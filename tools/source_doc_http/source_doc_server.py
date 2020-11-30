@@ -1,0 +1,247 @@
+from urllib.parse import urlparse
+
+import hashlib
+import argparse
+import sys
+import logging
+import os
+import json
+import urllib
+import http.server
+import dbm.gnu
+
+
+def setup_logging(logfilename):
+    logger = logging.getLogger("spc")
+    logger.setLevel(logging.DEBUG)
+
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    fh = logging.FileHandler(logfilename, "a+", encoding="utf8")
+    fh.setLevel(logging.DEBUG)
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
+
+
+    # create console handler with a higher log level
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.INFO)
+    logger.addHandler(ch)
+    return logger
+
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--server-address", dest='server_address', default=None, help="by default read it from environment variable SOURCE_DOC_SERVER_ADDRESS")
+    parser.add_argument("--log-file-name",  dest='log_file_name', required=False, default="source_doc_server.log")
+    parser.add_argument("--data-folder",  dest='data_folder', required=False, default=".")
+
+    args = parser.parse_args()
+    if args.server_address is None:
+        args.server_address = os.environ['SOURCE_DOC_SERVER_ADDRESS']
+    return args
+
+
+class TSourceDocHTTPServer(http.server.HTTPServer):
+    header_repeat_max_len = 20
+    max_bin_file_size = 10* (2**30)
+
+    def get_bin_file_path(self, i):
+        return os.path.join(self.args.data_folder, "{}.bin".format(i))
+
+    def __init__(self, args):
+        self.args = args
+        self.logger =  setup_logging(args.log_file_name)
+        self.stats = {
+            'bin_files_count': 1,
+            'all_file_size': 0,
+            'source_doc_count': 0
+        }
+        assert  os.path.exists(args.data_folder)
+        dbm_path = os.path.join(args.data_folder, "header.dbm")
+        if os.path.exists(dbm_path):
+            self.src_doc_params = dbm.gnu.open(dbm_path, "ws")
+            self.stats = json.loads(self.src_doc_params.get('stats'))
+        else:
+            self.logger.info("create new file {}".format(dbm_path))
+            self.src_doc_params = dbm.gnu.open(dbm_path,"cs")
+
+        self.files = list()
+        for i in range(self.stats['bin_files_count'] - 1):
+            fp = open(self.get_bin_file_path(i), "rb")
+            assert fp is not None
+            self.files.append(fp)
+
+        fp = open(self.get_bin_file_path(self.stats['bin_files_count'] - 1), "ab+")
+        assert fp is not None
+        self.files.append(fp)
+
+        host, port = self.args.server_address.split(":")
+        self.logger.debug("start server on {}:{}".format(host, int(port)))
+        try:
+            super().__init__((host, int(port)), TSourceDocRequestHandler)
+        except Exception as exp:
+            self.logger.error(exp)
+            raise
+
+    def get_source_document(self, sha256):
+        file_info = self.src_doc_params.get(sha256)
+        if file_info is None:
+            self.logger.debug("cannot find key {}".format(sha256))
+            return None, None
+        file_no, file_pos, size, extension = file_info.decode('latin').split(";")
+        file_no = int(file_no)
+        if file_no >= len(self.files):
+            self.logger.error("bad file no {} for key ={}  ".format(file_no, sha256))
+            return None, None
+        self.files[file_no].seek(int(file_pos))
+        file_contents = self.files[file_no].read(int(size))
+        return file_contents, extension
+
+    def create_new_bin_file(self):
+        self.files[-1].close()
+        self.files[-1] = open(self.get_bin_file_path(len(self.files) - 1), "rb")
+
+        self.files.append (open(self.get_bin_file_path(len(self.files)), "ab+"))
+
+    def write_repeat_header_to_bin_file(self, file_bytes, file_extension):
+        # these headers are needed if the main dbm is lost
+        header_repeat = '{};{}'.format(len(file_bytes), file_extension)
+        if len(header_repeat) > self.header_repeat_max_len:
+            # strange long file extension can be ignored and trimmed
+            header_repeat = header_repeat[:self.header_repeat_max_len]
+        elif len(header_repeat) > self.header_repeat_max_len:
+            header_repeat += ' ' * (self.header_repeat_max_len - len(header_repeat))
+        self.files[-1].write(header_repeat.encode('latin'))
+
+    def update_stats(self, file_bytes_len):
+        self.stats['all_file_size'] += file_bytes_len + self.header_repeat_max_len
+        self.stats['source_doc_count'] += 1
+        self.stats['bin_files_count'] = len(self.files)
+        self.src_doc_params["stats"] = json.dumps(self.stats)
+
+    def save_source_document(self, file_bytes, file_extension):
+        sha256 = hashlib.sha256(file_bytes).hexdigest()
+        if self.src_doc_params.get(sha256) is not None:
+            return
+        if self.files[-1].tell() > self.max_bin_file_size:
+            self.create_new_bin_file()
+        self.write_repeat_header_to_bin_file(file_bytes, file_extension)
+        self.src_doc_params[sha256] = "{};{};{};{}".format(
+            len(self.files) - 1,
+            self.files[-1].tell(),
+            len(file_bytes),
+            file_extension)
+        self.files[-1].write(file_bytes)
+        self.logger.debug("put source document {} to bin file {}".format(sha256, len(self.files) - 1 ))
+        self.update_stats(len(file_bytes))
+
+    def get_stats(self):
+        return self.stats
+
+
+class TSourceDocRequestHandler(http.server.BaseHTTPRequestHandler):
+
+    timeout = 10*60
+    HTTP_SERVER = None
+
+    def parse_cgi(self, query_components):
+        query = urllib.parse.urlparse(self.path).query
+        if query == "":
+            return True
+        for qc in query.split("&"):
+            items = qc.split("=")
+            if len(items) != 2:
+                return False
+            query_components[items[0]] = items[1]
+        return True
+
+    def send_error_wrapper(self, message, http_code=http.HTTPStatus.BAD_REQUEST, log_error=True):
+        if log_error:
+            self.HTTP_SERVER.logger.error(message)
+        http.server.SimpleHTTPRequestHandler.send_error(self, http_code, message)
+
+    def process_get_source_document(self):
+        query_components = dict()
+        if not self.parse_cgi(query_components):
+            self.send_error_wrapper('bad request', log_error=False)
+            return
+
+        if 'sha256' not in query_components:
+            self.send_error_wrapper('sha256 not in cgi', log_error=True)
+            return
+
+        file_data, file_extension = self.HTTP_SERVER.get_source_document(query_components['sha256'])
+        if file_data is None:
+            self.send_error_wrapper("not found", http_code=http.HTTPStatus.NOT_FOUND, log_error=True)
+            return
+
+        self.send_response(200)
+        self.send_header('file_extension', file_extension)
+        self.end_headers()
+        self.wfile.write(file_data)
+
+    def do_GET(self):
+        try:
+            path = urllib.parse.urlparse(self.path).path
+            if path == "/ping":
+                self.send_response(200)
+                self.end_headers()
+                self.wfile.write(b"pong\n")
+            elif path == "/stats":
+                self.send_response(200)
+                self.end_headers()
+                stats = json.dumps(self.HTTP_SERVER.get_stats()) + "\n"
+                self.wfile.write(stats.encode('utf8'))
+            elif path == "/get_source_document":
+                self.process_get_source_document()
+            else:
+                self.send_error_wrapper("unsupported action", log_error=False)
+        except Exception as exp:
+            self.HTTP_SERVER.logger.error(exp)
+            return
+
+
+    def do_PUT(self):
+        if self.path is None:
+            self.send_error_wrapper("no file specified")
+            return
+
+        _, file_extension = os.path.splitext(os.path.basename(self.path))
+
+        file_length = self.headers.get('Content-Length')
+        if file_length is None or not file_length.isdigit():
+            self.send_error_wrapper('cannot find header  Content-Length')
+            return
+        file_length = int(file_length)
+
+        self.HTTP_SERVER.logger.debug(
+            "start reading file {} file size {} from {}".format(self.path, file_length, self.client_address[0]))
+
+        try:
+            file_bytes = self.rfile.read(file_length)
+        except Exception as exp:
+            self.send_error_wrapper('file reading failed: {}'.format(str(exp)))
+            return
+
+        try:
+            self.HTTP_SERVER.save_source_document(file_bytes, file_extension)
+        except Exception as exp:
+            self.send_error_wrapper('writing failed: {}'.format(str(exp)))
+            return
+
+        self.send_response(http.HTTPStatus.CREATED)
+        self.end_headers()
+
+
+if __name__ == "__main__":
+    args = parse_args()
+    TSourceDocRequestHandler.HTTP_SERVER = TSourceDocHTTPServer(args)
+    try:
+        TSourceDocRequestHandler.HTTP_SERVER.serve_forever()
+    except KeyboardInterrupt:
+        TSourceDocRequestHandler.HTTP_SERVER.logger.info("ctrl+c received")
+    except Exception as exp:
+        TSourceDocRequestHandler.HTTP_SERVER.logger.error("general exception: {}".format(exp))
+    finally:
+        sys.exit(1)
+
