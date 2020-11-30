@@ -11,6 +11,24 @@ import json
 import argparse
 
 
+def setup_logging(logfilename="smart_parser_client.log"):
+    logger = logging.getLogger("sc")
+    logger.setLevel(logging.DEBUG)
+
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    fh = logging.FileHandler(logfilename, "a+", encoding="utf8")
+    fh.setLevel(logging.DEBUG)
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
+
+
+    # create console handler with a higher log level
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.INFO)
+    logger.addHandler(ch)
+    return logger
+
+
 class TSmartParserCacheClient(object):
 
     def assert_server_alive(self):
@@ -29,13 +47,14 @@ class TSmartParserCacheClient(object):
             self.logger.error("cannot connect to {} (smart parser cache server)".format(self.server_address))
             raise
 
-    def __init__(self, logger, timeout=300):
-        self.server_address = os.environ.get('SMART_PARSER_SERVER_ADDRESS')
+    def __init__(self, args):
+        self.logger = setup_logging()
+        self.server_address = args.server_address
+
         if self.server_address is None:
-            logger.error("specify environment variable SMART_PARSER_SERVER_ADDRESS")
+            self.logger.error("specify environment variable SMART_PARSER_SERVER_ADDRESS")
             assert self.server_address is not None
-        self.logger = logger
-        self.timeout = timeout
+        self.timeout = args.timeout
         self.assert_server_alive()
 
     def send_file(self, file_path):
@@ -85,31 +104,18 @@ class TSmartParserCacheClient(object):
             return self.retrieve_json_by_sha256(sha256)
 
 
-def setup_logging(logfilename):
-    logger = logging.getLogger("dlrobot_parallel")
-    logger.setLevel(logging.DEBUG)
-
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    fh = logging.FileHandler(logfilename, "a+", encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-
-    # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-    return logger
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--server-address", dest='server_address', default=None, help="by default read it from environment variable SOURCE_DOC_SERVER_ADDRESS")
     parser.add_argument("--action", dest='action', default=None, help="can be put, get or stats", required=True)
     parser.add_argument("--walk-folder-recursive", dest='walk_folder_recursive', default=None, required=False)
     parser.add_argument("--timeout", dest='timeout', default=300, type=int)
     parser.add_argument('files', nargs='*')
     args = parser.parse_args()
+    if args.server_address is None:
+        args.server_address = os.environ.get('SMART_PARSER_SERVER_ADDRESS')
     return args
 
 
@@ -127,8 +133,7 @@ def get_files(args):
 
 if __name__ == "__main__":
     args = parse_args()
-    logger = setup_logging("smart_parser_cache_client.log")
-    client = TSmartParserCacheClient(logger, args.timeout)
+    client = TSmartParserCacheClient(args)
     if args.action == "stats":
         print(json.dumps(client.get_stats()))
     else:

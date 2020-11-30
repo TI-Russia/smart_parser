@@ -8,6 +8,7 @@ import hashlib
 import argparse
 import sys
 import logging
+import time
 import os
 import json
 import urllib
@@ -52,43 +53,35 @@ def parse_args():
     return args
 
 
-def run_smart_parser(logger, file_path):
-    try:
-        logger.debug("process {} with smart_parser".format(file_path))
-        EXTERNAl_CONVERTORS.run_smart_parser_full(file_path)
-        smart_parser_json = file_path + ".json"
-        json_data = TSmartParserHTTPServer.SMART_PARSE_FAIL_CONSTANT
-        if os.path.exists(smart_parser_json):
-            with open(smart_parser_json, "rb") as inp:
-                json_data = zlib.compress(inp.read())
-            os.unlink(smart_parser_json)
-        sha256, _ = os.path.splitext(os.path.basename(file_path))
-        logger.debug("remove file {}".format(file_path))
-        os.unlink(file_path)
-        return sha256, json_data
-    except Exception as exp:
-        logger.error("Exception in run_smart_parser_thread:{}".format(exp))
-        raise
-
-
 class TSmartParserHTTPServer(http.server.HTTPServer):
     SMART_PARSE_FAIL_CONSTANT = b"no_json_found"
+    TASK_TIMEOUT = 10
 
-    def __init__(self, args, logger):
+    def __init__(self, args):
         self.args = args
-        self.logger = logger
+        self.logger = setup_logging(self.args.log_file_name)
         self.json_cache_dbm = dbm.gnu.open(args.cache_file, "ws" if os.path.exists(args.cache_file) else "cs")
         self.last_version = self.read_smart_parser_versions()
         self.task_queue = self.initialize_input_queue()
-        self.smart_parser_thread = threading.Thread(target=self.run_smart_parser_thread)
+        self.smart_parser_thread = threading.Thread(target=self.run_smart_parser_thread_pool)
         self.session_write_count = 0
+        self.worker_pool = None
         host, port = self.args.server_address.split(":")
         self.logger.debug("start server on {}:{}".format(host, int(port)))
+        self.working = True
         try:
             super().__init__((host, int(port)), TSmartParserRequestHandler)
         except Exception as exp:
             self.logger.error(exp)
             raise
+
+    def stop_server(self):
+        self.working = False
+        self.server_close()
+        time.sleep(self.TASK_TIMEOUT)
+        self.worker_pool.close()
+        self.smart_parser_thread.join(0)
+        self.shutdown()
 
     def check_file_extension(self, filename):
         _, extension = os.path.splitext(filename)
@@ -102,7 +95,7 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
                 self.logger.error ("cannot create input task directory {}".format(self.args.input_task_directory))
                 raise
         task_queue = queue.Queue()
-        for file_name in sorted(Path(args.input_task_directory).iterdir(), key=os.path.getmtime):
+        for file_name in sorted(Path(self.args.input_task_directory).iterdir(), key=os.path.getmtime):
             if self.check_file_extension(str(file_name)):
                 task_queue.put(os.path.basename(file_name))
         self.logger.error("initialize input task queue with {} files".format(task_queue.qsize()))
@@ -165,19 +158,41 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         self.json_cache_dbm[key] = json_data
 
     def get_tasks(self):
-        while True:
-            file_name = self.task_queue.get()
-            file_path = os.path.join(self.args.input_task_directory, file_name)
-            if os.path.exists(file_path):
-                yield file_path
-            else:
-                self.logger.error("file {} does not exist".format(file_path))
+        while self.working:
+            try:
+                file_name = self.task_queue.get(True, timeout=self.TASK_TIMEOUT)
+                file_path = os.path.join(self.args.input_task_directory, file_name)
+                if os.path.exists(file_path):
+                    yield file_path
+                else:
+                    self.logger.error("file {} does not exist".format(file_path))
+            except queue.Empty as exp:
+                pass
 
-    def run_smart_parser_thread(self):
-        self.logger.debug("run smart_parser in {} threads".format(self.args.worker_count))
-        pool = ThreadPool(self.args.worker_count)
+    def run_smart_parser(self, file_path):
         try:
-            task_results = pool.imap_unordered(partial(run_smart_parser, self.logger), self.get_tasks())
+            self.logger.debug("process {} with smart_parser".format(file_path))
+            EXTERNAl_CONVERTORS.run_smart_parser_full(file_path)
+            smart_parser_json = file_path + ".json"
+            json_data = TSmartParserHTTPServer.SMART_PARSE_FAIL_CONSTANT
+            if os.path.exists(smart_parser_json):
+                with open(smart_parser_json, "rb") as inp:
+                    json_data = zlib.compress(inp.read())
+                os.unlink(smart_parser_json)
+            sha256, _ = os.path.splitext(os.path.basename(file_path))
+            self.logger.debug("remove file {}".format(file_path))
+            self.task_queue.task_done()
+            os.unlink(file_path)
+            return sha256, json_data
+        except Exception as exp:
+            self.logger.error("Exception in run_smart_parser_thread:{}".format(exp))
+            raise
+
+    def run_smart_parser_thread_pool(self):
+        self.logger.debug("run smart_parser in {} threads".format(self.args.worker_count))
+        self.worker_pool = ThreadPool(self.args.worker_count)
+        try:
+            task_results = self.worker_pool.imap_unordered(partial(self.run_smart_parser), self.get_tasks())
             for (sha256, json_data) in task_results:
                 self.register_built_smart_parser_json(sha256, json_data)
         except Exception as exp:
@@ -189,10 +204,6 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
             'queue_size': self.task_queue.qsize(),
             'session_write_count': self.session_write_count
         }
-
-
-
-HTTP_SERVER = None
 
 
 class TSmartParserRequestHandler(http.server.BaseHTTPRequestHandler):
@@ -212,7 +223,7 @@ class TSmartParserRequestHandler(http.server.BaseHTTPRequestHandler):
 
     def send_error_wrapper(self, message, http_code=http.HTTPStatus.BAD_REQUEST, log_error=True):
         if log_error:
-            HTTP_SERVER.logger.error(message)
+            self.server.logger.error(message)
         http.server.SimpleHTTPRequestHandler.send_error(self, http_code, message)
 
     def process_get_json(self):
@@ -225,7 +236,7 @@ class TSmartParserRequestHandler(http.server.BaseHTTPRequestHandler):
             self.send_error_wrapper('sha256 not in cgi', log_error=True)
             return
 
-        js = HTTP_SERVER.get_smart_parser_json(query_components['sha256'], query_components.get('smart_parser_version'))
+        js = self.server.get_smart_parser_json(query_components['sha256'], query_components.get('smart_parser_version'))
         if js is None:
             self.send_error_wrapper("not found", http_code=http.HTTPStatus.NOT_FOUND, log_error=True)
             return
@@ -245,14 +256,14 @@ class TSmartParserRequestHandler(http.server.BaseHTTPRequestHandler):
             elif path == "/stats":
                 self.send_response(200)
                 self.end_headers()
-                stats = json.dumps(HTTP_SERVER.get_stats()) + "\n"
+                stats = json.dumps(self.server.get_stats()) + "\n"
                 self.wfile.write(stats.encode('utf8'))
             elif path == "/get_json":
                 self.process_get_json()
             else:
                 self.send_error_wrapper("unsupported action", log_error=False)
         except Exception as exp:
-            HTTP_SERVER.logger.error(exp)
+            self.server.logger.error(exp)
             return
 
 
@@ -269,7 +280,7 @@ class TSmartParserRequestHandler(http.server.BaseHTTPRequestHandler):
             return
         file_length = int(file_length)
 
-        HTTP_SERVER.logger.debug(
+        self.server.logger.debug(
             "start reading file {} file size {} from {}".format(self.path, file_length, self.client_address[0]))
 
         try:
@@ -279,7 +290,7 @@ class TSmartParserRequestHandler(http.server.BaseHTTPRequestHandler):
             return
 
         try:
-            HTTP_SERVER.put_to_task_queue(file_bytes, file_extension)
+            self.server.put_to_task_queue(file_bytes, file_extension)
         except Exception as exp:
             self.send_error_wrapper('register_task_result failed: {}'.format(str(exp)))
             return
@@ -290,18 +301,16 @@ class TSmartParserRequestHandler(http.server.BaseHTTPRequestHandler):
 
 if __name__ == "__main__":
     args = parse_args()
-    logger = setup_logging(args.log_file_name)
-    HTTP_SERVER = TSmartParserHTTPServer(args, logger)
-    HTTP_SERVER.logger.debug("start main smart_parser_thread")
-    HTTP_SERVER.smart_parser_thread.start()
+    server = TSmartParserHTTPServer(args)
+    server.logger.debug("start main smart_parser_thread")
+    server.smart_parser_thread.start()
     try:
-        HTTP_SERVER.serve_forever()
+        server.serve_forever()
     except KeyboardInterrupt:
-        logger.info("ctrl+c received")
+        self.logger.info("ctrl+c received")
     except Exception as exp:
-        sys.stderr.write("general exception: {}\n".format(exp))
-        logger.error("general exception: {}".format(exp))
+        self.logger.error("general exception: {}".format(exp))
     finally:
-        HTTP_SERVER.smart_parser_thread.join(10)
+        server.smart_parser_thread.join(10)
         sys.exit(1)
 
