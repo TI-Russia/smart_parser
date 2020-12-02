@@ -6,6 +6,7 @@ import threading
 import shutil
 import time
 
+
 def start_server(server):
     server.serve_forever()
 
@@ -13,30 +14,28 @@ def start_server(server):
 class TTestEnv:
     def __init__(self, port, worker_count):
         self.port = port
-        self.data_folder = "data.{}".format(port)
+        self.data_folder = os.path.join(os.path.dirname(__file__), "data.{}".format(port))
         self.server_address = "localhost:{}".format(self.port)
         self.server = None
         self.server_thread = None
         self.client = None
         self.setUp(worker_count)
 
-    def setUp(self, _worker_count):
+    def setUp(self, worker_count):
         TSmartParserHTTPServer.TASK_TIMEOUT = 1
-        os.chdir(os.path.dirname(__file__))
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
         os.mkdir(self.data_folder)
-        class TArgs:
-            cache_file = os.path.join(self.data_folder, "smart_parser.dbm")
-            input_task_directory = os.path.join(self.data_folder, "input")
-            server_address = self.server_address
-            log_file_name = os.path.join(self.data_folder, "smart_parser_server.log")
-            worker_count = _worker_count
-
-        self.server = TSmartParserHTTPServer(TArgs())
+        server_args = [
+            '--cache-file', os.path.join(self.data_folder, "smart_parser.dbm"),
+            '--input-task-directory', os.path.join(self.data_folder, "input"),
+            '--server-address', self.server_address,
+            '--log-file-name', os.path.join(self.data_folder, "smart_parser_server.log"),
+            '--worker-count', str(worker_count)
+        ]
+        self.server = TSmartParserHTTPServer(TSmartParserHTTPServer.parse_args(server_args))
         self.server_thread = threading.Thread(target=start_server, args=(self.server,))
         self.server_thread.start()
-        self.server.smart_parser_thread.start()
 
         class TArgs:
             server_address = self.server_address
@@ -69,7 +68,6 @@ class TestBasic(TestCase):
         self.assertGreater(len(js), 0)
         stats = self.env.client.get_stats()
         self.assertEqual(stats["session_write_count"], 1)
-        print("test_basic is done")
 
 
 class TestMultiThreaded(TestCase):

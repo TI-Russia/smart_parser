@@ -12,7 +12,7 @@ import dbm.gnu
 
 
 def setup_logging(logfilename):
-    logger = logging.getLogger("spc")
+    logger = logging.getLogger("source_doc_server")
     logger.setLevel(logging.DEBUG)
 
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -29,31 +29,30 @@ def setup_logging(logfilename):
     return logger
 
 
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--server-address", dest='server_address', default=None, help="by default read it from environment variable SOURCE_DOC_SERVER_ADDRESS")
-    parser.add_argument("--log-file-name",  dest='log_file_name', required=False, default="source_doc_server.log")
-    parser.add_argument("--data-folder",  dest='data_folder', required=False, default=".")
-    args.max_bin_file_size = None
-
-    args = parser.parse_args()
-    if args.server_address is None:
-        args.server_address = os.environ['SOURCE_DOC_SERVER_ADDRESS']
-    return args
-
-
 class TSourceDocHTTPServer(http.server.HTTPServer):
     header_repeat_max_len = 20
+
+    @staticmethod
+    def parse_args(arg_list):
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--server-address", dest='server_address', default=None,
+                            help="by default read it from environment variable SOURCE_DOC_SERVER_ADDRESS")
+        parser.add_argument("--log-file-name", dest='log_file_name', required=False, default="source_doc_server.log")
+        parser.add_argument("--data-folder", dest='data_folder', required=False, default=".")
+        parser.add_argument('--max-bin-file-size', dest='max_bin_file_size', required=False, default=10 * (2 ** 30), type=int)
+
+        args = parser.parse_args(arg_list)
+        if args.server_address is None:
+            args.server_address = os.environ['SOURCE_DOC_SERVER_ADDRESS']
+        return args
 
     def get_bin_file_path(self, i):
         return os.path.join(self.args.data_folder, "{}.bin".format(i))
 
-    def __init__(self, args):
+    def __init__(self, args, logger=None):
         self.args = args
         self.max_bin_file_size = self.args.max_bin_file_size
-        if self.max_bin_file_size is None:
-            self.max_bin_file_size = 10 * (2 ** 30)
-        self.logger =  setup_logging(args.log_file_name)
+        self.logger = logger if logger is not None else setup_logging(args.log_file_name)
         self.stats = None
         self.src_doc_params = None
         self.files = list()
@@ -251,7 +250,7 @@ class TSourceDocRequestHandler(http.server.BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    args = parse_args()
+    args = TSourceDocHTTPServer.parse_args(sys.argv[1:])
     server = TSourceDocHTTPServer(args)
     try:
         server.serve_forever()

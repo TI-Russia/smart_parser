@@ -3,9 +3,12 @@ import plotly.express as px
 import pandas as pd
 import datetime
 import os
+import sys
 import json
-from remote_call import TRemoteDlrobotCall
 from collections import defaultdict
+
+from .remote_call import TRemoteDlrobotCall
+
 #edit crontab
 #SHELL=/bin/bash
 #MAILTO=username
@@ -13,16 +16,6 @@ from collections import defaultdict
 #*/10       *     *        *      *      python /home/sokirko/smart_parser/tools/ConvStorage/scripts/get_stats.py --history-file /home/sokirko/declarator_hdd/declarator/convert_stats.txt
 #*/10       *     *        *      *      python /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_stats.py --central-stats-file  /home/sokirko/declarator_hdd/declarator/dlrobot_central/processed_projects/dlrobot_remote_calls.dat --conversion-server-stats /home/sokirko/declarator_hdd/declarator/convert_stats.txt --output-folder ~/smart_parser.disclosures_prod/tools/disclosures_stats/disclosures/static/dlrobot
 
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--central-stats-file", dest='central_stats_file', required=False,
-                        help="for example /home/sokirko/declarator_hdd/declarator/dlrobot_central/processed_projects/dlrobot_remote_calls.dat")
-    parser.add_argument("--conversion-server-stats", dest='conversion_server_stats', required=False,
-                        help="for example /home/sokirko/declarator_hdd/declarator/convert_stats.txt")
-    parser.add_argument("--output-folder", dest='output_folder', required=False, default=".",
-                        help="for example ~/smart_parser.disclosures_prod/tools/disclosures_site/disclosures/static")
-    args = parser.parse_args()
-    return args
 
 
 def build_html(args, fig, output_file):
@@ -31,6 +24,7 @@ def build_html(args, fig, output_file):
 
 
 class TDlrobotStats:
+
     def __init__(self,  args, min_date=None,  min_total_minutes=0):
         self.args = args
         self.min_date = min_date
@@ -128,61 +122,73 @@ class TDlrobotStats:
         return error_rates
 
 
-def process_dlrobot_stats(args):
-    stats = TDlrobotStats(args)
-    stats.write_declaration_crawling_stats('declaration_crawling_stats.html')
-    stats.write_website_progress('file_progress.html')
+class TDlrobotAllStats:
+    @staticmethod
+    def parse_args(arg_list):
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--central-stats-file", dest='central_stats_file', required=False,
+                            help="for example /home/sokirko/declarator_hdd/declarator/dlrobot_central/processed_projects/dlrobot_remote_calls.dat")
+        parser.add_argument("--conversion-server-stats", dest='conversion_server_stats', required=False,
+                            help="for example /home/sokirko/declarator_hdd/declarator/convert_stats.txt")
+        parser.add_argument("--output-folder", dest='output_folder', required=False, default=".",
+                            help="for example ~/smart_parser.disclosures_prod/tools/disclosures_site/disclosures/static")
+        return parser.parse_args(arg_list)
 
-    min_time = datetime.datetime.now() - datetime.timedelta(hours=12)
-    stats12hours = TDlrobotStats(args, min_time)
-    stats12hours.write_declaration_crawling_stats('declaration_crawling_stats_12h.html')
-    stats12hours.write_website_progress('file_progress_12h.html')
+    def __init__(self,  args):
+        self.args = args
 
-    df = pd.DataFrame({'host_names': stats12hours.host_names})
-    fig = px.histogram(df, x="host_names", title="Projects By Workers (12 hours)")
-    build_html(args, fig, "worker_stats_12h.html")
+    def process_dlrobot_stats(self):
+        stats = TDlrobotStats(self.args)
+        stats.write_declaration_crawling_stats('declaration_crawling_stats.html')
+        stats.write_website_progress('file_progress.html')
 
-    df = pd.DataFrame({'declaration_files_by_workers': stats12hours.declaration_files_by_workers})
-    fig = px.histogram(df, x="declaration_files_by_workers", title="Declaration Files By Workers (12 hours)")
-    build_html(args, fig, "declaration_files_by_workers_12h.html")
+        min_time = datetime.datetime.now() - datetime.timedelta(hours=12)
+        stats12hours = TDlrobotStats(self.args, min_time)
+        stats12hours.write_declaration_crawling_stats('declaration_crawling_stats_12h.html')
+        stats12hours.write_website_progress('file_progress_12h.html')
 
-    df = pd.DataFrame({'failures': stats12hours.failures})
-    fig = px.histogram(df, x="failures", title="Worker Failures (12 hours)")
-    build_html(args, fig, "failures_12h.html")
+        df = pd.DataFrame({'host_names': stats12hours.host_names})
+        fig = px.histogram(df, x="host_names", title="Projects By Workers (12 hours)")
+        build_html(self.args, fig, "worker_stats_12h.html")
 
-    host2error_rates = stats12hours.get_project_error_rates()
-    df = pd.DataFrame({'hostnames': list(host2error_rates.keys()), 'error_rate_in_percent': list(host2error_rates.values())})
-    fig = px.bar(df, x='hostnames', y='error_rate_in_percent')
-    build_html(args, fig, "error_rates_12h.html")
+        df = pd.DataFrame({'declaration_files_by_workers': stats12hours.declaration_files_by_workers})
+        fig = px.histogram(df, x="declaration_files_by_workers", title="Declaration Files By Workers (12 hours)")
+        build_html(self.args, fig, "declaration_files_by_workers_12h.html")
 
+        df = pd.DataFrame({'failures': stats12hours.failures})
+        fig = px.histogram(df, x="failures", title="Worker Failures (12 hours)")
+        build_html(self.args, fig, "failures_12h.html")
 
-    statsMin10Minutes = TDlrobotStats(args, min_date=None, min_total_minutes=10)
-    statsMin10Minutes.write_web_site_speed('web_site_speed.html')
+        host2error_rates = stats12hours.get_project_error_rates()
+        df = pd.DataFrame({'hostnames': list(host2error_rates.keys()), 'error_rate_in_percent': list(host2error_rates.values())})
+        fig = px.bar(df, x='hostnames', y='error_rate_in_percent')
+        build_html(self.args, fig, "error_rates_12h.html")
 
+        statsMin10Minutes = TDlrobotStats(self.args, min_date=None, min_total_minutes=10)
+        statsMin10Minutes.write_web_site_speed('web_site_speed.html')
 
-def process_convert_stats(args):
-    with open(args.conversion_server_stats, encoding="utf8") as inp:
-        timestamps = list()
-        ocr_pending_all_file_sizes = list()
-        for l in inp:
-            (timestamp, stats) = l.split("\t")
-            dttime = datetime.datetime.fromtimestamp(int(timestamp))
-            timestamps.append(pd.Timestamp(dttime))
-            ocr_pending_all_file_sizes.append( json.loads(stats)['ocr_pending_all_file_size'])
+    def process_convert_stats(self):
+        with open(self.args.conversion_server_stats, encoding="utf8") as inp:
+            timestamps = list()
+            ocr_pending_all_file_sizes = list()
+            for l in inp:
+                (timestamp, stats) = l.split("\t")
+                dttime = datetime.datetime.fromtimestamp(int(timestamp))
+                timestamps.append(pd.Timestamp(dttime))
+                ocr_pending_all_file_sizes.append( json.loads(stats)['ocr_pending_all_file_size'])
 
-    df = pd.DataFrame({'Time': timestamps, "ocr_pending_file_sizes": ocr_pending_all_file_sizes})
-    fig = px.line(df, x='Time', y='ocr_pending_file_sizes',
-                        title='Ocr Conversion Server')
-    build_html(args, fig, "ocr_pending_file_sizes.html")
+        df = pd.DataFrame({'Time': timestamps, "ocr_pending_file_sizes": ocr_pending_all_file_sizes})
+        fig = px.line(df, x='Time', y='ocr_pending_file_sizes',
+                            title='Ocr Conversion Server')
+        build_html(self.args, fig, "ocr_pending_file_sizes.html")
 
-
-def main(args):
-    if args.central_stats_file is not None:
-        process_dlrobot_stats(args)
-    if args.conversion_server_stats is not None:
-        process_convert_stats(args)
+    def build_stats(self):
+        if self.args.central_stats_file is not None:
+            self.process_dlrobot_stats()
+        if self.args.conversion_server_stats is not None:
+            self.process_convert_stats()
 
 
 if __name__ == "__main__":
-    args = parse_args()
-    main(args)
+    args = TDlrobotAllStats.parse_args(sys.argv[1:])
+    TDlrobotAllStats(args).build_stats()

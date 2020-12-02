@@ -1,8 +1,0 @@
-{
-    "sites": [
-        {
-            "morda_url": "http://www.aot.ru"
-        }
-    ],
-    "disable_search_engine": true
-}

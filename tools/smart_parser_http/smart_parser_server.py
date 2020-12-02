@@ -38,24 +38,27 @@ def setup_logging(logfilename):
     return logger
 
 
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--server-address", dest='server_address', default=None, help="by default read it from environment variable SMART_PARSER_SERVER_ADDRESS")
-    parser.add_argument("--log-file-name",  dest='log_file_name', required=False, default="smart_parser_cache.log")
-    parser.add_argument("--cache-file",  dest='cache_file', required=False, default="smart_parser_cache.dbm")
-    parser.add_argument("--input-task-directory", dest='input_task_directory',
-                        required=False, default="input_tasks")
-    parser.add_argument("--worker-count", dest='worker_count', default=2, type=int)
-
-    args = parser.parse_args()
-    if args.server_address is None:
-        args.server_address = os.environ['SMART_PARSER_SERVER_ADDRESS']
-    return args
 
 
 class TSmartParserHTTPServer(http.server.HTTPServer):
     SMART_PARSE_FAIL_CONSTANT = b"no_json_found"
     TASK_TIMEOUT = 10
+
+    @staticmethod
+    def parse_args(arg_list):
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--server-address", dest='server_address', default=None,
+                            help="by default read it from environment variable SMART_PARSER_SERVER_ADDRESS")
+        parser.add_argument("--log-file-name", dest='log_file_name', required=False, default="smart_parser_cache.log")
+        parser.add_argument("--cache-file", dest='cache_file', required=False, default="smart_parser_cache.dbm")
+        parser.add_argument("--input-task-directory", dest='input_task_directory',
+                            required=False, default="input_tasks")
+        parser.add_argument("--worker-count", dest='worker_count', default=2, type=int)
+
+        args = parser.parse_args(arg_list)
+        if args.server_address is None:
+            args.server_address = os.environ['SMART_PARSER_SERVER_ADDRESS']
+        return args
 
     def __init__(self, args):
         self.args = args
@@ -63,7 +66,6 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         self.json_cache_dbm = dbm.gnu.open(args.cache_file, "ws" if os.path.exists(args.cache_file) else "cs")
         self.last_version = self.read_smart_parser_versions()
         self.task_queue = self.initialize_input_queue()
-        self.smart_parser_thread = threading.Thread(target=self.run_smart_parser_thread_pool)
         self.session_write_count = 0
         self.worker_pool = None
         host, port = self.args.server_address.split(":")
@@ -74,6 +76,9 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         except Exception as exp:
             self.logger.error(exp)
             raise
+        self.logger.debug("start main smart_parser_thread")
+        self.smart_parser_thread = threading.Thread(target=self.run_smart_parser_thread_pool)
+        self.smart_parser_thread.start()
 
     def stop_server(self):
         self.working = False
@@ -300,10 +305,7 @@ class TSmartParserRequestHandler(http.server.BaseHTTPRequestHandler):
 
 
 if __name__ == "__main__":
-    args = parse_args()
-    server = TSmartParserHTTPServer(args)
-    server.logger.debug("start main smart_parser_thread")
-    server.smart_parser_thread.start()
+    server = TSmartParserHTTPServer(TSmartParserHTTPServer.parse_args(sys.argv[1:]))
     try:
         server.serve_forever()
     except KeyboardInterrupt:

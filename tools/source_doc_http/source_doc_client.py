@@ -27,6 +27,21 @@ def setup_logging(logfilename):
 
 class TSourceDocClient(object):
 
+    @staticmethod
+    def parse_args(arg_list):
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--server-address", dest='server_address', default=None,
+                            help="by default read it from environment variable SOURCE_DOC_SERVER_ADDRESS")
+        parser.add_argument("--action", dest='action', default=None, help="can be put, get or stats", required=False)
+        parser.add_argument("--timeout", dest='timeout', default=300, type=int)
+        parser.add_argument("--output-folder", dest='output_folder', default=".")
+        parser.add_argument('files', nargs='*')
+        args = parser.parse_args(arg_list)
+        if args.server_address is None:
+            args.server_address = os.environ['SOURCE_DOC_SERVER_ADDRESS']
+
+        return args
+
     def assert_server_alive(self):
         if self.server_address is None:
             raise Exception("environment variable SOURCE_DOC_SERVER_ADDRESS is not set")
@@ -43,8 +58,9 @@ class TSourceDocClient(object):
             self.logger.error("cannot connect to {} (source document server)".format(self.server_address))
             raise
 
-    def __init__(self, args):
-        self.logger = setup_logging("source_document.log")
+    def __init__(self, args, logger=None):
+        self.args = args
+        self.logger = logger if logger is not None else setup_logging("source_document_client.log")
         self.server_address = args.server_address
         if self.server_address is None:
             self.logger.error("specify environment variable SOURCE_DOC_SERVER_ADDRESS")
@@ -95,22 +111,8 @@ class TSourceDocClient(object):
             return None, None
 
 
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--server-address", dest='server_address', default=None, help="by default read it from environment variable SOURCE_DOC_SERVER_ADDRESS")
-    parser.add_argument("--action", dest='action', default=None, help="can be put, get or stats", required=True)
-    parser.add_argument("--timeout", dest='timeout', default=300, type=int)
-    parser.add_argument("--output-folder", dest='output_folder', default=".")
-    parser.add_argument('files', nargs='*')
-    args = parser.parse_args()
-    if args.server_address is None:
-        args.server_address = os.environ['SOURCE_DOC_SERVER_ADDRESS']
-
-    return args
-
-
 if __name__ == "__main__":
-    args = parse_args()
+    args = TSourceDocClient.parse_args(sys.argv[1:])
     client = TSourceDocClient(args)
     if args.action == "stats":
         print(json.dumps(client.get_stats()))

@@ -31,6 +31,20 @@ def setup_logging(logfilename="smart_parser_client.log"):
 
 class TSmartParserCacheClient(object):
 
+    @staticmethod
+    def parse_args(arg_list):
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--server-address", dest='server_address', default=None,
+                            help="by default read it from environment variable SOURCE_DOC_SERVER_ADDRESS")
+        parser.add_argument("--action", dest='action', default=None, help="can be put, get or stats", required=False)
+        parser.add_argument("--walk-folder-recursive", dest='walk_folder_recursive', default=None, required=False)
+        parser.add_argument("--timeout", dest='timeout', default=300, type=int)
+        parser.add_argument('files', nargs='*')
+        args = parser.parse_args(arg_list)
+        if args.server_address is None:
+            args.server_address = os.environ.get('SMART_PARSER_SERVER_ADDRESS')
+        return args
+
     def assert_server_alive(self):
         if self.server_address is None:
             raise Exception("environment variable SERVER_ADDRESS is not set")
@@ -47,8 +61,12 @@ class TSmartParserCacheClient(object):
             self.logger.error("cannot connect to {} (smart parser cache server)".format(self.server_address))
             raise
 
-    def __init__(self, args):
-        self.logger = setup_logging()
+    def __init__(self, args, logger=None):
+        if logger is None:
+            self.logger = setup_logging()
+        else:
+            self.logger = logger
+
         self.server_address = args.server_address
 
         if self.server_address is None:
@@ -104,21 +122,6 @@ class TSmartParserCacheClient(object):
             return self.retrieve_json_by_sha256(sha256)
 
 
-
-
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--server-address", dest='server_address', default=None, help="by default read it from environment variable SOURCE_DOC_SERVER_ADDRESS")
-    parser.add_argument("--action", dest='action', default=None, help="can be put, get or stats", required=True)
-    parser.add_argument("--walk-folder-recursive", dest='walk_folder_recursive', default=None, required=False)
-    parser.add_argument("--timeout", dest='timeout', default=300, type=int)
-    parser.add_argument('files', nargs='*')
-    args = parser.parse_args()
-    if args.server_address is None:
-        args.server_address = os.environ.get('SMART_PARSER_SERVER_ADDRESS')
-    return args
-
-
 def get_files(args):
     if args.walk_folder_recursive is not None:
         for root, dirs, files in os.walk(args.walk_folder_recursive):
@@ -132,7 +135,7 @@ def get_files(args):
 
 
 if __name__ == "__main__":
-    args = parse_args()
+    args = TSmartParserCacheClient.parse_args(sys.argv[1:])
     client = TSmartParserCacheClient(args)
     if args.action == "stats":
         print(json.dumps(client.get_stats()))

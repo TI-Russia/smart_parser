@@ -1,6 +1,7 @@
-from unittest import TestCase
 from source_doc_http.source_doc_server import TSourceDocHTTPServer
 from source_doc_http.source_doc_client import TSourceDocClient
+
+from unittest import TestCase
 import os
 import threading
 import hashlib
@@ -27,20 +28,22 @@ class TTestEnv:
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
         os.mkdir(self.data_folder)
-        class TArgs:
-            data_folder = self.data_folder
-            server_address = self.server_address
-            log_file_name = "source_doc_server.{}.log".format(self.port)
-            max_bin_file_size = self.max_bin_file_size
+        server_args = [
+            "--server-address", self.server_address,
+            '--log-file-name', "source_doc_server.{}.log".format(self.port),
+            '--data-folder', self.data_folder,
+        ]
+        if self.max_bin_file_size is not None:
+            server_args.extend(['--max-bin-file-size', str(self.max_bin_file_size)])
 
-        self.server = TSourceDocHTTPServer(TArgs())
+        self.server = TSourceDocHTTPServer(TSourceDocHTTPServer.parse_args(server_args))
         self.server_thread = threading.Thread(target=start_server, args=(self.server,))
         self.server_thread.start()
 
-        class TArgs:
-            server_address = self.server_address
-            timeout = 300
-        self.client = TSourceDocClient(TArgs())
+        client_args = [
+            "--server-address", self.server_address,
+        ]
+        self.client = TSourceDocClient(TSourceDocClient.parse_args(client_args))
 
     def tearDown(self):
         self.server.close_files()
