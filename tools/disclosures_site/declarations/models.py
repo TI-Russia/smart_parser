@@ -10,6 +10,7 @@ def get_django_language():
     return lang
 
 
+
 class Office(models.Model):
     name = models.TextField(verbose_name='office name')
     region_id = models.IntegerField(null=True)
