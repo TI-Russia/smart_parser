@@ -37,7 +37,6 @@ class TOfficeJoiner:
         self.logger.debug("start joining")
 
         self.region_name_to_id = None
-        self.fgup = None
         self.website_to_most_freq_office = None
         self.offices_file_path = os.path.join(os.path.dirname(__file__), "../data/offices.txt")
         self.offices = None
@@ -115,17 +114,18 @@ class TOfficeJoiner:
 
     def read_fgup(self):
         file_path = os.path.join(os.path.dirname(__file__), "../data/fgup.txt")
-        self.fgup = dict()
+        fgup = dict()
         with open (file_path, "r") as inp:
             for line in inp:
                 (name, region, web_site) = line.strip().split("\t")
-                self.fgup[web_site] =  {
+                fgup[web_site] =  {
                     "name_ru": name,
                     "region_id": self.region_name_to_id[region.lower()],
                     'type_id': None,
                     'parent_id': None
                     }
-        self.logger.debug("read {} fgup from {}".format(len(self.region_name_to_id), file_path))
+        self.logger.debug("read {} fgup from {}".format(len(fgup), file_path))
+        return fgup
 
     def extend_offices_and_sites(self, new_office_dict):
         name_to_office = dict((o['name_ru'], o['id']) for o in self.offices)
@@ -154,16 +154,46 @@ class TOfficeJoiner:
                 self.logger.error ("cannot add office {} with website {}, there is an office "
                             "with the same name or with the same web_site".format(office_info['name_ru'], web_site))
 
+    """
+    wd:Q2198484  - районы
+    wd:Q634099 - муниципальные образования
+
+    SELECT ?itemLabel ?website ?sitelinks
+    WHERE
+    {
+      VALUES ?russian_district { wd:Q2198484 wd:Q634099}
+      ?item wdt:P31 ?russian_district.
+      ?item wdt:P856 ?website.
+      SERVICE wikibase:label { bd:serviceParam wikibase:language "ru". }
+    }
+    """
+    def read_districts_from_wikidata (self):
+        file_path = os.path.join(os.path.dirname(__file__), "../data/districts_from_wikidata.json")
+        districts = dict()
+        with open(file_path, "r") as inp:
+            for x in json.load(inp):
+                name = x['itemLabel']
+                web_site = TDeclarationWebSites.get_web_domain_by_url(x['website'])
+                districts[web_site] =  {
+                    "name_ru": name,
+                    "region_id": None,
+                    'type_id': None,
+                    'parent_id': None
+                    }
+        self.logger.info("read {} items from {}".format(len(districts), file_path))
+        return districts
+
     def build_offices_and_web_sites (self):
         args = parse_args()
         self.read_offices()
         self.read_regions()
-        self.read_fgup()
+
         self.update_offices_from_declarator()
         self.web_sites.update_from_office_urls(self.offices, self.logger)
         self.calc_office_by_web_domain()
         self.web_sites.add_new_websites_from_declarator(self.website_to_most_freq_office)
-        self.extend_offices_and_sites(self.fgup)
+        self.extend_offices_and_sites(self.read_fgup())
+        self.extend_offices_and_sites(self.read_districts_from_wikidata())
 
         self.web_sites.save_to_disk()
         self.write_offices()
