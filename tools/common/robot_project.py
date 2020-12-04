@@ -67,7 +67,7 @@ class TRobotProject:
         office_info.morda_url = morda_url
         self.offices.append(office_info)
 
-    def read_project(self, fetch_morda_url=True, check_step_names=True):
+    def read_project(self, check_step_names=True):
         self.offices = list()
         with open(self.visited_pages_file, "r", encoding="utf8") as inpf:
             json_dict = json.loads(inpf.read())
@@ -81,13 +81,14 @@ class TRobotProject:
                     self.robot_step_passports.append(step_name)
 
             for o in json_dict.get('sites', []):
-                site = TRobotWebSite(self, init_json=o)
-                if fetch_morda_url:
-                    site.init_morda_url_if_necessary()
+                self.offices.append(TRobotWebSite(self).read_from_json(o))
 
-                self.offices.append(site)
             if "disable_search_engine" in json_dict:
                 self.enable_search_engine = False
+
+    def fetch_main_pages(self):
+        for site in self.offices:
+            site.fetch_the_main_page()
 
     def write_click_features(self, filename):
         self.logger.info("create {}".format(filename))

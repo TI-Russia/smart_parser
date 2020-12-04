@@ -144,6 +144,7 @@ def open_project(args):
     with TRobotProject(logger, args.project, ROBOT_STEPS, args.result_folder) as project:
         project.total_timeout = convert_timeout_to_seconds(args.total_timeout)
         project.read_project()
+        project.fetch_main_pages()
         if args.only_click_paths:
             project.write_export_stats()
         else:

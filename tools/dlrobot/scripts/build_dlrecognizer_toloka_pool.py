@@ -27,7 +27,7 @@ def parse_args():
 
 def create_toloka_pool(project_path, toloka_stream):
     with TRobotProject(logging, project_path, ROBOT_STEPS, None) as project:
-        project.read_project(fetch_morda_url=False)
+        project.read_project()
         office_info = project.offices[0]
         toloka_stream.write("INPUT:url\tINPUT:file_link\tINPUT:file_extension\tINPUT:html\n")
         ec = TExternalConverters()
@@ -55,7 +55,7 @@ def copy_files(args, toloka_results):
     assert args.positive_folder is not None
     assert args.negative_folder is not None
     with TRobotProject(args.project, ROBOT_STEPS) as project:
-        project.read_project(fetch_morda_url=False)
+        project.read_project()
         office_info = project.offices[0]
         index = 0
         domain = strip_html_url(office_info.morda_url)

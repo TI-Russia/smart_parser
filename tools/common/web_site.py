@@ -1,5 +1,5 @@
 from common.download import TDownloadedFile
-from common.http_request import  RobotHttpException
+from common.http_request import RobotHttpException
 from collections import defaultdict
 from common.primitives import get_site_domain_wo_www, get_html_title
 import os
@@ -12,6 +12,8 @@ import re
 from common.link_info import TLinkInfo, TClickEngine
 from common.robot_step import TRobotStep, TUrlInfo
 from common.export_files import TExportEnvironment
+from common.serp_parser import SearchEngine, SerpException
+
 
 FIXLIST = {
     'fsin.su': {
@@ -23,59 +25,78 @@ FIXLIST = {
 }
 
 
+class TWebSiteReachStatus:
+    normal = "normal"
+    only_selenium = "only_selenium"
+    out_of_reach = "out_of_reach"  #nor urllib, no selenium
+    abandoned = "abandoned"        #no trace in search engines
+
+    @staticmethod
+    def can_communicate(reach_status):
+        return reach_status == "normal" or reach_status == "only_selenium"
+
 class TRobotWebSite:
     SINGLE_DECLARATION_TIMEOUT = 60 * 30 # half an hour in seconds,
     CRAWLING_TIMEOUT = 60 * 60 * 3       # 3 hours
 
-    def __init__(self, project, init_json=None):
+
+    def __init__(self, project):
+        #runtime members (no serialization)
         self.start_crawling_time = time.time()
         self.parent_project = project
-        self.url_nodes = dict()
         self.logger = project.logger
-
-        #runtime members (no serialization)
         self.runtime_processed_files = dict()
         self.export_env = TExportEnvironment(self)
-        if init_json is not None:
-            self.morda_url = init_json['morda_url']
-            self.office_name = init_json.get('name', '')
-            self.enable_urllib = init_json.get('enable_urllib', True)
-            self.robot_steps = list()
-            self.export_env.from_json(init_json.get('exported_files'))
-            for step_no, step in enumerate(init_json.get('steps', list())):
-                self.robot_steps.append(TRobotStep(self, project.robot_step_passports[step_no], init_json=step))
-            for url, info in init_json.get('url_nodes', dict()).items():
-                self.url_nodes[url] = TUrlInfo(init_json=info)
-        else:
-            self.enable_urllib = True
-            self.morda_url = ""
-            self.office_name = ""
-            self.robot_steps = list()
+
+        #serialized members
+        self.url_nodes = dict()
+        self.enable_urllib = True
+        self.morda_url = ""
+        self.office_name = ""
+        self.reach_status = "normal"
+        self.robot_steps = list()
+        self.reach_status = None
 
         if len(self.robot_steps) == 0:
             for p in project.robot_step_passports:
                 self.robot_steps.append(TRobotStep(self, p))
         assert len(self.robot_steps) == len(project.robot_step_passports)
 
-    def init_morda_url_if_necessary(self):
-        if len(self.url_nodes) == 0:
-            title = None
-            for i in range(3):
-                try:
-                    html_data = TDownloadedFile(self.morda_url).data
-                    title = get_html_title(html_data)
-                    break
-                except RobotHttpException as exp:
-                    self.logger.error("cannot fetch morda url {} with urllib, sleep 3 sec".format(self.morda_url))
-                    time.sleep(3)
-            if title is None:
-                self.parent_project.selenium_driver.navigate(self.morda_url)
+    def fetch_the_main_page(self):
+        if len(self.url_nodes) > 0:
+            return True
+        for i in range(3):
+            try:
+                html_data = TDownloadedFile(self.morda_url).data
+                title = get_html_title(html_data)
+                self.reach_status = TWebSiteReachStatus.normal
+                self.url_nodes[self.morda_url] = TUrlInfo(title=title)
+                return
+            except RobotHttpException as exp:
+                self.logger.error("cannot fetch morda url {} with urllib, sleep 3 sec".format(self.morda_url))
                 time.sleep(3)
-                title = self.parent_project.selenium_driver.the_driver.title
-                self.logger.error("disable urllib for this website since we cannot reach the main page with urllib")
-                self.enable_urllib = False
-
+        try:
+            self.logger.error("disable urllib for this website since we cannot reach the main page with urllib")
+            self.parent_project.selenium_driver.navigate(self.morda_url)
+            time.sleep(3)
+            title = self.parent_project.selenium_driver.the_driver.title
+            self.enable_urllib = False
+            self.reach_status = TWebSiteReachStatus.only_selenium
             self.url_nodes[self.morda_url] = TUrlInfo(title=title)
+            return True
+        except Exception as exp:
+            self.logger.error ("cannot access the main page using selenium")
+            self.reach_status = TWebSiteReachStatus.out_of_reach
+
+        try:
+            urls = SearchEngine().site_search(self.morda_url, "")
+            if len(urls) == 0:
+                self.reach_status = TWebSiteReachStatus.abandoned
+        except SerpException as exp:
+            self.logger.error("cannot find this page using search engine")
+            self.reach_status = TWebSiteReachStatus.abandoned
+
+        return False
 
     def get_domain_name(self):
         return get_site_domain_wo_www(self.morda_url)
@@ -90,8 +111,22 @@ class TRobotWebSite:
             return False
         return True
 
+    def read_from_json(self, init_json):
+        self.reach_status = init_json['reach_status']
+        self.morda_url = init_json['morda_url']
+        self.office_name = init_json.get('name', '')
+        self.enable_urllib = init_json.get('enable_urllib', True)
+        self.robot_steps = list()
+        self.export_env.from_json(init_json.get('exported_files'))
+        for step_no, step in enumerate(init_json.get('steps', list())):
+            self.robot_steps.append(TRobotStep(self, self.parent_project.robot_step_passports[step_no], init_json=step))
+        for url, info in init_json.get('url_nodes', dict()).items():
+            self.url_nodes[url] = TUrlInfo(init_json=info)
+        return self
+
     def to_json(self):
         return {
+            'reach_status': self.reach_status,
             'morda_url': self.morda_url,
             'name': self.office_name,
             'enable_urllib': self.enable_urllib,
@@ -191,6 +226,8 @@ class TRobotWebSite:
             return self.robot_steps[step_index - 1].step_urls
 
     def find_links_for_one_website(self, step_index: int):
+        if not TWebSiteReachStatus.can_communicate(self.reach_status):
+            return
         step_passport = self.parent_project.robot_step_passports[step_index]
         step_name = step_passport['step_name']
         self.logger.info("=== step {0} =========".format(step_name))

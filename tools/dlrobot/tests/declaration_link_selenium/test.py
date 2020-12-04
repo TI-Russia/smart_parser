@@ -46,7 +46,7 @@ def open_project(args):
     start_url = args.start_page
     with TRobotProject(logger, args.project, ROBOT_STEPS, "result", enable_search_engine=False,
                        ) as project:
-        project.read_project(False, True)
+        project.read_project(True)
         office_info = project.offices[0]
         office_info.create_export_folder()
         office_info.url_nodes[start_url] = TUrlInfo(title="", step_name=None)
