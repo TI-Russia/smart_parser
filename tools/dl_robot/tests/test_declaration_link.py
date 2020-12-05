@@ -1,5 +1,4 @@
-from common.download import get_file_extension_only_by_headers, TDownloadedFile, \
-             DEFAULT_HTML_EXTENSION, TDownloadEnv
+from common.download import TDownloadEnv
 from common.robot_step import TRobotStep, TUrlInfo
 from common.robot_project import TRobotProject
 from dlrobot.declaration_link import looks_like_a_declaration_link
