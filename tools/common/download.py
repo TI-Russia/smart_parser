@@ -22,6 +22,10 @@ class TDownloadEnv:
     PDF_QUOTA_CONVERSION = 20 * 2**20 # in bytes
 
     @staticmethod
+    def get_download_folder():
+        return os.path.join(TDownloadEnv.FILE_CACHE_FOLDER, "downloads")
+
+    @staticmethod
     def clear_cache_folder():
         if os.path.exists(TDownloadEnv.FILE_CACHE_FOLDER):
             shutil.rmtree(TDownloadEnv.FILE_CACHE_FOLDER, ignore_errors=True)
@@ -107,7 +111,7 @@ def http_get_request_with_simple_js_redirect(logger, url):
 # save from selenium
 def save_downloaded_file(filename):
     logger = logging.getLogger("dlrobot_logger")
-    download_folder = os.path.join(TDownloadEnv.FILE_CACHE_FOLDER, "downloads")
+    download_folder = TDownloadEnv.get_download_folder()
     if not os.path.exists(download_folder):
         os.makedirs(download_folder)
     assert (os.path.exists(filename))
@@ -278,8 +282,7 @@ class TDownloadedFile:
 
 
 # use it preliminary, because ContentDisposition and Content-type often contain errors
-def get_file_extension_only_by_headers(url):
-    logger = logging.getLogger("dlrobot_logger")
+def get_file_extension_only_by_headers(logger, url):
     _, headers = request_url_headers_with_global_cache(logger, url)
     ext = get_file_extension_by_content_type(headers)
     return ext

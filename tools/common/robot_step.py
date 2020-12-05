@@ -122,7 +122,7 @@ class TRobotStep:
                 prepare_for_logging(link_info.target_url), # not redirected yet
                 prepare_for_logging(link_info.anchor_text)))
         try:
-            return self.step_passport['check_link_func'](link_info)
+            return self.step_passport['check_link_func'](self.logger, link_info)
         except UnicodeEncodeError as exp:
             self.logger.debug(exp)
             return False

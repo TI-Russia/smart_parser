@@ -1,5 +1,4 @@
 import re
-import logging
 from DeclDocRecognizer.document_types import SOME_OTHER_DOCUMENTS
 from common.download import get_file_extension_only_by_headers
 from common.primitives import normalize_and_russify_anchor_text, check_sub_page_or_iframe
@@ -49,7 +48,7 @@ def is_public_servant_role(s):
     return re.search(ROLE_FIRST_WORDS_REGEXP, s, re.IGNORECASE)
 
 
-def looks_like_a_document_link(link_info: TLinkInfo):
+def looks_like_a_document_link(logger, link_info: TLinkInfo):
     # check anchor text
     anchor_text_ru = normalize_and_russify_anchor_text(link_info.anchor_text)
     anchor_text_en = link_info.anchor_text.lower()
@@ -74,22 +73,22 @@ def looks_like_a_document_link(link_info: TLinkInfo):
         if target.endswith('.jpg') or target.endswith('.png'):
             return False
         try:
-            ext = get_file_extension_only_by_headers(link_info.target_url)
+            ext = get_file_extension_only_by_headers(logger, link_info.target_url)
             return ext != DEFAULT_HTML_EXTENSION and ext in ACCEPTED_DECLARATION_FILE_EXTENSIONS
         except RobotHttpException as err:
             if err.count == 1:
-                logging.getLogger("dlrobot_logger").error(err)
+                logger.error(err)
             return False
 
     return False
 
 
-def looks_like_a_declaration_link(link_info: TLinkInfo):
+def looks_like_a_declaration_link(logger, link_info: TLinkInfo):
     # here is a place for ML
     anchor_text = normalize_and_russify_anchor_text(link_info.anchor_text)
     if re.search('^((сведения)|(справк[аи])) о доходах', anchor_text):
         link_info.weight = TLinkInfo.BEST_LINK_WEIGHT
-        logging.getLogger("dlrobot_logger").debug("case 0, weight={}, features: 'сведения о доходах'".format(link_info.weight))
+        logger.debug("case 0, weight={}, features: 'сведения о доходах'".format(link_info.weight))
         return True
     page_html = normalize_and_russify_anchor_text(link_info.page_html)
     if has_negative_words(anchor_text):
@@ -103,7 +102,7 @@ def looks_like_a_declaration_link(link_info: TLinkInfo):
     income_anchor = re.search(income_regexp, anchor_text) is not None
     role_anchor = is_public_servant_role(anchor_text)
     document_link = None
-    sub_page = check_sub_page_or_iframe(link_info)
+    sub_page = check_sub_page_or_iframe(logger, link_info)
     target_url_has_income_word = False
     good_doc_type_path = False
     if link_info.target_url is not None:
@@ -127,7 +126,7 @@ def looks_like_a_declaration_link(link_info: TLinkInfo):
                 positive_case = "case 1"
             else:
                 if document_link is None:
-                    document_link = looks_like_a_document_link(link_info)  #lazy calculaiton since it has a time-consuming head http-request
+                    document_link = looks_like_a_document_link(logger, link_info)  #lazy calculaiton since it has a time-consuming head http-request
                 if document_link:
                     positive_case = "case 1"
 
@@ -139,7 +138,7 @@ def looks_like_a_declaration_link(link_info: TLinkInfo):
                 positive_case = "case 2"
             else:
                 if document_link is None:
-                    document_link = looks_like_a_document_link(link_info)
+                    document_link = looks_like_a_document_link(logger, link_info)
                 if document_link:
                     positive_case = "case 2"
 
@@ -171,7 +170,7 @@ def looks_like_a_declaration_link(link_info: TLinkInfo):
                         ("year_found_anchor", year_found_anchor), ('role_anchor', role_anchor))
 
         all_features_str = ";".join(k for k, v in all_features if v)
-        logging.getLogger("dlrobot_logger").debug("{}, weight={}, features: {}".format(positive_case, weight, all_features_str))
+        logger.debug("{}, weight={}, features: {}".format(positive_case, weight, all_features_str))
         link_info.weight = weight
         return True
     return False

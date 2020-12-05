@@ -83,6 +83,16 @@ class TExternalConverters:
         shutil.move(temp_outfile, out)
         return 0
 
+    def convert_to_pdf(self, inp, out):
+        if os.path.exists(out):
+            os.unlink(out)
+        run_with_timeout([self.soffice, '--headless', '--writer', '--convert-to', 'pdf', inp])
+        filename_wo_extenstion, _ = os.path.splitext(inp)
+        temp_outfile = os.path.basename(filename_wo_extenstion + ".pdf")
+        if not os.path.exists(temp_outfile):
+            return 1
+        shutil.move(temp_outfile, out)
+
     def convert_to_html_with_soffice(self, inp):
         run_with_timeout([self.soffice, '--headless', '--convert-to', 'html', inp])
         filename_wo_extenstion, _ = os.path.splitext(inp)

@@ -112,14 +112,15 @@ class TRobotWebSite:
         return True
 
     def read_from_json(self, init_json):
-        self.reach_status = init_json['reach_status']
+        self.reach_status = init_json.get('reach_status')
         self.morda_url = init_json['morda_url']
         self.office_name = init_json.get('name', '')
         self.enable_urllib = init_json.get('enable_urllib', True)
-        self.robot_steps = list()
         self.export_env.from_json(init_json.get('exported_files'))
-        for step_no, step in enumerate(init_json.get('steps', list())):
-            self.robot_steps.append(TRobotStep(self, self.parent_project.robot_step_passports[step_no], init_json=step))
+        if init_json.get('steps') is not None:
+            self.robot_steps = list()
+            for step_no, step in enumerate(init_json.get('steps', list())):
+                self.robot_steps.append(TRobotStep(self, self.parent_project.robot_step_passports[step_no], init_json=step))
         for url, info in init_json.get('url_nodes', dict()).items():
             self.url_nodes[url] = TUrlInfo(init_json=info)
         return self

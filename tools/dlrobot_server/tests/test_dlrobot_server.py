@@ -37,7 +37,7 @@ class TTestEnv:
         assert is_port_free(central_port)
         self.central_port = central_port
         self.data_folder = os.path.join(os.path.dirname(__file__), "data.{}".format(central_port))
-        self.central_address = "localhost:{}".format(self.central_port)
+        self.central_address = "127.0.0.1:{}".format(self.central_port)
         self.central = None
         self.central_thread = None
         self.worker_thread = None

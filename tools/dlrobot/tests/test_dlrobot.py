@@ -1,15 +1,16 @@
-from dlrobot.dlrobot import TDlrobot
+from dlrobot import TDlrobot
 from DeclDocRecognizer.external_convertors import TExternalConverters
+from common.download import TDownloadEnv
+
 from unittest import TestCase
 import os
 import threading
 import shutil
-import time
 from datetime import datetime
 import json
 import http.server
 from functools import partial
-from common.download import TDownloadEnv
+
 
 def start_server(server):
     try:
@@ -26,25 +27,22 @@ def is_port_free(port):
 
 class TTestEnv:
 
-    def __init__(self, name, project):
+    def __init__(self, port, website_folder):
         self.web_site = None
         self.web_site_folder = None
+        name = os.path.basename(website_folder)
         self.data_folder = os.path.join(os.path.dirname(__file__), "data.{}".format(name))
         self.dlrobot_result_folder = os.path.join(self.data_folder, "result")
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
         os.mkdir(self.data_folder)
         os.chdir(self.data_folder)
-        if project is not None:
-            self.project_path = os.path.join(self.data_folder, "project.txt")
-            with open(self.project_path, "w") as outp:
-                json.dump(project, outp)
-        else:
-            self.project_path = None
-
-    def setup_website(self, port, folder):
+        self.project_path = os.path.join(self.data_folder, "project.txt")
+        with open(self.project_path, "w") as outp:
+            project = {"sites": [{"morda_url": "http://127.0.0.1:{}".format(port)}], "disable_search_engine": True}
+            json.dump(project, outp)
         assert is_port_free(port)
-        self.web_site_folder = os.path.join(os.path.dirname(__file__), folder)
+        self.web_site_folder = os.path.join(os.path.dirname(__file__), website_folder)
         handler = partial(http.server.SimpleHTTPRequestHandler,
                           directory=self.web_site_folder)
         self.web_site = http.server.HTTPServer(server_address=("127.0.0.1", port), RequestHandlerClass=handler)
@@ -70,12 +68,9 @@ class TTestEnv:
 
 class TestSimple(TestCase):
     web_site_port = 8190
-    data_folder = "simple"
 
     def setUp(self):
-        project = {"sites": [{"morda_url": "http://127.0.0.1:{}".format(self.web_site_port)}], "disable_search_engine": True}
-        self.env = TTestEnv(self.data_folder, project)
-        self.env.setup_website(self.web_site_port, "simple_website")
+        self.env = TTestEnv(self.web_site_port, "web_sites/simple")
 
     def tearDown(self):
         self.env.tearDown()
@@ -88,12 +83,9 @@ class TestSimple(TestCase):
 
 class TestArchive(TestCase):
     web_site_port = 8191
-    data_folder = "archive"
 
     def setUp(self):
-        project = {"sites": [{"morda_url": "http://127.0.0.1:{}".format(self.web_site_port)}], "disable_search_engine": True}
-        self.env = TTestEnv(self.data_folder, project)
-        self.env.setup_website(self.web_site_port, "web_site_with_archives")
+        self.env = TTestEnv(self.web_site_port, "web_sites/archives")
 
     def tearDown(self):
         self.env.tearDown()
@@ -106,12 +98,9 @@ class TestArchive(TestCase):
 
 class TestWebSiteWithPdf(TestCase):
     web_site_port = 8192
-    data_folder = "pdf"
 
     def setUp(self):
-        project = {"sites": [{"morda_url": "http://127.0.0.1:{}".format(self.web_site_port)}], "disable_search_engine": True}
-        self.env = TTestEnv(self.data_folder, project)
-        self.env.setup_website(self.web_site_port, "web_site_with_pdf")
+        self.env = TTestEnv(self.web_site_port, "web_sites/pdf")
 
     def tearDown(self):
         self.env.tearDown()
@@ -127,9 +116,7 @@ class TestRandomPdf(TestCase):
     data_folder = "random_pdf"
 
     def setUp(self):
-        project = {"sites": [{"morda_url": "http://127.0.0.1:{}".format(self.web_site_port)}], "disable_search_engine": True}
-        self.env = TTestEnv(self.data_folder, project)
-        self.env.setup_website(self.web_site_port, "web_site_random_pdf")
+        self.env = TTestEnv(self.web_site_port, "web_sites/random_pdf")
 
     def tearDown(self):
         self.env.tearDown()
@@ -145,3 +132,33 @@ class TestRandomPdf(TestCase):
         dlrobot.open_project()
         self.assertEqual(len(self.env.get_result_files()), 0)
         self.assertGreater(TDownloadEnv.CONVERSION_CLIENT.all_pdf_size_sent_to_conversion, 0)
+
+
+class TestDownloadWithJs(TestCase):
+    web_site_port = 8197
+
+    def setUp(self):
+        self.env = TTestEnv(self.web_site_port, "web_sites/mkrf2")
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def test_download_with_js(self):
+        dlrobot = TDlrobot(TDlrobot.parse_args(['--clear-cache-folder',  '--project', self.env.project_path]))
+        dlrobot.open_project()
+        self.assertEqual (len(self.env.get_result_files()), 2)
+
+
+class TestWebsiteWithJs(TestCase):
+    web_site_port = 8198
+
+    def setUp(self):
+        self.env = TTestEnv(self.web_site_port, "web_sites/website_with_js")
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def test_download_with_js(self):
+        dlrobot = TDlrobot(TDlrobot.parse_args(['--clear-cache-folder',  '--project', self.env.project_path]))
+        dlrobot.open_project()
+        self.assertEqual (len(self.env.get_result_files()), 1)

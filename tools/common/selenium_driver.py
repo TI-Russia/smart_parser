@@ -35,7 +35,6 @@ class TSeleniumDriver:
         self.download_folder = download_folder
         assert download_folder != "."
         self.headless = headless
-        #self.headless = False
         self.loglevel = loglevel
         self.scroll_to_bottom_and_wait_more_results = scroll_to_bottom_and_wait_more_results
 
@@ -43,6 +42,7 @@ class TSeleniumDriver:
         options = FirefoxOptions()
         options.headless = self.headless
         options.log.level = self.loglevel
+        # see http://kb.mozillazine.org/About:config_Entries for all preferences
         options.set_preference("browser.download.folderList", 2)
         options.set_preference("browser.download.manager.showWhenStarting", False)
         options.set_preference("browser.download.manager.closeWhenDone", True)
@@ -53,9 +53,12 @@ class TSeleniumDriver:
             options.set_preference("browser.download.manager.showAlertOnComplete", False)
             options.set_preference("browser.helperApps.neverAsk.saveToDisk", ALL_CONTENT_TYPES)
             options.set_preference("browser.helperApps.alwaysAsk.force", False)
+            options.set_preference("pdfjs.disabled", True)
+            options.set_preference("plugin.scan.Acrobat", "99.0")
+            options.set_preference("plugin.scan.plid.all", False)
         for retry in range(3):
             try:
-                self.the_driver = webdriver.Firefox(firefox_options=options)
+                self.the_driver = webdriver.Firefox(options=options)
                 self.the_driver.implicitly_wait(10)
                 break
             except (WebDriverException, InvalidSwitchToTargetException) as exp:
@@ -160,7 +163,6 @@ class TSeleniumDriver:
             if self.the_driver.current_url != link_info.source_url:
                 link_info.target_url = self.the_driver.current_url
                 link_info.target_title = self.the_driver.title
-
         if self.the_driver.current_url != save_current_url:
             self.the_driver.back()
         if self.the_driver.current_url != save_current_url:
