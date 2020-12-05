@@ -30,7 +30,11 @@ class TDownloadEnv:
         if os.path.exists(TDownloadEnv.FILE_CACHE_FOLDER):
             shutil.rmtree(TDownloadEnv.FILE_CACHE_FOLDER, ignore_errors=True)
         if not os.path.exists(TDownloadEnv.FILE_CACHE_FOLDER):
-            os.mkdir(TDownloadEnv.FILE_CACHE_FOLDER)
+            try:
+                os.mkdir(TDownloadEnv.FILE_CACHE_FOLDER)
+            except Exception as exp:
+                print("cannot create folder {}, cwd={}".format(TDownloadEnv.FILE_CACHE_FOLDER, os.getcwd()))
+                raise
 
     @staticmethod
     def init_conversion():
@@ -109,8 +113,7 @@ def http_get_request_with_simple_js_redirect(logger, url):
 
 
 # save from selenium
-def save_downloaded_file(filename):
-    logger = logging.getLogger("dlrobot_logger")
+def save_downloaded_file(logger, filename):
     download_folder = TDownloadEnv.get_download_folder()
     if not os.path.exists(download_folder):
         os.makedirs(download_folder)

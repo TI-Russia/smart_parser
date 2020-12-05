@@ -118,4 +118,8 @@ class TestFileCache(TestCase):
                 x = TDownloadedFile(url)
             except RobotHttpException as exp:
                 codes.append(exp.http_code)
-        self.assertSequenceEqual(codes, [404, 404, 404, 429])
+        canon_result = [404, 404, 404, 429]
+        if codes != canon_result:
+            print("test_request_too_many_404 is going to fail")
+            print("TRequestPolicy.ALL_HTTP_REQUEST={}".format(str(TRequestPolicy.ALL_HTTP_REQUEST)))
+        self.assertSequenceEqual(codes, canon_result)

@@ -17,7 +17,7 @@ import threading
 import platform
 
 SCRIPT_DIR_NAME = os.path.realpath(os.path.dirname(__file__))
-DLROBOT_PATH = os.path.realpath(os.path.join(SCRIPT_DIR_NAME, "../dlrobot/dlrobot.py")).replace('\\', '/')
+DLROBOT_PATH = os.path.realpath(os.path.join(SCRIPT_DIR_NAME, "../dl_robot/dlrobot.py")).replace('\\', '/')
 assert os.path.exists(DLROBOT_PATH)
 
 

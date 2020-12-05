@@ -13,7 +13,7 @@ import json
 import logging
 from declarations.input_json import  TDlrobotHumanFile
 from collections import defaultdict
-from dlrobot.scripts.cloud import TSmartParserCacheClient
+from dl_robot.scripts.cloud import TSmartParserCacheClient
 
 
 def setup_logging(logfilename):

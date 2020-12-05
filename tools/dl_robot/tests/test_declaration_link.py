@@ -1,7 +1,7 @@
 from common.download import TDownloadEnv
 from common.robot_step import TRobotStep, TUrlInfo
 from common.robot_project import TRobotProject
-from dlrobot.declaration_link import looks_like_a_declaration_link
+from dl_robot.declaration_link import looks_like_a_declaration_link
 from common.http_request import TRequestPolicy
 
 import http.server

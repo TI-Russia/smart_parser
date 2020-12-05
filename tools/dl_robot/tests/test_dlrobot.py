@@ -1,4 +1,4 @@
-from dlrobot import TDlrobot
+from dl_robot.dlrobot import TDlrobot
 from DeclDocRecognizer.external_convertors import TExternalConverters
 from common.download import TDownloadEnv
 
@@ -143,7 +143,7 @@ class TestDownloadWithJs(TestCase):
     def tearDown(self):
         self.env.tearDown()
 
-    def test_download_with_js(self):
+    def test_download_with_js1(self):
         dlrobot = TDlrobot(TDlrobot.parse_args(['--clear-cache-folder',  '--project', self.env.project_path]))
         dlrobot.open_project()
         self.assertEqual (len(self.env.get_result_files()), 2)
@@ -158,7 +158,7 @@ class TestWebsiteWithJs(TestCase):
     def tearDown(self):
         self.env.tearDown()
 
-    def test_download_with_js(self):
+    def test_download_with_js2(self):
         dlrobot = TDlrobot(TDlrobot.parse_args(['--clear-cache-folder',  '--project', self.env.project_path]))
         dlrobot.open_project()
         self.assertEqual (len(self.env.get_result_files()), 1)

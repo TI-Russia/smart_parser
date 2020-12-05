@@ -70,7 +70,7 @@ class TestSelenium(TestCase):
         self.download_folder = os.path.join(self.data_folder, "download")
         os.mkdir(self.download_folder)
         try:
-            self.driver_holder = TSeleniumDriver(self.logger, headless=False,
+            self.driver_holder = TSeleniumDriver(self.logger, headless=True,
                                             download_folder=self.download_folder,
                                             loglevel="trace",
                                             scroll_to_bottom_and_wait_more_results=True)

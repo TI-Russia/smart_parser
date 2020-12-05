@@ -3,7 +3,7 @@ import sys
 import os
 from common.robot_project import TRobotProject
 from common.download import TDownloadedFile
-from dlrobot.dlrobot import ROBOT_STEPS
+from dl_robot.dlrobot import ROBOT_STEPS
 from common.primitives import strip_html_url
 from DeclDocRecognizer.external_convertors import TExternalConverters
 import shutil
