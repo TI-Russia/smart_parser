@@ -1,0 +1,19 @@
+{
+    "headers": {
+        "Server": "nginx/1.14.1",
+        "Date": "Sat, 05 Dec 2020 10:31:55 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "X-Powered-By": "PHP/7.2.31",
+        "Set-Cookie": "PHPSESSID=6b1b1a9c3882c6d068aaf767df84a05c; path=/; domain=.minpromtorg.gov.ru",
+        "Expires": "Thu, 19 Nov 1981 08:52:00 GMT",
+        "Cache-Control": "no-store, no-cache, must-revalidate",
+        "Pragma": "no-cache",
+        "X-Frame-Options": "SAMEORIGIN"
+    },
+    "charset": "utf-8",
+    "redirected_url": "https://minpromtorg.gov.ru/",
+    "original_url": "minpromtorg.gov.ru",
+    "file_extension": ".html"
+}

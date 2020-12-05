@@ -1,0 +1,380 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	
+	<title>Официальное опубликование правовых актов ∙ Официальный интернет-портал правовой информации</title>
+
+	<link rel="shortcut icon" href="/Content/themes/Main/favicon/favicon.ico" />
+	<link rel="icon" sizes="16x16 32x32 64x64" href="/Content/themes/Main/favicon/favicon.ico" />
+	<link rel="icon" type="image/png" sizes="196x196" href="/Content/themes/Main/favicon/favicon-192.png" />
+	<link rel="icon" type="image/png" sizes="160x160" href="/Content/themes/Main/favicon/favicon-160.png" />
+	<link rel="icon" type="image/png" sizes="96x96" href="/Content/themes/Main/favicon/favicon-96.png" />
+	<link rel="icon" type="image/png" sizes="64x64" href="/Content/themes/Main/favicon/favicon-64.png" />
+	<link rel="icon" type="image/png" sizes="32x32" href="/Content/themes/Main/favicon/favicon-32.png" />
+	<link rel="icon" type="image/png" sizes="16x16" href="/Content/themes/Main/favicon/favicon-16.png" />
+	<link rel="apple-touch-icon-precomposed" href="/Content/themes/Main/favicon/favicon-57.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="60x60" href="/Content/themes/Main/favicon/favicon-60.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="/Content/themes/Main/favicon/favicon-72.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="76x76" href="/Content/themes/Main/favicon/favicon-76.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="/Content/themes/Main/favicon/favicon-114.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="120x120" href="/Content/themes/Main/favicon/favicon-120.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/Content/themes/Main/favicon/favicon-144.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="152x152" href="/Content/themes/Main/favicon/favicon-152.png" />
+	<link rel="apple-touch-icon-precomposed" sizes="180x180" href="/Content/themes/Main/favicon/favicon-180.png" />
+	<link rel="apple-touch-icon" href="/Content/themes/Main/favicon/favicon-57.png" />
+	<link rel="apple-touch-icon" sizes="60x60" href="/Content/themes/Main/favicon/favicon-60.png" />
+	<link rel="apple-touch-icon" sizes="72x72" href="/Content/themes/Main/favicon/favicon-72.png" />
+	<link rel="apple-touch-icon" sizes="76x76" href="/Content/themes/Main/favicon/favicon-76.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="/Content/themes/Main/favicon/favicon-114.png" />
+	<link rel="apple-touch-icon" sizes="120x120" href="/Content/themes/Main/favicon/favicon-120.png" />
+	<link rel="apple-touch-icon" sizes="144x144" href="/Content/themes/Main/favicon/favicon-144.png" />
+	<link rel="apple-touch-icon" sizes="152x152" href="/Content/themes/Main/favicon/favicon-152.png" />
+	<link rel="apple-touch-icon" sizes="180x180" href="/Content/themes/Main/favicon/favicon-180.png" />
+	<meta name="msapplication-TileColor" content="#FFFFFF" />
+	<meta name="msapplication-TileImage" content="/Content/themes/Main/favicon/favicon-144.png" />
+	<meta name="msapplication-config" content="/Content/themes/Main/favicon/browserconfig.xml" />
+	<meta http-equiv='Content-Type' content='Type=text/html; charset=utf-8' />
+	<link href="/Content/themes/Main/jQueryUI/flick/BundlesStyles?v=X3EF4UyHTQK7KG1LLlR58bEf0cK5_2lQ6WyJl74DrfY1" rel="stylesheet"/>
+
+	<link href="/Content/themes/Main/calendar.css" rel="stylesheet"/>
+
+	<link href="/Content/bootstrap.min.css" rel="stylesheet"/>
+
+	<link href="/Content/bootstrap-theme.min.css" rel="stylesheet"/>
+
+	<link href="/Content/css/select2.css" rel="stylesheet"/>
+
+	<link href="/Content/select2-bootstrap.css" rel="stylesheet"/>
+
+	<link href="/Content/themes/Main/jquery.selectBox.css" rel="stylesheet"/>
+
+	<link href="/Content/themes/Main/layout.css" rel="stylesheet"/>
+
+	
+	<link href="/Content/fontawesome-all.min.css" rel="stylesheet"/>
+
+	<link href="/Content/fontawesome.min.css" rel="stylesheet"/>
+
+	<link href="/Content/themes/Main/style.css" rel="stylesheet"/>
+
+
+
+	
+	<link rel="stylesheet" href="/Content/themes/Main/BundlesPrintStyles?v=IZEMdAGRqSgbRc7uARWPhq-G1vb_tW2Mp90XsrBQ1co1" type="text/css" media="print" />
+
+
+
+	<script src="/Scripts/modernizr-2.6.2.js"></script>
+
+	<script src="/Scripts/jquery-1.10.1.js"></script>
+
+	<script src="/Scripts/jquery-migrate-1.2.1.js"></script>
+
+	<script src="/Scripts/jquery-ui-1.10.3.custom.js"></script>
+
+	<script src="/Scripts/calendar.js"></script>
+
+	
+	<script src="/Scripts/content.js"></script>
+
+	<script src="/Scripts/jquery.selectBox.js"></script>
+
+	<script src="/Scripts/jquery.selectboxParam.js"></script>
+
+	<script src="/Scripts/inputmask/jquery.inputmask.js"></script>
+
+	<script src="/Scripts/inputmask/jquery.inputmask.date.extensions.js"></script>
+
+	<script src="/Scripts/i18n/jquery.ui.datepicker-ru.js"></script>
+
+	<script src="/Scripts/script.js"></script>
+
+	<script src="/Scripts/RF.js"></script>
+
+	<script src="/Scripts/raphael.js"></script>
+
+	<script src="/Scripts/select2.js"></script>
+
+
+	
+	
+
+
+
+</head>
+<body>
+    <div class="page-container">
+        <div class="content-wrap">
+
+            <script type="text/javascript">
+                //$(document).ready(function () {
+                //    var navElem = $(".nav_main_item").last();
+                //    var indicatorPosition = navElem.position().left + navElem.width() / 2 - 8;
+                //    $("#menuArrow").css("left", indicatorPosition);
+                //});
+            </script>
+
+            <header>
+                <div class="header">
+                    <div class="header-bg-block"><div class="header-bg"></div></div>
+                    <div class="header-over"></div>
+
+                    <div class="container header-content">
+                        <div class="row">
+                            <div class="col-xs-12 text-right top-header">
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="logo">
+                                    <a href="http://pravo.gov.ru" title="На главную страницу портала" alt="На главную страницу портала"><img class="img-responsive" alt="Официальный интернет-портал правовой информации" src="/Content/themes/Main/images/logo.png" /></a>
+                                </div>
+                                <div class="site-title">
+                                    Официальный интернет-портал правовой информации
+                                </div>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="data-top">
+                                    05 декабря 2020 года
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.container.header-content -->
+                </div><!-- /.header -->
+                <div class="top_menu notforprint">
+                    <div class="container">
+                        <div class="row">
+                            <ul class="pull-left">
+                                <li>
+                                    <a title="На главную страницу портала" class="main-item with-icon" href="http://pravo.gov.ru">
+                                        <i class="icon icon-home"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="main-item without-icon" href="/Search/Period?type=daily" title="05 декабря">СЕГОДНЯ</a>
+                                </li>
+                                <li>
+
+
+                                    <a class="main-item without-icon" href="/Search/Period?type=weekly" title="Текущая неделя, с понедельника по воскресенье - c 30 по 06 декабря">НЕДЕЛЯ</a>
+                                </li>
+                                <li>
+                                    <a class="main-item without-icon" href="/Search/Period?type=monthly" title="Текущий месяц - декабрь">МЕСЯЦ</a>
+                                </li>
+                                <li>
+<a class="main-item without-icon" href="/Search">ПОИСК <i class='fa fa-search faright'></i></a>
+                                </li>
+                                <li>
+<a class="main-item without-icon" href="/Calendar">КАЛЕНДАРЬ ОПУБЛИКОВАНИЯ <i class='far fa-calendar-alt faright'></i></a>
+                                </li>
+                            </ul>
+                            <ul class="pull-right">
+                                <li>
+                                    <a class="main-item with-icon" href="/RssList/Index" title="RSS-лента"><img alt="" src="/Content/themes/Main/images/rss.svg" style="width:16px; height:16px;" /></a>
+                                </li>
+                                <li>
+                                    <a class="main-item with-icon" href="/HtmlConstructor/Index" style="padding-left:5px; padding-right:5px;" title="Html конструктор"><img alt="" src="/Content/themes/Main/images/html-coding.svg" style="width:20px;" /></a>
+                                </li>
+                                <li>
+                                    <a class="main-item with-icon" href="/Help/Index" title="Api интерфейс"><img alt="" src="/Content/themes/Main/images/api.png" style="width:25px;" /></a>
+                                </li>
+                               
+                            </ul>
+                        </div>
+                    </div>
+                </div><!-- /.top_menu -->
+
+            </header>
+
+            <div class="menuLine notforprint">
+                <div class="container">
+                    <div class="row">
+
+                        <!-- -- -->
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="container content-container">
+                <div class="modal notforprint"> 
+                </div>
+                <div>
+                    
+
+
+
+
+<input type="hidden" name="SearchObject.IsShowAppendPageCountList" value="true" />
+<table class="maintable" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td align="center" style="padding: 10px 0">
+            
+            <img src="/Content/themes/Main/images/sub_shapka.jpg" />
+            
+        </td>
+    </tr>
+                <tr>
+                    <td align="center">
+                        <table cellpadding="0" cellspacing="0">
+                            <tr>
+                                        <td valign="top" class="imgcontainer">
+<a class="questNewRight" href="/SignatoryAuthority/president" title="Законы Российской Федерации о поправке к Конституции Российской Федерации,
+Федеральные конституционные законы,
+Кодексы,
+Федеральные законы,
+указы Президента Российской Федерации,
+распоряжения Президента Российской Федерации"><img alt="" height="200px;" src="/File/GetBlockImage?id=e94b6872-dcac-414f-b2f1-a538d13a12a0" width="200px;" /></a>                                        </td>
+                                        <td valign="top" class="imgcontainer">
+                                                    <table border="0" cellpadding="0" cellspacing="0" style="margin-left: auto; margin-right: auto;">
+                                                        <tr>
+                                                            <td colspan="2" style="padding-top: 0">
+                                                                <a class="questNewRight" href="/Gspi/Index" title="Акты палат Федерального Собрания, принятые по вопросам, отнесенным к ведению палат частью 1 статьи 102 и частью 1 статьи 103 Конституции Российской Федерации"><img alt="" height="141px;" src="/File/GetBlockImage?id=a30c9c82-4a21-48ab-a41d-d1891a10962c" width="200px;" /></a>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                                <td>
+<a class="questNewRight" href="/SignatoryAuthority/council_1" title="Постановления Совета Федерации, принятые по вопросам, 
+отнесенным к ведению палаты частью 1 статьи 102 
+Конституции Российской Федерации"><img alt="" height="59px;" src="/File/GetBlockImage?id=950cdcb1-f55d-4e22-9f05-87074fe08efd" width="100px;" /></a>                                                                </td>
+                                                                <td>
+<a class="questNewRight" href="/SignatoryAuthority/council_2" title="Постановления Государственной Думы, принятые по вопросам, 
+отнесенным к ведению палаты частью 1 статьи 103 
+Конституции Российской Федерации"><img alt="" height="59px;" src="/File/GetBlockImage?id=0dbe1bc1-0e40-446a-a3ba-1ccabe18ca5e" width="100px;" /></a>                                                                </td>
+                                                        </tr>
+                                                    </table>
+                                        </td>
+                                        <td valign="top" class="imgcontainer">
+<a class="questNewRight" href="/SignatoryAuthority/government" title="Правовые акты Правительства Российской Федерации"><img alt="" height="200px;" src="/File/GetBlockImage?id=19bb10cd-32f3-4632-8303-c94dd5f45359" width="200px;" /></a>                                        </td>
+                                        <td valign="top" class="imgcontainer">
+<a class="questNewRight" href="/SignatoryAuthorityBlock/federal_authorities" title="Правовые акты федеральных органов исполнительной власти 
+и федеральных государственных органов Российской Федерации"><img alt="" height="200px;" src="/File/GetBlockImage?id=28bdeebd-e2cf-45ce-8d2a-2bc1aaadd7fc" width="200px;" /></a>                                        </td>
+
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top: 10px;"></td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <table cellpadding="0" cellspacing="0">
+                            <tr>
+
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top: 10px;"></td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <table cellpadding="0" cellspacing="0">
+                            <tr>
+                                        <td valign="top" class="imgcontainer">
+<a class="questNewRight" href="/SignatoryAuthority/court" title="Постановления Конституционного Суда Российской Федерации, 
+Определения Конституционного Суда Российской Федерации 
+и иные решения Конституционного Суда Российской Федерации"><img alt="" height="200px;" src="/File/GetBlockImage?id=b85249b6-f6e6-4562-a783-90ea989af2db" width="200px;" /></a>                                        </td>
+                                        <td valign="top" class="imgcontainer">
+<a class="questNewRight" href="/SignatoryAuthorityBlock/subjects" title="Законы и иные правовые акты субъектов Российской Федерации"><img alt="" height="200px;" src="/File/GetBlockImage?id=022fd55f-9f60-481e-a636-56d74b9ca759" width="200px;" /></a>                                        </td>
+                                        <td valign="top" class="imgcontainer">
+<a class="questNewRight" href="/SignatoryAuthority/international" title="Международные договоры, вступившие в силу для Российской Федерации, 
+Временно применяемые международные договоры Российской Федерации"><img alt="" height="200px;" src="/File/GetBlockImage?id=c79f71a1-c367-4e9d-a8b2-046cc8a1673f" width="200px;" /></a>                                        </td>
+                                        <td valign="top" class="imgcontainer">
+<a class="questNewRight" href="/SignatoryAuthority/un_securitycouncil" title="Резолюции Совета Безопасности Организации Объединённых Наций"><img alt="" height="200px;" src="/File/GetBlockImage?id=f3ddeeb2-0bb5-4f28-989b-e0e8dead6e63" width="200px;" /></a>                                        </td>
+
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top: 10px;"></td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <table cellpadding="0" cellspacing="0">
+                            <tr>
+
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding-top: 10px;"></td>
+                </tr>
+
+</table>
+
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div class="copy-container notforprint">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-8">
+                            <div class="bottom-certificate">
+                                <div class="row">
+                                    <span>
+                                        <a href="http://pravo.gov.ru/upload/medialibrary/aea/aea92c7a1a0cb2c5e8c2104cf6aceaff.jpg" target="_blank">Свидетельство о&nbsp;регистрации СМИ №&nbsp;ФС77-47467</a> &nbsp;&nbsp;&nbsp;
+                                    </span>
+                                    <span>
+                                        <a href="http://pravo.gov.ru/upload/medialibrary/eaf/eafafedba15eba345ea36007b7bbd994.jpg" target="_blank">Электронный паспорт ФГИС №&nbsp;ФС77110096</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+
+                            <div class="soc-bottom">
+                                <div class="soc-block soc-top">
+                                    <a title="Карта сайта" class="smap" href="http://pravo.gov.ru/karta-sayta/"></a>
+                                    <div class="line"></div>
+                                        <!-- Yandex.Metrika counter -->
+                                        <script type="text/javascript" src="/Scripts/counter-yandex.js"></script>
+                                        <noscript><div><img src="https://mc.yandex.ru/watch/25702331" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+                                        <!-- /Yandex.Metrika counter -->
+                                    <!--LiveInternet counter-->
+                                    <script type="text/javascript" src="/Scripts/counter-liveinternet.js"></script>
+                                    <!--/LiveInternet-->
+                                </div>
+
+                                <div class="lk-link">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#changeSiteVersion').click(function () {
+                    $.ajax({
+                        url: '/GSPI/ChangeSiteDisplayMode',
+                        cache: false,
+                        type: 'POST',
+                        data: { 'displayMode': 'mobile' },
+                        success: function (data) {
+                            var cururl = location.href;
+
+                            //As an HTTP redirect (back button will not work )
+                            window.location.replace(cururl);
+
+                            //like if you click on a link (it will be saved in the session history,
+                            //so the back button will work as expected)
+                            window.location.href = cururl;
+                        }
+                    });
+                });
+            });
+        </script>
+
+    </div>
+</body>
+</html>

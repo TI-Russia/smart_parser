@@ -1,0 +1,21 @@
+{
+    "headers": {
+        "Server": "nginx/1.18.0",
+        "Date": "Sat, 05 Dec 2020 10:31:56 GMT",
+        "Content-Type": "text/html; charset=UTF-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "X-Powered-By": "PHP/7.3.21",
+        "P3P": "policyref=\"/bitrix/p3p.xml\", CP=\"NON DSP COR CUR ADM DEV PSA PSD OUR UNR BUS UNI COM NAV INT DEM STA\"",
+        "X-Powered-CMS": "Bitrix Site Manager (d5c485cbf3b9fa72187b17d3c3146893)",
+        "Set-Cookie": "BITRIX_SM_LAST_VISIT=05.12.2020+13%3A31%3A55; expires=Tue, 30-Nov-2021 10:31:55 GMT; Max-Age=31103999; path=/",
+        "Expires": "Thu, 19 Nov 1981 08:52:00 GMT",
+        "Cache-Control": "no-store, no-cache, must-revalidate",
+        "Pragma": "no-cache",
+        "X-Frame-Options": "SAMEORIGIN"
+    },
+    "charset": "utf-8",
+    "redirected_url": "http://pravo.gov.ru",
+    "original_url": "pravo.gov.ru",
+    "file_extension": ".html"
+}

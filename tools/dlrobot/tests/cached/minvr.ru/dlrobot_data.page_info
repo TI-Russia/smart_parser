@@ -1,0 +1,27 @@
+{
+    "headers": {
+        "Server": "nginx/1.12.0",
+        "Date": "Sat, 05 Dec 2020 10:32:41 GMT",
+        "Content-Type": "text/html; charset=UTF-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "Vary": "HTTPS",
+        "X-Powered-By": "PHP/7.0.19",
+        "P3P": "policyref=\"/bitrix/p3p.xml\", CP=\"NON DSP COR CUR ADM DEV PSA PSD OUR UNR BUS UNI COM NAV INT DEM STA\"",
+        "X-Powered-CMS": "Bitrix Site Manager (0e863562a7ee806ef746d8112ec306f3)",
+        "Set-Cookie": "PHPSESSID=aiouu9obbvb8918fdrdlltqm14; path=/; HttpOnly",
+        "Expires": "Thu, 19 Nov 1981 08:52:00 GMT",
+        "Cache-Control": "no-store, no-cache, must-revalidate",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-XSS-Protection": "1; mode=block",
+        "Referrer-Policy": "origin",
+        "Feature-Policy": "accelerometer 'none';geolocation 'none';microphone 'none';camera 'none';magnetometer 'none';gyroscope 'none';usb 'none';payment 'none';"
+    },
+    "charset": "utf-8",
+    "redirected_url": "https://minvr.gov.ru/",
+    "original_url": "minvr.ru",
+    "file_extension": ".html"
+}

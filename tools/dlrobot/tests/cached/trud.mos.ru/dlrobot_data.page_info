@@ -1,0 +1,17 @@
+{
+    "headers": {
+        "Server": "nginx",
+        "Date": "Sat, 05 Dec 2020 10:32:06 GMT",
+        "Content-Type": "text/html; charset=UTF-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "Vary": "Accept-Encoding",
+        "Set-Cookie": "session-cookie=164dcb70b47352ec3d60a55f6940ac7213aff9af4843af87dd85e619175c19863c39b3b548b98aa71489391e21b08a01; Max-Age=86400; Path=/",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff"
+    },
+    "charset": "utf-8",
+    "redirected_url": "https://www.mos.ru/dszn/",
+    "original_url": "trud.mos.ru",
+    "file_extension": ".html"
+}

@@ -1,0 +1,18 @@
+{
+    "headers": {
+        "Cache-Control": "private",
+        "Content-Type": "text/html",
+        "Server": "Microsoft-IIS/7.5",
+        "X-AspNetMvc-Version": "5.2",
+        "X-AspNet-Version": "4.0.30319",
+        "Set-Cookie": "QuartaEsiaSession=33942248-62e1-4a9b-996a-7a2c1df9cd6b; path=/; secure; HttpOnly",
+        "X-Powered-By": "ASP.NET",
+        "Date": "Sat, 05 Dec 2020 10:32:44 GMT",
+        "Connection": "close",
+        "Content-Length": "1101"
+    },
+    "charset": null,
+    "redirected_url": "https://gossluzhba.gov.ru/",
+    "original_url": "gossluzhba.gov.ru",
+    "file_extension": ".html"
+}

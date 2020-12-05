@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru" xml:lang="ru">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="google" content="notranslate" />
+        <meta http-equiv="Content-Language" content="ru" />
+        <meta http-equiv="Cache-control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" value="0" />
+
+        <title>Госслужба</title>
+        <base href="/web-public/" />
+
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="stylesheet" href="styles.f5676cc0f3c7089875fd.css"></head>
+
+    <body>
+        <app-root></app-root>
+    <script src="runtime.e3788c6dbf1de0f0daab.js" defer></script><script src="polyfills-es5.a1d6e1e8cc208fed27fe.js" nomodule defer></script><script src="polyfills.991e4e229600aba14487.js" defer></script><script src="scripts.b7bf95c1096bdbb0b2f5.js" defer></script><script src="main.0c2720547a885959db32.js" defer></script></body>
+</html>

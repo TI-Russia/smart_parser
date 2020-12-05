@@ -1,0 +1,752 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="yandex-verification" content="c8739f3ddbaacd97" />
+    <!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+   (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+   m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+   (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+   ym(52345183, "init", {
+        id:52345183,
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true
+   });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/52345183" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter --> 
+ <meta name="yandex-verification" content="c8739f3ddbaacd97" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta charset="utf-8">
+<title>Управление Россельхознадзора по Оренбургской области</title>
+<meta name="description" content="">
+<meta name="keywords" content="">
+<meta name="generator" content="DataLife Engine (http://dle-news.ru)">
+<link rel="search" type="application/opensearchdescription+xml" href="https://oren-rshn.ru/index.php?do=opensearch" title="Управление Россельхознадзора по Оренбургской области">
+<link rel="canonical" href="https://oren-rshn.ru/">
+<link rel="alternate" type="application/rss+xml" title="Управление Россельхознадзора по Оренбургской области" href="https://oren-rshn.ru/rss.xml">
+<link href="/engine/editor/css/default.css?v=24" rel="stylesheet" type="text/css">
+<script src="/engine/classes/js/jquery.js?v=24"></script>
+<script src="/engine/classes/js/jqueryui.js?v=24" defer></script>
+<script src="/engine/classes/js/dle_js.js?v=24" defer></script>
+ <link type="text/css" rel="StyleSheet" href="/templates/Default/css/style.css" />
+ <link type="text/css" rel="StyleSheet" href="/templates/Default/css/engine.css" />
+ <link type="text/css" rel="StyleSheet" href="/templates/Default/css/responsive.css" />
+        <!-- DLE UniForm -->
+<link rel="stylesheet" href="/engine/classes/min/index.php?charset=utf-8&amp;f=/templates/Default/uniform/css/uniform.css&amp;01" />
+<script type="text/javascript" src="/engine/classes/min/index.php?charset=utf-8&amp;f=/templates/Default/uniform/js/jquery.magnificpopup.min.js,/templates/Default/uniform/js/jquery.ladda.min.js,/templates/Default/uniform/js/jquery.form.min.js,/templates/Default/uniform/js/uniform.js&amp;01"></script>
+<!-- /DLE UniForm -->                
+</head>
+<body> 
+    <script>
+<!--
+var dle_root       = '/';
+var dle_admin      = '';
+var dle_login_hash = '32a6bd295d2f2a8c18d46ef9ec9f909dc1ab90bc';
+var dle_group      = 5;
+var dle_skin       = 'Default';
+var dle_wysiwyg    = '1';
+var quick_wysiwyg  = '1';
+var dle_act_lang   = ["Да", "Нет", "Ввод", "Отмена", "Сохранить", "Удалить", "Загрузка. Пожалуйста, подождите..."];
+var menu_short     = 'Быстрое редактирование';
+var menu_full      = 'Полное редактирование';
+var menu_profile   = 'Просмотр профиля';
+var menu_send      = 'Отправить сообщение';
+var menu_uedit     = 'Админцентр';
+var dle_info       = 'Информация';
+var dle_confirm    = 'Подтверждение';
+var dle_prompt     = 'Ввод информации';
+var dle_req_field  = 'Заполните все необходимые поля';
+var dle_del_agree  = 'Вы действительно хотите удалить? Данное действие невозможно будет отменить';
+var dle_spam_agree = 'Вы действительно хотите отметить пользователя как спамера? Это приведёт к удалению всех его комментариев';
+var dle_complaint  = 'Укажите текст Вашей жалобы для администрации:';
+var dle_big_text   = 'Выделен слишком большой участок текста.';
+var dle_orfo_title = 'Укажите комментарий для администрации к найденной ошибке на странице';
+var dle_p_send     = 'Отправить';
+var dle_p_send_ok  = 'Уведомление успешно отправлено';
+var dle_save_ok    = 'Изменения успешно сохранены. Обновить страницу?';
+var dle_reply_title= 'Ответ на комментарий';
+var dle_tree_comm  = '0';
+var dle_del_news   = 'Удалить статью';
+var dle_sub_agree  = 'Вы действительно хотите подписаться на комментарии к данной публикации?';
+var allow_dle_delete_news   = false;
+var dle_search_delay   = false;
+var dle_search_value   = '';
+jQuery(function($){
+FastSearch();
+});
+//-->
+</script>
+    <!-- версия для слабовидящих -->
+<style>
+	 #hpvgd,.h-mdiv,.h-mdiv2,.h-ldiv,.h-rdiv {background:#EAEAEA; color:#6D6D6D;}
+	 #hpvgd {width:100%; z-index:100; width:100%; border-bottom:2px solid rgb(230,230,230);}
+	 .h-mdiv {display:none; position:relative; margin:auto; text-align:center;}
+	 .h-mdiv2 {display:none; position:fixed; margin:auto; text-align:center; width:400px; height:200px;}
+	 .h-ldiv {float:left; padding:7px 10px 7px 0px;}
+	 .h-rdiv {position:absolute; top:7px; right:0px; text-align:right;}
+	 .h-ni {display:none !important;}
+	 a.hcmaf {color:red; margin-left:5px; font-size:20px; font-weight:bold;}
+	 a.h-anl {color:#2a72cc;}
+	 a.h-al {color:#ED664B;}
+	 .h-fi {font-weight:bold; border-radius:50%; padding:0px 8px; margin-right:5px; font-size:19px;}
+	 .h-background-1 {color:#fff !important; background:#000 !important;}
+	 .h-background-2 {color:#000 !important; background:#fff !important;}
+</style>
+    <!--<script src="/templates/Default/js/uhpv-full.min.js"></script>-->
+    <script src="/templates/Default/js/uhpv-full.min.js"></script>
+<script>
+	var 	uhe 	= 2,
+		lng 	= 'ru',
+		has 	= 0,
+		imgs 	= 1,
+		bg 	= 1,
+		hwidth 	= 0,
+		bgs 	= ['1','2'],
+		fonts 	= ['19','21','23'];
+	$(document).ready(function(){uhpv(has)});
+</script>
+    <!-- версия для слабовидящих -->
+<script>
+<!--
+var dle_root       = '/';
+var dle_admin      = '';
+var dle_login_hash = '32a6bd295d2f2a8c18d46ef9ec9f909dc1ab90bc';
+var dle_group      = 5;
+var dle_skin       = 'Default';
+var dle_wysiwyg    = '1';
+var quick_wysiwyg  = '1';
+var dle_act_lang   = ["Да", "Нет", "Ввод", "Отмена", "Сохранить", "Удалить", "Загрузка. Пожалуйста, подождите..."];
+var menu_short     = 'Быстрое редактирование';
+var menu_full      = 'Полное редактирование';
+var menu_profile   = 'Просмотр профиля';
+var menu_send      = 'Отправить сообщение';
+var menu_uedit     = 'Админцентр';
+var dle_info       = 'Информация';
+var dle_confirm    = 'Подтверждение';
+var dle_prompt     = 'Ввод информации';
+var dle_req_field  = 'Заполните все необходимые поля';
+var dle_del_agree  = 'Вы действительно хотите удалить? Данное действие невозможно будет отменить';
+var dle_spam_agree = 'Вы действительно хотите отметить пользователя как спамера? Это приведёт к удалению всех его комментариев';
+var dle_complaint  = 'Укажите текст Вашей жалобы для администрации:';
+var dle_big_text   = 'Выделен слишком большой участок текста.';
+var dle_orfo_title = 'Укажите комментарий для администрации к найденной ошибке на странице';
+var dle_p_send     = 'Отправить';
+var dle_p_send_ok  = 'Уведомление успешно отправлено';
+var dle_save_ok    = 'Изменения успешно сохранены. Обновить страницу?';
+var dle_reply_title= 'Ответ на комментарий';
+var dle_tree_comm  = '0';
+var dle_del_news   = 'Удалить статью';
+var dle_sub_agree  = 'Вы действительно хотите подписаться на комментарии к данной публикации?';
+var allow_dle_delete_news   = false;
+var dle_search_delay   = false;
+var dle_search_value   = '';
+jQuery(function($){
+FastSearch();
+});
+//-->
+</script>
+<header>
+   <div id="hbg">
+     	<div id="header">
+        	<a href="#" class="logo"></a>
+        <div class="header__title">
+			Россельхознадзор
+			<span class="header__subtitle">Управление Федеральной службы по ветеринарному и фитосанитарному надзору по Оренбургской области</span>
+		</div>
+		<div class="searchForm">
+			<form onsubmit="this.sfSbm.disabled=true" action="" name="searchform" method="post" style="margin: auto">
+			    <input type="hidden" name="do" value="search" />
+			    <input type="hidden" name="subaction" value="search" />
+				<div align="center" class="schQuery"><input type="text" id="story" name="story" maxlength="20" size="10" placeholder="Поиск по сайту..." class="queryField" /></div>
+				<div align="center" class="schBtn"><button type="submit" class="searchSbmFl" name="sfSbm"><i class="fa fa-search"></i></button></div>
+			   </form>            
+	        </div>  <!--specialButton-->
+         		<div id="specialButton" style="float: right; right 300px; bottom: 0"><a href="javascript://" onclick="uvcl()"><b><img src="/uploads/vision.png" width="30" height="25" > Версия для слабовидящих</b></a></div>
+            <!--<div id="uhvb" style="float: right ; right 300px; bottom: 0"><a href="javascript://" onclick="uvcl()"><b><img src="/uploads/vision.png" width="30" height="25" > Версия для слабовидящих</b></a></div>-->
+               <!--<div id="uhvb" style="float: right ; right 300px; bottom: 0"><a href="javascript://" onclick="uvcl()"><b><img src="/templates/Default/images/vision.png">Версия для слабовидящих</b></a></div>-->
+   		</div>
+    <div id="headmenu" class="headmenu">
+	    <button class="nav_btn"><i class="fa fa-navicon"></i><span>Меню</span></button>
+		<a href="/" class="homelink"><i class="fa fa-home"></i></a>
+			<ul class="main_nav">
+				<li class="uWithSubmenu">
+                    <a href=""><span>Об Управлении</span></a>
+					<ul>
+					<li><a href="ob-upravlenii/4-ob-upravlenii.html"><span>Положение</span></a>
+					<li><a href="rukovodstvo"><span>Руководство</span></a>
+                    <li><a href="/uploads/image/struktura2020.jpg"><span>Структура</span></a>
+                    <li><a href="otdely"><span>Отделы</span></a>
+                    <li><a href="/22-kontaktnaya-informaciya.html"><span>Контакты</span></a>
+                    <ul>
+                    </ul>
+					</ul>
+					</li>
+                    
+				<li><a href="26-normativnaya-dokumentaciya.html"><span>Нормативные документы</span></a></li>
+                
+				<li class="uWithSubmenu">
+                    <a href="#"><span>К сведению граждан</span></a>
+					<ul>
+					<li><a href="23-poryadok-rassmotreniya-predlozheniy-zayavleniy-i-zhalob.html"><span>Порядок рассмотрения предложений, заявлений и жалоб</span></a>
+					<li><a href="/elpriem.html" >Электронная приёмная</a></li>
+                    <li><a href="/grafik-priema-grazhdan-rukovodstvom-upravlenija-rosselhoznadzora-po-orenburgskoj-oblasti.html"><span>График приема граждан</span></a>
+                    <li><a href="24-vopros-otvet.html"><span>Вопрос-Ответ</span></a>
+                    <li><a href="25-anketirovanie.html"><span>Анкетирование</span></a>
+                                     
+					</ul>
+					</li>
+                <li><a href=""><span>Телефон горячей линии</span></a>
+                <ul>
+                <li><a href="#"><span>8 (3532) 75-59-75</span></a>  
+              
+                <li><a href="#"><span>8 (3532) 92-73-00</span></a>  
+                </ul>
+                    </li>
+                <!--<li><a href="http://www.56rshn.ru"><b><span>     Старая версия сайта</span></b></a>
+                    </ul>
+                    </li>-->
+               <!-- <li class="uWithSubmenu">
+					<a href="#"><span>Афиша</span></a>
+					<ul>
+						<li><a href="#"><span>Концерты и  театры</span></a></li>
+						<li><a href="#"><span>Клубы и кино</span></a></li>
+					</ul>
+				</li>
+				<li class="uWithSubmenu">
+					<a href="#"><span>Пункт</span></a>
+					<ul>
+						<li><a href="/punkt1.html"><span>Подпункт1</span></a></li>
+						<li><a href="/achs.html"><span>АЧС</span></a></li>
+						<li><a href="#"><span>Подпункт3</span></a></li>
+					</ul>
+				</li>
+				<li><a href="#"><span>Авто</span></a></li>
+				
+				<li class="uWithSubmenu">
+					<a href="#"><span>Еще +</span></a>
+					<ul>
+						<li><a href="#"><span>Комментарии</span></a></li>
+						<li><a href="#"><span>Развлечения</span></a></li>
+						<li><a href="#"><span>Гороскоп</span></a></li>
+						<li><a href="#"><span>Справочники</span></a></li>
+					</ul>
+				</li>-->
+			</ul>
+	</div>
+	
+    
+   
+</div>
+
+   <!-- <script type="text/javascript" src="/templates/Default/js/snow.js"></script> --> 
+</header>
+     <div id="maincont">
+	<div id="sidebar-l">
+	<div class="left-block">
+		<div class="btitle-l"></div>
+		<div class="bcontmenucont">
+			<div id="uNMenuDiv1" class="uMenuV">
+				<ul class="uMenuRoot">
+
+
+				<li><a class=" uMenuItemA" href="/"><span>Главная</span></a></li>  
+                <!-- <li class="uWithSubmenu">
+                    <a href="#"><span>Об Управлении</span></a>
+					<ul>
+					<li><a href="#"><span>Положение</span></a>
+					<li><a href="#"><span>Руководство</span></a>
+                    <li><a href="#"><span>Структура</span></a>
+                    <li><a href="#"><span>Отделы</span></a>
+                    <ul>
+                    </ul>
+					</ul>
+					</li>
+                   -->
+                    
+               <li class="uWithSubmenu">
+                    <a href="/glavnaya"><span>Новости</span></a>
+					<ul>
+					<li><a href="/sobytija/"><span>События</span></a>
+                    <li><a href="/gosudarstvennyj-zemelnyj-nadzor/"><span>Государственный земельный надзор</span></a>
+                    <li><a href="/lekarstvennye-preparaty/"><span>Государственный контроль (надзор) в сфере обращения лекарственных средств для ветеринарного применения</span></a>
+                        <ul>
+                    </ul>
+					</ul>
+					</li>
+				
+
+				<li class="uWithSubmenu">
+                    <a href="#"><span>Пресс-служба</span></a>
+					<ul>
+					<li><a href="/video-arhiv/"><span>Работа со сми</span></a>
+					<li><a href="/fotografii/"><span>Фотоархив</span></a>
+					<li><a href="/kontakty-smi.html"><span>Контакты</span></a>
+					<li><a href="/video-rosselhoznadzora/"><span>Фильмы Россельхознадзора</span></a>
+                    <li><a href="https://www.youtube.com/channel/UCchXim1gS_fmPjuUe2d7V8g/videos"><span>Видеопидия КВО</span></a>
+                   
+                    <ul>
+                    </ul>
+					</ul>
+					</li>
+
+
+				
+					
+				<li><a href="/otkrytye-dannye.html"><span>Открытые данные</span></a></li>
+						
+                <li><a href="info/38-otkrytaja-sluzhba.html"><span>Открытая служба</span></a></li>
+
+				<li><a href="/publichnye-obsuzhdenija.html"><span>Публичные обсуждения</span></a></li>
+
+				<li><a href="info/39-obschestvennyj-sovet.html"><span>Общественный совет</span></a></li>
+
+			
+                 
+                <li><a href="/poleznaja-informacija.html"><span>Полезная информация</span></a></li>
+
+				<li><a href="/vjed/"><span>Информация для участников внешнеэкономической деятельности</span></a></li>
+				
+				<li><a href="/fitosanitarnye-kontrolnye-posty.html"><span>Фитосанитарные контрольные посты</span></a></li>
+
+				<li><a href="/evrazjes.html"><span>Евразийская Экономическая Комиссия</span></a></li>
+                    
+                    	<li><a href="info/54-konkursy.html"><span>Государственная служба</span></a></li>
+
+               	<li><a href="53-protivodejstvie-korrupcii.html"><span>Противодействие коррупции</span></a></li>
+
+               	<li><a href="info/42-okazanie-gosuslug.html"><span>Оказание госуслуг</span></a></li>
+               	
+               	<li class="uWithSubmenu">
+                    <a href="info/41-licenzirovanie-i-registracija.html"><span>Лицензирование и регистрация</span></a>
+					<ul>
+					<li><a href="/subektam-obraschenija-lekarstvennyh-sredstv-dlja-veterinarnogo-primenenija.html"><span>Субъектам обращения лекарственных средств для ветеринарного применения</span></a>
+                    <ul>
+                    </ul>
+					</ul>
+					</li>
+                <li><a href="/informacija-o-proverkah-dejatelnosti-organov-ispolnitelnoj-vlasti-subektov-rossijskoj-federacii.html"><span>Информация о проверках  деятельности органов исполнительной власти субъектов Российской Федерации и органов местного самоуправления, а также направленных им предписаниях</span></a></li>
+
+               	<li><a href="info/40-oplata-shtrafov.html"><span>Оплата штрафов</span></a></li>
+
+               	<li><a href="http://www.vetrf.ru"><span>Ветис</span></a></li>
+                    <li><a href="/gosudarstvennye-zakupki.html"><span>Госзакупки</span></a></li>
+                    	<!--<li><a href="#"><span>Конкурсы - ?</span></a></li>
+             
+                <li class="uWithSubmenu">
+					<a href="#"><span>Городские СМИ</span></a>
+					<ul>
+					<li><a href="#"><span>Подменю 1</span></a></li>
+					<li><a href="#"><span>Подменю 2</span></a></li>
+					<li><a href="#"><span>Подменю 3</span></a></li>
+					</ul>
+					</li>
+				-->
+					
+					
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="left-block">
+		 <a href="https://www.gosuslugi.ru/structure/10000376099" target="_blank"><img src="/uploads/banner_gos_uslugi.jpg" /></a> <!-- баннер -->
+        <a href="http://pravo.gov.ru" target="_blank"><img src="/uploads/banner_pravo.jpg" /></a>
+        <a href="http://контроль-надзор.рф" target="_blank"><img src="/uploads/banner_control.jpg" /></a>
+        <a href="http://pfo.gov.ru//" target="_blank"><img src="/uploads/banner_ofpredst.jpg" /></a>
+        <a href="http://www.fsvps.ru//" target="_blank"><img src="/uploads/banner_rshn.jpg" /></a>
+        <a href="http://mcx.ru//" target="_blank"><img src="/uploads/banner_mcx.jpg" /></a>
+        <a href="http://mcx.orb.ru//" target="_blank"><img src="/uploads/banner_oren_mcx.jpg" /></a>
+        <a href="http://oren-refcentr.ru//" target="_blank"><img src="/uploads/banner_oren_refc.jpg" /></a>
+        
+    </div>
+	 <!-- <div class="left-block">
+		<div class="btitlecomms">Комментарии</div>
+		File engine/modules/icomm.php not found.
+	</div>
+	<div class="left-block">
+		<div class="btitle-l">Архив</div>
+		<div class="bcont-l">
+			<div align="center"><a class="archives" href="https://oren-rshn.ru/2020/12/"><b>Декабрь 2020 (11)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2020/11/"><b>Ноябрь 2020 (60)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2020/10/"><b>Октябрь 2020 (56)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2020/09/"><b>Сентябрь 2020 (61)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2020/08/"><b>Август 2020 (68)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2020/07/"><b>Июль 2020 (62)</b></a><br /><div id="dle_news_archive" style="display:none;"><a class="archives" href="https://oren-rshn.ru/2020/06/"><b>Июнь 2020 (54)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2020/05/"><b>Май 2020 (51)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2020/04/"><b>Апрель 2020 (71)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2020/03/"><b>Март 2020 (55)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2020/02/"><b>Февраль 2020 (66)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2020/01/"><b>Январь 2020 (60)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2019/12/"><b>Декабрь 2019 (63)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2019/11/"><b>Ноябрь 2019 (80)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2019/10/"><b>Октябрь 2019 (74)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2019/09/"><b>Сентябрь 2019 (79)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2019/08/"><b>Август 2019 (95)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2019/07/"><b>Июль 2019 (82)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2019/06/"><b>Июнь 2019 (67)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2019/05/"><b>Май 2019 (76)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2019/04/"><b>Апрель 2019 (99)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2019/03/"><b>Март 2019 (93)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2019/02/"><b>Февраль 2019 (73)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2019/01/"><b>Январь 2019 (60)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2018/12/"><b>Декабрь 2018 (80)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2018/11/"><b>Ноябрь 2018 (82)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2018/10/"><b>Октябрь 2018 (16)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2018/09/"><b>Сентябрь 2018 (1)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2018/08/"><b>Август 2018 (2)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2018/07/"><b>Июль 2018 (13)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2018/06/"><b>Июнь 2018 (4)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2018/05/"><b>Май 2018 (15)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2018/04/"><b>Апрель 2018 (16)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2018/02/"><b>Февраль 2018 (1)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2017/12/"><b>Декабрь 2017 (3)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2017/11/"><b>Ноябрь 2017 (1)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2017/10/"><b>Октябрь 2017 (3)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2017/09/"><b>Сентябрь 2017 (1)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2017/08/"><b>Август 2017 (1)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2017/07/"><b>Июль 2017 (1)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2017/03/"><b>Март 2017 (5)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2017/02/"><b>Февраль 2017 (8)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2016/11/"><b>Ноябрь 2016 (13)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2016/07/"><b>Июль 2016 (4)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2016/06/"><b>Июнь 2016 (8)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2016/05/"><b>Май 2016 (1)</b></a><br /><a class="archives" href="https://oren-rshn.ru/2016/02/"><b>Февраль 2016 (11)</b></a><br /></div><div id="dle_news_archive_link" ><br /><a class="archives" onclick="$('#dle_news_archive').toggle('blind',{},700); return false;" href="#">Показать / скрыть весь архив</a></div></div> 
+		</div> 
+	</div>-->
+</div> <!-- Подключаем левую колонку -->
+	
+    	<div id="content"> <!-- Центральная колонка -->
+           		         <!--<span id="uhvb" style="display:none;"><a href="javascript://" onclick="uvcl()"><b><img src="/templates/Default/images/vision.png">  Версия для слабовидящих</b></a></span>-->
+            <p>
+    <h2  {font:25pt sans-serif; }  style="color: #4c8c43; margin-top: 35px; margin-bottom: 10px;">Об Управлении </h2>
+    Управление Россельхознадзора по Оренбургской области
+    является территориальным органом Россельхознадзора и осуществляет функции по 
+    контролю и надзору в сфере ветеринарии, обращения лекарственных средств для 
+    ветеринарного применения, карантина и защиты растений, безопасного обращения
+    с пестицидами и агрохимикатами при осуществлении государственного ветеринарного
+    надзора, обеспечения плодородия почв, обеспечения качества и безопасности зерна,
+    крупы, комбикормов и компонентов для их производства, побочных продуктов переработки
+    зерна, семеноводства сельскохозяйственных растений, земельных отношений (в части,
+    касающейся земель сельскохозяйственного назначения), функции по защите населения от
+    болезней, общих для человека и животных, а также для реализации отдельных установленных
+    законодательными и иными нормативными правовыми актами Российской Федерации задач и
+    функций Россельхознадзора. 
+    </p>
+		
+		<div class="intro">
+	<!-- <div class="intro__title">Актуально</div> -->
+
+	<section class="recent">
+		<div class="recentInfo recentInfo--1">
+			<a href="/achs.html">
+				<div class="recentInfo-block">
+					<img src="uploads/achs.png" width="70px" height="70px">
+					<p>Внимание АЧС</p>
+				</div>
+			</a>
+					</div>
+		<div class="recentInfo">
+			<a href="29-elektronnaya-veterinarnaya-sertifikaciya.html">
+				<div class="recentInfo-block">
+					<img src="uploads/sertific2.png" width="70px" height="70px">
+					<p>Электронная ветеринарная сертификация ФГИС МЕРКУРИЙ </p>
+				</div>
+			</a>
+                    </div> 
+        </section>
+    
+       <section class="recent"> 
+       <div class="recentInfo recentInfo--1">
+			<a href="/profilaktika-meroprijatij.html">
+				<div class="recentInfo-block">
+					<img src="uploads/file-warning.png" width="70px" height="70px">
+					<p>Профилактика мероприятий направленных на предупреждение нарушений обязательных требований</p>
+				</div>
+			</a>
+           </div>
+           <div class="recentInfo">
+			<a href="http://izv.fitorf.ru">
+				<div class="recentInfo-block">
+					<img src="uploads/izveschenie.png" width="70px" height="70px">
+					<p>Извещение о доставке подкарантинной продукции</p>
+                </div>
+			</a>
+            </div>
+           	</section>
+    <section class="recent"> 
+       <div class="recentInfo recentInfo--1">
+			<a href="/ostorozhno.html">
+				<div class="recentInfo-block">
+					<img src="uploads/klop.png" width="70px" height="70px">
+					<p>Осторожно!<br>
+                    1.Коричнево-мраморный клоп
+                    2.Многоядная муха - горбатка</p>
+				</div>
+			</a>
+           </div>
+           <div class="recentInfo">
+			<a href="/gorjachaja-linija-zerno.html">
+				<div class="recentInfo-block">
+					<img src="uploads/zernologo.png" width="70px" height="70px">
+					<p>Горячая линия зерно</p>
+                </div>
+			</a>
+            </div>
+           	</section>
+    <!--<section class="recent">--> 
+       <div class="recentInfo recentInfo--1">
+			<a href="/soobschit-o-nezhelatelnoj-reakcii-pri-primenenii-veterinarnogo-lekarstvennogo-preparata.html">
+				<div class="recentInfo-block-red">
+					<p>Сообщить о нежелательной реакции при применении<br>
+                        ветеринарного лекарственного препарата</p>
+				</div>
+                    </a>
+            </div>
+               <div class="recentInfo">
+			<a href="/obraschenie-s-zhivotnymi.html">
+				<div class="recentInfo-block">
+					<img src="uploads/pets2.png" width="70px" height="70px">
+					<p>Обращение с животными<br>
+                        Горячая линия</p>
+                </div>
+			</a>
+            </div>
+           	</section>
+</div>
+ <!-- Настроить одинаково данные 4 тега custom -->
+		<!--<div id="thirdinf" class="filinks"> 
+    <div class="secpic"><img src="/uploads/posts/2020-12/medium/1607075119_78.jpg"></div> 
+	<span> <a href="https://oren-rshn.ru/glavnaya/1976-upravleniem-rosselhoznadzora-po-orenburgskoj-oblasti-juridicheskoe-lico-privlecheno-k-administrativnoj-otvetstvennosti-za-narushenie-zemelnogo-zakonodatelstva-rf.html">Управлением Россельхознадзора по Оренбургской области юридическое лицо привлечено к административной ответственности за нарушение земельного законодательства РФ</a> <div class="fc3">Главная          / Государственный земельный надзор</div> </span> 
+</div>
+		<div class="ltn">
+    <div class="ltnpic"><a href="https://oren-rshn.ru/glavnaya/1975-itogi-dejatelnosti-upravlenija-rosselhoznadzora-s-nachala-2020-goda-v-sfere-semenovodstva.html"><img src="/uploads/posts/2020-12/medium/1606968469_77.jpg"></a></div> 
+	<a href="https://oren-rshn.ru/glavnaya/1975-itogi-dejatelnosti-upravlenija-rosselhoznadzora-s-nachala-2020-goda-v-sfere-semenovodstva.html">Итоги деятельности Управления Россельхознадзора с начала 2020 года в сфере семеноводства</a>
+</div>
+		-->
+    
+      	
+		<div id="lastcom">
+			<div class="lastnews">
+				<span>Новости</span>
+				<div class="ln"> 
+    <b><a href="https://oren-rshn.ru/glavnaya/1977-upravleniem-rosselhoznadzora-po-orenburgskoj-oblasti-ne-dopuscheno-k-vvozu-bolee-10-tonn-produkcii-iz-kirgizii-i-kazahstana.html">Управлением Россельхознадзора по Оренбургской области не допущено к ввозу более 10 тонн продукции из Киргизии и Казахстана</a></b>
+	<div class="lnpic"><a href="https://oren-rshn.ru/glavnaya/1977-upravleniem-rosselhoznadzora-po-orenburgskoj-oblasti-ne-dopuscheno-k-vvozu-bolee-10-tonn-produkcii-iz-kirgizii-i-kazahstana.html"><img src="/uploads/posts/2020-12/medium/1607080453_81.jpg"></a></div> 
+	С 27 ноября по 4 декабря 2020 года Управлением Россельхознадзора по Оренбургской области во взаимодействии с Пограничным управлением ФСБ России по Оренбургской области, на российско-казахстанском участке государственной границы РФ, по направлению к пунктам пропуска МАПП «Маштаково», МАПП «Сагарчин» и МАПП «Орск» пресечено 5 попыток незаконного ввоза на территорию России подкарантинной продукции высокого фитосанитарного риска из Киргизии и<br /> 
+	<div class="lncat">Главная</div>
+</div><div class="ln"> 
+    <b><a href="https://oren-rshn.ru/glavnaya/1976-upravleniem-rosselhoznadzora-po-orenburgskoj-oblasti-juridicheskoe-lico-privlecheno-k-administrativnoj-otvetstvennosti-za-narushenie-zemelnogo-zakonodatelstva-rf.html">Управлением Россельхознадзора по Оренбургской области юридическое лицо привлечено к административной ответственности за нарушение земельного законодательства РФ</a></b>
+	<div class="lnpic"><a href="https://oren-rshn.ru/glavnaya/1976-upravleniem-rosselhoznadzora-po-orenburgskoj-oblasti-juridicheskoe-lico-privlecheno-k-administrativnoj-otvetstvennosti-za-narushenie-zemelnogo-zakonodatelstva-rf.html"><img src="/uploads/posts/2020-12/medium/1607075119_78.jpg"></a></div> 
+	В октябре 2020 года должностными лицами Управления Россельхознадзора по Оренбургской области при проведении внеплановой выездной проверки ООО СПХ «Хирси» установлен факт зарастания сорной растительностью сельскохозяйственного угодья в территориальных границах Южноуральского сельсовета Переволоцкого района Оренбургской области. <br /> 
+	<div class="lncat">Главная              / Государственный земельный надзор</div>
+</div><div class="ln"> 
+    <b><a href="https://oren-rshn.ru/glavnaya/1975-itogi-dejatelnosti-upravlenija-rosselhoznadzora-s-nachala-2020-goda-v-sfere-semenovodstva.html">Итоги деятельности Управления Россельхознадзора с начала 2020 года в сфере семеноводства</a></b>
+	<div class="lnpic"><a href="https://oren-rshn.ru/glavnaya/1975-itogi-dejatelnosti-upravlenija-rosselhoznadzora-s-nachala-2020-goda-v-sfere-semenovodstva.html"><img src="/uploads/posts/2020-12/medium/1606968469_77.jpg"></a></div> 
+	Должностными лицами Управления Федеральной службы по ветеринарному и фитосанитарному надзору по Оренбургской области с начала 2020 года было проведено 59 контрольно - надзорных мероприятия за соблюдением требований законодательства РФ в области семеноводства, выявлено 55 нарушений.<br /> 
+	<div class="lncat">Главная</div>
+</div><div class="ln"> 
+    <b><a href="https://oren-rshn.ru/glavnaya/1974-itogi-dejatelnosti-upravlenija-rosselhoznadzora-v-sfere-vnutrennego-karantina-rastenij-s-nachala-2020-goda.html">Итоги деятельности Управления Россельхознадзора в сфере внутреннего карантина растений с начала 2020 года</a></b>
+	<div class="lnpic"><a href="https://oren-rshn.ru/glavnaya/1974-itogi-dejatelnosti-upravlenija-rosselhoznadzora-v-sfere-vnutrennego-karantina-rastenij-s-nachala-2020-goda.html"><img src="/uploads/posts/2020-12/medium/1606882222_74.jpg"></a></div> 
+	Должностными лицами Управления осуществлялся контроль за исполнением карантинных фитосанитарных требований в отношении подкарантинной продукции, выпущенной в оборот на территории РФ, а именно: - при внутрироссийских перевозках проконтролировано более 1,3 млн тонн подкарантинной продукции; - при вывозе с территории Оренбургской области подкарантинной продукции на экспорт проконтролировано более 551  тыс. тонн, 731  тыс. штук, 10,9 тыс.<br /> 
+	<div class="lncat">Главная</div>
+</div><div class="ln"> 
+    <b><a href="https://oren-rshn.ru/glavnaya/1973-orenburgskaja-oblast-uvelichivaet-jeksport-zhivotnovodcheskoj-produkcii.html">Оренбургская область увеличивает экспорт животноводческой продукции</a></b>
+	<div class="lnpic"><a href="https://oren-rshn.ru/glavnaya/1973-orenburgskaja-oblast-uvelichivaet-jeksport-zhivotnovodcheskoj-produkcii.html"><img src="/uploads/posts/2020-12/medium/1606819787_73.jpg"></a></div> 
+	С начала 2020 года Управлением Россельхознадзора по Оренбургской области проконтролировано более 76,8 тыс. тонн животноводческой продукции (выдано 1190 ветеринарных сертификатов (формы № 5)) предназначенной для экспорта в зарубежные страны.<br /> 
+	<div class="lncat">Главная</div>
+</div>
+				<div class="wln"><a href="/glavnaya">Смотреть все новости</a></div>
+			</div>
+			</div>
+		 <!-- Реклама -->
+		        
+         <div id="lastphotos">
+			<span>Последние фотографии</span>
+			<div class="lastphotospic"><a href="https://oren-rshn.ru/glavnaya/1977-upravleniem-rosselhoznadzora-po-orenburgskoj-oblasti-ne-dopuscheno-k-vvozu-bolee-10-tonn-produkcii-iz-kirgizii-i-kazahstana.html"><img src="/uploads/posts/2020-12/medium/1607080453_81.jpg"></a></div><div class="lastphotospic"><a href="https://oren-rshn.ru/glavnaya/1976-upravleniem-rosselhoznadzora-po-orenburgskoj-oblasti-juridicheskoe-lico-privlecheno-k-administrativnoj-otvetstvennosti-za-narushenie-zemelnogo-zakonodatelstva-rf.html"><img src="/uploads/posts/2020-12/medium/1607075119_78.jpg"></a></div><div class="lastphotospic"><a href="https://oren-rshn.ru/glavnaya/1975-itogi-dejatelnosti-upravlenija-rosselhoznadzora-s-nachala-2020-goda-v-sfere-semenovodstva.html"><img src="/uploads/posts/2020-12/medium/1606968469_77.jpg"></a></div><div class="lastphotospic"><a href="https://oren-rshn.ru/glavnaya/1974-itogi-dejatelnosti-upravlenija-rosselhoznadzora-v-sfere-vnutrennego-karantina-rastenij-s-nachala-2020-goda.html"><img src="/uploads/posts/2020-12/medium/1606882222_74.jpg"></a></div>
+		</div>
+         <!--<div id="videoarch">
+			<div class="videoarch">-->
+				<a href="/video-arhiv/"><span><h2>Видеозаписи</h2></span></a>
+           		<div id="news">
+	<div class="ntitle"><a href="https://oren-rshn.ru/video-arhiv/1932-rosselhoznadzor-vozbudil-delo-iz-za-krupnoj-svalki-pod-orenburgom.html">РОССЕЛЬХОЗНАДЗОР ВОЗБУДИЛ ДЕЛО ИЗ-ЗА КРУПНОЙ СВАЛКИ ПОД ОРЕНБУРГОМ</a></div>
+	<div class="npic"><a href="https://oren-rshn.ru/video-arhiv/1932-rosselhoznadzor-vozbudil-delo-iz-za-krupnoj-svalki-pod-orenburgom.html"><img src="/uploads/posts/2020-11/medium/1605262950_2020-11-13_151845.jpg"></a></div>
+	<div class="nncont">
+		<p></p>
+		<div class="ninfo">
+			<span class="entryReadAll"><a class="entryReadAllLink" href="https://oren-rshn.ru/video-arhiv/1932-rosselhoznadzor-vozbudil-delo-iz-za-krupnoj-svalki-pod-orenburgom.html">Читать дальше »</a></span>
+			<div class="e-comment"><span>0</span></div>
+			<div class="e-reads"><span>339</span></div>
+			<div class="e-author"><span><a onclick="ShowProfile('artem.t', 'https://oren-rshn.ru/user/artem.t/', '0'); return false;" href="https://oren-rshn.ru/user/artem.t/">artem.t</a></span></div>
+			<div class="e-cat"><span><a href="https://oren-rshn.ru/video-arhiv/">Видеозаписи</a>                      / <a href="https://oren-rshn.ru/video/">видео</a></span></div>
+		</div>
+	</div>
+</div><div id="news">
+	<div class="ntitle"><a href="https://oren-rshn.ru/video-arhiv/1771-pod-ugrozoj-ne-tolko-posevy-no-i-zdorove-zhitelej-regiona.html">Под угрозой не только посевы, но и здоровье жителей региона.</a></div>
+	<div class="npic"><a href="https://oren-rshn.ru/video-arhiv/1771-pod-ugrozoj-ne-tolko-posevy-no-i-zdorove-zhitelej-regiona.html"><img src="/uploads/posts/2020-08/medium/1598005293_2020-08-21_152114.jpg"></a></div>
+	<div class="nncont">
+		<p></p>
+		<div class="ninfo">
+			<span class="entryReadAll"><a class="entryReadAllLink" href="https://oren-rshn.ru/video-arhiv/1771-pod-ugrozoj-ne-tolko-posevy-no-i-zdorove-zhitelej-regiona.html">Читать дальше »</a></span>
+			<div class="e-comment"><span>0</span></div>
+			<div class="e-reads"><span>223</span></div>
+			<div class="e-author"><span><a onclick="ShowProfile('906565', 'https://oren-rshn.ru/user/906565/', '0'); return false;" href="https://oren-rshn.ru/user/906565/">906565</a></span></div>
+			<div class="e-cat"><span><a href="https://oren-rshn.ru/video-arhiv/">Видеозаписи</a>                       / <a href="https://oren-rshn.ru/video/">видео</a></span></div>
+		</div>
+	</div>
+</div><div id="news">
+	<div class="ntitle"><a href="https://oren-rshn.ru/video-arhiv/1769-v-saraktashe-i-novosergievke-vveli-karantin-iz-za-sornjakov.html">В САРАКТАШЕ И НОВОСЕРГИЕВКЕ ВВЕЛИ КАРАНТИН ИЗ-ЗА СОРНЯКОВ</a></div>
+	<div class="npic"><a href="https://oren-rshn.ru/video-arhiv/1769-v-saraktashe-i-novosergievke-vveli-karantin-iz-za-sornjakov.html"><img src="/uploads/posts/2020-08/medium/1597917698_2020-08-20_150002.jpg"></a></div>
+	<div class="nncont">
+		<p></p>
+		<div class="ninfo">
+			<span class="entryReadAll"><a class="entryReadAllLink" href="https://oren-rshn.ru/video-arhiv/1769-v-saraktashe-i-novosergievke-vveli-karantin-iz-za-sornjakov.html">Читать дальше »</a></span>
+			<div class="e-comment"><span>0</span></div>
+			<div class="e-reads"><span>463</span></div>
+			<div class="e-author"><span><a onclick="ShowProfile('906565', 'https://oren-rshn.ru/user/906565/', '0'); return false;" href="https://oren-rshn.ru/user/906565/">906565</a></span></div>
+			<div class="e-cat"><span><a href="https://oren-rshn.ru/video-arhiv/">Видеозаписи</a></span></div>
+		</div>
+	</div>
+</div>
+                <a href="/video-rosselhoznadzora/"><span><h2>Видео Россельхознадзора</h2></span></a>
+                <div id="news">
+	<div class="ntitle"><a href="https://oren-rshn.ru/video-rosselhoznadzora/1328-vsemirnaja-organizacija-po-ohrane-zdorovja-zhivotnyh-informiruet-o-tom-kak-predotvratit-rasprostranenie-achs-pri-peremeschenii-iz-odnoj-strany-v-druguju.html">Всемирная организация по охране здоровья животных информирует о том, как предотвратить распространение АЧС при перемещении из одной страны в другую</a></div>
+	<div class="npic"><a href="https://oren-rshn.ru/video-rosselhoznadzora/1328-vsemirnaja-organizacija-po-ohrane-zdorovja-zhivotnyh-informiruet-o-tom-kak-predotvratit-rasprostranenie-achs-pri-peremeschenii-iz-odnoj-strany-v-druguju.html"><img src="/uploads/posts/2020-01/medium/1580185316_1580185272995.png"></a></div>
+	<div class="nncont">
+		<p>Всемирная организация по охране здоровья животных (МЭБ) подготовила информационный видеоролик о том, как вирус африканской чумы свиней (АЧС) может перемещаться из одной страны в другую при перевозке продукции, зараженной им.</p>
+		<div class="ninfo">
+			<span class="entryReadAll"><a class="entryReadAllLink" href="https://oren-rshn.ru/video-rosselhoznadzora/1328-vsemirnaja-organizacija-po-ohrane-zdorovja-zhivotnyh-informiruet-o-tom-kak-predotvratit-rasprostranenie-achs-pri-peremeschenii-iz-odnoj-strany-v-druguju.html">Читать дальше »</a></span>
+			<div class="e-comment"><span>0</span></div>
+			<div class="e-reads"><span>342</span></div>
+			<div class="e-author"><span><a onclick="ShowProfile('Anna', 'https://oren-rshn.ru/user/Anna/', '0'); return false;" href="https://oren-rshn.ru/user/Anna/">Anna</a></span></div>
+			<div class="e-cat"><span><a href="https://oren-rshn.ru/video-rosselhoznadzora/">Видео Россельхознадзора</a></span></div>
+		</div>
+	</div>
+</div><div id="news">
+	<div class="ntitle"><a href="https://oren-rshn.ru/video-rosselhoznadzora/814-merkurij-v-molochnoj-otrasli-instrukcija-po-primeneniju.html">«МЕРКУРИЙ» в молочной отрасли: ИНСТРУКЦИЯ ПО ПРИМЕНЕНИЮ</a></div>
+	<div class="npic"><a href="https://oren-rshn.ru/video-rosselhoznadzora/814-merkurij-v-molochnoj-otrasli-instrukcija-po-primeneniju.html"><img src="/uploads/posts/2019-07/medium/1561966347_1561966253907.png"></a></div>
+	<div class="nncont">
+		<p>2019 год стал поворотным для молочной отрасли. Никогда прежде не подлежащая ветеринарной сертификации молочная продукция теперь сопровождается электронными документами.</p>
+		<div class="ninfo">
+			<span class="entryReadAll"><a class="entryReadAllLink" href="https://oren-rshn.ru/video-rosselhoznadzora/814-merkurij-v-molochnoj-otrasli-instrukcija-po-primeneniju.html">Читать дальше »</a></span>
+			<div class="e-comment"><span>0</span></div>
+			<div class="e-reads"><span>909</span></div>
+			<div class="e-author"><span><a onclick="ShowProfile('Anna', 'https://oren-rshn.ru/user/Anna/', '0'); return false;" href="https://oren-rshn.ru/user/Anna/">Anna</a></span></div>
+			<div class="e-cat"><span><a href="https://oren-rshn.ru/video-rosselhoznadzora/">Видео Россельхознадзора</a>                          / <a href="https://oren-rshn.ru/novosti-rosselhoznadzora/">НОВОСТИ РОССЕЛЬХОЗНАДЗОРА</a></span></div>
+		</div>
+	</div>
+</div><div id="news">
+	<div class="ntitle"><a href="https://oren-rshn.ru/video-rosselhoznadzora/562-video-rosselhoznadzor-provel-zasedanie-kollegii-po-itogam-dejatelnosti-v-2018-godu.html">Видео: Россельхознадзор провел заседание Коллегии по итогам деятельности в 2018 году</a></div>
+	<div class="npic"><a href="https://oren-rshn.ru/video-rosselhoznadzora/562-video-rosselhoznadzor-provel-zasedanie-kollegii-po-itogam-dejatelnosti-v-2018-godu.html"><img src="/uploads/posts/2019-03/medium/1553666449_1553666356890.png"></a></div>
+	<div class="nncont">
+		<p></p>
+		<div class="ninfo">
+			<span class="entryReadAll"><a class="entryReadAllLink" href="https://oren-rshn.ru/video-rosselhoznadzora/562-video-rosselhoznadzor-provel-zasedanie-kollegii-po-itogam-dejatelnosti-v-2018-godu.html">Читать дальше »</a></span>
+			<div class="e-comment"><span>0</span></div>
+			<div class="e-reads"><span>814</span></div>
+			<div class="e-author"><span><a onclick="ShowProfile('Anna', 'https://oren-rshn.ru/user/Anna/', '0'); return false;" href="https://oren-rshn.ru/user/Anna/">Anna</a></span></div>
+			<div class="e-cat"><span><a href="https://oren-rshn.ru/video-rosselhoznadzora/">Видео Россельхознадзора</a>                           / <a href="https://oren-rshn.ru/novosti-rosselhoznadzora/">НОВОСТИ РОССЕЛЬХОЗНАДЗОРА</a></span></div>
+		</div>
+	</div>
+</div>
+				<div class="wln"><a href="/video"; display: inline-block; !important; >Смотреть все видео</a></div>
+			
+                  		
+		
+		 <!-- Заголовки для категорий. В параметре category вместо цифр 1, 2, 3 пишем ID своих категорий -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <!-- Подключаем заголовки для категорий -->
+		
+		
+	</div>
+<div id="sidebar-r">
+	<div class="right-block">
+		<div class="tntitle"> 
+			<!-- <script language="JavaScript">  Вывод даты и времени 
+					dayarray=new Array("воскресенье","понедельник","вторник","среда","четверг","пятница","суббота")
+					montharray=new Array ("января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря")
+					ndata=new Date();
+					day=dayarray[ndata.getDay()];
+					month=montharray[ndata.getMonth()];
+					date=ndata.getDate();
+					year=ndata.getYear();
+					hours = ndata.getHours();
+					mins = ndata.getMinutes();
+					secs = ndata.getSeconds();
+					if (hours < 10) {hours = "0" + hours }
+					if (mins < 10) {mins = "0" + mins }
+					if (secs < 10) {secs = "0" + secs }
+					datastr=("<span>"+ date +", "+day+"</span> - "+ hours + ":" + mins + "," )
+					document.write(datastr);
+			</script>
+			<i class="weather">Оренбург File engine/modules/weather.php not found.</i>  Вывод погоды -->
+		</div>
+        
+		<!--<div class="todaynews"><div class="tnews"> 
+    <div class="tpic"><a href="https://oren-rshn.ru/glavnaya/1977-upravleniem-rosselhoznadzora-po-orenburgskoj-oblasti-ne-dopuscheno-k-vvozu-bolee-10-tonn-produkcii-iz-kirgizii-i-kazahstana.html"><img src="/uploads/posts/2020-12/medium/1607080453_81.jpg"></a></div> 
+	<a href="https://oren-rshn.ru/glavnaya/1977-upravleniem-rosselhoznadzora-po-orenburgskoj-oblasti-ne-dopuscheno-k-vvozu-bolee-10-tonn-produkcii-iz-kirgizii-i-kazahstana.html">Управлением Россельхознадзора по Оренбургской области не допущено к ввозу более 10 тонн продукции из Киргизии и Казахстана</a> 
+</div><div class="tnews"> 
+    <div class="tpic"><a href="https://oren-rshn.ru/glavnaya/1976-upravleniem-rosselhoznadzora-po-orenburgskoj-oblasti-juridicheskoe-lico-privlecheno-k-administrativnoj-otvetstvennosti-za-narushenie-zemelnogo-zakonodatelstva-rf.html"><img src="/uploads/posts/2020-12/medium/1607075119_78.jpg"></a></div> 
+	<a href="https://oren-rshn.ru/glavnaya/1976-upravleniem-rosselhoznadzora-po-orenburgskoj-oblasti-juridicheskoe-lico-privlecheno-k-administrativnoj-otvetstvennosti-za-narushenie-zemelnogo-zakonodatelstva-rf.html">Управлением Россельхознадзора по Оренбургской области юридическое лицо привлечено к административной ответственности за нарушение земельного законодательства РФ</a> 
+</div><div class="tnews"> 
+    <div class="tpic"><a href="https://oren-rshn.ru/glavnaya/1975-itogi-dejatelnosti-upravlenija-rosselhoznadzora-s-nachala-2020-goda-v-sfere-semenovodstva.html"><img src="/uploads/posts/2020-12/medium/1606968469_77.jpg"></a></div> 
+	<a href="https://oren-rshn.ru/glavnaya/1975-itogi-dejatelnosti-upravlenija-rosselhoznadzora-s-nachala-2020-goda-v-sfere-semenovodstva.html">Итоги деятельности Управления Россельхознадзора с начала 2020 года в сфере семеноводства</a> 
+</div></div>-->
+	</div>
+	<div class="right-block">
+   
+
+			<div class="btitle"><a href="/novosti-rosselhoznadzora"><p><font color="ffffff">Новости Россельхознадзора</font></p></a></div>
+          <div class="lasttopnews">
+				<span> </span>
+				<div class="ltn">
+    <div class="ltnpic"><a href="https://oren-rshn.ru/glavnaya/1606-veduschie-uchenye-nauchnyh-institutov-rosselhoznadzora-otvechajut-na-samye-rasprostranennye-voprosy-o-riskah-zarazhenija-zhivotnyh-novoj-koronavirusnoj-infekciej-covid-19.html"><img src="/uploads/posts/2020-11/1604645582_uypp5eydmw.jpg"></a></div> 
+	<a href="https://oren-rshn.ru/glavnaya/1606-veduschie-uchenye-nauchnyh-institutov-rosselhoznadzora-otvechajut-na-samye-rasprostranennye-voprosy-o-riskah-zarazhenija-zhivotnyh-novoj-koronavirusnoj-infekciej-covid-19.html">Ведущие ученые научных институтов Россельхознадзора отвечают на самые распространенные вопросы о рисках заражения животных новой коронавирусной инфекцией (COVID-19)</a>
+</div>
+			</div>
+        
+            <!--<div id="rshnews">
+						
+				</div>-->
+
+	</div>
+    <div class="right-block">
+        <center><a href="https://oren-rshn.ru/vnimanie-achs-gorjachaja-linija.html"><img src="/uploads/attention_a4s1.jpg" /></a></center>
+		   			<!--<center><a href="#"><img src="/templates/Default/images/banner.jpg" /></a></center>--> 
+    </div>
+    <div class="right-block">
+        <center><a href="https://oren-rshn.ru/glavnaya/1461-rekomendacii-vsemirnoj-organizacii-po-ohrane-zdorovja-zhivotnyh-mjeb-kasatelno-koronavirusnoj-infekcii-covid-19-dlja-vladelcev-domashnih-zhivotnyh.html"><img src="/uploads/covid19-2.jpg" /></a></center>
+		   			<!--<center><a href="#"><img src="/templates/Default/images/banner.jpg" /></a></center>--> 
+    </div>
+    <div class="right-block">
+        <center><a href="https://www.fsvps.ru/fsvps/importExport"><img src="/uploads/tranzit.jpg" /></a></center>
+		   			<!--<center><a href="#"><img src="/templates/Default/images/banner.jpg" /></a></center>--> 
+    </div>
+    <div class="right-block">
+        <center><a href="https://oren-rshn.ru/video-rosselhoznadzora/1328-vsemirnaja-organizacija-po-ohrane-zdorovja-zhivotnyh-informiruet-o-tom-kak-predotvratit-rasprostranenie-achs-pri-peremeschenii-iz-odnoj-strany-v-druguju.html"><img src="/uploads/video-achs.png" /></a></center>
+		   			<!--<center><a href="#"><img src="/templates/Default/images/banner.jpg" /></a></center>--> 
+    </div>
+     <div class="right-block">
+        <center><a href="https://oren-rshn.ru/dlja-uchastnikov-mezhdunarodnyh-vystavok.html"><img src="/uploads/vystavki.jpg" /></a></center>
+		   			<!--<center><a href="#"><img src="/templates/Default/images/banner.jpg" /></a></center>--> 
+    </div>
+     <div class="right-block">
+        <center><a href="https://oren-rshn.ru/vjed/1378-vvoz-semennogo-i-posadochnogo-materiala.html"><img src="/uploads/vvoz-semen.jpg" /></a></center>
+		   			<!--<center><a href="#"><img src="/templates/Default/images/banner.jpg" /></a></center>--> 
+    </div>
+     <div class="right-block">
+        <center><a href="https://oren-rshn.ru/covid19.html"><img src="/uploads/covid19g.gif" /></a></center>
+		   			<!--<center><a href="#"><img src="/templates/Default/images/banner.jpg" /></a></center>--> 
+    </div>
+         <div class="right-block">
+        <center><a href="https://docs.google.com/viewer?url=https%3A%2F%2Foren-rshn.ru%2Findex.php%3Fdo%3Ddownload%26id%3D320%26area%3Dstatic%26viewonline%3D1"><img src="uploads/encefalopatiya.jpg" /></a></center>
+	</div>
+    <div class="right-block">
+        <center><a href="https://oren-rshn.ru/pazharoopasnyj-period.html"><img src="uploads/pozh.jpg" /></a></center>
+	</div>
+	<div class="right-block">
+		
+	</div>
+     
+</div> <!-- Подключаем правую колонку -->
+	</div>
+    
+<!--<footer>
+	
+    <div id="fbg">
+		<div class="fbgtop"></div>
+		<div class="footline">
+			<div class="fblock">
+				<h2> </h2>
+<li>  </li>
+			</div>
+			<div class="fblock">
+			<!--	<h3>Популярные теги</h3> -->
+				<div class="tags"></div>
+			</div>
+			<!--<div class="fblock">
+				<h3> </h3>
+				<li><i class="fa fa-phone"></i> 8 (3532) 75-15-20</li>
+				<li><i class="fa fa-envelope-o"></i> </li>
+				<li><i class="fa fa-globe"></i> </li>
+			</div>
+		</div>
+        </div>
+</footer>-->
+<!--<div style="height: 65px; background: url(/uploads/fotos/4.gif) repeat-x 90%;"></div>-->
+
+<!--<script type="text/javascript" src="/templates/Default/js/script.js"></script>-->
+<a href='#' id='Go_Top' title="Вернуться к началу"><img src="/templates/Default/images/icon_top.png" alt="Наверх" title="Наверх"></a>
+<a href="https://webmaster.yandex.ru/sqi?host=www.oren-rshn.ru"><img width="88" height="31" alt="" border="0" src="https://yandex.ru/cycounter?www.oren-rshn.ru&theme=light&lang=ru"/></a>
+<script src="/templates/Default/js/uhpv-full.min.js"></script>
+</body>
+</html>
+<!-- DataLife Engine Copyright SoftNews Media Group (http://dle-news.ru) -->

@@ -1,0 +1,22 @@
+{
+    "headers": {
+        "Server": "nginx/1.11.8",
+        "Date": "Sat, 05 Dec 2020 10:32:04 GMT",
+        "Content-Type": "text/html; charset=utf-8",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close",
+        "X-Frame-Options": "SAMEORIGIN",
+        "X-XSS-Protection": "1; mode=block",
+        "X-Content-Type-Options": "nosniff",
+        "X-UA-Compatible": "IE=edge",
+        "ETag": "W/\"17f582cbc9fb70cd7c710955725e60bd\"",
+        "Cache-Control": "max-age=0, private, must-revalidate",
+        "Set-Cookie": "_rosminzdrav_session=fb3f83efcb587a470d5ecefcdda70a81; path=/; HttpOnly",
+        "X-Request-Id": "4917510e-528c-451b-b1d2-0fb46140ad5f",
+        "X-Runtime": "0.677883"
+    },
+    "charset": "utf-8",
+    "redirected_url": "https://minzdrav.gov.ru/",
+    "original_url": "rosminzdrav.ru",
+    "file_extension": ".html"
+}
