@@ -14,6 +14,7 @@ class TRemoteDlrobotCall:
         self.project_folder = None
         self.result_files_count = 0
         self.worker_host_name = None
+        self.reach_status = None
 
     def get_website(self):
         website = self.project_file
@@ -35,6 +36,7 @@ class TRemoteDlrobotCall:
         self.project_folder = d['result_folder']
         self.result_files_count = d['result_files_count']
         self.worker_host_name = d['worker_host_name']
+        self.reach_status = d['reach_status']
 
     def write_to_json(self):
         return {
@@ -45,7 +47,8 @@ class TRemoteDlrobotCall:
                 'end_time': self.end_time,
                 'result_folder': self.project_folder,
                 'result_files_count': self.result_files_count,
-                'worker_host_name': self.worker_host_name
+                'worker_host_name': self.worker_host_name,
+                'reach_status': self.reach_status
         }
 
     def calc_project_stats(self):
@@ -54,7 +57,18 @@ class TRemoteDlrobotCall:
         summary_file = os.path.join(self.project_folder,  self.project_file + '.result_summary')
         if os.path.exists(summary_file):
             with open(summary_file) as inp:
-                self.result_files_count = json.load(inp)['files_count']
+                json_dict = json.load(inp)
+                self.result_files_count = json_dict['files_count']
+        project_file = os.path.join(self.project_folder,  self.project_file + ".visited_pages")
+        if os.path.exists(project_file):
+            try:
+                with open(project_file) as inp:
+                    js = json.load(inp)
+                    sites = js.get('sites', [])
+                    if len(sites) == 1:
+                        self.reach_status = sites[0]['reach_status']
+            except Exception as exp:
+                pass
 
     @staticmethod
     def read_remote_calls_from_file(filename):

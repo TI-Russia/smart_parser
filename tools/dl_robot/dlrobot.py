@@ -1,16 +1,17 @@
-﻿import os
-import sys
-import argparse
-import logging
-import traceback
-from common.download import TDownloadEnv
+﻿from common.download import TDownloadEnv
 from common.robot_project import TRobotProject
 from common.robot_step import TRobotStep
 from common.web_site import TRobotWebSite
 from common.primitives import check_link_sitemap, check_anticorr_link_text, convert_timeout_to_seconds
 from dl_robot.declaration_link import looks_like_a_declaration_link
+
 import platform
 import tempfile
+import os
+import sys
+import argparse
+import logging
+import traceback
 
 
 def setup_logging(logfilename):
@@ -159,7 +160,7 @@ class TDlrobot:
 
 
 if __name__ == "__main__":
-    dlrobot = TDlrobot(TDlRobot.parse_args(sys.argv[1:]))
+    dlrobot = TDlrobot(TDlrobot.parse_args(sys.argv[1:]))
     try:
         if dlrobot.args.cache_folder_tmp:
             with tempfile.TemporaryDirectory(prefix="cached.", dir=".") as TDownloadEnv.FILE_CACHE_FOLDER:

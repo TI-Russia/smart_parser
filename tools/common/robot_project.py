@@ -142,13 +142,14 @@ class TRobotProject:
 
         unique_files = list(set(x.get('smart_parser_json_sha256', x.get('sha256')) for x in files_with_click_path))
         unique_files.sort()
-        # short report to commit to git
-        with open(self.result_summary_file, "w", encoding="utf8") as outf:
-            report = {
-                "files_count": len(unique_files),
-                "files_sorted": unique_files,
-            }
-            json.dump(report, outf, ensure_ascii=False, indent=4)
+        if len(unique_files) > 0:
+            # short report to commit to git
+            with open(self.result_summary_file, "w", encoding="utf8") as outf:
+                report = {
+                    "files_count": len(unique_files),
+                    "files_sorted": unique_files,
+                }
+                json.dump(report, outf, ensure_ascii=False, indent=4)
 
     def use_search_engine(self, step_info):
         request = step_info.step_passport['search_engine']['request']

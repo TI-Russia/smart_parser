@@ -1,10 +1,11 @@
 from ConvStorage.conversion_client import TDocConversionClient
 from dlrobot_server.common_server_worker import DLROBOT_HTTP_CODE, TTimeouts, TYandexCloud, DLROBOT_HEADER_KEYS, PITSTOP_FILE
-from common.primitives import convert_timeout_to_seconds, check_internet
+from common.primitives import convert_timeout_to_seconds, check_internet, get_site_domain_wo_www
 from common.content_types import ACCEPTED_DOCUMENT_EXTENSIONS
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from dlrobot_server.remote_call import TRemoteDlrobotCall
 from source_doc_http.source_doc_client import TSourceDocClient
+from common.web_site import TWebSiteReachStatus
 
 import argparse
 import sys
@@ -38,15 +39,28 @@ def setup_logging(logfilename):
     return logger
 
 
+def project_file_to_web_site(s):
+    s = s.replace('_', ':')
+    assert s.endswith('.txt')
+    return s[:-4]
+
+
+def web_site_to_project_file(s):
+    s = s.replace(':', '_')
+    return s + ".txt"
+
+
 class TDlrobotHTTPServer(http.server.HTTPServer):
 
     @staticmethod
     def parse_args(arg_list):
+        default_input_task_list_path = os.path.join(os.path.dirname(__file__), "../disclosures_site/data/web_sites.json")
+        assert os.path.exists(default_input_task_list_path)
         parser = argparse.ArgumentParser()
         parser.add_argument("--server-address", dest='server_address', default=None,
                             help="by default read it from environment variable DLROBOT_CENTRAL_SERVER_ADDRESS")
         parser.add_argument("--log-file-name", dest='log_file_name', required=False, default="dlrobot_central.log")
-        parser.add_argument("--input-folder", dest='input_folder', required=False, default="input_projects")
+        parser.add_argument("--input-task-list", dest='input_task_list', required=False, default=default_input_task_list_path)
         parser.add_argument("--result-folder", dest='result_folder', required=True)
         parser.add_argument("--tries-count", dest='tries_count', required=False, default=2, type=int)
         parser.add_argument("--read-previous-results", dest='read_previous_results', default=False, action='store_true',
@@ -70,6 +84,8 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                             default=True, action="store_false", required=False)
         parser.add_argument("--disable-source-doc-server", dest="enable_source_doc_server",
                             default=True, action="store_false", required=False)
+        parser.add_argument("--disable-search-engines", dest="enable_search_engines",
+                            default=True, action="store_false", required=False)
 
         args = parser.parse_args(arg_list)
         args.central_heart_rate = convert_timeout_to_seconds(args.central_heart_rate)
@@ -84,12 +100,24 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
     def initialize_tasks(self):
         self.dlrobot_remote_calls.clear()
         self.worker_2_running_tasks.clear()
-        self.input_files = list(x for x in os.listdir(self.args.input_folder) if x.endswith('.txt'))
+        self.input_web_sites = list()
+        with open (self.args.input_task_list) as inp:
+            for web_site, web_site_info in json.load(inp).items():
+                abandoned = False
+                for event in web_site_info.get('events', []):
+                    if event.get('type', "") == TWebSiteReachStatus.abandoned:
+                        abandoned = True
+                        break
+                if abandoned:
+                    continue
+                web_site = get_site_domain_wo_www(web_site)
+                self.input_web_sites.append(web_site)
+
         if not os.path.exists(self.args.result_folder):
             os.makedirs(self.args.result_folder)
         if self.args.read_previous_results:
             self.read_prev_dlrobot_remote_calls()
-        self.logger.debug("there are {} dlrobot projects to process".format(len(self.input_files)))
+        self.logger.debug("there are {} web sites to process".format(len(self.input_web_sites)))
         self.worker_2_running_tasks.clear()
 
     def __init__(self, args):
@@ -98,10 +126,11 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         self.conversion_client = TDocConversionClient(self.logger)
         self.args = args
         self.dlrobot_remote_calls = defaultdict(list)
-        self.input_files = list()
+        self.input_web_sites = list()
         self.worker_2_running_tasks = defaultdict(list)
         self.initialize_tasks()
         self.cloud_id_to_worker_ip = dict()
+        self.last_remote_call = None # for testing
         host, port = self.args.server_address.split(":")
         self.logger.debug("start server on {}:{}".format(host, port))
         super().__init__((host, int(port)), TDlrobotRequestHandler)
@@ -148,7 +177,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         return os.path.join(self.args.result_folder, "dlrobot_remote_calls.dat")
 
     def have_tasks(self):
-        return len(self.input_files) > 0  and not self.stop_process
+        return len(self.input_web_sites) > 0 and not self.stop_process
 
     def save_dlrobot_remote_call(self, remote_call: TRemoteDlrobotCall):
         with open (self.get_dlrobot_remote_calls_filename(), "a") as outp:
@@ -165,20 +194,12 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                 self.logger.debug("increase max_tries_count for {} to {}".format(remote_call.project_file, max_tries_count))
 
             if tries_count < max_tries_count:
-                self.input_files.append(remote_call.project_file)
-                self.logger.debug("register retry for {}".format(remote_call.project_file))
-
-    def input_tasks_exist(self):
-        with os.scandir(self.args.input_folder) as it:
-            for entry in it:
-                if entry.name.endswith(".txt"):
-                    return True
-        return False
+                web_site = project_file_to_web_site(remote_call.project_file)
+                self.input_web_sites.append(web_site)
+                self.logger.debug("register retry for {}".format(web_site))
 
     def can_start_new_epoch(self):
         if self.stop_process:
-            return False
-        if not self.input_tasks_exist():
             return False
         if self.get_running_jobs_count() > 0:
             return False
@@ -200,9 +221,10 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
             calls = TRemoteDlrobotCall.read_remote_calls_from_file(self.get_dlrobot_remote_calls_filename())
             for remote_call in calls:
                 self.dlrobot_remote_calls[remote_call.project_file].append(remote_call)
-                if remote_call.exit_code == 0 and remote_call.project_file in self.input_files:
-                    self.logger.debug("delete {}, since it is already processed".format(remote_call.project_file))
-                    self.input_files.remove(remote_call.project_file)
+                web_site = project_file_to_web_site(remote_call.project_file)
+                if remote_call.exit_code == 0 and web_site in self.input_web_sites:
+                    self.logger.debug("delete {}, since it is already processed".format(web_site))
+                    self.input_web_sites.remove(web_site)
 
     def get_running_jobs_count(self):
         return sum(len(w) for w in self.worker_2_running_tasks.values())
@@ -213,14 +235,15 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
     def conversion_server_queue_is_short(self):
         return self.pdf_conversion_queue_length < self.args.pdf_conversion_queue_limit
 
-    def get_new_job_task(self, worker_host_name, worker_ip):
-        project_file = self.input_files.pop(0)
+    def get_new_web_site_to_process(self, worker_host_name, worker_ip):
+        web_site = self.input_web_sites.pop(0)
+        project_file = web_site_to_project_file(web_site)
         self.logger.info("start job: {} on {} (host name={}), left jobs: {}, running jobs: {}".format(
-                project_file, worker_ip, worker_host_name, len(self.input_files), self.get_running_jobs_count()))
+                project_file, worker_ip, worker_host_name, len(self.input_web_sites), self.get_running_jobs_count()))
         res = TRemoteDlrobotCall(worker_ip, project_file)
         res.worker_host_name = worker_host_name
         self.worker_2_running_tasks[worker_ip].append(res)
-        return project_file
+        return web_site
 
     def untar_file(self, project_file, result_archive):
         base_folder, _ = os.path.splitext(project_file)
@@ -264,9 +287,11 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         remote_call.end_time = int(time.time())
         remote_call.project_folder = self.untar_file(project_file, result_archive)
         remote_call.calc_project_stats()
+        if not TWebSiteReachStatus.can_communicate(remote_call.reach_status):
+            remote_call.exit_code = -1
         self.send_declaraion_files_to_other_servers(remote_call.project_folder)
         self.save_dlrobot_remote_call(remote_call)
-
+        self.last_remote_call = remote_call
         self.logger.debug("got exitcode {} for task result {} from worker {}".format(
             exit_code, project_file, worker_ip))
 
@@ -346,7 +371,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
 
         return {
             'running_count': self.get_running_jobs_count(),
-            'input_tasks': len(self.input_files),
+            'input_tasks': len(self.input_web_sites),
             'processed_tasks': self.get_processed_jobs_count(),
             'worker_2_running_tasks':  workers
         }
@@ -403,7 +428,7 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             send_error('No authorization_code provided', log_error=False)
             return
 
-        if len(self.server.input_files) == 0 and self.server.can_start_new_epoch():
+        if len(self.server.input_web_sites) == 0 and self.server.can_start_new_epoch():
             self.server.start_new_epoch()
 
         if not self.server.have_tasks():
@@ -421,18 +446,24 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
     
         worker_ip = self.client_address[0]
         try:
-            project_file = self.server.get_new_job_task(worker_host_name, worker_ip)
+            web_site = self.server.get_new_web_site_to_process(worker_host_name, worker_ip)
         except Exception as exp:
             send_error(str(exp))
             return
 
         self.send_response(200)
-        self.send_header(DLROBOT_HEADER_KEYS.PROJECT_FILE,  project_file)
+        self.send_header(DLROBOT_HEADER_KEYS.PROJECT_FILE,  web_site_to_project_file(web_site))
         self.end_headers()
 
-        file_path = os.path.join(self.server.args.input_folder, project_file)
-        with open(file_path, 'rb') as fh:
-            self.wfile.write(fh.read())
+        try:
+            project_content = {"sites": [{"morda_url": "http://" + web_site}]}
+            if not self.server.args.enable_search_engines:
+                project_content['disable_search_engine'] = True
+
+            self.wfile.write(json.dumps(project_content, indent=4, ensure_ascii=False).encode("utf8"))
+        except Exception as exp:
+            self.server.logger("Cannot send project, exception = {}".format(exp))
+            send_error(str(exp))
 
     def do_PUT(self):
         def send_error(message, http_code=http.HTTPStatus.BAD_REQUEST):
@@ -489,9 +520,6 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
 if __name__ == "__main__":
     args = TDlrobotHTTPServer.parse_args(sys.argv[1:])
     server = TDlrobotHTTPServer(args)
-    if not server.input_tasks_exist():
-        server.logger.error("no input tasks found")
-        sys.exit(1)
 
     server.check_yandex_cloud() # to get worker ips
     try:

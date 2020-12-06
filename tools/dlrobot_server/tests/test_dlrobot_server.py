@@ -3,6 +3,7 @@ from dlrobot_server.dlrobot_worker import TDlrobotWorker
 from dlrobot_server.dlrobot_stats import TDlrobotAllStats
 from smart_parser_http.smart_parser_server import TSmartParserHTTPServer
 from source_doc_http.source_doc_server import TSourceDocHTTPServer
+from common.web_site import TWebSiteReachStatus
 
 from unittest import TestCase
 import os
@@ -42,7 +43,7 @@ class TTestEnv:
         self.central_thread = None
         self.worker_thread = None
         self.worker = None
-        self.input_projects_folder = None
+        self.input_web_sites_file = None
         self.result_folder = None
         self.worker_folder = os.path.join(self.data_folder, "workdir")
         self.web_site = None
@@ -68,18 +69,24 @@ class TTestEnv:
         self.smart_parser_server = TSmartParserHTTPServer(TSmartParserHTTPServer.parse_args(server_args))
         threading.Thread(target=start_server, args=(self.smart_parser_server,)).start()
 
-    def setup_central(self, enable_smart_parser, project, dlrobot_project_timeout=5*60, tries_count=2,
+    def setup_central(self, enable_smart_parser, web_site, dlrobot_project_timeout=5*60, tries_count=2,
                       enable_source_doc_server=False):
-        self.input_projects_folder = os.path.join(self.data_folder, "input_projects")
-        os.mkdir(self.input_projects_folder)
-        if project is not None:
-            with open(os.path.join(self.input_projects_folder, "project.txt"), "w") as outp:
-                outp.write(json.dumps(project))
+        self.input_web_sites_file = os.path.join(self.data_folder, "web_sites.json")
+        with open (self.input_web_sites_file, "w") as outp:
+            if web_site is not None:
+                js = {
+                    web_site: {
+                        "events": []
+                    }
+                }
+            else:
+                js = {}
+            json.dump(js, outp, indent=4, ensure_ascii=False)
 
         self.result_folder = os.path.join(self.data_folder, "processed_projects")
 
         server_args = [
-            '--input-folder', self.input_projects_folder,
+            '--input-task-list', self.input_web_sites_file,
             '--result-folder', self.result_folder,
             '--server-address', self.central_address,
             '--tries-count', str(tries_count),
@@ -87,6 +94,7 @@ class TTestEnv:
             '--dlrobot-project-timeout', str(dlrobot_project_timeout),
             '--log-file-name', os.path.join(self.data_folder, "dlrobot_central.log"),
             '--pdf-conversion-queue-limit', '3000000000',
+            '--disable-search-engines'
         ]
         if not enable_smart_parser:
             server_args.append('--disable-smart-parser-server')
@@ -139,8 +147,8 @@ class TTestEnv:
         if self.source_doc_server is not None:
             self.source_doc_server.shutdown()
             self.source_doc_server.close_files()
-        if os.path.exists(self.data_folder):
-            shutil.rmtree(self.data_folder, ignore_errors=True)
+        #if os.path.exists(self.data_folder):
+        #    shutil.rmtree(self.data_folder, ignore_errors=True)
 
     def count_projects_results(self):
         result_summary_count = 0
@@ -150,14 +158,19 @@ class TTestEnv:
                     result_summary_count += 1
         return result_summary_count
 
+    def get_last_reach_status (self):
+        assert len(self.central.dlrobot_remote_calls) == 1
+        remote_calls = list(self.central.dlrobot_remote_calls.values())[0]
+        assert len(remote_calls) > 0
+        return remote_calls[-1].reach_status
+
 
 class TestAotRu(TestCase):
     central_port = 8290
 
     def setUp(self):
-        project = {"sites": [{"morda_url": "http://www.aot.ru"}], "disable_search_engine": True}
         self.env = TTestEnv(self.central_port)
-        self.env.setup_central(False, project)
+        self.env.setup_central(False, "www.aot.ru")
         self.env.setup_worker("run_once")
 
     def tearDown(self):
@@ -169,7 +182,7 @@ class TestAotRu(TestCase):
         self.assertEqual(stats['running_count'], 1)
         self.env.worker_thread.join(200)
         self.assertEqual(self.env.count_projects_results(), 1)
-
+        self.assertEqual(self.env.get_last_reach_status(), TWebSiteReachStatus.normal)
         # one more time
         self.env.start_worker_thread()
         self.env.worker_thread.join(200)
@@ -180,9 +193,8 @@ class TestBadDomain(TestCase):
     central_port = 8291
 
     def setUp(self):
-        project = {"sites": [{"morda_url": "bad domain"}], "disable_search_engine": True}
         self.env = TTestEnv(self.central_port)
-        self.env.setup_central(False, project)
+        self.env.setup_central(False, "bad_domain")
         self.env.setup_worker("run_once")
 
     def tearDown(self):
@@ -192,6 +204,7 @@ class TestBadDomain(TestCase):
         self.env.worker_thread.join(200)
         self.assertEqual(self.env.count_projects_results(), 0)
         self.assertEqual(self.env.central.get_stats()['processed_tasks'], 1)
+        self.assertEqual(self.env.get_last_reach_status(), TWebSiteReachStatus.abandoned)
 
         self.env.start_worker_thread()
         self.env.worker_thread.join(200)
@@ -242,9 +255,8 @@ class DlrobotTimeout(TestCase):
     central_port = 8294
 
     def setUp(self):
-        project = {"sites": [{"morda_url": "bad domain"}], "disable_search_engine": True}
         self.env = TTestEnv(self.central_port)
-        self.env.setup_central(False, project, dlrobot_project_timeout=2, tries_count=1)
+        self.env.setup_central(False, "bad_domain", dlrobot_project_timeout=2, tries_count=1)
         self.env.setup_worker("run_once")
 
     def tearDown(self):
@@ -268,13 +280,9 @@ class DlrobotWebStats(TestCase):
     website_port = 8296
 
     def setUp(self):
-        project = {
-                    "sites": [{"morda_url": "http://127.0.0.1:{}".format(self.website_port)}],
-                    "disable_search_engine": True
-                   }
         self.env = TTestEnv(self.central_port)
         self.env.setup_website(self.website_port)
-        self.env.setup_central(False, project)
+        self.env.setup_central(False, "127.0.0.1:{}".format(self.website_port))
         self.env.setup_worker("run_once")
 
     def tearDown(self):
@@ -294,14 +302,10 @@ class DlrobotWithSmartParser(TestCase):
     smart_parser_server_port = 8299
 
     def setUp(self):
-        project = {
-            "sites": [{"morda_url": "http://127.0.0.1:{}".format(self.website_port)}],
-            "disable_search_engine": True
-        }
         self.env = TTestEnv(self.central_port)
         self.env.setup_website(self.website_port)
         self.env.setup_smart_parser_server(self.smart_parser_server_port)
-        self.env.setup_central(True, project)
+        self.env.setup_central(True, "127.0.0.1:{}".format(self.website_port))
         self.env.setup_worker("run_once")
 
     def tearDown(self):
@@ -321,16 +325,12 @@ class DlrobotWithSmartParserAndSourceDocServer(TestCase):
     source_doc_server_port = 8304
 
     def setUp(self):
-        project = {
-            "sites": [{"morda_url": "http://127.0.0.1:{}".format(self.website_port)}],
-            "disable_search_engine": True
-        }
         self.env = TTestEnv(self.central_port)
         self.env.setup_website(self.website_port)
         self.env.setup_smart_parser_server(self.smart_parser_server_port)
         self.env.setup_source_doc_server(self.source_doc_server_port)
 
-        self.env.setup_central(True, project, enable_source_doc_server=True)
+        self.env.setup_central(True, "127.0.0.1:{}".format(self.website_port), enable_source_doc_server=True)
         self.env.setup_worker("run_once")
 
     def tearDown(self):
