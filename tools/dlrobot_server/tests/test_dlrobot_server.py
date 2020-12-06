@@ -181,12 +181,12 @@ class TestAotRu(TestCase):
         stats = self.env.central.get_stats()
         self.assertEqual(stats['running_count'], 1)
         self.env.worker_thread.join(200)
-        self.assertEqual(self.env.count_projects_results(), 1)
+        self.assertEqual(self.env.count_projects_results(), 0)
         self.assertEqual(self.env.get_last_reach_status(), TWebSiteReachStatus.normal)
         # one more time
         self.env.start_worker_thread()
         self.env.worker_thread.join(200)
-        self.assertEqual(self.env.count_projects_results(), 2)
+
 
 
 class TestBadDomain(TestCase):
