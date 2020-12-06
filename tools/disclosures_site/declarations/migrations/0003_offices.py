@@ -16,7 +16,7 @@ def add_offices(apps, schema_editor):
     Office = apps.get_model('declarations', 'Office')
     for office in offices:
         c = Office(id=office['id'],
-                   name=office['name_ru'],
+                   name=office['name'],
                    type_id=office['type_id'],
                    parent_id=office['parent_id'],
                    region_id=office['region_id'],

@@ -11,9 +11,9 @@ import os
 from functools import partial
 import json
 import logging
-from declarations.input_json import  TDlrobotHumanFile
+from declarations.input_json import TDlrobotHumanFile
 from collections import defaultdict
-from dl_robot.scripts.cloud import TSmartParserCacheClient
+from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 
 
 def setup_logging(logfilename):
@@ -71,7 +71,7 @@ class TImporter:
         db.connections.close_all()
 
     def init_non_pickable(self):
-        self.smart_parser_cache_client = TSmartParserCacheClient(TImporter.logger)
+        self.smart_parser_cache_client = TSmartParserCacheClient(TSmartParserCacheClient.parse_args([]), TImporter.logger)
         self.primary_keys_builder.open_db_read_only()
 
     def init_after_fork(self):

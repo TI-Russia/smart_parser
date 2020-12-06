@@ -15,8 +15,8 @@ class SmartParserServerForTesting:
         if os.path.exists(self.workdir):
             shutil.rmtree(self.workdir)
         os.mkdir(self.workdir)
-        tool_dir = os.path.join(os.path.dirname(__file__), "../../../dl_robot/scripts/cloud")
-        server_script = os.path.join(tool_dir, "smart_parser_cache.py")
+        tool_dir = os.path.join(os.path.dirname(__file__), "../../../smart_parser_http")
+        server_script = os.path.join(tool_dir, "smart_parser_server.py")
         assert os.path.exists (server_script)
         self.server = subprocess.Popen(
             ['/usr/bin/python3',
@@ -32,7 +32,7 @@ class SmartParserServerForTesting:
 
         client = subprocess.Popen(
             ['/usr/bin/python3',
-               os.path.join(tool_dir, "smart_parser_cache_client.py"),
+               os.path.join(tool_dir, "smart_parser_client.py"),
               '--walk-folder-recursive',
               self.folder,
              '--action',

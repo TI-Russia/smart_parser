@@ -92,7 +92,7 @@ class TOfficeJoiner:
             if id > max_id:
                 r = {
                     'id': id,
-                    'name_ru': name_ru,
+                    'name': name_ru,
                     'type_id': type_id,
                     'parent_id': parent_id,
                     'region_id': region_id,
@@ -119,7 +119,7 @@ class TOfficeJoiner:
             for line in inp:
                 (name, region, web_site) = line.strip().split("\t")
                 fgup[web_site] =  {
-                    "name_ru": name,
+                    "name": name,
                     "region_id": self.region_name_to_id[region.lower()],
                     'type_id': None,
                     'parent_id': None
@@ -128,13 +128,13 @@ class TOfficeJoiner:
         return fgup
 
     def extend_offices_and_sites(self, new_office_dict):
-        name_to_office = dict((o['name_ru'], o['id']) for o in self.offices)
+        name_to_office = dict((o['name'], o['id']) for o in self.offices)
         max_id = max (o['id'] for o in self.offices)
         if max_id < TDeclarationWebSites.disclosures_office_start_id:
             max_id = TDeclarationWebSites.disclosures_office_start_id
 
         for web_site, office_info in new_office_dict.items():
-            office_id = name_to_office.get(office_info['name_ru'])
+            office_id = name_to_office.get(office_info['name'])
             has_web_site = self.web_sites.has_web_site(web_site)
             has_name = office_id is not None
             if has_web_site and has_name and \
@@ -147,12 +147,12 @@ class TOfficeJoiner:
                 self.offices.append(office_info)
                 self.web_sites.add_web_site(web_site, office_id)
                 self.logger.debug("add a new office {} with a new web site {}, set office_id={}".format(
-                    office_info['name_ru'], web_site, office_id))
+                    office_info['name'], web_site, office_id))
             elif has_name and not has_web_site:
                 self.web_sites.add_web_site(web_site, office_id)
             else:
                 self.logger.error ("cannot add office {} with website {}, there is an office "
-                            "with the same name or with the same web_site".format(office_info['name_ru'], web_site))
+                            "with the same name or with the same web_site".format(office_info['name'], web_site))
 
     """
     wd:Q2198484  - районы
@@ -175,7 +175,7 @@ class TOfficeJoiner:
                 name = x['itemLabel']
                 web_site = TDeclarationWebSites.get_web_domain_by_url(x['website'])
                 districts[web_site] =  {
-                    "name_ru": name,
+                    "name": name,
                     "region_id": None,
                     'type_id': None,
                     'parent_id': None
