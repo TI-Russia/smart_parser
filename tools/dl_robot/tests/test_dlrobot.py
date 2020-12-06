@@ -5,6 +5,7 @@ from common.download import TDownloadEnv
 from unittest import TestCase
 import os
 import threading
+import logging
 import shutil
 from datetime import datetime
 import json
@@ -55,10 +56,12 @@ class TTestEnv:
             self.web_site.shutdown()
         TDownloadEnv.CONVERSION_CLIENT.stop_conversion_thread()
         TDownloadEnv.CONVERSION_CLIENT = None
+        for handler in self.dlrobot.logger.handlers[:]:
+            handler.close()
+            self.dlrobot.logger.removeHandler(handler)
+        os.chdir(os.path.dirname(__file__))
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
-
-
 
     def get_result_files(self):
         files = list()
@@ -123,6 +126,7 @@ class TestRandomPdf(TestCase):
             outp.write(str(datetime.now()))
         converters = TExternalConverters()
         converters.convert_to_pdf(txt_file, pdf_file)
+        assert os.path.exists(pdf_file)
 
         self.env = TTestEnv(self.web_site_port, website_folder)
 

@@ -23,17 +23,6 @@ def setup_logging(logfilename):
     return logger
 
 
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--url", dest='source_url', required=True)
-    parser.add_argument("--start-anchor", dest='anchor')
-    parser.add_argument("--assert-child-url", dest='assert_child_url')
-    parser.add_argument("--visible", dest='headless', default=True, action="store_false")
-    parser.add_argument("--download-folder", dest='download_folder', default=None)
-    parser.add_argument("--check-scroll-down", dest="check_scroll_down", action="store_true", default=False)
-    return parser.parse_args()
-
-
 class TestSelenium(TestCase):
 
     def filter_link_elements_by_anchor(self, link_elements, start_anchor_text):

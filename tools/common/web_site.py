@@ -89,7 +89,7 @@ class TRobotWebSite:
             self.reach_status = TWebSiteReachStatus.out_of_reach
 
         try:
-            urls = SearchEngine().site_search(self.morda_url, "")
+            urls = SearchEngine().site_search(0, get_site_domain_wo_www(self.morda_url), "", self.parent_project.selenium_driver)
             if len(urls) == 0:
                 self.reach_status = TWebSiteReachStatus.abandoned
         except SerpException as exp:

@@ -155,6 +155,7 @@ class TDlrobot:
                 project.write_export_stats()
                 if self.args.click_features_file:
                     project.write_click_features(self.args.click_features_file)
+            return project
 
 
 if __name__ == "__main__":
