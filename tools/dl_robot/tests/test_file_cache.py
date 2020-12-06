@@ -110,7 +110,9 @@ class TestFileCache(TestCase):
             got_timeout_exception = True
         self.assertTrue(got_timeout_exception)
 
+    # cannot test it with other tests because
     def test_request_too_many_404(self):
+        TRequestPolicy.ENABLE = True
         url = self.build_url('/request_too_many_404')
         codes = list()
         for i in range(4):
@@ -118,6 +120,7 @@ class TestFileCache(TestCase):
                 x = TDownloadedFile(url)
             except RobotHttpException as exp:
                 codes.append(exp.http_code)
+
         canon_result = [404, 404, 404, 429]
         if codes != canon_result:
             print("test_request_too_many_404 is going to fail")

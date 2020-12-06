@@ -47,12 +47,18 @@ class TTestEnv:
                           directory=self.web_site_folder)
         self.web_site = http.server.HTTPServer(server_address=("127.0.0.1", port), RequestHandlerClass=handler)
         threading.Thread(target=start_server, args=(self.web_site,)).start()
+        self.dlrobot = TDlrobot(TDlrobot.parse_args(['--clear-cache-folder',  '--project', self.project_path]))
+        self.dlrobot.open_project()
 
     def tearDown(self):
         if self.web_site is not None:
             self.web_site.shutdown()
+        TDownloadEnv.CONVERSION_CLIENT.stop_conversion_thread()
+        TDownloadEnv.CONVERSION_CLIENT = None
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
+
+
 
     def get_result_files(self):
         files = list()
@@ -76,8 +82,6 @@ class TestSimple(TestCase):
         self.env.tearDown()
 
     def test_simple(self):
-        dlrobot = TDlrobot(TDlrobot.parse_args(['--clear-cache-folder',  '--project', self.env.project_path]))
-        dlrobot.open_project()
         self.assertEqual (len(self.env.get_result_files()), 1)
 
 
@@ -91,8 +95,6 @@ class TestArchive(TestCase):
         self.env.tearDown()
 
     def test_archive(self):
-        dlrobot = TDlrobot(TDlrobot.parse_args(['--clear-cache-folder',  '--project', self.env.project_path]))
-        dlrobot.open_project()
         self.assertEqual(len(self.env.get_result_files()), 4)
 
 
@@ -106,30 +108,28 @@ class TestWebSiteWithPdf(TestCase):
         self.env.tearDown()
 
     def test_pdf(self):
-        dlrobot = TDlrobot(TDlrobot.parse_args(['--clear-cache-folder',  '--project', self.env.project_path]))
-        dlrobot.open_project()
         self.assertEqual(len(self.env.get_result_files()), 1)
 
 
 class TestRandomPdf(TestCase):
     web_site_port = 8193
-    data_folder = "random_pdf"
 
     def setUp(self):
-        self.env = TTestEnv(self.web_site_port, "web_sites/random_pdf")
+        website_folder = "web_sites/random_pdf"
+        website_folder = os.path.join(os.path.dirname(__file__), website_folder)
+        txt_file = os.path.join(website_folder, "random.txt")
+        pdf_file = os.path.join(website_folder, "random.pdf")
+        with open(txt_file, "w") as outp:
+            outp.write(str(datetime.now()))
+        converters = TExternalConverters()
+        converters.convert_to_pdf(txt_file, pdf_file)
+
+        self.env = TTestEnv(self.web_site_port, website_folder)
 
     def tearDown(self):
         self.env.tearDown()
 
     def test_pdf(self):
-        txt_file = os.path.join(self.env.web_site_folder, "random.txt")
-        pdf_file = os.path.join(self.env.web_site_folder, "random.pdf")
-        with open (txt_file, "w") as outp:
-            outp.write(str(datetime.now()))
-        converters = TExternalConverters()
-        converters.convert_to_pdf(txt_file, pdf_file)
-        dlrobot = TDlrobot(TDlrobot.parse_args(['--clear-cache-folder',  '--project', self.env.project_path]))
-        dlrobot.open_project()
         self.assertEqual(len(self.env.get_result_files()), 0)
         self.assertGreater(TDownloadEnv.CONVERSION_CLIENT.all_pdf_size_sent_to_conversion, 0)
 
@@ -144,8 +144,6 @@ class TestDownloadWithJs(TestCase):
         self.env.tearDown()
 
     def test_download_with_js1(self):
-        dlrobot = TDlrobot(TDlrobot.parse_args(['--clear-cache-folder',  '--project', self.env.project_path]))
-        dlrobot.open_project()
         self.assertEqual (len(self.env.get_result_files()), 2)
 
 
@@ -159,6 +157,4 @@ class TestWebsiteWithJs(TestCase):
         self.env.tearDown()
 
     def test_download_with_js2(self):
-        dlrobot = TDlrobot(TDlrobot.parse_args(['--clear-cache-folder',  '--project', self.env.project_path]))
-        dlrobot.open_project()
         self.assertEqual (len(self.env.get_result_files()), 1)

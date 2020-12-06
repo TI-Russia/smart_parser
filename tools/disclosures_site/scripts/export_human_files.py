@@ -1,5 +1,5 @@
 from declarations.input_json import TSourceDocument, TDeclaratorReference,  TDlrobotHumanFile, TIntersectionStatus
-from common.archives import dearchive_one_archive
+from common.archives import TDearchiver
 
 import pymysql
 import os
@@ -43,10 +43,11 @@ def parse_args():
     return parser.parse_args()
 
 
-def unzip_one_archive(input_file):
+def unarchive(logger, input_file):
     base_name, file_extension = os.path.splitext(os.path.basename(input_file))
     output_folder = os.path.dirname(input_file)
-    for _, _, filename in dearchive_one_archive(file_extension, input_file, base_name, output_folder):
+    dearchiver = TDearchiver(logger, output_folder)
+    for _, _, filename in dearchiver.dearchive_one_archive(file_extension, input_file, base_name):
         yield filename
 
 
@@ -59,7 +60,7 @@ def download_file_and_unzip(logger, file_url, filename):
             fd.write(result.content)
         if extension == '.zip':
             try:
-                for archive_filename in unzip_one_archive(filename):
+                for archive_filename in unarchive(logger, filename):
                     yield archive_filename
             except Exception as e:
                 logger.error("cannot unzip  {}, exception={}".format(filename, e))

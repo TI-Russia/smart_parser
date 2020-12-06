@@ -3,7 +3,7 @@ import os
 from collections import defaultdict
 import shutil
 import hashlib
-from common.archives import dearchive_one_archive, is_archive_extension
+from common.archives import TDearchiver
 from common.download import ACCEPTED_DECLARATION_FILE_EXTENSIONS, TDownloadEnv, TDownloadedFile
 from common.content_types import DEFAULT_HTML_EXTENSION, DEFAULT_PDF_EXTENSION
 from DeclDocRecognizer.dlrecognizer import run_dl_recognizer, DL_RECOGNIZER_ENUM
@@ -116,8 +116,9 @@ class TExportEnvironment:
             self.logger.error("cannot find cached file {}, cache is broken or 404 on fetching?".format(cached_file))
             return
         new_files = list()
-        if is_archive_extension(extension):
-            for archive_index, name_in_archive, export_filename in dearchive_one_archive(extension, cached_file, index, office_folder):
+        if TDearchiver.is_archive_extension(extension):
+            dearchiver = TDearchiver(self.logger, office_folder)
+            for archive_index, name_in_archive, export_filename in dearchiver.dearchive_one_archive(extension, cached_file, index):
                 self.logger.debug("export temporal file {}, archive_index: {} to {}".format(cached_file, archive_index, export_filename))
                 new_files.append(TExportFile(link_info, url, cached_file, export_filename, archive_index, name_in_archive))
 

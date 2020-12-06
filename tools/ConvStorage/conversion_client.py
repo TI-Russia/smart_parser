@@ -8,7 +8,7 @@ import hashlib
 import os
 import queue
 import json
-from common.archives import dearchive_one_archive, is_archive_extension
+from common.archives import TDearchiver
 from common.content_types import DEFAULT_PDF_EXTENSION
 from tempfile import TemporaryDirectory
 from pathlib import Path
@@ -49,11 +49,11 @@ class TDocConversionClient(object):
                 task = self._input_tasks.get(timeout=self.input_task_timeout)
             except queue.Empty as exp:
                 continue
-            if is_archive_extension(task.file_extension):
+            if TDearchiver.is_archive_extension(task.file_extension):
                 with TemporaryDirectory(prefix="conversion_folder", dir=".") as tmp_folder:
-                    for archive_index, name_in_archive, export_filename in dearchive_one_archive(task.file_extension,
-                                                                                                 task.file_path, 0,
-                                                                                                 tmp_folder):
+                    dearchiver = TDearchiver(self.logger, tmp_folder)
+                    for archive_index, name_in_archive, export_filename in dearchiver.dearchive_one_archive(
+                                        task.file_extension, task.file_path, 0,):
                         if export_filename.endswith(DEFAULT_PDF_EXTENSION):
                             self._send_file_to_conversion_db(export_filename, DEFAULT_PDF_EXTENSION, task.rebuild)
             else:
@@ -160,7 +160,7 @@ class TDocConversionClient(object):
             return False
 
     def start_conversion_task_if_needed(self, filename, file_extension, rebuild=False):
-        if file_extension == DEFAULT_PDF_EXTENSION or is_archive_extension(file_extension):
+        if file_extension == DEFAULT_PDF_EXTENSION or TDearchiver.is_archive_extension(file_extension):
             max_file_size = 2 ** 25
             if Path(filename).stat().st_size  > max_file_size:
                 self.logger.debug("file {} is too large for conversion (size must less than {} bytes) ".format(
