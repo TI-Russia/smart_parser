@@ -52,7 +52,7 @@ class TTestEnv:
         self.server_thread.join(0)
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
-
+        os.chdir( os.path.dirname(__file__))
 
 class TestTSourceDocClient1(TestCase):
     def setUp(self):
