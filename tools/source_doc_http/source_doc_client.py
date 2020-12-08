@@ -5,7 +5,7 @@ import urllib.error
 import os
 import json
 import argparse
-
+import sys
 
 def setup_logging(logfilename):
     logger = logging.getLogger("src_doc_cln")
@@ -123,10 +123,10 @@ if __name__ == "__main__":
                 if file_data is None:
                     client.logger.error("{} not found".format(sha256_or_file_path))
                 else:
-                    file_path = os.join(args.output_folder, "{}{}".format(sha256_or_file_path, file_extension))
+                    file_path = os.path.join(args.output_folder, "{}{}".format(sha256_or_file_path, file_extension))
                     client.logger.debug("create file {}".format(file_path))
                     with open (file_path, "wb") as outp:
                         outp.write(file_data)
             else:
-                client.send_file(f)
+                client.send_file(sha256_or_file_path)
 
