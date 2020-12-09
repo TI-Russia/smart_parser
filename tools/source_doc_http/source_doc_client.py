@@ -7,6 +7,7 @@ import json
 import argparse
 import sys
 
+
 def setup_logging(logfilename):
     logger = logging.getLogger("src_doc_cln")
     logger.setLevel(logging.DEBUG)

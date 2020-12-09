@@ -54,6 +54,7 @@ class TTestEnv:
             shutil.rmtree(self.data_folder, ignore_errors=True)
         os.chdir( os.path.dirname(__file__))
 
+
 class TestTSourceDocClient1(TestCase):
     def setUp(self):
         self.env = TTestEnv(8492)
