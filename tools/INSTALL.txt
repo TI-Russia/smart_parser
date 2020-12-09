@@ -60,6 +60,7 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
     export CENTRAL_HOST_NAME=migalka
     export SMART_PARSER_SERVER_ADDRESS=$CENTRAL_HOST_NAME:8165
     export DLROBOT_CENTRAL_SERVER_ADDRESS=$CENTRAL_HOST_NAME:8089
+    export SOURCE_DOC_SERVER_ADDRESS=$CENTRAL_HOST_NAME:8090
 
     source ~/.profile
 
