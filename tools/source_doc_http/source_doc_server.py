@@ -146,7 +146,7 @@ class TSourceDocHTTPServer(http.server.HTTPServer):
         except IOError as exp:
             self.logger.error("cannot write repeat header for {} to {}, exception:{}".format(
                 sha256, output_bin_file.name, exp))
-            return
+            raise
         try:
             start_file_pos = output_bin_file.tell()
             output_bin_file.write(file_bytes)
@@ -154,7 +154,7 @@ class TSourceDocHTTPServer(http.server.HTTPServer):
         except IOError as exp:
             self.logger.error("cannot write file {} (size {}) to {}, exception:{}".format(
                 sha256, file_bytes, output_bin_file.name, exp))
-            return
+            raise
 
         try:
             self.src_doc_params[sha256] = "{};{};{};{}".format(
@@ -165,6 +165,7 @@ class TSourceDocHTTPServer(http.server.HTTPServer):
         except Exception as exp:
             self.logger.error("cannot add file info {} to {}, exception:{}".format(
                 sha256, self.dbm_path, exp))
+            raise
 
         self.logger.debug("put source document {} to bin file {}".format(sha256, len(self.files) - 1 ))
         self.update_stats(len(file_bytes))

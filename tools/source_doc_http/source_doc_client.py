@@ -36,6 +36,7 @@ class TSourceDocClient(object):
         parser.add_argument("--action", dest='action', default=None, help="can be put, get or stats", required=False)
         parser.add_argument("--timeout", dest='timeout', default=300, type=int)
         parser.add_argument("--output-folder", dest='output_folder', default=".")
+        parser.add_argument("--disable-first-ping", dest='enable_first_ping', action="store_false", default=True)
         parser.add_argument('files', nargs='*')
         args = parser.parse_args(arg_list)
         if args.server_address is None:
@@ -44,11 +45,7 @@ class TSourceDocClient(object):
         return args
 
     def assert_server_alive(self):
-        if self.server_address is None:
-            raise Exception("environment variable SOURCE_DOC_SERVER_ADDRESS is not set")
-
         self.logger.debug("check server {} is alive".format(self.server_address))
-
         try:
             with urllib.request.urlopen("http://" + self.server_address + "/ping",
                                         timeout=self.timeout) as response:
@@ -67,7 +64,8 @@ class TSourceDocClient(object):
             self.logger.error("specify environment variable SOURCE_DOC_SERVER_ADDRESS")
             assert self.server_address is not None
         self.timeout = args.timeout
-        self.assert_server_alive()
+        if args.enable_first_ping:
+            self.assert_server_alive()
 
     def send_file(self, file_path):
         conn = http.client.HTTPConnection(self.server_address)
