@@ -6,6 +6,7 @@ import os
 import json
 import argparse
 import sys
+from common.content_types import ACCEPTED_DOCUMENT_EXTENSIONS
 
 
 def setup_logging(logfilename):
