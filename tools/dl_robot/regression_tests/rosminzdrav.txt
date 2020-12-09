@@ -1,0 +1,9 @@
+{
+    "sites": [
+        {
+            "morda_url": "http://www.rosminzdrav.ru",
+            "name": ""
+        }
+    ]
+}
+
