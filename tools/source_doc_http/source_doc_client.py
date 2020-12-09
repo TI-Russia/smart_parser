@@ -37,6 +37,7 @@ class TSourceDocClient(object):
         parser.add_argument("--timeout", dest='timeout', default=300, type=int)
         parser.add_argument("--output-folder", dest='output_folder', default=".")
         parser.add_argument("--disable-first-ping", dest='enable_first_ping', action="store_false", default=True)
+        parser.add_argument("--walk-folder-recursive", dest='walk_folder_recursive', default=None, required=False)
         parser.add_argument('files', nargs='*')
         args = parser.parse_args(arg_list)
         if args.server_address is None:
@@ -110,13 +111,25 @@ class TSourceDocClient(object):
             return None, None
 
 
+def get_files(args):
+    if args.walk_folder_recursive is not None:
+        for root, dirs, files in os.walk(args.walk_folder_recursive):
+            for filename in files:
+                _, extension = os.path.splitext(filename)
+                if extension in ACCEPTED_DOCUMENT_EXTENSIONS:
+                    yield os.path.join(root, filename)
+    else:
+        for f in args.files:
+            yield f
+
+
 if __name__ == "__main__":
     args = TSourceDocClient.parse_args(sys.argv[1:])
     client = TSourceDocClient(args)
     if args.action == "stats":
         print(json.dumps(client.get_stats()))
     else:
-        for sha256_or_file_path in args.files:
+        for sha256_or_file_path in get_files(args):
             if args.action == "get":
                 file_data, file_extension = client.retrieve_file_data_by_sha256(sha256_or_file_path)
                 if file_data is None:
