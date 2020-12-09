@@ -91,11 +91,19 @@ def signal_term_handler(signum, frame):
 class TDlrobotWorker:
     def __init__(self, args):
         self.args = args
-        self.logger = setup_logging(self.args.log_file_name)
         self.running_project_file = None
-        self.setup_environment()
         self.working = True
         self.thread_pool = ThreadPoolExecutor(max_workers=self.args.worker_count)
+        self.setup_working_folder()
+        self.logger = setup_logging(self.args.log_file_name)
+        self.setup_environment()
+
+    def setup_working_folder(self):
+        if os.path.exists(self.args.working_folder):
+            shutil.rmtree(self.args.working_folder, ignore_errors=True)
+        os.makedirs(self.args.working_folder, exist_ok=True)
+        # important
+        os.chdir(self.args.working_folder)
 
     @staticmethod
     def parse_args(arg_list):
@@ -121,6 +129,7 @@ class TDlrobotWorker:
         parser.add_argument("--fake-dlrobot", dest='fake_dlrobot', required=False, default=False, action="store_true")
         parser.add_argument("--worker-count", dest='worker_count', default=2, type=int)
         parser.add_argument(dest='action', help="can be start, stop, restart, run_once")
+
 
         args = parser.parse_args(arg_list)
         return args
@@ -300,12 +309,6 @@ class TDlrobotWorker:
         return True
 
     def setup_environment(self):
-        self.logger.info("home folder = {}, working folder={}\n".format(self.args.home, self.args.working_folder))
-        if os.path.exists(self.args.working_folder):
-            shutil.rmtree(self.args.working_folder, ignore_errors=True)
-        os.makedirs(self.args.working_folder, exist_ok=True)
-        # important
-        os.chdir(self.args.working_folder)
         self.logger.debug("current dir: {}".format(os.path.realpath(os.path.curdir)))
         os.environ['ASPOSE_LIC'] = os.path.join(self.args.home, "lic.bin")
         os.environ['PYTHONPATH'] = os.path.join(self.args.home, "smart_parser/tools")
