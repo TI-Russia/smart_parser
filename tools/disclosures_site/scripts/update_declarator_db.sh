@@ -13,9 +13,14 @@ source $(dirname $0)/update_common.sh
     echo "CREATE DATABASE declarator CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
     create user if not exists 'declarator'@ identified by 'declarator';
     GRANT ALL PRIVILEGES ON *.* TO 'declarator'@;" | mysql
-    #browse https://declarator.org/manage/dump_files/ и найти свежий дамп
-    wget https://declarator.org/manage/dump_files/prod????.tar.gz
-    zcat prod????.tar.gz | mysql -D declarator
+    #посмотреть https://declarator.org/manage/dump_files/ и скачать свежий дамп, например
+    wget https://declarator.org/manage/dump_files/prod20201208_c2e1d1df8952449082527780429c0068.zip
+
+    # zcat prod20201208_c2e1d1df8952449082527780429c0068.zip | mysql -D declarator -u declarator -pdeclarator
+    # zcat стал выдавать ошибку gzip: prod20201208_c2e1d1df8952449082527780429c0068.zip: invalid compressed data--length error
+    # а unzip не выдает
+    unzip prod20201208_c2e1d1df8952449082527780429c0068.zip
+    cat prod20201208.sql  | mysql -D declarator -u declarator -pdeclarator
 
 
 #2.2  получить все новые (!) файлы из declarator в каталог $HUMAN_FILES_FOLDER и создать файл human_files.json
