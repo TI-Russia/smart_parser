@@ -1,0 +1,10 @@
+SHELL=/bin/bash
+MAILTO=username
+TOOLS=/home/sokirko/smart_parser/tools/
+CONV_STATS=/home/sokirko/declarator_hdd/declarator/convert_stats.txt
+CENTRAL_STATS=/home/sokirko/declarator_hdd/declarator/dlrobot_central/processed_projects/dlrobot_remote_calls.dat
+OUTPUT_FOLDER=/var/www/smart_parser/tools/disclosures_site/disclosures/static/dlrobot
+
+##Mins  Hours  Days   Months  Day of the week
+*/10       *     *        *      *      python $TOOLS/ConvStorage/scripts/get_stats.py --history-file $CONV_STATS
+*/10       *     *        *      *      python $TOOLS/dlrobot_server/dlrobot_stats.py --central-stats-file  $CENTRAL_STATS --conversion-server-stats $CONV_STATS --output-folder $OUTPUT_FOLDER

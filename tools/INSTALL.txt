@@ -78,8 +78,11 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
       sudo tar xfz geckodriver-v0.26.0-linux64.tar.gz
 
 2.10. Test dlrobot
-    cd ~/smart_parser/tools/robots/dlrobot/tests
-    bash run_tests.sh
+    cd ~/smart_parser/dl_robot/tests
+    bash tests.sh
+
+    cd ~/smart_parser/tools/dlrobot_server
+    python3 -m unittest
 
 
 =====================================================================================
@@ -94,34 +97,34 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
    Which zone do you want to use as a profile default ru-central1-c
    yc compute instance list
 
-3.2 Запуск сервиса smart_parser_cache
-    export SMART_PARSER_CACHE_FOLDER=~/declarator_hdd/declarator/smart_parser_cache
-    mkdir -p $SMART_PARSER_CACHE_FOLDER
-    cd $SMART_PARSER_CACHE_FOLDER
-    rm nohup.out; nohup python3 ~/smart_parser/tools/robots/dlrobot/scripts/cloud/smart_parser_cache.py &
+3.2 Запуск сервиса smart_parser_server
+    cd ~/smart_parser/tools/smart_parser_http && python3 -m unittest
+    export SMART_PARSER_SERVER_FOLDER=~/declarator_hdd/declarator/smart_parser_server
+    mkdir -p $SMART_PARSER_SERVER_FOLDER
+    cd $SMART_PARSER_SERVER_FOLDER
+    rm nohup.out; nohup python3 ~/smart_parser/tools/smart_parser_http/smart_parser_server.py &
 
-3.3 Построение списка всех входных доменов
-    # optional python $TOOLS/robots/dlrobot/scripts/check_domains.py --human-files $HUMAN_FILES_JSON --reached-domains ../domains/new_domains.txt  --timeouted-domains timeouted-domains.txt
-    python $TOOLS/robots/dlrobot/scripts/create_by_domains.py --domains $TOOLS/robots/dlrobot/domains.txt --domains $TOOLS/robots/dlrobot/domains/fix_region.txt --output-folder $INPUT_DLROBOT_PROJECTS
+3.3 Запуск сервера исходных документов
+    export SOURCE_DOC_SERVER_FOLDER=~/declarator_hdd/Yandex.Disk/declarator/source_doc
+    mkdir -p $SOURCE_DOC_SERVER_FOLDER
+    cd $SOURCE_DOC_SERVER_FOLDER
+    rm nohup.out; nohup python3 ~/smart_parser/tools/source_doc_http/source_doc_server.py --data-folder bin_files --log-file-name  /tmp/source_doc_server.log
+
+3.4 Обновление списка всех входных доменов (опционально)
+    python $TOOLS/disclosures_site/scripts/update_offices.py
 
 
-3.4  Запуск сервиса dlrobot_central
+3.5  Запуск сервиса dlrobot_central
    export DLROBOT_CENTRAL_FOLDER=~/declarator_hdd/declarator/dlrobot_central
    mkdir $DLROBOT_CENTRAL_FOLDER
    cd $DLROBOT_CENTRAL_FOLDER
-   nohup python3 $TOOLS/robots/dlrobot/scripts/cloud/dlrobot_central.py  \
-                 --input-folder input_projects \
-                 --result-folder processed_projects \
-                 --read-previous-results --check-yandex-cloud &
+   rm nohup.out nohup python3 ~/smart_parser/tools/dlrobot_server/dlrobot_central.py  \
+                --server-address $DLROBOT_CENTRAL_SERVER_ADDRESS \
+                --input-task-list ~/smart_parser/tools/disclosures_site/data/web_sites.json \
+                --result-folder processed_projects --read-previous-results --check-yandex-cloud
 
-3.5  init crontab in central for monitoring:
-crontab -e
+3.6  init crontab in central for monitoring (crontab -e), add lines from $TOOLS/dlrobot_server/crobtab.txt
 
-SHELL=/bin/bash
-MAILTO=username
-#Mins  Hours  Days   Months  Day of the week
-*/10       *     *        *      *      python /home/sokirko/smart_parser/tools/ConvStorage/scripts/get_stats.py --history-file /home/sokirko/declarator_hdd/declarator/convert_stats.txt
-*/10       *     *        *      *      python /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_stats.py --central-stats-file  /home/sokirko/declarator_hdd/declarator/2020-09-29/processed_projects/dlrobot_remote_calls.dat --conversion-server-stats /home/sokirko/declarator_hdd/declarator/convert_stats.txt --output-folder ~/smart_parser.disclosures_prod/tools/disclosures_site/disclosures/static/dlrobot
 
 
 
@@ -130,7 +133,7 @@ MAILTO=username
 =====================================================================================
 
 4.1 Create dlrobot worker service:
-    sudo cp ~/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_worker.service /etc/systemd/system
+    sudo cp ~/smart_parser/tools/robots/dlrobot_server/dlrobot_worker.service /etc/systemd/system
     sudo chmod 644 /etc/systemd/system/dlrobot_worker.service
     sudo systemctl enable dlrobot_worker
     sudo systemctl daemon-reload
