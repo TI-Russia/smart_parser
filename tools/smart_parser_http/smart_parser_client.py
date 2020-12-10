@@ -55,7 +55,7 @@ class TSmartParserCacheClient(object):
         try:
             with urllib.request.urlopen("http://" + self.server_address + "/ping",
                                         timeout=self.timeout) as response:
-                if response.read() == "yes":
+                if response.read() == "pong":
                     self.logger.debug("server {} is alive".format(self.server_address))
                     return True
         except Exception as exp:
