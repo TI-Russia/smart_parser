@@ -20,7 +20,6 @@ def parse_args():
     return args
 
 
-
 def kill_crawling():
     os.system("pkill -f firefox")
     os.system("pkill -f geckodriver")
@@ -105,12 +104,17 @@ def ssh_command(host, cmd_args):
 def update_cloud_from_central(args):
     hosts = list(get_hosts(args))
     for host, name in hosts:
+        if os.system("ping -c 1 {}".format(host)) != 0:
+            raise Exception("cannot ping host {}".format(host))
+
+    for host, name in hosts:
         proc = ssh_command (host, ["git", "-C", args.smart_parser_folder,  "pull"])
         proc.wait(600)
         if proc.returncode != 0:
             raise Exception("cannot update git on host {}".format(name))
     if args.action == "only_git_pull":
         return
+
     updaters = list()
     for host, name in hosts:
         cmd_args = ["python3", os.path.realpath(__file__)]
