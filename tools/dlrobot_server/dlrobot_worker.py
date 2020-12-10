@@ -45,9 +45,9 @@ def test_dlrobot_script(logger):
         stderr=subprocess.DEVNULL,
         env=os.environ
         )
-    exit_code = proc.wait()
-    logger.debug ("run dlrobot.py --help, exit_code={}".format(exit_code))
-    return exit_code == 0
+    proc.wait()
+    logger.debug ("run dlrobot.py --help, exit_code={}".format(proc.returncode))
+    return proc.returncode == 0
 
 
 def check_system_resources(logger):
@@ -217,7 +217,8 @@ class TDlrobotWorker:
                         env=my_env,
                         cwd=project_folder,
                         text=True)
-            exit_code = proc.wait(TTimeouts.OVERALL_HARD_TIMEOUT_IN_WORKER)  # 4 hours
+            proc.wait(TTimeouts.OVERALL_HARD_TIMEOUT_IN_WORKER)  # 4 hours
+            exit_code = proc.returncode
 
         except subprocess.TimeoutExpired as exp:
             self.logger.error("wait raises timeout exception:{},  timeout={}".format(
@@ -343,7 +344,7 @@ class TDlrobotWorker:
                 try:
                     project_file = self.get_new_task_job()
                     if project_file is not None:
-                        exit_code = self.run_dlrobot(project_file
+                        exit_code = self.run_dlrobot(project_file)
                         if self.working:
                             self.send_results_back(project_file, exit_code)
                 except ConnectionError as err:

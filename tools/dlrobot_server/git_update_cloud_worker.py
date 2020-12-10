@@ -10,7 +10,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--cloud",  dest='cloud', default=False, action="store_true",
                         required=False)
-    parser.add_argument("--action",  dest='action', default="restart", help="can be stop or restart")
+    parser.add_argument("--action",  dest='action', default="restart", help="can be start, stop or restart, only_git_pull")
     parser.add_argument("--host",  dest='host', default=None,  required=False)
 
     parser.add_argument("--smart-parser-folder",  dest='smart_parser_folder', default='/home/sokirko/smart_parser',
@@ -19,13 +19,6 @@ def parse_args():
     args = parser.parse_args()
     return args
 
-
-def git_pull(path):
-    cmd = "git -C {} pull".format(path)
-    exit_code = os.system(cmd)
-    if exit_code != 0:
-        print ("cannot git pull")
-        raise Exception(cmd + " failed")
 
 
 def kill_crawling():
@@ -88,39 +81,51 @@ def get_hosts(args):
 
 
 def update_one_worker_on_the_worker(args):
-    if args.break_crawling:
-        stop_dlrobot_worker_with_losses()
-    else:
-        stop_dlrobot_worker_gently()
+    if args.action == "restart" or args.action == "stop":
+        if args.break_crawling:
+            stop_dlrobot_worker_with_losses()
+        else:
+            stop_dlrobot_worker_gently()
+
     check_free_disk_space()
-    git_pull(args.smart_parser_folder)
-    if args.action == "restart":
+
+    if args.action == "restart" or args.action == "start":
         start_dlrobot_worker()
-    print("initalize success")
+
+
+def ssh_command(host, cmd_args):
+    cmd_args = ['ssh',
+                '-o', "StrictHostKeyChecking no",
+                host,
+                ] + cmd_args
+    print(" ".join(cmd_args))
+    return subprocess.Popen(cmd_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 
 def update_cloud_from_central(args):
-    script = os.path.realpath(__file__)
+    hosts = list(get_hosts(args))
+    for host, name in hosts:
+        proc = ssh_command (host, ["git", "-C", args.smart_parser_folder,  "pull"])
+        proc.wait(600)
+        if proc.returncode != 0:
+            raise Exception("cannot update git on host {}".format(name))
+    if args.action == "only_git_pull":
+        return
     updaters = list()
-    for host, name in get_hosts(args):
-        print ("update {}".format(name))
-        cmd_args =['ssh',
-              '-o',  "StrictHostKeyChecking no",
-              host,
-              "python3",
-               script
-             ]
+    for host, name in hosts:
+        cmd_args = ["python3", os.path.realpath(__file__)]
         if args.break_crawling:
             cmd_args.append("--break-crawling")
-        print(" ".join(cmd_args))
-        proc = subprocess.Popen(cmd_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if args.action != "restart":
+            cmd_args.extend(['--action', args.action])
+        proc = ssh_command (host, cmd_args)
         updaters.append(proc)
 
     for p in updaters:
-        exit_code = p.wait(5*60*60)
+        p.wait(5*60*60)
         print(p.communicate(timeout=10))
-        if exit_code != 0:
-            raise Exception("cannot update cloud")
+        if p.returncode != 0:
+            raise Exception("cannot update, failed command: {}".format(p.args))
 
 
 if __name__ == "__main__":
