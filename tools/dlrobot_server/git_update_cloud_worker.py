@@ -10,6 +10,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--cloud",  dest='cloud', default=False, action="store_true",
                         required=False)
+    parser.add_argument("--action",  dest='action', default="restart", help="can be stop or restart")
     parser.add_argument("--host",  dest='host', default=None,  required=False)
 
     parser.add_argument("--smart-parser-folder",  dest='smart_parser_folder', default='/home/sokirko/smart_parser',
@@ -93,7 +94,8 @@ def update_one_worker_on_the_worker(args):
         stop_dlrobot_worker_gently()
     check_free_disk_space()
     git_pull(args.smart_parser_folder)
-    start_dlrobot_worker()
+    if args.action == "restart":
+        start_dlrobot_worker()
     print("initalize success")
 
 

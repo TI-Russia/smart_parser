@@ -68,7 +68,7 @@ def delete_very_old_folders(logger):
     with os.scandir("") as it:
         for entry in it:
             if entry.is_dir() and entry.stat().st_mtime < now - TTimeouts.TIMEOUT_IN_WORKER_CLEAN_JUNK:
-                logger.error("delete folder {} while it is too old, see TTimeouts.TIMEOUT_IN_WORKER_CLEAN_JUNK".format(entry.name))
+                logger.error("delete folder {} because it is too old, see TTimeouts.TIMEOUT_IN_WORKER_CLEAN_JUNK".format(entry.name))
                 shutil.rmtree(str(entry.name), ignore_errors=True)
 
 
@@ -91,7 +91,6 @@ def signal_term_handler(signum, frame):
 class TDlrobotWorker:
     def __init__(self, args):
         self.args = args
-        self.running_project_file = None
         self.working = True
         self.thread_pool = ThreadPoolExecutor(max_workers=self.args.worker_count)
         self.setup_working_folder()
@@ -226,7 +225,7 @@ class TDlrobotWorker:
         except Exception as exp:
             self.logger.error(exp)
 
-        self.logger.debug("exit_code={}".format(exit_code))
+        self.logger.debug("{} exit_code={}".format(project_file, exit_code))
         # up to now we do not need a .click_paths file, but this file is written at the very end (after file export)
         goal_file = project_file + ".click_paths"
         if not os.path.exists(goal_file):
@@ -330,7 +329,6 @@ class TDlrobotWorker:
 
     def run_dlrobot_and_send_results_in_thread(self):
         while self.working:
-            self.running_project_file = None
             if os.path.exists(PITSTOP_FILE):
                 self.logger.debug("exit because file {} exists".format(PITSTOP_FILE))
                 break
@@ -343,16 +341,16 @@ class TDlrobotWorker:
                 time.sleep(60 * 10)  # there is a hope that the second process frees the disk
             else:
                 try:
-                    self.running_project_file = self.get_new_task_job()
-                    if self.running_project_file is not None:
-                        exit_code = self.run_dlrobot(self.running_project_file)
+                    project_file = self.get_new_task_job()
+                    if project_file is not None:
+                        exit_code = self.run_dlrobot(project_file
                         if self.working:
-                            self.send_results_back(self.running_project_file, exit_code)
+                            self.send_results_back(project_file, exit_code)
                 except ConnectionError as err:
                     self.logger.error(str(err))
             if self.args.action == "run_once":
                 break
-            if self.running_project_file is None:
+            if running_project_file is None:
                 time.sleep(self.args.timeout_before_next_task)
 
     def run_thread_pool(self):
