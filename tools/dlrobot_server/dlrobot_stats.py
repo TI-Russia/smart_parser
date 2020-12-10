@@ -7,7 +7,7 @@ import sys
 import json
 from collections import defaultdict
 
-from .remote_call import TRemoteDlrobotCall
+from dlrobot_server.remote_call import TRemoteDlrobotCall
 
 #see examples in crontab.txt
 

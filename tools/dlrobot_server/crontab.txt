@@ -6,5 +6,5 @@ CENTRAL_STATS=/home/sokirko/declarator_hdd/declarator/dlrobot_central/processed_
 OUTPUT_FOLDER=/var/www/smart_parser/tools/disclosures_site/disclosures/static/dlrobot
 
 ##Mins  Hours  Days   Months  Day of the week
-*/10       *     *        *      *      python $TOOLS/ConvStorage/scripts/get_stats.py --history-file $CONV_STATS
-*/10       *     *        *      *      python $TOOLS/dlrobot_server/dlrobot_stats.py --central-stats-file  $CENTRAL_STATS --conversion-server-stats $CONV_STATS --output-folder $OUTPUT_FOLDER
+*/10       *     *        *      *      python3 $TOOLS/ConvStorage/scripts/get_stats.py --history-file $CONV_STATS
+*/10       *     *        *      *      python3 $TOOLS/dlrobot_server/dlrobot_stats.py --central-stats-file  $CENTRAL_STATS --conversion-server-stats $CONV_STATS --output-folder $OUTPUT_FOLDER
