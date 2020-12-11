@@ -2,18 +2,18 @@ import declarations.models as models
 from declarations.serializers import TSmartParserJsonReader
 from declarations.documents import stop_elastic_indexing, start_elastic_indexing
 from declarations.management.commands.permalinks import TPermaLinksDB
-from django.core.management import BaseCommand
-from django.db import transaction
-from django.db import DatabaseError
+from smart_parser_http.smart_parser_client import TSmartParserCacheClient
+from declarations.input_json import TDlrobotHumanFile
 
 from multiprocessing import Pool
 import os
 from functools import partial
 import json
 import logging
-from declarations.input_json import TDlrobotHumanFile
 from collections import defaultdict
-from smart_parser_http.smart_parser_client import TSmartParserCacheClient
+from django.core.management import BaseCommand
+from django.db import transaction
+from django.db import DatabaseError
 
 
 def setup_logging(logfilename):
@@ -93,8 +93,7 @@ class TImporter:
         office = models.Office(id=src_doc.calculated_office_id)
         source_document_in_db = models.Source_Document(office=office,
                                                        sha256=sha256,
-                                                       file_path=src_doc.document_path,
-                                                       intersection_status=src_doc.intersection_status,
+                                                       intersection_status=src_doc.get_intersection_status(),
                                                        )
         source_document_in_db.id = self.primary_keys_builder.get_record_id(source_document_in_db)
         source_document_in_db.save()
@@ -171,17 +170,16 @@ class TImporter:
         for sha256 in self.office_to_source_documents[office_id]:
             src_doc = self.dlrobot_human.document_collection[sha256]
             assert src_doc.calculated_office_id == office_id
-            input_path = self.dlrobot_human.get_document_path(src_doc, absolute=True)
             smart_parser_json = self.get_smart_parser_json(all_imported_human_jsons, sha256, src_doc)
             doc_file_in_db = self.register_document_in_database(sha256, src_doc)
             if smart_parser_json is None:
-                self.logger.debug("file {} has no valid smart parser json, skip it".format(input_path))
+                self.logger.debug("file {} has no valid smart parser json, skip it".format(sha256))
             else:
                 try:
                     sections_count = self.import_one_smart_parser_json(src_doc.get_declarator_income_year(), doc_file_in_db, smart_parser_json)
-                    TImporter.logger.debug("import {} sections from {}".format(sections_count, input_path))
+                    TImporter.logger.debug("import {} sections from {}".format(sections_count, sha256))
                 except TSmartParserJsonReader.SerializerException as exp:
-                    TImporter.logger.error("Error! cannot import smart parser json for file {}: {} ".format(input_path, exp))
+                    TImporter.logger.error("Error! cannot import smart parser json for file {}: {} ".format(sha256, exp))
 
 
 def process_one_file_in_thread(importer: TImporter, office_id):

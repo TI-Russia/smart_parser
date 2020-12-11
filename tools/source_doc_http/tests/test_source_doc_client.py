@@ -46,9 +46,7 @@ class TTestEnv:
         self.client = TSourceDocClient(TSourceDocClient.parse_args(client_args))
 
     def tearDown(self):
-        self.server.close_files()
-        self.server.server_close()
-        self.server.shutdown()
+        self.server.stop_server()
         self.server_thread.join(0)
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)

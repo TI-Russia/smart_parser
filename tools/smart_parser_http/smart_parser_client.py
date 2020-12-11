@@ -75,6 +75,7 @@ class TSmartParserCacheClient(object):
             assert self.server_address is not None
         self.timeout = args.timeout
         self.assert_server_alive()
+        self.args = args
 
     def send_file(self, file_path):
         conn = http.client.HTTPConnection(self.server_address)
@@ -122,32 +123,31 @@ class TSmartParserCacheClient(object):
             sha256 = hashlib.sha256(inp.read()).hexdigest()
             return self.retrieve_json_by_sha256(sha256)
 
+    def get_files(self):
+        if self.args.walk_folder_recursive is not None:
+            for root, dirs, files in os.walk(self.args.walk_folder_recursive):
+                for filename in files:
+                    _, extension = os.path.splitext(filename)
+                    if extension in ACCEPTED_DOCUMENT_EXTENSIONS:
+                        yield os.path.join(root, filename)
+        else:
+            for f in self.args.files:
+                yield f
 
-def get_files(args):
-    if args.walk_folder_recursive is not None:
-        for root, dirs, files in os.walk(args.walk_folder_recursive):
-            for filename in files:
-                _, extension = os.path.splitext(filename)
-                if extension in ACCEPTED_DOCUMENT_EXTENSIONS:
-                    yield os.path.join(root, filename)
-    else:
-        for f in args.files:
-            yield f
+    def main(self):
+        if self.args.action == "stats":
+            print(json.dumps(self.get_stats()))
+        else:
+            for f in self.get_files():
+                if self.args.action == "get":
+                    js = self.retrieve_json_by_source_file(f)
+                    if js is None:
+                        print("not found")
+                    else:
+                        print(json.dumps(js, ensure_ascii=False))
+                else:
+                    self.send_file(f)
 
 
 if __name__ == "__main__":
-    args = TSmartParserCacheClient.parse_args(sys.argv[1:])
-    client = TSmartParserCacheClient(args)
-    if args.action == "stats":
-        print(json.dumps(client.get_stats()))
-    else:
-        for f in get_files(args):
-            if args.action == "get":
-                js = client.retrieve_json_by_source_file(f)
-                if js is None:
-                    print("not found")
-                else:
-                    print(json.dumps(js, ensure_ascii=False))
-            else:
-                client.send_file(f)
-
+    TSmartParserCacheClient(TSmartParserCacheClient.parse_args(sys.argv[1:])).main()

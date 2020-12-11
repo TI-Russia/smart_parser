@@ -1,7 +1,7 @@
 import json
 import os
 from urllib.parse import urlparse
-
+from common.primitives import get_site_domain_wo_www
 
 class TDeclarationWebSite:
     def __init__(self):
@@ -40,15 +40,6 @@ class TDeclarationWebSites:
         s.calculated_office_id = office_id
         self.web_sites[web_site] = s
 
-    @staticmethod
-    def get_web_domain_by_url(url):
-        if url is None or len(url) == 0:
-            return ""
-        web_site = urlparse(url).netloc
-        if web_site.startswith('www.'):
-            web_site = web_site[len('www.'):]
-        return web_site
-
     def has_web_site(self, web_site):
         return  web_site in self.web_sites
 
@@ -70,7 +61,7 @@ class TDeclarationWebSites:
 
     def update_from_office_urls(self, offices, logger):
         for o in offices:
-            web_site = self.get_web_domain_by_url(o.get('url'))
+            web_site = get_site_domain_wo_www(o.get('url'))
             if web_site not in self.web_sites:
                 self.add_web_site(web_site, o['id'])
                 logger.info ('add a website {} from office.url'.format(web_site))

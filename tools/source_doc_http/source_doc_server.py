@@ -97,6 +97,11 @@ class TSourceDocHTTPServer(http.server.HTTPServer):
         self.files.clear()
         self.src_doc_params.close()
 
+    def stop_server(self):
+        self.close_files()
+        self.server_close()
+        self.shutdown()
+
     def get_source_document(self, sha256):
         file_info = self.src_doc_params.get(sha256)
         if file_info is None:

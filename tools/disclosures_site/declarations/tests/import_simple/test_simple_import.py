@@ -1,9 +1,12 @@
-from django.test import TestCase
-from declarations.management.commands.import_json import ImportJsonCommand
-import os
 import declarations.models as models
-from declarations.tests.test_smart_parser import SmartParserServerForTesting
+from declarations.tests.smart_parser_for_testing import SmartParserServerForTesting
 from declarations.management.commands.permalinks import TPermaLinksDB
+from disclosures_site.declarations.tests.source_doc_for_testing import SourceDocServerForTesting
+from declarations.management.commands.import_json import ImportJsonCommand
+
+
+from django.test import TestCase
+import os
 
 
 class SimpleImportTestCase(TestCase):
@@ -12,7 +15,6 @@ class SimpleImportTestCase(TestCase):
         models.Section.objects.all().delete()
         models.Source_Document.objects.all().delete()
         self.assertGreater(models.Office.objects.count(), 0)
-        os.environ['SMART_PARSER_SERVER_ADDRESS'] = "localhost:8178"
         domains_folder = os.path.join(os.path.dirname(__file__), "domains")
         sp_workdir = os.path.join(os.path.dirname(__file__), "smart_parser_server")
         permalinks_path = os.path.join(os.path.dirname(__file__), "permalinks.dbm")

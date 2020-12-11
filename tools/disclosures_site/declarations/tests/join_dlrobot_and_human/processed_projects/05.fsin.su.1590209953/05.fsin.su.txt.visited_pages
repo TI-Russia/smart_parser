@@ -10,7 +10,7 @@
                     "cached_file": "cached/05.fsin.su/copy_dlrobot.xlsx",
                     "export_path": "result/05.fsin.su/copy_dlrobot.xlsx",
                     "archive_index": -1,
-                    "sha256": "1",
+                    "sha256": "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3",
                     "smart_parser_json_sha256": null
                 },
                 {
@@ -18,7 +18,7 @@
                     "cached_file": "cached/05.fsin.su/new_dlrobot.xlsx",
                     "export_path": "result/05.fsin.su/new_dlrobot.xlsx",
                     "archive_index": -1,
-                    "sha256": "2",
+                    "sha256": "fa8bd40933bf21520b3b664b0d7507919426cbd7a86a84238c400b93b3bf4d00",
                     "smart_parser_json_sha256": null
                 }
             ]

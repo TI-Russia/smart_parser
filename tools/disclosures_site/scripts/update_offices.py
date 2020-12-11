@@ -1,3 +1,6 @@
+from disclosures_site.declarations.web_sites import TDeclarationWebSites, TDeclarationWebSite
+from common.primitives import get_site_domain_wo_www
+
 import json
 import argparse
 import os
@@ -5,7 +8,6 @@ import gzip
 import pymysql
 import logging
 from operator import itemgetter
-from disclosures_site.declarations.web_sites import TDeclarationWebSites, TDeclarationWebSite
 from collections import defaultdict
 
 
@@ -67,7 +69,7 @@ class TOfficeJoiner:
         for office_id, url in in_cursor:
             if len(url) == 0:
                 continue
-            web_site = TDeclarationWebSites.get_web_domain_by_url(url)
+            web_site = get_site_domain_wo_www(url)
             if len(web_site) > 0:
                 web_site_and_office_freq[(web_site, office_id)] += 1
         freq_list = sorted(web_site_and_office_freq.items(), key=itemgetter(1), reverse=True)
@@ -173,7 +175,7 @@ class TOfficeJoiner:
         with open(file_path, "r") as inp:
             for x in json.load(inp):
                 name = x['itemLabel']
-                web_site = TDeclarationWebSites.get_web_domain_by_url(x['website'])
+                web_site = get_site_domain_wo_www(x['website'])
                 districts[web_site] =  {
                     "name": name,
                     "region_id": None,

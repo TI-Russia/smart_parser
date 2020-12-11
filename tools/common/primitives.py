@@ -67,6 +67,9 @@ def check_sub_page_or_iframe(logger,  link_info: TLinkInfo):
 
 
 def get_site_domain_wo_www(url):
+    if url is None or len(url) == 0:
+        return ""
+
     if not re.search(r'^[A-Za-z0-9+.\-]+://', url):
         url = 'http://{0}'.format(url)
     domain = urllib.parse.urlparse(url).netloc

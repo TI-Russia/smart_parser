@@ -1,9 +1,10 @@
 from declarations.management.commands.import_json import ImportJsonCommand
+from declarations.tests.smart_parser_for_testing import SmartParserServerForTesting
+from declarations.management.commands.permalinks import TPermaLinksDB
+
+from django.test import TestCase
 import os
 import declarations.models as models
-from declarations.tests.test_smart_parser import SmartParserServerForTesting
-from declarations.management.commands.permalinks import TPermaLinksDB
-from django.test import TestCase
 
 
 class ComplexImportTestCase(TestCase):
@@ -19,7 +20,6 @@ class ComplexImportTestCase(TestCase):
         p.create_sql_sequences()
         p.close()
 
-        os.environ['SMART_PARSER_SERVER_ADDRESS'] = "localhost:8178"
         domains_folder = os.path.join(os.path.dirname(__file__), "domains")
         sp_workdir = os.path.join(os.path.dirname(__file__), "smart_parser_server")
 
