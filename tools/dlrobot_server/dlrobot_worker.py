@@ -336,23 +336,27 @@ class TDlrobotWorker:
             if not threading.main_thread().is_alive():
                 break
 
+            timeout = self.args.timeout_before_next_task
+
             if not check_system_resources(self.logger):
                 delete_very_old_folders(self.logger)
-                self.logger.debug("check_system_resources failed, sleep 10 minutes")
-                time.sleep(60 * 10)  # there is a hope that the second process frees the disk
+                if not check_system_resources(self.logger):
+                    self.logger.debug("check_system_resources failed, sleep 10 minutes")
+                    timeout = 60 * 10  # there is a hope that the second process frees the disk
             else:
                 try:
                     project_file = self.get_new_task_job()
                     if project_file is not None:
                         exit_code = self.run_dlrobot(project_file)
+                        timeout = 0
                         if self.working:
                             self.send_results_back(project_file, exit_code)
                 except ConnectionError as err:
                     self.logger.error(str(err))
             if self.args.action == "run_once":
                 break
-            if running_project_file is None:
-                time.sleep(self.args.timeout_before_next_task)
+            if timeout > 0:
+                time.sleep(timeout)
 
     def run_thread_pool(self):
         self.logger.debug("start {} workers".format(self.args.worker_count))
