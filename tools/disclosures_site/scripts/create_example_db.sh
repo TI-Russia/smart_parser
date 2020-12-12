@@ -1,4 +1,3 @@
-export HUMAN_FILES_FOLDER=human_files
 export HUMAN_FILES_JSON=human_files.json
 
 export TOOLS=~/smart_parser/tools
@@ -13,7 +12,7 @@ echo "delete  smart parser service"
 pkill -f smart_parser_cache
 
 rm *.log
-#python3 $TOOLS/disclosures_site/scripts/export_human_files.py --document-file-id 33594  --table declarations_documentfile --output-folder $HUMAN_FILES_FOLDER --output-json $HUMAN_FILES_JSON
+#python3 $TOOLS/disclosures_site/scripts/export_human_files.py --document-file-id 33594  --table declarations_documentfile  --output-json $HUMAN_FILES_JSON
 
 #mkdir -p processed_projects/dogm.mos.ru
 #cd processed_projects/dogm.mos.ru

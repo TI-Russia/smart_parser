@@ -23,13 +23,11 @@ source $(dirname $0)/update_common.sh
     cat prod20201208.sql  | mysql -D declarator -u declarator -pdeclarator
 
 
-#2.2  получить все новые (!) файлы из declarator в каталог $HUMAN_FILES_FOLDER и создать файл human_files.json
-    python $TOOLS/disclosures_site/scripts/export_human_files.py --table declarations_documentfile --output-folder $HUMAN_FILES_FOLDER --output-json $HUMAN_FILES_JSON
+#2.2  получить все новые (!) файлы из declarator и создать файл human_files.json
+    cp $HUMAN_FILES_JSON human_files.json.sav
+    python3 $TOOLS/disclosures_site/scripts/export_human_files.py --table declarations_documentfile  --dlrobot-human-json $HUMAN_FILES_JSON
 
-#2.3  Отправляем все новые Pdf на конвертацию
-    find $HUMAN_FILES_FOLDER -name '*.pdf' |  xargs --verbose -n 10  python $TOOLS/ConvStorage/scripts/convert_pdf.py --skip-receiving
-
-#2.4 создание ручных json
+#2.3 создание ручных json
     [ -d  $HUMAN_JSONS_FOLDER ] || mkdir $HUMAN_JSONS_FOLDER
     cd ~/declarator/transparency
     source ../venv/bin/activate

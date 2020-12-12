@@ -58,6 +58,7 @@ class TDocConversionClient(object):
                             self._send_file_to_conversion_db(export_filename, DEFAULT_PDF_EXTENSION, task.rebuild)
             else:
                 self._send_file_to_conversion_db(task.file_path, task.file_extension, task.rebuild)
+            self._input_tasks.task_done()
 
     def _register_task(self, file_extension, file_contents, sha256, rebuild):
         conn = http.client.HTTPConnection(self.db_conv_url, timeout=self.default_http_timeout)
@@ -180,13 +181,13 @@ class TDocConversionClient(object):
             self.conversion_thread.join(timeout)
             self.conversion_thread = None
 
+    def wait_all_tasks_to_be_sent(self):
+        self.logger.debug("wait all conversion tasks to be sent to the server")
+        self._input_tasks.join()
+
     def wait_doc_conversion_finished(self, timeout_in_seconds):
         try:
-            if not self._input_tasks.empty():
-                self.logger.debug("wait all conversion tasks to be sent to the server")
-                while not self._input_tasks.empty():
-                    time.sleep(1) # time to send tasks
-
+            self.wait_all_tasks_to_be_sent()
             self.stop_conversion_thread()
             self._wait_conversion_tasks(timeout_in_seconds)
         except Exception as exp:

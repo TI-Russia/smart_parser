@@ -4,8 +4,7 @@
 export TOOLS=~/smart_parser/tools
 export DLROBOT_CENTRAL_FOLDER=~/declarator_hdd/declarator/dlrobot_central
 export DLROBOT_UPDATES_FOLDER=~/declarator_hdd/declarator/dlrobot_updates
-export HUMAN_FILES_JSON=~/declarator_hdd/declarator/human_files.json
-export HUMAN_FILES_FOLDER=~/declarator_hdd/declarator/human_files
+export HUMAN_FILES_JSON=~/declarator_hdd/Yandex.Disk/declarator/human_files.json
 export HUMAN_JSONS_FOLDER=~/declarator_hdd/declarator/human_jsons
 export YANDEX_DISK_FOLDER=~/declarator_hdd/Yandex.Disk/declarator/dlrobot_updates
 export DISCLOSURES_FILES=domains

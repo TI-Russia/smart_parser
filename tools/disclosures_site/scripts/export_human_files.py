@@ -155,8 +155,9 @@ class TExportHumanFiles:
                 self.new_pdfs.add(build_sha256(file_name))
             else:
                 self.smart_parser_server_client.send_file(file_name)
-
             yield file_name,  declarator_url
+
+        self.pdf_conversion_client.wait_all_tasks_to_be_sent()
 
         for f in os.listdir(self.args.tmp_folder):
             os.unlink(os.path.join(self.args.tmp_folder, f))
