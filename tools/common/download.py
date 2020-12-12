@@ -1,3 +1,9 @@
+from common.http_request import make_http_request, request_url_headers_with_global_cache
+from common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION, \
+            content_type_to_file_extension
+from ConvStorage.conversion_client import TDocConversionClient
+from common.http_request import RobotHttpException
+
 import json
 import re
 import urllib.parse
@@ -7,10 +13,6 @@ import logging
 from unidecode import unidecode
 import os
 import shutil
-from common.http_request import make_http_request, request_url_headers_with_global_cache
-from common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
-from ConvStorage.conversion_client import TDocConversionClient
-from common.http_request import RobotHttpException
 import cgi
 
 
@@ -162,7 +164,6 @@ def get_local_file_name_by_url(url):
 
 
 def get_file_extension_by_content_type(headers):
-    content_type = get_content_type_from_headers(headers)
     content_disposition = headers.get('Content-Disposition')
     if content_disposition is not None:
         found = re.findall("filename\s*=\s*(.+)", content_disposition.lower())
@@ -170,51 +171,8 @@ def get_file_extension_by_content_type(headers):
             filename = found[0].strip("\"")
             _, file_extension = os.path.splitext(filename)
             return file_extension
-
-    if content_type.startswith("text/csv"):
-        return ".csv"
-    elif content_type.startswith("text/css"):
-        return ".css"
-    elif content_type.startswith("text/javascript"):
-        return ".js"
-    elif content_type.startswith("text/plain"):
-        return ".txt"
-    elif content_type.startswith("text/xml"):
-        return ".xml"
-    elif content_type.startswith("text"):
-        return DEFAULT_HTML_EXTENSION
-    elif content_type.startswith("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"):
-        return ".xlsx"
-    elif content_type.startswith("application/vnd.openxmlformats-officedocument"):
-        return ".docx"
-    elif content_type.find("ms-word") != -1:
-        return ".doc"
-    elif content_type.startswith("application/msword"):
-        return ".doc"
-    elif content_type.startswith("application/rtf"):
-        return ".rtf"
-    elif content_type.startswith("application/excel"):
-        return ".xls"
-    elif content_type.startswith("application/vnd.ms-excel"):
-        return ".xls"
-    elif content_type.startswith("application/pdf"):
-        return ".pdf"
-    elif content_type.startswith("application/zip"):
-        return ".zip"
-    elif content_type.startswith("application/rss+xml"):
-        return ".some_xml"
-    elif content_type.startswith("application/xml"):
-        return ".some_xml"
-    elif content_type.startswith("application/"):
-        return ".some_application_format"
-    elif content_type.startswith("image/"):
-        return ".some_image_format"
-    elif content_type.startswith("audio/"):
-        return ".some_audio_format"
-    elif content_type.startswith("video/"):
-        return ".some_video_format"
-    else:
-        return DEFAULT_HTML_EXTENSION
+    content_type = get_content_type_from_headers(headers)
+    return content_type_to_file_extension(content_type)
 
 
 class TDownloadedFile:

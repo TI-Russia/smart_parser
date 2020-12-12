@@ -34,8 +34,8 @@
     {% if office.source_document_count > 0 %}
         <tr>
             <td valign="baseline"><b>Документы</b>:</td>
-            <td>{% for src_doc_id, file_path in office.get_source_documents %}
-              <a href="/file/{{ src_doc_id }}"> {{ file_path }} </a><br/>
+            <td>{% for src_doc_id in office.get_source_documents %}
+              <a href="/file/{{ src_doc_id }}"> {{ src_doc_id }} </a><br/>
             {% endfor %}
 
             {% if office.source_document_count > 10 %}

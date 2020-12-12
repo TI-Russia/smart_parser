@@ -1,17 +1,20 @@
 from . import models
-from django.views import generic
-from django.views.generic.edit import FormView
 from .documents import ElasticSectionDocument, ElasticPersonDocument, ElasticOfficeDocument, ElasticFileDocument
-from django import forms
-import logging
-import urllib
 from declarations.common import resolve_fullname, resolve_person_name_pattern_from_search_request
 from disclosures_site.declarations.statistics import TDisclosuresStatisticsHistory
 from .rubrics import fill_combo_box_with_rubrics
+from source_doc_http.source_doc_client import TSourceDocClient
+from common.content_types import file_extension_to_content_type
+
+from django.views import generic
+from django.views.generic.edit import FormView
+from django import forms
 from datetime import datetime
 from django_elasticsearch_dsl import TextField
 from django.http import HttpResponse
 import os
+import urllib
+
 
 class SectionView(generic.DetailView):
     model = models.Section
@@ -104,12 +107,12 @@ class CommonSearchForm(forms.Form):
         empty_value="",
         label="ФИО"
     )
-    file_path = forms.CharField(
+    web_domains = forms.CharField(
         widget=forms.TextInput(attrs={'size': 80}),
         strip=True,
         required=False,
         empty_value="",
-        label="Web domain or file name"
+        label="Web domain"
     )
     rubric_id = forms.ChoiceField(
         required=False,
@@ -200,7 +203,7 @@ class CommonSearchView(FormView, generic.ListView):
             'sort_by': self.request.GET.get('sort_by'),
             'order': self.request.GET.get('order'),
             'name': self.request.GET.get('name'),
-            'file_path': self.request.GET.get('file_path'),
+            'web_domains': self.request.GET.get('web_domains'),
             'source_document_id': self.request.GET.get('source_document_id'),
             'office_id': self.request.GET.get('office_id'),
             'page_size': self.request.GET.get('page_size'),
@@ -239,7 +242,7 @@ class CommonSearchView(FormView, generic.ListView):
             add_should_item("region_id", "term", int, should_items)
             add_should_item("income_year", "term", int, should_items)
             add_should_item("position_and_department", "match", str, should_items)
-            add_should_item("file_path", "match", str, should_items)
+            add_should_item("web_domains", "match", str, should_items)
             add_should_item("source_document_id", "term", int, should_items)
             add_should_item("office_id", "term", int, should_items)
             add_should_item("person_id", "term", int, should_items)
@@ -329,8 +332,8 @@ class CommonSearchView(FormView, generic.ListView):
             object_list.sort(key=lambda x: x.person_name, reverse=(order=="desc"))
         elif sort_by == "name":
             object_list.sort(key=lambda x: x.name, reverse=(order == "desc"))
-        elif sort_by == "file_path":
-            object_list.sort(key=lambda x: x.file_path, reverse=(order == "desc"))
+        elif sort_by == "web_domains":
+            object_list.sort(key=lambda x: x.web_domains, reverse=(order == "desc"))
         elif sort_by == "intersection_status":
             object_list.sort(key=lambda x: x.intersection_status, reverse=(order == "desc"))
         return object_list
@@ -386,8 +389,18 @@ class FileSearchView(CommonSearchView):
     model = models.Source_Document
     template_name = 'file/index.html'
     elastic_search_document = ElasticFileDocument
-    default_sort_field = ("file_path", "asc")
+    default_sort_field = ("web_domains", "asc")
     max_document_count = 300
 
     def get_queryset(self):
         return self.get_queryset_common()
+
+
+SOURCE_DOC_CLIENT = TSourceDocClient(TSourceDocClient.parse_args(['--timeout', '10']))
+
+
+def source_doc_getter(request, sha256_and_file_extension):
+    sha256, _ = os.path.splitext(sha256_and_file_extension)
+    data, file_extension = SOURCE_DOC_CLIENT.retrieve_file_data_by_sha256(sha256)
+    content_type = file_extension_to_content_type(file_extension)
+    return HttpResponse(data, content_type=content_type)

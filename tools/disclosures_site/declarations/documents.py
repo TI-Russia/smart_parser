@@ -1,4 +1,4 @@
-from django_elasticsearch_dsl import Document, IntegerField, TextField
+from django_elasticsearch_dsl import Document, IntegerField, TextField, ListField
 from django_elasticsearch_dsl.registries import registry
 from declarations.models import Section, Person, Office, Source_Document, TOfficeTableInMemory
 from django.conf import settings
@@ -128,13 +128,12 @@ file_search_index.settings(
 class ElasticFileDocument(Document):
     office_id = IntegerField()
     first_crawl_epoch = IntegerField()
-    default_field_name = "file_path"
+    web_domains = TextField()
 
     class Django:
         model = Source_Document
         fields = [
             'id',
-            'file_path',
             'intersection_status',
             'min_income_year',
             'max_income_year',
@@ -158,6 +157,17 @@ class ElasticFileDocument(Document):
         if self.first_crawl_epoch is None:
             return ''
         return datetime.fromtimestamp(self.first_crawl_epoch).strftime("%Y-%m-%d")
+
+    def prepare_web_domains(self, instance):
+        web_domains = set()
+        for ref in instance.web_reference_set.all():
+            if ref.web_domain is not None:
+                web_domains.add(ref.web_domain)
+        for ref in instance.declarator_file_reference_set.all():
+            if ref.web_domain is not None:
+                web_domains.add(ref.web_domain)
+        return " ".join(web_domains)
+
 
 def stop_elastic_indexing():
     ElasticOfficeDocument.django.ignore_signals = True

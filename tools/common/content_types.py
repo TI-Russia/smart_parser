@@ -719,3 +719,69 @@ content_types = [
 ]
 
 ALL_CONTENT_TYPES = ";".join(content_types)
+
+
+def content_type_to_file_extension(content_type):
+    if content_type.startswith("text/csv"):
+        return ".csv"
+    elif content_type.startswith("text/css"):
+        return ".css"
+    elif content_type.startswith("text/javascript"):
+        return ".js"
+    elif content_type.startswith("text/plain"):
+        return ".txt"
+    elif content_type.startswith("text/xml"):
+        return ".xml"
+    elif content_type.startswith("text"):
+        return DEFAULT_HTML_EXTENSION
+    elif content_type.startswith("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"):
+        return ".xlsx"
+    elif content_type.startswith("application/vnd.openxmlformats-officedocument"):
+        return ".docx"
+    elif content_type.find("ms-word") != -1:
+        return ".doc"
+    elif content_type.startswith("application/msword"):
+        return ".doc"
+    elif content_type.startswith("application/rtf"):
+        return ".rtf"
+    elif content_type.startswith("application/excel"):
+        return ".xls"
+    elif content_type.startswith("application/vnd.ms-excel"):
+        return ".xls"
+    elif content_type.startswith("application/pdf"):
+        return ".pdf"
+    elif content_type.startswith("application/zip"):
+        return ".zip"
+    elif content_type.startswith("application/rss+xml"):
+        return ".some_xml"
+    elif content_type.startswith("application/xml"):
+        return ".some_xml"
+    elif content_type.startswith("application/"):
+        return ".some_application_format"
+    elif content_type.startswith("image/"):
+        return ".some_image_format"
+    elif content_type.startswith("audio/"):
+        return ".some_audio_format"
+    elif content_type.startswith("video/"):
+        return ".some_video_format"
+    else:
+        return DEFAULT_HTML_EXTENSION
+
+
+def file_extension_to_content_type(file_extension, default_content_type='application/octet-stream'):
+    if file_extension == '.doc':
+        return "application/msword"
+    elif file_extension == '.docx':
+        return "application/vnd.openxmlformats-officedocument"
+    elif file_extension == '.xls':
+        return "application/excel"
+    elif file_extension == '.xlsx':
+        return "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    elif file_extension == '.rtf':
+        return "application/rtf"
+    elif file_extension == '.pdf':
+        return "application/pdf"
+    elif file_extension == DEFAULT_HTML_EXTENSION:
+        return "text/html"
+    else:
+        return default_content_type

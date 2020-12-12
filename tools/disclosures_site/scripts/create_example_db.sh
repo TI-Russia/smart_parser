@@ -55,8 +55,8 @@ python3 $TOOLS/disclosures_site/scripts/export_human_files.py --start-from-an-em
 #cd processed_projects/dogm.mos.ru
 #python3 $TOOLS/robots/dlrobot/dlrobot.py --project dogm.mos.ru.txt
 python3 $TOOLS/source_doc_http/source_doc_client.py --action put --walk-folder-recursive processed_projects/dogm.mos.ru/result
-python3 $TOOLS/robots/dlrobot/scripts/cloud/smart_parser_cache_client.py --action put --walk-folder-recursive processed_projects/dogm.mos.ru/result
-sleep 1m
+python3 $TOOLS/smart_parser_http/smart_parser_client.py --action put --walk-folder-recursive processed_projects/dogm.mos.ru/result
+sleep 2m
 
 
 python3 $TOOLS/disclosures_site/scripts/join_human_and_dlrobot.py \

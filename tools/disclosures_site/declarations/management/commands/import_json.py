@@ -4,6 +4,7 @@ from declarations.documents import stop_elastic_indexing, start_elastic_indexing
 from declarations.management.commands.permalinks import TPermaLinksDB
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from declarations.input_json import TDlrobotHumanFile
+from common.primitives import get_site_domain_wo_www
 
 from multiprocessing import Pool
 import os
@@ -96,15 +97,18 @@ class TImporter:
                                                        intersection_status=src_doc.get_intersection_status(),
                                                        )
         source_document_in_db.id = self.primary_keys_builder.get_record_id(source_document_in_db)
+        source_document_in_db.file_extension = src_doc.file_extension
         source_document_in_db.save()
         for ref in src_doc.decl_references:
             models.Declarator_File_Reference(source_document=source_document_in_db,
                                              declarator_documentfile_id=ref.document_file_id,
                                              declarator_document_id=ref.document_id,
+                                             web_domain=ref.web_domain,
                                              declarator_document_file_url=ref.document_file_url).save()
         for ref in src_doc.web_references:
             models.Web_Reference(source_document=source_document_in_db,
                                  dlrobot_url=ref.url,
+                                 web_domain=get_site_domain_wo_www(ref.url),
                                  crawl_epoch=ref.crawl_epoch).save()
 
         return source_document_in_db

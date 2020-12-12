@@ -27,7 +27,7 @@ class Office(models.Model):
     def get_source_documents(self, max_count=10):
         cnt = 0
         for src_doc in self.source_document_set.all():
-            yield src_doc.id, src_doc.file_path
+            yield src_doc.id
             cnt += 1
             if cnt >= max_count:
                 break
@@ -200,6 +200,7 @@ class Web_Reference(models.Model):
     source_document = models.ForeignKey('declarations.source_document', verbose_name="source document", on_delete=models.CASCADE)
     dlrobot_url = models.TextField(null=True)
     crawl_epoch = models.IntegerField(null=True)
+    web_domain = models.TextField(null=True)
 
 
 class Declarator_File_Reference(models.Model):
@@ -208,26 +209,20 @@ class Declarator_File_Reference(models.Model):
     declarator_documentfile_id = models.IntegerField(null=True)
     declarator_document_id = models.IntegerField(null=True)
     declarator_document_file_url = models.TextField(null=True)
+    web_domain = models.TextField(null=True)
 
 
 class Source_Document(models.Model):
     id = models.IntegerField(primary_key=True)
     office = models.ForeignKey('declarations.Office', verbose_name="office name", on_delete=models.CASCADE)
     sha256 = models.CharField(max_length=200)
-    file_path = models.CharField(max_length=128)
+    file_extension = models.CharField(max_length=16)
     intersection_status = models.CharField(max_length=16)
 
     # calculated fields (from sql table section)
     min_income_year = models.IntegerField(null=True, default=None)
     max_income_year = models.IntegerField(null=True, default=None)
     section_count = models.IntegerField(null=True, default=0)
-
-    @property
-    def doc_path(self):
-        doc_path = self.file_path
-        if doc_path.endswith('.json'):
-            doc_path = doc_path[:-len('.json')]
-        return doc_path
 
     def permalink_passports(self):
         yield "sd;{}".format(self.sha256)

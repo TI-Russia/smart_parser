@@ -55,7 +55,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.IntegerField(primary_key=True, serialize=False)),
                 ('sha256', models.CharField(max_length=200)),
-                ('file_path', models.CharField(max_length=128)),
+                ('file_extension', models.CharField(max_length=16)),
                 ('intersection_status', models.CharField(max_length=16)),
                 ('office', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='declarations.office',
                                              verbose_name='office name')),
@@ -73,6 +73,7 @@ class Migration(migrations.Migration):
                 ('declarator_document_file_url', models.TextField(null=True)),
                 ('source_document',models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
                                                  to='declarations.source_document', verbose_name='source document')),
+                ('web_domain', models.TextField(null=True)),
             ],
         ),
         migrations.CreateModel(
@@ -84,6 +85,7 @@ class Migration(migrations.Migration):
                 ('source_document',
                  models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='declarations.source_document',
                                    verbose_name='source document')),
+                ('web_domain', models.TextField(null=True)),
             ],
         ),
         migrations.CreateModel(

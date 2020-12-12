@@ -13,8 +13,8 @@
 
 <form action="{% url 'file_search' %}" method="get">
     <div class="search_input">
-        {{form.file_path.label_tag}}
-        {{form.file_path}}
+        {{form.web_domains.label_tag}}
+        {{form.web_domains}}
         <input type="submit" value="Поиск">
     </div>
     <div class="search_input">
@@ -32,7 +32,7 @@
     <table>
         <tr>
             <th><a href="?{{sort_by_id}}">ID</a></th>
-            <th><a href="?{{sort_by_file_path}}">File path</a></th>
+            <th><a href="?{{sort_by_web_domains}}">Web Domain</a></th>
             <th><a href="?{{sort_by_intersection_status}}">Sources</a></th>
             <th><a href="?{{sort_by_min_income_year}}">Min Year</a></th>
             <th><a href="?{{sort_by_max_income_year}}">Max Year</a></th>
@@ -42,8 +42,8 @@
 
       {% for file in object_list %}
         <tr>
-            <td> {{ file.id }}: </td>
-            <td> <a href="/file/{{ file.id }}"> {{ file.file_path }} </a> </td>
+            <td> <a href="/file/{{ file.id }}"> {{ file.id }} </a> </td>
+            <td> {{ file.web_domains }} </td>
             <td> {{ file.intersection_status }} </td>
             <td> {{ file.min_income_year }} </td>
             <td> {{ file.max_income_year }} </td>

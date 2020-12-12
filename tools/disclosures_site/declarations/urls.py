@@ -17,5 +17,6 @@ urlpatterns = [
 
     path('file/<int:pk>/', views.FileView.as_view(), name='file_detail'),
     path('file/', views.FileSearchView.as_view(), name='file_search'),
+    path('sourcedoc/<str:sha256_and_file_extension>', views.source_doc_getter, name='source_doc_getter'),
 
 ]
