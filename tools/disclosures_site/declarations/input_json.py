@@ -43,15 +43,19 @@ class TDeclaratorReference:
 
 
 class TWebReference:
-    def __init__(self, from_json=dict(), url=None, crawl_epoch=None):
+    def __init__(self, from_json=dict(), url=None, crawl_epoch=None, web_domain=None):
         self.url = from_json.get('url', url)
+        self.web_domain = from_json.get('web_domain', web_domain)
+        if self.web_domain is None:
+            self.web_domain = get_site_domain_wo_www(self.url)
         self.crawl_epoch = from_json.get('crawl_epoch', crawl_epoch)
-        assert len(from_json) == 0 or len(from_json) == 2
+        assert len(from_json) == 0 or len(from_json) == 3
 
     def write_to_json(self):
         return {
             'url': self.url,
-            'crawl_epoch': self.crawl_epoch
+            'crawl_epoch': self.crawl_epoch,
+            'web_domain': self.web_domain,
         }
 
     def __eq__(self, other):

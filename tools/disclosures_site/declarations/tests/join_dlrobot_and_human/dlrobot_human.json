@@ -7,11 +7,13 @@
             "w_refs": [
                 {
                     "crawl_epoch": 5602811863,
-                    "url": "http://05.fsin.su/old_dlrobot.xlsx"
+                    "url": "http://05.fsin.su/old_dlrobot.xlsx",
+                    "web_domain": "05.fsin.su"
                 },
                 {
                     "crawl_epoch": 0,
-                    "url": "http://05.fsin.su/old_link1"
+                    "url": "http://05.fsin.su/old_link1",
+                    "web_domain": "05.fsin.su"
                 }
             ]
         },
@@ -31,7 +33,8 @@
             "w_refs": [
                 {
                     "crawl_epoch": 5602811863,
-                    "url": "http://05.fsin.su/1984.xlsx"
+                    "url": "http://05.fsin.su/1984.xlsx",
+                    "web_domain": "05.fsin.su"
                 }
             ]
         },
@@ -41,11 +44,13 @@
             "w_refs": [
                 {
                     "crawl_epoch": 5602811863,
-                    "url": "http://05.fsin.su/new_dlrobot.xlsx"
+                    "url": "http://05.fsin.su/new_dlrobot.xlsx",
+                    "web_domain": "05.fsin.su"
                 },
                 {
                     "crawl_epoch": 5602811863,
-                    "url": "http://05.fsin.su/copy_dlrobot.xlsx"
+                    "url": "http://05.fsin.su/copy_dlrobot.xlsx",
+                    "web_domain": "05.fsin.su"
                 }
             ]
         },
@@ -83,7 +88,8 @@
             "w_refs": [
                 {
                     "crawl_epoch": 0,
-                    "url": "http://05.fsin.su/old_link2"
+                    "url": "http://05.fsin.su/old_link2",
+                    "web_domain": "05.fsin.su"
                 }
             ]
         },
@@ -93,7 +99,8 @@
             "w_refs": [
                 {
                     "crawl_epoch": 5602811863,
-                    "url": "http://05.fsin.su/new_dlrobot.xlsx"
+                    "url": "http://05.fsin.su/new_dlrobot.xlsx",
+                    "web_domain": "05.fsin.su"
                 }
             ]
         }

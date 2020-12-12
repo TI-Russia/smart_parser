@@ -1,7 +1,7 @@
-from declarations.input_json import TSourceDocument, TDlrobotHumanFile, TWebReference, TIntersectionStatus
+from declarations.input_json import TSourceDocument, TDlrobotHumanFile, TWebReference
 from disclosures_site.declarations.web_sites import TDeclarationWebSites
 from common.robot_project import TRobotProject
-from common.primitives import get_site_domain_wo_www
+
 
 import os
 import sys
@@ -101,8 +101,13 @@ class TJoiner:
             self.logger.error("cannot get exported files from {}".format(robot_project))
             return
         for sha256, file_info in exported_files.items():
-            web_ref = TWebReference(url=file_info.url, crawl_epoch=self.args.max_ctime)
-            self.add_dlrobot_file(sha256, file_info.file_extension, dlrobot_project_without_timestamp, [web_ref])
+            web_domain = dlrobot_project_without_timestamp
+            web_ref = TWebReference(
+                url=file_info.url,
+                crawl_epoch=self.args.max_ctime,
+                web_domain=web_domain
+            )
+            self.add_dlrobot_file(sha256, file_info.file_extension, web_domain, [web_ref])
 
     def add_new_dlrobot_files(self):
         self.logger.info("copy dlrobot files from {} ...".format(self.args.input_dlrobot_folder))
@@ -142,11 +147,11 @@ class TJoiner:
 
             if office_id is None:
                 for web_ref in src_doc.web_references:
-                    web_domain = get_site_domain_wo_www(web_ref.url)
-                    web_site = self.web_sites.get_web_site(web_domain)
+                    web_site = self.web_sites.get_web_site(web_ref.web_domain)
                     if web_site is not None:
                         office_id = web_site.calculated_office_id
                         break
+
             if office_id is not None:
                 self.logger.debug("set file {} calculated_office_id={}".format(sha256, office_id))
                 src_doc.calculated_office_id = office_id

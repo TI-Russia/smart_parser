@@ -29,11 +29,13 @@ CANON_HUMAN_DLROBOT = {
             "w_refs": [
                 {
                     "crawl_epoch": 5602811863,
-                    "url": "http://05.fsin.su/old_dlrobot.xlsx"
+                    "url": "http://05.fsin.su/old_dlrobot.xlsx",
+                    "web_domain": "05.fsin.su"
                 },
                 {
                     "crawl_epoch": 0,
-                    "url": "http://05.fsin.su/old_link1"
+                    "url": "http://05.fsin.su/old_link1",
+                    "web_domain": "05.fsin.su"
                 }
             ]
         },
@@ -53,7 +55,8 @@ CANON_HUMAN_DLROBOT = {
             "w_refs": [
                 {
                     "crawl_epoch": 5602811863,
-                    "url": "http://05.fsin.su/1984.xlsx"
+                    "url": "http://05.fsin.su/1984.xlsx",
+                    "web_domain": "05.fsin.su"
                 }
             ]
         },
@@ -63,11 +66,13 @@ CANON_HUMAN_DLROBOT = {
             "w_refs": [
                 {
                     "crawl_epoch": 5602811863,
-                    "url": "http://05.fsin.su/new_dlrobot.xlsx"
+                    "url": "http://05.fsin.su/new_dlrobot.xlsx",
+                    "web_domain": "05.fsin.su"
                 },
                 {
                     "crawl_epoch": 5602811863,
-                    "url": "http://05.fsin.su/copy_dlrobot.xlsx"
+                    "url": "http://05.fsin.su/copy_dlrobot.xlsx",
+                    "web_domain": "05.fsin.su"
                 }
             ]
         },
@@ -105,7 +110,8 @@ CANON_HUMAN_DLROBOT = {
             "w_refs": [
                 {
                     "crawl_epoch": 0,
-                    "url": "http://05.fsin.su/old_link2"
+                    "url": "http://05.fsin.su/old_link2",
+                    "web_domain": "05.fsin.su"
                 }
             ]
         },
@@ -115,7 +121,8 @@ CANON_HUMAN_DLROBOT = {
             "w_refs": [
                 {
                     "crawl_epoch": 5602811863,
-                    "url": "http://05.fsin.su/new_dlrobot.xlsx"
+                    "url": "http://05.fsin.su/new_dlrobot.xlsx",
+                    "web_domain": "05.fsin.su"
                 }
             ]
         }
@@ -143,5 +150,6 @@ class JoinDLrobotAndHuman(TestCase):
         self.assertDictEqual(CANON_STATS,  joiner.output_dlrobot_human.get_stats())
         with open(self.dlrobot_human_path) as inp:
             result_json = json.load(inp)
+            self.maxDiff = None
             self.assertDictEqual(CANON_HUMAN_DLROBOT, result_json)
 

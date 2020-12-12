@@ -108,7 +108,7 @@ class TImporter:
         for ref in src_doc.web_references:
             models.Web_Reference(source_document=source_document_in_db,
                                  dlrobot_url=ref.url,
-                                 web_domain=get_site_domain_wo_www(ref.url),
+                                 web_domain=ref.web_domain,
                                  crawl_epoch=ref.crawl_epoch).save()
 
         return source_document_in_db
