@@ -49,7 +49,7 @@ class TWebReference:
         if self.web_domain is None:
             self.web_domain = get_site_domain_wo_www(self.url)
         self.crawl_epoch = from_json.get('crawl_epoch', crawl_epoch)
-        assert len(from_json) == 0 or len(from_json) == 3
+
 
     def write_to_json(self):
         return {
