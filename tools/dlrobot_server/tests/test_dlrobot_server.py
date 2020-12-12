@@ -93,7 +93,6 @@ class TTestEnv:
             '--central-heart-rate', '1s',
             '--dlrobot-project-timeout', str(dlrobot_project_timeout),
             '--log-file-name', os.path.join(self.data_folder, "dlrobot_central.log"),
-            '--pdf-conversion-queue-limit', '3000000000',
             '--disable-search-engines'
         ]
         if not enable_smart_parser:

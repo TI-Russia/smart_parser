@@ -23,6 +23,8 @@ class TInputTask:
 
 class TDocConversionClient(object):
     DECLARATOR_CONV_URL = os.environ.get('DECLARATOR_CONV_URL')
+    MAX_FILE_PENDING_SUM_SIZE = 100 * 2 ** 20  # if pending file size sum is greater than MAX_FILE_PENDING_SUM_SIZE,
+                                               # then we should stop sending new files
 
     def __init__(self, logger=None):
         assert_declarator_conv_alive()
@@ -38,6 +40,18 @@ class TDocConversionClient(object):
         self.logger = logger if logger is not None else logging.getLogger("dlrobot_logger")
         self.all_pdf_size_sent_to_conversion = 0
         self.default_http_timeout = 60*10
+        self.last_pdf_conversion_queue_length = None
+        self.inner_stats_timestamp = None
+        self.update_inner_stats()
+
+    def update_inner_stats(self):
+        self.inner_stats_timestamp = time.time()
+        self.last_pdf_conversion_queue_length = self.get_pending_all_file_size()
+
+    def server_is_too_busy(self):
+        if time.time() > self.inner_stats_timestamp + 5*60:
+            self.update_inner_stats()  # update inner stats each 5 minutes
+        return self.last_pdf_conversion_queue_length >= TDocConversionClient.MAX_FILE_PENDING_SUM_SIZE
 
     def start_conversion_thread(self):
         self.conversion_thread = threading.Thread(target=self._process_files_to_convert_in_a_separate_thread, args=())

@@ -76,9 +76,6 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                             required=False, help="skip checking that this tast was given to this worker")
         parser.add_argument("--enable-ip-checking", dest='enable_ip_checking', default=False, action='store_true',
                             required=False)
-        parser.add_argument("--pdf-conversion-queue-limit", dest='pdf_conversion_queue_limit', type=int,
-                            default=100 * 2 ** 20, help="max sum size of al pdf files that are in pdf conversion queue",
-                            required=False)
         parser.add_argument("--crawl-epoch-id", dest="crawl_epoch_id", default="1", type=int)
         parser.add_argument("--disable-smart-parser-server", dest="enable_smart_parser",
                             default=True, action="store_false", required=False)
@@ -149,7 +146,6 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
             self.permitted_hosts = set(str(x) for x in ipaddress.ip_network('192.168.100.0/24').hosts())
             self.permitted_hosts.add('127.0.0.1')
             self.permitted_hosts.add('95.165.96.61') # disclosures.ru
-        self.pdf_conversion_queue_length = self.conversion_client.get_pending_all_file_size()
         self.logger.debug("init complete")
 
     def stop_server(self):
@@ -231,9 +227,6 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
 
     def get_processed_jobs_count(self):
         return sum(len(w) for w in self.dlrobot_remote_calls.values())
-
-    def conversion_server_queue_is_short(self):
-        return self.pdf_conversion_queue_length < self.args.pdf_conversion_queue_limit
 
     def get_new_web_site_to_process(self, worker_host_name, worker_ip):
         web_site = self.input_web_sites.pop(0)
@@ -360,10 +353,10 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                 os.unlink(PITSTOP_FILE)
             if self.stop_process and self.get_running_jobs_count() == 0:
                 raise Exception("exit for pit stop")
-            self.pdf_conversion_queue_length = self.conversion_client.get_pending_all_file_size()
-            if not self.conversion_server_queue_is_short():
+            self.conversion_client.update_inner_stats()
+            if self.conversion_client.server_is_too_busy():
                 self.logger.debug("stop sending tasks, because conversion pdf queue length is {}".format(
-                    self.pdf_conversion_queue_length))
+                    self.conversion_client.last_pdf_conversion_queue_length))
 
     def get_stats(self):
         workers = dict((k, list(r.write_to_json() for r in v))
@@ -440,7 +433,7 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             send_error('cannot find header {}'.format(DLROBOT_HEADER_KEYS.WORKER_HOST_NAME))
             return
 
-        if not self.server.conversion_server_queue_is_short():
+        if self.server.conversion_client.server_is_too_busy():
             send_error("pdf conversion server is too busy", DLROBOT_HTTP_CODE.TOO_BUSY)
             return
     

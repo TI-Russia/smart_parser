@@ -13,6 +13,7 @@ import logging
 import requests
 import urllib.parse
 import sys
+import time
 import glob
 import shutil
 import tempfile
@@ -56,9 +57,13 @@ class TExportHumanFiles:
         parser.add_argument("--max-files-count", dest='max_files_count', type=int)
         parser.add_argument("--mysql-port", dest='mysql_port', type=int, default=None)
         parser.add_argument("--pdf-conversion-timeout", dest='pdf_conversion_timeout',
-                                default=60*60,
+                                default=2*60*60,
                                 type=int,
                                 help="pdf conversion timeout")
+        parser.add_argument("--pdf-conversion-queue-limit", dest='pdf_conversion_queue_limit', type=int,
+                            default=100 * 2 ** 20, help="max sum size of al pdf files that are in pdf conversion queue",
+                            required=False)
+
         return parser.parse_args(arg_list)
 
     def __init__(self, args):
@@ -155,10 +160,9 @@ class TExportHumanFiles:
                 self.new_pdfs.add(build_sha256(file_name))
             else:
                 self.smart_parser_server_client.send_file(file_name)
-            yield file_name,  declarator_url
+            yield file_name, declarator_url
 
         self.pdf_conversion_client.wait_all_tasks_to_be_sent()
-
         for f in os.listdir(self.args.tmp_folder):
             os.unlink(os.path.join(self.args.tmp_folder, f))
 
@@ -174,6 +178,10 @@ class TExportHumanFiles:
         for document_file_id, document_id, file_path, link, office_id, income_year in self.get_all_file_sql_records():
             if document_file_id in document_file_ids:
                 continue
+
+            while self.pdf_conversion_client.server_is_too_busy():
+                self.logger.error("wait pdf conversion_server for 5 minutes")
+                time.sleep(5*60)
 
             web_site = urlparse(link).netloc
             if web_site.startswith('www.'):
@@ -202,19 +210,27 @@ class TExportHumanFiles:
         human_files_db.write()
         self.send_new_pdfs_to_smart_parser()
 
+
     def send_new_pdfs_to_smart_parser(self):
         self.logger.debug("wait pdf conversion for {} seconds".format(self.args.pdf_conversion_timeout))
         self.pdf_conversion_client.wait_doc_conversion_finished(self.args.pdf_conversion_timeout)
+
+        missed_pdf_count = 0
+        received_pdf_count = 0
         for sha256 in self.new_pdfs:
             self.logger.debug("try to converted file for {}".format(sha256))
             handle, temp_filename = tempfile.mkstemp(suffix=".docx")
             os.close(handle)
             if self.pdf_conversion_client.retrieve_document(sha256, temp_filename):
+                received_pdf_count += 1
                 self.logger.debug("send the converted file to smart parser")
                 self.smart_parser_server_client.send_file(temp_filename)
             else:
                 self.logger.error("converted file is not received")
+                missed_pdf_count += 1
             os.unlink(temp_filename)
+        if missed_pdf_count > 0:
+            self.logger.error('received_pdf_count = {}, missed_pdf_count={}'.format(received_pdf_count, missed_pdf_count))
 
 
 def main():
