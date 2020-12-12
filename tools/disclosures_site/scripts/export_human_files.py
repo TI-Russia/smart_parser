@@ -57,7 +57,7 @@ class TExportHumanFiles:
         parser.add_argument("--max-files-count", dest='max_files_count', type=int)
         parser.add_argument("--mysql-port", dest='mysql_port', type=int, default=None)
         parser.add_argument("--pdf-conversion-timeout", dest='pdf_conversion_timeout',
-                                default=2*60*60,
+                                default=1*60*60,
                                 type=int,
                                 help="pdf conversion timeout")
         parser.add_argument("--pdf-conversion-queue-limit", dest='pdf_conversion_queue_limit', type=int,
@@ -180,7 +180,9 @@ class TExportHumanFiles:
                 continue
 
             while self.pdf_conversion_client.server_is_too_busy():
-                self.logger.error("wait pdf conversion_server for 5 minutes")
+                self.logger.error("wait pdf conversion_server for 5 minutes, last_pdf_conversion_queue_length={}".format(
+                    self.pdf_conversion_client.last_pdf_conversion_queue_length
+                ))
                 time.sleep(5*60)
 
             web_site = urlparse(link).netloc

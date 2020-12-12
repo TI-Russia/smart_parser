@@ -15,8 +15,8 @@ source $(dirname $0)/update_common.sh
     export CRAWL_EPOCH=`python3 -c "import time; print (int(time.time() - 60 * 5))"`
     export DLROBOT_FOLDER=$DLROBOT_UPDATES_FOLDER/$CRAWL_EPOCH
 
-    mkdir -p $DLROBOT_FOLDER
-    cd $DLROBOT_FOLDER
+    mkdir -p $CRAWL_EPOCH
+    cd $CRAWL_EPOCH
     cp $TOOLS/disclosures_site/scripts/update_common.sh  .profile
     echo "" >> .profile
     echo "export DLROBOT_FOLDER=$DLROBOT_FOLDER" >> .profile
@@ -31,7 +31,6 @@ source $(dirname $0)/update_common.sh
         --input-dlrobot-folder  "$DLROBOT_CENTRAL_FOLDER/processed_projects" \
         --human-json $HUMAN_FILES_JSON \
         --old-dlrobot-human-json $OLD_DLROBOT_FOLDER/dlrobot_human.json \
-        --output-domains-folder $DISCLOSURES_FILES \
         --output-json dlrobot_human.json
 
 

@@ -161,9 +161,15 @@ class TJoiner:
 
         self.calc_office_id()
 
+        files_count_with_office_id = 0
+
         for sha256, src_doc in self.output_dlrobot_human.document_collection.items():
             if src_doc.calculated_office_id is None:
-                self.logger.error("file {} has no office".format(sha256))
+                self.logger.error("website: {}, file {} has no office".format(src_doc.get_web_site(), sha256))
+            else:
+                files_count_with_office_id += 1
+        self.error("all files count = {}, files_count_with_office_id = {}".format(
+                len(self.output_dlrobot_human.document_collection)), files_count_with_office_id)
 
         self.output_dlrobot_human.write()
 
