@@ -68,9 +68,9 @@ class TSourceDocument:
     only_human = "only_human"
 
     def __init__(self, from_json=dict()):
-        document_path = from_json.get('document_path')
-        if document_path is not None:
-            _, self.file_extension = os.path.splitext(document_path)   #old version
+        self.document_path_obsolete = from_json.get('document_path')
+        if self.document_path_obsolete is not None:
+            _, self.file_extension = os.path.splitext(self.document_path_obsolete)   #old version
         else:
             self.file_extension = from_json.get('file_ext')
         self.calculated_office_id = from_json.get('office_id')

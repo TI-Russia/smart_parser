@@ -122,7 +122,10 @@ class TJoiner:
         old_json = TDlrobotHumanFile(self.args.old_dlrobot_human_json)
         self.logger.info("copy old files ...")
         for sha256, src_doc in old_json.document_collection.items():
-            self.add_dlrobot_file(sha256, src_doc.file_extension, src_doc.get_web_site(),
+            web_site = src_doc.get_web_site()
+            if src_doc.document_path_obsolete is not None:
+                web_site = os.path.dirname (src_doc.document_path_obsolete)
+            self.add_dlrobot_file(sha256, src_doc.file_extension, web_site,
                                   web_refs= src_doc.web_references, decl_refs=src_doc.decl_references)
         self.logger.info("Database Document Count: {}".format(self.output_dlrobot_human.get_documents_count()))
 

@@ -86,10 +86,7 @@ source $(dirname $0)/update_common.sh
         --permanent-links-db permalinks.dbm
 
 
-#11 переиндексация секций и документв (elastic search) в бекграунде,
-    python3 manage.py search_index --rebuild  --settings disclosures.settings.dev -f &
-
-#12.  запуск сливалки, 4 gb memory each family portion, 30 GB temp files, no more than one process per workstation
+#11.  запуск сливалки, 4 gb memory each family portion, 30 GB temp files, no more than one process per workstation
    python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs  --print-family-prefixes   --permanent-links-db $DLROBOT_FOLDER/permalinks.dbm --settings disclosures.settings.dev > surname_spans.txt
    python3 $TOOLS/disclosures_site/manage.py clear_dedupe_artefacts --settings disclosures.settings.dev --permanent-links-db $DLROBOT_FOLDER/permalinks.dbm
    for host in $DEDUPE_HOSTS_SPACES; do
@@ -101,7 +98,7 @@ source $(dirname $0)/update_common.sh
    parallel -a surname_spans.txt --jobs 2 --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $DEDUPE_HOSTS --basefile $DEDUPE_MODEL  --verbose --workdir /tmp \
         python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --permanent-links-db /tmp/permalinks.dbm --dedupe-model-file $DEDUPE_MODEL  \
                 --verbose 3  --threshold 0.9  --surname-bounds {} --write-to-db --settings disclosures.settings.dev --logfile dedupe.{}.log
-                 
+
 
 #13  Коммит статистики
    cd $TOOLS/disclosures_site
@@ -110,13 +107,13 @@ source $(dirname $0)/update_common.sh
    git commit -m "new statistics" data/statistics.json
    git push
 
-#14 создание индекса для Person (elasticsearch), создание sitemap   в фоновом режиме
-
+#14 создание индекса для elasticsearch, создание sitemap   в фоновом режиме
    {
-     python3 $TOOLS/disclosures_site/manage.py search_index --rebuild  --settings disclosures.settings.dev -f declarations.Person;
-     python3 $TOOLS/disclosures_site/manage.py generate_sitemaps --settings disclosures.settings.dev --output-folder sitemap;
+     python3 $TOOLS/disclosures_site/manage.py search_index --rebuild  --settings disclosures.settings.dev -f
+     python3 $TOOLS/disclosures_site/manage.py generate_sitemaps --settings disclosures.settings.dev --output-folder sitemap
 
    } &
+   ELASTIC_PID=$!
 
 #15 создание surname_rank
 python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclosures.settings.dev
@@ -126,6 +123,7 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
  mysqldump -u disclosures -pdisclosures disclosures_db_dev  |  gzip -c > $DLROBOT_FOLDER/disclosures.sql.gz
 
 #17 обновление prod
+    wait $ELASTIC_PID
     cd $TOOLS_PROD
     git pull
 
