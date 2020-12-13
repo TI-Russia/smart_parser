@@ -125,6 +125,8 @@ class TJoiner:
             web_site = src_doc.get_web_site()
             if src_doc.document_path_obsolete is not None:
                 web_site = os.path.dirname (src_doc.document_path_obsolete)
+            for web_ref in src_doc.web_references:
+                web_ref.web_domain = web_site
             self.add_dlrobot_file(sha256, src_doc.file_extension, web_site,
                                   web_refs= src_doc.web_references, decl_refs=src_doc.decl_references)
         self.logger.info("Database Document Count: {}".format(self.output_dlrobot_human.get_documents_count()))
