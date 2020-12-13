@@ -56,7 +56,7 @@ source $(dirname $0)/update_common.sh
 
 
 #7  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод
-   python3 /var/www/smart_parser/tools/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.prod --output-dbm-file permalinks.dbm
+   python3 $TOOLS_PROD/manage.py create_permalink_storage --settings disclosures.settings.prod --output-dbm-file permalinks.dbm
 
 
 #8.  инициализация базы disclosures
@@ -85,7 +85,11 @@ source $(dirname $0)/update_common.sh
         --settings disclosures.settings.dev \
         --permanent-links-db permalinks.dbm
 
-#11.  запуск сливалки, 4 gb memory each family portion, 30 GB temp files, no more than one process per workstation
+
+#11 переиндексация секций и документв (elastic search) в бекграунде,
+    python3 manage.py search_index --rebuild  --settings disclosures.settings.dev -f &
+
+#12.  запуск сливалки, 4 gb memory each family portion, 30 GB temp files, no more than one process per workstation
    python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs  --print-family-prefixes   --permanent-links-db $DLROBOT_FOLDER/permalinks.dbm --settings disclosures.settings.dev > surname_spans.txt
    python3 $TOOLS/disclosures_site/manage.py clear_dedupe_artefacts --settings disclosures.settings.dev --permanent-links-db $DLROBOT_FOLDER/permalinks.dbm
    for host in $DEDUPE_HOSTS_SPACES; do
@@ -99,33 +103,31 @@ source $(dirname $0)/update_common.sh
                 --verbose 3  --threshold 0.9  --surname-bounds {} --write-to-db --settings disclosures.settings.dev --logfile dedupe.{}.log
                  
 
-#12  Коммит статистики
+#13  Коммит статистики
    cd $TOOLS/disclosures_site
    git pull
    python3 manage.py add_disclosures_statistics --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
    git commit -m "new statistics" data/statistics.json
    git push
 
-#13 (13-16) can be run in parallel
+#14 создание индекса для Person (elasticsearch), создание sitemap   в фоновом режиме
+
+   {
+     python3 $TOOLS/disclosures_site/manage.py search_index --rebuild  --settings disclosures.settings.dev -f declarations.Person;
+     python3 $TOOLS/disclosures_site/manage.py generate_sitemaps --settings disclosures.settings.dev --output-folder sitemap;
+
+   } &
+
+#15 создание surname_rank
+python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclosures.settings.dev
+
+#16 создание дампа базы
  cd $DLROBOT_FOLDER
  mysqldump -u disclosures -pdisclosures disclosures_db_dev  |  gzip -c > $DLROBOT_FOLDER/disclosures.sql.gz
 
-#14 создание индексов для elasticsearch
-   python3 $TOOLS/disclosures_site/manage.py search_index --rebuild  --settings disclosures.settings.dev -f
-
-#15 создание sitemap (можно параллельно с индексированием elasticsearch)
-  python3 $TOOLS/disclosures_site/manage.py generate_sitemaps --settings disclosures.settings.dev --output-folder sitemap
-
-#16
-  python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclosures.settings.dev
-
-#16 go to prod (migalka), disclosures.ru is offline
-    cd /var/www/smart_parser/tools/disclosures_site
+#17 обновление prod
+    cd $TOOLS_PROD
     git pull
-
-    # it takes more than 30 minutes  to unpack database, in future we have to use a temp databse
-    # something like this (not tested yet)
-    # todo: try to rename database with renaming all tables
 
     export DISCLOSURES_DATABASE_NAME=disclosures_prod_temp
     python3 manage.py create_database --settings disclosures.settings.prod --skip-checks
@@ -146,23 +148,9 @@ source $(dirname $0)/update_common.sh
 
     mysqladmin drop  disclosures_prod_temp -u disclosures -pdisclosures
 
-
-    # to rebuild one index
-    #python3 manage.py search_index --rebuild  -f --settings disclosures.settings.dev --models declarations.Section
-
-    # index sizes
-    # curl 127.0.0.1:9200/_cat/indices
-
-    # some query example
-    #curl -X GET "localhost:9200/declaration_file_prod/_search?pretty" -H 'Content-Type: application/json' -d'{"query": {"match" : {"office_id" : 5963}}}'
-
-#17 копируем файлы sitemap
+#18 копируем файлы sitemap
     rm -rf disclosures/static/sitemap
     ln -s  $DLROBOT_FOLDER/sitemap disclosures/static/sitemap
-
-#18  подменяем файл документов-исходников
-     rm -rf disclosures/static/domains
-     ln -s  $DLROBOT_FOLDER/$DISCLOSURES_FILES disclosures/static/domains
 
 
 #19  посылаем данные dlrobot в каталог, который синхронизирутеся с облаком, очищаем dlrobot_central (без возврата)

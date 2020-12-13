@@ -36,6 +36,10 @@ def create_tar_file(logger, args):
     with os.scandir(args.input_dlrobot_folder) as it:
         for entry in it:
             if entry.is_dir() and entry.stat().st_ctime < args.max_ctime:
+                result_folder = os.path.join(args.input_dlrobot_folder, entry.name, "result")
+                logger.info("rm folder {} ".format(result_folder))
+                shutil.rmtree(result_folder, ignore_errors=True)
+
                 logger.info("move {} {}".format(entry.name, tmp_folder))
                 shutil.move(os.path.join(args.input_dlrobot_folder, entry.name), tmp_folder)
     tar_file = "dlrobot.{}.tar.gz".format(args.max_ctime)

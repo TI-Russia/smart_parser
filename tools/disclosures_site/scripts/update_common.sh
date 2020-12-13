@@ -2,6 +2,7 @@
 
 # todo: выписывать smart_parser в $DLROBOT_FOLDER и делать ссылку на него в проде
 export TOOLS=~/smart_parser/tools
+export TOOLS_PROD=/var/www/smart_parser/tools/disclosures_site/
 export DLROBOT_CENTRAL_FOLDER=~/declarator_hdd/declarator/dlrobot_central
 export DLROBOT_UPDATES_FOLDER=~/declarator_hdd/declarator/dlrobot_updates
 export HUMAN_FILES_JSON=~/declarator_hdd/Yandex.Disk/declarator/human_files.json
