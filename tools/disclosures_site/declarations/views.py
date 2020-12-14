@@ -3,8 +3,8 @@ from .documents import ElasticSectionDocument, ElasticPersonDocument, ElasticOff
 from declarations.common import resolve_fullname, resolve_person_name_pattern_from_search_request
 from disclosures_site.declarations.statistics import TDisclosuresStatisticsHistory
 from .rubrics import fill_combo_box_with_rubrics
-from source_doc_http.source_doc_client import TSourceDocClient
 from common.content_types import file_extension_to_content_type
+from declarations.apps import DeclarationsConfig
 
 from django.views import generic
 from django.views.generic.edit import FormView
@@ -396,11 +396,8 @@ class FileSearchView(CommonSearchView):
         return self.get_queryset_common()
 
 
-SOURCE_DOC_CLIENT = TSourceDocClient(TSourceDocClient.parse_args(['--timeout', '10']))
-
-
 def source_doc_getter(request, sha256_and_file_extension):
     sha256, _ = os.path.splitext(sha256_and_file_extension)
-    data, file_extension = SOURCE_DOC_CLIENT.retrieve_file_data_by_sha256(sha256)
+    data, file_extension = DeclarationsConfig.SOURCE_DOC_CLIENT.retrieve_file_data_by_sha256(sha256)
     content_type = file_extension_to_content_type(file_extension)
     return HttpResponse(data, content_type=content_type)

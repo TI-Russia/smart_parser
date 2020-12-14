@@ -19,6 +19,7 @@ source $(dirname $0)/update_common.sh
     cd $CRAWL_EPOCH
     cp $TOOLS/disclosures_site/scripts/update_common.sh  .profile
     echo "" >> .profile
+    echo "" >> .profile
     echo "export DLROBOT_FOLDER=$DLROBOT_FOLDER" >> .profile
     echo "export CRAWL_EPOCH=$CRAWL_EPOCH" >> .profile
     echo "export OLD_DLROBOT_FOLDER=$OLD_DLROBOT_FOLDER" >> .profile
@@ -42,17 +43,6 @@ source $(dirname $0)/update_common.sh
         echo "the size of dlrobot_human.json is less than the size of older one, check dlrobot_human.json.stats"
         exit 1
     endif
-
-#4 (факультативно) новый смартпарсер через старые файлы dlrobot
-  #python3 $TOOLS/robots/dlrobot/scripts/cloud/smart_parser_cache_client.py  --walk-folder-recursive $DISCLOSURES_FILES --action put
-
-#3.5  (факультативно) переконвертация  pdf, которые не были переконвертированы раньше
- #find  $DISCLOSURES_FILES -name '*.pdf' -type f | xargs -n 100 --verbose python $TOOLS/ConvStorage/scripts/convert_pdf.py --skip-receiving --conversion-timeout 20
-
-#3.6  (факультативно) Запуск текущего классификатора на старых файлах из dlrobot и удаление тех, что не прошел классификатор
-  #find  $DISCLOSURES_FILES -name 'o*' -type f | xargs -P 4 -n 1 --verbose python $TOOLS/DeclDocRecognizer/dlrecognizer.py --delete-negative --source-file
-  #python $TOOLS/disclosures_site/scripts/clear_json_entries_for_deleted_files.py dlrobot_human.json
-  #python $TOOLS/disclosures_site/scripts/dlrobot_human_stats.py dlrobot_human.json > dlrobot_human.json.stats
 
 
 #7  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод
@@ -89,8 +79,8 @@ source $(dirname $0)/update_common.sh
 #11.  запуск сливалки, 4 gb memory each family portion, 30 GB temp files, no more than one process per workstation
    python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs  --print-family-prefixes   --permanent-links-db $DLROBOT_FOLDER/permalinks.dbm --settings disclosures.settings.dev > surname_spans.txt
    python3 $TOOLS/disclosures_site/manage.py clear_dedupe_artefacts --settings disclosures.settings.dev --permanent-links-db $DLROBOT_FOLDER/permalinks.dbm
-   echo $DEDUPE_HOSTS_SPACES | xargs  --verbose -P 4 -I {} -n 1 scp $DLROBOT_FOLDER/permalinks.dbm {}:/tmp
-   echo $DEDUPE_HOSTS_SPACES | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/git_update_cloud_worker.py --action stop --host $host
+   echo $DEDUPE_HOSTS_SPACES | tr " " "\n"  | xargs  --verbose -P 4 -I {} -n 1 scp $DLROBOT_FOLDER/permalinks.dbm {}:/tmp
+   echo $DEDUPE_HOSTS_SPACES | tr " " "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/git_update_cloud_worker.py --action stop --host $host
    parallel -a surname_spans.txt --jobs 2 --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $DEDUPE_HOSTS --basefile $DEDUPE_MODEL  --verbose --workdir /tmp \
         python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --permanent-links-db /tmp/permalinks.dbm --dedupe-model-file $DEDUPE_MODEL  \
                 --verbose 3  --threshold 0.9  --surname-bounds {} --write-to-db --settings disclosures.settings.dev --logfile dedupe.{}.log
