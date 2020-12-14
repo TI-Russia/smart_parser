@@ -94,21 +94,21 @@ def fill_combo_box_with_first_crawl_epochs():
 
 class CommonSearchForm(forms.Form):
     name = forms.CharField(
-        widget=forms.TextInput(attrs={'size': 80}),
+        widget=forms.TextInput(attrs={'size': 25}),
         strip=True,
         required=False,
         empty_value="",
         label="Название"
     )
     person_name = forms.CharField(
-        widget=forms.TextInput(attrs={'size': 80}),
+        widget=forms.TextInput(attrs={'size': 30}),
         strip=True,
         required=False,
         empty_value="",
         label="ФИО"
     )
     web_domains = forms.CharField(
-        widget=forms.TextInput(attrs={'size': 80}),
+        widget=forms.TextInput(attrs={'size': 20}),
         strip=True,
         required=False,
         empty_value="",

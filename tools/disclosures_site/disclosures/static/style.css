@@ -1,0 +1,51 @@
+@media screen and (max-device-width: 480px) /* Mobile */ {
+    body {
+        background-color: #F3F3F3;
+    }
+    html {
+        font-size: 36px
+    }
+}
+@media screen and (min-device-width: 480px)  /* Desktop */ {
+    body {
+        background-color: #F3F3F3;
+        text-color: black;
+        link-color: black;
+    }
+}
+
+div.header1 {
+    display: inline;
+    font-size: 200%;
+    font-weight: bold;
+    text-align: left;
+}
+
+div.header2 {
+    display: inline;
+    margin: 10px;
+    font-size: 100%;
+}
+
+span.selected_menu {
+    color: white;
+    background-color: black;
+}
+
+span.not_selected_menu {
+    color: black;
+    background-color: #F3F3F3;
+}
+
+span.menu_space {
+     width: 10px;
+     display: inline-block;
+}
+
+input {
+  font-size: 100%;
+}
+
+select {
+  font-size: 100%;
+}

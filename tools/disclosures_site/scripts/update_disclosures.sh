@@ -89,12 +89,8 @@ source $(dirname $0)/update_common.sh
 #11.  запуск сливалки, 4 gb memory each family portion, 30 GB temp files, no more than one process per workstation
    python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs  --print-family-prefixes   --permanent-links-db $DLROBOT_FOLDER/permalinks.dbm --settings disclosures.settings.dev > surname_spans.txt
    python3 $TOOLS/disclosures_site/manage.py clear_dedupe_artefacts --settings disclosures.settings.dev --permanent-links-db $DLROBOT_FOLDER/permalinks.dbm
-   for host in $DEDUPE_HOSTS_SPACES; do
-        scp $DLROBOT_FOLDER/permalinks.dbm $host:/tmp
-        ssh $host git -C ~/smart_parser pull
-        ssh $host touch /tmp/dlrobot_worker/.dlrobot_pit_stop
-   done
-   sleep 3h # till dlrobot worker stops
+   echo $DEDUPE_HOSTS_SPACES | xargs  --verbose -P 4 -I {} -n 1 scp $DLROBOT_FOLDER/permalinks.dbm {}:/tmp
+   echo $DEDUPE_HOSTS_SPACES | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/git_update_cloud_worker.py --action stop --host $host
    parallel -a surname_spans.txt --jobs 2 --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $DEDUPE_HOSTS --basefile $DEDUPE_MODEL  --verbose --workdir /tmp \
         python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --permanent-links-db /tmp/permalinks.dbm --dedupe-model-file $DEDUPE_MODEL  \
                 --verbose 3  --threshold 0.9  --surname-bounds {} --write-to-db --settings disclosures.settings.dev --logfile dedupe.{}.log
