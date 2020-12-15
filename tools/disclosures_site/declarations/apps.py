@@ -8,5 +8,5 @@ class DeclarationsConfig(AppConfig):
     SOURCE_DOC_CLIENT = None
 
     def ready(self):
-        if 'runserver' in sys.argv:
+        if 'runserver' in sys.argv or  sys.argv[0].endswith('gunicorn'):
             DeclarationsConfig.SOURCE_DOC_CLIENT = TSourceDocClient(TSourceDocClient.parse_args(['--timeout', '10']))
