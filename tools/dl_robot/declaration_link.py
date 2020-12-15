@@ -1,9 +1,9 @@
 import re
 from DeclDocRecognizer.document_types import SOME_OTHER_DOCUMENTS
 from common.download import get_file_extension_only_by_headers
-from common.primitives import normalize_and_russify_anchor_text, check_sub_page_or_iframe
+from common.primitives import normalize_and_russify_anchor_text
 from common.http_request import RobotHttpException
-from common.find_link import TLinkInfo
+from common.link_info import TLinkInfo, check_sub_page_or_iframe
 from common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
 
 NEGATIVE_WORDS = [
