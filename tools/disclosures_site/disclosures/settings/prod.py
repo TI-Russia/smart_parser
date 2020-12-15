@@ -17,4 +17,6 @@ ELASTICSEARCH_INDEX_NAMES = {
 
 os.environ['DISCLOSURES_DATABASE_NAME'] = os.environ.get('DISCLOSURES_DATABASE_NAME', 'disclosures_db')
 
+os.environ['SOURCE_DOC_SERVER_ADDRESS'] = os.environ.get('SOURCE_DOC_SERVER_ADDRESS', '192.168.100.151:8090')
+
 from .common import *

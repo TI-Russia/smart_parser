@@ -14,3 +14,4 @@ export DEDUPE_MODEL=~/declarator/transparency/toloka/dedupe_model/dedupe.info
 export DISCLOSURES_DB_HOST=migalka
 export DEDUPE_HOSTS=lena,avito
 export DEDUPE_HOSTS_SPACES=$"lena\navito"
+export SOURCE_DOC_SERVER_ADDRESS=migalka:8090
