@@ -9,4 +9,4 @@ class DeclarationsConfig(AppConfig):
 
     def ready(self):
         if 'runserver' in sys.argv:
-            self.SOURCE_DOC_CLIENT = TSourceDocClient(TSourceDocClient.parse_args(['--timeout', '10']))
+            DeclarationsConfig.SOURCE_DOC_CLIENT = TSourceDocClient(TSourceDocClient.parse_args(['--timeout', '10']))
