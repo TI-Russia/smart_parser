@@ -80,7 +80,7 @@ source $(dirname $0)/update_common.sh
    python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs  --print-family-prefixes   --permanent-links-db $DLROBOT_FOLDER/permalinks.dbm --settings disclosures.settings.dev > surname_spans.txt
    python3 $TOOLS/disclosures_site/manage.py clear_dedupe_artefacts --settings disclosures.settings.dev --permanent-links-db $DLROBOT_FOLDER/permalinks.dbm
    echo $DEDUPE_HOSTS_SPACES | tr " " "\n"  | xargs  --verbose -P 4 -I {} -n 1 scp $DLROBOT_FOLDER/permalinks.dbm {}:/tmp
-   echo $DEDUPE_HOSTS_SPACES | tr " " "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/git_update_cloud_worker.py --action stop --host $host
+   echo $DEDUPE_HOSTS_SPACES | tr " " "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/git_update_cloud_worker.py --action stop --host
    parallel -a surname_spans.txt --jobs 2 --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $DEDUPE_HOSTS --basefile $DEDUPE_MODEL  --verbose --workdir /tmp \
         python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --permanent-links-db /tmp/permalinks.dbm --dedupe-model-file $DEDUPE_MODEL  \
                 --verbose 3  --threshold 0.9  --surname-bounds {} --write-to-db --settings disclosures.settings.dev --logfile dedupe.{}.log
@@ -96,6 +96,7 @@ source $(dirname $0)/update_common.sh
 #14 создание индекса для elasticsearch, создание sitemap   в фоновом режиме
    {
      python3 $TOOLS/disclosures_site/manage.py search_index --rebuild  --settings disclosures.settings.dev -f
+     cd $DLROBOT_FOLDER
      python3 $TOOLS/disclosures_site/manage.py generate_sitemaps --settings disclosures.settings.dev --output-folder sitemap
 
    } &

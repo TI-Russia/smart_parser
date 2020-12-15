@@ -2,7 +2,6 @@ import shutil
 import os
 import argparse
 import logging
-import psutil
 
 
 def setup_logging(logfilename):
@@ -53,18 +52,8 @@ def create_tar_file(logger, args):
     return tar_file
 
 
-def check_yandex_disk_is_running():
-    for proc in psutil.process_iter():
-        cmdline = " ".join(proc.cmdline())
-        if proc.pid != os.getpid():
-            if 'yandex-disk' in cmdline:
-                return True
-    return False
-
-
 def main(args):
     logger = setup_logging("backuper.log")
-    assert check_yandex_disk_is_running()
 
     tar_file = create_tar_file(logger, args)
 
