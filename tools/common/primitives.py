@@ -1,6 +1,5 @@
 import urllib.parse
 import re
-from common.link_info import TLinkInfo
 import socket
 
 
@@ -39,31 +38,6 @@ def normalize_and_russify_anchor_text(text):
         text = " ".join(text.split()).replace("c", "с").replace("e", "е").replace("o", "о")
         return text
     return ""
-
-
-def check_link_sitemap(logger, link_info: TLinkInfo):
-    text = normalize_and_russify_anchor_text(link_info.anchor_text)
-    return text.startswith('карта сайта')
-
-
-def check_anticorr_link_text(logger, link_info: TLinkInfo):
-    text = link_info.anchor_text.strip().lower()
-    if text.find('антикоррупционная комиссия') != -1:
-        return True
-
-    if text.startswith(u'противодействие') or text.startswith(u'борьба') or text.startswith(u'нет'):
-        return text.find("коррупц") != -1
-    return False
-
-
-def check_sub_page_or_iframe(logger,  link_info: TLinkInfo):
-    if link_info.target_url is None:
-        return False
-    if link_info.tag_name is not None and link_info.tag_name.lower() == "iframe":
-        return True
-    parent = strip_html_url(link_info.source_url)
-    subpage = strip_html_url(link_info.target_url)
-    return subpage.startswith(parent)
 
 
 def get_site_domain_wo_www(url):
@@ -107,7 +81,6 @@ def convert_timeout_to_seconds(s):
         return int(s[:-1]) * seconds_per_unit[s[-1]]
     else:
         return int(s)
-
 
 
 def check_internet(host="8.8.8.8", port=53, timeout=3):

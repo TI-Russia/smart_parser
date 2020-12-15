@@ -1,4 +1,5 @@
 from DeclDocRecognizer.dlrecognizer import DL_RECOGNIZER_ENUM
+from common.primitives import normalize_and_russify_anchor_text, strip_html_url
 
 
 class TClickEngine:
@@ -72,3 +73,28 @@ class TLinkInfo:
         self.weight = rec.get('link_weight', TLinkInfo.MINIMAL_LINK_WEIGHT)
         self.dl_recognizer_result = rec.get('dl_recognizer_result', DL_RECOGNIZER_ENUM.UNKNOWN)
         return self
+
+
+def check_link_sitemap(logger, link_info: TLinkInfo):
+    text = normalize_and_russify_anchor_text(link_info.anchor_text)
+    return text.startswith('карта сайта')
+
+
+def check_anticorr_link_text(logger, link_info: TLinkInfo):
+    text = link_info.anchor_text.strip().lower()
+    if text.find('антикоррупционная комиссия') != -1:
+        return True
+
+    if text.startswith(u'противодействие') or text.startswith(u'борьба') or text.startswith(u'нет'):
+        return text.find("коррупц") != -1
+    return False
+
+
+def check_sub_page_or_iframe(logger,  link_info: TLinkInfo):
+    if link_info.target_url is None:
+        return False
+    if link_info.tag_name is not None and link_info.tag_name.lower() == "iframe":
+        return True
+    parent = strip_html_url(link_info.source_url)
+    subpage = strip_html_url(link_info.target_url)
+    return subpage.startswith(parent)

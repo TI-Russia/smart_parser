@@ -5,6 +5,7 @@ After=mysql.service
 [Service]
 User=sokirko
 Environment=PYTHONPATH=/var/www/smart_parser/tools:/var/www/smart_parser/tools/disclosures_site
+Environment=SOURCE_DOC_SERVER_ADDRESS=migalka:8090
 WorkingDirectory=/var/www/smart_parser/tools/disclosures_site
 ExecStart=/var/www/smart_parser/tools/venv/bin/python3 manage.py runserver 192.168.100.151:8000  --noreload --settings disclosures.settings.prod
 
