@@ -1,4 +1,6 @@
 import declarations.models as models
+import re
+
 
 class TOfficeRubrics:
     Court = 1
@@ -138,3 +140,11 @@ def build_rubrics(logger=None):
             office.rubric_id = rubric_id
             office.save()
 
+
+def convert_municipality_to_education(section_position):
+    if section_position is None:
+        return False
+    heavy_position = re.search('(завуч|учитель|учительница)', section_position, re.IGNORECASE)  is not None
+    light_position = re.search('(директор|заведующая|директора)', section_position, re.IGNORECASE) is not None
+    edu_office = re.search('СОШ|СШ|МКОУ|МБУДО|МАОУ|ГБОУ|МОУ|колледж|ВСОШ|общеобразовательного|образовательным|школы|интерната', section_position) != None
+    return heavy_position or (light_position and edu_office)

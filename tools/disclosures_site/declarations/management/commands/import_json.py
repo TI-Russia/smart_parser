@@ -4,7 +4,8 @@ from declarations.documents import stop_elastic_indexing, start_elastic_indexing
 from declarations.management.commands.permalinks import TPermaLinksDB
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from declarations.input_json import TDlrobotHumanFile
-from common.primitives import get_site_domain_wo_www
+from declarations.rubrics import convert_municipality_to_education, TOfficeRubrics
+from declarations.documents import OFFICES
 
 from multiprocessing import Pool
 import os
@@ -65,6 +66,7 @@ class TImporter:
         self.primary_keys_builder.open_db_read_only()
         self.first_new_section_id = self.primary_keys_builder.get_first_new_primary_key(models.Section)
         self.smart_parser_cache_client = None
+
 
     def delete_before_fork(self):
         self.primary_keys_builder.close_db()
@@ -147,6 +149,15 @@ class TImporter:
                             passports = list(json_reader.section.permalink_passports())
                             TImporter.logger.debug("found a new section {}, set section.id to {}".format(
                                 passports[0], section_id))
+
+                        # json_reader.section.rubric_id = source_document_in_db.office.rubric_id does not work
+                        # may be we should call source_document_in_db.refresh_from_db
+                        json_reader.section.rubric_id = OFFICES.offices[source_document_in_db.office.id]['rubric_id']
+
+                        if json_reader.section.rubric_id == TOfficeRubrics.Municipality and  \
+                                convert_municipality_to_education(json_reader.section.position):
+                            json_reader.section.rubric_id = TOfficeRubrics.Education
+
                         json_reader.save_to_database(section_id)
                         imported_section_years.append(income_year)
 

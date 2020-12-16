@@ -20,7 +20,6 @@ class ElasticSectionDocument(Document):
     default_field_name = "person_name"
     source_document_id = IntegerField()
     office_id = IntegerField()
-    rubric_id = IntegerField()
     position_and_department = TextField()
     income_size = IntegerField()
     person_id = IntegerField()
@@ -32,6 +31,7 @@ class ElasticSectionDocument(Document):
             'id',
             'person_name',
             'income_year',
+            'rubric_id'
         ]
 
     def prepare_source_document_id(self, instance):
@@ -46,9 +46,6 @@ class ElasticSectionDocument(Document):
             return 0 # there is no sql record with  region_id = 0
         else:
             return region_id
-
-    def prepare_rubric_id(self, instance):
-        return OFFICES.offices[instance.source_document.office.id]['rubric_id']
 
     def prepare_position_and_department(self, instance):
         str = ""

@@ -66,7 +66,7 @@ python3 $TOOLS/disclosures_site/scripts/join_human_and_dlrobot.py \
         --output-json dlrobot_human.json
 
 
-sudo python3 $TOOLS/disclosures_site/manage.py create_database --settings disclosures.settings.dev --password root --skip-checks
+python3 $TOOLS/disclosures_site/manage.py create_database --settings disclosures.settings.dev --username db_creator --password root --skip-checks
 python3 $TOOLS/disclosures_site/manage.py makemigrations --settings disclosures.settings.dev
 python3 $TOOLS/disclosures_site/manage.py migrate --settings disclosures.settings.dev
 python3 $TOOLS/disclosures_site/manage.py create_permalink_storage  --settings disclosures.settings.dev --output-dbm-file permalinks.dbm

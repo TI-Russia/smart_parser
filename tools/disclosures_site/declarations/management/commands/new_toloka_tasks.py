@@ -5,6 +5,7 @@ import os
 from collections import defaultdict
 from deduplicate.toloka import TToloka
 from django.core.management import BaseCommand
+from django.core.exceptions import ObjectDoesNotExist
 import declarations.models as models
 import django.db.utils
 from declarations.common import resolve_fullname
@@ -417,6 +418,8 @@ class Command(BaseCommand):
                 if golden_count >= gs_task_count:
                     break
             except django.db.utils.IntegrityError as err:
+                pass
+            except ObjectDoesNotExist as err:
                 pass
 
         #if golden_count < gs_task_count:

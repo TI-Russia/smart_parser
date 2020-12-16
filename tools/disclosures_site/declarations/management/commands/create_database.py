@@ -10,11 +10,17 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
+                '--host',
+            dest='host',
+            required=False,
+            default="localhost",
+        )
+        parser.add_argument(
                 '--username',
             dest='username',
             required=False,
             default="root",
-            help="mysql user name, default  root",
+            help="mysql user name that can create db, default  root",
         )
         parser.add_argument(
                 '--password',
@@ -36,7 +42,7 @@ class Command(BaseCommand):
         db_connection = pymysql.connect(
             user=options.get('username'),
             password=options.get('password'),
-            unix_socket = "/var/run/mysqld/mysqld.sock")
+            )
         if db_connection is None:
             sys.stdout.write("cannot make local connection to the database\n")
         else:
