@@ -47,24 +47,24 @@ def convert_to_int_with_nones(v):
 class TSectionPassportFactory:
     AMBIGUOUS_KEY = "AMBIGUOUS_KEY"
 
-    def __init__(self, office_id, year, person_name, sum_income,  sum_square, vehicle_count, office_hierarchy=None):
-        sum_income = str(convert_to_int_with_nones(sum_income))
-        sum_square = str(convert_to_int_with_nones(sum_square))
+    def __init__(self, office_id, year, person_name, income_sum, square_sum, vehicle_count, office_hierarchy=None):
+        income_sum = str(convert_to_int_with_nones(income_sum))
+        square_sum = str(convert_to_int_with_nones(square_sum))
         vehicle_count = str(convert_to_int_with_nones(vehicle_count))
         office_id = str(office_id)
         year = str(year)
         person_name = normalize_whitespace(person_name).lower()
         family_name = person_name.split(" ")[0]
         variants = [
-             (office_id, year, person_name, sum_income, sum_square, vehicle_count), # the most detailed is the first
-             (office_id, year, family_name, sum_income, sum_square, vehicle_count),
-             (office_id, year, person_name, sum_income)
+             (office_id, year, person_name, income_sum, square_sum, vehicle_count), # the most detailed is the first
+             (office_id, year, family_name, income_sum, square_sum, vehicle_count),
+             (office_id, year, person_name, income_sum)
         ]
         if office_hierarchy is not None:
             parent_office_id = str(office_hierarchy.get_parent_office(office_id))
             if parent_office_id != office_id:
-                variants.append((parent_office_id, year, person_name, sum_income, sum_square, vehicle_count))
-                variants.append((parent_office_id, year, family_name, sum_income)) #t is the most abstract passport parent office and family_name
+                variants.append((parent_office_id, year, person_name, income_sum, square_sum, vehicle_count))
+                variants.append((parent_office_id, year, family_name, income_sum)) #t is the most abstract passport parent office and family_name
 
         self.passport_variants = list(map((lambda x: "\t".join(x)), variants))
 
@@ -94,9 +94,9 @@ class TSectionPassportFactory:
                 )
         with connection.cursor() as cursor:
             cursor.execute(query)
-            for section_id, office_id, sum_income, person_name, year, sum_square, vehicle_count in cursor.fetchall():
-                yield section_id, TSectionPassportFactory(office_id, year, person_name, sum_income,
-                                                              sum_square, vehicle_count, office_hierarchy=office_hierarchy)
+            for section_id, office_id, income_sum, person_name, year, square_sum, vehicle_count in cursor.fetchall():
+                yield section_id, TSectionPassportFactory(office_id, year, person_name, income_sum,
+                                                              income_sum, vehicle_count, office_hierarchy=office_hierarchy)
 
     @staticmethod
     def get_all_passports_dict(iterator):
@@ -140,7 +140,7 @@ class TSmartParserJsonReader:
             self.value = value
 
         def __str__(self):
-            return (repr(self.value))
+            return repr(self.value)
 
     def __init__(self, income_year, source_document, section_json, id=None):
         self.section_json = section_json

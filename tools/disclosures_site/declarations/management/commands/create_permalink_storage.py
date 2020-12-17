@@ -1,9 +1,11 @@
+from declarations.management.commands.permalinks import TPermaLinksDB
+from common.primitives import queryset_iterator
 import declarations.models as models
+
 from django.core.management import BaseCommand
 import logging
 import os
-from declarations.management.commands.permalinks import TPermaLinksDB
-import gc
+
 
 
 def setup_logging(logfilename="create_permalink_storage.log"):
@@ -21,17 +23,6 @@ def setup_logging(logfilename="create_permalink_storage.log"):
     logger.addHandler(fh)
 
     return logger
-
-
-def queryset_iterator(queryset, chunksize=1000):
-    pk = 0
-    last_pk = queryset.order_by('-pk')[0].pk
-    queryset = queryset.order_by('pk')
-    while pk < last_pk:
-        for row in queryset.filter(pk__gt=pk)[:chunksize]:
-            pk = row.pk
-            yield row
-        gc.collect()
 
 
 class Command(BaseCommand):

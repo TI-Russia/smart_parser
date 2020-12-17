@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.translation import  get_language
-from .countries import  get_country_str
+from .countries import get_country_str
+from .rubrics import get_russian_rubric_str
 
 
 def get_django_language():
@@ -59,6 +60,13 @@ class Office(models.Model):
     @property
     def child_offices(self):
         return self.get_child_offices(max_count=5)
+
+    @property
+    def rubric_str(self):
+        if self.rubric_id is None:
+            return "unknown"
+        else:
+            return get_russian_rubric_str(self.rubric_id)
 
 
 class Region(models.Model):
@@ -324,6 +332,12 @@ class Section(models.Model):
         main_income = self.get_declarant_income_size()
         yield "sc;{};{};{};{}".format(self.source_document.id, self.person_name.lower(), self.income_year, main_income)
 
+    @property
+    def rubric_str(self):
+        if self.rubric_id is None:
+            return "unknown"
+        else:
+            return get_russian_rubric_str(self.rubric_id)
 
 
 

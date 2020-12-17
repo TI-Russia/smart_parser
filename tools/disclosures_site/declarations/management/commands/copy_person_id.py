@@ -1,13 +1,14 @@
 import declarations.models as models
 from declarations.documents import stop_elastic_indexing
 from django.core.management import BaseCommand
+from common.primitives import queryset_iterator
+from declarations.management.commands.permalinks import TPermaLinksDB
+from declarations.common import resolve_fullname
+
 import logging
 import pymysql
 import os
-import gc
 import json
-from declarations.management.commands.permalinks import TPermaLinksDB
-from declarations.common import resolve_fullname
 
 
 def setup_logging(logfilename="copy_person.log"):
@@ -72,17 +73,6 @@ def get_all_section_from_declarator_with_person_id():
                 props_to_person_id[key2] = person_id
 
     return props_to_person_id
-
-
-def queryset_iterator(queryset, chunksize=1000):
-    pk = 0
-    last_pk = queryset.order_by('-pk')[0].pk
-    queryset = queryset.order_by('pk')
-    while pk < last_pk:
-        for row in queryset.filter(pk__gt=pk)[:chunksize]:
-            pk = row.pk
-            yield row
-        gc.collect()
 
 
 class Command(BaseCommand):

@@ -92,10 +92,15 @@
     {% endfor %}
 
 </table>
+
 <br/><br/>
+
+Рубрика: {{section.rubric_str}}
+<br/>
 
 Источник декларации: <a href="/file/{{ section.source_document.id }}"> файл id={{ section.source_document.id }} </a>
 <br/><br/>
+
 
 {% if section.person_id %}
 <a href="/section/?person_id={{ section.person_id }}" > Остальные декларации этого человека</a>
