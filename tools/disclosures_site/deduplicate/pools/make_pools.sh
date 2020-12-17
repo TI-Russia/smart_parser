@@ -1,4 +1,4 @@
-python3 ../../scripts/dedupe/make_pools.py
+python3 ../../scripts/dedupe/import_pools_from_declarator.py
 
 # sokirko assigned pools https://sandbox.toloka.yandex.ru/requester/project/15926/pool/611429
 ## and https://sandbox.toloka.yandex.ru/requester/project/15926/pool/608496, we make training and golden out of it

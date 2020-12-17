@@ -1,32 +1,23 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
+from .dedupe_adapter import \
+    dedupe_object_writer, \
+    get_pairs_from_clusters, \
+    pool_to_dedupe
+from deduplicate.toloka import TToloka
 
 import dedupe
+from django.core.management import BaseCommand
 import logging
 import json
 import os
 from datetime import datetime
-
-from django.core.management import BaseCommand
-
 from collections import Counter
-from deduplicate.toloka import TToloka
-from .dedupe_adapter import \
-    dedupe_object_writer, \
-    describe_dedupe, \
-    get_pairs_from_clusters, \
-    pool_to_dedupe
 
 # more info on 70..100 to get more accuracy
 ROC_POINTS = list(range(0, 71, 10)) + list(range(71, 100))
 
 
-
-
 def setup_logging(logfilename="test_pool.log"):
     logger = logging.getLogger("toloka")
-    logger.setLevel(logging.DEBUG)
-
     # create formatter and add it to the handlers
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     if os.path.exists(logfilename):
@@ -116,14 +107,6 @@ class Command(BaseCommand):
 
     def init_options(self, options):
         self.options = options
-        log_level = logging.WARNING
-        if options.get("verbose"):
-            if options.get("verbose") == 1:
-                log_level = logging.INFO
-            elif options.get("verbose") >= 2:
-                log_level = logging.DEBUG
-
-        logging.getLogger().setLevel(log_level)
 
     def fill_dedupe_data(self):
         self.dedupe_objects = {}
@@ -204,18 +187,10 @@ class Command(BaseCommand):
             self.logger.info(json.dumps(metrics) + "\n")
         else:
             self.print_roc_points(test_pool_file_name, output_points_file)
-            #self.print_roc_points_quick_and_dirty(test_pool_file_name, output_points_file)
-
 
     def handle(self, *args, **options):
-
         self.init_options(options)
         self.log('Started at: {}'.format(datetime.now()))
-
-        if self.options.get("verbose") > 0:
-            with open(self.options["model_file"], 'rb') as sf:
-                describe_dedupe(self.logger, dedupe.StaticDedupe(sf))
-
         with open(self.options["points_file"], 'w', encoding="utf8") as outf:
             for test_pool in options["test_pool"]:
                 if options['test_only_human_rules']:

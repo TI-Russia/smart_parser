@@ -1,16 +1,13 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
-import dedupe
-from django.core.management import BaseCommand
-
-from .dedupe_adapter import dedupe_object_writer, describe_dedupe, pool_to_dedupe
+from .dedupe_adapter import dedupe_object_writer, pool_to_dedupe
 from deduplicate.toloka import TToloka
 
+from django.core.management import BaseCommand
 from sklearn.ensemble import RandomForestClassifier
 import json
 import logging
 from datetime import datetime
+import dedupe
+import os
 
 
 def setup_logging(logfilename="train_pool.log"):
@@ -192,4 +189,4 @@ class Command(BaseCommand):
                 self.dedupe.writeTraining(tf)
 
         self.write_dedupe_aux_params()
-        describe_dedupe(self.logger, self.dedupe)
+

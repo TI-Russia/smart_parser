@@ -3,10 +3,10 @@ import dedupe
 import logging
 from datetime import datetime
 from django.core.management import BaseCommand
-from .dedupe_adapter import TPersonFields, dedupe_object_reader, dedupe_object_writer, describe_dedupe, \
+from .dedupe_adapter import TPersonFields, dedupe_object_reader, dedupe_object_writer, \
     get_pairs_from_clusters
 import sys
-from declarations.documents import stop_elastic_indexing, start_elastic_indexing
+from declarations.documents import stop_elastic_indexing
 from declarations.management.commands.permalinks import TPermaLinksDB
 import declarations.models as models
 from declarations.common import resolve_fullname
@@ -308,8 +308,6 @@ class Command(BaseCommand):
             with open(self.options["model_file"], 'rb') as sf:
                 self.logger.info('read dedupe settings from {}'.format(sf.name))
                 self.dedupe = dedupe.StaticDedupe(sf, num_cores=self.options['num_cores'])
-                if logging.getLogger().getEffectiveLevel() > 1:
-                    describe_dedupe(self.logger, self.dedupe)
 
     def cluster_with_dedupe(self):
         if self.options.get("fake_dedupe", False):
