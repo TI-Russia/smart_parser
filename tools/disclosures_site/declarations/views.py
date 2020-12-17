@@ -209,6 +209,7 @@ class CommonSearchView(FormView, generic.ListView):
             'page_size': self.request.GET.get('page_size'),
             'person_id': self.request.GET.get('person_id'),
             'first_crawl_epoch': self.request.GET.get('first_crawl_epoch'),
+            'parent_id': self.request.GET.get('parent_id'),
         }
 
     def build_person_name_elastic_search_query(self, should_items):
@@ -250,6 +251,7 @@ class CommonSearchView(FormView, generic.ListView):
             add_should_item("min_income_year", "term", int, should_items)
             add_should_item("max_income_year", "term", int, should_items)
             add_should_item("section_count", "term", int, should_items)
+            add_should_item("parent_id", "term", int, should_items)
             self.build_office_full_text_elastic_search_query(should_items)
 
             if len(should_items) == 0:
@@ -347,7 +349,7 @@ class OfficeSearchView(CommonSearchView):
     max_document_count = 500
 
     def get_queryset(self):
-        if self.get_initial().get('name') is None:
+        if self.get_initial().get('name') is None and self.get_initial().get('parent_id') is None:
             try:
                 search = self.elastic_search_document.search()
                 query_dict = {

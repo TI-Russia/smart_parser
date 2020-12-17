@@ -25,7 +25,7 @@
             {% endfor %}
 
             {% if office.child_offices_count > 5 %}
-                <a href=/office?search_request={"parent_id":{{office.id}}}>...</a>
+                <a href="/office?parent_id={{office.id}}">...</a>
             {% endif %}
             </td>
         </tr>
