@@ -1,5 +1,5 @@
 from . import models
-from declarations.common import normalize_whitespace
+from declarations.russian_fio import normalize_whitespace
 from declarations.countries import get_country_code
 from django.db import connection
 import re

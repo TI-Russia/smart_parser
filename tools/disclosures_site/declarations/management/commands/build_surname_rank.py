@@ -4,7 +4,7 @@ import logging
 import os
 import sys
 from collections import defaultdict
-from declarations.common import resolve_fullname
+from declarations.russian_fio import TRussianFio
 from django.conf import settings
 
 
@@ -46,12 +46,12 @@ class Command(BaseCommand):
             default=0
         )
 
-    def get_surname_and_name(self, person_name):
-        fio = resolve_fullname(person_name)
-        if fio is None:
+    def get_surname_and_names(self, person_name):
+        fio = TRussianFio(person_name)
+        if not fio.is_resolved:
             return None, None
-        surname = fio['family_name'].lower()
-        name = "{} {}".format(fio.get('name', " ").lower(), fio.get('patronymic', " ").lower())
+        surname = fio.family_name
+        name = "{} {}".format(fio.first_name, fio.patronymic)
         return surname, name
 
     def build_dicts(self):
@@ -61,11 +61,11 @@ class Command(BaseCommand):
         cnt = 0
         all_ids = list()
         for s in models.Section.objects.raw("select id, person_name from declarations_section"):
-            surname, name = self.get_surname_and_name(s.person_name)
+            surname, names = self.get_surname_and_names(s.person_name)
             if surname is not None:
-                all_ids.append((s.id, surname, name))
-                surname_to_name[surname].add(name)
-                name_to_surname[name].add(surname)
+                all_ids.append((s.id, surname, names))
+                surname_to_name[surname].add(names)
+                name_to_surname[names].add(surname)
                 cnt += 1
         self.logger.info("processed {} sections".format(cnt))
 

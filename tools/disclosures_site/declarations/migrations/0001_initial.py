@@ -100,6 +100,9 @@ class Migration(migrations.Migration):
                 ('dedupe_score', models.FloatField(blank=True, default=0.0, null=True)),
                 ('source_document', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE,
                                                  to='declarations.source_document', verbose_name='source document')),
+                ('surname_rank', models.IntegerField(null=True)),
+                ('name_rank', models.IntegerField(null=True)),
+                ('rubric_id', models.IntegerField(null=True, default=None)),
             ]
 
         ),

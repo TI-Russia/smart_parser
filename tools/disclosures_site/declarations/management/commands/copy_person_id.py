@@ -3,7 +3,7 @@ from declarations.documents import stop_elastic_indexing
 from django.core.management import BaseCommand
 from common.primitives import queryset_iterator
 from declarations.management.commands.permalinks import TPermaLinksDB
-from declarations.common import resolve_fullname
+from declarations.russian_fio import TRussianFio
 
 import logging
 import pymysql
@@ -64,9 +64,9 @@ def get_all_section_from_declarator_with_person_id():
         else:
             props_to_person_id[key1] = person_id
 
-        fio_dict = resolve_fullname(fio)
-        if fio_dict is not None and len(fio_dict['family_name']) > 0:
-            key2 = build_section_passport(document_id, fio_dict['family_name'], income_main)
+        fio = TRussianFio(fio)
+        if fio.is_resolved:
+            key2 = build_section_passport(document_id, fio.family_name, income_main)
             if key2 in props_to_person_id:
                 props_to_person_id[key2] = "AMBIGUOUS_KEY"
             else:
@@ -146,10 +146,9 @@ class Command(BaseCommand):
         for declaration_info in section.source_document.declarator_file_reference_set.all():
             key1 = build_section_passport(declaration_info.declarator_document_id, section.person_name, main_income)
             checked_results.add(section_passports.get(key1))
-            fio_dict = resolve_fullname(section.person_name)
-            if fio_dict is not None and len(fio_dict['family_name']) > 0:
-                # only by surname
-                key2 = build_section_passport(declaration_info.declarator_document_id, fio_dict['family_name'], main_income)
+            fio = TRussianFio(section.person_name)
+            if fio.is_resolved:
+                key2 = build_section_passport(declaration_info.declarator_document_id, fio.family_name, main_income)
                 checked_results.add(section_passports.get(key2))
             else:
                 self.logger.error(

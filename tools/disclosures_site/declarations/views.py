@@ -1,6 +1,6 @@
 from . import models
 from .documents import ElasticSectionDocument, ElasticPersonDocument, ElasticOfficeDocument, ElasticFileDocument
-from declarations.common import resolve_fullname, resolve_person_name_pattern_from_search_request
+from declarations.russian_fio import TRussianFio
 from disclosures_site.declarations.statistics import TDisclosuresStatisticsHistory
 from .rubrics import fill_combo_box_with_rubrics
 from common.content_types import file_extension_to_content_type
@@ -64,20 +64,20 @@ def fill_combo_box_with_section_years():
     return res
 
 
-CACHE_REGIONS=None
+CACHED_REGIONS = None
 
 
 def fill_combo_box_with_regions():
-    global CACHE_REGIONS
-    if CACHE_REGIONS is  None:
-        CACHE_REGIONS = list()
-        CACHE_REGIONS.append(('', ''))
+    global CACHED_REGIONS
+    if CACHED_REGIONS is  None:
+        CACHED_REGIONS = list()
+        CACHED_REGIONS.append(('', ''))
         for r in models.Region.objects.all():
             name = r.name
             if len(name) > 33:
                 name = name[:33]
-            CACHE_REGIONS.append((r.id, name))
-    return CACHE_REGIONS
+            CACHED_REGIONS.append((r.id, name))
+    return CACHED_REGIONS
 
 
 def fill_combo_box_with_first_crawl_epochs():
@@ -142,26 +142,12 @@ class CommonSearchForm(forms.Form):
         choices=fill_combo_box_with_first_crawl_epochs)
 
 
-def check_Russian_name(name1, name2):
-    if name1 is None or name2 is None:
-        return True
-    if len(name1) == 0 or len(name2) == 0:
-        return True
-    name1 = name1.strip(".").lower()
-    name2 = name2.strip(".").lower()
-    return name1.startswith(name2) or name2.startswith(name1)
-
-
 def compare_Russian_fio(search_query, person_name):
     if search_query.find(' ') == -1 and search_query.find('.') == -1:
         return True
-    fio1 = resolve_person_name_pattern_from_search_request(search_query)
-    fio2 = resolve_fullname(person_name)
-    if fio1 is None or fio2 is None:
-        return False
-    return fio1['family_name'].lower() == fio2['family_name'].lower() \
-       and check_Russian_name(fio1.get('name'), fio2.get('name')) \
-       and check_Russian_name(fio1.get('patronymic'), fio2.get('patronymic'))
+    fio1 = TRussianFio(search_query, from_search_request=True)
+    fio2 = TRussianFio(person_name)
+    return fio1.is_resolved and fio2.is_resolved and fio1.is_compatible_to(fio2)
 
 
 class CommonSearchView(FormView, generic.ListView):
@@ -216,8 +202,8 @@ class CommonSearchView(FormView, generic.ListView):
         person_name = self.get_initial().get("person_name")
         if person_name is not None and person_name != '':
             should_items.append({"match": {"person_name": person_name}})
-            fio = resolve_person_name_pattern_from_search_request(person_name)
-            should_items.append({"match": {"person_name": fio['family_name']}})
+            fio = TRussianFio(person_name, from_search_request=True)
+            should_items.append({"match": {"person_name": fio.family_name}})
 
     def build_office_full_text_elastic_search_query(self, should_items):
         office_query = self.get_initial().get('office_request')

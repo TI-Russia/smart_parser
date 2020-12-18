@@ -3,7 +3,7 @@ import json
 import os
 import logging
 from django.core.management import BaseCommand
-from declarations.common import resolve_fullname
+from declarations.russian_fio import TRussianFio
 import declarations.models as models
 from declarations.serializers import TSmartParserJsonReader, TSectionPassportFactory
 import pickle
@@ -18,11 +18,11 @@ class ConvertException(Exception):
 
 
 def check_family_name(n1, n2):
-    fio1 = resolve_fullname(n1)
-    fio2 = resolve_fullname(n2)
-    if fio1 is None or fio2 is None:
+    fio1 = TRussianFio(n1)
+    fio2 = TRussianFio(n2)
+    if not fio1.is_resolved or not fio2.is_resolved:
         return n1[0:3].lower() == n2[0:3].lower()
-    return fio1['family_name'].lower() == fio2['family_name'].lower()
+    return fio1.family_name == fio2.family_name
 
 
 def setup_logging(logfilename="convert_pool.log"):

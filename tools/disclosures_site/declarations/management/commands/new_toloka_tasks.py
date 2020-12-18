@@ -8,7 +8,7 @@ from django.core.management import BaseCommand
 from django.core.exceptions import ObjectDoesNotExist
 import declarations.models as models
 import django.db.utils
-from declarations.common import resolve_fullname
+from declarations.russian_fio import TRussianFio
 from declarations.rubrics import get_russian_rubric_str
 from declarations.serializers import get_section_json
 import random
@@ -36,21 +36,6 @@ def setup_logging(logfilename="new_toloka_tasks.log"):
     return logger
 
 
-# Жуков Иван Николаевич	Жуков И Н -> true
-# Жуков И Н	Жуков И Н -> true
-# Жуков И П	Жуков И Н -> false
-# Жуков Иван П	Жуков Исаак Н -> false
-
-def are_compatible_Russian_fios(fio1, fio2):
-    f1, i1, o1 = fio1['family_name'], fio1['name'], fio1['patronymic']
-    f2, i2, o2 = fio2['family_name'], fio2['name'], fio2['patronymic']
-    return (f1 == f2 and
-            ((i1.startswith(i2) and o1.startswith(o2))
-             or (i2.startswith(i1) and o2.startswith(o1))
-             )
-            )
-
-
 class TDBSqueeze:
     person_coeff = +1  # there is no person.id == 0, so all person ids ar positive and all section ids are negative or zero
     section_coeff = -1
@@ -60,7 +45,7 @@ class TDBSqueeze:
         self.office_info = dict()
         self.surname_rank = dict()
         self.id_list = list()
-        self.id_cum_weights = list()
+        self.id_cum_weights = list() #random.choice takes cum_weights to create a weighted sample
 
     @staticmethod
     def unified_id_is_section(id):
@@ -87,6 +72,7 @@ class TDBSqueeze:
             return self.id_cum_weights[index1] - self.id_cum_weights[index1 - 1]
 
     def build_office_stats(self):
+        """  build section count for tolokers (just additional iuformation) """
         self.office_info.clear()
         sql = """select o.id, o.name, count(s.id) as section_count
                   from declarations_office o 
@@ -100,18 +86,18 @@ class TDBSqueeze:
         self.logger.info("office count = {}".format(len(self.office_info)))
 
     def build_persons(self, surname_to_unified_ids):
-        self.logger.info("build persons")
+        self.logger.info("build surname -> person.id  ")
         sql = 'SELECT id, person_name FROM declarations_person where declarator_person_id is not null'
         cnt = 0
         for p in models.Person.objects.raw(sql):
-            fio = resolve_fullname(p.person_name)
-            if fio is not None:
-                surname = fio['family_name'].lower()
-                surname_to_unified_ids[surname].append(TDBSqueeze.person_coeff * p.id)
+            fio = TRussianFio(p.person_name)
+            if fio.is_resolved:
+                surname_to_unified_ids[fio.family_name].append(TDBSqueeze.person_coeff * p.id)
                 cnt += 1
         self.logger.info("persons count = {}".format(cnt))
 
-    def build_sections_and(self, surname_to_unified_ids):
+    def build_sections(self, surname_to_unified_ids):
+        self.logger.info("build surname -> section.id  ")
         sql = """
                 select s.id as id, s.person_name as person_name  
                 from declarations_section s 
@@ -121,11 +107,9 @@ class TDBSqueeze:
         self.logger.info("build sections")
         cnt = 0
         for s in models.Section.objects.raw(sql):
-            fio = resolve_fullname(s.person_name)
-            if fio is not None:
-                surname = fio['family_name'].lower()
-                surname_to_unified_ids[surname].append(TDBSqueeze.section_coeff * s.id)
-                initials = "{} {}".format(fio.get('name', " ")[0].lower(), fio.get('patronymic', " ")[0].lower())
+            fio = TRussianFio(s.person_name)
+            if fio.is_resolved:
+                surname_to_unified_ids[fio.family_name].append(TDBSqueeze.section_coeff * s.id)
                 cnt += 1
         self.logger.info("sections count = {}".format(cnt))
 
@@ -147,8 +131,21 @@ class TDBSqueeze:
         self.build_office_stats()
         surname_to_unified_ids = defaultdict(list)
         self.build_persons(surname_to_unified_ids)
-        self.build_sections_and(surname_to_unified_ids)
+        self.build_sections(surname_to_unified_ids)
         self.build_id_list(surname_to_unified_ids)
+
+    def generate_pairs(self):
+        while True:
+            for id1 in random.choices(self.id_list, cum_weights=self.id_cum_weights, k=100):
+                index1 = self.id_list.index(id1)
+                index2_start = index1 + 1
+                index2_end = index2_start + self.get_ordered_pairs_count(index1)
+                id2 = random.choice(self.id_list[index2_start:index2_end])
+                assert id1 < id2
+                # do not yield (person, person)
+                if not self.unified_id_is_section(id1) and not self.unified_id_is_section(id2):
+                    continue
+                yield self.id_to_str(id1), self.id_to_str(id2)
 
 
 def get_section_year(s):
@@ -309,11 +306,11 @@ class Command(BaseCommand):
             raise e
 
     def check_auto_negative_fio(self, rec1, rec2):
-        fio1 = resolve_fullname(rec1.person_name)
-        fio2 = resolve_fullname(rec2.person_name)
-        assert fio1 is not None and fio2 is not None
-        assert fio1['family_name'].lower() == fio2['family_name'].lower()
-        if not are_compatible_Russian_fios(fio1, fio2):
+        fio1 = TRussianFio(rec1.person_name)
+        fio2 = TRussianFio(rec2.person_name)
+        assert fio1.is_resolved and fio2.is_resolved
+        assert fio1.family_name == fio2.family_name
+        if not fio1.is_compatible_to(fio2):
             self.logger.debug('auto negative example {} and {} because fio are not compatible'.format(rec1.person_name,
                                                                                               rec2.person_name))
             return True
@@ -368,19 +365,6 @@ class Command(BaseCommand):
             task.verdict = TOneTask.verdict_no
         return task
 
-    def generate_pairs(self):
-        while True:
-            for id1 in random.choices(self.db_squeeze.id_list, cum_weights=self.db_squeeze.id_cum_weights, k=100):
-                index1 = self.db_squeeze.id_list.index(id1)
-                index2_start = index1 + 1
-                index2_end = index2_start + self.db_squeeze.get_ordered_pairs_count(index1)
-                id2 = random.choice(self.db_squeeze.id_list[index2_start:index2_end])
-                assert id1 < id2
-                # do not yield (person, person)
-                if not self.db_squeeze.unified_id_is_section(id1) and not self.db_squeeze.unified_id_is_section(id2):
-                    continue
-                yield TDBSqueeze.id_to_str(id1), TDBSqueeze.id_to_str(id2)
-
     def new_toloka_tasks(self, task_count, golden_set_ratio, pool_name, goldensets):
         gs_task_count = int(task_count * golden_set_ratio)
         output_file_name = os.path.join(TToloka.TASKS_PATH, pool_name)
@@ -394,7 +378,7 @@ class Command(BaseCommand):
         tasks = list()
         auto_negative_count = 0
         auto_positive_count = 0
-        for id1, id2 in self.generate_pairs():
+        for id1, id2 in self.db_squeeze.generate_pairs():
             if (id1, id2) in prev_tasks or (id2, id1) in prev_tasks:
                 continue
             task = self.get_one_task(id1, id2)

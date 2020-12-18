@@ -9,7 +9,7 @@ import sys
 from declarations.documents import stop_elastic_indexing
 from declarations.management.commands.permalinks import TPermaLinksDB
 import declarations.models as models
-from declarations.common import resolve_fullname
+from declarations.russian_fio import TRussianFio
 
 
 def setup_logging(logfilename):
@@ -187,7 +187,7 @@ class Command(BaseCommand):
                         s.dedupe_score = None
                         s.person_id = None
                         s.save() # do it to disable constraint delete
-            if resolve_fullname(s.person_name) is None:
+            if not TRussianFio(s.person_name).is_resolved:
                 self.logger.debug("ignore section id={} person_name={}, cannot find family name".format(s.id, s.person_name))
                 continue
             if not take_sections_with_empty_income and s.get_declarant_income_size() == 0:

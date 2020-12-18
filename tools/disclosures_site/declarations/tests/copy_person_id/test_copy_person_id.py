@@ -4,7 +4,7 @@ import os
 import json
 from declarations.management.commands.permalinks import TPermaLinksDB
 from django.test import TestCase
-from declarations.common import resolve_fullname
+from declarations.russian_fio import TRussianFio
 
 
 class CopyPersonIdTestCaseBase(TestCase):
@@ -25,8 +25,8 @@ class CopyPersonIdTestCaseBase(TestCase):
         with open(person_ids_path, "w") as outp:
             fio_key = fio
             if use_only_surname:
-                fio_dict = resolve_fullname(fio)
-                fio_key = fio_dict['family_name']
+                fio_dict = TRussianFio(fio)
+                fio_key = fio_dict.family_name
 
             value = declarator_person_id
             if check_ambiguity:

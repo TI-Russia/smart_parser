@@ -6,7 +6,7 @@ import json
 import sys
 import math
 import dedupe
-from declarations.common import resolve_fullname
+from declarations.russian_fio import TRussianFio
 
 
 class DedupeObjectJsonEncoder(json.JSONEncoder):
@@ -75,12 +75,12 @@ class TPersonNameInfo:
         self.name = ""
         self.surname_freq = 0
         if person_name is not None and len(person_name) > 0:
-            fio = resolve_fullname(person_name)
+            fio = TRussianFio(person_name)
             if fio:
-                self.surname_freq = get_surname_freq(fio['family_name'])
-                self.family_name = prepareRussian(fio['family_name'])
-                self.patronymic = prepareRussian(fio['patronymic'])
-                self.name = prepareRussian(fio['name'])
+                self.surname_freq = get_surname_freq(fio.family_name)
+                self.family_name = prepareRussian(fio.family_name)
+                self.patronymic = prepareRussian(fio.patronymic)
+                self.name = prepareRussian(fio.first_name)
                 # this regularization deletes "." from full name "Sokirko V.V." ->  "Sokirko V V"
                 self.full_name = " ".join((self.family_name, self.name, self.patronymic))
         if len(self.patronymic) == 0:
