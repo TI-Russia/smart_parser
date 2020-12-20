@@ -318,6 +318,12 @@ class Section(models.Model):
         result = Relative.sort_by_visual_order(list(relatives))
         return result
 
+    def get_surname_rank(self):
+        return self.surname_rank if self.surname_rank is not None else 100
+
+    def get_name_rank(self):
+        return self.name_rank if self.name_rank is not None else 100
+
     def get_declarant_income_size(self):
         if hasattr(self, "tmp_income_set"):
             incomes = self.tmp_income_set # used during the main section import

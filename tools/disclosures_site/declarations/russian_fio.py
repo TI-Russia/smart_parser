@@ -1,10 +1,5 @@
 import re
-
-
-def normalize_whitespace(str):
-    str = re.sub(r'\s+', ' ', str)
-    str = str.strip()
-    return str
+from common.primitives import normalize_whitespace
 
 """
 Good fullnames (full list in test_serializers.py):
@@ -129,6 +124,11 @@ class TRussianFio:
                  or (fio.first_name.startswith(self.first_name) and fio.patronymic.startswith(self.patronymic))
                 )
 
-    def __eq__(self, other):
-        return self.family_name == other.family_name and self.first_name == other.first_name \
-               and self.patronymic == other.patronymic
+    def __str__(self):
+        return "{} {} {}".format(self.family_name, self.first_name, self.patronymic)
+
+    def __hash__(self):
+        return self.__str__()
+
+    def build_fio_with_initials(self):
+        return "{} {} {}".format(self.family_name, self.first_name[0:1], self.patronymic[0:1])

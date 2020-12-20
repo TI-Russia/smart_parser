@@ -34,13 +34,17 @@ def build_section_passport(document_id, fio, income_main):
     return "{}_{}_{}".format(document_id, fio.lower(), int(income_main))
 
 
-def get_all_section_from_declarator_with_person_id():
+def get_all_section_from_declarator_with_person_id(declarator_host):
     # query to declarator db
-    db_connection = pymysql.connect(db="declarator", user="declarator", password="declarator",
-                                    unix_socket="/var/run/mysqld/mysqld.sock")
+    if declarator_host is None:
+        db_connection = pymysql.connect(db="declarator", user="declarator", password="declarator",
+                                        unix_socket="/var/run/mysqld/mysqld.sock")
+    else:
+        db_connection = pymysql.connect(db="declarator", user="declarator", password="declarator",
+                                        host=declarator_host)
     in_cursor = db_connection.cursor()
     in_cursor.execute("""
-                    select  s.person_id, 
+                    select  s.person_id,
                             d.id, 
                             floor(i.size),
                             s.original_fio, 
@@ -50,7 +54,8 @@ def get_all_section_from_declarator_with_person_id():
                     inner join declarations_document d on s.document_id = d.id
                     left join declarations_income i on i.section_id = s.id
                     where s.person_id is not null
-                          and i.relative_id is null;
+                          and i.relative_id is null
+                          and s.dedupe_score = 0;
 
     """)
     props_to_person_id = dict()
@@ -97,6 +102,16 @@ class Command(BaseCommand):
             dest='permanent_links_db',
             required=True
         )
+        parser.add_argument(
+            '--declarator-host',
+            dest='declarator_host',
+            required=False
+        )
+        parser.add_argument(
+            '--person-name-prefix',
+            dest='person_name_prefix',
+            required=False
+        )
 
     def open_permalinks_db(self):
         self.primary_keys_builder = TPermaLinksDB(self.options['permanent_links_db'])
@@ -111,7 +126,7 @@ class Command(BaseCommand):
             with open(self.options.get('read_person_from_json'), "r", encoding="utf8") as inpf:
                 return json.load(inpf)
         else:
-            return get_all_section_from_declarator_with_person_id()
+            return get_all_section_from_declarator_with_person_id(self.options['declarator_host'])
 
     def copy_human_merge(self, section, declarator_person_id):
         person_id = self.declarator_person_id_to_disclosures_person_id.get(declarator_person_id)
@@ -142,23 +157,27 @@ class Command(BaseCommand):
         for i in section.income_set.all():
             if i.relative == models.Relative.main_declarant_code:
                 main_income = i.size
-        checked_results = set()
+        found_results = list()
         for declaration_info in section.source_document.declarator_file_reference_set.all():
             key1 = build_section_passport(declaration_info.declarator_document_id, section.person_name, main_income)
-            checked_results.add(section_passports.get(key1))
+            found_res1 = section_passports.get(key1)
+            if found_res1 is not None:
+                found_results.append(found_res1)
             fio = TRussianFio(section.person_name)
             if fio.is_resolved:
                 key2 = build_section_passport(declaration_info.declarator_document_id, fio.family_name, main_income)
-                checked_results.add(section_passports.get(key2))
+                found_res2 = section_passports.get(key2)
+                if found_res2 is not None:
+                    found_results.append(found_res2)
             else:
                 self.logger.error(
                     "section {} fio={} cannot find surname".format(section.id, section.person_name))
 
-        if len(checked_results) == 1 and None in checked_results:
+        if len(found_results) == 0:
             self.logger.debug("section {} fio={} cannot be found in declarator".format(section.id, section.person_name))
         else:
-            for person_id in checked_results:
-                if person_id is not None and person_id != "AMBIGUOUS_KEY":
+            for person_id  in found_results:
+                if person_id != "AMBIGUOUS_KEY":
                     self.copy_human_merge(section, person_id)
                     return True
             self.logger.debug("section {} fio={} is ambiguous".format(section.id, section.person_name))
@@ -174,7 +193,10 @@ class Command(BaseCommand):
         stop_elastic_indexing()
         cnt = 0
         merge_count = 0
-        for section in queryset_iterator(models.Section.objects):
+        sections = models.Section.objects
+        if options['person_name_prefix'] is not None:
+            sections = sections.filter(person_name__startswith=options['person_name_prefix'])
+        for section in queryset_iterator(sections):
             cnt += 1
             if (cnt % 10000) == 0:
                 self.logger.debug("number processed sections = {}".format(cnt))
