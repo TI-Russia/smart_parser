@@ -128,7 +128,10 @@ class TRussianFio:
         return "{} {} {}".format(self.family_name, self.first_name, self.patronymic)
 
     def __hash__(self):
-        return self.__str__()
+        return hash(self.__str__())
+
+    def __eq__(self, other):
+        return str(self) == str(other)
 
     def build_fio_with_initials(self):
         return "{} {} {}".format(self.family_name, self.first_name[0:1], self.patronymic[0:1])

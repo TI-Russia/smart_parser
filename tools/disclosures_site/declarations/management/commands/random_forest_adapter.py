@@ -19,7 +19,6 @@ def convert_vehicle(name):
     name = name.lower()
     return name
 
-
 def try_to_float(float_str):
     try:
         if float_str is None:
@@ -51,9 +50,11 @@ def all_positions_words(section):
 
 class TDeduplicationObject:
     INCOMPATIBLE_FIO_WEIGHT = 10000
+    PERSON = "p"
+    SECTION = "s"
 
     def __init__(self):
-        self.id = None
+        self.record_id = None
         self.person_name = None
         self.fio = None
         self.realty_squares = set()
@@ -71,9 +72,9 @@ class TDeduplicationObject:
         self.person_name = person_name
         self.fio = TRussianFio(person_name)
 
-    def initialize(self, object_id, person_name, realty_squares, surname_rank, name_rank, rubrics, offices,
+    def initialize(self, record_id, person_name, realty_squares, surname_rank, name_rank, rubrics, offices,
                     children_real_estates, average_income, years, vehicles, official_position_words):
-        self.id = object_id
+        self.record_id = record_id
         self.set_person_name(person_name)
         self.realty_squares = set(realty_squares)
         self.surname_rank = surname_rank
@@ -87,9 +88,9 @@ class TDeduplicationObject:
         self.official_position_words = official_position_words
         return self
 
-    def initialize_from_section(self, object_id, section):
+    def initialize_from_section(self, section):
         return self.initialize(
-            object_id,
+            (section.id, self.SECTION),
             section.person_name,
             all_realty_squares(section),
             section.get_surname_rank(),
@@ -103,7 +104,7 @@ class TDeduplicationObject:
             all_positions_words(section)
         )
 
-    def initialize_from_person(self, object_id, person):
+    def initialize_from_person(self, person):
         realty_squares = set()
         children_realty_squares = set()
         max_surname_rank = 0
@@ -128,7 +129,7 @@ class TDeduplicationObject:
             position_words |= all_positions_words(s)
 
         return self.initialize(
-                object_id,
+                (person.id, self.PERSON),
                 person.person_name,
                 realty_squares,
                 max_surname_rank,
@@ -143,10 +144,19 @@ class TDeduplicationObject:
         )
 
     def to_json(self):
-        return self.__dict__
+        s = dict(self.__dict__.items())
+        del s['fio']
+        for x in s:
+            if isinstance(s[x], set):
+                s[x] = list(s[x])
+        return s
 
     def from_json(self, js):
+        for k in js:
+            if isinstance(js[k], list):
+                js[k] = set(js[k])
         self.__dict__ = dict(js.items())
+        self.fio = TRussianFio(self.person_name)
         return self
 
     def build_features(self, other):
@@ -180,21 +190,40 @@ class TDeduplicationObject:
                 ]
 
     def __hash__(self):
-        return hash(self.id)
+        return hash(self.record_id)
+
+    def initialize_from_prefixed_id(self, prefixed_record_id):
+        if prefixed_record_id.startswith("section-"):
+            section_id = int(prefixed_record_id[len("section-"):])
+            try:
+                return self.initialize_from_section(models.Section.objects.get(id=section_id))
+            except models.Section.DoesNotExist:
+                raise django.core.exceptions.ObjectDoesNotExist
+        elif prefixed_record_id.startswith("person-"):
+            person_id = int(prefixed_record_id[len("person-"):])
+            try:
+                return self.initialize_from_person(models.Person.objects.get(id=person_id))
+            except models.Person.DoesNotExist:
+                raise django.core.exceptions.ObjectDoesNotExist
+        else:
+            assert False
 
 
 class TFioClustering:
 
-    def __init__(self, leaf_clusters, ml_model):
+    def __init__(self, leaf_clusters, ml_model, threshold):
         self.leaf_clusters = leaf_clusters
         self.ml_model = ml_model
-        self.squareform_distance_matrix = None
+        self.square_form_distance_matrix = None
         self.object_to_cluster_index = None
         self.clusters = defaultdict(list)
+        self.threshold = 1.0 - threshold
 
     def get_distance(self, o1, o2):
-        if o1.id == o2.id:
+        if o1.record_id == o2.record_id:
             return 0
+        if o1.record_id[1] == TDeduplicationObject.PERSON and o2.record_id[1] == TDeduplicationObject.PERSON:
+            return TDeduplicationObject.INCOMPATIBLE_FIO_WEIGHT
         if not o1.fio.is_compatible_to(o2.fio):
             return TDeduplicationObject.INCOMPATIBLE_FIO_WEIGHT
         else:
@@ -204,50 +233,39 @@ class TFioClustering:
         if len(self.leaf_clusters) == 1:
             self.clusters[0] = [(self.leaf_clusters[0], 0)]
         else:
-            self.squareform_distance_matrix = self.build_redundant_distance_matrix()
-            condensed_matrix = squareform(self.squareform_distance_matrix)
+            self.square_form_distance_matrix = self.build_redundant_distance_matrix()
+            condensed_matrix = squareform(self.square_form_distance_matrix)
             linkage_matrix = linkage(condensed_matrix, method="average")
-            self.object_to_cluster_index = fcluster(linkage_matrix, t=1, criterion="distance")
+            self.object_to_cluster_index = fcluster(linkage_matrix, t=self.threshold, criterion="distance")
             for i in range(len(self.object_to_cluster_index)):
-                distance = self.get_average_distance(i)
+                #distance = self.get_average_distance(i)
+                distance = self.get_min_distance(i)
                 self.clusters[self.object_to_cluster_index[i]].append((self.leaf_clusters[i], distance))
 
     def build_redundant_distance_matrix(self):
         """ build scipy squareform """
-        squareform_distance_matrix = list()
+        square_form_distance_matrix = list()
         for i in range(len(self.leaf_clusters)):
             row = list()
             for k in range(len(self.leaf_clusters)):
                 distance = self.get_distance(self.leaf_clusters[i], self.leaf_clusters[k])
                 row.append(distance)
-            squareform_distance_matrix.append(row)
-        return squareform_distance_matrix
+            square_form_distance_matrix.append(row)
+        return square_form_distance_matrix
 
     def get_average_distance(self, index):
         distance_sum = 0
         cluster_size = 1
         for i in range(len(self.object_to_cluster_index)):
             if self.object_to_cluster_index[i] == self.object_to_cluster_index[index]:
-                distance_sum += self.squareform_distance_matrix[i][index]
+                distance_sum += self.square_form_distance_matrix[i][index]
                 cluster_size += 1
         return float(distance_sum) / cluster_size
 
-
-def build_deduplication_object(record_id):
-    if record_id.startswith("section-"):
-        section_id = int(record_id[len("section-"):])
-        try:
-            return TDeduplicationObject().initialize_from_section(record_id, models.Section.objects.get(id=section_id))
-        except models.Section.DoesNotExist:
-            raise django.core.exceptions.ObjectDoesNotExist
-    elif record_id.startswith("person-"):
-        person_id = int(record_id[len("person-"):])
-        try:
-            return TDeduplicationObject().initialize_from_person(record_id, models.Person.objects.get(id=person_id))
-        except models.Person.DoesNotExist:
-            raise django.core.exceptions.ObjectDoesNotExist
-    else:
-        assert False
+    def get_min_distance(self, index):
+        return min(self.square_form_distance_matrix[i][index] \
+                        for i in range(len(self.object_to_cluster_index)) \
+                        if self.object_to_cluster_index[i] == self.object_to_cluster_index[index] and i != index)
 
 
 def pool_to_random_forest(logger, pairs):
@@ -263,9 +281,9 @@ def pool_to_random_forest(logger, pairs):
             if processed_cnt % 100 == 0:
                 sys.stdout.write(".")
                 sys.stdout.flush()
-            o1 = build_deduplication_object(id1)
+            o1 = TDeduplicationObject().initialize_from_prefixed_id(id1)
             single_objects.add(o1)
-            o2 = build_deduplication_object(id2)
+            o2 = TDeduplicationObject().initialize_from_prefixed_id(id2)
             single_objects.add(o2)
             features = o1.build_features(o2)
             X.append(features)
@@ -295,7 +313,7 @@ class TMLModel:
         return list(p1 for p0, p1 in self.ml_model.predict_proba(X))
 
     def get_ml_score(self, o1, o2):
-        if o1.id > o2.id:
-            o1,o2 = o2,o1
+        if o1.record_id > o2.record_id:
+            o1, o2 = o2, o1
         features = o1.build_features(o2)
         return self.predict_positive([features])[0]

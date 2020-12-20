@@ -156,12 +156,12 @@ class Command(BaseCommand):
                         s.dedupe_score = None
                         s.person_id = None
                         s.save() # do it to disable constraint delete
-            o = TDeduplicationObject().initialize_from_section("section-{}", s)
-            if not o.fio.person_name.is_resolved:
-                self.logger.debug("ignore section id={} person_name={}, cannot find family name".format(s.id, s.person_name))
+            o = TDeduplicationObject().initialize_from_section(s)
+            if not o.fio.is_resolved:
+                self.logger.debug("ignore section id={} person_name={}, cannot find family name".format(s.id, section.person_name))
                 continue
             if not take_sections_with_empty_income and o.average_income == 0:
-                self.logger.debug("ignore section id={} person_name={}, no income or zero-income".format(s.id, s.person_name))
+                self.logger.debug("ignore section id={} person_name={}, no income or zero-income".format(s.id, section.person_name))
                 continue
             self.cluster_by_minimal_fio[o.fio.build_fio_with_initials()].append(o)
             cnt += 1
@@ -179,7 +179,7 @@ class Command(BaseCommand):
                 p.delete()
                 deleted_cnt += 1
             else:
-                o = TDeduplicationObject().initialize_from_person("person-{}".format(p.id), p)
+                o = TDeduplicationObject().initialize_from_person(p)
                 if len(o.years) > 0:
                     self.cluster_by_minimal_fio[o.fio.build_fio_with_initials()].append(o)
                 cnt += 1
@@ -220,7 +220,11 @@ class Command(BaseCommand):
         for cluster_id, items in clusters.items():
             dump_stream.write("cluster {}\n".format(cluster_id))
             for obj, distance in items:
-                dump_stream.write("\t{} {} {}\n".format(obj.id, distance, obj.person_name))
+                dump_stream.write("\t{} {} {} {}\n".format(
+                    obj.record_id,
+                    1.0 - distance,
+                    obj.person_name,
+                    min(obj.years)))
 
     @staticmethod
     def link_section_to_person(section, person, dedupe_score):
@@ -236,29 +240,29 @@ class Command(BaseCommand):
         person.tmp_section_set = set(str(id) for (id, score) in section_ids)
         person.id = self.primary_keys_builder.get_record_id(person)
         person.save()
-        for (section_id, score) in section_ids:
+        for (section_id, distance) in section_ids:
             section = models.Section.objects.get(id=section_id)
-            self.link_section_to_person(section, person, score)
+            self.link_section_to_person(section, person, 1.0 - distance)
 
     def write_results_to_db(self, clusters):
         self.logger.info('write {} clusters to db'.format(len(clusters)))
         for cluster_id, items in clusters.items():
-            self.logger.debug("process cluster {}".format(";".join((o.id for o, _ in items))))
+            self.logger.debug("process cluster {}".format(";".join((str(o) for o, _ in items))))
             person_ids = set()
             section_ids = set()
-            for id, score in items:
-                if id.startswith("person-"):
-                    person_ids.add((int(id[len("person-"):]), score))
+            for record_id, score in items:
+                if record_id[1] == TDeduplicationObject.PERSON:
+                    person_ids.add((record_id[0], score))
                 else:
-                    section_ids.add((int(id[len("section-"):]), score))
+                    section_ids.add((record_id[0], score))
             if len(person_ids) == 0:
                 self.link_sections_to_a_new_person(section_ids)
             elif len(person_ids) == 1:
                 person_id = list(person_ids)[0][0]
                 person = models.Person.objects.get(id=person_id)
-                for section_id, score in section_ids:
+                for section_id, distance in section_ids:
                     section = models.Section.objects.get(id=section_id)
-                    self.link_section_to_person(section, person, score)
+                    self.link_section_to_person(section, person, 1.0 - distance)
             else:
                 self.logger.error("a cluster with two people found, I do not know what to do")
 
@@ -279,15 +283,14 @@ class Command(BaseCommand):
 
     def cluster_sections(self):
         for _, leaf_clusters in self.cluster_by_minimal_fio.items():
-            clustering = TFioClustering(leaf_clusters, self.ml_model)
+            clustering = TFioClustering(leaf_clusters, self.ml_model, self.threshold)
             clustering.cluster()
             yield clustering.clusters
-
 
     def cluster_sections_by_minimal_fio(self):
         if self.options.get("fake_dedupe", False):
             # all records in one cluster
-            ids = list(o.id for o in self.get_all_leaf_objects())
+            ids = list(o.record_id for o in self.get_all_leaf_objects())
             c = defaultdict()
             c[0] = [(i, 0.5) for i in ids]
             yield c

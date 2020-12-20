@@ -1,10 +1,10 @@
-from django.test import TestCase
-from declarations.management.commands.generate_dedupe_pairs import RunDedupe
-import os
+from declarations.management.commands.generate_dedupe_pairs2 import RunDedupe
 import declarations.models as models
 from declarations.management.commands.permalinks import TPermaLinksDB
+
 import time
-import shutil
+import os
+from django.test import TestCase
 
 
 def create_default_source_document():

@@ -1,12 +1,12 @@
 from declarations.management.commands.random_forest_adapter import TDeduplicationObject, TFioClustering
-
+import declarations.models as models
 from django.test import TestCase
 from collections import defaultdict
 
 
-def init_dedupe_object(id, person_name, realty_squares):
-    o  = TDeduplicationObject()
-    o.id = id
+def init_dedupe_object(record_id, person_name, realty_squares):
+    o = TDeduplicationObject()
+    o.record_id = (record_id, TDeduplicationObject.SECTION)
     o.set_person_name(person_name)
     o.realty_squares = realty_squares
     return o
@@ -32,10 +32,10 @@ class AmbiguousFio(TestCase):
             cluster_by_minimal_fio[c.fio.build_fio_with_initials()].append(c)
         self.assertEqual(len(cluster_by_minimal_fio), 1)
         for _, leaf_clusters in cluster_by_minimal_fio.items():
-            clustering = TFioClustering(leaf_clusters, TTestMLModel())
+            clustering = TFioClustering(leaf_clusters, TTestMLModel(), 1.0)
             clustering.cluster()
             self.assertEqual(len(clustering.clusters), 2)
             for x in clustering.clusters.values():
                 if len(x) == 2:
-                    self.assertEqual(x[0][0].id, 2)
-                    self.assertEqual(x[1][0].id, 3)
+                    self.assertEqual(x[0][0].record_id[0], 2)
+                    self.assertEqual(x[1][0].record_id[0], 3)
