@@ -1,3 +1,10 @@
+from DeclDocRecognizer.document_types import TCharCategory, SOME_OTHER_DOCUMENTS, VEHICLE_REGEXP_STR, russify, \
+        get_russian_normal_text_ratio
+from ConvStorage.conversion_client import TDocConversionClient
+from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
+from common.primitives import normalize_whitespace
+
+from collections import defaultdict
 import argparse
 import json
 import re
@@ -5,17 +12,6 @@ import os
 import hashlib
 import shutil
 import sys
-from DeclDocRecognizer.document_types import TCharCategory, SOME_OTHER_DOCUMENTS, VEHICLE_REGEXP_STR, russify, \
-        get_russian_normal_text_ratio
-from ConvStorage.conversion_client import TDocConversionClient
-from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
-from collections import defaultdict
-
-
-def normalize_whitespace(str):
-    str = re.sub(r'\s+', ' ', str)
-    str = str.strip()
-    return str
 
 
 class DL_RECOGNIZER_ENUM:

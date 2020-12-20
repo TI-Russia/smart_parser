@@ -4,6 +4,12 @@ import socket
 import gc
 
 
+def normalize_whitespace(str):
+    str = re.sub(r'\s+', ' ', str)
+    str = str.strip()
+    return str
+
+
 def strip_viewer_prefix(href):
     if href is None:
         return href
