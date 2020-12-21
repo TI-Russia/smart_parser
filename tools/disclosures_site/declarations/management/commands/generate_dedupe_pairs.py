@@ -290,9 +290,8 @@ class Command(BaseCommand):
     def cluster_sections_by_minimal_fio(self):
         if self.options.get("fake_dedupe", False):
             # all records in one cluster
-            ids = list(o.record_id for o in self.get_all_leaf_objects())
-            c = defaultdict()
-            c[0] = [(i, 0.5) for i in ids]
+            c = defaultdict(list)
+            c[0] = [(i, 0.5) for i in self.get_all_leaf_objects()]
             yield c
         else:
             self.logger.info('Clustering objects with threshold={}.'.format(self.threshold))

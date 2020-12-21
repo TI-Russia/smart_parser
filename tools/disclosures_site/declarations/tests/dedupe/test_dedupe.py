@@ -1,4 +1,4 @@
-from declarations.management.commands.generate_dedupe_pairs2 import RunDedupe
+from declarations.management.commands.generate_dedupe_pairs import RunDedupe
 import declarations.models as models
 from declarations.management.commands.permalinks import TPermaLinksDB
 

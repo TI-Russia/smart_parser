@@ -194,7 +194,7 @@ class Command(BaseCommand):
         cnt = 0
         merge_count = 0
         sections = models.Section.objects
-        if options['person_name_prefix'] is not None:
+        if options.get('person_name_prefix') is not None:
             sections = sections.filter(person_name__startswith=options['person_name_prefix'])
         for section in queryset_iterator(sections):
             cnt += 1
