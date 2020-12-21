@@ -247,14 +247,14 @@ class Command(BaseCommand):
     def write_results_to_db(self, clusters):
         self.logger.info('write {} clusters to db'.format(len(clusters)))
         for cluster_id, items in clusters.items():
-            self.logger.debug("process cluster {}".format(";".join((str(o) for o, _ in items))))
+            self.logger.debug("process cluster {}".format(cluster_id))
             person_ids = set()
             section_ids = set()
-            for record_id, score in items:
-                if record_id[1] == TDeduplicationObject.PERSON:
-                    person_ids.add((record_id[0], score))
+            for obj, distance in items:
+                if obj.record_id[1] == TDeduplicationObject.PERSON:
+                    person_ids.add((obj.record_id[0], distance))
                 else:
-                    section_ids.add((record_id[0], score))
+                    section_ids.add((obj.record_id[0], distance))
             if len(person_ids) == 0:
                 self.link_sections_to_a_new_person(section_ids)
             elif len(person_ids) == 1:
