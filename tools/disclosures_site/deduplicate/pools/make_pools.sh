@@ -14,6 +14,9 @@ cd ../..
 # create disclosures test set
 python3 ../../scripts/dedupe/make_pool.py  -f fix_list.txt --take-golden -m disclosures_test_m.tsv ../assignments/assignments_disclosures_test*  ../assignments/assignments_disclosures_golden_set*
 
+# create disclosures train set
+python3 ../../scripts/dedupe/make_pool.py  -f fix_list.txt --take-golden -m disclosures_train_m.tsv ../assignments/assignments_disclosures_train*
+
 
 #  pools for toloka
 # python3 manage.py new_toloka_tasks --settings disclosures.settings.prod --action prepare

@@ -68,7 +68,7 @@ class Command(BaseCommand):
         self.y_true = None
 
     def print_roc_points(self, test_pool_file_name, output_points_file):
-        y_proba = self.ml_model.predict_positive(self.X)
+        y_proba = self.ml_model.predict_positive_proba(self.X)
         precision, recall, thresholds = precision_recall_curve(self.y_true, y_proba)
         for precision, recall, threshold in zip(precision, recall, thresholds):
             point = {'Threshold': float(threshold),

@@ -1,37 +1,324 @@
-{"Threshold": 0.0, "TestName": "test_pool_m.tsv", "P": 0.5323, "R": 0.9754, "F1": 0.6887}
-{"Threshold": 0.1, "TestName": "test_pool_m.tsv", "P": 0.6068, "R": 0.9729, "F1": 0.7474}
-{"Threshold": 0.2, "TestName": "test_pool_m.tsv", "P": 0.7712, "R": 0.9631, "F1": 0.8565}
-{"Threshold": 0.3, "TestName": "test_pool_m.tsv", "P": 0.8773, "R": 0.9507, "F1": 0.9125}
-{"Threshold": 0.4, "TestName": "test_pool_m.tsv", "P": 0.9235, "R": 0.9212, "F1": 0.9223}
-{"Threshold": 0.5, "TestName": "test_pool_m.tsv", "P": 0.943, "R": 0.8966, "F1": 0.9192}
-{"Threshold": 0.6, "TestName": "test_pool_m.tsv", "P": 0.9699, "R": 0.8719, "F1": 0.9183}
-{"Threshold": 0.7, "TestName": "test_pool_m.tsv", "P": 0.9859, "R": 0.8621, "F1": 0.9198}
-{"Threshold": 0.71, "TestName": "test_pool_m.tsv", "P": 0.9858, "R": 0.8571, "F1": 0.917}
-{"Threshold": 0.72, "TestName": "test_pool_m.tsv", "P": 0.9886, "R": 0.8547, "F1": 0.9168}
-{"Threshold": 0.73, "TestName": "test_pool_m.tsv", "P": 0.9885, "R": 0.8498, "F1": 0.9139}
-{"Threshold": 0.74, "TestName": "test_pool_m.tsv", "P": 0.9885, "R": 0.8473, "F1": 0.9125}
-{"Threshold": 0.75, "TestName": "test_pool_m.tsv", "P": 0.9884, "R": 0.8424, "F1": 0.9096}
-{"Threshold": 0.76, "TestName": "test_pool_m.tsv", "P": 0.9913, "R": 0.8399, "F1": 0.9093}
-{"Threshold": 0.77, "TestName": "test_pool_m.tsv", "P": 0.9912, "R": 0.835, "F1": 0.9064}
-{"Threshold": 0.78, "TestName": "test_pool_m.tsv", "P": 0.9912, "R": 0.83, "F1": 0.9035}
-{"Threshold": 0.79, "TestName": "test_pool_m.tsv", "P": 0.9911, "R": 0.8251, "F1": 0.9005}
-{"Threshold": 0.8, "TestName": "test_pool_m.tsv", "P": 0.9911, "R": 0.8202, "F1": 0.8976}
-{"Threshold": 0.81, "TestName": "test_pool_m.tsv", "P": 0.991, "R": 0.8103, "F1": 0.8916}
-{"Threshold": 0.82, "TestName": "test_pool_m.tsv", "P": 0.9909, "R": 0.8005, "F1": 0.8856}
-{"Threshold": 0.83, "TestName": "test_pool_m.tsv", "P": 0.9907, "R": 0.7882, "F1": 0.8779}
-{"Threshold": 0.84, "TestName": "test_pool_m.tsv", "P": 0.9906, "R": 0.7783, "F1": 0.8717}
-{"Threshold": 0.85, "TestName": "test_pool_m.tsv", "P": 0.9903, "R": 0.7512, "F1": 0.8543}
-{"Threshold": 0.86, "TestName": "test_pool_m.tsv", "P": 0.9933, "R": 0.7315, "F1": 0.8426}
-{"Threshold": 0.87, "TestName": "test_pool_m.tsv", "P": 0.9932, "R": 0.7217, "F1": 0.8359}
-{"Threshold": 0.88, "TestName": "test_pool_m.tsv", "P": 0.993, "R": 0.702, "F1": 0.8225}
-{"Threshold": 0.89, "TestName": "test_pool_m.tsv", "P": 0.9928, "R": 0.6798, "F1": 0.807}
-{"Threshold": 0.9, "TestName": "test_pool_m.tsv", "P": 0.9925, "R": 0.6527, "F1": 0.7875}
-{"Threshold": 0.91, "TestName": "test_pool_m.tsv", "P": 0.9922, "R": 0.6256, "F1": 0.7674}
-{"Threshold": 0.92, "TestName": "test_pool_m.tsv", "P": 0.9918, "R": 0.5961, "F1": 0.7446}
-{"Threshold": 0.93, "TestName": "test_pool_m.tsv", "P": 0.9955, "R": 0.5443, "F1": 0.7038}
-{"Threshold": 0.94, "TestName": "test_pool_m.tsv", "P": 0.9951, "R": 0.5025, "F1": 0.6678}
-{"Threshold": 0.95, "TestName": "test_pool_m.tsv", "P": 1.0, "R": 0.4458, "F1": 0.6167}
-{"Threshold": 0.96, "TestName": "test_pool_m.tsv", "P": 1.0, "R": 0.3251, "F1": 0.4907}
-{"Threshold": 0.97, "TestName": "test_pool_m.tsv", "P": 1.0, "R": 0.1921, "F1": 0.3223}
-{"Threshold": 0.98, "TestName": "test_pool_m.tsv", "P": 1.0, "R": 0.0788, "F1": 0.1461}
-{"Threshold": 0.99, "TestName": "test_pool_m.tsv", "F1": 0.0, "P": 0.0, "R": 0.0}
+{"Threshold": 0.08950899807783848, "TestName": "disclosures_test_m.tsv", "P": 0.7747252747252747, "R": 1.0}
+{"Threshold": 0.0898631447961868, "TestName": "disclosures_test_m.tsv", "P": 0.7741046831955923, "R": 0.9964539007092199}
+{"Threshold": 0.10428735975342944, "TestName": "disclosures_test_m.tsv", "P": 0.7734806629834254, "R": 0.9929078014184397}
+{"Threshold": 0.10522582129189098, "TestName": "disclosures_test_m.tsv", "P": 0.775623268698061, "R": 0.9929078014184397}
+{"Threshold": 0.10825273192992035, "TestName": "disclosures_test_m.tsv", "P": 0.7777777777777778, "R": 0.9929078014184397}
+{"Threshold": 0.11176012847355525, "TestName": "disclosures_test_m.tsv", "P": 0.7799442896935933, "R": 0.9929078014184397}
+{"Threshold": 0.11526980963967903, "TestName": "disclosures_test_m.tsv", "P": 0.7821229050279329, "R": 0.9929078014184397}
+{"Threshold": 0.11601081994460105, "TestName": "disclosures_test_m.tsv", "P": 0.7843137254901961, "R": 0.9929078014184397}
+{"Threshold": 0.12228006679166283, "TestName": "disclosures_test_m.tsv", "P": 0.7865168539325843, "R": 0.9929078014184397}
+{"Threshold": 0.12387137107703926, "TestName": "disclosures_test_m.tsv", "P": 0.7887323943661971, "R": 0.9929078014184397}
+{"Threshold": 0.12858479187590446, "TestName": "disclosures_test_m.tsv", "P": 0.7909604519774012, "R": 0.9929078014184397}
+{"Threshold": 0.13430701047563517, "TestName": "disclosures_test_m.tsv", "P": 0.7932011331444759, "R": 0.9929078014184397}
+{"Threshold": 0.13971760385261403, "TestName": "disclosures_test_m.tsv", "P": 0.7954545454545454, "R": 0.9929078014184397}
+{"Threshold": 0.1413355243894093, "TestName": "disclosures_test_m.tsv", "P": 0.7977207977207977, "R": 0.9929078014184397}
+{"Threshold": 0.1424056775451411, "TestName": "disclosures_test_m.tsv", "P": 0.8, "R": 0.9929078014184397}
+{"Threshold": 0.14657500326196593, "TestName": "disclosures_test_m.tsv", "P": 0.8022922636103151, "R": 0.9929078014184397}
+{"Threshold": 0.14940992608997963, "TestName": "disclosures_test_m.tsv", "P": 0.8045977011494253, "R": 0.9929078014184397}
+{"Threshold": 0.15223427619813795, "TestName": "disclosures_test_m.tsv", "P": 0.8069164265129684, "R": 0.9929078014184397}
+{"Threshold": 0.1575363536463084, "TestName": "disclosures_test_m.tsv", "P": 0.8092485549132948, "R": 0.9929078014184397}
+{"Threshold": 0.15939570567813086, "TestName": "disclosures_test_m.tsv", "P": 0.8115942028985508, "R": 0.9929078014184397}
+{"Threshold": 0.15979915926216415, "TestName": "disclosures_test_m.tsv", "P": 0.813953488372093, "R": 0.9929078014184397}
+{"Threshold": 0.16648270919419073, "TestName": "disclosures_test_m.tsv", "P": 0.8187134502923976, "R": 0.9929078014184397}
+{"Threshold": 0.16699573666990952, "TestName": "disclosures_test_m.tsv", "P": 0.8211143695014663, "R": 0.9929078014184397}
+{"Threshold": 0.16923137821422923, "TestName": "disclosures_test_m.tsv", "P": 0.8235294117647058, "R": 0.9929078014184397}
+{"Threshold": 0.16972725804821592, "TestName": "disclosures_test_m.tsv", "P": 0.8259587020648967, "R": 0.9929078014184397}
+{"Threshold": 0.16993681663810814, "TestName": "disclosures_test_m.tsv", "P": 0.8284023668639053, "R": 0.9929078014184397}
+{"Threshold": 0.1710295953741777, "TestName": "disclosures_test_m.tsv", "P": 0.8308605341246291, "R": 0.9929078014184397}
+{"Threshold": 0.17163697782158083, "TestName": "disclosures_test_m.tsv", "P": 0.8333333333333334, "R": 0.9929078014184397}
+{"Threshold": 0.17288713603350064, "TestName": "disclosures_test_m.tsv", "P": 0.835820895522388, "R": 0.9929078014184397}
+{"Threshold": 0.18364147217480223, "TestName": "disclosures_test_m.tsv", "P": 0.8383233532934131, "R": 0.9929078014184397}
+{"Threshold": 0.18368547823777873, "TestName": "disclosures_test_m.tsv", "P": 0.8408408408408409, "R": 0.9929078014184397}
+{"Threshold": 0.19410081973807444, "TestName": "disclosures_test_m.tsv", "P": 0.8433734939759037, "R": 0.9929078014184397}
+{"Threshold": 0.19752639956738513, "TestName": "disclosures_test_m.tsv", "P": 0.8459214501510574, "R": 0.9929078014184397}
+{"Threshold": 0.197779286238887, "TestName": "disclosures_test_m.tsv", "P": 0.8484848484848485, "R": 0.9929078014184397}
+{"Threshold": 0.20112218931429987, "TestName": "disclosures_test_m.tsv", "P": 0.851063829787234, "R": 0.9929078014184397}
+{"Threshold": 0.2011909953922795, "TestName": "disclosures_test_m.tsv", "P": 0.8536585365853658, "R": 0.9929078014184397}
+{"Threshold": 0.20295527317783257, "TestName": "disclosures_test_m.tsv", "P": 0.8562691131498471, "R": 0.9929078014184397}
+{"Threshold": 0.20311317550022884, "TestName": "disclosures_test_m.tsv", "P": 0.8588957055214724, "R": 0.9929078014184397}
+{"Threshold": 0.20481693503495263, "TestName": "disclosures_test_m.tsv", "P": 0.8615384615384616, "R": 0.9929078014184397}
+{"Threshold": 0.2048253919269266, "TestName": "disclosures_test_m.tsv", "P": 0.8641975308641975, "R": 0.9929078014184397}
+{"Threshold": 0.20956808898597581, "TestName": "disclosures_test_m.tsv", "P": 0.8668730650154799, "R": 0.9929078014184397}
+{"Threshold": 0.2138843629060977, "TestName": "disclosures_test_m.tsv", "P": 0.8695652173913043, "R": 0.9929078014184397}
+{"Threshold": 0.2208879001632247, "TestName": "disclosures_test_m.tsv", "P": 0.8722741433021807, "R": 0.9929078014184397}
+{"Threshold": 0.2224396057507017, "TestName": "disclosures_test_m.tsv", "P": 0.875, "R": 0.9929078014184397}
+{"Threshold": 0.222615699741909, "TestName": "disclosures_test_m.tsv", "P": 0.877742946708464, "R": 0.9929078014184397}
+{"Threshold": 0.2356509135385033, "TestName": "disclosures_test_m.tsv", "P": 0.8805031446540881, "R": 0.9929078014184397}
+{"Threshold": 0.2373438146563399, "TestName": "disclosures_test_m.tsv", "P": 0.8832807570977917, "R": 0.9929078014184397}
+{"Threshold": 0.2458682266984773, "TestName": "disclosures_test_m.tsv", "P": 0.8860759493670886, "R": 0.9929078014184397}
+{"Threshold": 0.2459932602201168, "TestName": "disclosures_test_m.tsv", "P": 0.8888888888888888, "R": 0.9929078014184397}
+{"Threshold": 0.24602417886216316, "TestName": "disclosures_test_m.tsv", "P": 0.8945686900958466, "R": 0.9929078014184397}
+{"Threshold": 0.24625670395808016, "TestName": "disclosures_test_m.tsv", "P": 0.8974358974358975, "R": 0.9929078014184397}
+{"Threshold": 0.24778715332959927, "TestName": "disclosures_test_m.tsv", "P": 0.9003215434083601, "R": 0.9929078014184397}
+{"Threshold": 0.24954155139149178, "TestName": "disclosures_test_m.tsv", "P": 0.9032258064516129, "R": 0.9929078014184397}
+{"Threshold": 0.2508958142238509, "TestName": "disclosures_test_m.tsv", "P": 0.9061488673139159, "R": 0.9929078014184397}
+{"Threshold": 0.25211806337369036, "TestName": "disclosures_test_m.tsv", "P": 0.9090909090909091, "R": 0.9929078014184397}
+{"Threshold": 0.25322188743889684, "TestName": "disclosures_test_m.tsv", "P": 0.9084967320261438, "R": 0.9858156028368794}
+{"Threshold": 0.25407301495390494, "TestName": "disclosures_test_m.tsv", "P": 0.9114754098360656, "R": 0.9858156028368794}
+{"Threshold": 0.25416642450270543, "TestName": "disclosures_test_m.tsv", "P": 0.9144736842105263, "R": 0.9858156028368794}
+{"Threshold": 0.26393490688595656, "TestName": "disclosures_test_m.tsv", "P": 0.9174917491749175, "R": 0.9858156028368794}
+{"Threshold": 0.26466185554708926, "TestName": "disclosures_test_m.tsv", "P": 0.9205298013245033, "R": 0.9858156028368794}
+{"Threshold": 0.2800630826806803, "TestName": "disclosures_test_m.tsv", "P": 0.9235880398671097, "R": 0.9858156028368794}
+{"Threshold": 0.2854230470378564, "TestName": "disclosures_test_m.tsv", "P": 0.9266666666666666, "R": 0.9858156028368794}
+{"Threshold": 0.28719168826862146, "TestName": "disclosures_test_m.tsv", "P": 0.9297658862876255, "R": 0.9858156028368794}
+{"Threshold": 0.287970620668651, "TestName": "disclosures_test_m.tsv", "P": 0.9328859060402684, "R": 0.9858156028368794}
+{"Threshold": 0.29297092865853785, "TestName": "disclosures_test_m.tsv", "P": 0.936026936026936, "R": 0.9858156028368794}
+{"Threshold": 0.2956410479262546, "TestName": "disclosures_test_m.tsv", "P": 0.9423728813559322, "R": 0.9858156028368794}
+{"Threshold": 0.29669864516207833, "TestName": "disclosures_test_m.tsv", "P": 0.9455782312925171, "R": 0.9858156028368794}
+{"Threshold": 0.29879075712990144, "TestName": "disclosures_test_m.tsv", "P": 0.952054794520548, "R": 0.9858156028368794}
+{"Threshold": 0.30522386489403336, "TestName": "disclosures_test_m.tsv", "P": 0.9518900343642611, "R": 0.9822695035460993}
+{"Threshold": 0.31748701843710286, "TestName": "disclosures_test_m.tsv", "P": 0.9517241379310345, "R": 0.9787234042553191}
+{"Threshold": 0.320986271786246, "TestName": "disclosures_test_m.tsv", "P": 0.9550173010380623, "R": 0.9787234042553191}
+{"Threshold": 0.3479031704261616, "TestName": "disclosures_test_m.tsv", "P": 0.9583333333333334, "R": 0.9787234042553191}
+{"Threshold": 0.3489044915999532, "TestName": "disclosures_test_m.tsv", "P": 0.9616724738675958, "R": 0.9787234042553191}
+{"Threshold": 0.3868306668004237, "TestName": "disclosures_test_m.tsv", "P": 0.965034965034965, "R": 0.9787234042553191}
+{"Threshold": 0.4133825426799426, "TestName": "disclosures_test_m.tsv", "P": 0.971830985915493, "R": 0.9787234042553191}
+{"Threshold": 0.41599311052380267, "TestName": "disclosures_test_m.tsv", "P": 0.9717314487632509, "R": 0.975177304964539}
+{"Threshold": 0.4336220387452564, "TestName": "disclosures_test_m.tsv", "P": 0.9716312056737588, "R": 0.9716312056737588}
+{"Threshold": 0.43655121391303814, "TestName": "disclosures_test_m.tsv", "P": 0.9750889679715302, "R": 0.9716312056737588}
+{"Threshold": 0.44379546448008445, "TestName": "disclosures_test_m.tsv", "P": 0.9785714285714285, "R": 0.9716312056737588}
+{"Threshold": 0.44880055118620815, "TestName": "disclosures_test_m.tsv", "P": 0.978494623655914, "R": 0.9680851063829787}
+{"Threshold": 0.449880774269169, "TestName": "disclosures_test_m.tsv", "P": 0.9784172661870504, "R": 0.9645390070921985}
+{"Threshold": 0.4513528618407349, "TestName": "disclosures_test_m.tsv", "P": 0.9783393501805054, "R": 0.9609929078014184}
+{"Threshold": 0.4673405758448097, "TestName": "disclosures_test_m.tsv", "P": 0.9782608695652174, "R": 0.9574468085106383}
+{"Threshold": 0.4698763543821393, "TestName": "disclosures_test_m.tsv", "P": 0.9781818181818182, "R": 0.9539007092198581}
+{"Threshold": 0.4706215682593859, "TestName": "disclosures_test_m.tsv", "P": 0.9781021897810219, "R": 0.950354609929078}
+{"Threshold": 0.47321532331011906, "TestName": "disclosures_test_m.tsv", "P": 0.978021978021978, "R": 0.9468085106382979}
+{"Threshold": 0.509804925623703, "TestName": "disclosures_test_m.tsv", "P": 0.9779411764705882, "R": 0.9432624113475178}
+{"Threshold": 0.5165540721309066, "TestName": "disclosures_test_m.tsv", "P": 0.981549815498155, "R": 0.9432624113475178}
+{"Threshold": 0.5169344201842568, "TestName": "disclosures_test_m.tsv", "P": 0.9814814814814815, "R": 0.9397163120567376}
+{"Threshold": 0.5206497745207704, "TestName": "disclosures_test_m.tsv", "P": 0.9851301115241635, "R": 0.9397163120567376}
+{"Threshold": 0.576297329198372, "TestName": "disclosures_test_m.tsv", "P": 0.9850746268656716, "R": 0.9361702127659575}
+{"Threshold": 0.5819989754299694, "TestName": "disclosures_test_m.tsv", "P": 0.9850187265917603, "R": 0.9326241134751773}
+{"Threshold": 0.5848588912478251, "TestName": "disclosures_test_m.tsv", "P": 0.9849624060150376, "R": 0.9290780141843972}
+{"Threshold": 0.5856821411515315, "TestName": "disclosures_test_m.tsv", "P": 0.9849056603773585, "R": 0.925531914893617}
+{"Threshold": 0.5858782663954157, "TestName": "disclosures_test_m.tsv", "P": 0.9848484848484849, "R": 0.9219858156028369}
+{"Threshold": 0.5868735496360264, "TestName": "disclosures_test_m.tsv", "P": 0.9885931558935361, "R": 0.9219858156028369}
+{"Threshold": 0.6161081608867744, "TestName": "disclosures_test_m.tsv", "P": 0.9923664122137404, "R": 0.9219858156028369}
+{"Threshold": 0.617046622425236, "TestName": "disclosures_test_m.tsv", "P": 0.9923371647509579, "R": 0.9184397163120568}
+{"Threshold": 0.6410024001003034, "TestName": "disclosures_test_m.tsv", "P": 0.9923076923076923, "R": 0.9148936170212766}
+{"Threshold": 0.642184876638344, "TestName": "disclosures_test_m.tsv", "P": 0.9922779922779923, "R": 0.9113475177304965}
+{"Threshold": 0.6453278277625962, "TestName": "disclosures_test_m.tsv", "P": 0.9922480620155039, "R": 0.9078014184397163}
+{"Threshold": 0.6455919494220779, "TestName": "disclosures_test_m.tsv", "P": 0.9922178988326849, "R": 0.9042553191489362}
+{"Threshold": 0.6474109428714677, "TestName": "disclosures_test_m.tsv", "P": 0.9921568627450981, "R": 0.8971631205673759}
+{"Threshold": 0.6500792716960215, "TestName": "disclosures_test_m.tsv", "P": 0.9921259842519685, "R": 0.8936170212765957}
+{"Threshold": 0.6609915984061688, "TestName": "disclosures_test_m.tsv", "P": 0.9920634920634921, "R": 0.8865248226950354}
+{"Threshold": 0.6916536057164889, "TestName": "disclosures_test_m.tsv", "P": 0.992, "R": 0.8794326241134752}
+{"Threshold": 0.691741741049157, "TestName": "disclosures_test_m.tsv", "P": 0.9919678714859438, "R": 0.875886524822695}
+{"Threshold": 0.7085765661728525, "TestName": "disclosures_test_m.tsv", "P": 0.9919354838709677, "R": 0.8723404255319149}
+{"Threshold": 0.7089932328395191, "TestName": "disclosures_test_m.tsv", "P": 0.9919028340080972, "R": 0.8687943262411347}
+{"Threshold": 0.709111284985935, "TestName": "disclosures_test_m.tsv", "P": 0.991869918699187, "R": 0.8652482269503546}
+{"Threshold": 0.7091483220229721, "TestName": "disclosures_test_m.tsv", "P": 0.9959183673469387, "R": 0.8652482269503546}
+{"Threshold": 0.7188436323772379, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.8652482269503546}
+{"Threshold": 0.7267308362309505, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.8617021276595744}
+{"Threshold": 0.7313984500715038, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.8546099290780141}
+{"Threshold": 0.7446929030750168, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.851063829787234}
+{"Threshold": 0.7504544466598967, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.8475177304964538}
+{"Threshold": 0.7512087197939681, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.8439716312056738}
+{"Threshold": 0.7557145403673319, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.8404255319148937}
+{"Threshold": 0.7565515326626827, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.8368794326241135}
+{"Threshold": 0.7567247842172304, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.8333333333333334}
+{"Threshold": 0.7741403770623488, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.8297872340425532}
+{"Threshold": 0.774384394156366, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.8262411347517731}
+{"Threshold": 0.782520264434709, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.8226950354609929}
+{"Threshold": 0.7825573014717461, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.8191489361702128}
+{"Threshold": 0.7899961160024217, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.8156028368794326}
+{"Threshold": 0.7939133043655582, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.8120567375886525}
+{"Threshold": 0.7956471218192279, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.8049645390070922}
+{"Threshold": 0.8014041058255412, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.8014184397163121}
+{"Threshold": 0.8021171523795869, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.7943262411347518}
+{"Threshold": 0.8052442930524074, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.7872340425531915}
+{"Threshold": 0.81721146228452, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.7836879432624113}
+{"Threshold": 0.8241214987788901, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.7801418439716312}
+{"Threshold": 0.8242696469270382, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.776595744680851}
+{"Threshold": 0.8303705905600323, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.7730496453900709}
+{"Threshold": 0.8394460431086298, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.7695035460992907}
+{"Threshold": 0.8419947017759633, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.7659574468085106}
+{"Threshold": 0.8467916741782621, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.7588652482269503}
+{"Threshold": 0.8470055931171755, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.7553191489361702}
+{"Threshold": 0.8482490561964642, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.75177304964539}
+{"Threshold": 0.8482687153272643, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.74822695035461}
+{"Threshold": 0.8495806563208192, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.7446808510638298}
+{"Threshold": 0.8497233237584225, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.7411347517730497}
+{"Threshold": 0.850923522748325, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.7340425531914894}
+{"Threshold": 0.8522135116000996, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.7304964539007093}
+{"Threshold": 0.8549380906036769, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.7269503546099291}
+{"Threshold": 0.855809760152766, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.723404255319149}
+{"Threshold": 0.8611213310697171, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.7198581560283688}
+{"Threshold": 0.8618250347734205, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.7163120567375887}
+{"Threshold": 0.8621583189159077, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.7127659574468085}
+{"Threshold": 0.8635005313649414, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.7092198581560284}
+{"Threshold": 0.8641133301722507, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.7056737588652482}
+{"Threshold": 0.8656091198612779, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.7021276595744681}
+{"Threshold": 0.8700132276104287, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.6985815602836879}
+{"Threshold": 0.8711400975443104, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.6914893617021277}
+{"Threshold": 0.8719184310738765, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.6879432624113475}
+{"Threshold": 0.8763437379603303, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.6843971631205674}
+{"Threshold": 0.8774430698871936, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.6808510638297872}
+{"Threshold": 0.8810150835123515, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.6773049645390071}
+{"Threshold": 0.8827295294652443, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.6702127659574468}
+{"Threshold": 0.8827665665022814, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.6666666666666666}
+{"Threshold": 0.8830918483058241, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.6595744680851063}
+{"Threshold": 0.8901203321050387, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.6560283687943262}
+{"Threshold": 0.8936141595438958, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.6524822695035462}
+{"Threshold": 0.8937582908182973, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.648936170212766}
+{"Threshold": 0.8939868470268599, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.6418439716312057}
+{"Threshold": 0.8946073115730512, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.6382978723404256}
+{"Threshold": 0.8946905507305636, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.6347517730496454}
+{"Threshold": 0.895085521939529, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.6312056737588653}
+{"Threshold": 0.897079708676445, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.6276595744680851}
+{"Threshold": 0.9002388153740807, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.624113475177305}
+{"Threshold": 0.901253879086878, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.6170212765957447}
+{"Threshold": 0.9016705457535447, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.6134751773049646}
+{"Threshold": 0.9025597343708301, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.6099290780141844}
+{"Threshold": 0.9029301868441156, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.6063829787234043}
+{"Threshold": 0.9029317656630415, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.6028368794326241}
+{"Threshold": 0.9029912540690248, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.599290780141844}
+{"Threshold": 0.9036788588353732, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.5957446808510638}
+{"Threshold": 0.9043051047412005, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.5921985815602837}
+{"Threshold": 0.9048348387841003, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.5886524822695035}
+{"Threshold": 0.9082667820264962, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.5851063829787234}
+{"Threshold": 0.9102699443657444, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.5815602836879432}
+{"Threshold": 0.9105091090149364, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.5780141843971631}
+{"Threshold": 0.9122949808316747, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.5709219858156028}
+{"Threshold": 0.9142648743607797, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.5673758865248227}
+{"Threshold": 0.915963723532636, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.5638297872340425}
+{"Threshold": 0.9225587640176718, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.5602836879432624}
+{"Threshold": 0.9293036635113621, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.5531914893617021}
+{"Threshold": 0.9295825135471326, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.549645390070922}
+{"Threshold": 0.931029931800112, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.5460992907801419}
+{"Threshold": 0.9310490338817324, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.5425531914893617}
+{"Threshold": 0.9322850150348736, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.5390070921985816}
+{"Threshold": 0.9370197806394823, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.5319148936170213}
+{"Threshold": 0.9378103646385182, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.5283687943262412}
+{"Threshold": 0.9380072995044186, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.5212765957446809}
+{"Threshold": 0.938008952922594, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.5177304964539007}
+{"Threshold": 0.9383325813079612, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.5141843971631206}
+{"Threshold": 0.9392078697837466, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.5106382978723404}
+{"Threshold": 0.9409046358240787, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.5070921985815603}
+{"Threshold": 0.9417570898070318, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.5035460992907801}
+{"Threshold": 0.9422986927846394, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.49645390070921985}
+{"Threshold": 0.9423533984530985, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.4929078014184397}
+{"Threshold": 0.9423767232202579, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.48936170212765956}
+{"Threshold": 0.9424468409327875, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.4858156028368794}
+{"Threshold": 0.9436657773300082, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.48226950354609927}
+{"Threshold": 0.9437297417388423, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.4787234042553192}
+{"Threshold": 0.9444045208022245, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.475177304964539}
+{"Threshold": 0.9466265399123621, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.4716312056737589}
+{"Threshold": 0.9482974354101363, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.4645390070921986}
+{"Threshold": 0.9496682071341553, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.46099290780141844}
+{"Threshold": 0.9519083311834587, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.45390070921985815}
+{"Threshold": 0.9527385441818697, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.450354609929078}
+{"Threshold": 0.9535673216716126, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.44680851063829785}
+{"Threshold": 0.9540766259152837, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.4432624113475177}
+{"Threshold": 0.9541136629523208, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.4397163120567376}
+{"Threshold": 0.9573937548873342, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.43617021276595747}
+{"Threshold": 0.9578064445078233, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.4326241134751773}
+{"Threshold": 0.9586041907977257, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.42907801418439717}
+{"Threshold": 0.9587917528662846, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.4219858156028369}
+{"Threshold": 0.9588287899033215, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.41843971631205673}
+{"Threshold": 0.960808755397256, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.4148936170212766}
+{"Threshold": 0.9613570567017127, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.41134751773049644}
+{"Threshold": 0.9625045217530972, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.4078014184397163}
+{"Threshold": 0.9663055982921965, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.40425531914893614}
+{"Threshold": 0.9681837794730876, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.40070921985815605}
+{"Threshold": 0.9692116064836133, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.3971631205673759}
+{"Threshold": 0.9692610437473951, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.39361702127659576}
+{"Threshold": 0.969621099431421, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.38652482269503546}
+{"Threshold": 0.9697692475795688, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.3829787234042553}
+{"Threshold": 0.969961575166058, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.37943262411347517}
+{"Threshold": 0.969998612203095, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.375886524822695}
+{"Threshold": 0.9700893262465644, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.3723404255319149}
+{"Threshold": 0.9702374743947126, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.36879432624113473}
+{"Threshold": 0.9728054239617825, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.36524822695035464}
+{"Threshold": 0.9732413849054696, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.3617021276595745}
+{"Threshold": 0.9733895330536179, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.35815602836879434}
+{"Threshold": 0.9743061571073275, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.3546099290780142}
+{"Threshold": 0.9747887010645125, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.35106382978723405}
+{"Threshold": 0.9748257381015496, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.3475177304964539}
+{"Threshold": 0.9753545962006834, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.34397163120567376}
+{"Threshold": 0.9756130786587472, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.3404255319148936}
+{"Threshold": 0.9756501156957845, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.33687943262411346}
+{"Threshold": 0.9760197037664923, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.3333333333333333}
+{"Threshold": 0.9763423836187244, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.3262411347517731}
+{"Threshold": 0.9765928194293104, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.32269503546099293}
+{"Threshold": 0.9766298564663475, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.3191489361702128}
+{"Threshold": 0.9766977275771279, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.31560283687943264}
+{"Threshold": 0.9770137207524802, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.3120567375886525}
+{"Threshold": 0.9770507577895173, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.30851063829787234}
+{"Threshold": 0.9771270938457199, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.3049645390070922}
+{"Threshold": 0.9776271801113, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.2978723404255319}
+{"Threshold": 0.9776431187501335, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.29432624113475175}
+{"Threshold": 0.9778442729802155, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.2872340425531915}
+{"Threshold": 0.9779644761539982, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.28368794326241137}
+{"Threshold": 0.978474943142726, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.2801418439716312}
+{"Threshold": 0.9788034894603068, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.2765957446808511}
+{"Threshold": 0.9792806658948693, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.2695035460992908}
+{"Threshold": 0.9793042451344769, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.26595744680851063}
+{"Threshold": 0.9793614750528883, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.2624113475177305}
+{"Threshold": 0.979452393282625, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.2553191489361702}
+{"Threshold": 0.979983762949892, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.25177304964539005}
+{"Threshold": 0.9811148413125812, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.24468085106382978}
+{"Threshold": 0.9811167349641969, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.24113475177304963}
+{"Threshold": 0.9814620797747593, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.2375886524822695}
+{"Threshold": 0.981746144222166, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.23404255319148937}
+{"Threshold": 0.9818769513104032, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.23049645390070922}
+{"Threshold": 0.9819139883474405, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.22695035460992907}
+{"Threshold": 0.9820714260257087, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.22340425531914893}
+{"Threshold": 0.9823622622875358, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.2198581560283688}
+{"Threshold": 0.9823995798821566, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.21631205673758866}
+{"Threshold": 0.9827184007304728, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.2127659574468085}
+{"Threshold": 0.9829651424694615, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.20921985815602837}
+{"Threshold": 0.9830300445719157, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.20567375886524822}
+{"Threshold": 0.9831921883486151, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.20212765957446807}
+{"Threshold": 0.9833802089653746, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.19858156028368795}
+{"Threshold": 0.9838203348815864, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.19148936170212766}
+{"Threshold": 0.9841041186459897, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.1879432624113475}
+{"Threshold": 0.9841456166851291, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.18439716312056736}
+{"Threshold": 0.9841944819437222, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.18085106382978725}
+{"Threshold": 0.98431147571501, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.1773049645390071}
+{"Threshold": 0.9846250543605798, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.17375886524822695}
+{"Threshold": 0.9851355213493075, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.1702127659574468}
+{"Threshold": 0.9855045502033014, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.16666666666666666}
+{"Threshold": 0.9855415872403385, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.16312056737588654}
+{"Threshold": 0.9856441375750852, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.1595744680851064}
+{"Threshold": 0.9856811746121223, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.15602836879432624}
+{"Threshold": 0.9858344891116694, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.1524822695035461}
+{"Threshold": 0.9859826372598176, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.14893617021276595}
+{"Threshold": 0.9863425409064862, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.1453900709219858}
+{"Threshold": 0.9864245009430673, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.14184397163120568}
+{"Threshold": 0.9864615379801044, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.13829787234042554}
+{"Threshold": 0.9869485239175553, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.1347517730496454}
+{"Threshold": 0.9869855609545923, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.1276595744680851}
+{"Threshold": 0.987436863308837, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.12056737588652482}
+{"Threshold": 0.987473900345874, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.11702127659574468}
+{"Threshold": 0.9882782628340802, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.11347517730496454}
+{"Threshold": 0.988322787079266, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.1099290780141844}
+{"Threshold": 0.988426410982228, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.10638297872340426}
+{"Threshold": 0.9884709352274141, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.10283687943262411}
+{"Threshold": 0.9886202119474177, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.09929078014184398}
+{"Threshold": 0.9889454937509602, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.09574468085106383}
+{"Threshold": 0.9890381183162363, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.09219858156028368}
+{"Threshold": 0.9890751553532734, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.08865248226950355}
+{"Threshold": 0.9890771014291819, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.0851063829787234}
+{"Threshold": 0.9894023832327247, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.08156028368794327}
+{"Threshold": 0.9895755855916659, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.07801418439716312}
+{"Threshold": 0.9896126226287032, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.07446808510638298}
+{"Threshold": 0.9899232561571589, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.07092198581560284}
+{"Threshold": 0.9902352204198018, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.0673758865248227}
+{"Threshold": 0.9902485379607014, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.06382978723404255}
+{"Threshold": 0.9902722574568389, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.06028368794326241}
+{"Threshold": 0.990828733096227, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.05673758865248227}
+{"Threshold": 0.9911540148997695, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.05319148936170213}
+{"Threshold": 0.9913604765239923, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.04964539007092199}
+{"Threshold": 0.9913677344827463, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.04609929078014184}
+{"Threshold": 0.991685758327535, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.0425531914893617}
+{"Threshold": 0.9918435179585299, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.03900709219858156}
+{"Threshold": 0.9922295915919768, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.03546099290780142}
+{"Threshold": 0.9922666286290136, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.031914893617021274}
+{"Threshold": 0.9930045516929458, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.028368794326241134}
+{"Threshold": 0.993041588729983, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.024822695035460994}
+{"Threshold": 0.9931379434723595, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.02127659574468085}
+{"Threshold": 0.9931749805093966, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.01773049645390071}
+{"Threshold": 0.9934598229590661, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.014184397163120567}
+{"Threshold": 0.9937368431610865, "TestName": "disclosures_test_m.tsv", "P": 1.0, "R": 0.0070921985815602835}
