@@ -209,6 +209,23 @@ class TDeduplicationObject:
             assert False
 
 
+class TMLModel:
+    def __init__(self, filename):
+        self.file_name = filename
+        with open(filename, 'rb') as sf:
+            self.ml_model = pickle.load(sf)
+
+    def get_features(self, o1, o2):
+        if o1.record_id > o2.record_id:
+            o1, o2 = o2, o1
+        features = o1.build_features(o2)
+        return features
+
+    def predict_positive_proba(self, X):
+        return list(p1 for p0, p1 in self.ml_model.predict_proba(X))
+
+
+
 class TFioClustering:
 
     def __init__(self, leaf_clusters, ml_model, threshold):
@@ -217,9 +234,9 @@ class TFioClustering:
         self.square_form_distance_matrix = None
         self.object_to_cluster_index = None
         self.clusters = defaultdict(list)
-        self.threshold = 1.0 - threshold
+        self.min_distance = 1.0 - threshold
 
-    def get_distance(self, o1, o2):
+    def get_distance(self, o1, o2, ml_score):
         if o1.record_id == o2.record_id:
             return 0
         if o1.record_id[1] == TDeduplicationObject.PERSON and o2.record_id[1] == TDeduplicationObject.PERSON:
@@ -227,7 +244,7 @@ class TFioClustering:
         if not o1.fio.is_compatible_to(o2.fio):
             return TDeduplicationObject.INCOMPATIBLE_FIO_WEIGHT
         else:
-            return 1.0 - self.ml_model.get_ml_score(o1, o2)
+            return 1.0 - ml_score
 
     def cluster(self):
         if len(self.leaf_clusters) == 1:
@@ -235,37 +252,51 @@ class TFioClustering:
         else:
             self.square_form_distance_matrix = self.build_redundant_distance_matrix()
             condensed_matrix = squareform(self.square_form_distance_matrix)
-            linkage_matrix = linkage(condensed_matrix, method="average")
-            self.object_to_cluster_index = fcluster(linkage_matrix, t=self.threshold, criterion="distance")
+            linkage_matrix = linkage(condensed_matrix, method="single")
+            self.object_to_cluster_index = fcluster(linkage_matrix, t=self.min_distance, criterion="distance")
             for i in range(len(self.object_to_cluster_index)):
                 #distance = self.get_average_distance(i)
                 distance = self.get_min_distance(i)
                 self.clusters[self.object_to_cluster_index[i]].append((self.leaf_clusters[i], distance))
 
     def build_redundant_distance_matrix(self):
-        """ build scipy squareform """
+        """ build scipy squareform, single call predict_proba is too slow """
         square_form_distance_matrix = list()
+        X = list()
+        for i in range(len(self.leaf_clusters)):
+            for k in range(len(self.leaf_clusters)):
+                X.append(self.ml_model.get_features(self.leaf_clusters[i], self.leaf_clusters[k]))
+        ml_scores = self.ml_model.predict_positive_proba(X)
+
         for i in range(len(self.leaf_clusters)):
             row = list()
             for k in range(len(self.leaf_clusters)):
-                distance = self.get_distance(self.leaf_clusters[i], self.leaf_clusters[k])
+                ml_score = ml_scores[i * len(self.leaf_clusters) + k]
+                distance = self.get_distance(self.leaf_clusters[i], self.leaf_clusters[k], ml_score)
                 row.append(distance)
             square_form_distance_matrix.append(row)
         return square_form_distance_matrix
 
-    def get_average_distance(self, index):
-        distance_sum = 0
-        cluster_size = 1
+    def get_distances_to_other_cluster_items(self, index):
+        distances = list()
         for i in range(len(self.object_to_cluster_index)):
-            if self.object_to_cluster_index[i] == self.object_to_cluster_index[index]:
-                distance_sum += self.square_form_distance_matrix[i][index]
-                cluster_size += 1
-        return float(distance_sum) / cluster_size
+            if self.object_to_cluster_index[i] == self.object_to_cluster_index[index] and i != index:
+                distances.append(self.square_form_distance_matrix[i][index])
+        return distances
+
+    def get_average_distance(self, index):
+        distances = self.get_distances_to_other_cluster_items(index)
+        if len(distances) == 0:
+            return 0
+        else:
+            return float(sum(distances)) / len(distances)
 
     def get_min_distance(self, index):
-        return min(self.square_form_distance_matrix[i][index] \
-                        for i in range(len(self.object_to_cluster_index)) \
-                        if self.object_to_cluster_index[i] == self.object_to_cluster_index[index] and i != index)
+        distances = self.get_distances_to_other_cluster_items(index)
+        if len(distances) == 0:
+            return 0
+        else:
+            return float(min(distances))
 
 
 def pool_to_random_forest(logger, pairs):
@@ -285,13 +316,18 @@ def pool_to_random_forest(logger, pairs):
             single_objects.add(o1)
             o2 = TDeduplicationObject().initialize_from_prefixed_id(id2)
             single_objects.add(o2)
-            features = o1.build_features(o2)
-            X.append(features)
+
+            #random forest is not symmetric
+            X.append(o1.build_features(o2))
+            X.append(o2.build_features(o1))
+
             if mark == "YES":
                 logger.debug("{} {} -> YES".format(id1, id2))
                 y.append(1)
+                y.append(1)
             elif mark == "NO":
                 logger.debug("{} {} -> NO".format(id1, id2))
+                y.append(0)
                 y.append(0)
         except django.core.exceptions.ObjectDoesNotExist as e:
             missing_cnt += 1
@@ -303,17 +339,3 @@ def pool_to_random_forest(logger, pairs):
     return single_objects, X, y
 
 
-class TMLModel:
-    def __init__(self, filename):
-        self.file_name = filename
-        with open(filename, 'rb') as sf:
-            self.ml_model = pickle.load(sf)
-
-    def predict_positive(self, X):
-        return list(p1 for p0, p1 in self.ml_model.predict_proba(X))
-
-    def get_ml_score(self, o1, o2):
-        if o1.record_id > o2.record_id:
-            o1, o2 = o2, o1
-        features = o1.build_features(o2)
-        return self.predict_positive([features])[0]

@@ -158,10 +158,10 @@ class Command(BaseCommand):
                         s.save() # do it to disable constraint delete
             o = TDeduplicationObject().initialize_from_section(s)
             if not o.fio.is_resolved:
-                self.logger.debug("ignore section id={} person_name={}, cannot find family name".format(s.id, section.person_name))
+                self.logger.debug("ignore section id={} person_name={}, cannot find family name".format(s.id, s.person_name))
                 continue
             if not take_sections_with_empty_income and o.average_income == 0:
-                self.logger.debug("ignore section id={} person_name={}, no income or zero-income".format(s.id, section.person_name))
+                self.logger.debug("ignore section id={} person_name={}, no income or zero-income".format(s.id, s.person_name))
                 continue
             self.cluster_by_minimal_fio[o.fio.build_fio_with_initials()].append(o)
             cnt += 1
