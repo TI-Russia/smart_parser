@@ -73,6 +73,7 @@ class ExportHuman(TestCase):
                 with open (output_json) as inp:
                     result_json = json.load(inp)
                     self.assertDictEqual(canon_json, result_json)
+                time.sleep(2)
                 self.assertEqual(smart_parser_server.server.get_stats()['session_write_count'], 1)
 
     def test_4915(self):
