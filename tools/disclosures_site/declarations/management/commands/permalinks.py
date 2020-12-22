@@ -41,6 +41,7 @@ class TPermaLinksDB:
     def close_db(self):
         if self.access_mode == "cf":
             self._save_verification_code()
+        self.sync_db()
         self.db.close()
         self.db = None
 
