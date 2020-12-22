@@ -1,6 +1,7 @@
+import declarations.models as models
+
 import dbm.gnu
 import os
-import declarations.models as models
 from django.db import connection
 import sys
 
@@ -11,6 +12,7 @@ class TPermaLinksDB:
         self.filename = filename
         self.models = {models.Person, models.Section, models.Source_Document}
         self.db = None
+        self.access_mode = None
 
     def get_auto_increment_table_name(self, model):
         return model.objects.model._meta.db_table + "_auto_increment"
@@ -26,12 +28,26 @@ class TPermaLinksDB:
             cursor.execute("create table {} (id int auto_increment, PRIMARY KEY (id))".format(auto_increment_table))
             cursor.execute("alter table {} auto_increment = {}".format(auto_increment_table, start_from))
 
+    def sync_db(self):
+        self.db.sync()
+
+    def _save_verification_code(self):
+        self.db["verification_code"] = "1"
+
+    def _check_verification_code(self):
+        """ check the database is written completely by create_permalink_storage """
+        assert self.db["verification_code"] == "1".encode('latin')
+
     def close_db(self):
+        if self.access_mode == "cf":
+            self._save_verification_code()
         self.db.close()
         self.db = None
 
     def open_db_read_only(self):
-        self.db = dbm.gnu.open(self.filename)
+        self.access_mode = "r"
+        self.db = dbm.gnu.open(self.filename, self.access_mode)
+        self._check_verification_code()
 
     def create_sql_sequences(self):
         for model in self.models:
@@ -40,7 +56,8 @@ class TPermaLinksDB:
     def create_db(self):
         if os.path.exists(self.filename):
             os.unlink(self.filename)
-        self.db = dbm.gnu.open(self.filename, "c")
+        self.access_mode = "cf"
+        self.db = dbm.gnu.open(self.filename, self.access_mode)
         for typ in self.models:
             self.save_next_primary_key_value(typ, 0)
 
@@ -64,11 +81,8 @@ class TPermaLinksDB:
         for passport in django_db_model.permalink_passports():
             self.db[passport] = str(django_db_model.id)
 
-    def close(self):
-        self.db.close()
-
     def update_person_records_count_and_close(self):
-        self.db = dbm.gnu.open(self.filename, "w")
+        self.db = dbm.gnu.open(self.filename, "wf")
         with connection.cursor() as cursor:
             cursor.execute("select max(id) m from declarations_person;")
             old_value = self.get_first_new_primary_key(models.Person)
@@ -81,4 +95,10 @@ class TPermaLinksDB:
                 sys.stderr.write("person old next primary key = {}, new one = {}\n".format(old_value, new_value))
                 self.save_next_primary_key_value(models.Person, new_value)
             self.recreate_auto_increment_table(models.Person)
-        self.close()
+        self.close_db()
+
+    def create_and_save_empty_db(self):
+        self.create_db()
+        self.create_sql_sequences()
+        self._save_verification_code()
+        self.close_db()

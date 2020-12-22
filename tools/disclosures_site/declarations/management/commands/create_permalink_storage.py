@@ -7,7 +7,6 @@ import logging
 import os
 
 
-
 def setup_logging(logfilename="create_permalink_storage.log"):
     logger = logging.getLogger("copy_primary_keys")
     logger.setLevel(logging.DEBUG)
@@ -62,9 +61,11 @@ class Command(BaseCommand):
         db = TPermaLinksDB(options.get('output_dbm_file'))
         db.create_db()
         self.save_permalinks(logger, models.Source_Document, db)
+        db.sync_db()
         self.save_permalinks(logger, models.Section, db)
+        db.sync_db()
         self.save_permalinks(logger, models.Person, db)
-        db.close()
+        db.close_db()
 
         logger.info("all done")
 

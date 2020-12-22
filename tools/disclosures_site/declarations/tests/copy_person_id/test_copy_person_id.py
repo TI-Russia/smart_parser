@@ -1,10 +1,11 @@
+from declarations.management.commands.permalinks import TPermaLinksDB
 from declarations.management.commands.copy_person_id import CopyPersonIdCommand, build_section_passport
+from declarations.russian_fio import TRussianFio
+
 import declarations.models as models
 import os
 import json
-from declarations.management.commands.permalinks import TPermaLinksDB
 from django.test import TestCase
-from declarations.russian_fio import TRussianFio
 
 
 class CopyPersonIdTestCaseBase(TestCase):
@@ -53,10 +54,8 @@ class CopyPersonIdTestCaseBase(TestCase):
         models.Income(section=section2, size=income_main2, relative=models.Relative.main_declarant_code).save()
 
         permalinks_path = os.path.join(os.path.dirname(__file__), "permalinks.dbm")
-        p = TPermaLinksDB(permalinks_path)
-        p.create_db()
-        p.create_sql_sequences()
-        p.close_db()
+        TPermaLinksDB(permalinks_path).create_and_save_empty_db()
+
 
         copier = CopyPersonIdCommand(None, None)
         copier.handle(None, read_person_from_json=person_ids_path, permanent_links_db=permalinks_path)

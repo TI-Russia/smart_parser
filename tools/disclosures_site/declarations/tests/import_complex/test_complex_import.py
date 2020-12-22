@@ -15,10 +15,7 @@ class ComplexImportTestCase(TestCase):
         models.Source_Document.objects.all().delete()
 
         permalinks_path = os.path.join(os.path.dirname(__file__), "permalinks.dbm")
-        p = TPermaLinksDB(permalinks_path)
-        p.create_db()
-        p.create_sql_sequences()
-        p.close()
+        p = TPermaLinksDB(permalinks_path).create_and_save_empty_db()
 
         domains_folder = os.path.join(os.path.dirname(__file__), "domains")
         sp_workdir = os.path.join(os.path.dirname(__file__), "smart_parser_server")

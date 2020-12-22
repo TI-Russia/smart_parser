@@ -67,7 +67,6 @@ class TImporter:
         self.first_new_section_id = self.primary_keys_builder.get_first_new_primary_key(models.Section)
         self.smart_parser_cache_client = None
 
-
     def delete_before_fork(self):
         self.primary_keys_builder.close_db()
         from django import db

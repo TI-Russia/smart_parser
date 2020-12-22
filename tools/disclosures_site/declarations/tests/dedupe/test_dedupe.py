@@ -25,10 +25,7 @@ class CreateNewPersonId(TestCase):
         models.Section(id=1, source_document=src_doc, person_name="Иванов Иван Иванович").save()
         models.Section(id=2, source_document=src_doc, person_name="Иванов И. И.").save()
         permalinks_path = os.path.join(os.path.dirname(__file__), "permalinks.dbm")
-        p = TPermaLinksDB(permalinks_path)
-        p.create_db()
-        p.create_sql_sequences()
-        p.close()
+        TPermaLinksDB(permalinks_path).create_and_save_empty_db()
         run_dedupe = RunDedupe(None, None)
         run_dedupe.handle(None,
                           permanent_links_db=permalinks_path,
@@ -69,7 +66,7 @@ class UseOldPersonId(TestCase):
         p.create_db()
         p.save_next_primary_key_value(models.Person, 3)
         p.create_sql_sequences()
-        p.close()
+        p.close_db()
 
         run_dedupe = RunDedupe(None, None)
         run_dedupe.handle(None,
@@ -103,7 +100,7 @@ class RememberOldPersonId(TestCase):
         db.put_record_id(person)
         db.save_next_primary_key_value(models.Person, 100)
         db.create_sql_sequences()
-        db.close()
+        db.close_db()
         time.sleep(1)
 
         run_dedupe = RunDedupe(None, None)

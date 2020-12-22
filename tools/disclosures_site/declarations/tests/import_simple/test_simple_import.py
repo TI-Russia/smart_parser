@@ -27,7 +27,7 @@ class SimpleImportTestCase(TestCase):
         src_doc = models.Source_Document(id=doc_old_id, sha256="f974dc82aa52acea2f9c49467e7395924605de474e76bafa85572351194b153a")
         p.put_record_id(src_doc)
         p.recreate_auto_increment_table(models.Section)
-        p.close()
+        p.close_db()
 
         with SmartParserServerForTesting(sp_workdir, domains_folder):
             importer = ImportJsonCommand(None, None)

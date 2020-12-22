@@ -118,7 +118,7 @@ class Command(BaseCommand):
         self.primary_keys_builder.open_db_read_only()
 
     def update_primary_keys(self):
-        self.primary_keys_builder.close()
+        self.primary_keys_builder.close_db()
         self.primary_keys_builder.update_person_records_count_and_close()
 
     def build_passport_to_person_id_mapping_from_declarator(self):
