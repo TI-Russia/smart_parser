@@ -14,4 +14,10 @@ export DEDUPE_MODEL=~/TOOLS/disclosures_site/deduplicate/model/random_forest.pic
 export DISCLOSURES_DB_HOST=migalka
 export DEDUPE_HOSTS=lena,avito
 export DEDUPE_HOSTS_SPACES=$"lena\navito"
-export SOURCE_DOC_SERVER_ADDRESS=migalka:8090
+
+export CENTRAL_HOST_NAME=migalka
+export SMART_PARSER_SERVER_ADDRESS=$CENTRAL_HOST_NAME:8165
+export DLROBOT_CENTRAL_SERVER_ADDRESS=$CENTRAL_HOST_NAME:8089
+export SOURCE_DOC_SERVER_ADDRESS=$CENTRAL_HOST_NAME:8090
+export DECLARATOR_CONV_URL=disclosures.ru:8091
+

@@ -48,6 +48,10 @@ def all_positions_words(section):
     return set(s.split(' '))
 
 
+def average(num):
+    return sum(num) / ( len(num) + 0.0000001)
+
+
 class TDeduplicationObject:
     INCOMPATIBLE_FIO_WEIGHT = 10000
     PERSON = "p"
@@ -67,13 +71,14 @@ class TDeduplicationObject:
         self.years = set()
         self.vehicles = set()
         self.official_position_words = set()
+        self.regions = set()
 
     def set_person_name(self, person_name):
         self.person_name = person_name
         self.fio = TRussianFio(person_name)
 
     def initialize(self, record_id, person_name, realty_squares, surname_rank, name_rank, rubrics, offices,
-                    children_real_estates, average_income, years, vehicles, official_position_words):
+                    children_real_estates, average_income, years, vehicles, official_position_words, regions):
         self.record_id = record_id
         self.set_person_name(person_name)
         self.realty_squares = set(realty_squares)
@@ -86,6 +91,7 @@ class TDeduplicationObject:
         self.years = years
         self.vehicles = vehicles
         self.official_position_words = official_position_words
+        self.regions = regions
         return self
 
     def initialize_from_section(self, section):
@@ -101,7 +107,8 @@ class TDeduplicationObject:
             section.get_declarant_income_size(),
             set([section.income_year]),
             all_vehicles(section),
-            all_positions_words(section)
+            all_positions_words(section),
+            set([section.source_document.office.region_id])
         )
 
     def initialize_from_person(self, person):
@@ -115,6 +122,7 @@ class TDeduplicationObject:
         years = set()
         vehicles = set()
         position_words = set()
+        regions = set()
 
         for s in person.section_set.all():
             realty_squares |= all_realty_squares(s)
@@ -127,6 +135,7 @@ class TDeduplicationObject:
             years.add(s.income_year)
             vehicles |= all_vehicles(s)
             position_words |= all_positions_words(s)
+            regions.add(s.source_document.office.region_id)
 
         return self.initialize(
                 (person.id, self.PERSON),
@@ -137,10 +146,11 @@ class TDeduplicationObject:
                 rubrics,
                 offices,
                 children_realty_squares,
-                sum(main_incomes)/len(main_incomes),
+                average(main_incomes),
                 years,
                 vehicles,
-                position_words
+                position_words,
+                regions
         )
 
     def to_json(self):
@@ -160,7 +170,10 @@ class TDeduplicationObject:
         return self
 
     def build_features(self, other):
-        min_year_diff = min (abs(y1-y2) for y1 in self.years for y2 in other.years)
+        income_now = self.average_income
+        income_past = other.average_income
+        if average(self.years) > average(other.years):
+            income_now, income_past = income_past, income_now
 
         return [
             len(self.realty_squares.intersection(other.realty_squares)),
@@ -169,10 +182,10 @@ class TDeduplicationObject:
             len(self.rubrics.intersection(other.rubrics)),
             len(self.offices.intersection(other.offices)),
             abs(self.children_real_estates_sum - other.children_real_estates_sum),
-            self.average_income / (other.average_income + 0.000000001),
-            min_year_diff,
+            income_past / (income_now + 0.000000001),
             len(self.vehicles.intersection(other.vehicles)),
             len(self.official_position_words.intersection(other.official_position_words)),
+            len(self.regions.intersection(other.regions)),
         ]
 
     @staticmethod
@@ -184,9 +197,9 @@ class TDeduplicationObject:
                 "common_offices",
                 'children_real_estates_sum',
                 'average_income_ratio',
-                'years_distance',
                 'vehicles',
-                'official_position_words'
+                'official_position_words',
+                'common_regions'
                 ]
 
     def __hash__(self):
