@@ -51,17 +51,9 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
       sudo apt-get install -y dotnet-sdk-3.1
 
 
-2.6 update ~/.profile
-    export ASPOSE_LIC=~/lic.bin
-    export PYTHONPATH=~/smart_parser/tools:$PYTHONPATH
-    export DECLARATOR_CONV_URL=disclosures.ru:8091
+2.6 add  ~/smart_parser/tools/disclosures_site/tools/update_common.sh to  ~/.profile
 
-    # local central network names
-    export CENTRAL_HOST_NAME=migalka
-    export SMART_PARSER_SERVER_ADDRESS=$CENTRAL_HOST_NAME:8165
-    export DLROBOT_CENTRAL_SERVER_ADDRESS=$CENTRAL_HOST_NAME:8089
-    export SOURCE_DOC_SERVER_ADDRESS=$CENTRAL_HOST_NAME:8090
-
+    cat ~/smart_parser/tools/disclosures_site/tools/update_common.sh >> ~/.profile
     source ~/.profile
 
 2.7 compile and test smart_parser (c#, ~/smart_parser/src)

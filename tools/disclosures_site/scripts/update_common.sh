@@ -10,10 +10,10 @@ export HUMAN_JSONS_FOLDER=~/declarator_hdd/declarator/human_jsons
 export YANDEX_DISK_FOLDER=~/declarator_hdd/Yandex.Disk/declarator/dlrobot_updates
 export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
 
-export DEDUPE_MODEL=~/TOOLS/disclosures_site/deduplicate/model/random_forest.pickle
+export DEDUPE_MODEL=$TOOLS/disclosures_site/deduplicate/model/random_forest.pickle
 export DISCLOSURES_DB_HOST=migalka
 export DEDUPE_HOSTS=lena,avito
-export DEDUPE_HOSTS_SPACES=$"lena\navito"
+export DEDUPE_HOSTS_SPACES="lena avito"
 
 export CENTRAL_HOST_NAME=migalka
 export SMART_PARSER_SERVER_ADDRESS=$CENTRAL_HOST_NAME:8165

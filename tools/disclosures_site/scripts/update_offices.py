@@ -70,7 +70,8 @@ class TOfficeJoiner:
             if len(url) == 0:
                 continue
             web_site = get_site_domain_wo_www(url)
-            if len(web_site) > 0:
+            if len(web_site.strip()) > 2 and web_site.find(' ') == -1 and web_site  .find('.') != -1 and \
+                    web_site != "example.com":
                 web_site_and_office_freq[(web_site, office_id)] += 1
         freq_list = sorted(web_site_and_office_freq.items(), key=itemgetter(1), reverse=True)
         self.website_to_most_freq_office = dict()
@@ -128,6 +129,40 @@ class TOfficeJoiner:
                     }
         self.logger.debug("read {} fgup from {}".format(len(fgup), file_path))
         return fgup
+
+    def read_sudrf(self):
+        file_path = os.path.join(os.path.dirname(__file__), "../data/sudrf.txt")
+        output_courts = dict()
+        with open(file_path, "r") as inp:
+            courts = json.load(inp)
+
+        for court in courts:
+            web_site = get_site_domain_wo_www(court['link'])
+            region = court['region'].lower()
+            if region.startswith('город '):
+                region = region[6:].strip()
+
+            if region == "территории за пределами рф":
+                region_id = None
+            elif region.find('якутия') != -1:
+                region_id = 92
+            elif region.find('ханты') != -1:
+                region_id = 108
+            elif region.find('алания') != -1:
+                region_id = 17
+            elif region.find(' тыва') != -1:
+                region_id = 85
+            else:
+                region_id = self.region_name_to_id[region]
+
+            output_courts[web_site] = {
+                "name": court['name'],
+                "region_id": region_id,
+                'type_id': None,
+                'parent_id': None
+                }
+        self.logger.debug("read {} courts from {}".format(len(courts), file_path))
+        return output_courts
 
     def extend_offices_and_sites(self, new_office_dict):
         name_to_office = dict((o['name'], o['id']) for o in self.offices)
@@ -190,12 +225,26 @@ class TOfficeJoiner:
         self.read_offices()
         self.read_regions()
 
+        self.logger.info("update_offices_from_declarator")
         self.update_offices_from_declarator()
+
+        self.logger.info("update_from_office_urls")
         self.web_sites.update_from_office_urls(self.offices, self.logger)
+
+        self.logger.info("calc_office_by_web_domain")
         self.calc_office_by_web_domain()
+
+        self.logger.info("add_new_websites_from_declarator")
         self.web_sites.add_new_websites_from_declarator(self.website_to_most_freq_office)
+
+        self.logger.info("extend_offices_and_sites(self.read_fgup())")
         self.extend_offices_and_sites(self.read_fgup())
+
+        self.logger.info("extend_offices_and_sites(self.read_districts_from_wikidata())")
         self.extend_offices_and_sites(self.read_districts_from_wikidata())
+
+        self.logger.info("extend_offices_and_sites(self.read_sudrf())")
+        self.extend_offices_and_sites(self.read_sudrf())
 
         self.web_sites.save_to_disk()
         self.write_offices()

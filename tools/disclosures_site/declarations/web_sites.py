@@ -1,7 +1,7 @@
 import json
 import os
-from urllib.parse import urlparse
 from common.primitives import get_site_domain_wo_www
+
 
 class TDeclarationWebSite:
     def __init__(self):
