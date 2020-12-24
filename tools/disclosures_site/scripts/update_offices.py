@@ -13,6 +13,7 @@ from collections import defaultdict
 
 def parse_args():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--declarator-host", dest='declarator_host', default='localhost')
     return parser.parse_args()
 
 
@@ -34,7 +35,8 @@ def setup_logging(logfilename="update_offices.log"):
 
 
 class TOfficeJoiner:
-    def __init__(self):
+    def __init__(self, args):
+        self.args = args
         self.logger = setup_logging()
         self.logger.debug("start joining")
 
@@ -56,7 +58,8 @@ class TOfficeJoiner:
     def calc_office_by_web_domain(self):
         # query to declarator db
         db_connection = pymysql.connect(db="declarator", user="declarator", password="declarator",
-                                        unix_socket="/var/run/mysqld/mysqld.sock")
+                                        host=self.args.declarator_host
+                                        )
         in_cursor = db_connection.cursor()
         in_cursor.execute("""
                         select  o.id,
@@ -70,7 +73,7 @@ class TOfficeJoiner:
             if len(url) == 0:
                 continue
             web_site = get_site_domain_wo_www(url)
-            if len(web_site.strip()) > 2 and web_site.find(' ') == -1 and web_site  .find('.') != -1 and \
+            if len(web_site.strip()) > 2 and web_site.find(' ') == -1 and web_site.find('.') != -1 and \
                     web_site != "example.com":
                 web_site_and_office_freq[(web_site, office_id)] += 1
         freq_list = sorted(web_site_and_office_freq.items(), key=itemgetter(1), reverse=True)
@@ -83,7 +86,7 @@ class TOfficeJoiner:
 
     def update_offices_from_declarator(self):
         db_connection = pymysql.connect(db="declarator", user="declarator", password="declarator",
-                                        unix_socket="/var/run/mysqld/mysqld.sock")
+                                        host=self.args.declarator_host)
         in_cursor = db_connection.cursor()
         in_cursor.execute("""
                         select  id, name_ru, type_id, parent_id, region_id, url 
@@ -252,7 +255,7 @@ class TOfficeJoiner:
 
 
 if __name__ == '__main__':
-    joiner = TOfficeJoiner()
+    joiner = TOfficeJoiner(parse_args())
     joiner.build_offices_and_web_sites()
 
 

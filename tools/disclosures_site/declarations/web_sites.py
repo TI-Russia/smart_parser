@@ -52,12 +52,20 @@ class TDeclarationWebSites:
             json.dump(js, outp, indent=4, ensure_ascii=False)
 
     def add_new_websites_from_declarator(self, website_to_most_freq_office):
+        errors = list()
         for web_site, calculated_office_id in website_to_most_freq_office.items():
             if web_site not in self.web_sites:
                 self.add_web_site(web_site, calculated_office_id)
             elif self.web_sites[web_site].calculated_office_id >= self.disclosures_office_start_id:
-                raise Exception ("there is a web site {} that is referenced in "
-                                 "disclosures offices and declarator offices. Solve office ambiguity".format(web_site))
+                errors.append("web site: {}, declarator office id: {}, disclosures office id: {}".format(
+                    web_site, calculated_office_id, self.web_sites[web_site].calculated_office_id))
+        if len(errors) > 0:
+            file_name = "conflict_offices.txt"
+            with open(file_name, "w") as outp:
+                for x in errors:
+                    outp.write(x + "\n")
+            raise Exception ("there are web sites that are referenced in disclosures offices and declarator offices" +
+                              "we have to office ambiguity. These web sites are written to {}".format(file_name))
 
     def update_from_office_urls(self, offices, logger):
         for o in offices:
