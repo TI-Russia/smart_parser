@@ -19,7 +19,7 @@ import http.server
 import io, gzip, tarfile
 import ipaddress
 import shutil
-
+import glob
 
 def setup_logging(logfilename):
     logger = logging.getLogger("dlrobot_parallel")
@@ -83,6 +83,8 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                             default=True, action="store_false", required=False)
         parser.add_argument("--disable-search-engines", dest="enable_search_engines",
                             default=True, action="store_false", required=False)
+        parser.add_argument("--history-crawl-files-mask", dest="history_crawl_file_mask",
+                            default=None,  required=False)
 
         args = parser.parse_args(arg_list)
         args.central_heart_rate = convert_timeout_to_seconds(args.central_heart_rate)
@@ -114,6 +116,10 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
             os.makedirs(self.args.result_folder)
         if self.args.read_previous_results:
             self.read_prev_dlrobot_remote_calls()
+        if self.args.history_crawl_file_mask is not None:
+            history_files = glob.glob(self.args.history_crawl_file_mask)
+            self.read_history_dlrobot_remote_calls_and_sort_tasks(history_files)
+
         self.logger.debug("there are {} web sites to process".format(len(self.input_web_sites)))
         self.worker_2_running_tasks.clear()
 
@@ -221,6 +227,16 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                 if remote_call.exit_code == 0 and web_site in self.input_web_sites:
                     self.logger.debug("delete {}, since it is already processed".format(web_site))
                     self.input_web_sites.remove(web_site)
+
+    def read_history_dlrobot_remote_calls_and_sort_tasks(self, history_files):
+        history_iteractions = defaultdict(int)
+        for history_file in history_files:
+            self.logger.debug("read {}".format(history_file))
+            calls = TRemoteDlrobotCall.read_remote_calls_from_file(history_file, allow_history_formats=True)
+            for remote_call in calls:
+                web_site = project_file_to_web_site(remote_call.project_file)
+                history_iteractions[web_site] += 1
+        self.input_web_sites.sort(key=lambda x: history_iteractions[x])
 
     def get_running_jobs_count(self):
         return sum(len(w) for w in self.worker_2_running_tasks.values())

@@ -5,7 +5,7 @@ import sys
 
 class TRemoteDlrobotCall:
 
-    def __init__ (self, worker_ip="", project_file="", exit_code=1):
+    def __init__ (self, worker_ip="", project_file="", exit_code=1, allow_history_formats=False):
         self.worker_ip = worker_ip
         self.project_file = project_file
         self.exit_code = exit_code
@@ -15,6 +15,7 @@ class TRemoteDlrobotCall:
         self.result_files_count = 0
         self.worker_host_name = None
         self.reach_status = None
+        self.allow_history_formats = allow_history_formats
 
     def get_website(self):
         website = self.project_file
@@ -36,7 +37,10 @@ class TRemoteDlrobotCall:
         self.project_folder = d['result_folder']
         self.result_files_count = d['result_files_count']
         self.worker_host_name = d['worker_host_name']
-        self.reach_status = d['reach_status']
+        if not self.allow_history_formats:
+            self.reach_status = d['reach_status']
+        else:
+            self.reach_status = d.get('reach_status')
 
     def write_to_json(self):
         return {
@@ -71,14 +75,14 @@ class TRemoteDlrobotCall:
                 pass
 
     @staticmethod
-    def read_remote_calls_from_file(filename):
+    def read_remote_calls_from_file(filename, allow_history_formats=False):
         result = list()
         line_no = 1
         try:
             with open(filename, "r") as inp:
                 for line in inp:
                     line = line.strip()
-                    remote_call = TRemoteDlrobotCall()
+                    remote_call = TRemoteDlrobotCall(allow_history_formats=allow_history_formats)
                     remote_call.read_from_json(line)
                     result.append(remote_call)
                     line_no += 1

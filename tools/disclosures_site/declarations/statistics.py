@@ -66,27 +66,31 @@ class TDisclosuresStatisticsHistory:
                     result.append(stats)
         return result
 
-    def check_statistics(self, prev, curr):
-        def check_sum_metric_increase(values_to_sum):
-            metric_str = "+".join(values_to_sum)
-            sys.stderr.write("check {} increases...\n".format(metric_str))
-            old = sum(prev.metrics[x] for x in values_to_sum)
-            new = sum(curr.metrics[x] for x in values_to_sum)
-            if old > new:
-                raise Exception("metric {} is less than in the last db ({} < {}) ".format(
-                    metric_str, new, old))
-        check_sum_metric_increase(["source_document_count"])
-        check_sum_metric_increase(["sections_count"])
-        check_sum_metric_increase(["person_count"])
-        check_sum_metric_increase(['source_document_only_dlrobot_count', 'source_document_both_found_count'])
-        check_sum_metric_increase(['source_document_only_human_count', 'source_document_both_found_count'])
-        check_sum_metric_increase(["sections_dedupe_score_greater_0"])
+    def check_sum_metric_increase(self, curr_unknown, values_to_sum):
+        last_good = self.get_last()
+        metric_str = "+".join(values_to_sum)
+        sys.stderr.write("check {} increases...\n".format(metric_str))
+        old = sum(last_good.metrics[x] for x in values_to_sum)
+        new = sum(curr_unknown.metrics[x] for x in values_to_sum)
+        if old > new:
+            raise Exception("metric {} is less than in the last db ({} < {}) ".format(
+                metric_str, new, old))
 
-    def add_current_statistics(self, crawl_epoch):
+    def check_statistics(self,  curr):
+        self.check_sum_metric_increase(curr, ["source_document_count"])
+        self.check_sum_metric_increase(curr, ["sections_count"])
+        self.check_sum_metric_increase(curr, ["person_count"])
+        self.check_sum_metric_increase(curr, ['source_document_only_dlrobot_count', 'source_document_both_found_count'])
+        self.check_sum_metric_increase(curr, ['source_document_only_human_count', 'source_document_both_found_count'])
+        self.check_sum_metric_increase(curr, ["sections_dedupe_score_greater_0"])
+
+    @staticmethod
+    def build_current_statistics(crawl_epoch):
         stats = TDisclosuresStatistics(crawl_epoch)
         stats.build()
-        if len(self.history) > 0:
-            self.check_statistics(self.history[-1], stats)
+        return stats
+
+    def add_statistics(self, stats):
         self.history.append(stats)
 
     def write_to_disk(self):
@@ -96,7 +100,8 @@ class TDisclosuresStatisticsHistory:
 
     def get_last(self):
         if len(self.history) == 0:
-            self.add_current_statistics(0)
+            stats = self.build_current_statistics(0)
+            self.add_statistics(stats)
         return self.history[-1]
 
     @staticmethod

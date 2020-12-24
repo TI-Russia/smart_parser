@@ -69,20 +69,35 @@ class TTestEnv:
         self.smart_parser_server = TSmartParserHTTPServer(TSmartParserHTTPServer.parse_args(server_args))
         threading.Thread(target=start_server, args=(self.smart_parser_server,)).start()
 
-    def setup_central(self, enable_smart_parser, web_site, dlrobot_project_timeout=5*60, tries_count=2,
-                      enable_source_doc_server=False):
+    def build_web_sites_file(self, web_site):
         self.input_web_sites_file = os.path.join(self.data_folder, "web_sites.json")
-        with open (self.input_web_sites_file, "w") as outp:
+        with open(self.input_web_sites_file, "w") as outp:
             if web_site is not None:
-                js = {
-                    web_site: {
-                        "events": []
-                    }
-                }
+                if not isinstance(web_site, list):
+                    web_sites = [web_site]
+                else:
+                    web_sites = web_site
+                js = dict()
+                for w in web_sites:
+                    js[w] = {"events": []}
             else:
                 js = {}
             json.dump(js, outp, indent=4, ensure_ascii=False)
 
+    def build_history_file(self, web_site, file_name):
+        with open(file_name, "w") as outp:
+            rec = {"worker_ip": "95.165.96.61",
+                   "project_file": web_site + ".txt",
+                   "exit_code": 0,
+                   "start_time": 1601799469,
+                   "end_time": None,
+                   "result_folder": None,
+                   "result_files_count": 0, "worker_host_name": None}
+            json.dump(rec, outp)
+
+    def setup_central(self, enable_smart_parser, web_site, dlrobot_project_timeout=5*60, tries_count=2,
+                      enable_source_doc_server=False, history_file=None):
+        self.build_web_sites_file(web_site)
         self.result_folder = os.path.join(self.data_folder, "processed_projects")
 
         server_args = [
@@ -99,6 +114,8 @@ class TTestEnv:
             server_args.append('--disable-smart-parser-server')
         if not enable_source_doc_server:
             server_args.append('--disable-source-doc-server')
+        if history_file is not None:
+            server_args.extend(['--history-crawl-files-mask', history_file])
         self.central = TDlrobotHTTPServer(TDlrobotHTTPServer.parse_args(server_args))
         self.central_thread = threading.Thread(target=start_server, args=(self.central,))
         self.central_thread.start()
@@ -343,3 +360,18 @@ class DlrobotWithSmartParserAndSourceDocServer(TestCase):
 
         stats = self.env.source_doc_server.get_stats()
         self.assertEqual(stats['source_doc_count'], 1)
+
+
+class TestHistoryFiles(TestCase):
+    central_port = 8300
+    def setUp(self):
+        self.env = TTestEnv(self.central_port)
+        history_file = os.path.join(self.env.data_folder, "history.txt")
+        self.env.build_history_file("olddomain.ru", history_file)
+        self.env.setup_central(False, ["olddomain.ru", "newdomain.ru"], history_file=history_file)
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def test_task_order(self):
+        self.assertEqual( self.env.central.input_web_sites[0], "newdomain.ru")
