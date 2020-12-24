@@ -61,6 +61,7 @@ class TJoiner:
         self.output_dlrobot_human = TDlrobotHumanFile(args.output_json, read_db=False)
         self.web_sites = TDeclarationWebSites(self.logger)
         self.web_sites.load_from_disk()
+        self.old_files_with_office_count = 0
 
     def add_dlrobot_file(self, sha256, file_extension, web_domain, web_refs=[], decl_refs=[]):
         src_doc = self.output_dlrobot_human.document_collection.get(sha256)
@@ -121,7 +122,10 @@ class TJoiner:
         self.logger.info("read {}".format(self.args.old_dlrobot_human_json))
         old_json = TDlrobotHumanFile(self.args.old_dlrobot_human_json)
         self.logger.info("copy old files ...")
+        self.old_files_with_office_count = 0
         for sha256, src_doc in old_json.document_collection.items():
+            if src_doc.calculated_office_id is not None:
+                self.old_files_with_office_count += 1
             web_site = src_doc.get_web_site()
             if src_doc.document_path_obsolete is not None:
                 web_site = os.path.dirname (src_doc.document_path_obsolete)
@@ -178,10 +182,15 @@ class TJoiner:
                 self.logger.error("website: {}, file {} has no office".format(src_doc.get_web_site(), sha256))
             else:
                 files_count_with_office_id += 1
-        self.logger.error("all files count = {}, files_count_with_office_id = {}".format(
+        self.logger.info("all files count = {}, files_count_with_office_id = {}".format(
                 len(self.output_dlrobot_human.document_collection), files_count_with_office_id))
 
         self.output_dlrobot_human.write()
+
+        if self.old_files_with_office_count > files_count_with_office_id:
+            error = "old db has more files than the new one, stop processing (self.old_files_with_office_count > files_count_with_office_id)"
+            self.logger.error(error)
+            raise Exception(error)
 
 
 if __name__ == '__main__':
