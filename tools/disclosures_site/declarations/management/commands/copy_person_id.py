@@ -9,6 +9,7 @@ import logging
 import pymysql
 import os
 import json
+from django.db import connection
 
 
 def setup_logging(logfilename="copy_person.log"):
@@ -183,6 +184,56 @@ class Command(BaseCommand):
             self.logger.debug("section {} fio={} is ambiguous".format(section.id, section.person_name))
         return False
 
+    def copy_declarator_person_ids_fast(self, section_passports):
+        query = """
+            select s.id, r.declarator_document_id, s.person_name, i.size
+            from declarations_section s
+            join declarations_income i on i.section_id = s.id
+            join declarations_source_document d on s.source_document_id = d.id
+            join declarations_declarator_file_reference r on r.source_document_id = d.id
+            where i.relative = '{}'
+        """.format(models.Relative.main_declarant_code)
+        merge_count = 0
+        with connection.cursor() as cursor:
+            cursor.execute(query)
+            for section_id, declarator_document_id, person_name, main_income in cursor:
+                found_results = list()
+                key1 = build_section_passport(declarator_document_id, person_name, main_income)
+                found_res1 = section_passports.get(key1)
+                if found_res1 is not None:
+                    found_results.append(found_res1)
+                fio = TRussianFio(person_name)
+                if fio.is_resolved:
+                    key2 = build_section_passport(declarator_document_id, fio.family_name, main_income)
+                    found_res2 = section_passports.get(key2)
+                    if found_res2 is not None:
+                        found_results.append(found_res2)
+                if len(found_results) > 0:
+                    success = False
+                    for person_id in found_results:
+                        if person_id != "AMBIGUOUS_KEY":
+                            self.copy_human_merge(models.Section.objects.get(id=section_id), person_id)
+                            success = True
+                            merge_count += 1
+                            break
+                    if not success:
+                        self.logger.debug("section {} fio={} is ambiguous".format(section_id, person_name))
+        self.logger.info("set human person id to {} records".format(merge_count))
+
+    def copy_declarator_person_ids_old_obsolete(self, section_passports):
+        cnt = 0
+        merge_count = 0
+        sections = models.Section.objects
+        if self.options.get('person_name_prefix') is not None:
+            sections = sections.filter(person_name__startswith=self.options['person_name_prefix'])
+        for section in queryset_iterator(sections):
+            cnt += 1
+            if (cnt % 10000) == 0:
+                self.logger.debug("number processed sections = {}".format(cnt))
+            if self.process_section(section, section_passports):
+                merge_count += 1
+        self.logger.info("set human person id to {} records".format(merge_count))
+
     def handle(self, *args, **options):
         self.logger = setup_logging()
         self.options = options
@@ -191,19 +242,8 @@ class Command(BaseCommand):
         self.logger.info("found {} merges in declarator".format(len(section_passports)))
         self.logger.info("stop_elastic_indexing")
         stop_elastic_indexing()
-        cnt = 0
-        merge_count = 0
-        sections = models.Section.objects
-        if options.get('person_name_prefix') is not None:
-            sections = sections.filter(person_name__startswith=options['person_name_prefix'])
-        for section in queryset_iterator(sections):
-            cnt += 1
-            if (cnt % 10000) == 0:
-                self.logger.debug("number processed sections = {}".format(cnt))
-            if self.process_section(section, section_passports):
-                merge_count += 1
-
-        self.logger.info("set human person id to {} records".format(merge_count))
+        #self.copy_declarator_person_ids_old_obsolete(section_passports)
+        self.copy_declarator_person_ids_fast(section_passports)
         self.update_primary_keys()
         self.logger.info("all done")
 

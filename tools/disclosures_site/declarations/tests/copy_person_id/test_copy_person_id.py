@@ -56,7 +56,6 @@ class CopyPersonIdTestCaseBase(TestCase):
         permalinks_path = os.path.join(os.path.dirname(__file__), "permalinks.dbm")
         TPermaLinksDB(permalinks_path).create_and_save_empty_db()
 
-
         copier = CopyPersonIdCommand(None, None)
         copier.handle(None, read_person_from_json=person_ids_path, permanent_links_db=permalinks_path)
 
