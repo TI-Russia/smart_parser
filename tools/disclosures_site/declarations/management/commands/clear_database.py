@@ -1,4 +1,4 @@
-    import declarations.models as models
+import declarations.models as models
 from django.core.management import BaseCommand
 from django.db import connection
 import sys
