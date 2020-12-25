@@ -83,7 +83,7 @@ python3 $TOOLS/disclosures_site/manage.py copy_person_id \
         --settings disclosures.settings.dev \
         --permanent-links-db permalinks.dbm
 
-export DEDUPE_MODEL=~/declarator/transparency/toloka/dedupe_model/dedupe.info
-python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --dedupe-model-file $DEDUPE_MODEL --verbose 3  --threshold 0.9  --write-to-db --settings disclosures.settings.dev --permanent-links-db permalinks.dbm
+export DEDUPE_MODEL=$TOOLS/disclosures_site/deduplicate/model/random_forest.pickle
+python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --ml-model-file $DEDUPE_MODEL  --threshold 0.61 --write-to-db --settings disclosures.settings.dev --permanent-links-db permalinks.dbm
 
 python3 $TOOLS/disclosures_site/manage.py search_index --rebuild  --settings disclosures.settings.dev -f

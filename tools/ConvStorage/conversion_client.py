@@ -1,3 +1,6 @@
+from common.archives import TDearchiver
+from common.content_types import DEFAULT_PDF_EXTENSION
+
 import time
 import http.client
 import logging
@@ -8,8 +11,6 @@ import hashlib
 import os
 import queue
 import json
-from common.archives import TDearchiver
-from common.content_types import DEFAULT_PDF_EXTENSION
 from tempfile import TemporaryDirectory
 from pathlib import Path
 
@@ -93,6 +94,10 @@ class TDocConversionClient(object):
         except http.client.HTTPException as exp:
             self.logger.error("got exception {} in _register_task ".format(str(exp)))
             return False
+        except TimeoutError as exp:
+            self.logger.error("got exception {} in check_file_was_converted, timeout={} ".format(
+                str(exp), self.default_http_timeout))
+            return False
 
     def _send_file_to_conversion_db(self, filename, file_extension, rebuild):
         with open(filename, "rb") as f:
@@ -137,6 +142,10 @@ class TDocConversionClient(object):
         except http.client.HTTPException as exp:
             self.logger.error("got exception {} in check_file_was_converted ".format(str(exp)))
             return False
+        except TimeoutError as exp:
+            self.logger.error("got exception {} in check_file_was_converted, timeout={} ".format(
+                str(exp), self.default_http_timeout))
+            return False
 
     def get_stats(self):
         data = None
@@ -151,6 +160,10 @@ class TDocConversionClient(object):
             if data is not None:
                 message += "; conversion server answer was {}".format(data)
             self.logger.error(message)
+            return None
+        except TimeoutError as exp:
+            self.logger.error("got exception {} in check_file_was_converted, timeout={} ".format(
+                str(exp), self.default_http_timeout))
             return None
 
     def get_pending_all_file_size(self):
@@ -172,6 +185,10 @@ class TDocConversionClient(object):
                 return False
         except http.client.HTTPException as exp:
             self.logger.error("got exception {} in retrieve_document ".format(str(exp)))
+            return False
+        except TimeoutError as exp:
+            self.logger.error("got exception {} in check_file_was_converted, timeout={} ".format(
+                str(exp), self.default_http_timeout))
             return False
 
     def start_conversion_task_if_needed(self, filename, file_extension, rebuild=False):

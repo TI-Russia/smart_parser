@@ -4,7 +4,6 @@ import declarations.models as models
 from .random_forest_adapter import TDeduplicationObject, TFioClustering, TMLModel
 
 import logging
-from datetime import datetime
 from django.core.management import BaseCommand
 import sys
 import json
@@ -108,7 +107,6 @@ class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
         self.ml_model = None
-        self.dedupe_objects = None
         self.options = None
         self.logger = None
         self.primary_keys_builder = None
@@ -195,7 +193,7 @@ class Command(BaseCommand):
                 yield o
 
     def fill_dedupe_data(self, lower_bound, upper_bound):
-        self.dedupe_objects = {}
+        self.cluster_by_minimal_fio = defaultdict(list)
 
         input_dump_file = self.options.get("input_dedupe_objects")
         if input_dump_file is not None:
@@ -226,8 +224,10 @@ class Command(BaseCommand):
                     obj.person_name,
                     min(obj.years)))
 
-    @staticmethod
-    def link_section_to_person(section, person, dedupe_score):
+    def link_section_to_person(self, section, person, dedupe_score):
+        if section.person_id == person.id:
+            #dedupe score is not set to these records, they are from declarator
+            return
         section.person_id = person.id
         section.dedupe_score = dedupe_score
         section.save()
@@ -245,7 +245,6 @@ class Command(BaseCommand):
             self.link_section_to_person(section, person, 1.0 - distance)
 
     def write_results_to_db(self, clusters):
-        self.logger.info('write {} clusters to db'.format(len(clusters)))
         for cluster_id, items in clusters.items():
             self.logger.debug("process cluster {}".format(cluster_id))
             person_ids = set()
@@ -294,17 +293,19 @@ class Command(BaseCommand):
             c[0] = [(i, 0.5) for i in self.get_all_leaf_objects()]
             yield c
         else:
-            self.logger.info('Clustering objects with threshold={}.'.format(self.threshold))
+            all_objects_count = sum(len(v) for v in self.cluster_by_minimal_fio.values())
+            self.logger.info('Clustering {} objects with threshold={}, len(self.cluster_by_minimal_fio) = {}'.format(
+                all_objects_count, self.threshold, len(self.cluster_by_minimal_fio)))
             for c in self.cluster_sections():
                 yield c
 
     def handle(self, *args, **options):
         self.init_options(options)
-        self.logger.info('Started at: {}'.format(datetime.now()))
         if options.get('print_family_prefixes'):
             for lower_bound, upper_bound in self.get_family_name_bounds():
                 sys.stdout.write("{},{}\n".format(lower_bound, upper_bound))
             return
+        self.logger.info('surname bounds are {}'.format(options.get('surname_bounds', "")))
         stop_elastic_indexing()
         self.load_dedupe_model()
         dump_stream = None
@@ -314,7 +315,7 @@ class Command(BaseCommand):
             self.logger.debug('write result pairs to {}\n'.format(dump_file_name))
 
         for lower_bound, upper_bound in self.get_family_name_bounds():
-            self.logger.debug("lower_bound={}, upper_bound={}".format(lower_bound, upper_bound))
+            self.logger.info("lower_bound={}, upper_bound={}".format(lower_bound, upper_bound))
             self.fill_dedupe_data(lower_bound, upper_bound)
             for clusters_for_one_fio in self.cluster_sections_by_minimal_fio():
                 if dump_stream is not None:

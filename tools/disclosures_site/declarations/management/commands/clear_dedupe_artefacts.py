@@ -5,7 +5,6 @@ from declarations.management.commands.permalinks import TPermaLinksDB
 import declarations.models as models
 
 
-
 class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
@@ -38,8 +37,9 @@ class Command(BaseCommand):
                 primary_keys_builder = TPermaLinksDB(options['permanent_links_db'])
                 primary_keys_builder.open_db_read_only()
                 primary_keys_builder.recreate_auto_increment_table(models.Person)
-
-                self.run_sql(cursor, "delete from declarations_person where id in (select person_id from declarations_section where dedupe_score > 0)");
+                sys.stdout.write("person count = {}\n".format(models.Person.objects.count()))
+                self.run_sql(cursor, "delete from declarations_person where id in (select person_id from declarations_section where dedupe_score > 0)")
+                sys.stdout.write("person count = {}\n".format( models.Person.objects.count()))
                 self.run_sql(cursor, "update declarations_section set person_id=null where dedupe_score > 0;")
                 self.run_sql(cursor, "update declarations_section set dedupe_score = 0;")
 
