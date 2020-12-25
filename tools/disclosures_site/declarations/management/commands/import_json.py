@@ -16,6 +16,7 @@ from collections import defaultdict
 from django.core.management import BaseCommand
 from django.db import transaction
 from django.db import DatabaseError
+import gc
 
 
 def setup_logging(logfilename):
@@ -196,10 +197,11 @@ class TImporter:
                     TImporter.logger.error("Error! cannot import smart parser json for file {}: {} ".format(sha256, exp))
 
 
-def process_one_file_in_thread(importer: TImporter, office_id):
+def process_one_file_in_subprocess(importer: TImporter, office_id):
     importer.init_after_fork()
     try:
         importer.import_office(office_id)
+        gc.collect()
     except TSmartParserJsonReader.SerializerException as exp:
         TImporter.logger.error("cannot import office {}, exception: {}".format(office_id), exp)
 
@@ -251,7 +253,7 @@ class ImportJsonCommand(BaseCommand):
         if options.get('process_count', 0) > 1:
             importer.delete_before_fork()
             pool = Pool(processes=options.get('process_count'))
-            pool.map(partial(process_one_file_in_thread, importer), importer.office_to_source_documents.keys())
+            pool.map(partial(process_one_file_in_subprocess, importer), importer.office_to_source_documents.keys())
             importer.init_after_fork()
         else:
             importer.init_non_pickable()

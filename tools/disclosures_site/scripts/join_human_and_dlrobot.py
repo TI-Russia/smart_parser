@@ -63,15 +63,12 @@ class TJoiner:
         self.web_sites.load_from_disk()
         self.old_files_with_office_count = 0
 
-    def add_dlrobot_file(self, sha256, file_extension, web_domain, web_refs=[], decl_refs=[]):
+    def add_dlrobot_file(self, sha256, file_extension, web_refs=[], decl_refs=[]):
         src_doc = self.output_dlrobot_human.document_collection.get(sha256)
         if src_doc is None:
             src_doc = TSourceDocument()
             src_doc.file_extension = file_extension
             self.output_dlrobot_human.document_collection[sha256] = src_doc
-        else:
-            self.logger.debug("a file copy ({}) found in web domain {}".format(sha256, web_domain))
-
         for web_ref in web_refs:
             src_doc.add_web_reference(web_ref)
         for decl_ref in decl_refs:
@@ -108,7 +105,7 @@ class TJoiner:
                 crawl_epoch=self.args.max_ctime,
                 web_domain=web_domain
             )
-            self.add_dlrobot_file(sha256, file_info.file_extension, web_domain, [web_ref])
+            self.add_dlrobot_file(sha256, file_info.file_extension, [web_ref])
 
     def add_new_dlrobot_files(self):
         self.logger.info("copy dlrobot files from {} ...".format(self.args.input_dlrobot_folder))
@@ -126,13 +123,8 @@ class TJoiner:
         for sha256, src_doc in old_json.document_collection.items():
             if src_doc.calculated_office_id is not None:
                 self.old_files_with_office_count += 1
-            web_site = src_doc.get_web_site()
-            if src_doc.document_path_obsolete is not None:
-                web_site = os.path.dirname (src_doc.document_path_obsolete)
-            for web_ref in src_doc.web_references:
-                web_ref.web_domain = web_site
-            self.add_dlrobot_file(sha256, src_doc.file_extension, web_site,
-                                  web_refs= src_doc.web_references, decl_refs=src_doc.decl_references)
+            self.add_dlrobot_file(sha256, src_doc.file_extension,
+                                  web_refs=src_doc.web_references, decl_refs=src_doc.decl_references)
         self.logger.info("Database Document Count: {}".format(self.output_dlrobot_human.get_documents_count()))
 
     def add_human_files(self):
@@ -140,11 +132,7 @@ class TJoiner:
         human_files = TDlrobotHumanFile(self.args.human_json)
         self.logger.info("add human files ...")
         for sha256, src_doc in human_files.document_collection.items():
-            decl_ref = src_doc.decl_references[0]
-            web_site = decl_ref.web_domain
-            if web_site == "" or web_site is None:
-                web_site = "unknown_domain"
-            self.add_dlrobot_file(sha256, src_doc.file_extension, web_site, decl_refs=src_doc.decl_references)
+            self.add_dlrobot_file(sha256, src_doc.file_extension, decl_refs=src_doc.decl_references)
         self.logger.info("Database Document Count: {}".format(self.output_dlrobot_human.get_documents_count()))
 
     def calc_office_id(self):

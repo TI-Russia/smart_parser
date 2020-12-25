@@ -72,7 +72,7 @@ source $(dirname $0)/update_common.sh
                --permanent-links-db permalinks.dbm
 
    python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric source_document_count  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
-   python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric section_count  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
+   python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric sections_count  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
 
    python3 $TOOLS/disclosures_site/manage.py copy_person_id \
         --settings disclosures.settings.dev \
