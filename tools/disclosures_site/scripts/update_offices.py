@@ -1,10 +1,10 @@
 from disclosures_site.declarations.web_sites import TDeclarationWebSites, TDeclarationWebSite
 from common.primitives import get_site_domain_wo_www
+from declarations.russian_regions import TRussianRegions
 
 import json
 import argparse
 import os
-import gzip
 import pymysql
 import logging
 from operator import itemgetter
@@ -39,7 +39,7 @@ class TOfficeJoiner:
         self.args = args
         self.logger = setup_logging()
         self.logger.debug("start joining")
-
+        self.regions = TRussianRegions()
         self.region_name_to_id = None
         self.website_to_most_freq_office = None
         self.offices_file_path = os.path.join(os.path.dirname(__file__), "../data/offices.txt")
@@ -110,14 +110,6 @@ class TOfficeJoiner:
 
         self.logger.debug("found {} new  offices in  declarator".format(new_offices_count))
 
-    def read_regions(self):
-        file_path = os.path.join(os.path.dirname(__file__), "../data/regions.txt.gz")
-        with gzip.open(file_path) as inp:
-            regions = json.load(inp)
-
-            self.region_name_to_id = dict ((r['name'].lower().strip('*'), r['id']) for r in regions)
-            self.logger.debug("read {} regions from {}".format(len(self.region_name_to_id), file_path))
-
     def read_fgup(self):
         file_path = os.path.join(os.path.dirname(__file__), "../data/fgup.txt")
         fgup = dict()
@@ -126,7 +118,7 @@ class TOfficeJoiner:
                 (name, region, web_site) = line.strip().split("\t")
                 fgup[web_site] =  {
                     "name": name,
-                    "region_id": self.region_name_to_id[region.lower()],
+                    "region_id": self.regions.get_region_by_str(region.lower()).id,
                     'type_id': None,
                     'parent_id': None
                     }
@@ -141,26 +133,9 @@ class TOfficeJoiner:
 
         for court in courts:
             web_site = get_site_domain_wo_www(court['link'])
-            region = court['region'].lower()
-            if region.startswith('город '):
-                region = region[6:].strip()
-
-            if region == "территории за пределами рф":
-                region_id = None
-            elif region.find('якутия') != -1:
-                region_id = 92
-            elif region.find('ханты') != -1:
-                region_id = 108
-            elif region.find('алания') != -1:
-                region_id = 17
-            elif region.find(' тыва') != -1:
-                region_id = 85
-            else:
-                region_id = self.region_name_to_id[region]
-
             output_courts[web_site] = {
                 "name": court['name'],
-                "region_id": region_id,
+                "region_id": self.regions.get_region_by_str(court['region']),
                 'type_id': None,
                 'parent_id': None
                 }
@@ -226,7 +201,6 @@ class TOfficeJoiner:
     def build_offices_and_web_sites (self):
         args = parse_args()
         self.read_offices()
-        self.read_regions()
 
         self.logger.info("update_offices_from_declarator")
         self.update_offices_from_declarator()

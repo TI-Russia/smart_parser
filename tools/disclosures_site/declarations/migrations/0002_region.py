@@ -1,5 +1,7 @@
 from django.db import migrations, models
 from declarations.models import SynonymClass
+from declarations.russian_regions import TRussianRegions
+
 import gzip
 import json
 import os
@@ -9,23 +11,21 @@ def add_regions(apps, schema_editor):
     clear_regions(apps, schema_editor)
     Region = apps.get_model('declarations', 'Region')
     RegionSynonyms = apps.get_model('declarations', 'Region_Synonyms')
-    filepath = os.path.join(os.path.dirname(__file__), "../../data/regions.txt.gz")
-    with gzip.open(filepath) as inp:
-        regions = json.load(inp)
-    for r in regions:
+    regions = TRussianRegions()
+    for r in regions.regions:
         rec = Region(
-            id=r['id'],
-            name=r['name']
+            id=r.id,
+            name=r.name
         )
         rec.save()
 
         synonyms = {
-            r["short_name"]: SynonymClass.RussianShort,
-            r["extra_short_name"]: SynonymClass.RussianShort,
-            r["short_name_en"]: SynonymClass.EnglishShort,
-            r["extra_short_name_en"]: SynonymClass.EnglishShort,
-            r["name_en"]: SynonymClass.English,
-            r['name']: SynonymClass.Russian, # it  should be the last line in this dict, since r['name'] can be equal to r["short_name"]
+            r.short_name: SynonymClass.RussianShort,
+            r.extra_short_name: SynonymClass.RussianShort,
+            r.short_name_en: SynonymClass.EnglishShort,
+            r.extra_short_name_en: SynonymClass.EnglishShort,
+            r.name_en: SynonymClass.English,
+            r.name: SynonymClass.Russian, # it  should be the last line in this dict, since r['name'] can be equal to r["short_name"]
         }
 
         for k, v in synonyms.items():
