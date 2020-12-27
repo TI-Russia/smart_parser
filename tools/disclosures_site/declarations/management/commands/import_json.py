@@ -65,7 +65,7 @@ class TImporter:
         self.office_to_source_documents = self.build_office_to_file_mapping()
         self.primary_keys_builder = TPermaLinksDB(args['permanent_links_db'])
         self.primary_keys_builder.open_db_read_only()
-        self.first_new_section_id = self.primary_keys_builder.get_first_new_primary_key(models.Section)
+        self.first_new_section_id_for_print = self.primary_keys_builder.get_max_plus_one_primary_key_from_the_old_db(models.Section)
         self.smart_parser_cache_client = None
 
     def delete_before_fork(self):
@@ -145,7 +145,7 @@ class TImporter:
                     if self.register_section_passport(passport):
                         json_reader.section.tmp_income_set = json_reader.incomes
                         section_id = self.primary_keys_builder.get_record_id(json_reader.section)
-                        if section_id >= self.first_new_section_id:
+                        if section_id >= self.first_new_section_id_for_print:
                             passports = list(json_reader.section.permalink_passports())
                             TImporter.logger.debug("found a new section {}, set section.id to {}".format(
                                 passports[0], section_id))

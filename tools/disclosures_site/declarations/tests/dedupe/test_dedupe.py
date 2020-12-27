@@ -36,8 +36,10 @@ class CreateNewPersonId(TestCase):
                           rebuild=True)
 
         self.assertEqual(models.Person.objects.count(), 1)
+        self.assertEqual(TPermaLinksDB(permalinks_path).get_new_max_id(models.Person), 1)
         person = models.Section.objects.get(id=1)
         self.assertEqual(person.person_name, "Иванов Иван Иванович")
+
 
         sec1 = models.Section.objects.get(id=1)
         self.assertEqual(sec1.person_id, 1)
@@ -64,7 +66,7 @@ class UseOldPersonId(TestCase):
             os.unlink(permalinks_path)
         p = TPermaLinksDB(permalinks_path)
         p.create_db()
-        p.save_next_primary_key_value(models.Person, 3)
+        p.save_max_plus_one_primary_key(models.Person, 3)
         p.create_sql_sequences()
         p.close_db()
 
@@ -98,7 +100,7 @@ class RememberOldPersonId(TestCase):
         person = models.Person(id=99)
         person.tmp_section_set = {str(1), str(2)}
         db.put_record_id(person)
-        db.save_next_primary_key_value(models.Person, 100)
+        db.save_max_plus_one_primary_key(models.Person, 100)
         db.create_sql_sequences()
         db.close_db()
         time.sleep(1)

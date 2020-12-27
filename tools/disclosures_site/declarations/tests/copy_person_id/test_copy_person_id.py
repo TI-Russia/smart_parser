@@ -64,6 +64,8 @@ class CopyPersonIdTestCaseBase(TestCase):
             self.assertEqual(section1.person, None)
         else:
             self.assertEqual(models.Person.objects.count(), 1)
+            primary_key_db = TPermaLinksDB(permalinks_path)
+            self.assertEqual(primary_key_db.get_new_max_id(models.Person), 1)
             self.assertEqual(section1.person.declarator_person_id, declarator_person_id)
 
 

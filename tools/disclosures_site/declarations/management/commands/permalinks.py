@@ -3,7 +3,6 @@ import declarations.models as models
 import dbm.gnu
 import os
 from django.db import connection
-import sys
 
 
 class TPermaLinksDB:
@@ -14,19 +13,36 @@ class TPermaLinksDB:
         self.db = None
         self.access_mode = None
 
+    @staticmethod
     def get_auto_increment_table_name(self, model):
         return model.objects.model._meta.db_table + "_auto_increment"
 
-    def get_first_new_primary_key(self, model):
+    # stores the next primary key value from the old database
+    # this value is updated only in command create_permalinks_storage
+    def save_max_plus_one_primary_key(self, model_type, next_value):
+        assert model_type in self.models
+        self.db[str(model_type)] = str(next_value)
+
+    def get_max_plus_one_primary_key_from_the_old_db(self, model):
         return int(self.db.get(str(model)).decode('utf8'))
 
     def recreate_auto_increment_table(self, model):
-        start_from = self.get_first_new_primary_key(model)
+        start_from = self.get_max_plus_one_primary_key_from_the_old_db(model)
         auto_increment_table = self.get_auto_increment_table_name(model)
         with connection.cursor() as cursor:
             cursor.execute("drop table if exists {}".format(auto_increment_table))
             cursor.execute("create table {} (id int auto_increment, PRIMARY KEY (id))".format(auto_increment_table))
             cursor.execute("alter table {} auto_increment = {}".format(auto_increment_table, start_from))
+
+    def get_new_max_id(self, model):
+        auto_increment_table = self.get_auto_increment_table_name(model)
+        with connection.cursor() as cursor:
+            cursor.execute("select max(id) from {};".format(auto_increment_table))
+            for m, in cursor:
+                if m is None:
+                    return m
+                else:
+                    return int(m)
 
     def sync_db(self):
         self.db.sync()
@@ -60,11 +76,7 @@ class TPermaLinksDB:
         self.access_mode = "cf"
         self.db = dbm.gnu.open(self.filename, self.access_mode)
         for typ in self.models:
-            self.save_next_primary_key_value(typ, 0)
-
-    def save_next_primary_key_value(self, model_type, next_value):
-        assert model_type in self.models
-        self.db[str(model_type)] = str(next_value)
+            self.save_max_plus_one_primary_key(typ, 0)
 
     def get_record_id(self, django_db_model):
         assert type(django_db_model) in self.models
@@ -76,27 +88,12 @@ class TPermaLinksDB:
         with connection.cursor() as cursor:
             cursor.execute("insert into {} (id) values (null);".format(auto_increment_table))
             record_id = cursor.lastrowid
+
         return int(record_id)
 
-    def put_record_id(self, django_db_model):
-        for passport in django_db_model.permalink_passports():
-            self.db[passport] = str(django_db_model.id)
-
-    def update_person_records_count_and_close(self):
-        self.db = dbm.gnu.open(self.filename, "wf")
-        with connection.cursor() as cursor:
-            cursor.execute("select max(id) m from declarations_person;")
-            old_value = self.get_first_new_primary_key(models.Person)
-            if old_value is None:
-                old_value = 0                
-            new_value = cursor.fetchone()[0]
-            if new_value is None:
-                new_value = 0                
-            if new_value > old_value:
-                sys.stderr.write("person old next primary key = {}, new one = {}\n".format(old_value, new_value))
-                self.save_next_primary_key_value(models.Person, new_value)
-            self.recreate_auto_increment_table(models.Person)
-        self.close_db()
+    def put_record_id(self, record):
+        for passport in record.permalink_passports():
+            self.db[passport] = str(record.id)
 
     def create_and_save_empty_db(self):
         self.create_db()

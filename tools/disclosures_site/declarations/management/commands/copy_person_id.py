@@ -1,7 +1,6 @@
 import declarations.models as models
 from declarations.documents import stop_elastic_indexing
 from django.core.management import BaseCommand
-from common.primitives import queryset_iterator
 from declarations.management.commands.permalinks import TPermaLinksDB
 from declarations.russian_fio import TRussianFio
 
@@ -118,10 +117,6 @@ class Command(BaseCommand):
         self.primary_keys_builder = TPermaLinksDB(self.options['permanent_links_db'])
         self.primary_keys_builder.open_db_read_only()
 
-    def update_primary_keys(self):
-        self.primary_keys_builder.close_db()
-        self.primary_keys_builder.update_person_records_count_and_close()
-
     def build_passport_to_person_id_mapping_from_declarator(self):
         if self.options.get('read_person_from_json') is not None:
             with open(self.options.get('read_person_from_json'), "r", encoding="utf8") as inpf:
@@ -220,31 +215,17 @@ class Command(BaseCommand):
                         self.logger.debug("section {} fio={} is ambiguous".format(section_id, person_name))
         self.logger.info("set human person id to {} records".format(merge_count))
 
-    def copy_declarator_person_ids_old_obsolete(self, section_passports):
-        cnt = 0
-        merge_count = 0
-        sections = models.Section.objects
-        if self.options.get('person_name_prefix') is not None:
-            sections = sections.filter(person_name__startswith=self.options['person_name_prefix'])
-        for section in queryset_iterator(sections):
-            cnt += 1
-            if (cnt % 10000) == 0:
-                self.logger.debug("number processed sections = {}".format(cnt))
-            if self.process_section(section, section_passports):
-                merge_count += 1
-        self.logger.info("set human person id to {} records".format(merge_count))
-
     def handle(self, *args, **options):
         self.logger = setup_logging()
         self.options = options
         self.open_permalinks_db()
+        assert models.Person.objects.count() == 0
         section_passports = self.build_passport_to_person_id_mapping_from_declarator()
         self.logger.info("found {} merges in declarator".format(len(section_passports)))
         self.logger.info("stop_elastic_indexing")
         stop_elastic_indexing()
-        #self.copy_declarator_person_ids_old_obsolete(section_passports)
         self.copy_declarator_person_ids_fast(section_passports)
-        self.update_primary_keys()
+        self.primary_keys_builder.close_db()
         self.logger.info("all done")
 
 CopyPersonIdCommand=Command

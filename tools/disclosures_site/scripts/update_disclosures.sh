@@ -64,6 +64,8 @@ source $(dirname $0)/update_common.sh
 
 #10  Импорт json в dislosures_db (может быть, стоит запускать в 2 потока, а то памяти на мигалке не хватает)
    python3 $TOOLS/disclosures_site/manage.py clear_database --settings disclosures.settings.dev
+
+   #15 hours
    python3 $TOOLS/disclosures_site/manage.py import_json \
                --settings disclosures.settings.dev \
                --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER \
@@ -74,16 +76,23 @@ source $(dirname $0)/update_common.sh
    python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric source_document_count  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
    python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric sections_count  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
 
-   python3 $TOOLS/disclosures_site/manage.py copy_person_id \
-        --settings disclosures.settings.dev \
-        --permanent-links-db permalinks.dbm
+
+#11 создание surname_rank
+python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclosures.settings.dev
 
 
-#11.  запуск сливалки, 4 gb memory each family portion, 30 GB temp files, no more than one process per workstation
+#12.  запуск сливалки, 4 gb memory each family portion, 30 GB temp files, no more than one process per workstation
+   #optional, clear person table
+   python3 $TOOLS/disclosures_site/manage.py clear_dedupe_artefacts --settings disclosures.settings.dev
+
+   #1 hour
+   python3 $TOOLS/disclosures_site/manage.py copy_person_id --settings disclosures.settings.dev --permanent-links-db permalinks.dbm
+
    python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs  --print-family-prefixes   --permanent-links-db $DLROBOT_FOLDER/permalinks.dbm --settings disclosures.settings.dev > surname_spans.txt
-   python3 $TOOLS/disclosures_site/manage.py clear_dedupe_artefacts --settings disclosures.settings.dev --permanent-links-db $DLROBOT_FOLDER/permalinks.dbm
    echo $DEDUPE_HOSTS_SPACES | tr " " "\n"  | xargs  --verbose -P 4 -I {} -n 1 scp $DLROBOT_FOLDER/permalinks.dbm {}:/tmp
    echo $DEDUPE_HOSTS_SPACES | tr " " "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/git_update_cloud_worker.py --action stop --host
+
+   #18 hours
    parallel -a surname_spans.txt --jobs 2 --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $DEDUPE_HOSTS --basefile $DEDUPE_MODEL  --verbose --workdir /tmp \
         python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --permanent-links-db /tmp/permalinks.dbm --ml-model-file $DEDUPE_MODEL  \
                 --threshold 0.61  --surname-bounds {} --write-to-db --settings disclosures.settings.dev --logfile dedupe.{}.log
@@ -105,8 +114,6 @@ source $(dirname $0)/update_common.sh
    } &
    ELASTIC_PID=$!
 
-#15 создание surname_rank
-python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclosures.settings.dev
 
 #16 создание дампа базы
  cd $DLROBOT_FOLDER
