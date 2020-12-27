@@ -11,19 +11,21 @@ import scipy.stats
 
 
 class TRegionStats:
-    def  __init__(self, region_id, region_name, declarant_incomes, citizen_month_median_income):
+    def  __init__(self, region_id, region_name, declarant_incomes, citizen_month_median_income, population):
         self.region_id = region_id
         self.region_name = region_name
         self.declarant_month_median_income = int(median(declarant_incomes) / 12)
         self.declarant_count = len(declarant_incomes)
         self.citizen_month_median_income = citizen_month_median_income
+        self.population = population
 
     def to_json(self):
         return {
             'region' : self.region_name,
             'declarant_month_median_income': self.declarant_month_median_income,
             'declarant_count': self.declarant_count,
-            'citizen_month_median_income': self.citizen_month_median_income
+            'citizen_month_median_income': self.citizen_month_median_income,
+            'population': self.population
         }
 
 
@@ -42,7 +44,7 @@ class Command(BaseCommand):
             type=int,
         )
 
-    def build_declarant_incomes(self, year, incomes_all_citizen, max_income=5000000):
+    def build_declarant_incomes(self, year, incomes_all_citizen, population, max_income=5000000):
         minOboronyId =  450
         query = """
             select o.region_id, i.size 
@@ -64,12 +66,14 @@ class Command(BaseCommand):
             for region_id, items in groupby(cursor, itemgetter(0)):
                 incomes = list(income for _, income in items )
                 region_name = regions.get(region_id, "")
-                s = TRegionStats(region_id, region_name, incomes, incomes_all_citizen.get(region_id))
+                s = TRegionStats(region_id, region_name, incomes,
+                                 incomes_all_citizen.get(region_id), population.get(region_id))
                 region_stats.append(s)
         return region_stats
 
-    def read_russian_median_income(self, year_to_read):
-        filepath = os.path.join(os.path.dirname(__file__), "../../../data/median_income.csv")
+    #rea csv from https://russia.duck.consulting
+    def read_russia_duck_consulting_csv(self, basename, year_to_read):
+        filepath = os.path.join(os.path.dirname(__file__), "../../../data/", basename)
         incomes_all_citizen = dict()
         with open(filepath, "r") as inp:
             for line in inp:
@@ -126,7 +130,9 @@ class Command(BaseCommand):
                 r.declarant_month_median_income,
                 r.citizen_month_median_income,
                 round(r.declarant_month_median_income / r.citizen_month_median_income, 2),
-                r.declarant_count))
+                r.declarant_count,
+                r.population,
+                int(r.population / r.declarant_count)))
 
         basename = "region_income_report_{}".format(year)
         with open(os.path.join(report_folder, basename + ".csv"), "w") as outp:
@@ -163,10 +169,13 @@ class Command(BaseCommand):
     <th>Медианная зарплата работающих граждан</th>
     <th>Отношение дохода чиновника к зарплате граждан</th>
     <th>Кол-во учтенных деклараций</th>
+    <th>Население</th>
+    <th>Население/Кол-во учтенных деклараций</th>
   </tr>
                        """.format(year, year))
             for r in data:
-                outp.write("<tr><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td><td>{}</td></tr>\n".format(*r))
+                td_s = ("<td>{}</td>"*len(r)).format(*r)
+                outp.write("<tr>{}</tr>\n".format(td_s))
             outp.write("""
 </table>
 <br/>
@@ -183,8 +192,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.options = options
         year = self.options['year']
-        incomes_all_citizen = self.read_russian_median_income(year)
-        region_stats =  self.build_declarant_incomes(year, incomes_all_citizen)
+        incomes_all_citizen = self.read_russia_duck_consulting_csv("median_income.csv", year)
+        population = self.read_russia_duck_consulting_csv("russia_population.csv", year)
+        region_stats = self.build_declarant_incomes(year, incomes_all_citizen, population )
         #self.print_regions_stats(region_stats)
         self.build_html_by_regions_stats(year, region_stats)
         self.print_pearson_corr(region_stats)
