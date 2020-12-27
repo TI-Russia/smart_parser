@@ -14,7 +14,7 @@ class TPermaLinksDB:
         self.access_mode = None
 
     @staticmethod
-    def get_auto_increment_table_name(self, model):
+    def get_auto_increment_table_name(model):
         return model.objects.model._meta.db_table + "_auto_increment"
 
     # stores the next primary key value from the old database
@@ -28,14 +28,14 @@ class TPermaLinksDB:
 
     def recreate_auto_increment_table(self, model):
         start_from = self.get_max_plus_one_primary_key_from_the_old_db(model)
-        auto_increment_table = self.get_auto_increment_table_name(model)
+        auto_increment_table = TPermaLinksDB.get_auto_increment_table_name(model)
         with connection.cursor() as cursor:
             cursor.execute("drop table if exists {}".format(auto_increment_table))
             cursor.execute("create table {} (id int auto_increment, PRIMARY KEY (id))".format(auto_increment_table))
             cursor.execute("alter table {} auto_increment = {}".format(auto_increment_table, start_from))
 
     def get_new_max_id(self, model):
-        auto_increment_table = self.get_auto_increment_table_name(model)
+        auto_increment_table = TPermaLinksDB.get_auto_increment_table_name(model)
         with connection.cursor() as cursor:
             cursor.execute("select max(id) from {};".format(auto_increment_table))
             for m, in cursor:
@@ -84,7 +84,7 @@ class TPermaLinksDB:
             old_id = self.db.get(passport)
             if old_id is not None:
                 return int(old_id)
-        auto_increment_table = self.get_auto_increment_table_name(type(django_db_model))
+        auto_increment_table = TPermaLinksDB.get_auto_increment_table_name(type(django_db_model))
         with connection.cursor() as cursor:
             cursor.execute("insert into {} (id) values (null);".format(auto_increment_table))
             record_id = cursor.lastrowid

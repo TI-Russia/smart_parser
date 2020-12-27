@@ -250,10 +250,10 @@ class Command(BaseCommand):
             person_ids = set()
             section_ids = set()
             for obj, distance in items:
-                if obj.record_id[1] == TDeduplicationObject.PERSON:
-                    person_ids.add((obj.record_id[0], distance))
+                if obj.record_id.source_table == TDeduplicationObject.PERSON:
+                    person_ids.add((obj.record_id.id, distance))
                 else:
-                    section_ids.add((obj.record_id[0], distance))
+                    section_ids.add((obj.record_id.id, distance))
             if len(person_ids) == 0:
                 self.link_sections_to_a_new_person(section_ids)
             elif len(person_ids) == 1:

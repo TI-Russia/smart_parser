@@ -2,6 +2,7 @@ from django.core.management import BaseCommand
 from django.db import connection
 import sys
 
+
 class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)

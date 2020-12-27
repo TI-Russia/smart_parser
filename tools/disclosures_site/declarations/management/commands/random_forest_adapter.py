@@ -7,7 +7,7 @@ import sys
 from unidecode import unidecode
 from scipy.cluster.hierarchy import linkage, fcluster
 from scipy.spatial.distance import squareform
-from collections import defaultdict
+from collections import defaultdict, namedtuple
 import pickle
 
 
@@ -52,6 +52,8 @@ def average(num):
     return sum(num) / ( len(num) + 0.0000001)
 
 
+TDeduplicationRecordId = namedtuple('TDeduplicationRecordId', ['id', 'source_table'])
+
 class TDeduplicationObject:
     INCOMPATIBLE_FIO_WEIGHT = 10000
     PERSON = "p"
@@ -72,13 +74,15 @@ class TDeduplicationObject:
         self.vehicles = set()
         self.official_position_words = set()
         self.regions = set()
+        self.db_section_person_id = None
 
     def set_person_name(self, person_name):
         self.person_name = person_name
         self.fio = TRussianFio(person_name)
 
-    def initialize(self, record_id, person_name, realty_squares, surname_rank, name_rank, rubrics, offices,
-                    children_real_estates, average_income, years, vehicles, official_position_words, regions):
+    def initialize(self, record_id: TDeduplicationRecordId, person_name, realty_squares, surname_rank, name_rank, rubrics, offices,
+                    children_real_estates, average_income, years, vehicles, official_position_words, regions,
+                   db_section_person_id=None):
         self.record_id = record_id
         self.set_person_name(person_name)
         self.realty_squares = set(realty_squares)
@@ -92,11 +96,13 @@ class TDeduplicationObject:
         self.vehicles = vehicles
         self.official_position_words = official_position_words
         self.regions = regions
+
+        self.db_section_person_id = db_section_person_id
         return self
 
     def initialize_from_section(self, section):
         return self.initialize(
-            (section.id, self.SECTION),
+            TDeduplicationRecordId(section.id, self.SECTION),
             section.person_name,
             all_realty_squares(section),
             section.get_surname_rank(),
@@ -138,7 +144,7 @@ class TDeduplicationObject:
             regions.add(s.source_document.office.region_id)
 
         return self.initialize(
-                (person.id, self.PERSON),
+                TDeduplicationRecordId(person.id, self.PERSON),
                 person.person_name,
                 realty_squares,
                 max_surname_rank,
@@ -205,15 +211,15 @@ class TDeduplicationObject:
     def __hash__(self):
         return hash(self.record_id)
 
-    def initialize_from_prefixed_id(self, prefixed_record_id):
-        if prefixed_record_id.startswith("section-"):
-            section_id = int(prefixed_record_id[len("section-"):])
+    def initialize_from_prefixed_id(self, prefixed_is_c):
+        if prefixed_is_c.startswith("section-"):
+            section_id = int(prefixed_is_c[len("section-"):])
             try:
                 return self.initialize_from_section(models.Section.objects.get(id=section_id))
             except models.Section.DoesNotExist:
                 raise django.core.exceptions.ObjectDoesNotExist
-        elif prefixed_record_id.startswith("person-"):
-            person_id = int(prefixed_record_id[len("person-"):])
+        elif prefixed_is_c.startswith("person-"):
+            person_id = int(prefixed_is_c[len("person-"):])
             try:
                 return self.initialize_from_person(models.Person.objects.get(id=person_id))
             except models.Person.DoesNotExist:
@@ -229,14 +235,10 @@ class TMLModel:
             self.ml_model = pickle.load(sf)
 
     def get_features(self, o1, o2):
-        if o1.record_id > o2.record_id:
-            o1, o2 = o2, o1
-        features = o1.build_features(o2)
-        return features
+        return o1.build_features(o2)
 
     def predict_positive_proba(self, X):
         return list(p1 for p0, p1 in self.ml_model.predict_proba(X))
-
 
 
 class TFioClustering:
@@ -252,7 +254,7 @@ class TFioClustering:
     def get_distance(self, o1, o2, ml_score):
         if o1.record_id == o2.record_id:
             return 0
-        if o1.record_id[1] == TDeduplicationObject.PERSON and o2.record_id[1] == TDeduplicationObject.PERSON:
+        if o1.record_id.source_table == TDeduplicationObject.PERSON and o2.record_id.source_table == TDeduplicationObject.PERSON:
             return TDeduplicationObject.INCOMPATIBLE_FIO_WEIGHT
         if not o1.fio.is_compatible_to(o2.fio):
             return TDeduplicationObject.INCOMPATIBLE_FIO_WEIGHT
@@ -278,7 +280,8 @@ class TFioClustering:
         X = list()
         for i in range(len(self.leaf_clusters)):
             for k in range(len(self.leaf_clusters)):
-                X.append(self.ml_model.get_features(self.leaf_clusters[i], self.leaf_clusters[k]))
+                i1, i2 = (i, k) if i < k else (k, i)
+                X.append(self.ml_model.get_features(self.leaf_clusters[i1], self.leaf_clusters[i2]))
         ml_scores = self.ml_model.predict_positive_proba(X)
 
         for i in range(len(self.leaf_clusters)):
@@ -350,5 +353,43 @@ def pool_to_random_forest(logger, pairs):
         processed_cnt, missing_cnt
     ))
     return single_objects, X, y
+
+
+def check_pool_after_real_clustering(logger, pairs):
+    sys.stdout.flush()
+    missing_cnt = 0
+    processed_cnt = 0
+    y_true = list()
+    y = list()
+    for (id1, id2), mark in pairs.items():
+        try:
+            processed_cnt += 1
+            if processed_cnt % 100 == 0:
+                sys.stdout.write(".")
+                sys.stdout.flush()
+            o1 = TDeduplicationObject().initialize_from_prefixed_id(id1)
+            o2 = TDeduplicationObject().initialize_from_prefixed_id(id2)
+            if not o1.fio.is_compatible_to(o2.fio):
+                raise django.core.exceptions.ObjectDoesNotExist()
+
+            if mark == "YES":
+                y_true.append(1)
+            elif mark == "NO":
+                y_true.append(0)
+            if o1.record_id.source_table == TDeduplicationObject.SECTION and o2.record_id.source_table == TDeduplicationObject.SECTION:
+                y.append(1 if o1.db_section_person_id == o2.db_section_person_id else 0)
+            else:
+                if o1.record_id.source_table == TDeduplicationObject.PERSON:
+                    o1,o2 = o2,o1
+                y.append(1 if o1.db_section_person_id == o2.record_id.id else 0)
+
+        except django.core.exceptions.ObjectDoesNotExist as e:
+            missing_cnt += 1
+            logger.debug("skip pair {0} {1}, since one them is not found in DB".format(id1, id2))
+
+    logger.info("convert pool to dedupe: pool size = {0}, missing_count={1}".format(
+        processed_cnt, missing_cnt
+    ))
+    return y_true, y
 
 

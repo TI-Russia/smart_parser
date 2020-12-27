@@ -1,11 +1,12 @@
-from declarations.management.commands.random_forest_adapter import TDeduplicationObject, TFioClustering
+from declarations.management.commands.random_forest_adapter import TDeduplicationObject, TFioClustering, \
+    TDeduplicationRecordId
 from django.test import TestCase
 from collections import defaultdict
 
 
 def init_dedupe_object(record_id, person_name):
     o = TDeduplicationObject()
-    o.record_id = (record_id, TDeduplicationObject.SECTION)
+    o.record_id = TDeduplicationRecordId(record_id, TDeduplicationObject.SECTION)
     o.set_person_name(person_name)
     return o
 
@@ -54,8 +55,8 @@ class AmbiguousFio(TestCase):
             self.assertEqual(len(clustering.clusters), 2)
             for x in clustering.clusters.values():
                 if len(x) == 2:
-                    self.assertEqual(x[0][0].record_id[0], 2)
-                    self.assertEqual(x[1][0].record_id[0], 3)
+                    self.assertEqual(x[0][0].record_id.id, 2)
+                    self.assertEqual(x[1][0].record_id.id, 3)
 
     def test_cluster_merge(self):
         objs = [init_dedupe_object(1, "Иванов В. Н."),
