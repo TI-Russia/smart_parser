@@ -114,7 +114,8 @@ class TDeduplicationObject:
             set([section.income_year]),
             all_vehicles(section),
             all_positions_words(section),
-            set([section.source_document.office.region_id])
+            set([section.source_document.office.region_id]),
+            db_section_person_id=section.person_id
         )
 
     def initialize_from_person(self, person):
@@ -361,6 +362,7 @@ def check_pool_after_real_clustering(logger, pairs):
     processed_cnt = 0
     y_true = list()
     y = list()
+    result_pairs = list()
     for (id1, id2), mark in pairs.items():
         try:
             processed_cnt += 1
@@ -376,12 +378,14 @@ def check_pool_after_real_clustering(logger, pairs):
                 y_true.append(1)
             elif mark == "NO":
                 y_true.append(0)
+
             if o1.record_id.source_table == TDeduplicationObject.SECTION and o2.record_id.source_table == TDeduplicationObject.SECTION:
                 y.append(1 if o1.db_section_person_id == o2.db_section_person_id else 0)
             else:
                 if o1.record_id.source_table == TDeduplicationObject.PERSON:
                     o1,o2 = o2,o1
                 y.append(1 if o1.db_section_person_id == o2.record_id.id else 0)
+            result_pairs.append((o1.record_id, o2.record_id))
 
         except django.core.exceptions.ObjectDoesNotExist as e:
             missing_cnt += 1
@@ -390,6 +394,6 @@ def check_pool_after_real_clustering(logger, pairs):
     logger.info("convert pool to dedupe: pool size = {0}, missing_count={1}".format(
         processed_cnt, missing_cnt
     ))
-    return y_true, y
+    return result_pairs, y_true, y
 
 

@@ -47,9 +47,14 @@ class Command(BaseCommand):
         self.options = options
         self.logger.info("read {}".format(options["test_pool"]))
         test_data = TToloka.read_toloka_golden_pool(options["test_pool"])
-        y_true, y = check_pool_after_real_clustering(self.logger, test_data)
+        pairs, y_true, y = check_pool_after_real_clustering(self.logger, test_data)
         self.logger.info("Match pairs: {}".format(sum(1 for i in y_true if i == 1)))
         self.logger.info("Distinct pairs: {}".format(sum(1 for i in y_true if i == 0)))
-        self.logger.info("Precision : {}".format(precision_score(y_true, y)))
-        self.logger.info("Recall : {}".format(recall_score(y_true, y)))
-
+        precision = precision_score(y_true, y)
+        recall = recall_score(y_true, y)
+        self.logger.info("Precision : {}".format(precision))
+        self.logger.info("Recall : {}".format(recall))
+        for pair, y1, y2 in zip(pairs, y_true, y):
+            self.logger.debug("{} {} {}".format(pair, y1, y2))
+        assert precision > 0.95
+        assert recall > 0.95

@@ -97,6 +97,7 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
         python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --permanent-links-db /tmp/permalinks.dbm --ml-model-file $DEDUPE_MODEL  \
                 --threshold 0.61  --surname-bounds {} --write-to-db --settings disclosures.settings.dev --logfile dedupe.{}.log
 
+   python3 $TOOLS/disclosures_site/manage.py test_real_clustering_on_pool --test-pool $TOOLS/disclosures_site/deduplicate/pools/disclosures_test_m.tsv   --settings disclosures.settings.dev
 
 #13  Коммит статистики
    cd $TOOLS/disclosures_site
