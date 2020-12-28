@@ -18,7 +18,7 @@ class Command(BaseCommand):
         if options.get('check_metric') is not None:
             history.check_sum_metric_increase(stats, [options.get('check_metric')])
         else:
-            self.check_statistics(stats)
+            history.check_statistics(stats)
             history.add_statistics(stats)
             sys.stderr.write("do not forget to commit {}\n".format(history.file_path))
             history.write_to_disk()
