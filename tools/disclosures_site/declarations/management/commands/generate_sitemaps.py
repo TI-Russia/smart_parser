@@ -72,6 +72,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self.logger = setup_logging()
+        region_report_folder = os.path.join(os.path.dirname(__file__), "../../../disclosures/static/regionreports")
         sitemap_folder = options['output_folder']
         if os.path.exists(sitemap_folder):
             shutil.rmtree(sitemap_folder, ignore_errors=True)
@@ -109,5 +110,8 @@ class Command(BaseCommand):
             outp.write("https://disclosures.ru/section/\n")
             outp.write("https://disclosures.ru/file/\n")
             outp.write("https://disclosures.ru/statistics/\n")
+            for f in os.listdir(region_report_folder):
+                if f.endswith('.html'):
+                    outp.write("https://disclosures.ru/static/regionreports/{}\n".format(f))
             for l in sitemap:
                 outp.write(l + "\n")
