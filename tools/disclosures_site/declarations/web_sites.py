@@ -1,37 +1,47 @@
 import json
 import os
 from common.primitives import get_site_domain_wo_www
+from common.web_site import TWebSiteReachStatus
 
 
 class TDeclarationWebSite:
     def __init__(self):
         self.interactions = list()
         self.calculated_office_id = None
+        self.reach_status = TWebSiteReachStatus.normal
 
     def read_from_json(self, js):
         self.interactions = js['events']
         self.calculated_office_id = js['calc_office_id']
+        self.reach_status = js.get('reach_status', TWebSiteReachStatus.normal)
         return self
 
     def write_to_json(self):
-        return {
+        rec = {
             'events': self.interactions,
             'calc_office_id': self.calculated_office_id,
         }
+        if self.reach_status != TWebSiteReachStatus.normal:
+            rec['reach_status'] = self.reach_status
+        return rec
 
 
 class TDeclarationWebSites:
     disclosures_office_start_id = 20000
 
-    def __init__(self, logger):
+    def __init__(self, logger, file_name=None):
         self.web_sites = dict()
         self.logger = logger
-        self.file_name = os.path.join(os.path.dirname(__file__), "../data/web_sites.json")
+        if file_name is None:
+            self.file_name = os.path.join(os.path.dirname(__file__), "../data/web_sites.json")
+        else:
+            self.file_name = file_name
 
     def load_from_disk(self):
         with open(self.file_name, "r") as inp:
             for k, v in json.load(inp).items():
                 self.web_sites[k] = TDeclarationWebSite().read_from_json(v)
+        return self
 
     def add_web_site(self, web_site, office_id):
         self.logger.debug("add web site {} ".format(web_site))
