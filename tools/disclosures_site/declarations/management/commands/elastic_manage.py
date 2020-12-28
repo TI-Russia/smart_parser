@@ -34,7 +34,8 @@ class TElasticIndex:
         dev_count = self.document_count(self.dev)
         if self.enable_increase_check:
             if prod_count > dev_count:
-                raise Exception("index {} contains more document than {}".format(self.prod, self.dev))
+                raise Exception("index {} contains more documents ({}) than index {} ({})".format(
+                    self.prod, prod_count, self.dev, dev_count))
         if self.enable_empty_check:
             if dev_count == 0:
                 raise Exception("index {} contains no documents".format(self.dev))
