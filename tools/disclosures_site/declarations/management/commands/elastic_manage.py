@@ -27,7 +27,7 @@ class TElasticIndex:
             self.es.indices.delete(index_name)
 
     def document_count(self, index_name):
-        return self.es.cat.count(index_name, params={"format": "json"})[0]['count']
+        return int(self.es.cat.count(index_name, params={"format": "json"})[0]['count'])
 
     def check(self):
         prod_count = self.document_count(self.prod)
