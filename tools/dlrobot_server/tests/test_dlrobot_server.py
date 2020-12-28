@@ -111,7 +111,8 @@ class TTestEnv:
             '--central-heart-rate', '1s',
             '--dlrobot-project-timeout', str(dlrobot_project_timeout),
             '--log-file-name', os.path.join(self.data_folder, "dlrobot_central.log"),
-            '--disable-search-engines'
+            '--disable-search-engines',
+            '--disable-telegram'
         ]
         if not enable_smart_parser:
             server_args.append('--disable-smart-parser-server')

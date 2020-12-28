@@ -5,6 +5,7 @@ import os
 import time
 import telegram_send
 
+
 LAST_MESSAGES = dict()
 def send_email (event_id, to_addr, message):
     global LAST_MESSAGES

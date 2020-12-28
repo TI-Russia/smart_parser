@@ -21,6 +21,7 @@ import io, gzip, tarfile
 import ipaddress
 import shutil
 import glob
+import telegram_send
 
 def setup_logging(logfilename):
     logger = logging.getLogger("dlrobot_parallel")
@@ -86,6 +87,8 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                             default=True, action="store_false", required=False)
         parser.add_argument("--history-crawl-files-mask", dest="history_crawl_file_mask",
                             default=None,  required=False)
+        parser.add_argument("--disable-telegram", dest="enable_telegram",
+                            default=True,  required=False, action="store_false")
 
         args = parser.parse_args(arg_list)
         args.central_heart_rate = convert_timeout_to_seconds(args.central_heart_rate)
@@ -100,6 +103,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
     def initialize_tasks(self):
         self.dlrobot_remote_calls.clear()
         self.worker_2_running_tasks.clear()
+
         self.input_web_sites = list()
         web_sites = TDeclarationWebSites(self.logger, self.args.input_task_list).load_from_disk()
         for web_site, web_site_info in web_sites.web_sites.items():
@@ -126,9 +130,11 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         self.dlrobot_remote_calls = defaultdict(list)
         self.input_web_sites = list()
         self.worker_2_running_tasks = defaultdict(list)
+        self.worker_2_continuous_failures_count = defaultdict(int)
         self.initialize_tasks()
         self.cloud_id_to_worker_ip = dict()
         self.last_remote_call = None # for testing
+        self.banned_workers = set()
         host, port = self.args.server_address.split(":")
         self.logger.debug("start server on {}:{}".format(host, port))
         super().__init__((host, int(port)), TDlrobotRequestHandler)
@@ -148,6 +154,12 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
             self.permitted_hosts.add('127.0.0.1')
             self.permitted_hosts.add('95.165.96.61') # disclosures.ru
         self.logger.debug("init complete")
+        self.send_to_telegram("start dlrobot central with {} tasks".format(len(self.input_web_sites)))
+
+    def send_to_telegram(self, message):
+        if self.args.enable_telegram:
+            self.logger.debug("send to telegram: {}".format(message))
+            telegram_send.send(messages=[message])
 
     def stop_server(self):
         self.server_close()
@@ -281,11 +293,22 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                         if self.source_doc_client is not None:
                             self.source_doc_client.send_file(file_path)
 
+    def worker_ip_is_banned(self, worker_ip):
+        if self.worker_2_continuous_failures_count[worker_ip] > 7:
+            if worker_ip not in self.banned_workers:
+                self.banned_workers.add(worker_ip)
+                self.send_to_telegram("too many dlrobot errors from ip {}, the host is completely banned, you have to "
+                                      " restart dlrobot_central to unban it".format(worker_ip))
+
     def register_task_result(self, worker_host_name, worker_ip, project_file, exit_code, result_archive):
         if self.args.skip_worker_check:
             remote_call = TRemoteDlrobotCall(worker_ip, project_file)
         else:
             remote_call = self.pop_project_from_running_tasks(worker_ip, project_file)
+        if exit_code == 0:
+            self.worker_2_continuous_failures_count[worker_ip] = 0
+        else:
+            self.worker_2_continuous_failures_count[worker_ip] += 1
         remote_call.worker_host_name = worker_host_name
         remote_call.exit_code = exit_code
         remote_call.end_time = int(time.time())
@@ -449,6 +472,12 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             return
     
         worker_ip = self.client_address[0]
+
+        if self.server.worker_ip_is_banned(worker_ip):
+            error_msg = "too many dlrobot errors from ip {}".format(worker_ip)
+            send_error(error_msg, DLROBOT_HTTP_CODE.TOO_BUSY)
+            return
+
         try:
             web_site = self.server.get_new_web_site_to_process(worker_host_name, worker_ip)
         except Exception as exp:
