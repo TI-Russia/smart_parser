@@ -59,12 +59,12 @@ class TSeleniumDriver:
         for retry in range(3):
             try:
                 self.the_driver = webdriver.Firefox(options=options)
-                self.the_driver.implicitly_wait(10)
+                #self.the_driver.implicitly_wait(10)
                 break
             except (WebDriverException, InvalidSwitchToTargetException) as exp:
                 if retry == 2:
                     raise
-                self.logger.error("Exception:{}, sleep and retry...".format(str(exp)))
+                self.logger.error("Cannot start selenium, exception:{}, sleep and retry...".format(str(exp)))
                 time.sleep(10)
 
     def stop_executable(self):

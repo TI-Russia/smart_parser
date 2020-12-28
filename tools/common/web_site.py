@@ -35,10 +35,10 @@ class TWebSiteReachStatus:
     def can_communicate(reach_status):
         return reach_status == "normal" or reach_status == "only_selenium"
 
+
 class TRobotWebSite:
     SINGLE_DECLARATION_TIMEOUT = 60 * 30 # half an hour in seconds,
     CRAWLING_TIMEOUT = 60 * 60 * 3       # 3 hours
-
 
     def __init__(self, project):
         #runtime members (no serialization)
