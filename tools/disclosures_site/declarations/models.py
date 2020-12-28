@@ -334,6 +334,11 @@ class Section(models.Model):
                 return i.size
         return 0
 
+    @property
+    def declarant_income_size(self):
+        return self.get_declarant_income_size()
+
+
     def permalink_passports(self):
         main_income = self.get_declarant_income_size()
         yield "sc;{};{};{};{}".format(self.source_document.id, self.person_name.lower(), self.income_year, main_income)
