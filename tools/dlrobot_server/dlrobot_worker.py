@@ -194,6 +194,7 @@ class TDlrobotWorker:
 
         my_env = os.environ.copy()
         my_env['TMP'] = project_folder
+        my_env['TMPDIR'] = project_folder
         exit_code = 1
         result_folder = "result"
         try:

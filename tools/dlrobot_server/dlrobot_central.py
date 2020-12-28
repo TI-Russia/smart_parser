@@ -6,6 +6,7 @@ from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from dlrobot_server.remote_call import TRemoteDlrobotCall
 from source_doc_http.source_doc_client import TSourceDocClient
 from common.web_site import TWebSiteReachStatus
+from disclosures_site.declarations.web_sites import TDeclarationWebSites
 
 import argparse
 import sys
@@ -100,15 +101,9 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         self.dlrobot_remote_calls.clear()
         self.worker_2_running_tasks.clear()
         self.input_web_sites = list()
-        with open (self.args.input_task_list) as inp:
-            for web_site, web_site_info in json.load(inp).items():
-                abandoned = False
-                for event in web_site_info.get('events', []):
-                    if event.get('type', "") == TWebSiteReachStatus.abandoned:
-                        abandoned = True
-                        break
-                if abandoned:
-                    continue
+        web_sites = TDeclarationWebSites(self.logger, self.args.input_task_list).load_from_disk()
+        for web_site, web_site_info in web_sites.web_sites.items():
+            if TWebSiteReachStatus.can_communicate(web_site_info.reach_status):
                 web_site = get_site_domain_wo_www(web_site)
                 self.input_web_sites.append(web_site)
 

@@ -79,7 +79,10 @@ class TTestEnv:
                     web_sites = web_site
                 js = dict()
                 for w in web_sites:
-                    js[w] = {"events": []}
+                    js[w] = {
+                        "events": [],
+                        "calc_office_id": None
+                    }
             else:
                 js = {}
             json.dump(js, outp, indent=4, ensure_ascii=False)
