@@ -134,11 +134,7 @@ def convert_russian_web_domain_if_needed(url):
 
 
 def _prepare_url_before_http_request(logger, url, method):
-    if url.find('://') == -1:
-        url = "http://" + url
-
     TRequestPolicy.consider_request_policy(logger, url, method)
-
     return convert_russian_web_domain_if_needed(url)
 
 
@@ -152,6 +148,9 @@ if os.environ.get("DLROBOT_HTTP_TIMEOUT"):
 
 
 def make_http_request_urllib(logger, url, method):
+    if not url.lower().startswith('http'):
+        raise RobotHttpException('unknown protocol, can be only http or https')
+
     try:
         url = _prepare_url_before_http_request(logger, url, method)
 
@@ -208,6 +207,8 @@ def collect_http_headers_for_curl(header_dict, header_line):
 
 
 def make_http_request_curl(logger, url, method):
+    if not url.lower.startswith('http'):
+        raise RobotHttpException('unknown protocol, can be http or https')
     url = _prepare_url_before_http_request(logger, url, method)
     buffer = BytesIO()
     curl = pycurl.Curl()

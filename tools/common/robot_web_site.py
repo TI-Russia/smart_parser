@@ -35,6 +35,10 @@ class TWebSiteReachStatus:
     def can_communicate(reach_status):
         return reach_status == "normal" or reach_status == "only_selenium"
 
+    @staticmethod
+    def check_status(status):
+        return status in {TWebSiteReachStatus.normal, TWebSiteReachStatus.only_selenium,
+                           TWebSiteReachStatus.out_of_reach, TWebSiteReachStatus.abandoned}
 
 class TRobotWebSite:
     SINGLE_DECLARATION_TIMEOUT = 60 * 30 # half an hour in seconds,
@@ -56,18 +60,47 @@ class TRobotWebSite:
         self.reach_status = "normal"
         self.robot_steps = list()
         self.reach_status = None
+        self.protocol = "http"
+        self.only_with_www = False
 
         if len(self.robot_steps) == 0:
             for p in project.robot_step_passports:
                 self.robot_steps.append(TRobotStep(self, p))
         assert len(self.robot_steps) == len(project.robot_step_passports)
 
+    def recognize_protocol_and_www(self):
+        if self.morda_url.startswith('http://'):
+            self.protocol = "http"
+        elif self.morda_url.startswith('https://'):
+            self.protocol = "https"
+        else:
+            for only_with_www in [False, True]:
+                for protocol in ["http", "https"]:
+                    try:
+                        url = protocol + "://"
+                        if only_with_www:
+                            url += "www."
+                        url += self.morda_url
+                        html_data = TDownloadedFile(self.logger, url).data
+                        self.morda_url = url
+                        self.logger.debug('set main url to {}'.format(url))
+                        self.protocol = protocol
+                        self.only_with_www = only_with_www
+                        return
+                    except RobotHttpException as exp:
+                        self.logger.error("cannot fetch {}  with urllib, sleep 3 sec".format(url))
+                        time.sleep(3)
+
+    def get_domain_name(self):
+        return get_site_domain_wo_www(self.morda_url)
+
     def fetch_the_main_page(self):
         if len(self.url_nodes) > 0:
             return True
+        self.recognize_protocol_and_www()
         for i in range(3):
             try:
-                html_data = TDownloadedFile(self.morda_url).data
+                html_data = TDownloadedFile(self.logger, self.morda_url).data
                 title = get_html_title(html_data)
                 self.reach_status = TWebSiteReachStatus.normal
                 self.url_nodes[self.morda_url] = TUrlInfo(title=title)
@@ -98,9 +131,6 @@ class TRobotWebSite:
 
         return False
 
-    def get_domain_name(self):
-        return get_site_domain_wo_www(self.morda_url)
-
     def check_crawling_timeouts(self, enough_crawled_urls):
         current_time = time.time()
         if enough_crawled_urls and current_time - self.export_env.last_found_declaration_time > TRobotWebSite.SINGLE_DECLARATION_TIMEOUT:
@@ -113,10 +143,13 @@ class TRobotWebSite:
 
     def read_from_json(self, init_json):
         self.reach_status = init_json.get('reach_status')
+        self.only_with_www = init_json.get('only_with_www')
+        self.protocol = init_json.get('protocol', "http")
         self.morda_url = init_json['morda_url']
         self.office_name = init_json.get('name', '')
         self.enable_urllib = init_json.get('enable_urllib', True)
         self.export_env.from_json(init_json.get('exported_files'))
+
         if init_json.get('steps') is not None:
             self.robot_steps = list()
             for step_no, step in enumerate(init_json.get('steps', list())):
@@ -133,7 +166,9 @@ class TRobotWebSite:
             'enable_urllib': self.enable_urllib,
             'steps': [s.to_json() for s in self.robot_steps],
             'url_nodes': dict( (url, info.to_json()) for url,info in self.url_nodes.items()),
-            'exported_files': self.export_env.to_json()
+            'exported_files': self.export_env.to_json(),
+            'protocol': self.protocol,
+            'only_with_www': self.only_with_www
         }
 
     def get_parents(self, url):
@@ -250,7 +285,7 @@ class TRobotWebSite:
         target.processed_pages = set()
 
         if include_source == "always":
-            assert not is_last_step # todo: should we export it?
+            assert not is_last_step  # todo: should we export it?
             target.step_urls.update(target.pages_to_process)
 
         if self.parent_project.need_search_engine_before(target):

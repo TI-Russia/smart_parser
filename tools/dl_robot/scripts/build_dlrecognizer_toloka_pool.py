@@ -26,7 +26,8 @@ def parse_args():
 #todo: pdf and zip files!
 
 def create_toloka_pool(project_path, toloka_stream):
-    with TRobotProject(logging, project_path, ROBOT_STEPS, None) as project:
+    logger = logging.getLogger("")
+    with TRobotProject(logger, project_path, ROBOT_STEPS, None) as project:
         project.read_project()
         office_info = project.offices[0]
         toloka_stream.write("INPUT:url\tINPUT:file_link\tINPUT:file_extension\tINPUT:html\n")
@@ -39,7 +40,7 @@ def create_toloka_pool(project_path, toloka_stream):
             sys.stderr.flush()
             url = export_record['url']
             cached_file = export_record['cached_file']
-            extension = TDownloadedFile(url).file_extension
+            extension = TDownloadedFile(logger, url).file_extension
             temp_file = "dummy" + extension
             shutil.copy(cached_file, temp_file)
             html = ec.convert_to_html_with_soffice(temp_file)
@@ -54,6 +55,7 @@ def create_toloka_pool(project_path, toloka_stream):
 def copy_files(args, toloka_results):
     assert args.positive_folder is not None
     assert args.negative_folder is not None
+    logger = logging.getLogger("")
     with TRobotProject(args.project, ROBOT_STEPS) as project:
         project.read_project()
         office_info = project.offices[0]
@@ -64,7 +66,7 @@ def copy_files(args, toloka_results):
             cached_file = export_record['cached_file']
             url = export_record['url']
             print ()
-            extension = TDownloadedFile(url).file_extension
+            extension = TDownloadedFile(logger, url).file_extension
             out_file = "{}_{}_{}{}".format(domain, index, int(time.time()), extension)
             tol_res = toloka_results.get(cached_file)
             if tol_res == "YES":

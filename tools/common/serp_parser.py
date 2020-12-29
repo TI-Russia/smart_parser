@@ -103,7 +103,6 @@ class SearchEngine:
 
     @staticmethod
     def _send_request(search_engine, site_url, query, selenium_holder: TSeleniumDriver):
-        assert get_site_domain_wo_www(site_url) == site_url
         if SearchEngine.is_search_engine_ref(query) or SearchEngine.is_search_engine_ref(site_url):
             selenium_holder.logger.error("Warning! we use keyword 'google' to filter results out, search would yield no results")
         request_parts = ["site:{}".format(site_url), query]
@@ -141,6 +140,9 @@ class SearchEngine:
     @staticmethod
     def site_search(search_engine, site_url, query, selenium_holder: TSeleniumDriver,
                     enable_cache=True):
+        #serp matching is made by without www and http
+        site_url = get_site_domain_wo_www(site_url)
+
         if enable_cache:
             cached_results = SearchEngine.read_cache(site_url, query)
             if len(cached_results) > 0:

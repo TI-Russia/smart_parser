@@ -95,24 +95,6 @@ def get_content_charset(headers):
         return params.get('charset')
 
 
-def http_get_request_with_simple_js_redirect(logger, url):
-    redirected_url, headers, data = make_http_request(logger, url, "GET")
-
-    try:
-        if get_content_type_from_headers(headers).lower().startswith('text'):
-            try:
-                data_utf8 = convert_html_to_utf8_using_content_charset(get_content_charset(headers), data)
-                match = re.search('((window|document).location\s*=\s*[\'"]?)([^"\'\s]+)([\'"]?\s*;)', data_utf8)
-                if match:
-                    redirect_url = match.group(3)
-                    if redirect_url != url:
-                        return make_http_request(logger, redirect_url, "GET")
-            except (RobotHttpException, ValueError) as err:
-                pass
-    except AttributeError:
-        pass
-    return redirected_url, headers, data
-
 
 # save from selenium
 def save_downloaded_file(logger, filename):
@@ -138,7 +120,7 @@ def _url_to_cached_folder_verbose(url):
     if local_path.startswith('http://'):
         local_path = local_path[len('http://'):]
     if local_path.startswith('https://'):
-        local_path = local_path[len('https://'):]
+        local_path = local_path[len('https://'):] + "_s"
     local_path = local_path.replace('\\', '/') # must be the same to calc hashlib.md5, change it after hashlib.md5
     local_path = re.sub('/\\.+/', '/q/', local_path)  # dots are interpreted as to go to the parent folder  (cd ..)
     local_path = unidecode(local_path)
@@ -179,7 +161,8 @@ class TDownloadedFile:
     def get_page_info_file_name(self):
         return self.data_file_path + ".page_info"
 
-    def __init__(self, original_url):
+    def __init__(self, logger, original_url):
+        self.logger = logger
         self.original_url = original_url
         self.page_info = dict()
         self.data_file_path = get_local_file_name_by_url(self.original_url)
@@ -193,8 +176,7 @@ class TDownloadedFile:
             self.redirected_url = self.page_info.get('redirected_url', self.original_url)
             self.file_extension = self.page_info.get('file_extension')
         else:
-            logger = logging.getLogger("dlrobot_logger")
-            redirected_url, info, data = http_get_request_with_simple_js_redirect(logger, original_url)
+            redirected_url, info, data = self._http_get_request_with_simple_js_redirect()
             self.redirected_url = redirected_url
             self.data = data
             if hasattr(info, "_headers"):
@@ -211,6 +193,33 @@ class TDownloadedFile:
                 self.write_file_to_cache()
                 sha256 = hashlib.sha256(data).hexdigest()
                 TDownloadEnv.send_pdf_to_conversion(self.data_file_path, self.file_extension, sha256)
+
+    @staticmethod
+    def get_simple_js_redirect(main_url, data_utf8):
+        match = re.search('\n[^=]*((window|document).location(.href)?\s*=\s*[\'"]?)([^"\'\s]+)([\'"]?\s*;)', data_utf8)
+        if match:
+            redirect_url = match.group(4)
+            if redirect_url.startswith('http'):
+                return redirect_url
+            else:
+                return urllib.parse.urljoin(main_url, redirect_url)
+        return None
+
+    def _http_get_request_with_simple_js_redirect(self):
+        redirected_url, headers, data = make_http_request(self.logger, self.original_url, "GET")
+
+        try:
+            if get_content_type_from_headers(headers).lower().startswith('text'):
+                try:
+                    data_utf8 = convert_html_to_utf8_using_content_charset(get_content_charset(headers), data)
+                    redirect_url = self.get_simple_js_redirect(self.original_url, data_utf8)
+                    if redirect_url is not None:
+                        return make_http_request(self.logger, redirect_url, "GET")
+                except (RobotHttpException, ValueError) as err:
+                    pass
+        except AttributeError:
+            pass
+        return redirected_url, headers, data
 
     def write_file_to_cache(self):
         with open(self.data_file_path, "wb") as f:
@@ -249,11 +258,11 @@ def get_file_extension_only_by_headers(logger, url):
     return ext
 
 
-def are_web_mirrors(domain1, domain2):
+def are_web_mirrors(logger, url1, url2):
     try:
         # check all mirrors including simple javascript
-        html1 = TDownloadedFile(domain1).data
-        html2 = TDownloadedFile(domain2).data
+        html1 = TDownloadedFile(logger, url1).data
+        html2 = TDownloadedFile(logger, url2).data
         res = len(html1) == len(html2)  # it is enough
         return res
     except RobotHttpException as exp:

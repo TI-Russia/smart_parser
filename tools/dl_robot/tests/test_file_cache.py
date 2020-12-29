@@ -96,16 +96,16 @@ class TestFileCache(TestCase):
 
     def test_request_the_same(self):
         url = self.build_url('/somepath')
-        TDownloadedFile(url)
+        TDownloadedFile(self.logger, url)
         self.assertEqual(HTTP_GET_REQUESTS_COUNT, 1)
-        TDownloadedFile(url)
+        TDownloadedFile(self.logger, url)
         self.assertEqual(HTTP_GET_REQUESTS_COUNT, 1)
 
     def test_request_timed_out(self):
         url = self.build_url('/very_long')
         got_timeout_exception = False
         try:
-            TDownloadedFile(url)
+            TDownloadedFile(self.logger, url)
         except RobotHttpException as exp:
             got_timeout_exception = True
         self.assertTrue(got_timeout_exception)
@@ -117,7 +117,7 @@ class TestFileCache(TestCase):
         codes = list()
         for i in range(4):
             try:
-                x = TDownloadedFile(url)
+                x = TDownloadedFile(self.logger, url)
             except RobotHttpException as exp:
                 codes.append(exp.http_code)
 

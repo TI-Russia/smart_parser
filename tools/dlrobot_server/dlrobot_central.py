@@ -5,7 +5,7 @@ from common.content_types import ACCEPTED_DOCUMENT_EXTENSIONS
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from dlrobot_server.remote_call import TRemoteDlrobotCall
 from source_doc_http.source_doc_client import TSourceDocClient
-from common.web_site import TWebSiteReachStatus
+from common.robot_web_site import TWebSiteReachStatus
 from disclosures_site.declarations.web_sites import TDeclarationWebSites
 
 import argparse

@@ -12,6 +12,7 @@ from common.html_parser import THtmlParser
 # see https://sutr.ru/about_the_university/svedeniya-ob-ou/education/ with 20000 links
 MAX_LINKS_ON_ONE_WEB_PAGE = 1000
 
+
 def get_office_domain(web_domain):
     index = 2
     if web_domain.endswith("gov.ru"):
@@ -37,7 +38,7 @@ def check_href_elementary(href):
     return True
 
 
-def web_link_is_absolutely_prohibited(source, href):
+def web_link_is_absolutely_prohibited(logger, source, href):
     if len(href) == 0:
         return True
 
@@ -62,7 +63,7 @@ def web_link_is_absolutely_prohibited(source, href):
     source_domain = re.sub(':[0-9]+$', '', source_domain)  # delete port
 
     if get_office_domain(href_domain) != get_office_domain(source_domain):
-        if not are_web_mirrors(source_domain, href_domain):
+        if not are_web_mirrors(logger, source, href):
             return True
     return False
 

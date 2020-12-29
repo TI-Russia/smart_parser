@@ -114,7 +114,7 @@ class TRobotStep:
     def normalize_and_check_link(self, link_info: TLinkInfo):
         if link_info.target_url is not None:
             link_info.target_url = strip_viewer_prefix(link_info.target_url).strip(" \r\n\t")
-            if web_link_is_absolutely_prohibited(link_info.source_url, link_info.target_url):
+            if web_link_is_absolutely_prohibited(self.logger, link_info.source_url, link_info.target_url):
                 return False
         self.logger.debug(
             "check element {}, url={} text={}".format(
@@ -130,7 +130,7 @@ class TRobotStep:
     def add_link_wrapper(self, link_info: TLinkInfo):
         assert link_info.target_url is not None
         try:
-            downloaded_file = TDownloadedFile(link_info.target_url)
+            downloaded_file = TDownloadedFile(self.logger, link_info.target_url)
         except RobotHttpException as err:
             self.logger.error(err)
             return
@@ -172,7 +172,7 @@ class TRobotStep:
         downloaded_file = None
         if use_urllib:
             try:
-                downloaded_file = TDownloadedFile(url)
+                downloaded_file = TDownloadedFile(self.logger, url)
             except RobotHttpException as err:
                 self.logger.error(err)
                 return

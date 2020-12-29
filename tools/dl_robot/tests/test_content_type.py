@@ -89,7 +89,7 @@ class TestContentType(TestCase):
         url = self.build_url("somepath")
         wrong_extension = get_file_extension_only_by_headers(self.logger, url)
         self.assertEqual(wrong_extension, ".doc")  # see minvr.ru for this error
-        downloaded_file = TDownloadedFile(url)
+        downloaded_file = TDownloadedFile(self.logger, url)
         right_extension = downloaded_file.file_extension  # read file contents to determine it's type
         self.assertEqual(right_extension, DEFAULT_HTML_EXTENSION)
         self.assertEqual(HTTP_GET_REQUESTS_COUNT, 1)

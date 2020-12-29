@@ -6,7 +6,7 @@ import time
 from common.selenium_driver import TSeleniumDriver
 from common.link_info import TLinkInfo, TClickEngine
 from common.serp_parser import SearchEngine, SearchEngineEnum, SerpException
-from common.web_site import TRobotWebSite, TRobotStep
+from common.robot_web_site import TRobotWebSite, TRobotStep
 from common.http_request import RobotHttpException
 from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
 

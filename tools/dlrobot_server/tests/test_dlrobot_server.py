@@ -3,7 +3,7 @@ from dlrobot_server.dlrobot_worker import TDlrobotWorker
 from dlrobot_server.dlrobot_stats import TDlrobotAllStats
 from smart_parser_http.smart_parser_server import TSmartParserHTTPServer
 from source_doc_http.source_doc_server import TSourceDocHTTPServer
-from common.web_site import TWebSiteReachStatus
+from common.robot_web_site import TWebSiteReachStatus
 
 from unittest import TestCase
 import os

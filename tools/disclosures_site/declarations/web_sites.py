@@ -1,7 +1,7 @@
 import json
 import os
 from common.primitives import get_site_domain_wo_www
-from common.web_site import TWebSiteReachStatus
+from common.robot_web_site import TWebSiteReachStatus
 
 
 class TDeclarationWebSite:
@@ -13,7 +13,7 @@ class TDeclarationWebSite:
     def read_from_json(self, js):
         self.interactions = js['events']
         self.calculated_office_id = js['calc_office_id']
-        self.reach_status = js.get('reach_status', TWebSiteReachStatus.normal)
+        self.reach_status = js.get('status', TWebSiteReachStatus.normal)
         return self
 
     def write_to_json(self):
@@ -22,7 +22,7 @@ class TDeclarationWebSite:
             'calc_office_id': self.calculated_office_id,
         }
         if self.reach_status != TWebSiteReachStatus.normal:
-            rec['reach_status'] = self.reach_status
+            rec['status'] = self.reach_status
         return rec
 
 
@@ -52,6 +52,10 @@ class TDeclarationWebSites:
 
     def has_web_site(self, web_site):
         return  web_site in self.web_sites
+
+    def set_status_to_web_site(self, web_site, reach_status):
+        assert TWebSiteReachStatus.check_status(reach_status)
+        self.web_sites[web_site].reach_status = reach_status
 
     def get_web_site(self, web_site):
         return self.web_sites.get(web_site)
