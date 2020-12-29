@@ -57,8 +57,8 @@
     },
     "rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 478
+        "calc_office_id": 478,
+        "status": "abandoned"
     },
     "fmbaros.ru": {
         "events": [],
@@ -242,8 +242,8 @@
     },
     "fms.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 7
+        "calc_office_id": 7,
+        "status": "abandoned"
     },
     "apparat.lenobl.ru": {
         "events": [],
@@ -1123,7 +1123,8 @@
     },
     "seligarovo.com": {
         "events": [],
-        "calc_office_id": 2929
+        "calc_office_id": 2929,
+        "status": "abandoned"
     },
     "toropecadm.ru": {
         "events": [],
@@ -1211,7 +1212,8 @@
     },
     "prok-altai.ru": {
         "events": [],
-        "calc_office_id": 20
+        "calc_office_id": 20,
+        "status": "abandoned"
     },
     "zsamur.ru": {
         "events": [],
@@ -1271,7 +1273,8 @@
     },
     "chel-oblsud.ru": {
         "events": [],
-        "calc_office_id": 792
+        "calc_office_id": 792,
+        "status": "abandoned"
     },
     "ursn-rm.ru": {
         "events": [],
@@ -1483,7 +1486,8 @@
     },
     "xn--80abucjiibhv9a.xn--p1ai": {
         "events": [],
-        "calc_office_id": 598
+        "calc_office_id": 598,
+        "status": "abandoned"
     },
     "belgorod.izbirkom.ru": {
         "events": [],
@@ -1615,7 +1619,8 @@
     },
     "admsp.ru": {
         "events": [],
-        "calc_office_id": 1136
+        "calc_office_id": 1136,
+        "status": "abandoned"
     },
     "mo15.spb.ru": {
         "events": [],
@@ -1987,7 +1992,8 @@
     },
     "priozersk.lenobl.ru": {
         "events": [],
-        "calc_office_id": 3367
+        "calc_office_id": 3367,
+        "status": "abandoned"
     },
     "tver.izbirkom.ru": {
         "events": [],
@@ -2547,7 +2553,8 @@
     },
     "fano.gov.ru": {
         "events": [],
-        "calc_office_id": 4199
+        "calc_office_id": 4199,
+        "status": "abandoned"
     },
     "egov-buryatia.ru": {
         "events": [],
@@ -4811,7 +4818,8 @@
     },
     "ksrme.ru": {
         "events": [],
-        "calc_office_id": 843
+        "calc_office_id": 843,
+        "status": "abandoned"
     },
     "36.rkn.gov.ru": {
         "events": [],
@@ -5771,7 +5779,8 @@
     },
     "zanprim.regiontrud.ru": {
         "events": [],
-        "calc_office_id": 5943
+        "calc_office_id": 5943,
+        "status": "abandoned"
     },
     "arbat.mos.ru": {
         "events": [],
@@ -5923,7 +5932,8 @@
     },
     "aleksin.tula.ru": {
         "events": [],
-        "calc_office_id": 1672
+        "calc_office_id": 1672,
+        "status": "abandoned"
     },
     "tyumen-city.ru": {
         "events": [],
@@ -5995,7 +6005,8 @@
     },
     "gagino.ru": {
         "events": [],
-        "calc_office_id": 1905
+        "calc_office_id": 1905,
+        "status": "abandoned"
     },
     "dumadzr.ru": {
         "events": [],
@@ -6515,7 +6526,8 @@
     },
     "city.usinsk.ru": {
         "events": [],
-        "calc_office_id": 3614
+        "calc_office_id": 3614,
+        "status": "abandoned"
     },
     "udora.info": {
         "events": [],
@@ -6771,7 +6783,8 @@
     },
     "duma.chukotka.ru": {
         "events": [],
-        "calc_office_id": 953
+        "calc_office_id": 953,
+        "status": "abandoned"
     },
     "52.rospotrebnadzor.ru": {
         "events": [],
@@ -7467,7 +7480,8 @@
     },
     "municipal.ako.kirov.ru": {
         "events": [],
-        "calc_office_id": 3197
+        "calc_office_id": 3197,
+        "status": "abandoned"
     },
     "svechamunicipal.ru": {
         "events": [],
@@ -8227,7 +8241,8 @@
     },
     "xn--b1abd2anabbbnc1c.xn--p1ai": {
         "events": [],
-        "calc_office_id": 2151
+        "calc_office_id": 2151,
+        "status": "abandoned"
     },
     "stpadmin.ru": {
         "events": [],
@@ -8371,7 +8386,8 @@
     },
     "portal.admnkz.info": {
         "events": [],
-        "calc_office_id": 2551
+        "calc_office_id": 2551,
+        "status": "abandoned"
     },
     "akmrko.ru": {
         "events": [],
@@ -8579,7 +8595,8 @@
     },
     "selemja28.ru": {
         "events": [],
-        "calc_office_id": 3041
+        "calc_office_id": 3041,
+        "status": "abandoned"
     },
     "admser.ru": {
         "events": [],
@@ -9115,7 +9132,8 @@
     },
     "prokuror-tula.ru": {
         "events": [],
-        "calc_office_id": 71
+        "calc_office_id": 71,
+        "status": "abandoned"
     },
     "proctuva.ru": {
         "events": [],
@@ -9203,7 +9221,8 @@
     },
     "duma.ryazan.net": {
         "events": [],
-        "calc_office_id": 558
+        "calc_office_id": 558,
+        "status": "abandoned"
     },
     "altai-krai.arbitr.ru": {
         "events": [],
@@ -9323,7 +9342,8 @@
     },
     "old.r-altay.roskazna.ru": {
         "events": [],
-        "calc_office_id": 4722
+        "calc_office_id": 4722,
+        "status": "abandoned"
     },
     "belgorod.roskazna.ru": {
         "events": [],
@@ -9487,13 +9507,13 @@
     },
     "to33.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5232
+        "calc_office_id": 5232,
+        "status": "abandoned"
     },
     "to21.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5296
+        "calc_office_id": 5296,
+        "status": "abandoned"
     },
     "rsnkchr.ru": {
         "events": [],
@@ -9621,7 +9641,8 @@
     },
     "yaruga.belnet.ru": {
         "events": [],
-        "calc_office_id": 1434
+        "calc_office_id": 1434,
+        "status": "abandoned"
     },
     "rakitnoeadm.ru": {
         "events": [],
@@ -9645,7 +9666,8 @@
     },
     "hoholadm.ru": {
         "events": [],
-        "calc_office_id": 1475
+        "calc_office_id": 1475,
+        "status": "abandoned"
     },
     "pavpos.ru": {
         "events": [],
@@ -9945,7 +9967,8 @@
     },
     "radmin.rubtsovsk.ru": {
         "events": [],
-        "calc_office_id": 2362
+        "calc_office_id": 2362,
+        "status": "abandoned"
     },
     "admsln.narod.ru": {
         "events": [],
@@ -10161,7 +10184,8 @@
     },
     "xn----7sbekhag7am9h.xn--p1ai": {
         "events": [],
-        "calc_office_id": 2902
+        "calc_office_id": 2902,
+        "status": "abandoned"
     },
     "vesegonsk.ru": {
         "events": [],
@@ -10205,7 +10229,8 @@
     },
     "ivanadmin28.ru": {
         "events": [],
-        "calc_office_id": 3033
+        "calc_office_id": 3033,
+        "status": "abandoned"
     },
     "karadmin.ru": {
         "events": [],
@@ -10237,7 +10262,8 @@
     },
     "obl-raion.ru": {
         "events": [],
-        "calc_office_id": 3124
+        "calc_office_id": 3124,
+        "status": "abandoned"
     },
     "admilinskoe.ru": {
         "events": [],
@@ -10249,7 +10275,8 @@
     },
     "bmr-kamchatka.ru": {
         "events": [],
-        "calc_office_id": 3156
+        "calc_office_id": 3156,
+        "status": "abandoned"
     },
     "bhregion.ru": {
         "events": [],
@@ -10313,7 +10340,8 @@
     },
     "kola.murmansk.ru": {
         "events": [],
-        "calc_office_id": 3390
+        "calc_office_id": 3390,
+        "status": "abandoned"
     },
     "rkolyshley.pnzreg.ru": {
         "events": [],
@@ -10797,7 +10825,8 @@
     },
     "region.adm.nov.ru": {
         "events": [],
-        "calc_office_id": 185
+        "calc_office_id": 185,
+        "status": "abandoned"
     },
     "gossluzhba.ivanovoobl.ru": {
         "events": [],
@@ -10817,7 +10846,8 @@
     },
     "irkproc.ru": {
         "events": [],
-        "calc_office_id": 30
+        "calc_office_id": 30,
+        "status": "abandoned"
     },
     "kamprok.ru": {
         "events": [],
@@ -11805,8 +11835,8 @@
     },
     "to73.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5290
+        "calc_office_id": 5290,
+        "status": "abandoned"
     },
     "rsn.kaluga.ru": {
         "events": [],
@@ -11938,7 +11968,8 @@
     },
     "olhadmin.ru": {
         "events": [],
-        "calc_office_id": 1462
+        "calc_office_id": 1462,
+        "status": "abandoned"
     },
     "adm-pushkino.ru": {
         "events": [],
@@ -12262,7 +12293,8 @@
     },
     "nanrayon.ru": {
         "events": [],
-        "calc_office_id": 2490
+        "calc_office_id": 2490,
+        "status": "abandoned"
     },
     "sovetgai.ru": {
         "events": [],
@@ -12398,7 +12430,8 @@
     },
     "yp33.avo.ru": {
         "events": [],
-        "calc_office_id": 2956
+        "calc_office_id": 2956,
+        "status": "abandoned"
     },
     "mirniy.ru": {
         "events": [],
@@ -12714,7 +12747,8 @@
     },
     "dt.mos.ru": {
         "events": [],
-        "calc_office_id": 5972
+        "calc_office_id": 5972,
+        "status": "abandoned"
     },
     "sport.mos.ru": {
         "events": [],
@@ -13242,7 +13276,8 @@
     },
     "perovo.nichost.ru": {
         "events": [],
-        "calc_office_id": 6833
+        "calc_office_id": 6833,
+        "status": "abandoned"
     },
     "vgmok.ru": {
         "events": [],
@@ -13286,8 +13321,8 @@
     },
     "rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 480
+        "calc_office_id": 480,
+        "status": "abandoned"
     },
     "sakha.gov.ru": {
         "events": [],
@@ -13299,7 +13334,8 @@
     },
     "magadan.ru": {
         "events": [],
-        "calc_office_id": 222
+        "calc_office_id": 222,
+        "status": "abandoned"
     },
     "prokamur.ru": {
         "events": [],
@@ -13383,11 +13419,13 @@
     },
     "oblsud.kurgan.ru": {
         "events": [],
-        "calc_office_id": 749
+        "calc_office_id": 749,
+        "status": "abandoned"
     },
     "verhsud.saransk.ru": {
         "events": [],
-        "calc_office_id": 755
+        "calc_office_id": 755,
+        "status": "abandoned"
     },
     "oblsud.orl.sudrf.ru": {
         "events": [],
@@ -13423,7 +13461,8 @@
     },
     "moscow.gks.ru": {
         "events": [],
-        "calc_office_id": 1300
+        "calc_office_id": 1300,
+        "status": "abandoned"
     },
     "frn.spb.sudrf.ru": {
         "events": [],
@@ -13727,7 +13766,8 @@
     },
     "msko.gks.ru": {
         "events": [],
-        "calc_office_id": 4994
+        "calc_office_id": 4994,
+        "status": "abandoned"
     },
     "nizhstat.gks.ru": {
         "events": [],
@@ -13759,28 +13799,28 @@
     },
     "to29.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5226
+        "calc_office_id": 5226,
+        "status": "abandoned"
     },
     "to35.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5234
+        "calc_office_id": 5234,
+        "status": "abandoned"
     },
     "to07.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5241
+        "calc_office_id": 5241,
+        "status": "abandoned"
     },
     "to45.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5254
+        "calc_office_id": 5254,
+        "status": "abandoned"
     },
     "to46.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5255
+        "calc_office_id": 5255,
+        "status": "abandoned"
     },
     "to53.rosreestr.ru": {
         "events": [],
@@ -13788,8 +13828,8 @@
     },
     "to26.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5281
+        "calc_office_id": 5281,
+        "status": "abandoned"
     },
     "to72.rosreestr.ru": {
         "events": [],
@@ -13865,7 +13905,8 @@
     },
     "rcxn.yaroslavl.ru": {
         "events": [],
-        "calc_office_id": 5464
+        "calc_office_id": 5464,
+        "status": "abandoned"
     },
     "05.rpn.gov.ru": {
         "events": [],
@@ -14005,7 +14046,8 @@
     },
     "admingribanovka.e-gov36.ru": {
         "events": [],
-        "calc_office_id": 1453
+        "calc_office_id": 1453,
+        "status": "abandoned"
     },
     "petropavlovka.com": {
         "events": [],
@@ -14021,7 +14063,8 @@
     },
     "krasn.mosreg.ru": {
         "events": [],
-        "calc_office_id": 1530
+        "calc_office_id": 1530,
+        "status": "abandoned"
     },
     "reutov.net": {
         "events": [],
@@ -14057,7 +14100,8 @@
     },
     "gorodob.ru": {
         "events": [],
-        "calc_office_id": 1609
+        "calc_office_id": 1609,
+        "status": "abandoned"
     },
     "xn--80aafin6al6b.xn--p1ai": {
         "events": [],
@@ -14121,7 +14165,8 @@
     },
     "adminshabl.57ru.ru": {
         "events": [],
-        "calc_office_id": 1812
+        "calc_office_id": 1812,
+        "status": "abandoned"
     },
     "achit-adm.ru": {
         "events": [],
@@ -14369,8 +14414,8 @@
     },
     "admbirsk.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 2654
+        "calc_office_id": 2654,
+        "status": "abandoned"
     },
     "sovet-davlekanovo.ru": {
         "events": [],
@@ -14466,7 +14511,8 @@
     },
     "smid.eao.ru": {
         "events": [],
-        "calc_office_id": 3126
+        "calc_office_id": 3126,
+        "status": "abandoned"
     },
     "ivgorduma.ru": {
         "events": [],
@@ -14670,7 +14716,8 @@
     },
     "admin.chita.ru": {
         "events": [],
-        "calc_office_id": 3785
+        "calc_office_id": 3785,
+        "status": "abandoned"
     },
     "tu87.rosim.ru": {
         "events": [],
@@ -14822,7 +14869,8 @@
     },
     "adm.meteo.nw.ru": {
         "events": [],
-        "calc_office_id": 5493
+        "calc_office_id": 5493,
+        "status": "abandoned"
     },
     "sktu.customs.ru": {
         "events": [],
@@ -15198,8 +15246,8 @@
     },
     "to36.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 928
+        "calc_office_id": 928,
+        "status": "abandoned"
     },
     "rsn-msk.ru": {
         "events": [],
@@ -15207,8 +15255,8 @@
     },
     "to78.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 1295
+        "calc_office_id": 1295,
+        "status": "abandoned"
     },
     "ustavsudklgd.ru": {
         "events": [],
@@ -15472,38 +15520,38 @@
     },
     "to28.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5225
+        "calc_office_id": 5225,
+        "status": "abandoned"
     },
     "to30.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5227
+        "calc_office_id": 5227,
+        "status": "abandoned"
     },
     "to02.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5228
+        "calc_office_id": 5228,
+        "status": "abandoned"
     },
     "to37.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5238
+        "calc_office_id": 5238,
+        "status": "abandoned"
     },
     "to09.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5246
+        "calc_office_id": 5246,
+        "status": "abandoned"
     },
     "to43.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5249
+        "calc_office_id": 5249,
+        "status": "abandoned"
     },
     "to52.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5262
+        "calc_office_id": 5262,
+        "status": "abandoned"
     },
     "to54.rosreestr.ru": {
         "events": [],
@@ -15511,48 +15559,48 @@
     },
     "to57.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5267
+        "calc_office_id": 5267,
+        "status": "abandoned"
     },
     "to25.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5270
+        "calc_office_id": 5270,
+        "status": "abandoned"
     },
     "to62.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5273
+        "calc_office_id": 5273,
+        "status": "abandoned"
     },
     "to63.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5274
+        "calc_office_id": 5274,
+        "status": "abandoned"
     },
     "to16.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5283
+        "calc_office_id": 5283,
+        "status": "abandoned"
     },
     "to70.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5285
+        "calc_office_id": 5285,
+        "status": "abandoned"
     },
     "to74.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5294
+        "calc_office_id": 5294,
+        "status": "abandoned"
     },
     "to20.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5295
+        "calc_office_id": 5295,
+        "status": "abandoned"
     },
     "to76.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5298
+        "calc_office_id": 5298,
+        "status": "abandoned"
     },
     "rsn-kld.ru": {
         "events": [],
@@ -16284,7 +16332,8 @@
     },
     "bogovarovo-adm.ru": {
         "events": [],
-        "calc_office_id": 3228
+        "calc_office_id": 3228,
+        "status": "abandoned"
     },
     "mishkino.kurganobl.ru": {
         "events": [],
@@ -16424,7 +16473,8 @@
     },
     "lahden-mr.ru": {
         "events": [],
-        "calc_office_id": 3600
+        "calc_office_id": 3600,
+        "status": "abandoned"
     },
     "emdinmu.ru": {
         "events": [],
@@ -16684,24 +16734,23 @@
     },
     "fmsvolg.ru": {
         "events": [],
-        "status": "abandoned",
-
-        "calc_office_id": 314
+        "calc_office_id": 314,
+        "status": "abandoned"
     },
     "ufmsko.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 348
+        "calc_office_id": 348,
+        "status": "abandoned"
     },
     "ufms.omsk.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 350
+        "calc_office_id": 350,
+        "status": "abandoned"
     },
     "fmsamur.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 356
+        "calc_office_id": 356,
+        "status": "abandoned"
     },
     "ivanovo.izbirkom.ru": {
         "events": [],
@@ -16813,8 +16862,8 @@
     },
     "fms39.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 3898
+        "calc_office_id": 3898,
+        "status": "abandoned"
     },
     "01.mchs.gov.ru": {
         "events": [],
@@ -17034,7 +17083,8 @@
     },
     "glava.r-19.ru": {
         "events": [],
-        "calc_office_id": 133
+        "calc_office_id": 133,
+        "status": "abandoned"
     },
     "xn--80abfj4bhldqe.xn--80aaaac8algcbgbck3fl0q.xn--p1ai": {
         "events": [],
@@ -17282,112 +17332,113 @@
     },
     "ugadn72.ru": {
         "events": [],
-        "calc_office_id": 5214
+        "calc_office_id": 5214,
+        "status": "abandoned"
     },
     "to04.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5223
+        "calc_office_id": 5223,
+        "status": "abandoned"
     },
     "to22.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5224
+        "calc_office_id": 5224,
+        "status": "abandoned"
     },
     "to08.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5243
+        "calc_office_id": 5243,
+        "status": "abandoned"
     },
     "to41.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5245
+        "calc_office_id": 5245,
+        "status": "abandoned"
     },
     "to42.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5248
+        "calc_office_id": 5248,
+        "status": "abandoned"
     },
     "to59.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5269
+        "calc_office_id": 5269,
+        "status": "abandoned"
     },
     "to60.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5271
+        "calc_office_id": 5271,
+        "status": "abandoned"
     },
     "to67.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5280
+        "calc_office_id": 5280,
+        "status": "abandoned"
     },
     "to17.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5286
+        "calc_office_id": 5286,
+        "status": "abandoned"
     },
     "to18.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5289
+        "calc_office_id": 5289,
+        "status": "abandoned"
     },
     "to27.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5291
+        "calc_office_id": 5291,
+        "status": "abandoned"
     },
     "to89.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5297
+        "calc_office_id": 5297,
+        "status": "abandoned"
     },
     "r22.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5338
+        "calc_office_id": 5338,
+        "status": "abandoned"
     },
     "r41.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5357
+        "calc_office_id": 5357,
+        "status": "abandoned"
     },
     "r24.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5365
+        "calc_office_id": 5365,
+        "status": "abandoned"
     },
     "r51.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5373
+        "calc_office_id": 5373,
+        "status": "abandoned"
     },
     "r52.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5374
+        "calc_office_id": 5374,
+        "status": "abandoned"
     },
     "r59.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5381
+        "calc_office_id": 5381,
+        "status": "abandoned"
     },
     "r17.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5398
+        "calc_office_id": 5398,
+        "status": "abandoned"
     },
     "r71.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5399
+        "calc_office_id": 5399,
+        "status": "abandoned"
     },
     "r18.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5401
+        "calc_office_id": 5401,
+        "status": "abandoned"
     },
     "rosselhoznadzor30.ru": {
         "events": [],
@@ -17579,11 +17630,13 @@
     },
     "sovetsk-tilsit.ru": {
         "events": [],
-        "calc_office_id": 1417
+        "calc_office_id": 1417,
+        "status": "abandoned"
     },
     "povoradm.ru": {
         "events": [],
-        "calc_office_id": 1467
+        "calc_office_id": 1467,
+        "status": "abandoned"
     },
     "adm-vidnoe.ru": {
         "events": [],
@@ -17599,7 +17652,8 @@
     },
     "chekhov-city.ru": {
         "events": [],
-        "calc_office_id": 1512
+        "calc_office_id": 1512,
+        "status": "abandoned"
     },
     "shhyolkovo.ru": {
         "events": [],
@@ -17803,7 +17857,8 @@
     },
     "kosiha-raion.ru": {
         "events": [],
-        "calc_office_id": 2342
+        "calc_office_id": 2342,
+        "status": "abandoned"
     },
     "ust-kalmanka22.ru": {
         "events": [],
@@ -17955,7 +18010,8 @@
     },
     "admsud.avo.ru": {
         "events": [],
-        "calc_office_id": 2954
+        "calc_office_id": 2954,
+        "status": "abandoned"
     },
     "admbabynino.ru": {
         "events": [],
@@ -17979,7 +18035,8 @@
     },
     "tambr.ru": {
         "events": [],
-        "calc_office_id": 3044
+        "calc_office_id": 3044,
+        "status": "abandoned"
     },
     "gorduma-vichuga37.ru": {
         "events": [],
@@ -18099,7 +18156,8 @@
     },
     "xn--80aaaaqdf1cg9bgv6a.xn--p1ai": {
         "events": [],
-        "calc_office_id": 3500
+        "calc_office_id": 3500,
+        "status": "abandoned"
     },
     "lbt.yanao.ru": {
         "events": [],
@@ -18755,7 +18813,8 @@
     },
     "mru29.fmbaros.ru": {
         "events": [],
-        "calc_office_id": 5306
+        "calc_office_id": 5306,
+        "status": "abandoned"
     },
     "mru51.fmbaros.ru": {
         "events": [],
@@ -18819,48 +18878,48 @@
     },
     "fms-ra.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 266
+        "calc_office_id": 266,
+        "status": "abandoned"
     },
     "fms-altay.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 268
+        "calc_office_id": 268,
+        "status": "abandoned"
     },
     "ufms31.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 283
+        "calc_office_id": 283,
+        "status": "abandoned"
     },
     "fmsvrn.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 286
+        "calc_office_id": 286,
+        "status": "abandoned"
     },
     "fmsorel.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 293
+        "calc_office_id": 293,
+        "status": "abandoned"
     },
     "ufms67.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 295
+        "calc_office_id": 295,
+        "status": "abandoned"
     },
     "fms.tambov.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 296
+        "calc_office_id": 296,
+        "status": "abandoned"
     },
     "fms-tula.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 298
+        "calc_office_id": 298,
+        "status": "abandoned"
     },
     "ufmsyar.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 299
+        "calc_office_id": 299,
+        "status": "abandoned"
     },
     "ufms.spb.ru": {
         "events": [],
@@ -18868,13 +18927,13 @@
     },
     "fms.rkomi.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 302
+        "calc_office_id": 302,
+        "status": "abandoned"
     },
     "ufmsarh.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 303
+        "calc_office_id": 303,
+        "status": "abandoned"
     },
     "ufms35.ru": {
         "events": [],
@@ -18882,118 +18941,118 @@
     },
     "novufms.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 307
+        "calc_office_id": 307,
+        "status": "abandoned"
     },
     "ofms01.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 310
+        "calc_office_id": 310,
+        "status": "abandoned"
     },
     "ufms-astrakhan.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 313
+        "calc_office_id": 313,
+        "status": "abandoned"
     },
     "ofms.cherkessk.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 319
+        "calc_office_id": 319,
+        "status": "abandoned"
     },
     "ufmssk.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 322
+        "calc_office_id": 322,
+        "status": "abandoned"
     },
     "fms12.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 324
+        "calc_office_id": 324,
+        "status": "abandoned"
     },
     "fmsrm.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 325
+        "calc_office_id": 325,
+        "status": "abandoned"
     },
     "ufms.tatarstan.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 326
+        "calc_office_id": 326,
+        "status": "abandoned"
     },
     "fms-udm.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 327
+        "calc_office_id": 327,
+        "status": "abandoned"
     },
     "fms43.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 330
+        "calc_office_id": 330,
+        "status": "abandoned"
     },
     "fmspenza.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 333
+        "calc_office_id": 333,
+        "status": "abandoned"
     },
     "ufms-saratov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 335
+        "calc_office_id": 335,
+        "status": "abandoned"
     },
     "ufms.region73.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 336
+        "calc_office_id": 336,
+        "status": "abandoned"
     },
     "ufms72.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 339
+        "calc_office_id": 339,
+        "status": "abandoned"
     },
     "fmschel.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 340
+        "calc_office_id": 340,
+        "status": "abandoned"
     },
     "ufms86.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 341
+        "calc_office_id": 341,
+        "status": "abandoned"
     },
     "xn----8sb8afgomi6h.xn--p1ai": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 342
+        "calc_office_id": 342,
+        "status": "abandoned"
     },
     "ufmsrb.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 343
+        "calc_office_id": 343,
+        "status": "abandoned"
     },
     "ufms.chita.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 352
+        "calc_office_id": 352,
+        "status": "abandoned"
     },
     "ufms14.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 353
+        "calc_office_id": 353,
+        "status": "abandoned"
     },
     "fmspk.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 354
+        "calc_office_id": 354,
+        "status": "abandoned"
     },
     "fmskam.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 357
+        "calc_office_id": 357,
+        "status": "abandoned"
     },
     "fms.chukotka.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 358
+        "calc_office_id": 358,
+        "status": "abandoned"
     },
     "primorsk.izbirkom.ru": {
         "events": [],
@@ -19201,8 +19260,8 @@
     },
     "fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 468
+        "calc_office_id": 468,
+        "status": "abandoned"
     },
     "arch.gosnadzor.ru": {
         "events": [],
@@ -19266,7 +19325,8 @@
     },
     "stavsud.ru": {
         "events": [],
-        "calc_office_id": 779
+        "calc_office_id": 779,
+        "status": "abandoned"
     },
     "vs.udm.sudrf.ru": {
         "events": [],
@@ -19278,8 +19338,8 @@
     },
     "r48.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 884
+        "calc_office_id": 884,
+        "status": "abandoned"
     },
     "roszdravnadzor.spb.ru": {
         "events": [],
@@ -19287,8 +19347,8 @@
     },
     "r77.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 1288
+        "calc_office_id": 1288,
+        "status": "abandoned"
     },
     "lefortovsky.msk.sudrf.ru": {
         "events": [],
@@ -19372,7 +19432,8 @@
     },
     "old.dagestan.roskazna.ru": {
         "events": [],
-        "calc_office_id": 4735
+        "calc_office_id": 4735,
+        "status": "abandoned"
     },
     "git15.rostrud.ru": {
         "events": [],
@@ -19444,168 +19505,168 @@
     },
     "to31.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5229
+        "calc_office_id": 5229,
+        "status": "abandoned"
     },
     "to79.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5236
+        "calc_office_id": 5236,
+        "status": "abandoned"
     },
     "to38.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5240
+        "calc_office_id": 5240,
+        "status": "abandoned"
     },
     "to39.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5242
+        "calc_office_id": 5242,
+        "status": "abandoned"
     },
     "to10.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5247
+        "calc_office_id": 5247,
+        "status": "abandoned"
     },
     "to11.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5250
+        "calc_office_id": 5250,
+        "status": "abandoned"
     },
     "to24.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5253
+        "calc_office_id": 5253,
+        "status": "abandoned"
     },
     "to12.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5258
+        "calc_office_id": 5258,
+        "status": "abandoned"
     },
     "to50.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5260
+        "calc_office_id": 5260,
+        "status": "abandoned"
     },
     "to66.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5278
+        "calc_office_id": 5278,
+        "status": "abandoned"
     },
     "to68.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5282
+        "calc_office_id": 5282,
+        "status": "abandoned"
     },
     "to69.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5284
+        "calc_office_id": 5284,
+        "status": "abandoned"
     },
     "to86.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5293
+        "calc_office_id": 5293,
+        "status": "abandoned"
     },
     "r39.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5337
+        "calc_office_id": 5337,
+        "status": "abandoned"
     },
     "r28.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5339
+        "calc_office_id": 5339,
+        "status": "abandoned"
     },
     "r29.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5340
+        "calc_office_id": 5340,
+        "status": "abandoned"
     },
     "r03.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5345
+        "calc_office_id": 5345,
+        "status": "abandoned"
     },
     "r33.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5346
+        "calc_office_id": 5346,
+        "status": "abandoned"
     },
     "r75.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5350
+        "calc_office_id": 5350,
+        "status": "abandoned"
     },
     "r37.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5351
+        "calc_office_id": 5351,
+        "status": "abandoned"
     },
     "r42.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5360
+        "calc_office_id": 5360,
+        "status": "abandoned"
     },
     "r13.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5371
+        "calc_office_id": 5371,
+        "status": "abandoned"
     },
     "r57.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5379
+        "calc_office_id": 5379,
+        "status": "abandoned"
     },
     "r61.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5384
+        "calc_office_id": 5384,
+        "status": "abandoned"
     },
     "r62.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5385
+        "calc_office_id": 5385,
+        "status": "abandoned"
     },
     "r64.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5387
+        "calc_office_id": 5387,
+        "status": "abandoned"
     },
     "r65.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5389
+        "calc_office_id": 5389,
+        "status": "abandoned"
     },
     "r15.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5391
+        "calc_office_id": 5391,
+        "status": "abandoned"
     },
     "r16.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5395
+        "calc_office_id": 5395,
+        "status": "abandoned"
     },
     "r69.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5396
+        "calc_office_id": 5396,
+        "status": "abandoned"
     },
     "r72.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5400
+        "calc_office_id": 5400,
+        "status": "abandoned"
     },
     "r74.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5406
+        "calc_office_id": 5406,
+        "status": "abandoned"
     },
     "r21.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5408
+        "calc_office_id": 5408,
+        "status": "abandoned"
     },
     "rsn-ing.ru": {
         "events": [],
@@ -20245,7 +20306,8 @@
     },
     "shentala.ru": {
         "events": [],
-        "calc_office_id": 2022
+        "calc_office_id": 2022,
+        "status": "abandoned"
     },
     "shent.samgd.ru": {
         "events": [],
@@ -20301,7 +20363,8 @@
     },
     "apsheronskmo.ru": {
         "events": [],
-        "calc_office_id": 2245
+        "calc_office_id": 2245,
+        "status": "abandoned"
     },
     "kurganinskyuo.my1.ru": {
         "events": [],
@@ -20321,7 +20384,8 @@
     },
     "xn----7sbbg2acfccfjiygh3am0e.xn--p1ai": {
         "events": [],
-        "calc_office_id": 2351
+        "calc_office_id": 2351,
+        "status": "abandoned"
     },
     "mhlaltay.ru": {
         "events": [],
@@ -20501,7 +20565,8 @@
     },
     "rzhevregion.com": {
         "events": [],
-        "calc_office_id": 2927
+        "calc_office_id": 2927,
+        "status": "abandoned"
     },
     "baryatino40.ru": {
         "events": [],
@@ -20601,7 +20666,8 @@
     },
     "mishkino.org": {
         "events": [],
-        "calc_office_id": 3251
+        "calc_office_id": 3251,
+        "status": "abandoned"
     },
     "raion.shadrinsk.net": {
         "events": [],
@@ -20613,7 +20679,8 @@
     },
     "xn--80apdbbftbgrh5k.xn--p1ai": {
         "events": [],
-        "calc_office_id": 3313
+        "calc_office_id": 3313,
+        "status": "abandoned"
     },
     "education-26.ru": {
         "events": [],
@@ -20789,7 +20856,8 @@
     },
     "mo-altay.khakasnet.ru": {
         "events": [],
-        "calc_office_id": 3734
+        "calc_office_id": 3734,
+        "status": "abandoned"
     },
     "nojay-urt.ru": {
         "events": [],
@@ -21149,7 +21217,8 @@
     },
     "mru20.fmbaros.ru": {
         "events": [],
-        "calc_office_id": 5303
+        "calc_office_id": 5303,
+        "status": "abandoned"
     },
     "mru25.fmbaros.ru": {
         "events": [],
@@ -21289,33 +21358,33 @@
     },
     "fmsmoscow.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 282
+        "calc_office_id": 282,
+        "status": "abandoned"
     },
     "ufms-bryansk.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 284
+        "calc_office_id": 284,
+        "status": "abandoned"
     },
     "fms33.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 285
+        "calc_office_id": 285,
+        "status": "abandoned"
     },
     "fms-k.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 289
+        "calc_office_id": 289,
+        "status": "abandoned"
     },
     "fmsmo.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 292
+        "calc_office_id": 292,
+        "status": "abandoned"
     },
     "ufms-rzn.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 294
+        "calc_office_id": 294,
+        "status": "abandoned"
     },
     "tver-ufms.ru": {
         "events": [],
@@ -21323,138 +21392,138 @@
     },
     "ufms.karelia.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 301
+        "calc_office_id": 301,
+        "status": "abandoned"
     },
     "ufms.gov-murman.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 305
+        "calc_office_id": 305,
+        "status": "abandoned"
     },
     "ufms.pskov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 308
+        "calc_office_id": 308,
+        "status": "abandoned"
     },
     "fms-nao.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 309
+        "calc_office_id": 309,
+        "status": "abandoned"
     },
     "fms08.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 311
+        "calc_office_id": 311,
+        "status": "abandoned"
     },
     "ufmskrn.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 312
+        "calc_office_id": 312,
+        "status": "abandoned"
     },
     "fms-rostov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 315
+        "calc_office_id": 315,
+        "status": "abandoned"
     },
     "ufmskbr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 318
+        "calc_office_id": 318,
+        "status": "abandoned"
     },
     "ufmsosetia.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 320
+        "calc_office_id": 320,
+        "status": "abandoned"
     },
     "ufmschr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 321
+        "calc_office_id": 321,
+        "status": "abandoned"
     },
     "fms21.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 328
+        "calc_office_id": 328,
+        "status": "abandoned"
     },
     "permufms.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 329
+        "calc_office_id": 329,
+        "status": "abandoned"
     },
     "fmsnnov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 331
+        "calc_office_id": 331,
+        "status": "abandoned"
     },
     "ufmsoren.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 332
+        "calc_office_id": 332,
+        "status": "abandoned"
     },
     "ufms63.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 334
+        "calc_office_id": 334,
+        "status": "abandoned"
     },
     "fms45.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 337
+        "calc_office_id": 337,
+        "status": "abandoned"
     },
     "ufms-ural.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 338
+        "calc_office_id": 338,
+        "status": "abandoned"
     },
     "ofmstuva.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 344
+        "calc_office_id": 344,
+        "status": "abandoned"
     },
     "fms19.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 345
+        "calc_office_id": 345,
+        "status": "abandoned"
     },
     "krasufms.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 346
+        "calc_office_id": 346,
+        "status": "abandoned"
     },
     "xn--38-7lcun.xn--p1ai": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 347
+        "calc_office_id": 347,
+        "status": "abandoned"
     },
     "fms-nso.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 349
+        "calc_office_id": 349,
+        "status": "abandoned"
     },
     "ufms.tomsk.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 351
+        "calc_office_id": 351,
+        "status": "abandoned"
     },
     "ufms-khb.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 355
+        "calc_office_id": 355,
+        "status": "abandoned"
     },
     "fms-magadan.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 359
+        "calc_office_id": 359,
+        "status": "abandoned"
     },
     "sakhfms.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 360
+        "calc_office_id": 360,
+        "status": "abandoned"
     },
     "fmseao.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 361
+        "calc_office_id": 361,
+        "status": "abandoned"
     },
     "krasnodar.izbirkom.ru": {
         "events": [],
@@ -21486,7 +21555,8 @@
     },
     "fsoz.gov.ru": {
         "events": [],
-        "calc_office_id": 488
+        "calc_office_id": 488,
+        "status": "abandoned"
     },
     "gfs.gov.ru": {
         "events": [],
@@ -21674,7 +21744,8 @@
     },
     "vostochnoe-mo.ru": {
         "events": [],
-        "calc_office_id": 6825
+        "calc_office_id": 6825,
+        "status": "abandoned"
     },
     "preobr.ru": {
         "events": [],
@@ -21726,7 +21797,8 @@
     },
     "gov.altai-republic.ru": {
         "events": [],
-        "calc_office_id": 149
+        "calc_office_id": 149,
+        "status": "abandoned"
     },
     "alania.gov.ru": {
         "events": [],
@@ -21778,8 +21850,8 @@
     },
     "to48.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 878
+        "calc_office_id": 878,
+        "status": "abandoned"
     },
     "duma32.ru": {
         "events": [],
@@ -21787,8 +21859,8 @@
     },
     "to77.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 1296
+        "calc_office_id": 1296,
+        "status": "abandoned"
     },
     "gagarinsky.msk.sudrf.ru": {
         "events": [],
@@ -21988,7 +22060,8 @@
     },
     "old.omsk.roskazna.ru": {
         "events": [],
-        "calc_office_id": 4766
+        "calc_office_id": 4766,
+        "status": "abandoned"
     },
     "r01.fssprus.ru": {
         "events": [],
@@ -22048,57 +22121,58 @@
     },
     "ugadn68.ru": {
         "events": [],
-        "calc_office_id": 5209
+        "calc_office_id": 5209,
+        "status": "abandoned"
     },
     "to01.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5222
+        "calc_office_id": 5222,
+        "status": "abandoned"
     },
     "to32.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5230
+        "calc_office_id": 5230,
+        "status": "abandoned"
     },
     "to03.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5231
+        "calc_office_id": 5231,
+        "status": "abandoned"
     },
     "to34.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5233
+        "calc_office_id": 5233,
+        "status": "abandoned"
     },
     "to44.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5251
+        "calc_office_id": 5251,
+        "status": "abandoned"
     },
     "to23.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5252
+        "calc_office_id": 5252,
+        "status": "abandoned"
     },
     "to47.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5256
+        "calc_office_id": 5256,
+        "status": "abandoned"
     },
     "to13.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5259
+        "calc_office_id": 5259,
+        "status": "abandoned"
     },
     "to51.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5261
+        "calc_office_id": 5261,
+        "status": "abandoned"
     },
     "to55.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5265
+        "calc_office_id": 5265,
+        "status": "abandoned"
     },
     "to58.rosreestr.ru": {
         "events": [],
@@ -22106,138 +22180,138 @@
     },
     "to61.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5272
+        "calc_office_id": 5272,
+        "status": "abandoned"
     },
     "to64.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5275
+        "calc_office_id": 5275,
+        "status": "abandoned"
     },
     "to14.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5276
+        "calc_office_id": 5276,
+        "status": "abandoned"
     },
     "to19.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5292
+        "calc_office_id": 5292,
+        "status": "abandoned"
     },
     "r30.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5341
+        "calc_office_id": 5341,
+        "status": "abandoned"
     },
     "r34.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5347
+        "calc_office_id": 5347,
+        "status": "abandoned"
     },
     "r35.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5348
+        "calc_office_id": 5348,
+        "status": "abandoned"
     },
     "r38.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5353
+        "calc_office_id": 5353,
+        "status": "abandoned"
     },
     "r40.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5356
+        "calc_office_id": 5356,
+        "status": "abandoned"
     },
     "r43.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5361
+        "calc_office_id": 5361,
+        "status": "abandoned"
     },
     "r11.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5362
+        "calc_office_id": 5362,
+        "status": "abandoned"
     },
     "r23.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5364
+        "calc_office_id": 5364,
+        "status": "abandoned"
     },
     "r45.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5366
+        "calc_office_id": 5366,
+        "status": "abandoned"
     },
     "r46.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5367
+        "calc_office_id": 5367,
+        "status": "abandoned"
     },
     "r47.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5368
+        "calc_office_id": 5368,
+        "status": "abandoned"
     },
     "r12.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5370
+        "calc_office_id": 5370,
+        "status": "abandoned"
     },
     "r54.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5376
+        "calc_office_id": 5376,
+        "status": "abandoned"
     },
     "r55.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5377
+        "calc_office_id": 5377,
+        "status": "abandoned"
     },
     "r56.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5378
+        "calc_office_id": 5378,
+        "status": "abandoned"
     },
     "r58.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5380
+        "calc_office_id": 5380,
+        "status": "abandoned"
     },
     "r25.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5382
+        "calc_office_id": 5382,
+        "status": "abandoned"
     },
     "r63.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5386
+        "calc_office_id": 5386,
+        "status": "abandoned"
     },
     "r14.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5388
+        "calc_office_id": 5388,
+        "status": "abandoned"
     },
     "r66.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5390
+        "calc_office_id": 5390,
+        "status": "abandoned"
     },
     "r26.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5393
+        "calc_office_id": 5393,
+        "status": "abandoned"
     },
     "r68.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5394
+        "calc_office_id": 5394,
+        "status": "abandoned"
     },
     "r70.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5397
+        "calc_office_id": 5397,
+        "status": "abandoned"
     },
     "rsnmurman.ru": {
         "events": [],
@@ -22685,7 +22759,8 @@
     },
     "bes.sao.mos.ru": {
         "events": [],
-        "calc_office_id": 1009
+        "calc_office_id": 1009,
+        "status": "abandoned"
     },
     "beskudnikovo.mos.ru": {
         "events": [],
@@ -22713,7 +22788,8 @@
     },
     "sok.sao.mos.ru": {
         "events": [],
-        "calc_office_id": 1019
+        "calc_office_id": 1019,
+        "status": "abandoned"
     },
     "sokol.mos.ru": {
         "events": [],
@@ -22721,7 +22797,8 @@
     },
     "tim.sao.mos.ru": {
         "events": [],
-        "calc_office_id": 1020
+        "calc_office_id": 1020,
+        "status": "abandoned"
     },
     "khovrino.mos.ru": {
         "events": [],
@@ -22781,7 +22858,8 @@
     },
     "xn--24--tddaypadqdlnhz.xn--p1ai": {
         "events": [],
-        "calc_office_id": 1191
+        "calc_office_id": 1191,
+        "status": "abandoned"
     },
     "msmetal-kolpinfo.ru": {
         "events": [],
@@ -22909,7 +22987,8 @@
     },
     "motadm.ru": {
         "events": [],
-        "calc_office_id": 1764
+        "calc_office_id": 1764,
+        "status": "abandoned"
     },
     "xn--80aaaav2blrolg5cyg.xn--80acgfbsl1azdqr.xn--p1ai": {
         "events": [],
@@ -22949,7 +23028,8 @@
     },
     "malysheva.midural.ru": {
         "events": [],
-        "calc_office_id": 1853
+        "calc_office_id": 1853,
+        "status": "abandoned"
     },
     "nsergi16.ru": {
         "events": [],
@@ -23037,11 +23117,13 @@
     },
     "marks.sarmo.ru": {
         "events": [],
-        "calc_office_id": 2128
+        "calc_office_id": 2128,
+        "status": "abandoned"
     },
     "pugachjov.sarmo.ru": {
         "events": [],
-        "calc_office_id": 2135
+        "calc_office_id": 2135,
+        "status": "abandoned"
     },
     "dumavlz.ru": {
         "events": [],
@@ -23049,7 +23131,8 @@
     },
     "adm.lysva.ru": {
         "events": [],
-        "calc_office_id": 2196
+        "calc_office_id": 2196,
+        "status": "abandoned"
     },
     "ohansk.ucoz.ru": {
         "events": [],
@@ -23085,7 +23168,8 @@
     },
     "sovetskoe-alt.ru": {
         "events": [],
-        "calc_office_id": 2364
+        "calc_office_id": 2364,
+        "status": "abandoned"
     },
     "admhabary.ru": {
         "events": [],
@@ -23109,7 +23193,8 @@
     },
     "new.ehirit.ru": {
         "events": [],
-        "calc_office_id": 2452
+        "calc_office_id": 2452,
+        "status": "abandoned"
     },
     "borisogleb.ru": {
         "events": [],
@@ -23125,7 +23210,8 @@
     },
     "chumikan.ru": {
         "events": [],
-        "calc_office_id": 2496
+        "calc_office_id": 2496,
+        "status": "abandoned"
     },
     "googai.ucoz.ru": {
         "events": [],
@@ -23229,7 +23315,8 @@
     },
     "dumashkot.ru": {
         "events": [],
-        "calc_office_id": 2727
+        "calc_office_id": 2727,
+        "status": "abandoned"
     },
     "xn----btbhbfb0dvaes.xn--p1ai": {
         "events": [],
@@ -23317,7 +23404,8 @@
     },
     "new.belraion.ru": {
         "events": [],
-        "calc_office_id": 3028
+        "calc_office_id": 3028,
+        "status": "abandoned"
     },
     "sel28.ru": {
         "events": [],
@@ -23365,7 +23453,8 @@
     },
     "zolotuhinsky.ru": {
         "events": [],
-        "calc_office_id": 3274
+        "calc_office_id": 3274,
+        "status": "abandoned"
     },
     "rlgov.ru": {
         "events": [],
@@ -23437,7 +23526,8 @@
     },
     "yustinskoe-rmo.ru": {
         "events": [],
-        "calc_office_id": 3581
+        "calc_office_id": 3581,
+        "status": "abandoned"
     },
     "yashkulrmo.rk08.ru": {
         "events": [],
@@ -23521,7 +23611,8 @@
     },
     "omszapdeg.ru": {
         "events": [],
-        "calc_office_id": 6764
+        "calc_office_id": 6764,
+        "status": "abandoned"
     },
     "bvyazemy.ru": {
         "events": [],
@@ -23565,7 +23656,8 @@
     },
     "fss.penza.ru": {
         "events": [],
-        "calc_office_id": 4083
+        "calc_office_id": 4083,
+        "status": "abandoned"
     },
     "r26.fss.ru": {
         "events": [],
@@ -23949,29 +24041,28 @@
     },
     "ufmsivanovo.ru": {
         "events": [],
-        "status": "abandoned",
-
-        "calc_office_id": 287
+        "calc_office_id": 287,
+        "status": "abandoned"
     },
     "fms.kaluga.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 288
+        "calc_office_id": 288,
+        "status": "abandoned"
     },
     "xn--j1aaerdcjdf.xn--p1ai": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 290
+        "calc_office_id": 290,
+        "status": "abandoned"
     },
     "ufms48.seo-lip.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 291
+        "calc_office_id": 291,
+        "status": "abandoned"
     },
     "fmsrd.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 316
+        "calc_office_id": 316,
+        "status": "abandoned"
     },
     "cikrb.ru": {
         "events": [],
@@ -24403,7 +24494,8 @@
     },
     "prokzabkray.ru": {
         "events": [],
-        "calc_office_id": 29
+        "calc_office_id": 29,
+        "status": "abandoned"
     },
     "procuratura.nov.ru": {
         "events": [],
@@ -24463,8 +24555,8 @@
     },
     "r36.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 935
+        "calc_office_id": 935,
+        "status": "abandoned"
     },
     "78reg.roszdravnadzor.ru": {
         "events": [],
@@ -24472,13 +24564,13 @@
     },
     "r78.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 1287
+        "calc_office_id": 1287,
+        "status": "abandoned"
     },
     "78.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 1301
+        "calc_office_id": 1301,
+        "status": "abandoned"
     },
     "babushky.msk.sudrf.ru": {
         "events": [],
@@ -24610,23 +24702,23 @@
     },
     "03.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5062
+        "calc_office_id": 5062,
+        "status": "abandoned"
     },
     "06fskn.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5070
+        "calc_office_id": 5070,
+        "status": "abandoned"
     },
     "24.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5083
+        "calc_office_id": 5083,
+        "status": "abandoned"
     },
     "27.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5121
+        "calc_office_id": 5121,
+        "status": "abandoned"
     },
     "ugadn52.tu.rostransnadzor.ru": {
         "events": [],
@@ -24642,7 +24734,8 @@
     },
     "ugadn31.ru": {
         "events": [],
-        "calc_office_id": 5170
+        "calc_office_id": 5170,
+        "status": "abandoned"
     },
     "ugadn60.tu.rostransnadzor.ru": {
         "events": [],
@@ -24650,7 +24743,8 @@
     },
     "ugadn64.ru": {
         "events": [],
-        "calc_office_id": 5205
+        "calc_office_id": 5205,
+        "status": "abandoned"
     },
     "ugadn14.tu.rostransnadzor.ru": {
         "events": [],
@@ -24658,7 +24752,8 @@
     },
     "xn--16-6kclg8cwb.xn--p1ai": {
         "events": [],
-        "calc_office_id": 5210
+        "calc_office_id": 5210,
+        "status": "abandoned"
     },
     "ugadn16.tu.rostransnadzor.ru": {
         "events": [],
@@ -24674,108 +24769,108 @@
     },
     "to05.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5235
+        "calc_office_id": 5235,
+        "status": "abandoned"
     },
     "to75.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5237
+        "calc_office_id": 5237,
+        "status": "abandoned"
     },
     "to06.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5239
+        "calc_office_id": 5239,
+        "status": "abandoned"
     },
     "to40.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5244
+        "calc_office_id": 5244,
+        "status": "abandoned"
     },
     "to49.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5257
+        "calc_office_id": 5257,
+        "status": "abandoned"
     },
     "to56.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5266
+        "calc_office_id": 5266,
+        "status": "abandoned"
     },
     "to15.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5279
+        "calc_office_id": 5279,
+        "status": "abandoned"
     },
     "to71.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5287
+        "calc_office_id": 5287,
+        "status": "abandoned"
     },
     "r31.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5343
+        "calc_office_id": 5343,
+        "status": "abandoned"
     },
     "r32.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5344
+        "calc_office_id": 5344,
+        "status": "abandoned"
     },
     "r05.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5349
+        "calc_office_id": 5349,
+        "status": "abandoned"
     },
     "r07.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5354
+        "calc_office_id": 5354,
+        "status": "abandoned"
     },
     "r09.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5358
+        "calc_office_id": 5358,
+        "status": "abandoned"
     },
     "r10.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5359
+        "calc_office_id": 5359,
+        "status": "abandoned"
     },
     "r44.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5363
+        "calc_office_id": 5363,
+        "status": "abandoned"
     },
     "r50.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5372
+        "calc_office_id": 5372,
+        "status": "abandoned"
     },
     "r53.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5375
+        "calc_office_id": 5375,
+        "status": "abandoned"
     },
     "r60.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5383
+        "calc_office_id": 5383,
+        "status": "abandoned"
     },
     "r73.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5402
+        "calc_office_id": 5402,
+        "status": "abandoned"
     },
     "r27.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5403
+        "calc_office_id": 5403,
+        "status": "abandoned"
     },
     "r20.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5407
+        "calc_office_id": 5407,
+        "status": "abandoned"
     },
     "rsn42.ru": {
         "events": [],
@@ -26719,7 +26814,8 @@
     },
     "iglino.ru": {
         "events": [],
-        "calc_office_id": 2667
+        "calc_office_id": 2667,
+        "status": "abandoned"
     },
     "ilesh.ru": {
         "events": [],
@@ -26847,7 +26943,8 @@
     },
     "kirillov.vologda.ru": {
         "events": [],
-        "calc_office_id": 3107
+        "calc_office_id": 3107,
+        "status": "abandoned"
     },
     "sokol-adm.ru": {
         "events": [],
@@ -27455,14 +27552,13 @@
     },
     "ufmsing.ru": {
         "events": [],
-        "status": "abandoned",
-
-        "calc_office_id": 317
+        "calc_office_id": 317,
+        "status": "abandoned"
     },
     "fmsrb.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 323
+        "calc_office_id": 323,
+        "status": "abandoned"
     },
     "bashkortostan.izbirkom.ru": {
         "events": [],
@@ -27738,72 +27834,73 @@
     },
     "28fskn.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5056
+        "calc_office_id": 5056,
+        "status": "abandoned"
     },
     "29.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5057
+        "calc_office_id": 5057,
+        "status": "abandoned"
     },
     "fskn35.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5065
+        "calc_office_id": 5065,
+        "status": "abandoned"
     },
     "07.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5072
+        "calc_office_id": 5072,
+        "status": "abandoned"
     },
     "42.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5078
+        "calc_office_id": 5078,
+        "status": "abandoned"
     },
     "43.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5079
+        "calc_office_id": 5079,
+        "status": "abandoned"
     },
     "fskn-kuban.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5082
+        "calc_office_id": 5082,
+        "status": "abandoned"
     },
     "45.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5084
+        "calc_office_id": 5084,
+        "status": "abandoned"
     },
     "fskn.lipetsk.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5086
+        "calc_office_id": 5086,
+        "status": "abandoned"
     },
     "49.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5087
+        "calc_office_id": 5087,
+        "status": "abandoned"
     },
     "51.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5091
+        "calc_office_id": 5091,
+        "status": "abandoned"
     },
     "gnk.nsk.ru": {
         "events": [],
-        "calc_office_id": 5094
+        "calc_office_id": 5094,
+        "status": "abandoned"
     },
     "55.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5095
+        "calc_office_id": 5095,
+        "status": "abandoned"
     },
     "56.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5096
+        "calc_office_id": 5096,
+        "status": "abandoned"
     },
     "fskn.perm.ru": {
         "events": [],
@@ -27815,18 +27912,18 @@
     },
     "fskn.tomsk.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5115
+        "calc_office_id": 5115,
+        "status": "abandoned"
     },
     "fskn72.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5118
+        "calc_office_id": 5118,
+        "status": "abandoned"
     },
     "74.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5124
+        "calc_office_id": 5124,
+        "status": "abandoned"
     },
     "gnk89.ru": {
         "events": [],
@@ -27870,7 +27967,8 @@
     },
     "ugadn40.ru": {
         "events": [],
-        "calc_office_id": 5180
+        "calc_office_id": 5180,
+        "status": "abandoned"
     },
     "ugadn10.tu.rostransnadzor.ru": {
         "events": [],
@@ -27914,7 +28012,8 @@
     },
     "ugadn50.ru": {
         "events": [],
-        "calc_office_id": 5193
+        "calc_office_id": 5193,
+        "status": "abandoned"
     },
     "ugadn55.tu.rostransnadzor.ru": {
         "events": [],
@@ -27962,43 +28061,43 @@
     },
     "to65.rosreestr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5277
+        "calc_office_id": 5277,
+        "status": "abandoned"
     },
     "r06.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5352
+        "calc_office_id": 5352,
+        "status": "abandoned"
     },
     "r08.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5355
+        "calc_office_id": 5355,
+        "status": "abandoned"
     },
     "r49.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5369
+        "calc_office_id": 5369,
+        "status": "abandoned"
     },
     "r19.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5404
+        "calc_office_id": 5404,
+        "status": "abandoned"
     },
     "r86.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5405
+        "calc_office_id": 5405,
+        "status": "abandoned"
     },
     "r89.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5409
+        "calc_office_id": 5409,
+        "status": "abandoned"
     },
     "r76.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5410
+        "calc_office_id": 5410,
+        "status": "abandoned"
     },
     "primorsk.fsvps.ru": {
         "events": [],
@@ -28530,23 +28629,28 @@
     },
     "vdeg.sao.mos.ru": {
         "events": [],
-        "calc_office_id": 1011
+        "calc_office_id": 1011,
+        "status": "abandoned"
     },
     "dmi.sao.mos.ru": {
         "events": [],
-        "calc_office_id": 1013
+        "calc_office_id": 1013,
+        "status": "abandoned"
     },
     "zdeg.sao.mos.ru": {
         "events": [],
-        "calc_office_id": 1014
+        "calc_office_id": 1014,
+        "status": "abandoned"
     },
     "sav.sao.mos.ru": {
         "events": [],
-        "calc_office_id": 1018
+        "calc_office_id": 1018,
+        "status": "abandoned"
     },
     "hov.sao.mos.ru": {
         "events": [],
-        "calc_office_id": 1021
+        "calc_office_id": 1021,
+        "status": "abandoned"
     },
     "hor.sao.mos.ru": {
         "events": [],
@@ -28554,7 +28658,8 @@
     },
     "uprava-bibirevo.ru": {
         "events": [],
-        "calc_office_id": 1026
+        "calc_office_id": 1026,
+        "status": "abandoned"
     },
     "uprava-lianozovo.ru": {
         "events": [],
@@ -28630,11 +28735,13 @@
     },
     "kolomjagi.ru": {
         "events": [],
-        "calc_office_id": 1258
+        "calc_office_id": 1258,
+        "status": "abandoned"
     },
     "smolninscoe.sp.ru": {
         "events": [],
-        "calc_office_id": 1274
+        "calc_office_id": 1274,
+        "status": "abandoned"
     },
     "ligovka-yamskaya.sankt-peterburg.info": {
         "events": [],
@@ -28746,7 +28853,8 @@
     },
     "old.boradmin.ru": {
         "events": [],
-        "calc_office_id": 1554
+        "calc_office_id": 1554,
+        "status": "abandoned"
     },
     "admvolot.net": {
         "events": [],
@@ -28762,7 +28870,8 @@
     },
     "severnoe-nso.ru": {
         "events": [],
-        "calc_office_id": 1596
+        "calc_office_id": 1596,
+        "status": "abandoned"
     },
     "adm-chulim.ru": {
         "events": [],
@@ -28778,7 +28887,8 @@
     },
     "veselorn.donland.ru": {
         "events": [],
-        "calc_office_id": 1629
+        "calc_office_id": 1629,
+        "status": "abandoned"
     },
     "vesotobr.ru": {
         "events": [],
@@ -28922,7 +29032,8 @@
     },
     "zato-uralsky.ru": {
         "events": [],
-        "calc_office_id": 1883
+        "calc_office_id": 1883,
+        "status": "abandoned"
     },
     "dumashgo.midural.ru": {
         "events": [],
@@ -29254,7 +29365,8 @@
     },
     "adm.progress.amur.ru": {
         "events": [],
-        "calc_office_id": 2863
+        "calc_office_id": 2863,
+        "status": "abandoned"
     },
     "mo-tambov.ru": {
         "events": [],
@@ -29294,12 +29406,13 @@
     },
     "romn.lol.su": {
         "events": [],
-        "calc_office_id": 3039
+        "calc_office_id": 3039,
+        "status": "abandoned"
     },
     "admdyatkovo.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 3057
+        "calc_office_id": 3057,
+        "status": "abandoned"
     },
     "syamzha-ar.vologda.ru": {
         "events": [],
@@ -29367,7 +29480,8 @@
     },
     "makushino45.com": {
         "events": [],
-        "calc_office_id": 3250
+        "calc_office_id": 3250,
+        "status": "abandoned"
     },
     "chastoozero.ucoz.ru": {
         "events": [],
@@ -29567,8 +29681,8 @@
     },
     "torbeevo.o-mordovia.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 3667
+        "calc_office_id": 3667,
+        "status": "abandoned"
     },
     "chamzinka.o-mordovia.ru": {
         "events": [],
@@ -29584,8 +29698,8 @@
     },
     "ak-dovurakadm.wixsite.com": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 3713
+        "calc_office_id": 3713,
+        "status": "abandoned"
     },
     "mongun-taiga.rtyva.ru": {
         "events": [],
@@ -29777,8 +29891,8 @@
     },
     "ufms48.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 291
+        "calc_office_id": 291,
+        "status": "abandoned"
     },
     "old.egov-buryatia.ru": {
         "events": [],
@@ -30038,8 +30152,8 @@
     },
     "fsknmsk.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 1302
+        "calc_office_id": 1302,
+        "status": "abandoned"
     },
     "babushky.mos-gorsud.ru": {
         "events": [],
@@ -30159,9 +30273,8 @@
     },
     "32.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-
-        "calc_office_id": 5061
+        "calc_office_id": 5061,
+        "status": "abandoned"
     },
     "vladnarko.ru": {
         "events": [],
@@ -30169,43 +30282,43 @@
     },
     "fskn.chita.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5068
+        "calc_office_id": 5068,
+        "status": "abandoned"
     },
     "37.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5069
+        "calc_office_id": 5069,
+        "status": "abandoned"
     },
     "ufskn38.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5071
+        "calc_office_id": 5071,
+        "status": "abandoned"
     },
     "ufskn39.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5073
+        "calc_office_id": 5073,
+        "status": "abandoned"
     },
     "10.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5077
+        "calc_office_id": 5077,
+        "status": "abandoned"
     },
     "fskn.rkomi.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5080
+        "calc_office_id": 5080,
+        "status": "abandoned"
     },
     "46.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5085
+        "calc_office_id": 5085,
+        "status": "abandoned"
     },
     "fskn.gov12.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5088
+        "calc_office_id": 5088,
+        "status": "abandoned"
     },
     "gnk-pskov.ru": {
         "events": [],
@@ -30213,17 +30326,18 @@
     },
     "fskn-rostov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5102
+        "calc_office_id": 5102,
+        "status": "abandoned"
     },
     "66.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5108
+        "calc_office_id": 5108,
+        "status": "abandoned"
     },
     "ugadn22.ru": {
         "events": [],
-        "calc_office_id": 5165
+        "calc_office_id": 5165,
+        "status": "abandoned"
     },
     "ugadn2983.tu.rostransnadzor.ru": {
         "events": [],
@@ -30239,7 +30353,8 @@
     },
     "ugadn.karelia.ru": {
         "events": [],
-        "calc_office_id": 5181
+        "calc_office_id": 5181,
+        "status": "abandoned"
     },
     "ugadn42.ru": {
         "events": [],
@@ -30251,7 +30366,8 @@
     },
     "ugadn57.orel.ru": {
         "events": [],
-        "calc_office_id": 5198
+        "calc_office_id": 5198,
+        "status": "abandoned"
     },
     "ugadn57.tu.rostransnadzor.ru": {
         "events": [],
@@ -30259,7 +30375,8 @@
     },
     "xn--58-13-3vea6a1a1dajgubhidp.xn--p1ai": {
         "events": [],
-        "calc_office_id": 5199
+        "calc_office_id": 5199,
+        "status": "abandoned"
     },
     "ugadn63.tu.rostransnadzor.ru": {
         "events": [],
@@ -30271,13 +30388,13 @@
     },
     "r02.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5342
+        "calc_office_id": 5342,
+        "status": "abandoned"
     },
     "r67.rosfinnadzor.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5392
+        "calc_office_id": 5392,
+        "status": "abandoned"
     },
     "rsn-ki.ru": {
         "events": [],
@@ -33697,8 +33814,8 @@
     },
     "fms62.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 294
+        "calc_office_id": 294,
+        "status": "abandoned"
     },
     "xn--21-7lcun.xn--p1ai": {
         "events": [],
@@ -33758,8 +33875,8 @@
     },
     "15.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5109
+        "calc_office_id": 5109,
+        "status": "abandoned"
     },
     "ismu.baikal.ru": {
         "events": [],
@@ -34079,38 +34196,38 @@
     },
     "22.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5055
+        "calc_office_id": 5055,
+        "status": "abandoned"
     },
     "30.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5058
+        "calc_office_id": 5058,
+        "status": "abandoned"
     },
     "fskn31.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5060
+        "calc_office_id": 5060,
+        "status": "abandoned"
     },
     "34.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5064
+        "calc_office_id": 5064,
+        "status": "abandoned"
     },
     "fsknvrn.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5066
+        "calc_office_id": 5066,
+        "status": "abandoned"
     },
     "40.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5074
+        "calc_office_id": 5074,
+        "status": "abandoned"
     },
     "44.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5081
+        "calc_office_id": 5081,
+        "status": "abandoned"
     },
     "gnknn.ru": {
         "events": [],
@@ -34118,18 +34235,18 @@
     },
     "53.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5093
+        "calc_office_id": 5093,
+        "status": "abandoned"
     },
     "57.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5097
+        "calc_office_id": 5097,
+        "status": "abandoned"
     },
     "25.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5100
+        "calc_office_id": 5100,
+        "status": "abandoned"
     },
     "rugnk.ru": {
         "events": [],
@@ -34137,43 +34254,43 @@
     },
     "14.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5106
+        "calc_office_id": 5106,
+        "status": "abandoned"
     },
     "ufsknsk.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5111
+        "calc_office_id": 5111,
+        "status": "abandoned"
     },
     "ufskn.tatarstan.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5113
+        "calc_office_id": 5113,
+        "status": "abandoned"
     },
     "fskn-tver.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5114
+        "calc_office_id": 5114,
+        "status": "abandoned"
     },
     "71.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5117
+        "calc_office_id": 5117,
+        "status": "abandoned"
     },
     "73.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5120
+        "calc_office_id": 5120,
+        "status": "abandoned"
     },
     "19.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5122
+        "calc_office_id": 5122,
+        "status": "abandoned"
     },
     "76.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5128
+        "calc_office_id": 5128,
+        "status": "abandoned"
     },
     "ugadn76.ru": {
         "events": [],
@@ -36141,23 +36258,23 @@
     },
     "ofms.kchr09.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 319
+        "calc_office_id": 319,
+        "status": "abandoned"
     },
     "ufms.irkutsk.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 347
+        "calc_office_id": 347,
+        "status": "abandoned"
     },
     "ufms.ykt.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 353
+        "calc_office_id": 353,
+        "status": "abandoned"
     },
     "ufms.khv.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 355
+        "calc_office_id": 355,
+        "status": "abandoned"
     },
     "kaliningrad.izbirkom.ru": {
         "events": [],
@@ -36381,33 +36498,33 @@
     },
     "28.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5056
+        "calc_office_id": 5056,
+        "status": "abandoned"
     },
     "31.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5060
+        "calc_office_id": 5060,
+        "status": "abandoned"
     },
     "05.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5067
+        "calc_office_id": 5067,
+        "status": "abandoned"
     },
     "41.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5075
+        "calc_office_id": 5075,
+        "status": "abandoned"
     },
     "09.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5076
+        "calc_office_id": 5076,
+        "status": "abandoned"
     },
     "ufskn-rm.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5089
+        "calc_office_id": 5089,
+        "status": "abandoned"
     },
     "gnkmo.ru": {
         "events": [],
@@ -36419,28 +36536,28 @@
     },
     "58.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5098
+        "calc_office_id": 5098,
+        "status": "abandoned"
     },
     "63.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5104
+        "calc_office_id": 5104,
+        "status": "abandoned"
     },
     "64.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5105
+        "calc_office_id": 5105,
+        "status": "abandoned"
     },
     "fskn-smolensk.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5110
+        "calc_office_id": 5110,
+        "status": "abandoned"
     },
     "68.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5112
+        "calc_office_id": 5112,
+        "status": "abandoned"
     },
     "narkostop.net": {
         "events": [],
@@ -36448,8 +36565,8 @@
     },
     "18.fskn.gov.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5119
+        "calc_office_id": 5119,
+        "status": "abandoned"
     },
     "gnk86.ru": {
         "events": [],
@@ -36457,8 +36574,8 @@
     },
     "fskn-chr.ru": {
         "events": [],
-        "status": "abandoned",
-        "calc_office_id": 5125
+        "calc_office_id": 5125,
+        "status": "abandoned"
     },
     "ugadn48.tu.rostransnadzor.ru": {
         "events": [],
