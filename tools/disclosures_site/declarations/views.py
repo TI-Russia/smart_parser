@@ -166,6 +166,8 @@ class CommonSearchView(FormView, generic.ListView):
         context = super().get_context_data(**kwargs)
         if hasattr(self, "hits_count"):
             context['hits_count'] = self.hits_count
+            if hasattr(self, "fuzzy_search"):
+                context['fuzzy_search'] = self.fuzzy_search
             context['query_fields'] = self.get_query_in_cgi()
             old_sort_by, old_order = self.get_sort_order()
             old_cgi_fields = self.get_initial()
@@ -281,8 +283,11 @@ class CommonSearchView(FormView, generic.ListView):
                     normal_documents.append(search_doc)
                 else:
                     doubtful_documents.append(search_doc)
-        if len (normal_documents) == 0:
+        if len(normal_documents) == 0:
             normal_documents.extend(doubtful_documents)
+            self.fuzzy_search = True
+        else:
+            self.fuzzy_search = False
         self.hits_count = search_results.count()
 
         return normal_documents

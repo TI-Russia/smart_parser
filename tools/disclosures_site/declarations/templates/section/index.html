@@ -38,6 +38,11 @@
 {% if hits_count is not None %}
     <br/>
     Число найденных деклараций: {{ hits_count }}
+    {% if fuzzy_search %}
+        <small>(точного вхождения не найдено, ищем без фильтра по ФИО) </small>
+    {% endif %}
+
+
     <br/>
 
     <table cellpadding="5">
