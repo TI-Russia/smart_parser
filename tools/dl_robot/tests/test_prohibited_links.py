@@ -46,4 +46,8 @@ class TestProhibitedLinks(TestCase):
         with tempfile.TemporaryDirectory(dir=os.path.dirname(__file__), prefix="cached_prohibited.") as tmp_folder:
             TDownloadEnv.FILE_CACHE_FOLDER = str(tmp_folder)
             for (source, target, is_prohibited) in BAD_LINKS:
+                if not source.startswith('http'):
+                    source = 'http://' + source
+                if not target.startswith('http'):
+                    target = 'http://' + target
                 self.assertEqual(is_prohibited, web_link_is_absolutely_prohibited(logger, source, target))

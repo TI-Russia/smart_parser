@@ -66,6 +66,7 @@
   pip3 install servicemanager
   pip3 install pywin32
   copy C:\Python37\Lib\site-packages\pywin32_system32\*.dll c:\windows\system32
+  #adjust SERVER_ADDRESS and WORKING_DIR in ConvStorage\DisclosuresPdfConvService.py
   python3 C:\tmp\smart_parser\smart_parser\tools\ConvStorage\DisclosuresPdfConvService.py install
   net start DisclosuresPdfConvService
 

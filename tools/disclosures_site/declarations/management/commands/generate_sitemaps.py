@@ -103,15 +103,15 @@ class Command(BaseCommand):
                 write_static_file(office, years, file_sections, sitemap_folder, sitemap)
 
         with open(os.path.join(sitemap_folder, "sitemap.txt"), "w") as outp:
-            outp.write("https://disclosures.ru/\n")
-            outp.write("https://disclosures.ru/about.html\n")
-            outp.write("https://disclosures.ru/office/\n")
-            outp.write("https://disclosures.ru/person/\n")
-            outp.write("https://disclosures.ru/section/\n")
-            outp.write("https://disclosures.ru/file/\n")
-            outp.write("https://disclosures.ru/statistics/\n")
+            outp.write("https://disclosures.ru/\r\n")
+            outp.write("https://disclosures.ru/about.html\r\n")
+            outp.write("https://disclosures.ru/office/\r\n")
+            outp.write("https://disclosures.ru/person/\r\n")
+            outp.write("https://disclosures.ru/section/\r\n")
+            outp.write("https://disclosures.ru/file/\r\n")
+            outp.write("https://disclosures.ru/statistics/\r\n")
             for f in os.listdir(region_report_folder):
                 if f.endswith('.html'):
-                    outp.write("https://disclosures.ru/static/regionreports/{}\n".format(f))
+                    outp.write("https://disclosures.ru/static/regionreports/{}\r\n".format(f))
             for l in sitemap:
-                outp.write(l + "\n")
+                outp.write(l + "\r\n")

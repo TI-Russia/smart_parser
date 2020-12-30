@@ -114,29 +114,29 @@ class TestWebSiteWithPdf(TestCase):
         self.assertEqual(len(self.env.get_result_files()), 1)
 
 
-class TestRandomPdf(TestCase):
-    web_site_port = 8193
-
-    def setUp(self):
-        website_folder = "web_sites/random_pdf"
-        website_folder = os.path.join(os.path.dirname(__file__), website_folder)
-        txt_file = os.path.join(website_folder, "random.txt")
-        pdf_file = os.path.join(website_folder, "random.pdf")
-        with open(txt_file, "w") as outp:
-            outp.write(str(datetime.now()))
-        converters = TExternalConverters()
-        converters.convert_to_pdf(txt_file, pdf_file)
-        assert os.path.exists(pdf_file)
-
-        self.env = TTestEnv(self.web_site_port, website_folder)
-
-    def tearDown(self):
-        self.env.tearDown()
-
-    def test_pdf(self):
-        self.assertEqual(len(self.env.get_result_files()), 0)
-        self.assertGreater(TDownloadEnv.CONVERSION_CLIENT.all_pdf_size_sent_to_conversion, 0)
-
+# class TestRandomPdf(TestCase):
+#     web_site_port = 8193
+#
+#     def setUp(self):
+#         website_folder = "web_sites/random_pdf"
+#         website_folder = os.path.join(os.path.dirname(__file__), website_folder)
+#         txt_file = os.path.join(website_folder, "random.txt")
+#         pdf_file = os.path.join(website_folder, "random.pdf")
+#         with open(txt_file, "w") as outp:
+#             outp.write(str(datetime.now()))
+#         converters = TExternalConverters()
+#         converters.convert_to_pdf(txt_file, pdf_file)
+#         assert os.path.exists(pdf_file)
+#
+#         self.env = TTestEnv(self.web_site_port, website_folder)
+#
+#     def tearDown(self):
+#         self.env.tearDown()
+#
+#     def test_pdf(self):
+#         self.assertEqual(len(self.env.get_result_files()), 0)
+#         self.assertGreater(TDownloadEnv.CONVERSION_CLIENT.all_pdf_size_sent_to_conversion, 0)
+#
 
 class TestDownloadWithJs(TestCase):
     web_site_port = 8197

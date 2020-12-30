@@ -6,7 +6,7 @@ import logging
 
 class TestRecursion(TestCase):
     def test_yandex(self):
-        redirected_url, headers = request_url_headers_with_global_cache(logging, "www.yandex.ru")
+        redirected_url, headers = request_url_headers_with_global_cache(logging, "http://www.yandex.ru")
         self.assertIsNotNone(headers)
         self.assertEqual(redirected_url, 'https://yandex.ru/')
 
@@ -73,4 +73,3 @@ class TestRecursion(TestCase):
         """
         redirect = TDownloadedFile.get_simple_js_redirect("http://www.aot.ru", html)
         self.assertEqual(redirect, "http://www.aot.ru/newPage.html")
-*

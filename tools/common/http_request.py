@@ -149,7 +149,7 @@ if os.environ.get("DLROBOT_HTTP_TIMEOUT"):
 
 def make_http_request_urllib(logger, url, method):
     if not url.lower().startswith('http'):
-        raise RobotHttpException('unknown protocol, can be only http or https')
+        raise RobotHttpException('unknown protocol, can be only http or https', url, 520, method)
 
     try:
         url = _prepare_url_before_http_request(logger, url, method)

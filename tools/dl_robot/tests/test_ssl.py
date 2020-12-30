@@ -23,9 +23,9 @@ class TestSSL(TestCase):
         shutil.rmtree(self.data_folder, ignore_errors=True)
 
     def test_ssl(self):
-        sites = ["www.yandex.ru", "chukotka.sledcom.ru/", "www.aot.ru", "www.mid.ru",
-                 "officefinder.rs", "ozerny.ru", "ksl.spb.sudrf.ru",  "spbogdo.ru",
-                 "akrvo.ru", "http://primorie.fas.gov.ru"]
+        sites = ["http://www.yandex.ru", "http://chukotka.sledcom.ru/", "http://www.aot.ru", "http://www.mid.ru",
+                 "http://officefinder.rs", "http://ozerny.ru", "http://ksl.spb.sudrf.ru",  "http://spbogdo.ru",
+                 "http://akrvo.ru", "http://primorie.fas.gov.ru"]
         for site in sites:
             make_http_request(logging, site, "GET") # no exceptions
 
