@@ -1,46 +1,57 @@
-import smtplib, ssl
 import urllib.request
 import urllib.parse
 import os
 import time
 import telegram_send
+import logging
+import logging.handlers
+import datetime
+import pytz
+
+MOSCOW_TIME_ZONE = pytz.timezone("Europe/Moscow")
+
+
+def setup_logging(logfilename="health_chk.log"):
+    logger = logging.getLogger("health_chk")
+    logger.setLevel(logging.DEBUG)
+
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    fh = logging.handlers.RotatingFileHandler(logfilename, "a+", encoding="utf8", maxBytes=1024*1024)
+    fh.setLevel(logging.DEBUG)
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
+
+    return logger
+
+
+LOGGER = setup_logging()
 
 
 LAST_MESSAGES = dict()
-def send_email (event_id, to_addr, message):
+
+
+def send_message(event_id, message):
+    LOGGER.debug("{} {}".format(event_id, message))
     global LAST_MESSAGES
-    last_send_time, last_send_message = LAST_MESSAGES.get(event_id, (0,""))
+    last_send_time, last_send_message = LAST_MESSAGES.get(event_id, (0, ""))
     if last_send_message == message:
-        if time.time() - last_send_time < 60*60: # the same message was sent within an hour
+        if time.time() - last_send_time < 60 * 60: # the same message was sent within an hour
             return
+    if event_id == "alive":
+        for (last_send_time, _) in LAST_MESSAGES.values():
+            if time.time() - last_send_time < 60 * 60 * 24:  # the was a message within 24 hours
+                return
+
     LAST_MESSAGES[event_id] = (time.time(), message)
-    print("send email {}:{}".format(event_id, message))
-    smtp_server = "smtp.gmail.com"
-    port = 587  # For starttls
-    sender_email = "disclosures.ru@gmail.com"
-    with open("example.txt", "r") as inp:
-        text_cut = inp.read()[1024:1034]
-
-    context = ssl.create_default_context()
-
-    try:
-        server = smtplib.SMTP(smtp_server, port)
-        server.starttls(context=context) # Secure the connection
-        server.login(sender_email, text_cut)
-        server.sendmail(sender_email, to_addr, message)
-    except Exception as e:
-        print(e)
-    finally:
-        server.quit()
 
     try:
         telegram_send.send(messages=[message])
     except Exception as e:
-        print(e)
+        LOGGER.error("cannot send to telegram")
 
 
 def check_ping(hostname):
-    response = os.system("ping -c 1 " + hostname)
+    response = os.system("ping -c 1 {} >/dev/null".format(hostname))
     # and then check the response...
     return response == 0
 
@@ -53,6 +64,7 @@ def read_morda(url):
     except Exception as exp:
         return False
 
+
 def check_pdf_converter_server():
     try:
         f = urllib.request.urlopen('http://disclosures.ru:8091/ping', timeout=30)
@@ -64,52 +76,59 @@ def check_pdf_converter_server():
 
 def main():
     url = 'http://disclosures.ru'
-    admin_email = "alexey.sokirko@gmail.com"
     ping_flag = True
     morda_flag = True
     pdf_conv_srv_flag = True
     last_time_check_morda = 0
     last_time_check_pdf_conv_src = 0
-    send_email("start", admin_email, "disclosures checker start")
-    #assert read_morda(url)
-    #assert check_pdf_converter_server()
+    last_time_alive = 0
+    send_message("start", "disclosures checker start")
 
-    ping_period = 60*5
+    ping_period = 60 * 5
     http_read_period = 60 * 30
+    alive_period = 60 * 60 * 24
     #ping_period = 10
     #http_read_period = 20
+
     while True:
         time.sleep(ping_period)
         if not check_ping('google.com'):
+            LOGGER.error("cannot access google, internet is down, I am helpless")
             continue
 
         if not check_ping('disclosures.ru'):
-            send_email("ping", admin_email, "disclosures.ru is not reached, ping failed")
+            send_message("ping", "disclosures.ru is not reached, ping failed")
             ping_flag = False
         else:
             if not ping_flag:
-                send_email("ping", admin_email, "disclosures.ru ping succeeded")
+                send_message("ping",  "disclosures.ru ping succeeded")
                 ping_flag = True
 
             if not morda_flag or time.time() - last_time_check_morda  >= http_read_period:
                 last_time_check_morda = time.time()
                 if read_morda(url):
                     if not morda_flag:
-                        send_email("morda", admin_email, "disclosures.ru main page access restored")
+                        send_message("morda",  "disclosures.ru main page access restored")
                     morda_flag = True
                 else:
-                    send_email("morda", admin_email, "disclosures.ru main page access failed")
+                    send_message("morda", "disclosures.ru main page access failed")
                     morda_flag = False
 
             if not pdf_conv_srv_flag or time.time() - last_time_check_pdf_conv_src >= http_read_period:
                 last_time_check_pdf_conv_src = time.time()
                 if check_pdf_converter_server():
                     if not pdf_conv_srv_flag:
-                        send_email("pdf_conv_srv", admin_email, "pdf conversion server access restored")
+                        send_message("pdf_conv_srv", "pdf conversion server access restored")
                     pdf_conv_srv_flag = True
                 else:
-                    send_email("pdf_conv_srv", admin_email, "pdf conversion server access failed")
+                    send_message("pdf_conv_srv", "pdf conversion server access failed")
                     pdf_conv_srv_flag = False
+
+            if time.time() - last_time_alive >= alive_period:
+                dt_time = datetime.datetime.now(tz=MOSCOW_TIME_ZONE)
+                if 22 > dt_time.hour > 8:
+                    # do not send at nights "alive" message
+                    send_message("alive", "check_disclosures_health.py is alive")
 
 
 if __name__ == "__main__":
