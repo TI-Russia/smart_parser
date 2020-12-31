@@ -110,8 +110,7 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
    {
      python3 $TOOLS/disclosures_site/manage.py search_index --rebuild  --settings disclosures.settings.dev -f
      cd $DLROBOT_FOLDER
-     python3 $TOOLS/disclosures_site/manage.py generate_sitemaps --settings disclosures.settings.dev --output-folder sitemap
-
+     python3 $TOOLS/disclosures_site/manage.py generate_static_sections --settings disclosures.settings.dev --output-folder sections
    } &
    ELASTIC_PID=$!
 
@@ -144,9 +143,10 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
     mysqladmin drop  disclosures_prod_temp -u disclosures -pdisclosures -f
 
 #18 копируем файлы sitemap
-    rm -rf disclosures/static/sitemap
-    ln -s  $DLROBOT_FOLDER/sitemap disclosures/static/sitemap
-
+    rm -rf disclosures/static/sections
+    ln -s  $DLROBOT_FOLDER/sections disclosures/static/sections
+    rm -rf disclosures/static/sitemap.xml
+    python3 manage.py generate_sitemaps --settings disclosures.settings.prod --output-file disclosures/static/sitemap.xml
 
 #19  посылаем данные dlrobot в каталог, который синхронизирутеся с облаком, очищаем dlrobot_central (без возврата)
     cd $DLROBOT_FOLDER

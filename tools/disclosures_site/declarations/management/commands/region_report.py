@@ -134,7 +134,7 @@ class Command(BaseCommand):
                 r.population,
                 int(r.population / r.declarant_count)))
 
-        basename = "region_income_report_{}".format(year)
+        basename = "region-income-report-{}".format(year)
         with open(os.path.join(report_folder, basename + ".csv"), "w") as outp:
             for r in data:
                 outp.write(",".join(map(str, r)) + "\n")

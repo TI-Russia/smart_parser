@@ -41,7 +41,13 @@ class AboutPageView(generic.TemplateView):
 
 def sitemapView(request):
     sitemap_path = os.path.join(os.path.dirname(__file__), "../disclosures/static/sitemap", "sitemap.txt")
-    with open (sitemap_path) as inp:
+    with open(sitemap_path) as inp:
+        return HttpResponse(inp.read())
+
+
+def sitemapXmlView(request):
+    sitemap_path = os.path.join(os.path.dirname(__file__), "../disclosures/static/sitemap.xml")
+    with open(sitemap_path) as inp:
         return HttpResponse(inp.read())
 
 
