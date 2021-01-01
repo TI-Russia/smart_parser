@@ -146,6 +146,7 @@ class Command(BaseCommand):
     <meta charset="UTF-8">
     <title>Средний доход чиновников за {} год по регионам</title>
     <h1>Средний доход чиновников за {} год по регионам</h1>
+    <meta name="description" content="Средний доход российских чиновников (государственных и муниципальных служащих) по регионам за {} год">
     <style>
            table {{ 
             border: 1px solid black;
@@ -172,7 +173,7 @@ class Command(BaseCommand):
     <th>Население</th>
     <th>Население/Кол-во учтенных деклараций</th>
   </tr>
-                       """.format(year, year))
+                       """.format(year, year, year))
             for r in data:
                 td_s = ("<td>{}</td>"*len(r)).format(*r)
                 outp.write("<tr>{}</tr>\n".format(td_s))
