@@ -3,6 +3,7 @@ from django.utils.translation import  get_language
 from .countries import get_country_str
 from .rubrics import get_russian_rubric_str
 
+from collections import defaultdict
 
 def get_django_language():
     lang = get_language().lower()
@@ -312,11 +313,12 @@ class Section(models.Model):
     @property
     def section_parts(self):
         relatives = set()
+        relatives.add(Relative(Relative.main_declarant_code))
         relatives |= get_relatives(self.income_set)
         relatives |= get_relatives(self.realestate_set)
         relatives |= get_relatives(self.vehicle_set)
-        result = Relative.sort_by_visual_order(list(relatives))
-        return result
+        relative_list = Relative.sort_by_visual_order(list(relatives))
+        return relative_list
 
     def get_surname_rank(self):
         return self.surname_rank if self.surname_rank is not None else 100
@@ -338,7 +340,6 @@ class Section(models.Model):
     def declarant_income_size(self):
         return self.get_declarant_income_size()
 
-
     def permalink_passports(self):
         main_income = self.get_declarant_income_size()
         yield "sc;{};{};{};{}".format(self.source_document.id, self.person_name.lower(), self.income_year, main_income)
@@ -350,5 +351,48 @@ class Section(models.Model):
         else:
             return get_russian_rubric_str(self.rubric_id)
 
+    @staticmethod
+    def describe_realty(r: RealEstate):
+        if r is None:
+            return ["", "", ""]
+        type_str = r.type
+        if r.country != "RU":
+            type_str += " ({})".format(r.country_str)
+        return [type_str, str(r.square), r.own_type_str]
 
+    @property
+    def html_table_data_rows(self):
+        secton_parts = self.section_parts
 
+        realties = defaultdict(list)
+        for r in self.realestate_set.all():
+            realties[r.relative].append(Section.describe_realty(r))
+        for x in secton_parts:
+            if len(realties[x.code]) == 0:
+                realties[x.code].append(Section.describe_realty(None))
+
+        vehicles = defaultdict(str)
+        for v in self.vehicle_set.all():
+            vehicles[v.relative] += v.name + "<br/>"
+
+        incomes = defaultdict(str)
+        for i in self.income_set.all():
+            incomes[i.relative] = str(i.size)
+
+        table = list()
+        for relative in secton_parts:
+            cnt = 0
+            for (realty_type, realty_square, own_type) in realties[relative.code]:
+                if cnt == 0:
+                    rowspan = len(realties[relative.code])
+                    if relative.code == Relative.main_declarant_code:
+                        cells = [(self.person_name, rowspan), (self.position, rowspan)]
+                    else:
+                        cells = [(relative.name, rowspan), ("", rowspan)]
+                    cells.extend([(realty_type, 1), (realty_square, 1), (own_type, 1),
+                                  (vehicles[relative.code], rowspan), (incomes[relative.code], rowspan)])
+                else:
+                    cells = [(realty_type, 1), (realty_square, 1), (own_type, 1)]
+                cnt += 1
+                table.append(cells)
+        return table
