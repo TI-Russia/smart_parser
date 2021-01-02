@@ -21,6 +21,11 @@ class SectionView(generic.DetailView):
     template_name = 'section/detail.html'
 
 
+class PersonView(generic.DetailView):
+    model = models.Person
+    template_name = 'person/detail.html'
+
+
 class FileView(generic.DetailView):
     model = models.Source_Document
     template_name = 'file/detail.html'

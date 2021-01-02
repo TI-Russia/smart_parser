@@ -2,8 +2,10 @@ from django.db import models
 from django.utils.translation import  get_language
 from .countries import get_country_str
 from .rubrics import get_russian_rubric_str
+from declarations.nominal_income import get_average_nominal_incomes
 
 from collections import defaultdict
+from operator import attrgetter
 
 def get_django_language():
     lang = get_language().lower()
@@ -246,6 +248,53 @@ class Person(models.Model):
     def section_count(self):
         return self.section_set.all().count()
 
+    @property
+    def last_position_and_office_str(self):
+        last_section = max( (s for s in self.section_set.all()), key=attrgetter("income_year"))
+        str = last_section.source_document.office.name
+
+        position_and_department = ""
+        if last_section.department is not None:
+            position_and_department += last_section.department
+
+        if last_section.position is not None:
+            if position_and_department != "":
+                position_and_department += ", "
+            position_and_department += last_section.position
+
+        if position_and_department != "":
+            str += " ({})".format(position_and_department)
+        return str
+
+    @property
+    def declaraion_count_str(self):
+        cnt = len(self.section_set.all())
+        if cnt == 1:
+            return "{} декларация".format(cnt)
+        elif cnt < 5:
+            return "{} декларации".format(cnt)
+        else:
+            return "{} деклараций".format(cnt)
+
+    @property
+    def years_str(self):
+        years = list(s.income_year for s in self.section_set.all())
+        years.sort()
+        if len(years) == 1:
+            return "{} год".format(years[0])
+        else:
+            return "{} годы".format(", ".join(map(str, years)))
+
+    @property
+    def sections_ordered_by_year(self):
+        return list(sorted(self.section_set.all(), key=attrgetter("income_year")))
+
+    def income_growth_yearly(self):
+        sections = self.sections_ordered_by_year
+        years = list(s.income_year for s in sections)
+        incomes = list(s.get_declarant_income_size() for s in sections)
+        return get_average_nominal_incomes(years, incomes)
+
     def permalink_passports(self):
         if hasattr(self, "tmp_section_set"):
             sections = self.tmp_section_set
@@ -359,6 +408,17 @@ class Section(models.Model):
         if r.country != "RU":
             type_str += " ({})".format(r.country_str)
         return [type_str, str(r.square), r.own_type_str]
+
+    @property
+    def realty_square_sum(self):
+        sum = 0
+        for r in self.realestate_set.all():
+            sum += r.square
+        return sum
+
+    @property
+    def vehicle_count(self):
+        return len(list(self.vehicle_set.all()))
 
     @property
     def html_table_data_rows(self):

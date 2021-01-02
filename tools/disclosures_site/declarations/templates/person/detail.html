@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ person.person_name }}, {{person.last_position_and_office_str}}, {{person.declaraion_count_str }} {{ person.years_str}}
+{% endblock title %}
+
+{% block serp_description %}
+<meta name="description" CONTENT="{{ person.person_name }}, {{person.last_position_and_office_str}}, {{person.declaraion_count_str }} {{ person.years_str}}">
+{% endblock serp_description %}
+
+{% block content %}
+
+<h1>
+     {{person.person_name}}
+</h1>
+
+<h2>
+     {{ person.last_position_and_office_str }}
+</h2>
+
+<h3>
+     Cведения о доходах за {{person.years_str}}
+</h3>
+
+
+<table class="solid_table">
+    <tr>
+       <th>Год</th>
+       <th>Недвижимость(кв.м)</th>
+       <th>Транспорт</th>
+       <th>Доход</th>
+    </tr>
+
+    {% for s in person.sections_ordered_by_year %}
+        <tr>
+            <td> <a href="/section/{{ s.id }}">{{s.income_year}} </a>  </td>
+            <td align="right"> {{s.realty_square_sum}} </td>
+            <td align="right"> {{s.vehicle_count}} </td>
+            <td align="right"> &nbsp;{{s.declarant_income_size}}&nbsp; </td>
+        </tr>
+    {% endfor %}
+
+</table>
+
+<br/><br/>
+
+{% if person.declarator_person_id %}
+    <a href="http://declarator.org/person/{{person.declarator_person_id}}"> Ссылка на Декларатор </a>
+{% endif %}
+
+{% with comp=person.income_growth_yearly %}
+    {% if comp %}
+    <h4>
+         Сравнение роста номинальных доходов со средним ростом доходов по всей стране
+    </h4>
+      <table class="solid_table">
+          <tr>
+              <th>Мин. год</th>
+              <th>Макс. год</th>
+              <th>Рост доходов этого чиновника</th>
+              <th>Рост доходов населения России</th>
+          </tr>
+          <tr>
+              <td align="center">{{comp.min_year}}</td>
+              <td align="center">{{comp.max_year}}</td>
+              <td align="center">{{comp.declarant_income}}%</td>
+              <td align="center">{{comp.population_income}}%</td>
+          </tr>
+      </table>
+
+    {% endif %}
+{% endwith %}
+
+
+{% endblock content %}

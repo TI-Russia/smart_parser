@@ -17,16 +17,8 @@
 
 </h1>
 
-<style>
-   .declaration_table td, .declaration_table th {
-        border: solid;
-        padding-left: 4px;
-        padding-right: 4px;
 
-   }
-</style>
-
-<table class="declaration_table" style="border:solid; border-collapse: collapse">
+<table class="declaration_table">
     <tr>
        <th rowspan="2">ФИО</th>
        <th rowspan="2">Должность</th>
@@ -35,9 +27,9 @@
        <th rowspan="2" width="10%">Доход</th>
     </tr>
     <tr>
-        <th> Тип </th>
-        <th> Площадь </th>
-        <th> Владение </th>
+        <th>Тип</th>
+        <th>Площадь</th>
+        <th>Владение</th>
     </tr>
 
     {% for cells in section.html_table_data_rows %}

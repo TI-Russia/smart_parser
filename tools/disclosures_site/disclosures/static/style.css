@@ -49,3 +49,23 @@ input {
 select {
   font-size: 100%;
 }
+
+.declaration_table td, .declaration_table th {
+    border: solid;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+table.declaration_table  {
+    border: solid;
+    border-collapse: collapse;
+}
+
+.solid_table td, .solid_table th {
+    border: solid;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+table.solid_table  {
+    border: solid;
+    border-collapse: collapse;
+}

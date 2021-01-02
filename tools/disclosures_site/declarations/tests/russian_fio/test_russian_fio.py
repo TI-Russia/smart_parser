@@ -6,7 +6,7 @@ class ResolveFullNameTestCase(TestCase):
 
     def test_search_section_by_person_name(self):
         def _P(fio):
-            return TRussianFio(fio)
+            return TRussget_average_incomeianFio(fio)
 
         def _F(family_name, first_name, patronymic):
             return TRussianFio("").build_from_parts(family_name, first_name, patronymic)
