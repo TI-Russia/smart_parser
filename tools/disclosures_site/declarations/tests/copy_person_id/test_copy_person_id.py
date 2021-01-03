@@ -1,6 +1,7 @@
 from declarations.management.commands.permalinks import TPermaLinksDB
 from declarations.management.commands.copy_person_id import CopyPersonIdCommand, build_section_passport
 from declarations.russian_fio import TRussianFio
+from declarations.management.commands.create_permalink_storage import CreatePermalinksStorageCommand
 
 import declarations.models as models
 import os
@@ -10,7 +11,7 @@ from django.test import TestCase
 
 class CopyPersonIdTestCaseBase(TestCase):
 
-    def check_case(self, use_only_surname, check_ambiguity):
+    def check_case(self, use_only_surname, check_ambiguity, permalinks_path=None):
         models.Section.objects.all().delete()
         models.Declarator_File_Reference.objects.all().delete()
         models.Source_Document.objects.all().delete()
@@ -53,8 +54,9 @@ class CopyPersonIdTestCaseBase(TestCase):
         models.Income(section=section1, size=income_main1, relative=models.Relative.main_declarant_code).save()
         models.Income(section=section2, size=income_main2, relative=models.Relative.main_declarant_code).save()
 
-        permalinks_path = os.path.join(os.path.dirname(__file__), "permalinks.dbm")
-        TPermaLinksDB(permalinks_path).create_and_save_empty_db()
+        if permalinks_path is None:
+            permalinks_path = os.path.join(os.path.dirname(__file__), "permalinks.dbm")
+            TPermaLinksDB(permalinks_path).create_and_save_empty_db()
 
         copier = CopyPersonIdCommand(None, None)
         copier.handle(None, read_person_from_json=person_ids_path, permanent_links_db=permalinks_path)
@@ -64,9 +66,10 @@ class CopyPersonIdTestCaseBase(TestCase):
             self.assertEqual(section1.person, None)
         else:
             self.assertEqual(models.Person.objects.count(), 1)
-            primary_key_db = TPermaLinksDB(permalinks_path)
-            self.assertEqual(primary_key_db.get_new_max_id(models.Person), 1)
+            #primary_key_db = TPermaLinksDB(permalinks_path)
+            #self.assertEqual(primary_key_db.get_new_max_id(models.Person), 1)
             self.assertEqual(section1.person.declarator_person_id, declarator_person_id)
+            self.assertEqual(section1.person.id, 1)
 
 
 class Simple(CopyPersonIdTestCaseBase):
@@ -83,3 +86,17 @@ class Ambiguity(CopyPersonIdTestCaseBase):
     def test(self):
         self.check_case(False, True)
 
+
+class SimpleRememberPrimaryKeys(CopyPersonIdTestCaseBase):
+    def test(self):
+        self.check_case(False, False)
+
+        # check that we reuse old person ids
+        permalinks_path = os.path.join(os.path.dirname(__file__), "permalinks.dbm")
+        CreatePermalinksStorageCommand(None, None).handle(None, output_dbm_file=permalinks_path)
+        permalinks_db = TPermaLinksDB(permalinks_path)
+        permalinks_db.open_db_read_only()
+        permalinks_db.create_sql_sequences()
+
+        self.check_case(False, False, permalinks_path=permalinks_path)
+        self.assertEqual(permalinks_db.get_new_max_id(models.Person), None)

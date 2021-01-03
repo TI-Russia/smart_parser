@@ -7,6 +7,7 @@ from declarations.nominal_income import get_average_nominal_incomes
 from collections import defaultdict
 from operator import attrgetter
 
+
 def get_django_language():
     lang = get_language().lower()
     if len(lang) > 2:
@@ -235,8 +236,8 @@ class Source_Document(models.Model):
     max_income_year = models.IntegerField(null=True, default=None)
     section_count = models.IntegerField(null=True, default=0)
 
-    def permalink_passports(self):
-        yield "sd;{}".format(self.sha256)
+    def get_permalink_passport(self):
+        return "sd;{}".format(self.sha256)
 
 
 class Person(models.Model):
@@ -295,20 +296,11 @@ class Person(models.Model):
         incomes = list(s.get_declarant_income_size() for s in sections)
         return get_average_nominal_incomes(years, incomes)
 
-    def permalink_passports(self):
-        if hasattr(self, "tmp_section_set"):
-            sections = self.tmp_section_set
-        else:
-            sections = list(str(s.id) for s in self.section_set.all())
-            sections.sort()
-        if len(sections) > 0:
-            #a person without sections exists before  saving to the db in copy_person_id.py
-            yield "ps;" + ";".join(sections)
-        else:
-            assert self.declarator_person_id is not None
-
+    def get_permalink_passport(self):
         if self.declarator_person_id is not None:
-            yield "psd;" + str(self.declarator_person_id)
+            return "psd;" + str(self.declarator_person_id)
+        else:
+            return None
 
 
 class RealEstate(models.Model):
@@ -389,9 +381,9 @@ class Section(models.Model):
     def declarant_income_size(self):
         return self.get_declarant_income_size()
 
-    def permalink_passports(self):
+    def get_permalink_passport(self):
         main_income = self.get_declarant_income_size()
-        yield "sc;{};{};{};{}".format(self.source_document.id, self.person_name.lower(), self.income_year, main_income)
+        return "sc;{};{};{};{}".format(self.source_document.id, self.person_name.lower(), self.income_year, main_income)
 
     @property
     def rubric_str(self):

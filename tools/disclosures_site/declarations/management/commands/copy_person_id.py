@@ -35,7 +35,7 @@ def build_section_passport(document_id, fio, income_main):
 
 
 def get_all_section_from_declarator_with_person_id(declarator_host):
-    # query to declarator db
+    # запрос в Декларатор, поиск секций, которые руками (s.dedupe_score = 0) привязаны к персонам
     if declarator_host is None:
         db_connection = pymysql.connect(db="declarator", user="declarator", password="declarator",
                                         unix_socket="/var/run/mysqld/mysqld.sock")
@@ -43,6 +43,7 @@ def get_all_section_from_declarator_with_person_id(declarator_host):
         db_connection = pymysql.connect(db="declarator", user="declarator", password="declarator",
                                         host=declarator_host)
     in_cursor = db_connection.cursor()
+
     in_cursor.execute("""
                     select  s.person_id,
                             d.id, 
@@ -86,9 +87,9 @@ class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
         self.options = None
-        self.primary_keys_builder = None
+        self.permalinks_db = None
         self.logger = None
-        self.declarator_person_id_to_disclosures_person_id = dict()
+        self.declarator_person_id_to_disclosures_person = dict()
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -114,8 +115,8 @@ class Command(BaseCommand):
         )
 
     def open_permalinks_db(self):
-        self.primary_keys_builder = TPermaLinksDB(self.options['permanent_links_db'])
-        self.primary_keys_builder.open_db_read_only()
+        self.permalinks_db = TPermaLinksDB(self.options['permanent_links_db'])
+        self.permalinks_db.open_db_read_only()
 
     def build_passport_to_person_id_mapping_from_declarator(self):
         if self.options.get('read_person_from_json') is not None:
@@ -125,21 +126,18 @@ class Command(BaseCommand):
             return get_all_section_from_declarator_with_person_id(self.options['declarator_host'])
 
     def copy_human_merge(self, section, declarator_person_id):
-        person_id = self.declarator_person_id_to_disclosures_person_id.get(declarator_person_id)
-        if person_id is None:
+        person = self.declarator_person_id_to_disclosures_person.get(declarator_person_id)
+        if person is None:
             # we think that person ids in declarator db are stable
-            person = models.Person(declarator_person_id=declarator_person_id)
-            person.id = self.primary_keys_builder.get_record_id(person)
-            if person.person_name is None or len(person.person_name) < len(section.person_name):
-                person.person_name = section.person_name
+            person = models.Person(
+                id=self.permalinks_db.get_person_id_by_declarator_id(declarator_person_id),
+                declarator_person_id=declarator_person_id,
+                person_name=section.person_name)
             person.save()
-            self.declarator_person_id_to_disclosures_person_id[declarator_person_id] = person.id
-        else:
-            person = models.Person.objects.get(id=person_id)
-            assert person is not None
-            if person.person_name is None or len(person.person_name) < len(section.person_name):
-                person.person_name = section.person_name
-                person.save()
+            self.declarator_person_id_to_disclosures_person[declarator_person_id] = person
+        elif person.person_name is None or len(person.person_name) < len(section.person_name):
+            person.person_name = section.person_name
+            person.save()
 
         self.logger.debug("connect section {} to person {}, declarator_person_id={}".format(
             section.id, person.id, declarator_person_id))
@@ -225,7 +223,7 @@ class Command(BaseCommand):
         self.logger.info("stop_elastic_indexing")
         stop_elastic_indexing()
         self.copy_declarator_person_ids_fast(section_passports)
-        self.primary_keys_builder.close_db()
+        self.permalinks_db.close_db()
         self.logger.info("all done")
 
 CopyPersonIdCommand=Command

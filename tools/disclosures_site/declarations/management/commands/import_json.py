@@ -63,19 +63,19 @@ class TImporter:
         if models.Section.objects.count() > 0:
             raise Exception("implement all section passports reading from db if you want to import to non-empty db! ")
         self.office_to_source_documents = self.build_office_to_file_mapping()
-        self.primary_keys_builder = TPermaLinksDB(args['permanent_links_db'])
-        self.primary_keys_builder.open_db_read_only()
-        self.first_new_section_id_for_print = self.primary_keys_builder.get_max_plus_one_primary_key_from_the_old_db(models.Section)
+        self.permalinks_db = TPermaLinksDB(args['permanent_links_db'])
+        self.permalinks_db.open_db_read_only()
+        self.first_new_section_id_for_print = self.permalinks_db.get_max_plus_one_primary_key_from_the_old_db(models.Section)
         self.smart_parser_cache_client = None
 
     def delete_before_fork(self):
-        self.primary_keys_builder.close_db()
+        self.permalinks_db.close_db()
         from django import db
         db.connections.close_all()
 
     def init_non_pickable(self):
         self.smart_parser_cache_client = TSmartParserCacheClient(TSmartParserCacheClient.parse_args([]), TImporter.logger)
-        self.primary_keys_builder.open_db_read_only()
+        self.permalinks_db.open_db_read_only()
 
     def init_after_fork(self):
         from django.db import connection
@@ -98,7 +98,7 @@ class TImporter:
                                                        sha256=sha256,
                                                        intersection_status=src_doc.get_intersection_status(),
                                                        )
-        source_document_in_db.id = self.primary_keys_builder.get_record_id(source_document_in_db)
+        source_document_in_db.id = self.permalinks_db.get_source_doc_id_by_sha256(sha256)
         source_document_in_db.file_extension = src_doc.file_extension
         source_document_in_db.save()
         for ref in src_doc.decl_references:
@@ -144,11 +144,10 @@ class TImporter:
                     passport = json_reader.get_passport_factory().get_passport_collection()[0]
                     if self.register_section_passport(passport):
                         json_reader.section.tmp_income_set = json_reader.incomes
-                        section_id = self.primary_keys_builder.get_record_id(json_reader.section)
+                        section_id = self.permalinks_db.get_section_id(json_reader.section)
                         if section_id >= self.first_new_section_id_for_print:
-                            passports = list(json_reader.section.permalink_passports())
                             TImporter.logger.debug("found a new section {}, set section.id to {}".format(
-                                passports[0], section_id))
+                                json_reader.section.get_permalink_passport(), section_id))
 
                         # json_reader.section.rubric_id = source_document_in_db.office.rubric_id does not work
                         # may be we should call source_document_in_db.refresh_from_db

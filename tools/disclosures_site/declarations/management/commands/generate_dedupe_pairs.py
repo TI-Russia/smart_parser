@@ -70,11 +70,6 @@ class Command(BaseCommand):
             help='rebuild old persom, declaration pairs',
         )
         parser.add_argument(
-            '--input-dedupe-objects',
-            dest='input_dedupe_objects',
-            help='',
-        )
-        parser.add_argument(
             '--dump-dedupe-objects-file',
             dest='dump_dedupe_objects_file',
             help='',
@@ -109,10 +104,11 @@ class Command(BaseCommand):
         self.ml_model = None
         self.options = None
         self.logger = None
-        self.primary_keys_builder = None
+        self.permalinks_db = None
         self.rebuild = False
         self.threshold = 0
         self.cluster_by_minimal_fio = defaultdict(list)
+        self.section_cache = dict()
 
     def init_options(self, options):
         self.logger = setup_logging(options.get('logfile'))
@@ -120,8 +116,8 @@ class Command(BaseCommand):
         self.rebuild = options.get('rebuild', False)
         if self.rebuild and not options['write_to_db']:
             self.logger.info("please add --write-to-db  option if you use --rebuild")
-        self.primary_keys_builder = TPermaLinksDB(options['permanent_links_db'])
-        self.primary_keys_builder.open_db_read_only()
+        self.permalinks_db = TPermaLinksDB(options['permanent_links_db'])
+        self.permalinks_db.open_db_read_only()
         if options.get('threshold', 0) != 0:
             self.threshold = options.get('threshold')
         else:
@@ -161,6 +157,7 @@ class Command(BaseCommand):
             if not take_sections_with_empty_income and o.average_income == 0:
                 self.logger.debug("ignore section id={} person_name={}, no income or zero-income".format(s.id, s.person_name))
                 continue
+            self.section_cache[s.id] = s
             self.cluster_by_minimal_fio[o.fio.build_fio_with_initials()].append(o)
             cnt += 1
             if cnt % 10000 == 0:
@@ -195,14 +192,6 @@ class Command(BaseCommand):
     def fill_dedupe_data(self, lower_bound, upper_bound):
         self.cluster_by_minimal_fio = defaultdict(list)
 
-        input_dump_file = self.options.get("input_dedupe_objects")
-        if input_dump_file is not None:
-            with open(input_dump_file, "r", encoding="utf-8") as fp:
-                for line in fp:
-                    o = TDeduplicationObject().from_json(json.loads(line))
-                    self.cluster_by_minimal_fio[o.fio.build_fio_with_initials()].append(o)
-            return
-
         self.read_sections(lower_bound, upper_bound)
         self.read_people(lower_bound, upper_bound)
 
@@ -224,52 +213,67 @@ class Command(BaseCommand):
                     obj.person_name,
                     min(obj.years)))
 
-    def link_section_to_person(self, section, person, dedupe_score):
+    def link_section_to_person(self, section, person, distance):
         if section.person_id == person.id:
             #dedupe score is not set to these records, they are from declarator
             return
         section.person_id = person.id
-        section.dedupe_score = dedupe_score
+        section.dedupe_score = 1.0 - distance
         section.save()
         if len(person.person_name) < len(section.person_name):
             person.person_name = section.person_name
             person.save()
 
-    def link_sections_to_a_new_person(self, section_ids):
-        person = models.Person()
-        person.tmp_section_set = set(str(id) for (id, score) in section_ids)
-        person.id = self.primary_keys_builder.get_record_id(person)
+    def link_sections_to_a_new_person(self, sections, section_distances):
+        assert len(section_distances) == len(sections)
+        person_variants = defaultdict(int)
+        for section in sections:
+            person_id = self.permalinks_db.get_person_id_by_section(section)
+            if person_id is not None:
+                person_variants[person_id] += 1
+
+        if len(person_variants) > 0:
+            max_person_id_count, max_person_id = sorted( list( (v, k) for (k, v) in person_variants.items()))[-1]
+            section_count_in_old_cluster = self.permalinks_db.get_section_count_by_person_id(max_person_id)
+            if section_count_in_old_cluster is not None and max_person_id_count * 2 > section_count_in_old_cluster:
+                self.logger.debug("use old person.id, max_person_id={}, section_count_in_old_cluster={}, max_person_id_count={}".format(
+                    max_person_id, max_person_id_count, section_count_in_old_cluster
+                ))
+                person_id = max_person_id
+
+        if person_id is None:
+            person_id = self.permalinks_db.get_new_id(models.Person)
+        person = models.Person(id=person_id)
         person.save()
-        for (section_id, distance) in section_ids:
-            section = models.Section.objects.get(id=section_id)
-            self.link_section_to_person(section, person, 1.0 - distance)
+
+        for (section, distance) in zip(sections,section_distances):
+            self.link_section_to_person(section, person, distance)
 
     def write_results_to_db(self, clusters):
         for cluster_id, items in clusters.items():
             self.logger.debug("process cluster {}".format(cluster_id))
-            person_ids = set()
-            section_ids = set()
+            person_ids = list()
+            sections = list()
+            section_distances = list()
             for obj, distance in items:
                 if obj.record_id.source_table == TDeduplicationObject.PERSON:
-                    person_ids.add((obj.record_id.id, distance))
+                    person_ids.append(obj.record_id.id)
                 else:
-                    section_ids.add((obj.record_id.id, distance))
+                    section = self.section_cache[obj.record_id.id]
+                    sections.append(section)
+                    section_distances.append(distance)
             if len(person_ids) == 0:
-                self.link_sections_to_a_new_person(section_ids)
+                self.link_sections_to_a_new_person(sections, section_distances)
             elif len(person_ids) == 1:
-                person_id = list(person_ids)[0][0]
-                person = models.Person.objects.get(id=person_id)
-                for section_id, distance in section_ids:
-                    section = models.Section.objects.get(id=section_id)
-                    self.link_section_to_person(section, person, 1.0 - distance)
+                person = models.Person.objects.get(id=person_ids[0])
+                for section, distance in zip(sections, section_distances):
+                    self.link_section_to_person(section, person, distance)
             else:
                 self.logger.error("a cluster with two people found, I do not know what to do")
 
     def get_family_name_bounds(self):
         if self.options.get('surname_bounds') is not None:
             yield self.options.get('surname_bounds').split(',')
-        elif self.options.get("input_dedupe_objects") is not None:
-            yield None, None
         else:
             all_borders = ',А,Б,БП,В,Г,ГП,Д,Е,Ж,ЖР,З,И,К,КИ,КП,КС,Л,М,МН,Н,О,П,ПН,Р,С,СН,Т,ТП,У,Ф,Х,Ц,Ч,Ш,ШП,Щ,Э,Ю,Я,'.split(',')
             for x in range(1, len(all_borders)):

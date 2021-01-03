@@ -21,6 +21,7 @@ class SimpleImportTestCase(TestCase):
 
         section_count = 111999
         doc_old_id = 111110
+
         p = TPermaLinksDB(permalinks_path)
         p.create_db()
 
@@ -28,7 +29,7 @@ class SimpleImportTestCase(TestCase):
         p.recreate_auto_increment_table(models.Section)
 
         src_doc = models.Source_Document(id=doc_old_id, sha256="f974dc82aa52acea2f9c49467e7395924605de474e76bafa85572351194b153a")
-        p.put_record_id(src_doc)
+        p.save_source_doc(src_doc)
         p.save_max_plus_one_primary_key(models.Source_Document, doc_old_id + 1)
         p.recreate_auto_increment_table(models.Source_Document)
         p.close_db()

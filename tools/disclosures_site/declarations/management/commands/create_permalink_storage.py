@@ -30,6 +30,7 @@ class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
         self.options = None
+        self.logger = None
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -40,33 +41,36 @@ class Command(BaseCommand):
             help='write mapping to this fiie'
         )
 
-    def save_permalinks(self, logger, django_db_model, db: TPermaLinksDB):
-        if django_db_model.objects.count() == 0:
-            db.save_max_plus_one_primary_key(django_db_model, 0)
+    def save_dataset(self, db: TPermaLinksDB, model_type, save_function):
+        if model_type.objects.count() == 0:
+            db.save_max_plus_one_primary_key(model_type, 0)
         else:
             cnt = 0
             max_value = 0
-            for record in queryset_iterator(django_db_model.objects.all()):
+            for record in queryset_iterator(model_type.objects.all()):
                 cnt += 1
                 if (cnt % 3000) == 0:
-                    logger.debug("{}:{}".format(str(django_db_model), cnt))
-                db.put_record_id(record)
+                    self.logger.debug("{}".format(cnt))
+                save_function(record)
                 max_value = max(record.id, max_value)
 
-            db.save_max_plus_one_primary_key(django_db_model, max_value + 1)
+            db.save_max_plus_one_primary_key(model_type, max_value + 1)
 
     def handle(self, *args, **options):
-        logger = setup_logging()
+        self.logger = setup_logging()
 
         db = TPermaLinksDB(options.get('output_dbm_file'))
         db.create_db()
-        self.save_permalinks(logger, models.Source_Document, db)
+
+        self.save_dataset(db, models.Source_Document, db.save_source_doc)
         db.sync_db()
-        self.save_permalinks(logger, models.Section, db)
+
+        self.save_dataset(db, models.Section, db.save_section)
         db.sync_db()
-        self.save_permalinks(logger, models.Person, db)
+
+        self.save_dataset(db, models.Person, db.save_person)
         db.close_db()
 
-        logger.info("all done")
+        self.logger.info("all done")
 
-CreatePermalinksStorage=Command
+CreatePermalinksStorageCommand=Command
