@@ -181,7 +181,7 @@ class Command(BaseCommand):
 </table>
 <br/>
 <a href={}> Данные в сsv-формате</a>
-<script src="sorttable.js"></script>
+<script src="/static/sorttable.js"></script>
 <script>
     var table = document.getElementById("statstable");
     table.querySelectorAll(`th`).forEach((th, position) => {{
