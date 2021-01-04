@@ -38,11 +38,18 @@ def parse_args():
     parser.add_argument("--source-file", dest='source_file', required=True)
     parser.add_argument("--keep-txt", dest='keep_txt', action="store_true", default=False)
     parser.add_argument("--reuse-txt", dest='reuse_txt', action="store_true", default=False)
-    parser.add_argument("--output", dest='output', default=None)
+    parser.add_argument("--output-verdict", dest='output_verdict', default=None)
     parser.add_argument("--delete-negative", dest='delete_negative', default=False, action="store_true")
+    parser.add_argument("--output-folder", dest='output_folder', default=None,
+                        help="save all temp files to this folder")
     args = parser.parse_args()
-    if args.output is None:
-        args.output = args.source_file + ".verdict"
+    if args.output_folder is not None:
+        os.makedirs(args.output_folder, exist_ok=True)
+    if args.output_verdict is None:
+        if args.output_folder is None:
+            args.output_verdict = args.source_file + ".verdict"
+        else:
+            args.output_verdict = os.path.join(args.output_folder,  os.path.basename(args.source_file) + ".verdict")
     return args
 
 
@@ -283,12 +290,16 @@ def apply_second_rules(verdict):
             verdict.description = "headers and vehicles and surnames_word"
 
 
-def get_text_of_a_document(source_file, keep_txt=False, reuse_txt=False):
+def get_text_of_a_document(source_file, keep_txt=False, reuse_txt=False, output_folder=None):
     global EXTERNAl_CONVERTORS
     ec = EXTERNAl_CONVERTORS
     _, file_extension = os.path.splitext(source_file)
     file_extension = file_extension.lower()
-    txt_file = source_file + ".txt"
+    if output_folder is None:
+        txt_file = source_file + ".txt"
+    else:
+        txt_file = os.path.join(output_folder, os.path.basename(source_file) + ".txt")
+
     if reuse_txt and os.path.exists(txt_file):
         pass
     elif file_extension == ".xlsx":
@@ -333,8 +344,8 @@ def get_text_of_a_document(source_file, keep_txt=False, reuse_txt=False):
         return None
 
 
-def run_dl_recognizer(source_file, keep_txt=False, reuse_txt=False):
-    input_text = get_text_of_a_document(source_file, keep_txt, reuse_txt)
+def run_dl_recognizer(source_file, keep_txt=False, reuse_txt=False, output_folder=None):
+    input_text = get_text_of_a_document(source_file, keep_txt, reuse_txt, output_folder)
     if input_text is None:
         v = TClassificationVerdict("", 0)
         v.verdict = DL_RECOGNIZER_ENUM.NEGATIVE
@@ -350,10 +361,10 @@ def run_dl_recognizer(source_file, keep_txt=False, reuse_txt=False):
 
 if __name__ == "__main__":
     args = parse_args()
-    verdict = run_dl_recognizer(args.source_file, args.keep_txt, args.reuse_txt)
+    verdict = run_dl_recognizer(args.source_file, args.keep_txt, args.reuse_txt, args.output_folder)
     if args.delete_negative:
         if verdict.verdict == DL_RECOGNIZER_ENUM.NEGATIVE:
             os.unlink(args.source_file)
     else:
-        with open(args.output, "w", encoding="utf8") as outf:
+        with open(args.output_verdict, "w", encoding="utf8") as outf:
             outf.write(json.dumps(verdict.to_json(), ensure_ascii=False, indent=4))

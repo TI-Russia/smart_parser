@@ -1,10 +1,8 @@
 bash run_tests.sh
 
-export DeclDocRecognizerLargeTestsFolder=/mnt/ntfs/tmp/smart_parser/smart_parser/tools/DeclDocRecognizer
-bash get_metrics.sh >metrics.txt
-diff metrics.txt metrics.txt.canon
+#test files are saved to sokirko's yandex disk (because they are too large for github)
+export DECL_DOC_RECOGNIZER_LARGE_TESTS_FOLDER=/mnt/ntfs/Sokirko/declarator_test_files/DeclDocRecognizer
 
-bash run_folder.sh $DeclDocRecognizerLargeTestsFolder/many_plus
-grep some_other_document $DeclDocRecognizerLargeTestsFolder/many_plus/*.verdict > many_plus.metrics.txt
-diff many_plus.metrics.txt many_plus.metrics.txt.canon
+bash get_metrics.sh
+bash get_metrics_large.sh
 
