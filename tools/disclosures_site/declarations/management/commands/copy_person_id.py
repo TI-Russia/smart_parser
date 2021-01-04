@@ -216,10 +216,11 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.logger = setup_logging()
         self.options = options
-        self.open_permalinks_db()
+        self.logger.debug("models.Person.objects.count()={}".format(models.Person.objects.count()))
         assert models.Person.objects.count() == 0
+        self.open_permalinks_db()
         section_passports = self.build_passport_to_person_id_mapping_from_declarator()
-        self.logger.info("found {} merges in declarator".format(len(section_passports)))
+        self.logger.info("merge by {} passports from declarator".format(len(section_passports)))
         self.logger.info("stop_elastic_indexing")
         stop_elastic_indexing()
         self.copy_declarator_person_ids_fast(section_passports)

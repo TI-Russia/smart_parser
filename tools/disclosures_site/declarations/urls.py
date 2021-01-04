@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views
 
 urlpatterns = [
@@ -6,6 +6,8 @@ urlpatterns = [
     path('about.html', views.AboutPageView.as_view(), name='about_page'),
     path('sitemap.txt', views.sitemapView, name='sitemap'),
     path('sitemap.xml', views.sitemapXmlView, name='sitemapxml'),
+    re_path('sitemap(?P<sitemapid>[0-9a-z-]+)?.xml', views.sitemapAuxXmlView, name='sitemapauxxml'),
+    re_path('static/(?P<sitemapid>[0-9a-z-]+)?/sitemap.xml', views.sitemapAuxXmlView, name='sitemapauxxml'),
     path('statistics/', views.StatisticsView.as_view(), name='statistics'),
 
     path('person/', views.PersonSearchView.as_view(), name='person_search'),

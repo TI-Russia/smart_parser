@@ -47,13 +47,19 @@ class AboutPageView(generic.TemplateView):
 def sitemapView(request):
     sitemap_path = os.path.join(os.path.dirname(__file__), "../disclosures/static/sitemap", "sitemap.txt")
     with open(sitemap_path) as inp:
-        return HttpResponse(inp.read())
+        return HttpResponse(inp.read(), content_type="text/xml; charset=utf-8")
 
 
 def sitemapXmlView(request):
     sitemap_path = os.path.join(os.path.dirname(__file__), "../disclosures/static/sitemap.xml")
     with open(sitemap_path) as inp:
-        return HttpResponse(inp.read())
+        return HttpResponse(inp.read(), content_type="text/xml; charset=utf-8")
+
+
+def sitemapAuxXmlView(request, sitemapid):
+    sitemap_path = os.path.join(os.path.dirname(__file__), "../disclosures/static/", request.path.strip('/'))
+    with open(sitemap_path) as inp:
+        return HttpResponse(inp.read(), content_type="text/xml; charset=utf-8")
 
 
 class StatisticsView(generic.TemplateView):
