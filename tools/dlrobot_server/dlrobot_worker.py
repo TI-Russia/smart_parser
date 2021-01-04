@@ -263,6 +263,7 @@ class TDlrobotWorker:
             "created file {} size={}".format(dlrobot_results_file_name, os.stat(dlrobot_results_file_name).st_size))
 
         for try_id in range(3):
+            conn = None
             try:
                 conn = http.client.HTTPConnection(self.args.server_address, timeout=self.args.http_put_timeout)
                 with open(dlrobot_results_file_name, "rb") as inp:
@@ -270,6 +271,7 @@ class TDlrobotWorker:
                     conn.request("PUT", dlrobot_results_file_name, inp.read(), headers=headers)
                     response = conn.getresponse()
                     conn.close()
+                    conn = None
                     self.logger.debug("sent dlrobot result file {}, exitcode={}. size={}, http_code={}".format(
                         dlrobot_results_file_name,
                         exitcode,
@@ -277,8 +279,9 @@ class TDlrobotWorker:
                         response.status))
                     break
             except Exception as error:
-                conn.close()
-                self.logger.error('Exception: {}, try_id={}', error, try_id)
+                if conn is not None:
+                    conn.close()
+                self.logger.error('Exception: {}, try_id={}', str(error), try_id)
                 if try_id == 2:
                     self.logger.debug("give up")
                     raise
