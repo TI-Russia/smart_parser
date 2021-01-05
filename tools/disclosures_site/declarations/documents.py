@@ -134,7 +134,8 @@ class ElasticFileDocument(Document):
             'intersection_status',
             'min_income_year',
             'max_income_year',
-            'section_count'
+            'section_count',
+            'sha256'
         ]
 
     def prepare_office_id(self, instance):

@@ -56,6 +56,7 @@ source $(dirname $0)/update_common.sh
     python3 manage.py migrate --settings disclosures.settings.dev
     python3 manage.py search_index --rebuild  --settings disclosures.settings.dev -f
     python3 manage.py test declarations/tests --settings disclosures.settings.dev
+    #python3 manage.py search_index   --rebuild --settings disclosures.settings.prod --models declarations.Source_Document
 
 #9
     cd $DLROBOT_FOLDER

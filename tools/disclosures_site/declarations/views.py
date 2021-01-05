@@ -157,6 +157,11 @@ class CommonSearchForm(forms.Form):
         required=False,
         label="Дата обнаружения",
         choices=fill_combo_box_with_first_crawl_epochs)
+    sha256 = forms.CharField(
+        widget=forms.TextInput(attrs={'size': 26}),
+        required=False,
+        empty_value="",
+        label="Sha256")
 
 
 def compare_Russian_fio(search_query, person_name):
@@ -215,6 +220,7 @@ class CommonSearchView(FormView, generic.ListView):
             'person_id': self.request.GET.get('person_id'),
             'first_crawl_epoch': self.request.GET.get('first_crawl_epoch'),
             'parent_id': self.request.GET.get('parent_id'),
+            'sha256': self.request.GET.get('sha256'),
         }
 
     def build_person_name_elastic_search_query(self, should_items):
@@ -253,6 +259,7 @@ class CommonSearchView(FormView, generic.ListView):
             add_should_item("office_id", "term", int, should_items)
             add_should_item("person_id", "term", int, should_items)
             add_should_item("first_crawl_epoch", "term", int, should_items)
+            add_should_item("sha256", "term", str, should_items)
             add_should_item("min_income_year", "term", int, should_items)
             add_should_item("max_income_year", "term", int, should_items)
             add_should_item("section_count", "term", int, should_items)
