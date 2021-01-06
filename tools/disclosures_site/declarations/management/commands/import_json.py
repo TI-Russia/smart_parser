@@ -17,6 +17,7 @@ from django.core.management import BaseCommand
 from django.db import transaction
 from django.db import DatabaseError
 import gc
+from statistics import median
 
 
 def setup_logging(logfilename):
@@ -132,7 +133,7 @@ class TImporter:
         imported_section_years = list()
         section_index = 0
         TImporter.logger.debug("try to import {} declarants".format(len(input_json['persons'])))
-
+        incomes = list()
         for p in input_json['persons']:
             section_index += 1
             income_year = p.get('year', common_income_year)
@@ -156,7 +157,9 @@ class TImporter:
                         if json_reader.section.rubric_id == TOfficeRubrics.Municipality and  \
                                 convert_municipality_to_education(json_reader.section.position):
                             json_reader.section.rubric_id = TOfficeRubrics.Education
-
+                        main_income = json_reader.get_main_declarant_income_size()
+                        if main_income is not None and main_income > 0:
+                            incomes.append(main_income)
                         json_reader.save_to_database(section_id)
                         imported_section_years.append(income_year)
 
@@ -167,6 +170,7 @@ class TImporter:
             source_document_in_db.min_income_year = min(imported_section_years)
             source_document_in_db.max_income_year = max(imported_section_years)
             source_document_in_db.section_count = len(imported_section_years)
+            source_document_in_db.median_income = median(incomes)
             source_document_in_db.save()
 
         return len(imported_section_years)

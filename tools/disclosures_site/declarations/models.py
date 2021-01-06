@@ -235,6 +235,7 @@ class Source_Document(models.Model):
     min_income_year = models.IntegerField(null=True, default=None)
     max_income_year = models.IntegerField(null=True, default=None)
     section_count = models.IntegerField(null=True, default=0)
+    median_income = models.IntegerField(null=True, default=0)
 
     def get_permalink_passport(self):
         return "sd;{}".format(self.sha256)

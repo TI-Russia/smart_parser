@@ -20,6 +20,8 @@
 
 <b>Section Count:</b> {{ source_document.section_count }} <br/><br/>
 
+<b>Median Income:</b> {{ source_document.median_income }} <br/><br/>
+
 {% for web_location in source_document.web_reference_set.all %}
     <b>Сайт:</b> <a href="{{ web_location.dlrobot_url }}"> {{ web_location.dlrobot_url }}</a> , обход № {{ web_location.crawl_epoch }}  <br/>
     <br><br/>

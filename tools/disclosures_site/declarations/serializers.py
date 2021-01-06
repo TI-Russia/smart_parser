@@ -153,6 +153,11 @@ class TSmartParserJsonReader:
         self.real_estates = list(read_real_estates(section_json))
         self.vehicles = list(read_vehicles(section_json))
 
+    def get_main_declarant_income_size(self):
+        for i in self.incomes:
+            if i.relative == models.Relative.main_declarant_code:
+                return i.size
+
     def init_person_info(self):
         person_info = self.section_json.get('person')
         if person_info is None:
