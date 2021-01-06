@@ -192,5 +192,6 @@ pip3 install -r requirements.txt
 
 5.5 install https
     sudo apt-get install certbot python3-certbot-nginx
+    #https://certbot.eff.org/lets-encrypt/ubuntuxenial-nginx.html
     sudo certbot --nginx
-    (здесь точно все дописано?)
+

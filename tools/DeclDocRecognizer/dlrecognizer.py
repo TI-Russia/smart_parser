@@ -2,7 +2,8 @@ from DeclDocRecognizer.document_types import TCharCategory, SOME_OTHER_DOCUMENTS
         get_russian_normal_text_ratio
 from ConvStorage.conversion_client import TDocConversionClient
 from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
-from common.primitives import normalize_whitespace
+from common.primitives import normalize_whitespace, string_contains_Russian_name
+
 
 from collections import defaultdict
 import argparse
@@ -77,7 +78,19 @@ def get_smart_parser_result(source_file):
     with open(json_file, "r", encoding="utf8") as inpf:
         smart_parser_json = json.load(inpf)
     os.remove(json_file)
-    number_of_persons = len(smart_parser_json.get("persons", []))
+    good_names_count = 0
+    bad_names_count = 0
+    for p in smart_parser_json.get("persons", []):
+        name = p.get('person', {}).get('name_raw','')
+        if string_contains_Russian_name(name):
+            good_names_count += 1
+        else:
+            bad_names_count += 1
+    #good_names_ratio = good_names_count*5 > (good_names_count + bad_names_count)
+    #number_of_persons = len(smart_parser_json.get("persons", []))
+    if good_names_count*5 < (good_names_count + bad_names_count):
+        good_names_count = 0
+    number_of_persons = good_names_count
     return number_of_persons, smart_parser_json.get('document', {}).get("sheet_title", "")
 
 

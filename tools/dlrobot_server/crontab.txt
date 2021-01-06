@@ -9,3 +9,4 @@ OUTPUT_FOLDER=/var/www/smart_parser/tools/disclosures_site/disclosures/static/dl
 */10       *     *        *      *    python3 $TOOLS/ConvStorage/scripts/get_stats.py --history-file $CONV_STATS
 */10       *     *        *      *    python3 $TOOLS/dlrobot_server/dlrobot_stats.py --central-stats-file  $CENTRAL_STATS --conversion-server-stats $CONV_STATS --output-folder $OUTPUT_FOLDER
 */20       */5   *        *      *    yandex-disk sync
+0          */1   *        *      *    certbot -q renew
