@@ -1,7 +1,7 @@
 from collections import defaultdict
 import re
 
-SOME_OTHER_DOCUMENTS = [
+SOME_OTHER_DOCUMENTS = {
     'шаблоны',
     'решение',
     'постановление',
@@ -18,8 +18,10 @@ SOME_OTHER_DOCUMENTS = [
     'приказ',
     'методические рекомендации',
     'график',
-    'поручение'
-]
+    'поручение',
+    'документация',
+    'распределение'
+}
 
 
 class TCharCategory:
