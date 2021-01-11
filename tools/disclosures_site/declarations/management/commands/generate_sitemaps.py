@@ -142,7 +142,7 @@ class Command(BaseCommand):
         sitemap_index_path = os.path.join(os.path.dirname(__file__), "../../../disclosures/static/sitemap.xml")
         with open(sitemap_index_path, "w") as outp:
             outp.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n")
-            outp.write("<sitemapindex xmlns=\"https://www.sitemaps.org/schemas/sitemap/0.9\">\n")
+            outp.write("<sitemapindex xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n")
             self.write_sitemap_index_entry(main_sitemap, outp)
             for s in rare_people_sitemaps:
                 self.write_sitemap_index_entry(s, outp)
