@@ -279,10 +279,8 @@ class TDlrobotWorker:
                         response.status))
                     break
             except Exception as exc:
-                # I cannot use here str(exc), because some unknown exception (with str 'timed out')  cannot be printed.
-                # Is it socket.timeout? Is it TimeoutError? The exception occurs too rarely to investigate.
-                self.logger.error('worker got {}', type(exc).__name__)
-                self.logger.error('try_id = {}', try_id)
+                self.logger.error('worker got {}'.format(type(exc).__name__))
+                self.logger.error('try_id = {}'.format(try_id))
                 if conn is not None:
                     conn.close()
                 if try_id == 2:
