@@ -28,39 +28,6 @@ def convert_to_seconds(s):
         return int(s)
 
 
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--server-address", dest='server_address', default=None, help="by default read it from environment variable DECLARATOR_CONV_URL")
-    parser.add_argument("--logfile", dest='logfile', default='db_conv.log')
-    parser.add_argument("--db-json", dest='db_json', required=True)
-    parser.add_argument("--clear-db", dest='clear_json', required=False, action="store_true")
-    parser.add_argument("--disable-ocr", dest='enable_ocr', default=True, required=False, action="store_false")
-    parser.add_argument("--disable-winword", dest='enable_winword', default=True, required=False, action="store_false")
-    parser.add_argument("--input-folder", dest='input_folder', required=False, default="input_files")
-    parser.add_argument("--input-folder-cracked", dest='input_folder_cracked', required=False, default="input_files_cracked")
-    parser.add_argument("--ocr-input-folder", dest='ocr_input_folder', required=False, default="pdf.ocr")
-    parser.add_argument("--ocr-output-folder", dest='ocr_output_folder', required=False, default="pdf.ocr.out")
-    parser.add_argument("--ocr-logs-folder", dest='ocr_logs_folder', required=False, default="ocr.logs")
-    parser.add_argument("--ocr-timeout", dest='ocr_timeout', required=False,
-                        help="delete file if ocr cannot process it in this timeout, default 3h", default="3h")
-    parser.add_argument("--microsoft-pdf-2-docx",
-                        dest='microsoft_pdf_2_docx',
-                        required=False,
-                        default="C:/tmp/smart_parser/smart_parser/tools/MicrosoftPdf2Docx/bin/Debug/MicrosoftPdf2Docx.exe")
-    parser.add_argument("--disable-killing-winword", dest='use_winword_exlusively', default=True, required=False, action="store_false")
-    parser.add_argument("--request-rate-serialize",
-                        dest='request_rate_serialize', default=100, required=False, type=int,
-                        help="save db on each Nth get request")
-    parser.add_argument("--ocr-restart-time", dest='ocr_restart_time', required=False,
-                        help="restart ocr if it produces no results", default="3h")
-    parser.add_argument("--central-heart-rate", dest='central_heart_rate', type=int,  required=False, default='10')
-
-    args = parser.parse_args()
-    TConvertProcessor.ocr_timeout_with_waiting_in_queue = convert_to_seconds(args.ocr_timeout)
-    TConvertProcessor.ocr_restart_time = convert_to_seconds(args.ocr_restart_time)
-    if args.server_address is None:
-        args.server_address = os.environ['DECLARATOR_CONV_URL']
-    return args
 
 
 def setup_logging(logfilename):
@@ -113,6 +80,45 @@ class TConvertProcessor(http.server.HTTPServer):
 
     # if the ocr queue is not empty and ocr produces no results in  1 hour, we have to restart ocr
     ocr_restart_time = 60*60  #1 hour
+
+    @staticmethod
+    def parse_args(arglist):
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--server-address", dest='server_address', default=None,
+                            help="by default read it from environment variable DECLARATOR_CONV_URL")
+        parser.add_argument("--logfile", dest='logfile', default='db_conv.log')
+        parser.add_argument("--db-json", dest='db_json', required=True)
+        parser.add_argument("--clear-db", dest='clear_json', required=False, action="store_true")
+        parser.add_argument("--disable-ocr", dest='enable_ocr', default=True, required=False, action="store_false")
+        parser.add_argument("--disable-winword", dest='enable_winword', default=True, required=False,
+                            action="store_false")
+        parser.add_argument("--input-folder", dest='input_folder', required=False, default="input_files")
+        parser.add_argument("--input-folder-cracked", dest='input_folder_cracked', required=False,
+                            default="input_files_cracked")
+        parser.add_argument("--ocr-input-folder", dest='ocr_input_folder', required=False, default="pdf.ocr")
+        parser.add_argument("--ocr-output-folder", dest='ocr_output_folder', required=False, default="pdf.ocr.out")
+        parser.add_argument("--ocr-logs-folder", dest='ocr_logs_folder', required=False, default="ocr.logs")
+        parser.add_argument("--ocr-timeout", dest='ocr_timeout', required=False,
+                            help="delete file if ocr cannot process it in this timeout, default 3h", default="3h")
+        parser.add_argument("--microsoft-pdf-2-docx",
+                            dest='microsoft_pdf_2_docx',
+                            required=False,
+                            default="C:/tmp/smart_parser/smart_parser/tools/MicrosoftPdf2Docx/bin/Debug/MicrosoftPdf2Docx.exe")
+        parser.add_argument("--disable-killing-winword", dest='use_winword_exlusively', default=True, required=False,
+                            action="store_false")
+        parser.add_argument("--request-rate-serialize",
+                            dest='request_rate_serialize', default=100, required=False, type=int,
+                            help="save db on each Nth get request")
+        parser.add_argument("--ocr-restart-time", dest='ocr_restart_time', required=False,
+                            help="restart ocr if it produces no results", default="3h")
+        parser.add_argument("--central-heart-rate", dest='central_heart_rate', type=int, required=False, default='10')
+
+        args = parser.parse_args(arglist)
+        TConvertProcessor.ocr_timeout_with_waiting_in_queue = convert_to_seconds(args.ocr_timeout)
+        TConvertProcessor.ocr_restart_time = convert_to_seconds(args.ocr_restart_time)
+        if args.server_address is None:
+            args.server_address = os.environ['DECLARATOR_CONV_URL']
+        return args
 
     def __init__(self):
         self.args = None
@@ -558,6 +564,7 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
         #reply_body = 'Saved file {} (file length={})\n'.format(self.path, file_length)
         #self.wfile.write(reply_body.encode('utf-8'))
 
+
 LOGGER = None
 
 def conversion_server_main(args):
@@ -584,7 +591,7 @@ def conversion_server_main(args):
 
 
 if __name__ == '__main__':
-    args = parse_args()
+    args = TConvertProcessor.parse_args(sys.argv[1:])
     try:
         exit_code = conversion_server_main(args)
     except KeyboardInterrupt as exp:

@@ -7,7 +7,7 @@ import time
 import sys
 import logging
 import os
-from conv_storage_server import conversion_server_main, parse_args, HTTP_SERVER
+from conv_storage_server import conversion_server_main, TConvertProcessor, HTTP_SERVER
 
 WORKING_DIR = "c:\\tmp\\conv_db"
 SERVER_ADDRESS = "192.168.100.152:8091" #production
@@ -67,11 +67,11 @@ class AppServerSvc (win32serviceutil.ServiceFramework):
     def main(self):
         self.logger.debug("chdir {}".format(WORKING_DIR))
         os.chdir(WORKING_DIR)
-        sys.argv = ['conv_storage_server.py',
+        server_args = [
             '--server-address',  SERVER_ADDRESS,
             '--db-json', 'converted_file_storage.json',
         ]
-        args = parse_args()
+        args = TConvertProcessor.parse_args(server_args)
         self.logger.debug("args={}".format(str(args)))
         while True:
             if self.stop_requested:
