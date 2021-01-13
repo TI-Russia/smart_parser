@@ -1,9 +1,6 @@
-import socket
 import time
-import sys
 import logging
 import os
-import argparse
 
 from conv_storage_server import conversion_server_main, TConvertProcessor, HTTP_SERVER
 
@@ -26,19 +23,21 @@ def setup_logging():
     return logger
 
 
-def parse_args():
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--action", dest='action')
-
-
-class AppServerSvc:
-    def __init__(self, args):
+class ConvertPdfService:
+    def __init__(self):
         self.stop_requested = False
         self.logger = setup_logging()
-        self.args = args
 
-    def main(self):
+    def stop_service(self):
+        try:
+            self.logger.info('HTTP_SERVER.stop_http_server() ...')
+            HTTP_SERVER.stop_http_server()
+        except Exception as exp:
+            self.logger.error(exp)
+            raise
+        self.stop_requested = True
+
+    def run_service(self):
         self.logger.debug("chdir {}".format(WORKING_DIR))
         os.chdir(WORKING_DIR)
         server_args = TConvertProcessor.parse_args(['--server-address',  SERVER_ADDRESS,
@@ -62,7 +61,6 @@ class AppServerSvc:
 
 
 if __name__ == '__main__':
-    args = parse_args()
-    srv = AppServerSvc(args)
-    srv.main()
+    srv = ConvertPdfService()
+    srv.run_service()
 
