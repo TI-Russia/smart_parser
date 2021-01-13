@@ -116,8 +116,8 @@ class TestReload(TestCase):
         self.assertTrue(self.env.client.send_file("test1.txt"))
 
         stats = self.env.client.get_stats()
-        self.env.server.close_files()
-        self.env.server.load_from_disk()
+        self.env.server.file_storage.close_files()
+        self.env.server.file_storage.load_from_disk()
 
         file_data_, _ = self.env.client.retrieve_file_data_by_sha256(hashlib.sha256(file_data1).hexdigest())
         self.assertEqual(file_data1, file_data_)
