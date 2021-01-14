@@ -7,6 +7,9 @@
     2.4. follow https://www.pandasecurity.com/en/mediacenter/tips/how-to-free-up-ram/#:~:text=To%20locate%20your%20computer%20memory,space%20they%20are%20taking%20up.
         Switch off many background apps (leave security)
 
+
+2.1 net stop windows search (руками в панели services)
+
 3. Install Microsoft Word 2019
 
 4. Install Cygwin в c:\cygwin64 with

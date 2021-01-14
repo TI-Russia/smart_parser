@@ -22,7 +22,6 @@ def setup_logging():
 
 
 if __name__ == '__main__':
-    args = parse_args()
     logger = setup_logging()
     client = TDocConversionClient(TDocConversionClient.parse_args(sys.argv[1:]),  logger)
     client.start_conversion_thread()

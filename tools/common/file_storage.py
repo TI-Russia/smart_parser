@@ -42,7 +42,7 @@ class TFileStorage:
             open_mode = "c"
         if os.name != "nt":
             open_mode += "s"
-        self.logger.info("open gdb file {} with mode: {}".format(self.dbm_path, open_mode))
+        self.logger.info("open dbm file {} with mode: {}".format(self.dbm_path, open_mode))
         self.saved_file_params = gdbm.open(self.dbm_path, open_mode)
         if open_mode[0] == "w":
             self.stats = json.loads(self.saved_file_params.get('stats'))

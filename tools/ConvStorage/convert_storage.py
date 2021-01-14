@@ -16,16 +16,16 @@ class TConvertStorage:
         self.project_path = project_path
         with open(self.project_path, "r", encoding="utf8") as inp:
             self.project = json.load(inp)
-        self.converted_files_folder = self.project['converted_folder']
-        self.input_files_folder = self.project['input_folder']
+        self.converted_files_folder = os.path.join(self.main_folder, self.project['converted_folder'])
+        self.input_files_folder = os.path.join(self.main_folder, self.project['input_folder'])
         self.access_file_path = self.project.get('access_file_path', os.path.join(self.main_folder, "access.log"))
         self.access_file = open(self.access_file_path, "a+")
         if not os.path.exists(self.input_files_folder):
             os.makedirs(self.input_files_folder)
         if not os.path.exists(self.converted_files_folder):
             os.makedirs(self.converted_files_folder)
-        self.input_file_storage = TFileStorage(self.logger, self.input_files_folder)
-        self.converted_file_storage = TFileStorage(self.logger, self.converted_files_folder)
+        self.input_file_storage = TFileStorage(self.logger, self.input_files_folder, max_bin_file_size=2**30)
+        self.converted_file_storage = TFileStorage(self.logger, self.converted_files_folder, max_bin_file_size=2**30)
 
     @staticmethod
     def create_empty_db(output_filename, input_folder, converted_folder):
@@ -70,16 +70,18 @@ class TConvertStorage:
     def has_converted_file(self, sha256):
         return self.converted_file_storage.has_saved_file(sha256)
 
-    def register_access_request(self, sha256):
-        time_str = datetime.now().strftime('%Y-%m-%d %H:%M')
+    def register_access_request(self, sha256, timestamp=None):
+        if timestamp is None:
+            time_str = datetime.now().strftime('%Y-%m-%d %H:%M')
+        else:
+            time_str = datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M')
         self.access_file.write("{}: {}\n".format(time_str, sha256))
         self.access_file.flush()
 
     def save_converted_file_broken_stub(self, sha256, force=False):
         self.converted_file_storage.save_file(self.broken_stub, ".docx", None, force=force, sha256=sha256)
 
-
-    def save_converted_file(self, file_name, sha256, converter_id, force=False):
+    def save_converted_file(self, file_name, sha256, converter_id, force=False, delete_file=False):
         _, file_extension = os.path.splitext(file_name)
         with open(file_name, "rb") as inp:
 
@@ -89,13 +91,15 @@ class TConvertStorage:
                                                    aux_params,
                                                    force=force,
                                                    sha256=sha256)
-        self.delete_file_silently(file_name)
+        if delete_file:
+            self.delete_file_silently(file_name)
 
-    def save_input_file(self, file_name):
+    def save_input_file(self, file_name, delete_file=False):
         _, file_extension = os.path.splitext(file_name)
         with open(file_name, "rb") as inp:
             self.input_file_storage.save_file(inp.read(), file_extension)
-        self.delete_file_silently(file_name)
+        if delete_file:
+            self.delete_file_silently(file_name)
 
     def close_storage(self):
         self.access_file.close()
