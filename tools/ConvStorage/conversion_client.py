@@ -1,5 +1,6 @@
 from common.archives import TDearchiver
 from common.content_types import DEFAULT_PDF_EXTENSION
+from ConvStorage.convert_storage import TConvertStorage
 
 import time
 import http.client
@@ -13,6 +14,7 @@ import queue
 import json
 from tempfile import TemporaryDirectory
 from pathlib import Path
+import argparse
 
 
 class TInputTask:
@@ -27,7 +29,22 @@ class TDocConversionClient(object):
     MAX_FILE_PENDING_SUM_SIZE = 100 * 2 ** 20  # if pending file size sum is greater than MAX_FILE_PENDING_SUM_SIZE,
                                                # then we should stop sending new files
 
-    def __init__(self, logger=None):
+    @staticmethod
+    def parse_args(arg_list):
+        parser = argparse.ArgumentParser()
+        parser.add_argument('input', nargs='+')
+        parser.add_argument("--rebuild", dest='rebuild_pdf', action="store_true", default=False)
+        parser.add_argument("--conversion-timeout", dest='conversion_timeout', type=int, default=60 * 30)
+        parser.add_argument("--conversion-server", "--server-address", dest='conversion_server', required=False)
+        parser.add_argument("--skip-receiving", dest='receive_files', default=True, action="store_false",
+                            required=False)
+        parser.add_argument("--output-folder", dest='output_folder', default=None, required=False)
+        return parser.parse_args(arg_list)
+
+    def __init__(self, args, logger=None):
+        self.args = args
+        if args.conversion_server is not None:
+            TDocConversionClient.DECLARATOR_CONV_URL = args.conversion_server
         assert_declarator_conv_alive()
         self.wait_new_tasks = True
         self._input_tasks = queue.Queue()
@@ -173,13 +190,18 @@ class TDocConversionClient(object):
         return stats['ocr_pending_all_file_size']
 
     def retrieve_document(self, sha256, output_file_name):
+        # retrieve_document returns True, if file was processed by the server.
+        # If the server  found an error in pdf it returned TConvertStorage.broken_stub.
+        # If the server return TConvertStorage.broken_stub we do not create a file, but return True.
         conn = http.client.HTTPConnection(self.db_conv_url, timeout=self.default_http_timeout)
         try:
             conn.request("GET", "?sha256=" + sha256)
             response = conn.getresponse()
             if response.code == 200:
-                with open(output_file_name, "wb") as out:
-                    out.write(response.read())
+                file_content = response.read()
+                if file_content != TConvertStorage.broken_stub:
+                    with open(output_file_name, "wb") as out:
+                        out.write(file_content)
                 return True
             else:
                 return False
@@ -223,6 +245,50 @@ class TDocConversionClient(object):
             self._wait_conversion_tasks(timeout_in_seconds)
         except Exception as exp:
             self.logger.error("wait_doc_conversion_finished: exception {}".format(exp))
+
+    def send_files(self):
+        sent_files = set()
+        for filepath in self.args.input:
+            _, extension = os.path.splitext(filepath)
+            if self.start_conversion_task_if_needed(filepath, extension.lower(), self.args.rebuild_pdf):
+                self.logger.debug("send {}".format(filepath))
+                sent_files.add(filepath)
+        return sent_files
+
+    def receive_files(self, sent_files):
+        errors_count = 0
+        for filepath in sent_files:
+            self.logger.debug("download docx for {}".format(filepath))
+            with open(filepath, "rb") as f:
+                sha256hash = hashlib.sha256(f.read()).hexdigest()
+            outfile = filepath + ".docx"
+            if self.args.output_folder is not None:
+                outfile = os.path.join(self.args.output_folder, os.path.basename(outfile))
+            if self.retrieve_document(sha256hash, outfile):
+                if os.path.exists(outfile):
+                    self.logger.debug("save {}".format(outfile))
+            else:
+                self.logger.error("cannot download docx for file {}".format(filepath))
+                errors_count += 1
+        return errors_count == 0
+
+    def process_files(self):
+        sent_files = set()
+        start_time = time.time()
+        try:
+            sent_files = self.send_files()
+            if self.args.receive_files and len(sent_files) > 0:
+                self.wait_doc_conversion_finished(self.args.conversion_timeout)
+            else:
+                self.logger.debug("stop conversion finished")
+                self.stop_conversion_thread(timeout=1)
+        except Exception as exp:
+            self.logger.error("exception: {}, stop_conversion_thread".format(exp))
+            self.stop_conversion_thread(timeout=1)
+        if self.args.receive_files and time.time() - start_time < self.args.conversion_timeout:
+            if not self.receive_files(sent_files):
+                return 1
+        return 0
 
 
 def assert_declarator_conv_alive():

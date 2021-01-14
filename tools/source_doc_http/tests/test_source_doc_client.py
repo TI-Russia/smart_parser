@@ -113,10 +113,10 @@ class TestReload(TestCase):
         with open("test8484.txt", "wb") as outp:
             outp.write(file_data1)
 
-        self.assertTrue(self.env.client.send_file("test1.txt"))
+        self.assertTrue(self.env.client.send_file("test8484.txt"))
 
         stats = self.env.client.get_stats()
-        self.env.server.file_storage.close_files()
+        self.env.server.file_storage.close_file_storage()
         self.env.server.file_storage.load_from_disk()
 
         file_data_, _ = self.env.client.retrieve_file_data_by_sha256(hashlib.sha256(file_data1).hexdigest())

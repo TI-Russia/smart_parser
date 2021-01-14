@@ -1,53 +1,52 @@
+from common.file_storage import TFileStorage
 import os
 import json
-import shutil
-import time
-import threading
-
-
-def move_file_with_retry(logger, file_name, folder):
-    for try_index in [1, 2, 3]:
-        try:
-            shutil.move(file_name, folder)
-            return
-        except Exception as exp:
-            logger.error("cannot move {}, exception={}, wait 20 seconds...".format(file_name, exp))
-            time.sleep(20)
-    shutil.move(file_name, folder)
+from datetime import datetime
 
 
 class TConvertStorage:
 
     converted_file_extension = ".pdf.docx"
     converter_id_key = "c"
-    access_request_key = "a"
+    broken_stub = b"broken_stub"
 
-    def __init__(self, logger, conv_db_json_file_name, new_db=False):
+    def __init__(self, logger, project_path):
         self.logger = logger
-        self.main_folder = os.path.dirname(conv_db_json_file_name)
-        self.conv_db_json_file_name = conv_db_json_file_name
-        self.conv_db_json = None
-        with open(self.conv_db_json_file_name, "r", encoding="utf8") as inp:
-            self.conv_db_json = json.load(inp)
-        self.converted_files_folder = self.conv_db_json['converted_folder']
-        self.input_files_folder = self.conv_db_json['input_folder']
+        self.main_folder = os.path.dirname(project_path)
+        self.project_path = project_path
+        with open(self.project_path, "r", encoding="utf8") as inp:
+            self.project = json.load(inp)
+        self.converted_files_folder = self.project['converted_folder']
+        self.input_files_folder = self.project['input_folder']
+        self.access_file_path = self.project.get('access_file_path', os.path.join(self.main_folder, "access.log"))
+        self.access_file = open(self.access_file_path, "a+")
         if not os.path.exists(self.input_files_folder):
             os.makedirs(self.input_files_folder)
         if not os.path.exists(self.converted_files_folder):
             os.makedirs(self.converted_files_folder)
-        self.modify_json_lock = threading.Lock()
-        assert "files" in self.conv_db_json
-        self.last_save_time = time.time()
+        self.input_file_storage = TFileStorage(self.logger, self.input_files_folder)
+        self.converted_file_storage = TFileStorage(self.logger, self.converted_files_folder)
 
     @staticmethod
     def create_empty_db(output_filename, input_folder, converted_folder):
         db = {
-            "files": {},
             "input_folder": input_folder,
             "converted_folder": converted_folder
         }
         with open(output_filename, "w") as outf:
             json.dump(db, outf, indent=4)
+
+    def clear_database(self):
+        self.input_file_storage.clear_db()
+        self.converted_file_storage.clear_db()
+
+    def delete_file_silently(self, full_path):
+        try:
+            if os.path.exists(full_path):
+                self.logger.debug("delete {}".format(full_path))
+                os.unlink(full_path)
+        except Exception as exp:
+            self.logger.error("Exception {}, cannot delete {}, do not know how to deal with it...".format(exp, full_path))
 
     @staticmethod
     def is_normal_input_file_name(filename):
@@ -65,107 +64,40 @@ class TConvertStorage:
             return None
         return sha256
 
-    def clear_database(self):
-        self.conv_db_json['files'] = dict()
-        self.save_database()
-
-    def save_database(self):
-        self.modify_json_lock.acquire()
-        try:
-            with open(self.conv_db_json_file_name + ".tmp", "w") as outf:
-                json.dump(self.conv_db_json, outf, indent=4)
-            # make file write more stable (remember that windows is very unstable with its regular updates)
-            os.replace(self.conv_db_json_file_name + ".tmp", self.conv_db_json_file_name)
-            self.last_save_time = time.time()
-        finally:
-            self.modify_json_lock.release()
-
-    def register_missing_files(self):
-        files = os.listdir(os.path.join(self.converted_files_folder))
-        self.logger.info("there are {} files in {}".format(len(files), self.converted_files_folder))
-        self.logger.info("there are {} files in {}".format(len(self.conv_db_json['files']), self.conv_db_json_file_name))
-        for f in files:
-            if not f.endswith(self.converted_file_extension):
-                self.logger.error("bad file name {}".format(f))
-                assert f.endswith(self.converted_file_extension)
-            sha256 = f[:-len(self.converted_file_extension)]
-            assert (len(sha256) == 64)
-            if sha256 not in self.conv_db_json['files']:
-                self.conv_db_json['files'][sha256] = {}
-                self.register_access_request(sha256)
-                self.logger.debug("register {} with no properties, because they are lost".format(sha256))
-
-    def get_converted_file_name(self, sha256):
-        return os.path.join(self.main_folder, self.converted_files_folder, sha256 + self.converted_file_extension)
+    def get_converted_file(self, sha256):
+        return self.converted_file_storage.get_saved_file(sha256)
 
     def has_converted_file(self, sha256):
-        filename = self.get_converted_file_name(sha256)
-        if filename is None:
-            return False
-        return os.path.exists(filename)
+        return self.converted_file_storage.has_saved_file(sha256)
 
     def register_access_request(self, sha256):
-        file_info = self.conv_db_json['files'].get(sha256)
-        if file_info is None:
-            return
-        file_info[TConvertStorage.access_request_key] = int(time.time()/(60*60*24))  # in days
+        time_str = datetime.now().strftime('%Y-%m-%d %H:%M')
+        self.access_file.write("{}: {}\n".format(time_str, sha256))
+        self.access_file.flush()
 
-    def copy_file(self, src, dst, move_files=False):
-        if move_files:
-            self.logger.debug("copy {} to {}".format(src, dst))
-            shutil.move(src, dst)
-        else: 
-            self.logger.debug("copy {} to {}".format(src, dst))
-            shutil.copy(src, dst)
+    def save_converted_file_broken_stub(self, sha256, force=False):
+        self.converted_file_storage.save_file(self.broken_stub, ".docx", None, force=force, sha256=sha256)
 
-    def add_database(self, add_db, move_files=False):
-        self.logger.info("start to copy  files..")
-        cnt = 0
-        for sha256, file_info in add_db.conv_db_json['files'].items():
-            if sha256 not in self.conv_db_json['files']:
-                cnt += 1
-                self.conv_db_json['files'][sha256] = file_info
-                self.copy_file(add_db.get_input_file_name(sha256), self.get_input_file_name(sha256), move_files)
-                self.copy_file(add_db.get_converted_file_name(sha256), self.get_converted_file_name(sha256), move_files)
-        self.logger.info("added {} files..".format(cnt))
 
-    def save_converted_file(self, file_name, sha256, converter_id):
-        converted_file = self.get_converted_file_name(sha256)
-        self.logger.debug("move {} to {}".format(file_name, converted_file))
-        move_file_with_retry(self.logger, file_name, converted_file)
+    def save_converted_file(self, file_name, sha256, converter_id, force=False):
+        _, file_extension = os.path.splitext(file_name)
+        with open(file_name, "rb") as inp:
 
-        self.modify_json_lock.acquire()
-        try:
-            self.conv_db_json['files'][sha256] = {TConvertStorage.converter_id_key: converter_id}
-        finally:
-            self.modify_json_lock.release()
+            aux_params = json.dumps({self.converter_id_key: converter_id})
+            self.converted_file_storage.save_file(inp.read(),
+                                                   file_extension,
+                                                   aux_params,
+                                                   force=force,
+                                                   sha256=sha256)
+        self.delete_file_silently(file_name)
 
-    def get_input_file_name(self, sha256):
-        return os.path.join(self.main_folder, self.input_files_folder, sha256 + ".pdf")
+    def save_input_file(self, file_name):
+        _, file_extension = os.path.splitext(file_name)
+        with open(file_name, "rb") as inp:
+            self.input_file_storage.save_file(inp.read(), file_extension)
+        self.delete_file_silently(file_name)
 
-    def save_input_file(self, file_name, sha256):
-        input_file = self.get_input_file_name(sha256)
-        self.logger.debug("move {} to {}".format(file_name, input_file))
-        move_file_with_retry(self.logger, file_name, input_file)
-
-    def delete_conversion_record(self, sha256):
-        if sha256 not in self.conv_db_json['files']:
-            return False
-        self.logger.debug("delete_conversion_record {}".format(sha256))
-        file_path = self.get_converted_file_name(sha256)
-        if os.path.exists(file_path):
-            self.logger.debug("delete {}".format(file_path))
-            os.remove(file_path)
-
-        file_path = self.get_input_file_name(sha256)
-        if os.path.exists(file_path):
-            self.logger.debug("delete {}".format(file_path))
-            os.remove(file_path)
-
-        self.modify_json_lock.acquire()
-        try:
-            del self.conv_db_json['files'][sha256]
-        finally:
-            self.modify_json_lock.release()
-        self.save_database()
-        return True
+    def close_storage(self):
+        self.access_file.close()
+        self.converted_file_storage.close_file_storage()
+        self.input_file_storage.close_file_storage()

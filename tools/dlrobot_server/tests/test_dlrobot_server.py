@@ -166,7 +166,7 @@ class TTestEnv:
             self.smart_parser_server.stop_server()
         if self.source_doc_server is not None:
             self.source_doc_server.shutdown()
-            self.source_doc_server.close_files()
+            self.source_doc_server.close_file_storage()
         #if os.path.exists(self.data_folder):
         #    shutil.rmtree(self.data_folder, ignore_errors=True)
 

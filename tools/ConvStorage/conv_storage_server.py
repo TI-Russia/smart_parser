@@ -1,4 +1,4 @@
-from ConvStorage.convert_storage import TConvertStorage, move_file_with_retry
+from ConvStorage.convert_storage import TConvertStorage
 
 import argparse
 import json
@@ -28,6 +28,15 @@ def convert_to_seconds(s):
         return int(s)
 
 
+def move_file_with_retry(logger, file_name, folder):
+    for try_index in [1, 2, 3]:
+        try:
+            shutil.move(file_name, folder)
+            return
+        except Exception as exp:
+            logger.error("cannot move {}, exception={}, wait 20 seconds...".format(file_name, exp))
+            time.sleep(20)
+    shutil.move(file_name, folder)
 
 
 def setup_logging(logfilename):
@@ -41,6 +50,7 @@ def setup_logging(logfilename):
     fh.setFormatter(formatter)
     logger.addHandler(fh)
     return logger
+
 
 def strip_drm(logger, filename, stripped_file):
     with open("crack.info", "w", encoding="utf8") as outf:
@@ -66,12 +76,13 @@ def taskkill_windows(process_name):
 
 
 class TInputTask:
-    def __init__(self, file_path, sha256, file_size):
+    def __init__(self, file_path, sha256, file_size, force):
         self.file_path = file_path
         self.basename = os.path.basename(file_path)
         self.sha256 = sha256
         self.file_size = file_size
         self.creation_time = time.time()
+        self.force = force
 
 
 class TConvertProcessor(http.server.HTTPServer):
@@ -120,9 +131,9 @@ class TConvertProcessor(http.server.HTTPServer):
             args.server_address = os.environ['DECLARATOR_CONV_URL']
         return args
 
-    def __init__(self):
-        self.args = None
-        self.logger = None
+    def __init__(self, args):
+        self.args = args
+        self.logger = setup_logging(args.logfile)
         self.convert_storage = None
 
         self.input_thread = None
@@ -134,69 +145,51 @@ class TConvertProcessor(http.server.HTTPServer):
         self.processed_files_size = 0
         self.failed_files_size = 0
         self.successful_get_requests = 0
+        self.finished_ocr_tasks = 0
 
         self.last_heart_beat = time.time()
         self.file_garbage_collection_timestamp = 0
-        self.save_get_requests = 0
         self.ocr_queue_is_empty_last_time_stamp = time.time()
         self.got_ocred_file_last_time_stamp = time.time()
         self.http_server_is_working = False
-
-    def start_http_server(self, args, logger):
-        self.args = args
-        self.logger = logger
         self.convert_storage = TConvertStorage(self.logger, args.db_json)
         if args.clear_json:
             self.convert_storage.clear_database()
         self.create_folders()
         host, port = self.args.server_address.split(":")
         super().__init__((host, int(port)), THttpServerRequestHandler)
-        self.logger.debug("started server {}:{}".format(host, port))
+
+    def start_http_server(self):
+        self.logger.debug("myServer.serve_forever(): {}".format(self.args.server_address))
         self.http_server_is_working = True
-        self.logger.debug("myServer.serve_forever()...  ")
         self.serve_forever()
 
     def stop_http_server(self):
         if self.http_server_is_working:
             self.logger.debug("try to stop http server  ")
             self.http_server_is_working = False
+            self.shutdown()
             self.server_close()
             if os.path.exists(self.args.input_folder_cracked):
                 shutil.rmtree(self.args.input_folder_cracked, ignore_errors=False)
             self.logger.debug("http server was stopped")
+            self.convert_storage.close_storage()
+            for i in self.logger.handlers:
+                self.logger.removeHandler(i)
+                i.flush()
+                i.close()
 
-    def delete_file_silently(self, full_path):
-        try:
-            if os.path.exists(full_path):
-                self.logger.debug("delete {}".format(full_path))
-                os.unlink(full_path)
-        except Exception as exp:
-            self.logger.error("Exception {}, cannot delete {}, do not know how to deal with it...".format(exp, full_path))
-
-    def save_new_file(self, sha256, file_bytes, file_extension):
+    def save_new_file(self, sha256, file_bytes, file_extension, force):
         filename = os.path.join(self.args.input_folder, sha256 + file_extension)
         if os.path.exists(filename):  # already registered as an input task
             return False
         with open(filename, 'wb') as output_file:
             output_file.write(file_bytes)
         self.logger.debug("save new file {} ".format(filename))
-        task = TInputTask(filename, sha256, len(file_bytes))
+        task = TInputTask(filename, sha256, len(file_bytes), force)
         self.input_files_size += task.file_size
         self.input_task_queue.put(task)
         return True
-
-    def move_one_ocred_file(self, docx_file):
-        sha256 = TConvertStorage.get_sha256_from_filename(docx_file)
-
-        #delete tmp stripped pdf file, the input file is in storage
-        self.delete_file_silently(os.path.join(self.args.ocr_input_folder, sha256 + ".pdf"))
-
-        if sha256 is None:
-            self.logger.debug("remove abnormal converted file ".format(docx_file))
-            self.delete_file_silently(docx_file)
-        else:
-            self.convert_storage.save_converted_file(docx_file, sha256, "ocr")
-            self.register_ocr_process_finish(sha256, True)
 
     def register_file_process_finish(self, input_task: TInputTask, process_result):
         self.input_files_size -= input_task.file_size
@@ -205,11 +198,11 @@ class TConvertProcessor(http.server.HTTPServer):
         else:
             self.failed_files_size += input_task.file_size
 
-    def register_ocr_process_finish(self, sha256, process_result):
-        input_task = self.ocr_tasks.get(sha256)
+    def register_ocr_process_finish(self, input_task: TInputTask, process_result):
         if input_task is not None:
             self.register_file_process_finish(input_task, process_result)
-            del self.ocr_tasks[sha256]
+            del self.ocr_tasks[input_task.sha256]
+            self.finished_ocr_tasks += 1
 
     def convert_with_microsoft_word(self, filename):
         if not self.args.enable_winword:
@@ -245,20 +238,22 @@ class TConvertProcessor(http.server.HTTPServer):
         self.logger.info("convert {} with microsoft word".format(input_file))
         docxfile = self.convert_with_microsoft_word(stripped_file)
         if docxfile is not None:
-            self.convert_storage.save_converted_file(docxfile, input_task.sha256, "word")
-            self.convert_storage.save_input_file(input_file, input_task.sha256)
-            self.delete_file_silently(stripped_file)
+            self.convert_storage.delete_file_silently(stripped_file)
+
+            self.convert_storage.save_converted_file(docxfile, input_task.sha256, "word", input_task.force)
+            self.convert_storage.save_input_file(input_file)
             self.register_file_process_finish(input_task, True)
         else:
             if not self.args.enable_ocr:
                 self.logger.info("cannot process {}, delete it".format(input_file))
-                self.delete_file_silently(input_file)
-                self.delete_file_silently(stripped_file)
+                self.convert_storage.delete_file_silently(input_file)
+                self.convert_storage.delete_file_silently(stripped_file)
                 self.register_file_process_finish(input_task, False)
             else:
                 self.logger.info("move {} to {}".format(stripped_file, self.args.ocr_input_folder))
                 move_file_with_retry(self.logger, stripped_file, self.args.ocr_input_folder)
-                self.convert_storage.save_input_file(input_file, input_task.sha256)
+
+                self.convert_storage.save_input_file(input_file)
                 self.ocr_tasks[input_task.sha256] = input_task
 
     def create_cracked_folder(self):
@@ -321,21 +316,21 @@ class TConvertProcessor(http.server.HTTPServer):
 
                 if os.path.exists(filename):
                     if not TConvertStorage.is_normal_input_file_name(filename):
-                        self.delete_file_silently(filename)
+                        self.convert_storage.delete_file_silently(filename)
+                        self.convert_storage.delete_file_silently(filename)
                     else:
                         sha256 = TConvertStorage.get_sha256_from_filename(filename)
-                        self.register_ocr_process_finish(sha256, False)
+                        self.register_ocr_process_finish(self.ocr_tasks.get(sha256), False)
+                        self.convert_storage.save_converted_file_broken_stub(sha256, True)
                         self.logger.debug("remove {}, since ocr cannot process it (\"{}\")".format(filename, log_file))
-                        self.delete_file_silently(filename)
+                        self.convert_storage.delete_file_silently(filename)
 
     def try_convert_with_winword(self):
-        new_files_in_db = False
         files_count = 0
         while not self.input_task_queue.empty():
             task = self.input_task_queue.get()
             try:
                 self.process_one_input_file(task)
-                new_files_in_db = True
                 files_count += 1
                 if files_count >= 80:
                     break  # just give a chance to accomplish other tasks, then return to these tasks
@@ -344,7 +339,6 @@ class TConvertProcessor(http.server.HTTPServer):
                 if os.path.exists(task.file_path):
                     self.logger.error("delete {}".format(task.file_path))
                     os.unlink(task.file_path)
-        return new_files_in_db
 
     def process_docx_from_ocr(self):
         new_files_in_db = False
@@ -352,23 +346,30 @@ class TConvertProcessor(http.server.HTTPServer):
             if not docx_file.endswith(".docx"):
                 continue
             docx_file = os.path.join(self.args.ocr_output_folder, docx_file)
+            input_task = self.ocr_tasks.get(TConvertStorage.get_sha256_from_filename(docx_file))
+            if input_task is None:
+                self.logger.debug("remove a converted file from unknown sources ".format(docx_file))
+                self.convert_storage.delete_file_silently(docx_file)
+            else:
+                for try_index in [1, 2, 3]:
+                    self.logger.info("got file {} from ocr try to move it, trial No {}".format(docx_file, try_index))
+                    try:
+                        self.convert_storage.save_converted_file(docx_file, input_task.sha256, "ocr", input_task.force)
+                        self.register_ocr_process_finish(input_task, True)
+                        new_files_in_db = True
+                        break
+                    except Exception as exp:
+                        # under windows it should raise an exception if ocr is still writing to this file
+                        self.logger.error("Exception {}, sleep 60 seconds ...".format(str(exp)))
+                        time.sleep(60)
 
-            for try_index in [1, 2, 3]:
-                self.logger.info("got file {} from ocr try to move it, trial No {}".format(docx_file, try_index))
-                try:
-                    self.move_one_ocred_file(docx_file)
-                    new_files_in_db = True
-                    break
-                except Exception as exp:
-                    self.logger.error("Exception {}, sleep 60 seconds ...".format(str(exp)))
-                    time.sleep(60)
+                # delete tmp stripped pdf file, the input file is in storage
+                self.convert_storage.delete_file_silently(os.path.join(self.args.ocr_input_folder, input_task.sha256 + ".pdf"))
 
-            if os.path.exists(docx_file):
-                self.logger.debug("cannot access {} in 3 tries, remove it".format(docx_file))
-                input_base_name = os.path.basename(docx_file)[:-len(".docx")]
-                sha256 = TConvertStorage.get_sha256_from_filename(docx_file)
-                self.register_ocr_process_finish(input_base_name, False)
-                self.delete_file_silently(docx_file)
+                if os.path.exists(docx_file):
+                    self.logger.debug("cannot access {} in 3 tries, remove it".format(docx_file))
+                    self.register_ocr_process_finish(input_task, False)
+                    self.convert_storage.delete_file_silently(docx_file)
 
         return new_files_in_db
 
@@ -393,6 +394,7 @@ class TConvertProcessor(http.server.HTTPServer):
                 'is_converting': input_task_queue > 0 or ocr_tasks_count > 0,
                 'processed_files_size': self.processed_files_size,
                 'failed_files_size': self.failed_files_size,
+                'finished_ocr_tasks': self.finished_ocr_tasks
             }
         except Exception as exp:
             return {"exception": str(exp)}
@@ -405,9 +407,9 @@ class TConvertProcessor(http.server.HTTPServer):
             if current_time - timestamp > TConvertProcessor.ocr_timeout_with_waiting_in_queue:
                 self.logger.error("delete orphan file {} after stalling {} seconds".format(
                     fpath, TConvertProcessor.ocr_timeout_with_waiting_in_queue))
-                self.delete_file_silently(fpath)
+                self.convert_storage.delete_file_silently(fpath)
                 sha256 = TConvertStorage.get_sha256_from_filename(pdf_file)
-                self.register_ocr_process_finish(sha256, False)
+                self.register_ocr_process_finish(self.ocr_tasks.get(sha256), False)
 
     def restart_ocr(self):
         self.logger.debug("restart ocr");
@@ -416,7 +418,7 @@ class TConvertProcessor(http.server.HTTPServer):
     def process_all_tasks(self):
         if len(self.ocr_tasks) == 0:
             self.ocr_queue_is_empty_last_time_stamp = time.time()
-        new_files_from_winword = self.try_convert_with_winword()
+        self.try_convert_with_winword()
         new_files_from_ocr = self.process_docx_from_ocr()
         if new_files_from_ocr:
             self.got_ocred_file_last_time_stamp = time.time()
@@ -434,15 +436,6 @@ class TConvertProcessor(http.server.HTTPServer):
             self.restart_ocr()
             self.got_ocred_file_last_time_stamp = time.time()  #otherwize restart will be too often
 
-        # periodic save db:
-        # new files or each 100 requests or 15 minutes
-        if new_files_from_winword or \
-                new_files_from_ocr or \
-                self.successful_get_requests - self.save_get_requests >= self.args.request_rate_serialize or \
-                current_time - self.convert_storage.last_save_time > 60*15:  # each 100 requests or 15 minutes
-            self.save_get_requests = self.successful_get_requests
-            self.convert_storage.save_database()
-
     def service_actions(self):
         current_time = time.time()
         if current_time - self.last_heart_beat >= self.args.central_heart_rate:
@@ -450,7 +443,6 @@ class TConvertProcessor(http.server.HTTPServer):
             self.last_heart_beat = time.time()
 
 
-HTTP_SERVER = TConvertProcessor()
 ALLOWED_FILE_EXTENSTIONS={'.pdf'}
 
 
@@ -468,7 +460,7 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
         return True
 
     def log_message(self, msg_format, *args):
-        HTTP_SERVER.logger.debug(msg_format % args)
+        self.server.logger.debug(msg_format % args)
 
     def process_special_commands(self):
         if self.path == "/ping":
@@ -479,7 +471,7 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
         if self.path == "/stat":
             self.send_response(200)
             self.end_headers()
-            stats = json.dumps(HTTP_SERVER.get_stats())
+            stats = json.dumps(self.server.get_stats())
             self.wfile.write(stats.encode("utf8"))
             return True
         return False
@@ -501,8 +493,8 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
             send_error('No SHA256 provided')
             return
 
-        file_path = HTTP_SERVER.convert_storage.get_converted_file_name(sha256)
-        if file_path is None or not os.path.exists(file_path):
+        file_contents, _ = self.server.convert_storage.get_converted_file(sha256)
+        if file_contents is None:
             send_error('File not found')
             return
 
@@ -510,11 +502,10 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header('Content-type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')
             self.end_headers()
-            HTTP_SERVER.convert_storage.register_access_request(sha256)
-            HTTP_SERVER.successful_get_requests += 1;
+            self.server.convert_storage.register_access_request(sha256)
+            self.server.successful_get_requests += 1;
             if query_components.get("download_converted_file", True):
-                with open(file_path, 'rb') as fh:
-                    self.wfile.write(fh.read())  # Read the file and send the contents
+                self.wfile.write(file_contents)
         except Exception as exp:
             send_error(str(exp))
 
@@ -542,22 +533,19 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
         if file_length > max_file_size:
             send_error("file is too large (size must less than {} bytes ".format(max_file_size))
             return
-        HTTP_SERVER.logger.debug("receive file {} length {}".format(self.path, file_length))
+        self.server.logger.debug("receive file {} length {}".format(self.path, file_length))
         file_bytes = self.rfile.read(file_length)
         sha256 = hashlib.sha256(file_bytes).hexdigest()
-        if rebuild:
-            HTTP_SERVER.convert_storage.delete_conversion_record(sha256)
-        else:
-            if HTTP_SERVER.convert_storage.has_converted_file(sha256):
-                self.send_response(201, 'Already exists')
-                self.end_headers()
-                return
-        if not HTTP_SERVER.save_new_file(sha256, file_bytes,  file_extension):
+        if not rebuild and self.server.convert_storage.has_converted_file(sha256):
+            self.send_response(201, 'Already exists')
+            self.end_headers()
+            return
+        if not self.server.save_new_file(sha256, file_bytes,  file_extension, rebuild):
             self.send_response(201, 'Already registered as a conversion task, wait ')
             self.end_headers()
             return
 
-        HTTP_SERVER.all_put_files_count += 1
+        self.server.all_put_files_count += 1
 
         self.send_response(201, 'Created')
         self.end_headers()
@@ -565,28 +553,24 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
         #self.wfile.write(reply_body.encode('utf-8'))
 
 
-LOGGER = None
-
 def conversion_server_main(args):
+    server = TConvertProcessor(args)
 
-    global  LOGGER
-    if LOGGER is None:
-        LOGGER = setup_logging(args.logfile)
     if shutil.which("qpdf") is None:
-        LOGGER.error("cannot find qpdf, sudo apt install qpdf")
+        server.logger.error("cannot find qpdf, sudo apt install qpdf")
         return 0
     if shutil.which("qpdf") is None:
-        LOGGER.error("cannot find pdfcrack\nsee https://sourceforge.net/projects/pdfcrack/files/")
+        server.logger.error("cannot find pdfcrack\nsee https://sourceforge.net/projects/pdfcrack/files/")
         return 0
 
     exit_code = 0
     try:
-        HTTP_SERVER.start_http_server(args, LOGGER)
+        server.start_http_server()
     except Exception as exp:
-        LOGGER.error("general exception: {}".format(exp))
+        server.logger.error("general exception: {}".format(exp))
         exit_code = 1
-    HTTP_SERVER.stop_http_server()
-    LOGGER.debug("reach the end of the main")
+    server.stop_http_server()
+    server.logger.debug("reach the end of the main")
     return exit_code
 
 
