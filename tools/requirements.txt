@@ -29,3 +29,4 @@ gunicorn
 psycopg2-binary
 matplotlib
 telegram_send
+pytest

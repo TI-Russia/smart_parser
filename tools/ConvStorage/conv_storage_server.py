@@ -201,8 +201,9 @@ class TConvertProcessor(http.server.HTTPServer):
     def register_ocr_process_finish(self, input_task: TInputTask, process_result):
         if input_task is not None:
             self.register_file_process_finish(input_task, process_result)
-            del self.ocr_tasks[input_task.sha256]
-            self.finished_ocr_tasks += 1
+            if input_task.sha256 in self.ocr_tasks:
+                del self.ocr_tasks[input_task.sha256]
+                self.finished_ocr_tasks += 1
 
     def convert_with_microsoft_word(self, filename):
         if not self.args.enable_winword:
