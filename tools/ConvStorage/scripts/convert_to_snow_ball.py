@@ -35,7 +35,7 @@ if __name__ == '__main__':
     args = parse_args()
     logger = setup_logging()
     TConvertStorage.create_empty_db(args.output_project, "db_input_files", "db_converted_files")
-    out_storage = TConvertStorage(logger, args.output_project, disc_sync_rate=100)
+    out_storage = TConvertStorage(logger, args.output_project)
     out_storage.clear_database()
 
     input_json = None

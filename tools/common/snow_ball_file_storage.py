@@ -5,23 +5,37 @@ import shutil
 
 
 class TSnowBallFileStorage:
+    bin_file_prefix = "fs"
+    bin_file_extension = ".bin"
     default_max_bin_file_size = 10 * (2 ** 30)
 
-    # disc_sync_rate means that we sync with disk after each sync_period db update
-    # disc_sync_rate=1 means sync after each db update
-    def __init__(self, logger, data_folder, max_bin_file_size=default_max_bin_file_size):
-        self.max_bin_file_size = max_bin_file_size
-        self.saved_file_params = dict()
-        self.saved_file_params_file = None
-        self.data_folder = data_folder
-        self.header_file_path = os.path.join(self.data_folder, "header.dat")
-        self.load_from_disk()
-        self.logger = logger
+    def clear_stats(self):
         self.stats = {
             'bin_files_count': 1,
             'all_file_size': 0,
             'source_doc_count': 0
         }
+
+    # disc_sync_rate means that we sync with disk after each sync_period db update
+    # disc_sync_rate=1 means sync after each db update
+    def __init__(self, logger, data_folder, max_bin_file_size=default_max_bin_file_size):
+        self.logger = logger
+        self.max_bin_file_size = max_bin_file_size
+        self.saved_file_params = dict()
+        self.saved_file_params_file = None
+        self.data_folder = data_folder
+        self.bin_files = list()
+        self.header_file_path = os.path.normpath(os.path.join(self.data_folder, "header.dat"))
+        self.stats = None
+        self.load_from_disk()
+
+    def get_bin_file_path(self, i):
+        path = os.path.join(self.data_folder, "{}_{:03d}{}".format(
+            self.bin_file_prefix, i, self.bin_file_extension))
+        return os.path.normpath(path)
+
+    def looks_like_a_bin_file(self, f):
+        return f.startswith(self.bin_file_prefix) and f.endswith(self.bin_file_extension)
 
     def write_key_to_header(self, key, value):
         self.saved_file_params[key] = value
@@ -29,21 +43,23 @@ class TSnowBallFileStorage:
         self.saved_file_params_file.flush()
 
     def get_stats_file_path(self):
-        return self.header_path + ".stats"
+        return  self.header_file_path + ".stats"
 
     def save_stats(self):
         with open(self.get_stats_file_path(), "w") as outp:
-            json.dump(outp, self.stats, indent=4)
+            json.dump(self.stats, outp, indent=4)
 
     def close_file_storage(self):
+        self.save_stats()
         self.saved_file_params_file.close()
-        if len(self.bin_files) > 0:
-            self.bin_files[-1].close()
+        for f in self.bin_files:
+            f.close()
 
     def load_from_disk(self):
         assert os.path.exists(self.data_folder)
-        self.saved_file_params_file = open(self.header_file_path, "a+")
         self.saved_file_params = dict()
+        self.saved_file_params_file = open(self.header_file_path, "a+")
+        self.saved_file_params_file.seek(0)
         for line in self.saved_file_params_file:
             key, value = line.strip().split("\t")
             self.saved_file_params[key] = value
@@ -51,6 +67,8 @@ class TSnowBallFileStorage:
         if os.path.exists(self.get_stats_file_path()):
             with open(self.get_stats_file_path()) as inp:
                 self.stats = json.load(inp)
+        else:
+            self.clear_stats()
 
         self.bin_files.clear()
         for i in range(self.stats['bin_files_count'] - 1):
@@ -62,6 +80,11 @@ class TSnowBallFileStorage:
         assert fp is not None
         self.bin_files.append(fp)
 
+        file_in_folder = sum(1 for f in os.listdir(self.data_folder) if self.looks_like_a_bin_file(f))
+        assert (file_in_folder == self.stats['bin_files_count'])
+
+        self.save_stats()
+
     def clear_db(self):
         self.close_file_storage()
 
@@ -71,6 +94,8 @@ class TSnowBallFileStorage:
         self.logger.info("mkdir {}".format(self.data_folder))
         os.mkdir(self.data_folder)
 
+        self.clear_stats()
+        self.save_stats()
         self.load_from_disk()
 
     def has_saved_file(self, sha256):
@@ -101,7 +126,7 @@ class TSnowBallFileStorage:
 
     def write_repeat_header_to_bin_file(self, file_bytes, file_extension, output_bin_file):
         # these headers are needed if the main dbm is lost
-        header_repeat = 'pdf_cnf_doc;{};{}'.format(len(file_bytes), file_extension)
+        header_repeat = '<pdf_cnf_doc>{};{}</pdf_cnf_doc>'.format(len(file_bytes), file_extension)
         output_bin_file.write(header_repeat.encode('latin'))
 
     def update_stats(self, file_bytes_len):
@@ -135,7 +160,7 @@ class TSnowBallFileStorage:
             raise
 
         try:
-            value = {"{};{};{};{};{}".format(
+            value = "{};{};{};{};{}".format(
                 len(self.bin_files) - 1,
                 start_file_pos,
                 len(file_bytes),

@@ -108,7 +108,7 @@ class TTestEnv:
             '--db-json', self.project_file,
             '--disable-killing-winword',
             '--ocr-input-folder', self.pdf_ocr_folder,
-            '--ocr-output-folder', self.pdf_ocr_out_folder,
+            '--ocr-output-folder', self.pdf_ocr_out_folder
         ] + addit_server_args
 
         if start_process:
@@ -178,7 +178,7 @@ class TestPing(TestCase):
         self.assertEqual(exit_code, 0)
 
         with open ("http_code.txt") as inp:
-            self.assertEqual(inp.read().strip(), "200")
+            self.assertEqual(inp.read().strip(" \r\n\r'"), "200")
 
         with open ("dummy.txt") as inp:
             self.assertEqual(inp.read().strip(), "yes")
@@ -297,7 +297,8 @@ class TestComplicatedPdf(TestCase):
 
 class TestWinwordConvertToJpg(TestCase):
     def setUp(self):
-        self.env = TTestEnv("prevent_word_to_jpg")
+        # each docement to a separate bin file
+        self.env = TTestEnv("prevent_word_to_jpg", addit_server_args=['--bin-file-size', '1000'])
 
     def tearDown(self):
         self.env.tearDown()
@@ -309,10 +310,14 @@ class TestWinwordConvertToJpg(TestCase):
                 input_files.append(os.path.join('../files', l))
         input_files.append('../files/18822_cut.pdf')
         output_files = self.env.process_with_client(input_files, timeout=240)
-
         self.assertEqual(len(output_files), len(input_files))
         stats = self.env.server.get_stats()
         self.assertEqual(stats['finished_ocr_tasks'], len(input_files))
+        file_sizes = list(os.stat(x).st_size for x in output_files)
+        self.env.restart_server()
+        output_files = self.env.process_with_client(input_files, timeout=240)
+        new_file_sizes = list(os.stat(x).st_size for x in output_files)
+        self.assertListEqual(file_sizes, new_file_sizes)
 
 
 class TestRebuild(TestCase):

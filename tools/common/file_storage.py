@@ -19,7 +19,9 @@ class TFileStorage:
     def get_bin_file_path(self, i):
         return os.path.join(self.data_folder, "{}.bin".format(i))
 
-    def __init__(self, logger, data_folder, max_bin_file_size=default_max_bin_file_size):
+    # disc_sync_rate means that we sync with disk after each sync_period db update
+    # disc_sync_rate=1 means sync after each db update
+    def __init__(self, logger, data_folder, max_bin_file_size=default_max_bin_file_size, disc_sync_rate=1):
         self.data_folder =  data_folder
         self.max_bin_file_size = max_bin_file_size
         self.logger = logger
@@ -28,12 +30,21 @@ class TFileStorage:
         self.bin_files = list()
         self.dbm_path = None
         self.load_from_disk()
-        self.sync_after_write = (os.name == "nt")
+        if os.name == "nt":
+            self.write_without_sync_count = 0
+            self.disc_sync_rate = disc_sync_rate
+        else:
+            self.disc_sync_rate = None
 
     def write_key_to_dbm(self, key, value):
         self.saved_file_params[key] = value
-        if self.sync_after_write:
+        self.write_without_sync_count += 1
+
+        if self.disc_sync_rate is not None and self.write_without_sync_count >= self.disc_sync_rate:
+            if self.disc_sync_rate > 1:
+                self.logger.debug("sync db")
             self.saved_file_params.sync()
+            self.write_without_sync_count = 0
 
     def open_dbm(self):
         if os.path.exists(self.dbm_path):
@@ -70,10 +81,10 @@ class TFileStorage:
     def clear_db(self):
         self.close_file_storage()
 
-        self.logger("rm -rf self.data_folder")
-        shutil.rmtree(self.data_folder, ignore_errors=True)
+        self.logger.info("rm -rf {}".format(self.data_folder))
+        shutil.rmtree(self.data_folder)
 
-        self.logger("mkdir self.data_folder")
+        self.logger.info("mkdir {}".format(self.data_folder))
         os.mkdir(self.data_folder)
 
         self.load_from_disk()
@@ -166,5 +177,6 @@ class TFileStorage:
 
     def close_file_storage(self):
         if self.saved_file_params is not None:
+            self.saved_file_params.sync() # for nt
             self.saved_file_params.close()
             self.bin_files[-1].close()

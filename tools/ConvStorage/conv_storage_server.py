@@ -123,6 +123,7 @@ class TConvertProcessor(http.server.HTTPServer):
         parser.add_argument("--ocr-restart-time", dest='ocr_restart_time', required=False,
                             help="restart ocr if it produces no results", default="3h")
         parser.add_argument("--central-heart-rate", dest='central_heart_rate', type=int, required=False, default='10')
+        parser.add_argument("--bin-file-size", dest='user_bin_file_size', type=int, required=False)
 
         args = parser.parse_args(arglist)
         TConvertProcessor.ocr_timeout_with_waiting_in_queue = convert_to_seconds(args.ocr_timeout)
@@ -152,7 +153,7 @@ class TConvertProcessor(http.server.HTTPServer):
         self.ocr_queue_is_empty_last_time_stamp = time.time()
         self.got_ocred_file_last_time_stamp = time.time()
         self.http_server_is_working = False
-        self.convert_storage = TConvertStorage(self.logger, args.db_json)
+        self.convert_storage = TConvertStorage(self.logger, args.db_json, args.user_bin_file_size)
         if args.clear_json:
             self.convert_storage.clear_database()
         self.create_folders()
@@ -522,7 +523,7 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
         if action == "convert_if_absent":
             rebuild = False
         elif action == "convert_mandatory":
-                rebuild = True
+            rebuild = True
         else:
             send_error("bad action (file path), can be 'convert_mandatory' or 'convert_if_absent', got \"{}\"".format(action))
             return

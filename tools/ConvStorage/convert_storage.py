@@ -1,4 +1,5 @@
-from common.file_storage import TFileStorage
+#from common.file_storage import TFileStorage
+from common.snow_ball_file_storage import TSnowBallFileStorage
 import os
 import json
 from datetime import datetime
@@ -10,7 +11,7 @@ class TConvertStorage:
     converter_id_key = "c"
     broken_stub = b"broken_stub"
 
-    def __init__(self, logger, project_path):
+    def __init__(self, logger, project_path, user_bin_file_size=None):
         self.logger = logger
         self.main_folder = os.path.dirname(project_path)
         self.project_path = project_path
@@ -24,8 +25,13 @@ class TConvertStorage:
             os.makedirs(self.input_files_folder)
         if not os.path.exists(self.converted_files_folder):
             os.makedirs(self.converted_files_folder)
-        self.input_file_storage = TFileStorage(self.logger, self.input_files_folder, max_bin_file_size=2**30)
-        self.converted_file_storage = TFileStorage(self.logger, self.converted_files_folder, max_bin_file_size=2**30)
+        bin_files_size = user_bin_file_size
+        if bin_files_size is None:
+            bin_files_size =  2 * 2 ** 30
+        self.input_file_storage = TSnowBallFileStorage(self.logger, self.input_files_folder,
+                                               max_bin_file_size=bin_files_size)
+        self.converted_file_storage = TSnowBallFileStorage(self.logger, self.converted_files_folder,
+                                                   max_bin_file_size=bin_files_size)
 
     @staticmethod
     def create_empty_db(output_filename, input_folder, converted_folder):
@@ -81,7 +87,7 @@ class TConvertStorage:
     def save_converted_file_broken_stub(self, sha256, force=False):
         self.converted_file_storage.save_file(self.broken_stub, ".docx", None, force=force, sha256=sha256)
 
-    def save_converted_file(self, file_name, sha256, converter_id, force=False, delete_file=False):
+    def save_converted_file(self, file_name, sha256, converter_id, force=False, delete_file=True):
         _, file_extension = os.path.splitext(file_name)
         with open(file_name, "rb") as inp:
 
@@ -94,7 +100,7 @@ class TConvertStorage:
         if delete_file:
             self.delete_file_silently(file_name)
 
-    def save_input_file(self, file_name, delete_file=False):
+    def save_input_file(self, file_name, delete_file=True):
         _, file_extension = os.path.splitext(file_name)
         with open(file_name, "rb") as inp:
             self.input_file_storage.save_file(inp.read(), file_extension)
