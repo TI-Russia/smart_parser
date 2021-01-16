@@ -1,5 +1,6 @@
 from ConvStorage.conv_storage_server import TConvertProcessor
 from ConvStorage.conversion_client import TDocConversionClient
+from common.simple_logger import close_logger
 
 from unittest import TestCase
 import os
@@ -146,10 +147,7 @@ class TTestEnv:
         self.client.process_files()
 
         if self.server is None:
-            for i in logger.handlers:
-                logger.removeHandler(i)
-                i.flush()
-                i.close()
+            close_logger(logger)
 
         return output_files
 

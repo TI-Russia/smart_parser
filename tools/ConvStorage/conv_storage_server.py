@@ -40,6 +40,7 @@ def move_file_with_retry(logger, file_name, folder):
 
 
 def setup_logging(logfilename):
+    setup_logger("db_conv_logger", logfilename)
     logger = logging.getLogger("db_conv_logger")
     logger.setLevel(logging.DEBUG)
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')

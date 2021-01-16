@@ -7,6 +7,7 @@
     2.4. follow https://www.pandasecurity.com/en/mediacenter/tips/how-to-free-up-ram/#:~:text=To%20locate%20your%20computer%20memory,space%20they%20are%20taking%20up.
         Switch off many background apps (leave security)
 
+2.0  Make your network private (not public) and enabe file sharing to let ping go
 
 2.1 net stop windows search (руками в панели services)
 
