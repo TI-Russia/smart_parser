@@ -2,6 +2,7 @@ from dl_robot.dlrobot import TDlrobot
 from common.robot_web_site import TWebSiteReachStatus
 from common.download import TDownloadEnv
 
+
 import os
 import json
 import shutil
@@ -17,6 +18,7 @@ class TestDeletedWebSite(TestCase):
         os.chdir(self.data_folder)
 
     def tearDown(self):
+        os.chdir(os.path.dirname(__file__))
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
 

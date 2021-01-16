@@ -3,6 +3,7 @@ from common.robot_step import TRobotStep, TUrlInfo
 from common.robot_project import TRobotProject
 from dl_robot.declaration_link import looks_like_a_declaration_link
 from common.http_request import TRequestPolicy
+from common.simple_logger import close_logger
 
 from unittest import TestCase
 import os
@@ -68,6 +69,8 @@ class TestDeclarationLinkSelenium(TestCase):
         self.logger = setup_logging("dlrobot.log")
 
     def tearDown(self):
+        close_logger(self.logger)
+        os.chdir(os.path.dirname(__file__))
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
 

@@ -1,6 +1,7 @@
 from dl_robot.dlrobot import TDlrobot
 from DeclDocRecognizer.external_convertors import TExternalConverters
 from common.download import TDownloadEnv
+from common.simple_logger import close_logger
 
 from unittest import TestCase
 import os
@@ -56,9 +57,7 @@ class TTestEnv:
             self.web_site.shutdown()
         TDownloadEnv.CONVERSION_CLIENT.stop_conversion_thread()
         TDownloadEnv.CONVERSION_CLIENT = None
-        for handler in self.dlrobot.logger.handlers[:]:
-            handler.close()
-            self.dlrobot.logger.removeHandler(handler)
+        close_logger(self.dlrobot.logger)
         os.chdir(os.path.dirname(__file__))
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)

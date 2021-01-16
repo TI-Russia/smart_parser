@@ -1,5 +1,6 @@
 from common.download import TDownloadedFile, TDownloadEnv
 from common.http_request import TRequestPolicy, RobotHttpException
+from common.simple_logger import close_logger
 
 import http.server
 from unittest import TestCase
@@ -91,6 +92,8 @@ class TestFileCache(TestCase):
 
     def tearDown(self):
         self.web_server.shutdown()
+        close_logger(self.dlrobot.logger)
+        os.chdir(os.path.dirname(__file__))
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
 

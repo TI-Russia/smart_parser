@@ -1,6 +1,7 @@
 from common.download import get_file_extension_only_by_headers, TDownloadedFile, \
              DEFAULT_HTML_EXTENSION, TDownloadEnv
 from common.http_request import make_http_request_urllib
+from common.simple_logger import close_logger
 
 import http.server
 from unittest import TestCase
@@ -71,7 +72,7 @@ class TestContentType(TestCase):
         time.sleep(1)
         self.data_folder = os.path.join(os.path.dirname(__file__), "data.content_type")
         if os.path.exists(self.data_folder):
-            shutil.rmtree(self.data_folder, ignore_errors=True)
+            shutil.rmtree(self.data_folder, ignore_errors=False)
         os.mkdir(self.data_folder)
         os.chdir(self.data_folder)
         TDownloadEnv.clear_cache_folder()
@@ -79,11 +80,14 @@ class TestContentType(TestCase):
 
     def tearDown(self):
         self.web_server.shutdown()
+        close_logger(self.logger)
+        time.sleep(1)
+        os.chdir(os.path.dirname(__file__))
         if os.path.exists(self.data_folder):
-            shutil.rmtree(self.data_folder, ignore_errors=True)
+            shutil.rmtree(self.data_folder, ignore_errors=False)
 
     def build_url(self, path):
-        return 'http://' + os.path.join(self.server_address, path)
+        return 'http://' + os.path.join(self.server_address, path).replace('\\', '/')
 
     def test_content_type(self):
         url = self.build_url("somepath")

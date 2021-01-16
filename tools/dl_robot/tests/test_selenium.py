@@ -1,6 +1,8 @@
 from common.selenium_driver import TSeleniumDriver
 from common.find_link import TLinkInfo, TClickEngine
 from common.download import TDownloadEnv
+from common.simple_logger import close_logger
+
 import os
 import logging
 import argparse
@@ -70,6 +72,9 @@ class TestSelenium(TestCase):
 
     def tearDown(self):
         self.driver_holder.stop_executable()
+        close_logger(self.dlrobot.logger)
+        os.chdir(os.path.dirname(__file__))
+
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
 
