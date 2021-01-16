@@ -43,7 +43,7 @@ class TSnowBallFileStorage:
         self.saved_file_params_file.flush()
 
     def get_stats_file_path(self):
-        return  self.header_file_path + ".stats"
+        return self.header_file_path + ".stats"
 
     def save_stats(self):
         with open(self.get_stats_file_path(), "w") as outp:
@@ -69,6 +69,8 @@ class TSnowBallFileStorage:
                 self.stats = json.load(inp)
         else:
             self.clear_stats()
+
+        assert (len(self.saved_file_params) == self.stats['source_doc_count'])
 
         self.bin_files.clear()
         for i in range(self.stats['bin_files_count'] - 1):
