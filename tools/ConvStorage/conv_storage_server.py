@@ -159,6 +159,14 @@ class TConvertProcessor(http.server.HTTPServer):
         self.create_folders()
         host, port = self.args.server_address.split(":")
         super().__init__((host, int(port)), THttpServerRequestHandler)
+        if shutil.which("qpdf") is None:
+            msg = "cannot find qpdf, sudo apt install qpdf"
+            self.logger.error(msg)
+            raise Exception(msg)
+        if shutil.which("qpdf") is None:
+            msg = "cannot find pdfcrack\nsee https://sourceforge.net/projects/pdfcrack/files/"
+            self.logger.error(msg)
+            raise Exception(msg)
 
     def start_http_server(self):
         self.logger.debug("myServer.serve_forever(): {}".format(self.args.server_address))
@@ -557,14 +565,6 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
 
 def conversion_server_main(args):
     server = TConvertProcessor(args)
-
-    if shutil.which("qpdf") is None:
-        server.logger.error("cannot find qpdf, sudo apt install qpdf")
-        return 0
-    if shutil.which("qpdf") is None:
-        server.logger.error("cannot find pdfcrack\nsee https://sourceforge.net/projects/pdfcrack/files/")
-        return 0
-
     exit_code = 0
     try:
         server.start_http_server()

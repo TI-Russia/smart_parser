@@ -2,7 +2,7 @@ import time
 import logging
 import os
 
-from conv_storage_server import conversion_server_main, TConvertProcessor, HTTP_SERVER
+from conv_storage_server import conversion_server_main, TConvertProcessor
 
 WORKING_DIR = "c:\\tmp\\conv_db"
 SERVER_ADDRESS = "192.168.100.152:8091" #production
@@ -24,14 +24,17 @@ def setup_logging():
 
 
 class ConvertPdfService:
+
     def __init__(self):
+        self.server = None
         self.stop_requested = False
         self.logger = setup_logging()
 
     def stop_service(self):
         try:
-            self.logger.info('HTTP_SERVER.stop_http_server() ...')
-            HTTP_SERVER.stop_http_server()
+            if self.server is not None:
+                self.logger.info('stop_http_server() ...')
+                self.server.stop_http_server()
         except Exception as exp:
             self.logger.error(exp)
             raise
@@ -44,17 +47,19 @@ class ConvertPdfService:
             '--db-json', 'converted_file_storage.json',
         ])
         self.logger.debug("server_args={}".format(str(server_args)))
+        self.server = TConvertProcessor(server_args)
+
         while True:
             if self.stop_requested:
-                self.logger.info('Stopping HTTP_SERVER {}'.format(HTTP_SERVER))
-                HTTP_SERVER.stop_http_server()
+                self.logger.info('Stopping http_server')
+                self.server.stop_http_server()
                 break
             try:
-                self.logger.debug("conversion_server_main")
-                conversion_server_main(server_args)
+                self.logger.debug("start_http_server")
+                self.server.start_http_server()
             except Exception as exp:
                 self.logger.error("general exception: {}".format(str(exp)))
-                HTTP_SERVER.stop_http_server()
+                self.server.stop_http_server()
             if not self.stop_requested:
                 self.logger.info('service is restarting in 5 seconds')
                 time.sleep(5)

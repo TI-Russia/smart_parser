@@ -29,10 +29,10 @@ class AppServerSvc (win32serviceutil.ServiceFramework):
             servicemanager.LogMsg(servicemanager.EVENTLOG_INFORMATION_TYPE,
                                   servicemanager.PYS_SERVICE_STARTED,
                                   (self._svc_name_, ''))
+            self.service.run_service()
         except Exception as exp:
             self.service.logger.error(exp)
             raise
-        self.run_service()
 
 
 if __name__ == '__main__':
