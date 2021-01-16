@@ -72,7 +72,7 @@ class TestSelenium(TestCase):
 
     def tearDown(self):
         self.driver_holder.stop_executable()
-        close_logger(self.dlrobot.logger)
+        close_logger(self.logger)
         os.chdir(os.path.dirname(__file__))
 
         if os.path.exists(self.data_folder):

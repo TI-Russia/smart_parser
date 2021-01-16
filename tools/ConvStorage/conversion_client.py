@@ -32,7 +32,7 @@ class TDocConversionClient(object):
     @staticmethod
     def parse_args(arg_list):
         parser = argparse.ArgumentParser()
-        parser.add_argument('input', nargs='+')
+        parser.add_argument('input', nargs='*')
         parser.add_argument("--rebuild", dest='rebuild_pdf', action="store_true", default=False)
         parser.add_argument("--conversion-timeout", dest='conversion_timeout', type=int, default=60 * 30)
         parser.add_argument("--conversion-server", "--server-address", dest='conversion_server', required=False)

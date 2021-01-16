@@ -40,7 +40,7 @@ class TDownloadEnv:
 
     @staticmethod
     def init_conversion():
-        TDownloadEnv.CONVERSION_CLIENT = TDocConversionClient()
+        TDownloadEnv.CONVERSION_CLIENT = TDocConversionClient(TDocConversionClient.parse_args([]))
         TDownloadEnv.CONVERSION_CLIENT.start_conversion_thread()
 
     @staticmethod

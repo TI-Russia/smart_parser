@@ -77,7 +77,7 @@ class TExportHumanFiles:
             shutil.rmtree(self.args.tmp_folder, ignore_errors=True)
             os.mkdir(self.args.tmp_folder)
         self.source_doc_client = TSourceDocClient(TSourceDocClient.parse_args([]), self.logger)
-        self.pdf_conversion_client = TDocConversionClient()
+        self.pdf_conversion_client = TDocConversionClient(TDocConversionClient.parse_args([]), self.logger)
         self.smart_parser_server_client = TSmartParserCacheClient(TSmartParserCacheClient.parse_args([]), self.logger)
         self.new_pdfs = set()
 

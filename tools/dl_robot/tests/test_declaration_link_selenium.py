@@ -28,6 +28,9 @@ def setup_logging(logfilename):
     return logger
 
 
+# it looks like mkrf has changed the site structure, so there is no income declaratiosn
+# on https://www.mkrf.ru/activities/reports/index.php
+
 class TestDeclarationLinkSelenium(TestCase):
 
     def download_website(self, project_path, start_url):
@@ -79,7 +82,13 @@ class TestDeclarationLinkSelenium(TestCase):
             lines = list(l.strip() for l in inp)
             self.assertSequenceEqual(links, lines)
 
+    def canonize_links(self, links, file_name):
+        with open(os.path.join(os.path.dirname(__file__), file_name)) as outp:
+            for l in links:
+                outp.write(l + "\n")
+
     def test_mkrf(self):
         links = self.download_website('web_sites/mkrf/mkrf.txt', 'https://www.mkrf.ru/activities/reports/index.php')
+        # self.canonize_links(links, 'web_sites/mkrf/found_links')
         self.compare_to_file(links, 'web_sites/mkrf/found_links')
 

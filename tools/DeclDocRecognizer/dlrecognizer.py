@@ -337,7 +337,7 @@ def get_text_of_a_document(source_file, keep_txt=False, reuse_txt=False, output_
         temp_file = source_file + ".docx"
         with open(source_file, "rb") as f:
             sha256 = hashlib.sha256(f.read()).hexdigest()
-            if TDocConversionClient().retrieve_document(sha256, temp_file) and os.path.exists(temp_file):
+            if TDocConversionClient(TDocConversionClient.parse_args([])).retrieve_document(sha256, temp_file) and os.path.exists(temp_file):
                 ec.run_office2txt(temp_file, txt_file)
             else:
                 # the worse case, let's use calibre

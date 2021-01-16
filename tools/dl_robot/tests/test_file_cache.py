@@ -92,7 +92,7 @@ class TestFileCache(TestCase):
 
     def tearDown(self):
         self.web_server.shutdown()
-        close_logger(self.dlrobot.logger)
+        close_logger(self.logger)
         os.chdir(os.path.dirname(__file__))
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)

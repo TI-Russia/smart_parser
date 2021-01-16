@@ -30,8 +30,8 @@ class TFileStorage:
         self.bin_files = list()
         self.dbm_path = None
         self.load_from_disk()
+        self.write_without_sync_count = 0
         if os.name == "nt":
-            self.write_without_sync_count = 0
             self.disc_sync_rate = disc_sync_rate
         else:
             self.disc_sync_rate = None

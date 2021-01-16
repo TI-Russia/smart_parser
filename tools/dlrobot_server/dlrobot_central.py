@@ -125,7 +125,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
     def __init__(self, args):
         self.timeout = 60 * 10
         self.logger = setup_logging(args.log_file_name)
-        self.conversion_client = TDocConversionClient(self.logger)
+        self.conversion_client = TDocConversionClient(TDocConversionClient.parse_args([]), self.logger)
         self.args = args
         self.dlrobot_remote_calls = defaultdict(list)
         self.input_web_sites = list()

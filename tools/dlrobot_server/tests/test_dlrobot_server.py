@@ -165,8 +165,7 @@ class TTestEnv:
         if self.smart_parser_server is not None:
             self.smart_parser_server.stop_server()
         if self.source_doc_server is not None:
-            self.source_doc_server.shutdown()
-            self.source_doc_server.close_file_storage()
+            self.source_doc_server.stop_server()
         #if os.path.exists(self.data_folder):
         #    shutil.rmtree(self.data_folder, ignore_errors=True)
 
@@ -206,7 +205,6 @@ class TestAotRu(TestCase):
         # one more time
         self.env.start_worker_thread()
         self.env.worker_thread.join(200)
-
 
 
 class TestBadDomain(TestCase):

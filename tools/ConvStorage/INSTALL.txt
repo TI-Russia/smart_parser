@@ -78,7 +78,8 @@
   net start DisclosuresPdfConvService
 
 
-22.  Add a firewall rule for C:\Python37\Lib\site-packages\win32\pythonservice.exe 
+22.  Add a firewall rule for C:\Python37\Lib\site-packages\win32\pythonservice.exe
+   Remember that in esset nod by default firewall rules are "DENY" rules not "ALLOW"
 
 23. optional add copy_to_converter2.sh to windows task sheduler 
 

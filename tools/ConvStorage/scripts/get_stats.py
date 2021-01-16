@@ -13,7 +13,7 @@ def parse_args():
 
 if __name__ == '__main__':
     args = parse_args()
-    conv_client = TDocConversionClient(logging)
+    conv_client = TDocConversionClient(TDocConversionClient.parse_args([]), logging)
     stats = conv_client.get_stats()
     if args.history_file is None:
         print(json.dumps(stats))

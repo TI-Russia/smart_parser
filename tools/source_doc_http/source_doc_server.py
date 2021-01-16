@@ -57,6 +57,7 @@ class TSourceDocHTTPServer(http.server.HTTPServer):
             self.logger.error(exp)
             raise
 
+
     def stop_server(self):
         self.file_storage.close_file_storage()
         self.server_close()
