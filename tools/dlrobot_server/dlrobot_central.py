@@ -236,8 +236,8 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                 if remote_call.exit_code == 0 and web_site in self.input_web_sites:
                     self.logger.debug("delete {}, since it is already processed".format(web_site))
                     self.input_web_sites.remove(web_site)
-            for web_site, interaction_count in interaction_counter:
-                if interaction_count >= self.args.tries_count:
+            for web_site, interaction_count in interaction_counter.items():
+                if interaction_count >= self.args.tries_count and web_site in self.input_web_sites:
                     self.logger.debug("delete {}, since we have tried {} times to download it".format(
                         web_site, interaction_count))
                     self.input_web_sites.remove(web_site)
