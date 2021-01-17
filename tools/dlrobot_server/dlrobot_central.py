@@ -228,12 +228,21 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         if os.path.exists(self.get_dlrobot_remote_calls_filename()):
             self.logger.debug("read {}".format(self.get_dlrobot_remote_calls_filename()))
             calls = TRemoteDlrobotCall.read_remote_calls_from_file(self.get_dlrobot_remote_calls_filename())
+            interaction_counter = defaultdict(int)
             for remote_call in calls:
                 self.dlrobot_remote_calls[remote_call.project_file].append(remote_call)
                 web_site = project_file_to_web_site(remote_call.project_file)
+                interaction_counter[web_site] += 1
                 if remote_call.exit_code == 0 and web_site in self.input_web_sites:
                     self.logger.debug("delete {}, since it is already processed".format(web_site))
                     self.input_web_sites.remove(web_site)
+            for web_site, interaction_count in interaction_counter:
+                if interaction_count >= self.args.tries_count:
+                    self.logger.debug("delete {}, since we have tried {} times to download it".format(
+                        web_site, interaction_count))
+                    self.input_web_sites.remove(web_site)
+
+
 
     def read_history_dlrobot_remote_calls_and_sort_tasks(self, history_files):
         history_iteractions = defaultdict(int)
