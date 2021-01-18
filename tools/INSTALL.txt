@@ -117,6 +117,9 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
 
 3.6  init crontab in central for monitoring (crontab -e), add lines from $TOOLS/disclosures_site/scripts/crontab.txt
 
+3.7  Get api-token from telegram BotFather and give it to
+    telegram-send --configure
+
 
 
 
