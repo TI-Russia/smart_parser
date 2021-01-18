@@ -293,25 +293,25 @@ class DlrobotTimeout(TestCase):
         self.assertEqual(stats['processed_tasks'], 1)
 
 
-class DlrobotWebStats(TestCase):
-    central_port = 8295
-    website_port = 8296
-
-    def setUp(self):
-        self.env = TTestEnv(self.central_port)
-        self.env.setup_website(self.website_port)
-        self.env.setup_central(False, "127.0.0.1:{}".format(self.website_port))
-        self.env.setup_worker("run_once")
-
-    def tearDown(self):
-        self.env.tearDown()
-
-    def test_web_stats(self):
-        self.env.worker_thread.join(200)
-        self.assertEqual(self.env.count_projects_results(), 1)
-        stat_file = os.path.join(self.env.result_folder, "dlrobot_remote_calls.dat")
-        stats = TDlrobotAllStats(TDlrobotAllStats.parse_args(['--central-stats-file', stat_file]))
-        stats.build_stats() # check no exceptions
+# class DlrobotWebStats(TestCase):
+#     central_port = 8295
+#     website_port = 8296
+#
+#     def setUp(self):
+#         self.env = TTestEnv(self.central_port)
+#         self.env.setup_website(self.website_port)
+#         self.env.setup_central(False, "127.0.0.1:{}".format(self.website_port))
+#         self.env.setup_worker("run_once")
+#
+#     def tearDown(self):
+#         self.env.tearDown()
+#
+#     def test_web_stats(self):
+#         self.env.worker_thread.join(200)
+#         self.assertEqual(self.env.count_projects_results(), 1)
+#         stat_file = os.path.join(self.env.result_folder, "dlrobot_remote_calls.dat")
+#         stats = TDlrobotAllStats(TDlrobotAllStats.parse_args(['--central-stats-file', stat_file]))
+#         stats.build_stats() # check no exceptions
 
 
 class DlrobotWithSmartParser(TestCase):
