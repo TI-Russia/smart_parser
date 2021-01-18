@@ -135,6 +135,7 @@ class TSnowBallFileStorage:
         self.stats['all_file_size'] += file_bytes_len
         self.stats['source_doc_count'] = len(self.saved_file_params)
         self.stats['bin_files_count'] = len(self.bin_files)
+        self.save_stats()
 
     def save_file(self, file_bytes, file_extension, aux_params=None, force=False, sha256=None):
         if sha256 is None:

@@ -40,7 +40,6 @@ def move_file_with_retry(logger, file_name, folder):
 
 
 def setup_logging(logfilename):
-    setup_logger("db_conv_logger", logfilename)
     logger = logging.getLogger("db_conv_logger")
     logger.setLevel(logging.DEBUG)
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -472,6 +471,9 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
 
     def log_message(self, msg_format, *args):
         self.server.logger.debug(msg_format % args)
+
+    def log_request(self, code='-', size='-'):
+        self.log_message('"%s" %s %s from %s', self.requestline, str(code), str(size), str(self.client_address[0]))
 
     def process_special_commands(self):
         if self.path == "/ping":
