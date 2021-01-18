@@ -58,16 +58,19 @@ class TDocConversionClient(object):
         self.logger = logger if logger is not None else logging.getLogger("dlrobot_logger")
         self.all_pdf_size_sent_to_conversion = 0
         self.default_http_timeout = 60*10
-        self.last_pdf_conversion_queue_length = None
         self.inner_stats_timestamp = None
-        self.update_inner_stats()
+        self.last_pdf_conversion_queue_length = None
 
     def update_inner_stats(self):
         self.inner_stats_timestamp = time.time()
-        self.last_pdf_conversion_queue_length = self.get_pending_all_file_size()
+        stats = self.get_stats()
+        if stats is None:
+            self.last_pdf_conversion_queue_length = 200 * 2 ** 20  # just an unknown number, terror magnifies objects
+        else:
+            self.last_pdf_conversion_queue_length = stats['ocr_pending_all_file_size']
 
     def server_is_too_busy(self):
-        if time.time() > self.inner_stats_timestamp + 5*60:
+        if self.inner_stats_timestamp is None or time.time() > self.inner_stats_timestamp + 4*60:
             self.update_inner_stats()  # update inner stats each 5 minutes
         return self.last_pdf_conversion_queue_length >= TDocConversionClient.MAX_FILE_PENDING_SUM_SIZE
 
@@ -182,12 +185,6 @@ class TDocConversionClient(object):
             self.logger.error("got exception {} in check_file_was_converted, timeout={} ".format(
                 str(exp), self.default_http_timeout))
             return None
-
-    def get_pending_all_file_size(self):
-        stats = self.get_stats()
-        if stats is None:
-            return 200 * 2 ** 20  # just an unknown number, terror magnifies objects
-        return stats['ocr_pending_all_file_size']
 
     def retrieve_document(self, sha256, output_file_name):
         # retrieve_document returns True, if file was processed by the server.

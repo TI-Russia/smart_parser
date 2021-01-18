@@ -1,6 +1,6 @@
 from dlrobot_server.dlrobot_central import TDlrobotHTTPServer
 from dlrobot_server.dlrobot_worker import TDlrobotWorker
-from dlrobot_server.dlrobot_stats import TDlrobotAllStats
+from disclosures_site.scripts.dl_monitoring import TDlrobotAllStats
 from smart_parser_http.smart_parser_server import TSmartParserHTTPServer
 from source_doc_http.source_doc_server import TSourceDocHTTPServer
 from common.robot_web_site import TWebSiteReachStatus

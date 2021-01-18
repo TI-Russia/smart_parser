@@ -396,7 +396,6 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                 os.unlink(PITSTOP_FILE)
             if self.stop_process and self.get_running_jobs_count() == 0:
                 raise Exception("exit for pit stop")
-            self.conversion_client.update_inner_stats()
             if self.conversion_client.server_is_too_busy():
                 self.logger.debug("stop sending tasks, because conversion pdf queue length is {}".format(
                     self.conversion_client.last_pdf_conversion_queue_length))
