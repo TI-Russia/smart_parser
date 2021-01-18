@@ -7,9 +7,12 @@ CENTRAL_STATS=/home/sokirko/declarator_hdd/declarator/dlrobot_central/processed_
 OUTPUT_FOLDER=/var/www/smart_parser/tools/disclosures_site/disclosures/static/dlrobot
 DECLARATOR_CONV_URL=192.168.100.152:8091
 SOURCE_DOC_SERVER_ADDRESS=192.168.100.151:8090
+LOG_ARCHIVE=/home/sokirko/declarator_hdd/Yandex.Disk/declarator/nginx_logs/
 
 ##Mins  Hours  Days   Months  Day of the week
 */10       *     *        *      *    python3 $TOOLS/ConvStorage/scripts/get_stats.py --history-file $CONV_STATS
 */10       *     *        *      *    python3 $TOOLS/disclosures_site/scripts/dl_monitoring.py --central-stats-file  $CENTRAL_STATS --conversion-server-stats $CONV_STATS --central-server-cpu-and-mem  /tmp/glances.dat --output-folder $OUTPUT_FOLDER
 */20       */5   *        *      *    yandex-disk sync
 0          */1   *        *      *    certbot -q renew
+57 23 * * * gzip -c /var/log/nginx/access.log  > $LOG_ARCHIVE/access.`date "+\%Y-\%m-\%d"`.gz
+57 23 * * * gzip -c /var/log/nginx/error.log  > $LOG_ARCHIVE/error.`date "+\%Y-\%m-\%d"`.gz

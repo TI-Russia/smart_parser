@@ -400,13 +400,14 @@ class Section(models.Model):
         type_str = r.type
         if r.country != "RU":
             type_str += " ({})".format(r.country_str)
-        return [type_str, str(r.square), r.own_type_str]
+        square_str = "none" if r.square is None else str(r.square)
+        return [type_str, square_str, r.own_type_str]
 
     @property
     def realty_square_sum(self):
         sum = 0
         for r in self.realestate_set.all():
-            sum += r.square
+            sum += 0 if r.square is None else r.square
         return sum
 
     @property
