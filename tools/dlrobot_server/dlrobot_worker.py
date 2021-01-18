@@ -361,7 +361,10 @@ class TDlrobotWorker:
                         if self.working:
                             self.send_results_back(project_file, exit_code)
                 except ConnectionError as err:
-                    self.logger.error(str(err))
+                    self.logger.error("exception {}: {}".format(type(err).__name__,  str(err)))
+                except TimeoutError as err:
+                    self.logger.error("timeout error:{}".format(str(err)))
+
             if self.args.action == "run_once":
                 break
             if timeout > 0:
