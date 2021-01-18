@@ -1,5 +1,5 @@
 SHELL=/bin/bash
-MAILTO=username
+MAILTO=sokirko@yandex.ru
 TOOLS=/home/sokirko/smart_parser/tools/
 PYTHONPATH=/home/sokirko/smart_parser/tools
 CONV_STATS=/home/sokirko/declarator_hdd/declarator/convert_stats.txt
@@ -9,6 +9,6 @@ DECLARATOR_CONV_URL=192.168.100.152:8091
 
 ##Mins  Hours  Days   Months  Day of the week
 */10       *     *        *      *    python3 $TOOLS/ConvStorage/scripts/get_stats.py --history-file $CONV_STATS
-*/10       *     *        *      *    python3 $TOOLS/dlrobot_server/dlrobot_stats.py --central-stats-file  $CENTRAL_STATS --conversion-server-stats $CONV_STATS --output-folder $OUTPUT_FOLDER
+*/10       *     *        *      *    python3 $TOOLS/disclosures_site/scripts/dl_monitoring.py --central-stats-file  $CENTRAL_STATS --conversion-server-stats $CONV_STATS --central-server-cpu-and-mem  /tmp/glances.dat --output-folder $OUTPUT_FOLDER
 */20       */5   *        *      *    yandex-disk sync
 0          */1   *        *      *    certbot -q renew

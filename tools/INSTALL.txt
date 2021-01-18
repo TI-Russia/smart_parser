@@ -115,7 +115,7 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
                 --input-task-list ~/smart_parser/tools/disclosures_site/data/web_sites.json \
                 --result-folder processed_projects --read-previous-results --check-yandex-cloud
 
-3.6  init crontab in central for monitoring (crontab -e), add lines from $TOOLS/dlrobot_server/crobtab.txt
+3.6  init crontab in central for monitoring (crontab -e), add lines from $TOOLS/disclosures_site/scripts/crontab.txt
 
 
 
@@ -189,3 +189,8 @@ pip3 install -r requirements.txt
     #https://certbot.eff.org/lets-encrypt/ubuntuxenial-nginx.html
     sudo certbot --nginx
 
+5.6  Install workstation monitoring
+  sudo cp /home/sokirko/smart_parser/tools/workstation_monitoring/workstation_monitoring.service /etc/systemd/system
+  sudo systemctl enable workstation_monitoring
+  sudo systemctl daemon-reload
+  sudo systemctl start workstation_monitoring
