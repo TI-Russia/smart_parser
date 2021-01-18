@@ -7,6 +7,7 @@ import sys
 import json
 from collections import defaultdict
 import time
+import logging
 
 from dlrobot_server.remote_call import TRemoteDlrobotCall
 from source_doc_http.source_doc_client import TSourceDocClient
@@ -133,7 +134,7 @@ class TDlrobotAllStats:
         else:
             history = list()
 
-        source_doc_client = TSourceDocClient(TSourceDocClient.parse_args([]))
+        source_doc_client = TSourceDocClient(TSourceDocClient.parse_args([]), logger=logging)
         stats = source_doc_client.get_stats()
         now = int(time.time())
         stats['ts'] = now

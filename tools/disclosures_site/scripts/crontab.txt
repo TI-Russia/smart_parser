@@ -6,6 +6,7 @@ CONV_STATS=/home/sokirko/declarator_hdd/declarator/convert_stats.txt
 CENTRAL_STATS=/home/sokirko/declarator_hdd/declarator/dlrobot_central/processed_projects/dlrobot_remote_calls.dat
 OUTPUT_FOLDER=/var/www/smart_parser/tools/disclosures_site/disclosures/static/dlrobot
 DECLARATOR_CONV_URL=192.168.100.152:8091
+SOURCE_DOC_SERVER_ADDRESS=192.168.100.151:8090
 
 ##Mins  Hours  Days   Months  Day of the week
 */10       *     *        *      *    python3 $TOOLS/ConvStorage/scripts/get_stats.py --history-file $CONV_STATS
