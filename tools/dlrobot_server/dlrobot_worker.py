@@ -262,7 +262,8 @@ class TDlrobotWorker:
         self.logger.debug(
             "created file {} size={}".format(dlrobot_results_file_name, os.stat(dlrobot_results_file_name).st_size))
 
-        for try_id in range(3):
+        max_send_try_count = 3
+        for try_id in range(max_send_try_count):
             conn = None
             try:
                 conn = http.client.HTTPConnection(self.args.server_address, timeout=self.args.http_put_timeout)
@@ -280,12 +281,15 @@ class TDlrobotWorker:
                     break
             except Exception as exc:
                 self.logger.error('worker got {}'.format(type(exc).__name__))
-                self.logger.error('try_id = {}'.format(try_id))
+                self.logger.error('try_id = {} out of {}'.format(try_id, max_send_try_count))
                 if conn is not None:
                     conn.close()
-                if try_id == 2:
-                    self.logger.debug("give up")
-                    raise
+                if try_id == max_send_try_count - 1:
+                    self.logger.debug("give up, we cannot send the results back, so the results are useless")
+                else:
+                    sleep_seconds = (try_id + 1) * 180
+                    self.logger.debug('sleep for {} seconds'.format(sleep_seconds))
+                    time.sleep(sleep_seconds)
 
         self.logger.debug("delete file {}".format(dlrobot_results_file_name))
         os.unlink(dlrobot_results_file_name)
