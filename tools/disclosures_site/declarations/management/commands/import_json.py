@@ -170,7 +170,10 @@ class TImporter:
             source_document_in_db.min_income_year = min(imported_section_years)
             source_document_in_db.max_income_year = max(imported_section_years)
             source_document_in_db.section_count = len(imported_section_years)
-            source_document_in_db.median_income = median(incomes)
+            if len(incomes) > 0:
+                source_document_in_db.median_income = median(incomes)
+            else:
+                source_document_in_db.median_income = 0
             source_document_in_db.save()
 
         return len(imported_section_years)

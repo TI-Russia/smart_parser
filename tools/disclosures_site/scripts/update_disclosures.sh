@@ -17,12 +17,13 @@ source $(dirname $0)/update_common.sh
 
     mkdir -p $CRAWL_EPOCH
     cd $CRAWL_EPOCH
-    cp $TOOLS/disclosures_site/scripts/update_common.sh  .profile
+    cp ~/smart_parser/tools/disclosures_site/scripts/update_common.sh  .profile
     echo "" >> .profile
     echo "" >> .profile
     echo "export DLROBOT_FOLDER=$DLROBOT_FOLDER" >> .profile
     echo "export CRAWL_EPOCH=$CRAWL_EPOCH" >> .profile
     echo "export OLD_DLROBOT_FOLDER=$OLD_DLROBOT_FOLDER" >> .profile
+    source .profile
 
     cp $DLROBOT_CENTRAL_FOLDER/dlrobot_central.log $YANDEX_DISK_FOLDER
 
@@ -45,13 +46,13 @@ source $(dirname $0)/update_common.sh
     endif
 
 
-#7  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод
+#7  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод (7-8 часов)
    python3 $TOOLS_PROD/manage.py create_permalink_storage --settings disclosures.settings.prod --output-dbm-file permalinks.dbm
 
 
 #8.  инициализация базы disclosures
     cd ~/smart_parser/tools/disclosures_site
-    python3 manage.py create_database --settings disclosures.settings.dev --skip-checks
+    python3 manage.py create_database --settings disclosures.settings.dev --skip-checks --username
     python3 manage.py makemigrations --settings disclosures.settings.dev
     python3 manage.py migrate --settings disclosures.settings.dev
     python3 manage.py search_index --rebuild  --settings disclosures.settings.dev -f

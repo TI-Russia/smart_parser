@@ -1,13 +1,11 @@
 import declarations.models as models
-from declarations.russian_regions import TRussianRegions
 
 from django.core.management import BaseCommand
 from itertools import groupby
-from operator import itemgetter, attrgetter
+from operator import itemgetter
 from statistics import median
 from django.db import connection
 import os
-import scipy.stats
 
 
 class TOfficeStats:
