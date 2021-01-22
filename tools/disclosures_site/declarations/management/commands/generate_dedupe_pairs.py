@@ -217,6 +217,7 @@ class Command(BaseCommand):
         if section.person_id == person.id:
             #dedupe score is not set to these records, they are from declarator
             return
+        self.logger.debug("link section {} to person {}".format(section.id, person.id))
         section.person_id = person.id
         section.dedupe_score = 1.0 - distance
         section.save()
@@ -251,7 +252,6 @@ class Command(BaseCommand):
 
     def write_results_to_db(self, clusters):
         for cluster_id, items in clusters.items():
-            self.logger.debug("process cluster {}".format(cluster_id))
             person_ids = list()
             sections = list()
             section_distances = list()
@@ -329,5 +329,7 @@ class Command(BaseCommand):
 
         if dump_stream is not None:
             dump_stream.close()
+        self.logger.debug("all done")
+
 
 RunDedupe=Command

@@ -380,7 +380,8 @@ def check_pool_after_real_clustering(logger, pairs):
                 y_true.append(0)
 
             if o1.record_id.source_table == TDeduplicationObject.SECTION and o2.record_id.source_table == TDeduplicationObject.SECTION:
-                y.append(1 if o1.db_section_person_id == o2.db_section_person_id else 0)
+                same_person = (o1.db_section_person_id is not None) and (o1.db_section_person_id == o2.db_section_person_id)
+                y.append(1 if same_person else 0)
             else:
                 if o1.record_id.source_table == TDeduplicationObject.PERSON:
                     o1,o2 = o2,o1
