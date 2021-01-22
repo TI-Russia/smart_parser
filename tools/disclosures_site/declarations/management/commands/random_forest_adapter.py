@@ -9,6 +9,7 @@ from scipy.cluster.hierarchy import linkage, fcluster
 from scipy.spatial.distance import squareform
 from collections import defaultdict, namedtuple
 import pickle
+from sklearn.metrics import precision_score, recall_score
 
 
 def convert_vehicle(name):
@@ -356,13 +357,47 @@ def pool_to_random_forest(logger, pairs):
     return single_objects, X, y
 
 
+class TTestCase:
+    def __init__(self, id1, id2, person_name1, person_name2, y_true, y_pred):
+        self.id1 = id1
+        self.id2 = id2
+        self.person_name1 = person_name1
+        self.person_name2 = person_name2
+        self.y_true = y_true
+        self.y_pred = y_pred
+
+
+class TTestCases:
+    def __init__(self):
+        self.test_cases = list()
+
+    def add_test_case(self, test_case):
+        self.test_cases.append(test_case)
+
+    def y_true(self):
+        return list(t.y_true for t in self.test_cases)
+
+    def y_pred(self):
+        return list(t.y_pred for t in self.test_cases)
+
+    def match_pairs_count(self):
+        return sum(1 for i in self.y_pred() if i == 1)
+
+    def distinct_pairs_count(self):
+        return sum(1 for i in self.y_pred() if i == 0)
+
+    def get_precision(self):
+        return precision_score(self.y_true(), self.y_pred())
+
+    def get_recall(self):
+        return recall_score(self.y_true(), self.y_pred())
+
+
 def check_pool_after_real_clustering(logger, pairs):
     sys.stdout.flush()
     missing_cnt = 0
     processed_cnt = 0
-    y_true = list()
-    y = list()
-    result_pairs = list()
+    test_cases = TTestCases()
     for (id1, id2), mark in pairs.items():
         try:
             processed_cnt += 1
@@ -374,20 +409,17 @@ def check_pool_after_real_clustering(logger, pairs):
             if not o1.fio.is_compatible_to(o2.fio):
                 raise django.core.exceptions.ObjectDoesNotExist()
 
-            if mark == "YES":
-                y_true.append(1)
-            elif mark == "NO":
-                y_true.append(0)
+            y_true = 1 if mark == "YES" else 0
 
             if o1.record_id.source_table == TDeduplicationObject.SECTION and o2.record_id.source_table == TDeduplicationObject.SECTION:
-                same_person = (o1.db_section_person_id is not None) and (o1.db_section_person_id == o2.db_section_person_id)
-                y.append(1 if same_person else 0)
+                y_pred = 1 if (o1.db_section_person_id is not None) and (o1.db_section_person_id == o2.db_section_person_id) else 0
             else:
                 if o1.record_id.source_table == TDeduplicationObject.PERSON:
-                    o1,o2 = o2,o1
-                y.append(1 if o1.db_section_person_id == o2.record_id.id else 0)
-            result_pairs.append((o1.record_id, o2.record_id))
-
+                    o1, o2 = o2, o1
+                    id1, id2 = id2, id1
+                y_pred = 1 if o1.db_section_person_id == o2.record_id.id else 0
+            test_case = TTestCase (id1, id2, o1.person_name, o2.person_name, y_true, y_pred)
+            test_cases.add_test_case(test_case)
         except django.core.exceptions.ObjectDoesNotExist as e:
             missing_cnt += 1
             logger.debug("skip pair {0} {1}, since one them is not found in DB".format(id1, id2))
@@ -395,6 +427,6 @@ def check_pool_after_real_clustering(logger, pairs):
     logger.info("convert pool to dedupe: pool size = {0}, missing_count={1}".format(
         processed_cnt, missing_cnt
     ))
-    return result_pairs, y_true, y
+    return test_cases
 
 

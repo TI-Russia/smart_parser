@@ -269,7 +269,14 @@ class Command(BaseCommand):
                 for section, distance in zip(sections, section_distances):
                     self.link_section_to_person(section, person, distance)
             else:
-                self.logger.error("a cluster with two people found, I do not know what to do")
+                left_sections = ",".join((str(section.id) for section in sections))
+                persons = ",".join((str(id) for id in person_ids))
+                self.logger.debug("a cluster with two people found, I do not know what to do".format(left_sections))
+                self.logger.debug("  cluster sections: ".format(left_sections))
+                self.logger.debug("  cluster persons: ".format(persons))
+
+
+
 
     def get_family_name_bounds(self):
         if self.options.get('surname_bounds') is not None:
