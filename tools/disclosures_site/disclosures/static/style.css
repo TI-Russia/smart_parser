@@ -69,3 +69,7 @@ table.solid_table  {
     border: solid;
     border-collapse: collapse;
 }
+
+div.clickable {
+  cursor: pointer;
+}

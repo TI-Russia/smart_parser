@@ -79,7 +79,7 @@ source $(dirname $0)/update_common.sh
    python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric sections_count  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
 
 
-#11 создание surname_rank
+#11 создание surname_rank (30 мин)
 python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclosures.settings.dev
 
 
