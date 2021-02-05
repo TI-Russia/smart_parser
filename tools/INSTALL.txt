@@ -120,6 +120,7 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
 3.7  Get api-token from telegram BotFather and give it to
     telegram-send --configure
 
+3.8 sudo apt install parallel
 
 
 
