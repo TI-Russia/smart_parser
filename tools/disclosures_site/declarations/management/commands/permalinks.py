@@ -122,7 +122,12 @@ class TPermaLinksDB:
         section_info = self.db.get(passport)
         if section_info is not None:
             _, person_id = section_info.decode('utf8').split(';')
-            return int(person_id)
+            if person_id == 'None':
+                return None #a section that was not linked to a person in the previous db
+            else:
+                return int(person_id)
+        else:
+            return None  #a new section that did not exist in the previous db
 
     def get_section_id(self, section):
         passport = TPermaLinksDB.get_section_passport(section)

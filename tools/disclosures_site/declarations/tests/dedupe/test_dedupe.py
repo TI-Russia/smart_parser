@@ -104,16 +104,25 @@ class RememberOldPersonId(TestCase):
                        person_name="Иванов Иван Иванович",
                        person=person)
         section1.save()
+
         section2 = models.Section(id=2,
                        source_document=src_doc,
                        person_name="Иванов И. И.",
                        person=person)
         section2.save()
+
+        section3 = models.Section(id=3,
+                                  source_document=src_doc,
+                                  person_name="Петров И. И.",
+                                  person=None)
+        section3.save()
+
         permalinks_path = os.path.join(os.path.dirname(__file__), "permalinks.dbm")
         db = TPermaLinksDB(permalinks_path)
         db.create_db()
         db.save_section(section1)
         db.save_section(section2)
+        db.save_section(section3)
         db.save_person(person)
         db.save_max_plus_one_primary_key(models.Person, 100)
         db.create_sql_sequences()
@@ -141,6 +150,9 @@ class RememberOldPersonId(TestCase):
 
         sec2 = models.Section.objects.get(id=2)
         self.assertEqual(sec2.person_id, person_id)
+
+        sec3 = models.Section.objects.get(id=3)
+        self.assertEqual(sec3.person_id, person_id)
 
 
 class AddNewSectionsToOldPersonId(TestCase):

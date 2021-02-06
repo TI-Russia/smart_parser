@@ -1,7 +1,7 @@
 [Unit]
 Description=source declaration document daemon
-After=network.target
-
+After=network-online.target
+Wants=network-online.target
 
 [Service]
 User=sokirko

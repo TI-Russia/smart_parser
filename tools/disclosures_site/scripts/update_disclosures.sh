@@ -17,12 +17,13 @@ source $(dirname $0)/update_common.sh
 
     mkdir -p $CRAWL_EPOCH
     cd $CRAWL_EPOCH
-    cp $TOOLS/disclosures_site/scripts/update_common.sh  .profile
+    cp ~/smart_parser/tools/disclosures_site/scripts/update_common.sh  .profile
     echo "" >> .profile
     echo "" >> .profile
     echo "export DLROBOT_FOLDER=$DLROBOT_FOLDER" >> .profile
     echo "export CRAWL_EPOCH=$CRAWL_EPOCH" >> .profile
     echo "export OLD_DLROBOT_FOLDER=$OLD_DLROBOT_FOLDER" >> .profile
+    source .profile
 
     cp $DLROBOT_CENTRAL_FOLDER/dlrobot_central.log $YANDEX_DISK_FOLDER
 
@@ -45,13 +46,13 @@ source $(dirname $0)/update_common.sh
     endif
 
 
-#7  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод
+#7  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод (7-8 часов)
    python3 $TOOLS_PROD/manage.py create_permalink_storage --settings disclosures.settings.prod --output-dbm-file permalinks.dbm
 
 
 #8.  инициализация базы disclosures
     cd ~/smart_parser/tools/disclosures_site
-    python3 manage.py create_database --settings disclosures.settings.dev --skip-checks
+    python3 manage.py create_database --settings disclosures.settings.dev --skip-checks --username
     python3 manage.py makemigrations --settings disclosures.settings.dev
     python3 manage.py migrate --settings disclosures.settings.dev
     python3 manage.py search_index --rebuild  --settings disclosures.settings.dev -f
@@ -78,7 +79,7 @@ source $(dirname $0)/update_common.sh
    python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric sections_count  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
 
 
-#11 создание surname_rank
+#11 создание surname_rank (30 мин)
 python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclosures.settings.dev
 
 
@@ -94,10 +95,14 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
    echo $DEDUPE_HOSTS_SPACES | tr " " "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/git_update_cloud_worker.py --action stop --host
 
    #18 hours
-   parallel -a surname_spans.txt --jobs 2 --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $DEDUPE_HOSTS --basefile $DEDUPE_MODEL  --verbose --workdir /tmp \
+   parallel --halt soon,fail=1 -a surname_spans.txt --jobs 2 --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $DEDUPE_HOSTS --basefile $DEDUPE_MODEL  --verbose --workdir /tmp \
         python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --permanent-links-db /tmp/permalinks.dbm --ml-model-file $DEDUPE_MODEL  \
                 --threshold 0.61  --surname-bounds {} --write-to-db --settings disclosures.settings.dev --logfile dedupe.{}.log
 
+   if [ $? != "0" ]; then
+     echo "dedupe failed on some cluster"
+     exit 1
+   fi
    python3 $TOOLS/disclosures_site/manage.py test_real_clustering_on_pool --test-pool $TOOLS/disclosures_site/deduplicate/pools/disclosures_test_m.tsv   --settings disclosures.settings.dev
 
 #13  Коммит статистики
