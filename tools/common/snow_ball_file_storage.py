@@ -58,6 +58,7 @@ class TSnowBallFileStorage:
     def load_from_disk(self):
         assert os.path.exists(self.data_folder)
         self.saved_file_params = dict()
+        self.logger.debug("open snow ball header  {}".format(self.header_file_path))
         self.saved_file_params_file = open(self.header_file_path, "a+")
         self.saved_file_params_file.seek(0)
         for line in self.saved_file_params_file:
@@ -78,7 +79,9 @@ class TSnowBallFileStorage:
             assert fp is not None
             self.bin_files.append(fp)
 
-        fp = open(self.get_bin_file_path(self.stats['bin_files_count'] - 1), "ab+")
+        last_bin_file_path = self.get_bin_file_path(self.stats['bin_files_count'] - 1)
+        self.logger.debug("open last  bin file for writing: {}".format(last_bin_file_path))
+        fp = open(last_bin_file_path, "ab+")
         assert fp is not None
         self.bin_files.append(fp)
 
