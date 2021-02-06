@@ -262,7 +262,6 @@ class TConvertProcessor(http.server.HTTPServer):
             else:
                 self.logger.info("move {} to {}".format(stripped_file, self.args.ocr_input_folder))
                 move_file_with_retry(self.logger, stripped_file, self.args.ocr_input_folder)
-
                 self.convert_storage.save_input_file(input_file)
                 self.ocr_tasks[input_task.sha256] = input_task
 
@@ -404,7 +403,8 @@ class TConvertProcessor(http.server.HTTPServer):
                 'is_converting': input_task_queue > 0 or ocr_tasks_count > 0,
                 'processed_files_size': self.processed_files_size,
                 'failed_files_size': self.failed_files_size,
-                'finished_ocr_tasks': self.finished_ocr_tasks
+                'finished_ocr_tasks': self.finished_ocr_tasks,
+                'snow_ball_os_error_count': self.convert_storage.snow_ball_os_error_count,
             }
         except Exception as exp:
             return {"exception": str(exp)}

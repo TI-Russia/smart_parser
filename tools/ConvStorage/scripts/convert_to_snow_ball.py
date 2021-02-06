@@ -48,11 +48,11 @@ if __name__ == '__main__':
         logger.debug(sha256)
         input_file = os.path.join(input_folder, sha256  + ".pdf")
         if not os.path.exists(input_file):
-            logger.error("cannot find {}".format(input_file))
+            logger.debug("cannot find {}".format(input_file))
             continue
         converted_file = os.path.join(converted_folder, sha256  + ".pdf.docx")
         if not os.path.exists(converted_file):
-            logger.error("cannot find {}".format(converted_file))
+            logger.debug("cannot find {}".format(converted_file))
             continue
 
         converter_id = file_info.get('c', "word")
