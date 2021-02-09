@@ -131,7 +131,7 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
     git pull
 
     export DISCLOSURES_DATABASE_NAME=disclosures_prod_temp
-    python3 manage.py create_database --settings disclosures.settings.prod --skip-checks
+    python3 manage.py create_database --settings disclosures.settings.prod --skip-checks --username db_creator --password root
     zcat $DLROBOT_FOLDER/disclosures.sql.gz | mysql -u disclosures -pdisclosures -D $DISCLOSURES_DATABASE_NAME
     python3 manage.py elastic_manage --action backup-prod --settings disclosures.settings.dev
     python3 manage.py elastic_manage --action dev-to-prod --settings disclosures.settings.dev
@@ -141,7 +141,7 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
 
     export DISCLOSURES_DATABASE_NAME=disclosures_db
     mysqladmin drop  $DISCLOSURES_DATABASE_NAME -u disclosures -pdisclosures -f
-    python3 manage.py create_database --settings disclosures.settings.prod --skip-checks
+    python3 manage.py create_database --settings disclosures.settings.prod --skip-checks --username db_creator --password root
     zcat $DLROBOT_FOLDER/disclosures.sql.gz | mysql -u disclosures -pdisclosures -D $DISCLOSURES_DATABASE_NAME
     sudo systemctl restart gunicorn
     # now prod works on database disclosures_db

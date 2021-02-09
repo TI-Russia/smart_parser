@@ -74,10 +74,11 @@ RubricsInRussian = {
     }
 }
 
+def get_all_rubric_ids():
+    return RubricsInRussian.keys()
 
 def fill_combo_box_with_rubrics():
     return [('', '')] + list ( (k, v['name']) for k, v in RubricsInRussian.items())
-
 
 def get_russian_rubric_str(rubric_id):
     return RubricsInRussian[rubric_id]['name']

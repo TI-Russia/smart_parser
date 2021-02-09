@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import  get_language
 from .countries import get_country_str
 from .rubrics import get_russian_rubric_str
-from declarations.nominal_income import get_average_nominal_incomes
+from declarations.nominal_income import get_average_nominal_incomes, YearIncome
 
 from collections import defaultdict
 from operator import attrgetter
@@ -293,9 +293,10 @@ class Person(models.Model):
 
     def income_growth_yearly(self):
         sections = self.sections_ordered_by_year
-        years = list(s.income_year for s in sections)
-        incomes = list(s.get_declarant_income_size() for s in sections)
-        return get_average_nominal_incomes(years, incomes)
+        incomes = list()
+        for s in self.sections_ordered_by_year:
+            incomes.append(YearIncome(s.income_year, s.get_declarant_income_size()))
+        return get_average_nominal_incomes(incomes)
 
     def get_permalink_passport(self):
         if self.declarator_person_id is not None:

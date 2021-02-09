@@ -1,6 +1,10 @@
 from collections import namedtuple
 
-YearIncome = namedtuple('YearIncome', ['year', 'nominal_income'])
+
+class YearIncome:
+    def __init__(self, year, income):
+        self.year = year
+        self.income = income
 
 #average by the following sources:
 # https://ac.gov.ru/archive/files/publication/a/20967.pdf
@@ -31,28 +35,28 @@ def find_year(year):
 IncomeCompare = namedtuple('IncomeCompare', ['population_income', 'declarant_income', 'min_year', 'max_year'])
 
 #years are not continous
-def get_average_nominal_incomes(years, incomes):
-    if len(years) <= 1:
+def get_average_nominal_incomes(year_incomes):
+    if len(year_incomes) <= 1:
         return None
     first_declarant_income = None
     population_start_index = None
     last_declarant_income = None
     population_end_index = None
-    for i in range(len(years)):
-        if incomes[i] == 0 or incomes[i] is None:
+    for year_income in year_incomes:
+        if year_income.income == 0 or year_income.income is None:
             continue
-        k = find_year(years[i])
+        k = find_year(year_income.year)
         if k != -1:
             if first_declarant_income is None:
                 population_start_index = k + 1
-                first_declarant_income = incomes[i]
-            last_declarant_income = incomes[i]
+                first_declarant_income = year_income.income
+            last_declarant_income = year_income.income
             population_end_index = k + 1
     if population_start_index is None or population_start_index == population_end_index:
         return None
     growth = 1.0
     for i in range(population_start_index, population_end_index):
-        growth = growth + growth * RUSSIAN_NOMINAL_INCOMES_YEARLY[i].nominal_income
+        growth = growth + growth * RUSSIAN_NOMINAL_INCOMES_YEARLY[i].income
     declarant_growth = (float(last_declarant_income) - float(first_declarant_income)) / float(first_declarant_income)
     population_growth = growth - 1.0
     return IncomeCompare(int(100.0 * population_growth), \
