@@ -12,6 +12,7 @@ class YearIncome:
 # https://ac.gov.ru/files/publication/a/11944.pdf
 
 
+# must be without gaps
 RUSSIAN_NOMINAL_INCOMES_YEARLY = [
     YearIncome(2010, 0.11),
     YearIncome(2011, 0.11),
