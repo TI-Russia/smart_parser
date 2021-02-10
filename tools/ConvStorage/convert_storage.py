@@ -32,6 +32,7 @@ class TConvertStorage:
                                                max_bin_file_size=bin_files_size)
         self.converted_file_storage = TSnowBallFileStorage(self.logger, self.converted_files_folder,
                                                    max_bin_file_size=bin_files_size)
+        self.snow_ball_os_error_count = 0
 
     @staticmethod
     def create_empty_db(output_filename, input_folder, converted_folder):
@@ -85,25 +86,37 @@ class TConvertStorage:
         self.access_file.flush()
 
     def save_converted_file_broken_stub(self, sha256, force=False):
-        self.converted_file_storage.save_file(self.broken_stub, ".docx", None, force=force, sha256=sha256)
+        try:
+            self.converted_file_storage.save_file(self.broken_stub, ".docx", None, force=force, sha256=sha256)
+        except OSerror:
+            self.snow_ball_os_error_count += 1
+            raise
 
     def save_converted_file(self, file_name, sha256, converter_id, force=False, delete_file=True):
         _, file_extension = os.path.splitext(file_name)
-        with open(file_name, "rb") as inp:
+        try:
+            with open(file_name, "rb") as inp:
 
-            aux_params = json.dumps({self.converter_id_key: converter_id})
-            self.converted_file_storage.save_file(inp.read(),
-                                                   file_extension,
-                                                   aux_params,
-                                                   force=force,
-                                                   sha256=sha256)
+                aux_params = json.dumps({self.converter_id_key: converter_id})
+                self.converted_file_storage.save_file(inp.read(),
+                                                       file_extension,
+                                                       aux_params,
+                                                       force=force,
+                                                       sha256=sha256)
+        except OSerror:
+            self.snow_ball_os_error_count += 1
+            raise
         if delete_file:
             self.delete_file_silently(file_name)
 
     def save_input_file(self, file_name, delete_file=True):
         _, file_extension = os.path.splitext(file_name)
-        with open(file_name, "rb") as inp:
-            self.input_file_storage.save_file(inp.read(), file_extension)
+        try:
+            with open(file_name, "rb") as inp:
+                self.input_file_storage.save_file(inp.read(), file_extension)
+        except OSerror:
+            self.snow_ball_os_error_count += 1
+            raise
         if delete_file:
             self.delete_file_silently(file_name)
 
