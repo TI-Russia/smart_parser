@@ -11,8 +11,10 @@
 </style>
 <form action="{% url 'section_search' %}" method="get">
     <div class="search_input">
-        {{form.person_name.label_tag}}
-        {{form.person_name}}
+        <abbr title="Начинайте с фамилии...">
+            {{form.person_name.label_tag}}
+            {{form.person_name}}
+        </abbr>
         <input type="submit" value="Поиск">
     </div>
     <div class="search_input">
@@ -29,8 +31,10 @@
         {{form.position_and_department.label_tag}}
         {{form.position_and_department}}
         &nbsp;
-        {{form.office_request.label_tag}}
-        {{form.office_request}}
+        <abbr title="Часть названия или числовой идентификатор">
+            {{form.office_request.label_tag}}
+            {{form.office_request}}
+        </abbr>
     </div>
 </form>
 

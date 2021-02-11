@@ -6,7 +6,7 @@ from declarations.nominal_income import get_average_nominal_incomes, YearIncome
 
 from collections import defaultdict
 from operator import attrgetter
-
+from itertools import groupby
 
 def get_django_language():
     lang = get_language().lower()
@@ -251,22 +251,12 @@ class Person(models.Model):
         return self.section_set.all().count()
 
     @property
+    def last_section(self):
+        return max( (s for s in self.section_set.all()), key=attrgetter("income_year"))
+
+    @property
     def last_position_and_office_str(self):
-        last_section = max( (s for s in self.section_set.all()), key=attrgetter("income_year"))
-        str = last_section.source_document.office.name
-
-        position_and_department = ""
-        if last_section.department is not None:
-            position_and_department += last_section.department
-
-        if last_section.position is not None:
-            if position_and_department != "":
-                position_and_department += ", "
-            position_and_department += last_section.position
-
-        if position_and_department != "":
-            str += " ({})".format(position_and_department)
-        return str
+        return self.last_section.position_and_office_str
 
     @property
     def declaraion_count_str(self):
@@ -279,8 +269,15 @@ class Person(models.Model):
             return "{} деклараций".format(cnt)
 
     @property
+    def has_spouse(self):
+        for s in self.section_set.all():
+            if s.has_spouse():
+                return True
+        return False
+
+    @property
     def years_str(self):
-        years = list(s.income_year for s in self.section_set.all())
+        years = list(set(s.income_year for s in self.section_set.all()))
         years.sort()
         if len(years) == 1:
             return "{} год".format(years[0])
@@ -289,10 +286,14 @@ class Person(models.Model):
 
     @property
     def sections_ordered_by_year(self):
-        return list(sorted(self.section_set.all(), key=attrgetter("income_year")))
+        sections = list()
+        for _, year_sections in groupby(sorted(self.section_set.all(), key=attrgetter("income_year")), key=attrgetter("income_year")):
+            for s in year_sections:
+                sections.append(s) # one section per year
+                break
+        return sections
 
     def income_growth_yearly(self):
-        sections = self.sections_ordered_by_year
         incomes = list()
         for s in self.sections_ordered_by_year:
             incomes.append(YearIncome(s.income_year, s.get_declarant_income_size()))
@@ -379,9 +380,19 @@ class Section(models.Model):
                 return i.size
         return 0
 
+    def get_spouse_income_size(self):
+        for i in self.income_set.all():
+            if i.relative == Relative.spouse_code:
+                return i.size
+        return 0
+
     @property
     def declarant_income_size(self):
         return self.get_declarant_income_size()
+
+    @property
+    def spouse_income_size(self):
+        return self.get_spouse_income_size()
 
     def get_permalink_passport(self):
         main_income = self.get_declarant_income_size()
@@ -405,15 +416,53 @@ class Section(models.Model):
         return [type_str, square_str, r.own_type_str]
 
     @property
-    def realty_square_sum(self):
+    def declarant_realty_square_sum(self):
         sum = 0
         for r in self.realestate_set.all():
-            sum += 0 if r.square is None else r.square
+            if r.relative == Relative.main_declarant_code:
+                sum += 0 if r.square is None else r.square
+        return sum
+
+    @property
+    def spouse_realty_square_sum(self):
+        sum = 0
+        for r in self.realestate_set.all():
+            if r.relative == Relative.spouse_code:
+                sum += 0 if r.square is None else r.square
         return sum
 
     @property
     def vehicle_count(self):
         return len(list(self.vehicle_set.all()))
+
+    def has_spouse(self):
+        for r in self.realestate_set.all():
+            if r.relative == Relative.spouse_code:
+                return True
+        for r in self.income_set.all():
+            if r.relative == Relative.spouse_code:
+                return True
+        for r in self.vehicle_set.all():
+            if r.relative == Relative.spouse_code:
+                return True
+        return True
+
+    @property
+    def position_and_office_str(self):
+        str = self.source_document.office.name
+
+        position_and_department = ""
+        if self.department is not None:
+            position_and_department += self.department
+
+        if self.position is not None:
+            if position_and_department != "":
+                position_and_department += ", "
+            position_and_department += self.position
+
+        if position_and_department != "":
+            str += " ({})".format(position_and_department.strip())
+        return str
 
     @property
     def html_table_data_rows(self):
@@ -441,9 +490,9 @@ class Section(models.Model):
                 if cnt == 0:
                     rowspan = len(realties[relative.code])
                     if relative.code == Relative.main_declarant_code:
-                        cells = [(self.person_name, rowspan), (self.position, rowspan)]
+                        cells = [(self.person_name, rowspan)]
                     else:
-                        cells = [(relative.name, rowspan), ("", rowspan)]
+                        cells = [(relative.name, rowspan)]
                     cells.extend([(realty_type, 1), (realty_square, 1), (own_type, 1),
                                   (vehicles[relative.code], rowspan), (incomes[relative.code], rowspan)])
                 else:

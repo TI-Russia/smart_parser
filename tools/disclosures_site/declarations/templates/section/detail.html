@@ -9,38 +9,19 @@
 {% block content %}
 
 <h1>
-     {{ section.source_document.office.name }} <br/>
-     Cведения о доходах за {{ section.income_year }} год <br/>
-     {% if section.department %}
-        {{ section.department }}
-     {% endif %}
-
+    {% if section.person_id %}
+        {{section.person.person_name}}
+    {% else %}
+        {{section.person_name}}
+    {% endif %}
 </h1>
 
+<h2>
+     {{section.position_and_office_str}} <br/>
+     Cведения о доходах за {{ section.income_year }} год <br/>
+</h2>
 
-<table class="declaration_table">
-    <tr>
-       <th rowspan="2">ФИО</th>
-       <th rowspan="2">Должность</th>
-       <th colspan="3">Недвижимость</th>
-       <th rowspan="2">Транспорт</th>
-       <th rowspan="2" width="10%">Доход</th>
-    </tr>
-    <tr>
-        <th>Тип</th>
-        <th>Площадь</th>
-        <th>Владение</th>
-    </tr>
-
-    {% for cells in section.html_table_data_rows %}
-        <tr>
-            {% for value_and_rowspan in cells %}
-                <td rowspan="{{value_and_rowspan.1}}"> {{value_and_rowspan.0 |safe}} </td>
-            {% endfor %}
-        </tr>
-    {% endfor %}
-
-</table>
+{% include "section/section_table.html" %}
 
 <br/><br/>
 

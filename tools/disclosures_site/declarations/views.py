@@ -233,13 +233,16 @@ class CommonSearchView(FormView, generic.ListView):
     def build_office_full_text_elastic_search_query(self, should_items):
         office_query = self.get_initial().get('office_request')
         if office_query is not None and len(office_query) > 0:
-            oqd = {"query": {"match": {"name": {"query": office_query, "operator": "and"}}}}
-            search_results = ElasticOfficeDocument.search().update_from_dict(oqd)
-            total = search_results.count()
-            if total == 0:
-                return None
-            offices = list(o.id for o in search_results[0:total])
-            should_items.append({"terms": {"office_id": offices}})
+            if office_query.isdigit():
+                should_items.append({"terms": {"office_id": [int(office_query)]}})
+            else:
+                oqd = {"query": {"match": {"name": {"query": office_query, "operator": "and"}}}}
+                search_results = ElasticOfficeDocument.search().update_from_dict(oqd)
+                total = search_results.count()
+                if total == 0:
+                    return None
+                offices = list(o.id for o in search_results[0:total])
+                should_items.append({"terms": {"office_id": offices}})
 
     def query_elastic_search(self):
         def add_should_item(field_name, elastic_search_operaror, field_type, should_items):
