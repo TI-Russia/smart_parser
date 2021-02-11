@@ -1,0 +1,329 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Солопова Ольга Николаевна\n",
+        "role": "Председатель суда\n"
+      },
+      "year": 2016,
+      "incomes": [
+        {
+          "size": 3356725.62,
+          "size_raw": "3356725,62",
+          "relative": null
+        },
+        {
+          "size": 251163.52,
+          "size_raw": "251163,52",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Затомская Ольга Юрьевна",
+        "role": "судья\n\n"
+      },
+      "year": 2016,
+      "incomes": [
+        {
+          "size": 2150983.28,
+          "size_raw": "2150983,28",
+          "relative": null
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Гордеев Дмитрий Сергеевич",
+        "role": "судья\n"
+      },
+      "year": 2016,
+      "incomes": [
+        {
+          "size": 2116125.33,
+          "size_raw": "2116125,33",
+          "relative": null
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Беляков Анатолий Анатольевич",
+        "role": "судья\n"
+      },
+      "year": 2016,
+      "incomes": [
+        {
+          "size": 1306087.45,
+          "size_raw": "1306087,45",
+          "relative": null
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Молитвина Татьяна Александровна",
+        "role": "судья\n"
+      },
+      "year": 2016,
+      "incomes": [
+        {
+          "size": 2042110.34,
+          "size_raw": "2042110,34",
+          "relative": null
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Криворучко Алексей Вячеславович",
+        "role": "судья\n"
+      },
+      "year": 2016,
+      "incomes": [
+        {
+          "size": 2223876.33,
+          "size_raw": "2223876,33",
+          "relative": null
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Сизинцева Мария Владимировна",
+        "role": "судья\n"
+      },
+      "year": 2016,
+      "incomes": [
+        {
+          "size": 2097949.17,
+          "size_raw": "2097949,17",
+          "relative": null
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Москаленко Мария Сергеевна",
+        "role": "судья\n"
+      },
+      "year": 2016,
+      "incomes": [
+        {
+          "size": 2364456.68,
+          "size_raw": "2364456,68",
+          "relative": null
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Стеклиев\n Алексей Викторович\n",
+        "role": "судья\n"
+      },
+      "year": 2016,
+      "incomes": [
+        {
+          "size": 2122260.22,
+          "size_raw": "2122260,22",
+          "relative": null
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Орехова Алеся Юрьевна\n",
+        "role": "судья\n"
+      },
+      "year": 2016,
+      "incomes": [
+        {
+          "size": 2084467.55,
+          "size_raw": "2084467,55",
+          "relative": null
+        },
+        {
+          "size": 1058824.77,
+          "size_raw": "1058824,77",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Иванов Денис Михайлович",
+        "role": "судья\n"
+      },
+      "year": 2016,
+      "incomes": [
+        {
+          "size": 2035332.59,
+          "size_raw": "2035332,59",
+          "relative": null
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Булгакова\n Елена Михайловна\n",
+        "role": "судья\n"
+      },
+      "year": 2016,
+      "incomes": [],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Виноградова\n Любовь Евгеньевна\n",
+        "role": "судья\n"
+      },
+      "year": 2016,
+      "incomes": [
+        {
+          "size": 2196944.20,
+          "size_raw": "2196944,2",
+          "relative": null
+        },
+        {
+          "size": 2349067.56,
+          "size_raw": "2349067,56",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Меркулова\n Александр Анатольевич\n",
+        "role": "судья\n"
+      },
+      "year": 2016,
+      "incomes": [
+        {
+          "size": 1905999.02,
+          "size_raw": "1905999,02",
+          "relative": null
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Коротова Екатерина Геннадьевна",
+        "role": "судья\n"
+      },
+      "year": 2016,
+      "incomes": [
+        {
+          "size": 1951374.31,
+          "size_raw": "1951374,31",
+          "relative": null
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Комлев Сергей\n Владимирович\n",
+        "role": "мировой судья судебного участка № 423\n"
+      },
+      "year": 2016,
+      "incomes": [],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Казакова\n Екатерина Николаевна\n",
+        "role": "мировой судья судебного участка № 370\n"
+      },
+      "year": 2016,
+      "incomes": [
+        {
+          "size": 1490369.30,
+          "size_raw": "1490369,3",
+          "relative": null
+        },
+        {
+          "size": 1312477.69,
+          "size_raw": "1312477,69",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Бунеева Ирина Владимировна",
+        "role": "мировой судья судебного участка № 389\n\n"
+      },
+      "year": 2016,
+      "incomes": [
+        {
+          "size": 774071.97,
+          "size_raw": "774071,97",
+          "relative": null
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Шведова Мария Евгеньевна\n",
+        "role": "мировой судья судебного участка № 367\n\n"
+      },
+      "year": 2016,
+      "incomes": [
+        {
+          "size": 1503808.71,
+          "size_raw": "1503808,71",
+          "relative": null
+        },
+        {
+          "size": 1458117.99,
+          "size_raw": "1458117,99",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    }
+  ],
+  "document": {
+    "year": 2016
+  }
+}
