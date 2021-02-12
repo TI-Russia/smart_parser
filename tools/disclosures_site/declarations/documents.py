@@ -22,6 +22,7 @@ class ElasticSectionDocument(Document):
     office_id = IntegerField()
     position_and_department = TextField()
     income_size = IntegerField()
+    spouse_income_size = IntegerField()
     person_id = IntegerField()
     region_id = IntegerField()
 
@@ -59,6 +60,9 @@ class ElasticSectionDocument(Document):
 
     def prepare_income_size(self, instance):
         return instance.get_declarant_income_size()
+
+    def prepare_spouse_income_size(self, instance):
+        return instance.get_spouse_income_size()
 
     def prepare_person_id(self, instance):
         return instance.person_id

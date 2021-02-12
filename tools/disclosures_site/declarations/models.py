@@ -3,10 +3,12 @@ from django.utils.translation import  get_language
 from .countries import get_country_str
 from .rubrics import get_russian_rubric_str
 from declarations.nominal_income import get_average_nominal_incomes, YearIncome
+from declarations.ratings import TPersonRatings
 
 from collections import defaultdict
 from operator import attrgetter
 from itertools import groupby
+
 
 def get_django_language():
     lang = get_language().lower()
@@ -305,6 +307,22 @@ class Person(models.Model):
         else:
             return None
 
+    @property
+    def ratings(self):
+        s = ""
+        for r in self.person_rating_items_set.all():
+            rating = '<abbr title="{} ({} год, {} место, {} {}, число участников:{} )"> <image src="/static/images/{}"/></abbr>'.format(
+                r.rating.name,
+                r.rating_year,
+                r.person_place,
+                r.rating_value,
+                r.rating.rating_unit_name,
+                r.competitors_number,
+                r.rating.image_file_path)
+            rating = "<a href={}>{}</a>".format(TPersonRatings.get_search_params_by_rating(r), rating)
+            s += rating
+        return s
+
 
 class RealEstate(models.Model):
     section = models.ForeignKey('declarations.Section', on_delete=models.CASCADE)
@@ -383,8 +401,11 @@ class Section(models.Model):
     def get_spouse_income_size(self):
         for i in self.income_set.all():
             if i.relative == Relative.spouse_code:
-                return i.size
-        return 0
+                if i.size is None:
+                    return None
+                else:
+                    return i.size
+        return None
 
     @property
     def declarant_income_size(self):
@@ -418,18 +439,30 @@ class Section(models.Model):
     @property
     def declarant_realty_square_sum(self):
         sum = 0
+        cnt = 0
         for r in self.realestate_set.all():
             if r.relative == Relative.main_declarant_code:
-                sum += 0 if r.square is None else r.square
-        return sum
+                if r.square is not None:
+                    sum += r.square
+                    cnt += 1
+        if cnt > 0:
+            return sum
+        else:
+            return None
 
     @property
     def spouse_realty_square_sum(self):
         sum = 0
+        has_realty = 0
         for r in self.realestate_set.all():
             if r.relative == Relative.spouse_code:
-                sum += 0 if r.square is None else r.square
-        return sum
+                if r.square is not None:
+                    sum += r.square
+                    has_realty = True
+        if has_realty:
+            return sum
+        else:
+            return None
 
     @property
     def vehicle_count(self):
@@ -445,7 +478,7 @@ class Section(models.Model):
         for r in self.vehicle_set.all():
             if r.relative == Relative.spouse_code:
                 return True
-        return True
+        return False
 
     @property
     def position_and_office_str(self):
@@ -500,3 +533,36 @@ class Section(models.Model):
                 cnt += 1
                 table.append(cells)
         return table
+
+
+class Person_Rating(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.TextField(verbose_name='rating name')
+    image_file_path = models.TextField(verbose_name='file path')
+    rating_unit_name = models.TextField(verbose_name='rating_unit')
+
+    @staticmethod
+    def create_ratings():
+        Person_Rating(
+            id=TPersonRatings.MaxDeclarantOfficeIncomeRating,
+            name="Самый высокий доход внутри ведомства",
+            image_file_path="declarant_office_income.png",
+            rating_unit_name="руб.",
+            ).save()
+
+        Person_Rating(
+            id=TPersonRatings.MaxSpouseOfficeIncomeRating,
+            name="Самый высокий доход супруги(а) внутри ведомства",
+            image_file_path="spouse_office_income.png",
+            rating_unit_name= "руб.",
+            ).save()
+
+
+class Person_Rating_Items(models.Model):
+    rating = models.ForeignKey('declarations.Person_Rating', on_delete=models.CASCADE)
+    person = models.ForeignKey('declarations.Person', on_delete=models.CASCADE)
+    person_place = models.IntegerField()
+    rating_year = models.IntegerField()
+    rating_value = models.IntegerField()
+    competitors_number = models.IntegerField(default=0)
+    office = models.ForeignKey('declarations.Office', on_delete=models.CASCADE, null=True)

@@ -11,7 +11,7 @@
 {% block content %}
 
 <h1>
-     {{person.person_name}}
+     {{person.person_name}} {{person.ratings |safe}}
 </h1>
 
 <h2>
@@ -48,12 +48,12 @@
     {% for s in person.sections_ordered_by_year %}
         <tr>
             <td> <a href="/section/{{ s.id }}">{{s.income_year}} </a>  </td>
-            <td align="right"> {{s.declarant_realty_square_sum}} </td>
+            <td align="right"> {{s.declarant_realty_square_sum|default_if_none:""}} </td>
             <td align="right"> {{s.vehicle_count}} </td>
             <td align="right"> &nbsp;{{s.declarant_income_size}}&nbsp; </td>
             {% if person.has_spouse %}
-              <td>{{s.spouse_realty_square_sum}}</td>
-              <td>{{s.spouse_income_size}}</td>
+              <td>{{s.spouse_realty_square_sum|default_if_none:""}}</td>
+              <td>{{s.spouse_income_size|default_if_none:""}}</td>
             {% endif %}
         </tr>
     {% endfor %}
