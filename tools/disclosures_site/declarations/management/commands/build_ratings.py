@@ -4,7 +4,7 @@ from declarations.ratings import TPersonRatings
 from django.core.management import BaseCommand
 import heapq
 from collections import defaultdict
-
+from django.db import connection
 
 class Command(BaseCommand):
     help = 'all ratings'
@@ -35,16 +35,29 @@ class Command(BaseCommand):
                 heapq.heappushpop(rating, person_result)
             self.ratings_person_count[rating_key] += 1
 
-    def fill_ratings(self):
-        for person in models.Person.objects.all():
-            for s in person.section_set.all():
-                self.update_rating(
-                    (TPersonRatings.MaxDeclarantOfficeIncomeRating, s.income_year, s.source_document.office_id),
-                    (s.get_declarant_income_size(), person.id))
+    def build_income_sql(self, ):
+        return region_stats
 
-                self.update_rating(
-                    (TPersonRatings.MaxSpouseOfficeIncomeRating, s.income_year, s.source_document.office_id),
-                    (s.get_spouse_income_size(), person.id))
+    def fill_income_ratings(self):
+        query = """
+            select p.id, s.income_year, d.office_id,  i.size, i.relative 
+            from declarations_section s 
+            join declarations_source_document d on d.id=s.source_document_id 
+            join declarations_income i on i.section_id=s.id
+            join declarations_person p on p.id=s.person_id  
+        """
+        with connection.cursor() as cursor:
+            cursor.execute(query)
+            for person_id, income_year, office_id, income_size, relative_code  in cursor:
+                if relative_code == models.Relative.main_declarant_code:
+                    self.update_rating(
+                        (TPersonRatings.MaxDeclarantOfficeIncomeRating, income_year, office_id),
+                        (income_size, person_id))
+
+                if relative_code == models.Relative.spouse_code:
+                    self.update_rating(
+                        (TPersonRatings.MaxSpouseOfficeIncomeRating, income_year, office_id),
+                        (income_size, person_id))
 
     def save_ratings_to_db(self):
         for rating_key, rating in self.rating_items.items():
@@ -70,7 +83,7 @@ class Command(BaseCommand):
         models.Person_Rating_Items.objects.all().delete()
         models.Person_Rating.objects.all().delete()
         models.Person_Rating.create_ratings()
-        self.fill_ratings()
+        self.fill_income_ratings()
         self.save_ratings_to_db()
 
 BuildRatingCommand=Command

@@ -120,6 +120,8 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
    } &
    ELASTIC_PID=$!
 
+#15 создание рейтингов
+python3 $TOOLS/manage.py build_ratings --settings disclosures.settings.dev
 
 #16 создание дампа базы
  cd $DLROBOT_FOLDER
