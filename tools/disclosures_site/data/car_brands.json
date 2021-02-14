@@ -1,0 +1,1896 @@
+{
+    "1": {
+        "name": "Богдан",
+        "img": "bogdan.png",
+        "synonyms": [
+            "bogdan",
+            "богдан"
+        ]
+    },
+    "2": {
+        "name": "Бронто",
+        "img": "bronto.png",
+        "synonyms": [
+            "bronto",
+            "бронто"
+        ]
+    },
+    "3": {
+        "name": "ВАЗ",
+        "img": "vaz.png",
+        "synonyms": [
+            "vaz",
+            "ваз"
+        ]
+    },
+    "4": {
+        "name": "ВИС",
+        "img": "vis.png",
+        "synonyms": [
+            "vis",
+            "вис"
+        ]
+    },
+    "5": {
+        "name": "ГАЗ",
+        "img": "gaz.png",
+        "synonyms": [
+            "gaz",
+            "газ"
+        ]
+    },
+    "6": {
+        "name": "Ё мобиль",
+        "img": "yo_mobil.png",
+        "luxury": true,
+        "synonyms": [
+            "yo mobil",
+            "ё мобиль"
+        ]
+    },
+    "7": {
+        "name": "ЗАЗ",
+        "img": "zaz.png",
+        "synonyms": [
+            "zaz",
+            "заз",
+            "таврия"
+        ]
+    },
+    "8": {
+        "name": "ЗИЛ",
+        "img": "zil.png",
+        "synonyms": [
+            "zil",
+            "зил"
+        ]
+    },
+    "9": {
+        "name": "ЗиС",
+        "img": "zis.png",
+        "synonyms": [
+            "zis",
+            "зис"
+        ]
+    },
+    "10": {
+        "name": "ИЖ",
+        "img": "izh.png",
+        "synonyms": [
+            "izh",
+            "иж"
+        ]
+    },
+    "11": {
+        "name": "КАВЗ",
+        "img": "kavz.png",
+        "synonyms": [
+            "kavz",
+            "кавз"
+        ]
+    },
+    "12": {
+        "name": "КАМАЗ",
+        "img": "kamaz.png",
+        "synonyms": [
+            "kamaz",
+            "камаз"
+        ]
+    },
+    "13": {
+        "name": "КРАЗ",
+        "img": "kraz.png",
+        "synonyms": [
+            "kraz",
+            "краз"
+        ]
+    },
+    "14": {
+        "name": "Lada",
+        "img": "lada.png",
+        "synonyms": [
+            "lada",
+            "лада"
+        ]
+    },
+    "15": {
+        "name": "ЛАЗ",
+        "img": "laz.png",
+        "synonyms": [
+            "laz",
+            "лаз"
+        ]
+    },
+    "16": {
+        "name": "ЛиАЗ",
+        "img": "liaz.png",
+        "synonyms": [
+            "liaz",
+            "лиаз"
+        ]
+    },
+    "17": {
+        "name": "ЛуАЗ",
+        "img": "luaz.png",
+        "synonyms": [
+            "luaz",
+            "луаз"
+        ]
+    },
+    "18": {
+        "name": "МАЗ",
+        "img": "maz.png",
+        "synonyms": [
+            "maz",
+            "маз"
+        ]
+    },
+    "19": {
+        "name": "Marussia",
+        "img": "marussia.png",
+        "synonyms": [
+            "marussia",
+            "маруся"
+        ]
+    },
+    "20": {
+        "name": "Москвич",
+        "img": "moskvich.png",
+        "synonyms": [
+            "moskvich",
+            "АЗЛК",
+            "москвич"
+        ]
+    },
+    "21": {
+        "name": "Ока",
+        "img": "oka.png",
+        "synonyms": [
+            "oka",
+            "ока"
+        ]
+    },
+    "22": {
+        "name": "ПАЗ",
+        "img": "paz.png",
+        "synonyms": [
+            "paz",
+            "паз"
+        ]
+    },
+    "23": {
+        "name": "СеАЗ",
+        "img": "seaz.png",
+        "synonyms": [
+            "seaz",
+            "сеаз"
+        ]
+    },
+    "24": {
+        "name": "СМЗ",
+        "img": "smz.png",
+        "synonyms": [
+            "smz",
+            "смз"
+        ]
+    },
+    "25": {
+        "name": "ТагАЗ",
+        "img": "tagaz.png",
+        "synonyms": [
+            "tagaz",
+            "тагаз"
+        ]
+    },
+    "26": {
+        "name": "УАЗ",
+        "img": "uaz.png",
+        "synonyms": [
+            "uaz",
+            "уаз"
+        ]
+    },
+    "27": {
+        "name": "Урал",
+        "img": "ural.png",
+        "synonyms": [
+            "ural",
+            "урал"
+        ]
+    },
+    "28": {
+        "name": "ЯМАЛ",
+        "img": "yamal.png",
+        "synonyms": [
+            "yamal",
+            "ямал"
+        ]
+    },
+    "29": {
+        "name": "AC",
+        "img": "ac.png",
+        "synonyms": [
+            "ac"
+        ]
+    },
+    "30": {
+        "name": "Acura",
+        "img": "acura.png",
+        "synonyms": [
+            "acura",
+            "акура"
+        ]
+    },
+    "31": {
+        "name": "Alfa Romeo",
+        "img": "alfa_romeo.png",
+        "luxury": true,
+        "synonyms": [
+            "alfa romeo",
+            "альфа ромео"
+        ]
+    },
+    "32": {
+        "name": "Alpina",
+        "img": "alpina.png",
+        "luxury": true,
+        "synonyms": [
+            "alpina",
+            "альпина"
+        ]
+    },
+    "33": {
+        "name": "Aston Martin",
+        "img": "aston_martin.png",
+        "luxury": true,
+        "synonyms": [
+            "aston martin",
+            "астон мартин"
+        ]
+    },
+    "34": {
+        "name": "Audi",
+        "img": "audi.png",
+        "luxury": true,
+        "synonyms": [
+            "audi",
+            "ауди"
+        ]
+    },
+    "35": {
+        "name": "BAW",
+        "img": "baw.png",
+        "synonyms": [
+            "baw"
+        ]
+    },
+    "36": {
+        "name": "Bentley",
+        "img": "bentley.png",
+        "luxury": true,
+        "synonyms": [
+            "bentley",
+            "бентли"
+        ]
+    },
+    "37": {
+        "name": "Bitter",
+        "img": "bitter.png",
+        "synonyms": [
+            "bitter"
+        ]
+    },
+    "38": {
+        "name": "BMW",
+        "img": "bmw.png",
+        "luxury": true,
+        "synonyms": [
+            "bmw",
+            "бмв"
+        ]
+    },
+    "39": {
+        "name": "Borgward",
+        "img": "borgward.png",
+        "luxury": true,
+        "synonyms": [
+            "borgward",
+            "боргвард"
+        ]
+    },
+    "40": {
+        "name": "Brabus",
+        "img": "brabus.png",
+        "luxury": true,
+        "synonyms": [
+            "brabus",
+            "брабус"
+        ]
+    },
+    "41": {
+        "name": "Brilliance",
+        "img": "brilliance.png",
+        "synonyms": [
+            "brilliance",
+            "бриллианс"
+        ]
+    },
+    "42": {
+        "name": "Bristol",
+        "img": "bristol.png",
+        "synonyms": [
+            "bristol",
+            "бристоль"
+        ]
+    },
+    "43": {
+        "name": "Bufori",
+        "img": "bufori.png",
+        "luxury": true,
+        "synonyms": [
+            "bufori",
+            "буфори"
+        ]
+    },
+    "44": {
+        "name": "Bugatti",
+        "img": "bugatti.png",
+        "luxury": true,
+        "synonyms": [
+            "bugatti",
+            "бугати",
+            "бугатти"
+        ]
+    },
+    "45": {
+        "name": "Buick",
+        "img": "buick.png",
+        "luxury": true,
+        "synonyms": [
+            "buick",
+            "бьюик"
+        ]
+    },
+    "46": {
+        "name": "BYD",
+        "img": "byd.png",
+        "synonyms": [
+            "byd",
+            "бид"
+        ]
+    },
+    "47": {
+        "name": "Byvin",
+        "img": "byvin.png",
+        "synonyms": [
+            "byvin",
+            "байвин",
+            "бивин"
+        ]
+    },
+    "48": {
+        "name": "Cadillac",
+        "img": "cadillac.png",
+        "luxury": true,
+        "synonyms": [
+            "cadillac",
+            "кадиллак"
+        ]
+    },
+    "49": {
+        "name": "Callaway",
+        "img": "callaway.png",
+        "synonyms": [
+            "callaway",
+            "каллавей"
+        ]
+    },
+    "50": {
+        "name": "Caterham",
+        "img": "caterham.png",
+        "luxury": true,
+        "synonyms": [
+            "caterham",
+            "катерхем"
+        ]
+    },
+    "51": {
+        "name": "Changan",
+        "img": "changan.png",
+        "synonyms": [
+            "changan",
+            "чанган"
+        ]
+    },
+    "52": {
+        "name": "Changfeng",
+        "img": "changfeng.png",
+        "synonyms": [
+            "changfeng",
+            "чанфэн"
+        ]
+    },
+    "53": {
+        "name": "Chery",
+        "img": "chery.png",
+        "synonyms": [
+            "chery",
+            "чери"
+        ]
+    },
+    "54": {
+        "name": "Chevrolet",
+        "img": "chevrolet.png",
+        "synonyms": [
+            "chevrolet",
+            "шевроле",
+            "шевролет"
+        ]
+    },
+    "55": {
+        "name": "Chrysler",
+        "img": "chrysler.png",
+        "synonyms": [
+            "chrysler",
+            "крайслер"
+        ]
+    },
+    "56": {
+        "name": "Citroen",
+        "img": "citroen.png",
+        "synonyms": [
+            "citroen",
+            "ситроен",
+            "sitroen"
+        ]
+    },
+    "57": {
+        "name": "Cizeta",
+        "img": "cizeta.png",
+        "luxury": true,
+        "synonyms": [
+            "cizeta",
+            "чизета"
+        ]
+    },
+    "58": {
+        "name": "Coggiola",
+        "img": "coggiola.png",
+        "synonyms": [
+            "coggiola",
+            "коджиола"
+        ]
+    },
+    "59": {
+        "name": "Cord",
+        "img": "cord.png",
+        "luxury": true,
+        "synonyms": [
+            "cord",
+            "корд"
+        ]
+    },
+    "60": {
+        "name": "Dacia",
+        "img": "dacia.png",
+        "synonyms": [
+            "dacia",
+            "дачия",
+            "дачиа"
+        ]
+    },
+    "61": {
+        "name": "Dadi",
+        "img": "dadi.png",
+        "synonyms": [
+            "dadi",
+            "дади"
+        ]
+    },
+    "62": {
+        "name": "Daewoo",
+        "img": "daewoo.png",
+        "synonyms": [
+            "daewoo",
+            "дэу"
+        ]
+    },
+    "63": {
+        "name": "DAF",
+        "img": "daf.png",
+        "synonyms": [
+            "daf",
+            "даф"
+        ]
+    },
+    "64": {
+        "name": "Daihatsu",
+        "img": "daihatsu.png",
+        "synonyms": [
+            "daihatsu",
+            "дайхатсу"
+        ]
+    },
+    "65": {
+        "name": "Daimler",
+        "img": "daimler.png",
+        "luxury": true,
+        "synonyms": [
+            "daimler",
+            "даймлер"
+        ]
+    },
+    "66": {
+        "name": "Datsun",
+        "img": "datsun.png",
+        "synonyms": [
+            "datsun",
+            "датсун"
+        ]
+    },
+    "67": {
+        "name": "Delage",
+        "img": "delage.png",
+        "luxury": true,
+        "synonyms": [
+            "delage",
+            "делаж"
+        ]
+    },
+    "68": {
+        "name": "DeLorean",
+        "img": "delorean.png",
+        "luxury": true,
+        "synonyms": [
+            "delorean",
+            "делориан"
+        ]
+    },
+    "69": {
+        "name": "Derways",
+        "img": "derways.png",
+        "synonyms": [
+            "derways",
+            "дервейс"
+        ]
+    },
+    "70": {
+        "name": "Desoto",
+        "img": "desoto.png",
+        "luxury": true,
+        "synonyms": [
+            "desoto",
+            "десото"
+        ]
+    },
+    "71": {
+        "name": "Dodge",
+        "img": "dodge.png",
+        "synonyms": [
+            "dodge",
+            "додж"
+        ]
+    },
+    "72": {
+        "name": "Dongfeng",
+        "img": "dongfeng.png",
+        "synonyms": [
+            "dongfeng",
+            "донгфенг"
+        ]
+    },
+    "73": {
+        "name": "Eagle",
+        "img": "eagle.png",
+        "synonyms": [
+            "eagle",
+            "игл"
+        ]
+    },
+    "74": {
+        "name": "FAW",
+        "img": "faw.png",
+        "synonyms": [
+            "faw",
+            "фав"
+        ]
+    },
+    "75": {
+        "name": "Ferrari",
+        "img": "ferrari.png",
+        "luxury": true,
+        "synonyms": [
+            "ferrari",
+            "феррари"
+        ]
+    },
+    "76": {
+        "name": "Fiat",
+        "img": "fiat.png",
+        "synonyms": [
+            "fiat",
+            "фиат"
+        ]
+    },
+    "77": {
+        "name": "Fisker",
+        "img": "fisker.png",
+        "luxury": true,
+        "synonyms": [
+            "fisker",
+            "фискер"
+        ]
+    },
+    "78": {
+        "name": "Ford",
+        "img": "ford.png",
+        "synonyms": [
+            "ford",
+            "Фодр",
+            "форд"
+        ]
+    },
+    "79": {
+        "name": "Foton",
+        "img": "foton.png",
+        "synonyms": [
+            "foton",
+            "фотон"
+        ]
+    },
+    "80": {
+        "name": "FSO",
+        "img": "fso.png",
+        "synonyms": [
+            "fso",
+            "фсо"
+        ]
+    },
+    "81": {
+        "name": "Geely",
+        "img": "geely.png",
+        "synonyms": [
+            "geely",
+            "джили"
+        ]
+    },
+    "82": {
+        "name": "Ginetta",
+        "img": "ginetta.png",
+        "luxury": true,
+        "synonyms": [
+            "ginetta"
+        ]
+    },
+    "83": {
+        "name": "GMC",
+        "img": "gmc.png",
+        "synonyms": [
+            "gmc",
+            "Джи-Эм-Си"
+        ]
+    },
+    "84": {
+        "name": "Gonow",
+        "img": "gonow.png",
+        "synonyms": [
+            "gonow",
+            "гонов"
+        ]
+    },
+    "85": {
+        "name": "Gordon",
+        "img": "gordon.png",
+        "luxury": true,
+        "synonyms": [
+            "gordon",
+            "гордон"
+        ]
+    },
+    "86": {
+        "name": "Great Wall",
+        "img": "great_wall.png",
+        "synonyms": [
+            "great wall",
+            "грейт вол"
+        ]
+    },
+    "87": {
+        "name": "Gumpert",
+        "img": "gumpert.png",
+        "luxury": true,
+        "synonyms": [
+            "gumpert",
+            "гумперт"
+        ]
+    },
+    "88": {
+        "name": "Hafei",
+        "img": "hafei.png",
+        "synonyms": [
+            "hafei",
+            "хафей",
+            "хафэй"
+        ]
+    },
+    "89": {
+        "name": "Haima",
+        "img": "haima.png",
+        "synonyms": [
+            "haima",
+            "хайма"
+        ]
+    },
+    "90": {
+        "name": "Haval",
+        "img": "haval.png",
+        "synonyms": [
+            "haval",
+            "хавэйл"
+        ]
+    },
+    "91": {
+        "name": "Hawtai",
+        "img": "hawtai.png",
+        "synonyms": [
+            "hawtai",
+            "хаутай"
+        ]
+    },
+    "92": {
+        "name": "Hindustan",
+        "img": "hindustan.png",
+        "synonyms": [
+            "hindustan",
+            "хиндустан"
+        ]
+    },
+    "93": {
+        "name": "Hino",
+        "img": "hino.png",
+        "synonyms": [
+            "hino",
+            "хино"
+        ]
+    },
+    "94": {
+        "name": "Holden",
+        "img": "holden.png",
+        "synonyms": [
+            "holden",
+            "холден"
+        ]
+    },
+    "95": {
+        "name": "Honda",
+        "img": "honda.png",
+        "synonyms": [
+            "honda",
+            "yonda",
+            "хонда"
+        ]
+    },
+    "96": {
+        "name": "Horch",
+        "img": "horch.png",
+        "synonyms": [
+            "horch",
+            "хорх"
+        ]
+    },
+    "97": {
+        "name": "Huanghai",
+        "img": "huanghai.png",
+        "synonyms": [
+            "huanghai",
+            "хуангхай"
+        ]
+    },
+    "98": {
+        "name": "Hummer",
+        "img": "hummer.png",
+        "luxury": true,
+        "synonyms": [
+            "hummer",
+            "хаммер"
+        ]
+    },
+    "99": {
+        "name": "Hyundai",
+        "img": "hyundai.png",
+        "synonyms": [
+            "hyundai",
+            "хендай",
+            "хёнде",
+            "хундай",
+            "Hyndai",
+            "hyandai",
+            "Хендэ",
+            "хенде"
+        ]
+    },
+    "100": {
+        "name": "IFA",
+        "img": "ifa.png",
+        "synonyms": [
+            "ifa",
+            "ифа"
+        ]
+    },
+    "101": {
+        "name": "Ikarus",
+        "img": "ikarus.png",
+        "synonyms": [
+            "ikarus",
+            "икарус"
+        ]
+    },
+    "102": {
+        "name": "Infiniti",
+        "img": "infiniti.png",
+        "luxury": true,
+        "synonyms": [
+            "infiniti",
+            "инфинити"
+        ]
+    },
+    "103": {
+        "name": "Innocenti",
+        "img": "innocenti.png",
+        "synonyms": [
+            "innocenti"
+        ]
+    },
+    "104": {
+        "name": "Invicta",
+        "img": "invicta.png",
+        "luxury": true,
+        "synonyms": [
+            "invicta",
+            "инвикта"
+        ]
+    },
+    "106": {
+        "name": "Isdera",
+        "img": "isdera.png",
+        "luxury": true,
+        "synonyms": [
+            "isdera"
+        ]
+    },
+    "107": {
+        "name": "Isuzu",
+        "img": "isuzu.png",
+        "synonyms": [
+            "isuzu",
+            "исузу"
+        ]
+    },
+    "108": {
+        "name": "Iveco",
+        "img": "iveco.png",
+        "synonyms": [
+            "iveco",
+            "ивеко"
+        ]
+    },
+    "109": {
+        "name": "Jac",
+        "img": "jac.png",
+        "synonyms": [
+            "jac",
+            "джак"
+        ]
+    },
+    "110": {
+        "name": "Jaguar",
+        "img": "jaguar.png",
+        "luxury": true,
+        "synonyms": [
+            "jaguar",
+            "ягуар"
+        ]
+    },
+    "111": {
+        "name": "Jeep",
+        "img": "jeep.png",
+        "synonyms": [
+            "jeep",
+            "джип"
+        ]
+    },
+    "112": {
+        "name": "Jensen",
+        "img": "jensen.png",
+        "synonyms": [
+            "jensen",
+            "дженсен"
+        ]
+    },
+    "113": {
+        "name": "JMC",
+        "img": "jmc.png",
+        "synonyms": [
+            "jmc",
+            "джейэмси"
+        ]
+    },
+    "114": {
+        "name": "Jowett",
+        "img": "jowett.png",
+        "luxury": true,
+        "synonyms": [
+            "jowett"
+        ]
+    },
+    "115": {
+        "name": "Kaiser",
+        "img": "kaiser.png",
+        "luxury": true,
+        "synonyms": [
+            "kaiser",
+            "кайзер"
+        ]
+    },
+    "116": {
+        "name": "Kenworth",
+        "img": "kenworth.png",
+        "synonyms": [
+            "kenworth",
+            "кенворт"
+        ]
+    },
+    "117": {
+        "name": "KIA",
+        "img": "kia.png",
+        "synonyms": [
+            "kia",
+            "киа",
+            "кия"
+        ]
+    },
+    "118": {
+        "name": "Koenigsegg",
+        "img": "koenigsegg.png",
+        "luxury": true,
+        "synonyms": [
+            "koenigsegg",
+            "кёнигсегг"
+        ]
+    },
+    "119": {
+        "name": "KTM",
+        "img": "ktm.png",
+        "luxury": true,
+        "synonyms": [
+            "ktm",
+            "ктм"
+        ]
+    },
+    "120": {
+        "name": "Lamborghini",
+        "img": "lamborghini.png",
+        "luxury": true,
+        "synonyms": [
+            "lamborghini",
+            "ламборгини",
+            "ламборжини"
+        ]
+    },
+    "121": {
+        "name": "Lancia",
+        "img": "lancia.png",
+        "synonyms": [
+            "lancia",
+            "лянча"
+        ]
+    },
+    "122": {
+        "name": "Land Rover",
+        "img": "land_rover.png",
+        "luxury": true,
+        "synonyms": [
+            "land rover",
+            "ленд ровер"
+        ]
+    },
+    "123": {
+        "name": "Landwind",
+        "img": "landwind.png",
+        "synonyms": [
+            "landwind",
+            "лэндвинд"
+        ]
+    },
+    "124": {
+        "name": "Lexus",
+        "img": "lexus.png",
+        "luxury": true,
+        "synonyms": [
+            "lexus",
+            "лексус"
+        ]
+    },
+    "125": {
+        "name": "Leyland",
+        "img": "leyland.png",
+        "synonyms": [
+            "leyland",
+            "лиланд"
+        ]
+    },
+    "126": {
+        "name": "Lifan",
+        "img": "lifan.png",
+        "synonyms": [
+            "lifan",
+            "лифан"
+        ]
+    },
+    "127": {
+        "name": "Ligier",
+        "img": "ligier.png",
+        "synonyms": [
+            "ligier",
+            "лижье"
+        ]
+    },
+    "128": {
+        "name": "Lincoln",
+        "img": "lincoln.png",
+        "luxury": true,
+        "synonyms": [
+            "lincoln",
+            "линкольн"
+        ]
+    },
+    "129": {
+        "name": "Lotus",
+        "img": "lotus.png",
+        "synonyms": [
+            "lotus",
+            "лотус"
+        ]
+    },
+    "130": {
+        "name": "Luxgen",
+        "img": "luxgen.png",
+        "synonyms": [
+            "luxgen",
+            "люксген"
+        ]
+    },
+    "131": {
+        "name": "Mahindra",
+        "img": "mahindra.png",
+        "synonyms": [
+            "mahindra",
+            "махиндра"
+        ]
+    },
+    "132": {
+        "name": "MAN",
+        "img": "man.png",
+        "synonyms": [
+            "man",
+            "ман"
+        ]
+    },
+    "133": {
+        "name": "Marcos",
+        "img": "marcos.png",
+        "luxury": true,
+        "synonyms": [
+            "marcos",
+            "маркос"
+        ]
+    },
+    "134": {
+        "name": "Maruti",
+        "img": "maruti.png",
+        "synonyms": [
+            "maruti",
+            "марути"
+        ]
+    },
+    "135": {
+        "name": "Maserati",
+        "img": "maserati.png",
+        "luxury": true,
+        "synonyms": [
+            "maserati",
+            "мазерати"
+        ]
+    },
+    "136": {
+        "name": "Matra",
+        "img": "matra.png",
+        "luxury": true,
+        "synonyms": [
+            "matra"
+        ]
+    },
+    "137": {
+        "name": "Maybach",
+        "img": "maybach.png",
+        "luxury": true,
+        "synonyms": [
+            "maybach",
+            "майбах"
+        ]
+    },
+    "138": {
+        "name": "Mazda",
+        "img": "mazda.png",
+        "synonyms": [
+            "mazda",
+            "мазда",
+            "vazda"
+        ]
+    },
+    "139": {
+        "name": "McLaren",
+        "img": "mclaren.png",
+        "luxury": true,
+        "synonyms": [
+            "mclaren",
+            "макларен"
+        ]
+    },
+    "140": {
+        "name": "Mersedes-Benz",
+        "img": "mercedes-benz.png",
+        "luxury": true,
+        "synonyms": [
+            "mercedes-benz",
+            "мерседес-бенц",
+            "Mercedes",
+            "мерседес"
+        ]
+    },
+    "141": {
+        "name": "Mercury",
+        "img": "mercury.png",
+        "luxury": true,
+        "synonyms": [
+            "mercury",
+            "меркури"
+        ]
+    },
+    "142": {
+        "name": "MG",
+        "img": "mg.png",
+        "synonyms": [
+            "mg"
+        ]
+    },
+    "143": {
+        "name": "Microcar",
+        "img": "microcar.png",
+        "synonyms": [
+            "microcar",
+            "микрокар"
+        ]
+    },
+    "144": {
+        "name": "MINI",
+        "img": "mini.png",
+        "synonyms": [
+            "mini",
+            "мини"
+        ]
+    },
+    "145": {
+        "name": "Mitsubushi",
+        "img": "mitsubishi.png",
+        "synonyms": [
+            "mitsubishi",
+            "митсубиси",
+            "мицубиси",
+            "мицубиши",
+            "Мцубиси",
+            "митсубиши"
+        ]
+    },
+    "146": {
+        "name": "Mitsuoka",
+        "img": "mitsuoka.png",
+        "luxury": true,
+        "synonyms": [
+            "mitsuoka",
+            "мицуока"
+        ]
+    },
+    "147": {
+        "name": "Morgan",
+        "img": "morgan.png",
+        "luxury": true,
+        "synonyms": [
+            "morgan",
+            "морган"
+        ]
+    },
+    "148": {
+        "name": "Morris",
+        "img": "morris.png",
+        "synonyms": [
+            "morris",
+            "моррис"
+        ]
+    },
+    "149": {
+        "name": "Neoplan",
+        "img": "neoplan.png",
+        "synonyms": [
+            "neoplan",
+            "неоплан"
+        ]
+    },
+    "150": {
+        "name": "Nissan",
+        "img": "nissan.png",
+        "synonyms": [
+            "nissan",
+            "ниссан",
+            "нисан"
+        ]
+    },
+    "151": {
+        "name": "Noble",
+        "img": "noble.png",
+        "luxury": true,
+        "synonyms": [
+            "noble"
+        ]
+    },
+    "152": {
+        "name": "Oldsmobile",
+        "img": "oldsmobile.png",
+        "luxury": true,
+        "synonyms": [
+            "oldsmobile",
+            "олдсмобиль"
+        ]
+    },
+    "153": {
+        "name": "Opel",
+        "img": "opel.png",
+        "synonyms": [
+            "opel",
+            "опель"
+        ]
+    },
+    "154": {
+        "name": "Osca",
+        "img": "osca.png",
+        "luxury": true,
+        "synonyms": [
+            "osca",
+            "оска"
+        ]
+    },
+    "155": {
+        "name": "Packard",
+        "img": "packard.png",
+        "luxury": true,
+        "synonyms": [
+            "packard",
+            "паккард"
+        ]
+    },
+    "156": {
+        "name": "Pagani",
+        "img": "pagani.png",
+        "luxury": true,
+        "synonyms": [
+            "pagani"
+        ]
+    },
+    "157": {
+        "name": "Panhard",
+        "img": "panhard.png",
+        "synonyms": [
+            "panhard"
+        ]
+    },
+    "158": {
+        "name": "Panoz",
+        "img": "panoz.png",
+        "luxury": true,
+        "synonyms": [
+            "panoz",
+            "паноз"
+        ]
+    },
+    "159": {
+        "name": "Perodua",
+        "img": "perodua.png",
+        "synonyms": [
+            "perodua",
+            "перодуа"
+        ]
+    },
+    "160": {
+        "name": "Peterbilt",
+        "img": "peterbilt.png",
+        "synonyms": [
+            "peterbilt",
+            "петербилт"
+        ]
+    },
+    "161": {
+        "name": "Peugeot",
+        "img": "peugeot.png",
+        "synonyms": [
+            "peugeot",
+            "пежо",
+            "пижо"
+        ]
+    },
+    "162": {
+        "name": "PGO",
+        "img": "pgo.png",
+        "luxury": true,
+        "synonyms": [
+            "pgo",
+            "пго"
+        ]
+    },
+    "163": {
+        "name": "Piaggio",
+        "img": "piaggio.png",
+        "luxury": true,
+        "synonyms": [
+            "piaggio",
+            "пьяджио"
+        ]
+    },
+    "164": {
+        "name": "Plymouth",
+        "img": "plymouth.png",
+        "synonyms": [
+            "plymouth",
+            "плимут"
+        ]
+    },
+    "165": {
+        "name": "Pontiac",
+        "img": "pontiac.png",
+        "synonyms": [
+            "pontiac",
+            "понтиак"
+        ]
+    },
+    "166": {
+        "name": "Porsche",
+        "img": "porsche.png",
+        "luxury": true,
+        "synonyms": [
+            "porsche",
+            "порше",
+            "порш"
+        ]
+    },
+    "167": {
+        "name": "Proton",
+        "img": "proton.png",
+        "synonyms": [
+            "proton",
+            "протон"
+        ]
+    },
+    "168": {
+        "name": "Puch",
+        "img": "puch.png",
+        "synonyms": [
+            "puch",
+            "пух"
+        ]
+    },
+    "169": {
+        "name": "Qoros",
+        "img": "qoros.png",
+        "synonyms": [
+            "qoros",
+            "куорос"
+        ]
+    },
+    "170": {
+        "name": "RAF",
+        "img": "raf.png",
+        "synonyms": [
+            "raf",
+            "раф"
+        ]
+    },
+    "171": {
+        "name": "Ravon",
+        "img": "ravon.png",
+        "synonyms": [
+            "ravon",
+            "равон"
+        ]
+    },
+    "172": {
+        "name": "Renault",
+        "img": "renault.png",
+        "synonyms": [
+            "renault",
+            "рено",
+            "reno",
+            "renauit"
+        ]
+    },
+    "173": {
+        "name": "Rezvani",
+        "img": "rezvani.png",
+        "luxury": true,
+        "synonyms": [
+            "rezvani",
+            "резвани"
+        ]
+    },
+    "174": {
+        "name": "Rimac",
+        "img": "rimac.png",
+        "luxury": true,
+        "synonyms": [
+            "rimac",
+            "римак"
+        ]
+    },
+    "175": {
+        "name": "Rolls Royce",
+        "img": "rolls_royce.png",
+        "luxury": true,
+        "synonyms": [
+            "rolls royce",
+            "роллс-ройс",
+            "роллс ройс"
+        ]
+    },
+    "176": {
+        "name": "Ronart",
+        "img": "ronart.png",
+        "luxury": true,
+        "synonyms": [
+            "ronart"
+        ]
+    },
+    "177": {
+        "name": "Rover",
+        "img": "rover.png",
+        "synonyms": [
+            "rover",
+            "ровер"
+        ]
+    },
+    "178": {
+        "name": "Saab",
+        "img": "saab.png",
+        "synonyms": [
+            "saab",
+            "сааб"
+        ]
+    },
+    "179": {
+        "name": "Saleen",
+        "img": "saleen.png",
+        "luxury": true,
+        "synonyms": [
+            "saleen"
+        ]
+    },
+    "180": {
+        "name": "Santana",
+        "img": "santana.png",
+        "synonyms": [
+            "santana",
+            "сантана"
+        ]
+    },
+    "181": {
+        "name": "Saturn",
+        "img": "saturn.png",
+        "synonyms": [
+            "saturn",
+            "сатурн"
+        ]
+    },
+    "182": {
+        "name": "Scania",
+        "img": "scania.png",
+        "synonyms": [
+            "scania",
+            "скания",
+            "сканиа"
+        ]
+    },
+    "183": {
+        "name": "Scion",
+        "img": "scion.png",
+        "synonyms": [
+            "scion",
+            "сайон"
+        ]
+    },
+    "184": {
+        "name": "Seat",
+        "img": "seat.png",
+        "synonyms": [
+            "seat",
+            "сеат"
+        ]
+    },
+    "185": {
+        "name": "Setra",
+        "img": "setra.png",
+        "synonyms": [
+            "setra",
+            "сетра"
+        ]
+    },
+    "186": {
+        "name": "Shuanghuan",
+        "img": "shuanghuan.png",
+        "synonyms": [
+            "shuanghuan",
+            "шунган"
+        ]
+    },
+    "187": {
+        "name": "Simca",
+        "img": "simca.png",
+        "synonyms": [
+            "simca",
+            "симка"
+        ]
+    },
+    "188": {
+        "name": "Skoda",
+        "img": "skoda.png",
+        "synonyms": [
+            "skoda",
+            "шкода"
+        ]
+    },
+    "189": {
+        "name": "Smart",
+        "img": "smart.png",
+        "synonyms": [
+            "smart",
+            "смарт"
+        ]
+    },
+    "190": {
+        "name": "Soueast",
+        "img": "soueast.png",
+        "synonyms": [
+            "soueast"
+        ]
+    },
+    "191": {
+        "name": "Spyker",
+        "img": "spyker.png",
+        "luxury": true,
+        "synonyms": [
+            "spyker",
+            "спайкер"
+        ]
+    },
+    "192": {
+        "name": "Ssangyong",
+        "img": "ssangyong.png",
+        "synonyms": [
+            "ssangyong",
+            "ssang Yong",
+            "ссанъён"
+        ]
+    },
+    "193": {
+        "name": "Steyr",
+        "img": "steyr.png",
+        "synonyms": [
+            "steyr",
+            "штайр"
+        ]
+    },
+    "194": {
+        "name": "Studebaker",
+        "img": "studebaker.png",
+        "luxury": true,
+        "synonyms": [
+            "studebaker",
+            "студебекер"
+        ]
+    },
+    "195": {
+        "name": "Stutz",
+        "img": "stutz.png",
+        "luxury": true,
+        "synonyms": [
+            "stutz"
+        ]
+    },
+    "196": {
+        "name": "Subaru",
+        "img": "subaru.png",
+        "synonyms": [
+            "subaru",
+            "субару"
+        ]
+    },
+    "197": {
+        "name": "Sunbeam",
+        "img": "sunbeam.png",
+        "synonyms": [
+            "sunbeam"
+        ]
+    },
+    "198": {
+        "name": "Suzuki",
+        "img": "suzuki.png",
+        "synonyms": [
+            "suzuki",
+            "сузуки"
+        ]
+    },
+    "199": {
+        "name": "Talbot",
+        "img": "talbot.png",
+        "synonyms": [
+            "talbot",
+            "толбет"
+        ]
+    },
+    "200": {
+        "name": "TATA",
+        "img": "tata.png",
+        "synonyms": [
+            "tata",
+            "тата"
+        ]
+    },
+    "201": {
+        "name": "Tatra",
+        "img": "tatra.png",
+        "synonyms": [
+            "tatra",
+            "татра"
+        ]
+    },
+    "202": {
+        "name": "Tazzari",
+        "img": "tazzari.png",
+        "synonyms": [
+            "tazzari",
+            "таззари"
+        ]
+    },
+    "203": {
+        "name": "Tesla",
+        "img": "tesla.png",
+        "luxury": true,
+        "synonyms": [
+            "tesla",
+            "тесла"
+        ]
+    },
+    "204": {
+        "name": "Tianma",
+        "img": "tianma.png",
+        "synonyms": [
+            "tianma"
+        ]
+    },
+    "205": {
+        "name": "Tofas",
+        "img": "tofas.png",
+        "synonyms": [
+            "tofas",
+            "тофаш"
+        ]
+    },
+    "206": {
+        "name": "Toyota",
+        "img": "toyota.png",
+        "synonyms": [
+            "toyota",
+            "тайота",
+            "тойота"
+        ]
+    },
+    "207": {
+        "name": "Trabant",
+        "img": "trabant.png",
+        "synonyms": [
+            "trabant",
+            "трабан"
+        ]
+    },
+    "208": {
+        "name": "Tramontana",
+        "img": "tramontana.png",
+        "luxury": true,
+        "synonyms": [
+            "tramontana",
+            "трамонтана"
+        ]
+    },
+    "209": {
+        "name": "Triumph",
+        "img": "triumph.png",
+        "luxury": true,
+        "synonyms": [
+            "triumph"
+        ]
+    },
+    "210": {
+        "name": "TVR",
+        "img": "tvr.png",
+        "synonyms": [
+            "tvr"
+        ]
+    },
+    "211": {
+        "name": "Ultima",
+        "img": "ultima.png",
+        "luxury": true,
+        "synonyms": [
+            "ultima",
+            "ультима"
+        ]
+    },
+    "212": {
+        "name": "Vauxhall",
+        "img": "vauxhall.png",
+        "synonyms": [
+            "vauxhall",
+            "воксхолл"
+        ]
+    },
+    "213": {
+        "name": "Venturi",
+        "img": "venturi.png",
+        "luxury": true,
+        "synonyms": [
+            "venturi",
+            "вентури"
+        ]
+    },
+    "214": {
+        "name": "Volkswagen",
+        "img": "volkswagen.png",
+        "synonyms": [
+            "volkswagen",
+            "wolksvagen",
+            "фольксваген",
+            "фольцваген",
+            "Vokswagen",
+            "Volks Wagen",
+            "фольксвагэн"
+        ]
+    },
+    "215": {
+        "name": "Volvo",
+        "img": "volvo.png",
+        "luxury": true,
+        "synonyms": [
+            "volvo",
+            "вольво",
+            "волво"
+        ]
+    },
+    "216": {
+        "name": "Vortex",
+        "img": "vortex.png",
+        "synonyms": [
+            "vortex",
+            "вортекс"
+        ]
+    },
+    "217": {
+        "name": "Wartburg",
+        "img": "wartburg.png",
+        "synonyms": [
+            "wartburg",
+            "вартбург"
+        ]
+    },
+    "218": {
+        "name": "Westfield",
+        "img": "westfield.png",
+        "luxury": true,
+        "synonyms": [
+            "westfield",
+            "вестфилд"
+        ]
+    },
+    "219": {
+        "name": "Wiesmann",
+        "img": "wiesmann.png",
+        "luxury": true,
+        "synonyms": [
+            "wiesmann",
+            "вайсман"
+        ]
+    },
+    "220": {
+        "name": "Willys",
+        "img": "willys.png",
+        "luxury": true,
+        "synonyms": [
+            "willys",
+            "виллис"
+        ]
+    },
+    "221": {
+        "name": "XinKai",
+        "img": "xin_kai.png",
+        "synonyms": [
+            "xin kai",
+            "ксин кай",
+            "ксинкай"
+        ]
+    },
+    "222": {
+        "name": "Yamaha",
+        "img": "yamaha.png",
+        "synonyms": [
+            "yamaha",
+            "ямаха"
+        ]
+    },
+    "223": {
+        "name": "Yutong",
+        "img": "yutong.png",
+        "synonyms": [
+            "yutong",
+            "ютонг"
+        ]
+    },
+    "224": {
+        "name": "Zenvo",
+        "img": "zenvo.png",
+        "luxury": true,
+        "synonyms": [
+            "zenvo",
+            "зенво"
+        ]
+    },
+    "225": {
+        "name": "Zotye",
+        "img": "zotye.png",
+        "synonyms": [
+            "zotye",
+            "зоти"
+        ]
+    },
+    "226": {
+        "name": "ZX",
+        "img": "zx.png",
+        "synonyms": [
+            "zx"
+        ]
+    }
+}
