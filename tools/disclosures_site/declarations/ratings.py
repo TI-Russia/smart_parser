@@ -2,6 +2,7 @@
 class TPersonRatings:
     MaxDeclarantOfficeIncomeRating = 1
     MaxSpouseOfficeIncomeRating = 2
+    LuxuryCarRating = 3
 
     @staticmethod
     def get_search_params_by_rating(rating):
@@ -15,5 +16,10 @@ class TPersonRatings:
                 rating.office_id,
                 rating.rating_year
                 )
+        elif rating.rating_id == TPersonRatings.LuxuryCarRating:
+            return "/section/?office_request={}&car_brands={}".format(
+                rating.office_id,
+                rating.rating_value
+            )
         else:
             return ""

@@ -5,6 +5,7 @@ from disclosures_site.declarations.statistics import TDisclosuresStatisticsHisto
 from .rubrics import fill_combo_box_with_rubrics
 from common.content_types import file_extension_to_content_type
 from declarations.apps import DeclarationsConfig
+from declarations.car_brands import CAR_BRANDS
 
 from django.views import generic
 from django.views.generic.edit import FormView
@@ -97,6 +98,19 @@ def fill_combo_box_with_regions():
     return CACHED_REGIONS
 
 
+CACHED_CAR_BRANDS = None
+
+
+def fill_combo_box_with_car_brands():
+    global CACHED_CAR_BRANDS
+    if CACHED_CAR_BRANDS is None:
+        CACHED_CAR_BRANDS = list()
+        CACHED_CAR_BRANDS.append(('', ''))
+        for id, brand_info in CAR_BRANDS.brand_dict.items():
+            CACHED_CAR_BRANDS.append((id, brand_info['name']))
+    return CACHED_CAR_BRANDS
+
+
 def fill_combo_box_with_first_crawl_epochs():
     values = list()
     values.append(('', ''))
@@ -143,6 +157,10 @@ class CommonSearchForm(forms.Form):
         required=False,
         label="Регион",
         choices=fill_combo_box_with_regions)
+    car_brands = forms.ChoiceField(
+        required=False,
+        label="Машина",
+        choices=fill_combo_box_with_car_brands)
     office_request = forms.CharField(
         widget=forms.TextInput(attrs={'size': 25}),
         required=False,
@@ -221,6 +239,7 @@ class CommonSearchView(FormView, generic.ListView):
             'first_crawl_epoch': self.request.GET.get('first_crawl_epoch'),
             'parent_id': self.request.GET.get('parent_id'),
             'sha256': self.request.GET.get('sha256'),
+            'car_brands': self.request.GET.get('car_brands'),
         }
 
     def build_person_name_elastic_search_query(self, should_items):
@@ -255,6 +274,7 @@ class CommonSearchView(FormView, generic.ListView):
             add_should_item("name", "match", str, should_items)
             add_should_item("rubric_id", "term", int, should_items)
             add_should_item("region_id", "term", int, should_items)
+            add_should_item("car_brands", "term", str, should_items)
             add_should_item("income_year", "term", int, should_items)
             add_should_item("position_and_department", "match", str, should_items)
             add_should_item("web_domains", "match", str, should_items)

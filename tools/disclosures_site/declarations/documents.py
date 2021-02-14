@@ -1,4 +1,4 @@
-from django_elasticsearch_dsl import Document, IntegerField, TextField, ListField
+from django_elasticsearch_dsl import Document, IntegerField, TextField, ListField, KeywordField
 from django_elasticsearch_dsl.registries import registry
 from declarations.models import Section, Person, Office, Source_Document, TOfficeTableInMemory
 from django.conf import settings
@@ -25,6 +25,7 @@ class ElasticSectionDocument(Document):
     spouse_income_size = IntegerField()
     person_id = IntegerField()
     region_id = IntegerField()
+    car_brands = KeywordField()
 
     class Django:
         model = Section
@@ -66,6 +67,9 @@ class ElasticSectionDocument(Document):
 
     def prepare_person_id(self, instance):
         return instance.person_id
+
+    def prepare_car_brands(self, instance):
+        return instance.get_car_brands()
 
 
 person_search_index = Index(settings.ELASTICSEARCH_INDEX_NAMES['person_index_name'])

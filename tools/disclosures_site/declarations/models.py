@@ -4,11 +4,12 @@ from .countries import get_country_str
 from .rubrics import get_russian_rubric_str
 from declarations.nominal_income import get_average_nominal_incomes, YearIncome
 from declarations.ratings import TPersonRatings
+from declarations.car_brands import CAR_BRANDS
 
 from collections import defaultdict
 from operator import attrgetter
 from itertools import groupby
-
+import os
 
 def get_django_language():
     lang = get_language().lower()
@@ -311,14 +312,22 @@ class Person(models.Model):
     def ratings(self):
         s = ""
         for r in self.person_rating_items_set.all():
-            rating = '<abbr title="{} ({} год, {} место, {} {}, число участников:{} )"> <image src="/static/images/{}"/></abbr>'.format(
+            if r.rating.id == TPersonRatings.LuxuryCarRating:
+                image_path = CAR_BRANDS.get_image_url(str(r.rating_value))
+                rating_info = ""
+            else:
+                image_path = os.path.join("/static/images/", r.rating.image_file_path)
+                rating_info = ", {} место, {} {}, число участников:{}".format(
+                    r.person_place,
+                    r.rating_value,
+                    r.rating.rating_unit_name,
+                    r.competitors_number
+                )
+            rating = '<abbr title="{} ({} год {})"> <image src="{}"/></abbr>'.format(
                 r.rating.name,
                 r.rating_year,
-                r.person_place,
-                r.rating_value,
-                r.rating.rating_unit_name,
-                r.competitors_number,
-                r.rating.image_file_path)
+                rating_info,
+                image_path)
             rating = "<a href={}>{}</a>".format(TPersonRatings.get_search_params_by_rating(r), rating)
             s += rating
         return s
@@ -534,6 +543,13 @@ class Section(models.Model):
                 table.append(cells)
         return table
 
+    def get_car_brands(self):
+        car_brands = set()
+        for v in self.vehicle_set.all():
+            if v.name is not None and len(v.name) > 1:
+                car_brands.update(CAR_BRANDS.find_brands(v.name))
+        return list(car_brands)
+
 
 class Person_Rating(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -555,6 +571,13 @@ class Person_Rating(models.Model):
             name="Самый высокий доход супруги(а) внутри ведомства",
             image_file_path="spouse_office_income.png",
             rating_unit_name= "руб.",
+            ).save()
+
+        Person_Rating(
+            id=TPersonRatings.LuxuryCarRating,
+            name="Дорогой автомобиль",
+            image_file_path="",
+            rating_unit_name="",
             ).save()
 
 
