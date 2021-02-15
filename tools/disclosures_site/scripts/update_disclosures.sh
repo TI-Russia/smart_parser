@@ -52,7 +52,7 @@ source $(dirname $0)/update_common.sh
 
 #8.  инициализация базы disclosures
     cd ~/smart_parser/tools/disclosures_site
-    python3 manage.py create_database --settings disclosures.settings.dev --skip-checks --username
+    python3 manage.py create_database --settings disclosures.settings.dev --skip-checks --username db_creator --password root
     python3 manage.py makemigrations --settings disclosures.settings.dev
     python3 manage.py migrate --settings disclosures.settings.dev
     python3 manage.py search_index --rebuild  --settings disclosures.settings.dev -f

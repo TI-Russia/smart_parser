@@ -62,6 +62,7 @@ class Migration(migrations.Migration):
                 ('max_income_year', models.IntegerField(default=None, null=True)),
                 ('min_income_year', models.IntegerField(default=None, null=True)),
                 ('section_count', models.IntegerField(default=0, null=True)),
+                ('median_income', models.IntegerField(default=0, null=True)),
             ],
         ),
         migrations.CreateModel(
@@ -137,4 +138,29 @@ class Migration(migrations.Migration):
                 ('section', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='declarations.Section')),
             ],
         ),
+        migrations.CreateModel(
+            name='Person_Rating',
+            fields=[
+                ('id', models.IntegerField(primary_key=True, serialize=False)),
+                ('name', models.TextField(verbose_name='rating name')),
+                ('image_file_path', models.TextField(verbose_name='file path')),
+                ('rating_unit_name', models.TextField(verbose_name='rating_unit')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Person_Rating_Items',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('person_place', models.IntegerField()),
+                ('rating_year', models.IntegerField()),
+                ('rating_value', models.IntegerField()),
+                ('competitors_number', models.IntegerField(default=0)),
+                ('office',
+                 models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='declarations.office')),
+                ('person', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='declarations.person')),
+                ('rating',
+                 models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='declarations.person_rating')),
+            ],
+        ),
+
     ]
