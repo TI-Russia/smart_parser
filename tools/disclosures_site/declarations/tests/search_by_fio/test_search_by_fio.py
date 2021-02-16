@@ -1,6 +1,8 @@
 from django.test import TestCase
 import declarations.models as models
 from declarations.views import SectionSearchView, compare_Russian_fio
+from declarations.management.commands.build_elastic_index import BuildElasticIndex
+
 
 class FioSearchTestCase(TestCase):
 
@@ -20,6 +22,7 @@ class FioSearchTestCase(TestCase):
         src_doc = models.Source_Document(id=1, office_id=1)
         src_doc.save()
         models.Section(id=1, person_name="Иванов Иван Иванович", source_document=src_doc).save()
+        BuildElasticIndex(None, None).handle(None, model="section")
 
         self.assertEqual(self.search_sections_by_fio("Иванов И.И.")[0].id, 1)
         self.assertEqual(self.search_sections_by_fio("Иванов Иван Иванович")[0].id, 1)
@@ -33,6 +36,7 @@ class FioSearchTestCase(TestCase):
         models.Section(id=1, person_name="Один Иван Ильич", source_document=src_doc).save()
         models.Section(id=2, person_name="Два Иван Ильич", source_document=src_doc).save()
         models.Section(id=3, person_name="Иван Ильич", source_document=src_doc).save()
+        BuildElasticIndex(None, None).handle(None, model="section")
 
         res = self.search_sections_by_fio("Один Иван")
         self.assertEqual(len(res), 1)

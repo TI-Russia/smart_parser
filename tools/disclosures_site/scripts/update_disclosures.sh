@@ -64,7 +64,7 @@ source $(dirname $0)/update_common.sh
     python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev --permanent-links-db permalinks.dbm
 
 
-#10  Импорт json в dislosures_db (может быть, стоит запускать в 2 потока, а то памяти на мигалке не хватает)
+#10  Импорт json в dislosures_db
    python3 $TOOLS/disclosures_site/manage.py clear_database --settings disclosures.settings.dev
 
    #15 hours
@@ -114,7 +114,7 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
 
 #14 создание индекса для elasticsearch, создание sitemap   в фоновом режиме
    {
-     python3 $TOOLS/disclosures_site/manage.py search_index --rebuild  --settings disclosures.settings.dev -f
+     python3 $TOOLS/disclosures_site/manage.py build_elastic_index --settings disclosures.settings.dev
      cd $DLROBOT_FOLDER
      python3 $TOOLS/disclosures_site/manage.py generate_static_sections --settings disclosures.settings.dev --output-folder sections
    } &

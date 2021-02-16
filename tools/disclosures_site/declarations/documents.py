@@ -6,6 +6,10 @@ from elasticsearch_dsl import Index
 from django.db.utils import DatabaseError
 from datetime import datetime
 
+#We do not support elaastic index updates on a single sql db edit.
+#Elastic indices are created in disclosures_site/declarations/management/commands/build_elastic_index.py via sql queries,
+#since it is faster than prepare_field* mechanics.
+
 section_search_index = Index(settings.ELASTICSEARCH_INDEX_NAMES['section_index_name'])
 section_search_index.settings(
     number_of_shards=1,
@@ -36,41 +40,6 @@ class ElasticSectionDocument(Document):
             'rubric_id'
         ]
 
-    def prepare_source_document_id(self, instance):
-        return instance.source_document_id
-
-    def prepare_office_id(self, instance):
-        return instance.source_document.office.id
-
-    def prepare_region_id(self, instance):
-        region_id = instance.source_document.office.region_id
-        if region_id  is None:
-            return 0 # there is no sql record with  region_id = 0
-        else:
-            return region_id
-
-    def prepare_position_and_department(self, instance):
-        str = ""
-        if instance.position is not None:
-            str += instance.position
-        if instance.department is not None:
-            if len(str) > 0:
-                str += " "
-            str += instance.department
-        return str
-
-    def prepare_income_size(self, instance):
-        return instance.get_declarant_income_size()
-
-    def prepare_spouse_income_size(self, instance):
-        return instance.get_spouse_income_size()
-
-    def prepare_person_id(self, instance):
-        return instance.person_id
-
-    def prepare_car_brands(self, instance):
-        return instance.get_car_brands()
-
 
 person_search_index = Index(settings.ELASTICSEARCH_INDEX_NAMES['person_index_name'])
 person_search_index.settings(
@@ -90,8 +59,6 @@ class ElasticPersonDocument(Document):
             'id',
             'person_name',
         ]
-    def prepare_section_count(self, instance):
-        return instance.section_count
 
 
 office_search_index = Index(settings.ELASTICSEARCH_INDEX_NAMES['office_index_name'])
@@ -113,13 +80,6 @@ class ElasticOfficeDocument(Document):
             'id',
             'name',
         ]
-
-    def prepare_parent_id(self, instance):
-        assert OFFICES is not None
-        return instance.parent_id
-
-    def prepare_source_document_count(self, instance):
-        return instance.source_document_count
 
 
 file_search_index = Index(settings.ELASTICSEARCH_INDEX_NAMES['file_index_name'])
@@ -146,34 +106,6 @@ class ElasticFileDocument(Document):
             'sha256'
         ]
 
-    def prepare_office_id(self, instance):
-        return instance.office_id
-
-    def prepare_first_crawl_epoch(self, instance):
-        min_crawl_epoch = None
-        for web_ref in instance.web_reference_set.all():
-            if min_crawl_epoch is None:
-                min_crawl_epoch = web_ref.crawl_epoch
-            else:
-                min_crawl_epoch = min(min_crawl_epoch, web_ref.crawl_epoch)
-        return min_crawl_epoch
-
-    @property
-    def get_first_crawl_epoch_str(self):
-        if self.first_crawl_epoch is None:
-            return ''
-        return datetime.fromtimestamp(self.first_crawl_epoch).strftime("%Y-%m-%d")
-
-    def prepare_web_domains(self, instance):
-        web_domains = set()
-        for ref in instance.web_reference_set.all():
-            if ref.web_domain is not None:
-                web_domains.add(ref.web_domain)
-        for ref in instance.declarator_file_reference_set.all():
-            if ref.web_domain is not None:
-                web_domains.add(ref.web_domain)
-        return " ".join(web_domains)
-
 
 def stop_elastic_indexing():
     ElasticOfficeDocument.django.ignore_signals = True
@@ -182,15 +114,9 @@ def stop_elastic_indexing():
     ElasticFileDocument.django.ignore_signals = True
 
 
-def start_elastic_indexing():
-    ElasticOfficeDocument.django.ignore_signals = False
-    ElasticSectionDocument.django.ignore_signals = False
-    ElasticPersonDocument.django.ignore_signals = False
-    ElasticFileDocument.django.ignore_signals = False
-
+stop_elastic_indexing()
 
 try:
-    OFFICES = TOfficeTableInMemory()
+     OFFICES = TOfficeTableInMemory()
 except DatabaseError as exp:
-    stop_elastic_indexing()
-    print("stop_elastic_indexing because there is no offices")
+    pass

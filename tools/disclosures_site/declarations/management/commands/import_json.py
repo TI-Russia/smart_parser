@@ -1,6 +1,5 @@
 import declarations.models as models
 from declarations.serializers import TSmartParserJsonReader
-from declarations.documents import stop_elastic_indexing, start_elastic_indexing
 from declarations.management.commands.permalinks import TPermaLinksDB
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from declarations.input_json import TDlrobotHumanFile
@@ -255,7 +254,6 @@ class ImportJsonCommand(BaseCommand):
     def handle(self, *args, **options):
         TImporter.logger = setup_logging("import_json.log")
         importer = TImporter(options)
-        stop_elastic_indexing()
 
         self.stdout.write("start importing")
         if options.get('process_count', 0) > 1:
@@ -272,7 +270,6 @@ class ImportJsonCommand(BaseCommand):
                 importer.import_office(office_id)
                 cnt += 1
 
-        start_elastic_indexing()
         TImporter.logger.info("Section count={}".format(models.Section.objects.all().count()))
         TImporter.logger.info("all done")
 

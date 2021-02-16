@@ -2,7 +2,6 @@ from django.core.management import BaseCommand
 import declarations.models as models
 from declarations.rubrics import TOfficeRubrics, convert_municipality_to_education
 from concurrent.futures import ProcessPoolExecutor
-from declarations.documents import stop_elastic_indexing
 
 from django.db import transaction
 import sys
@@ -34,8 +33,6 @@ class Command(BaseCommand):
         super(Command, self).__init__(*args, **kwargs)
 
     def handle(self, *args, **options):
-        stop_elastic_indexing()
-
         pool = ProcessPoolExecutor(max_workers=4)
         documents_ids = models.Source_Document.objects.values_list('id')
         pool.map(set_rubric, documents_ids)

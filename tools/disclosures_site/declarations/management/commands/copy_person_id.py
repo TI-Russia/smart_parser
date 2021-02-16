@@ -1,5 +1,4 @@
 import declarations.models as models
-from declarations.documents import stop_elastic_indexing
 from django.core.management import BaseCommand
 from declarations.management.commands.permalinks import TPermaLinksDB
 from declarations.russian_fio import TRussianFio
@@ -221,8 +220,6 @@ class Command(BaseCommand):
         self.open_permalinks_db()
         section_passports = self.build_passport_to_person_id_mapping_from_declarator()
         self.logger.info("merge by {} passports from declarator".format(len(section_passports)))
-        self.logger.info("stop_elastic_indexing")
-        stop_elastic_indexing()
         self.copy_declarator_person_ids_fast(section_passports)
         self.permalinks_db.close_db()
         self.logger.info("all done")
