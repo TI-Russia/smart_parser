@@ -33,17 +33,20 @@ class CarBrands:
 
     def find_brands(self, s):
         brands = list()
-        for w in self.word_rgx.findall(s.lower()):
-            brand = self.brand_first_words.get(w)
+        prev_brand = None
+        for word in self.word_rgx.findall(s.lower()):
+            brand = self.brand_first_words.get(word)
             if brand is None:
-                hyphen = w.find('-')
+                hyphen = word.find('-')
                 if hyphen != -1:
-                    brand = self.brand_first_words.get(w[:hyphen])
+                    brand = self.brand_first_words.get(word[:hyphen])
             if brand is None:
-                brand = self.brand_first_words.get(unidecode(w))
+                brand = self.brand_first_words.get(unidecode(word))
 
             if brand is not None:
-                brands.append (brand)
+                if brand != prev_brand:
+                    brands.append (brand)
+            prev_brand = brand
         return brands
 
     def get_image_url(self, brand_id):

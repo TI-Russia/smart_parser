@@ -11,6 +11,7 @@ import os
 from bs4 import BeautifulSoup
 from collections import defaultdict
 
+
 class TIncomeStats:
     def  __init__(self,  declarant_incomes):
         self.year_incomes = declarant_incomes

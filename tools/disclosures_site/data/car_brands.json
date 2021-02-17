@@ -15,14 +15,6 @@
             "бронто"
         ]
     },
-    "3": {
-        "name": "ВАЗ",
-        "img": "vaz.png",
-        "synonyms": [
-            "vaz",
-            "ваз"
-        ]
-    },
     "4": {
         "name": "ВИС",
         "img": "vis.png",
@@ -110,7 +102,9 @@
         "img": "lada.png",
         "synonyms": [
             "lada",
-            "лада"
+            "лада",
+            "vaz",
+            "ваз"
         ]
     },
     "15": {
@@ -1438,6 +1432,7 @@
             "renault",
             "рено",
             "reno",
+            "renaul",
             "renauit"
         ]
     },

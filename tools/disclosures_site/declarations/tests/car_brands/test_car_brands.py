@@ -14,6 +14,13 @@ class ResolveCarBrands(TestCase):
         brand_finder = CarBrands()
         check("Рено альфа ромео", ["Renault", "Alfa Romeo"])
         check("КIА", ["KIA"]) #unidecode
+        check("ВАЗ Lada \n217030", ["Lada"])
+        check("ВАЗ Lada \n217030", ["Lada"])
+        check("л/а ВАЗ 2190 Гранта", ["Lada"])
+        check("легковой автомобиль ВАЗ-2190 Лада Гранта", ["Lada"])
+        check("легковой автомобиль: \nМАЗДА Мазда-6", ["Mazda"])
+        check("Легковой автомобиль Пежо Peugeot", ["Peugeot"])
+        check("автомобиль Мерседес-\nБенц GL \n350 CDI	Mersedes-Benz", ["Peugeot"])
 
     def test_car_brand_1000(self):
         brand_finder = CarBrands()
@@ -21,5 +28,5 @@ class ResolveCarBrands(TestCase):
             for test_case in json.load(inp):
                 for k, canon_brands in test_case.items():
                     brands = list(brand_finder.get_brand_name(x) for x in brand_finder.find_brands(k))
-                    self.assertListEqual(brands, canon_brands)
+                    self.assertListEqual(canon_brands, brands)
 
