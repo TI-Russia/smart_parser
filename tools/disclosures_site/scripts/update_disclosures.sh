@@ -121,7 +121,7 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
    ELASTIC_PID=$!
 
 #15 создание рейтингов
-python3 $TOOLS/manage.py build_ratings --settings disclosures.settings.dev
+python3 $TOOLS/disclosures_site/manage.py build_ratings --settings disclosures.settings.dev
 
 #16 создание дампа базы
  cd $DLROBOT_FOLDER
@@ -132,23 +132,18 @@ python3 $TOOLS/manage.py build_ratings --settings disclosures.settings.dev
     cd $TOOLS_PROD
     git pull
 
-    export DISCLOSURES_DATABASE_NAME=disclosures_prod_temp
-    python3 manage.py create_database --settings disclosures.settings.prod --skip-checks --username db_creator --password root
-    zcat $DLROBOT_FOLDER/disclosures.sql.gz | mysql -u disclosures -pdisclosures -D $DISCLOSURES_DATABASE_NAME
+    #backup prod
+    export DISCLOSURES_DATABASE_NAME=disclosures_prod_sav
+    { mysqladmin drop  $DISCLOSURES_DATABASE_NAME -u disclosures -pdisclosures -f || true }
+    bash scripts/rename_db.sh disclosures_db $DISCLOSURES_DATABASE_NAME
     python3 manage.py elastic_manage --action backup-prod --settings disclosures.settings.dev
+
+
+    # move dev elastic index  to prod elastic index
     python3 manage.py elastic_manage --action dev-to-prod --settings disclosures.settings.dev
+    # move dev db to prod db
+    bash scripts/rename_db.sh disclosures_db_dev disclosures
     sudo systemctl restart gunicorn
-    # now prod works on database disclosures_prod_temp
-
-
-    export DISCLOSURES_DATABASE_NAME=disclosures_db
-    mysqladmin drop  $DISCLOSURES_DATABASE_NAME -u disclosures -pdisclosures -f
-    python3 manage.py create_database --settings disclosures.settings.prod --skip-checks --username db_creator --password root
-    zcat $DLROBOT_FOLDER/disclosures.sql.gz | mysql -u disclosures -pdisclosures -D $DISCLOSURES_DATABASE_NAME
-    sudo systemctl restart gunicorn
-    # now prod works on database disclosures_db
-
-    mysqladmin drop  disclosures_prod_temp -u disclosures -pdisclosures -f
 
 #18 копируем файлы sitemap
     rm -rf disclosures/static/sections
