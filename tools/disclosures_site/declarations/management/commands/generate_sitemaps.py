@@ -123,7 +123,13 @@ class Command(BaseCommand):
 
     def build_main_sitemap(self):
         sitemap_path = os.path.join(os.path.dirname(__file__), "../../../disclosures/static/sitemap-main.xml")
-        url_paths = ["", "about.html", "statistics", "office"]
+        url_paths = ["",
+                     "about.html",
+                     "statistics",
+                     "office",
+                     "/static/car-brands/car-brands-by-years.html",
+                     "/static/car-brands/report.html",
+                     ""]
         self.write_sitemap(url_paths, sitemap_path, priority=1.0)
         return 'sitemap-main.xml'
 

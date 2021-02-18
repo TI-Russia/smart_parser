@@ -41,6 +41,9 @@ def build_freq_dict_by_years(args):
 
 
 def build_html(args, freq_dict_by_years):
+    def th_wrapper(s):
+        return "<th><div class=\"clickable\">{}↑↓</div></th>\n".format(s)
+
     with open("car-brands-by-years.html", "w") as outp:
 
         outp.write("""
@@ -55,10 +58,10 @@ def build_html(args, freq_dict_by_years):
         <h1>Статистика автомобильных брендов по декларациям о доходах (2011-2019)</h1>
         <a href="report.html"> Описание колонок </a> <br/><br/>
         """)
-        outp.write("<table class=\"solid_table\"><tr><th>Марка</th>\n")
+        outp.write("<table id=\"statstable\" class=\"solid_table\"><tr><th>Марка</th>\n")
         for year in range(args.start_year, args.last_year + 1):
-            outp.write("<th>{}<br/>(кол-во)</th>\n".format(year))
-            outp.write("<th>{}<br/>(%)</th>\n".format(year))
+            outp.write(th_wrapper("{}<br/>(кол-во)".format(year)))
+            outp.write(th_wrapper("{}<br/>(%)".format(year)))
         outp.write("</tr>\n")
 
         for brand_id, values in freq_dict_by_years.items():
@@ -66,7 +69,17 @@ def build_html(args, freq_dict_by_years):
                 brand_id, CAR_BRANDS.get_brand_name(brand_id) )
             tds = map((lambda x: "<td>{}</td>\n".format(x)),  ([name] + values))
             outp.write("<tr>{}</tr>\n".format(" ".join(tds)))
-        outp.write("</table></body></html>")
+        outp.write("""
+        </table></body>
+        <script src="/static/sorttable.js"></script>
+        <script>
+            var table = document.getElementById("statstable");
+            table.querySelectorAll(`th`).forEach((th, position) => {{
+                th.addEventListener(`click`, evt => sortTable(position + 1));
+            }});
+        </script>
+        </html>
+        """)
 
 
 def main():

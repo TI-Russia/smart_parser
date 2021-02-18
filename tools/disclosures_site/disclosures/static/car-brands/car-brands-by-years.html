@@ -9,25 +9,25 @@
         <body>
         <h1>Статистика автомобильных брендов по декларациям о доходах (2011-2019)</h1>
         <a href="report.html"> Описание колонок </a> <br/><br/>
-        <table class="solid_table"><tr><th>Марка</th>
-<th>2011<br/>(кол-во)</th>
-<th>2011<br/>(%)</th>
-<th>2012<br/>(кол-во)</th>
-<th>2012<br/>(%)</th>
-<th>2013<br/>(кол-во)</th>
-<th>2013<br/>(%)</th>
-<th>2014<br/>(кол-во)</th>
-<th>2014<br/>(%)</th>
-<th>2015<br/>(кол-во)</th>
-<th>2015<br/>(%)</th>
-<th>2016<br/>(кол-во)</th>
-<th>2016<br/>(%)</th>
-<th>2017<br/>(кол-во)</th>
-<th>2017<br/>(%)</th>
-<th>2018<br/>(кол-во)</th>
-<th>2018<br/>(%)</th>
-<th>2019<br/>(кол-во)</th>
-<th>2019<br/>(%)</th>
+        <table id="statstable" class="solid_table"><tr><th>Марка</th>
+<th><div class="clickable">2011<br/>(кол-во)↑↓</div></th>
+<th><div class="clickable">2011<br/>(%)↑↓</div></th>
+<th><div class="clickable">2012<br/>(кол-во)↑↓</div></th>
+<th><div class="clickable">2012<br/>(%)↑↓</div></th>
+<th><div class="clickable">2013<br/>(кол-во)↑↓</div></th>
+<th><div class="clickable">2013<br/>(%)↑↓</div></th>
+<th><div class="clickable">2014<br/>(кол-во)↑↓</div></th>
+<th><div class="clickable">2014<br/>(%)↑↓</div></th>
+<th><div class="clickable">2015<br/>(кол-во)↑↓</div></th>
+<th><div class="clickable">2015<br/>(%)↑↓</div></th>
+<th><div class="clickable">2016<br/>(кол-во)↑↓</div></th>
+<th><div class="clickable">2016<br/>(%)↑↓</div></th>
+<th><div class="clickable">2017<br/>(кол-во)↑↓</div></th>
+<th><div class="clickable">2017<br/>(%)↑↓</div></th>
+<th><div class="clickable">2018<br/>(кол-во)↑↓</div></th>
+<th><div class="clickable">2018<br/>(%)↑↓</div></th>
+<th><div class="clickable">2019<br/>(кол-во)↑↓</div></th>
+<th><div class="clickable">2019<br/>(%)↑↓</div></th>
 </tr>
 <tr><td><a href=/section?car_brands=1&sort_by=income_year&order=desc>Богдан</a></td>
  <td>100</td>
@@ -3389,4 +3389,14 @@
  <td>26</td>
  <td>0.01</td>
 </tr>
-</table></body></html>
+
+        </table></body>
+        <script src="/static/sorttable.js"></script>
+        <script>
+            var table = document.getElementById("statstable");
+            table.querySelectorAll(`th`).forEach((th, position) => {{
+                th.addEventListener(`click`, evt => sortTable(position + 1));
+            }});
+        </script>
+        </html>
+        
