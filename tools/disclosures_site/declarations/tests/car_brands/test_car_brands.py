@@ -20,7 +20,7 @@ class ResolveCarBrands(TestCase):
         check("легковой автомобиль ВАЗ-2190 Лада Гранта", ["Lada"])
         check("легковой автомобиль: \nМАЗДА Мазда-6", ["Mazda"])
         check("Легковой автомобиль Пежо Peugeot", ["Peugeot"])
-        check("автомобиль Мерседес-\nБенц GL \n350 CDI	Mersedes-Benz", ["Peugeot"])
+        check("автомобиль Мерседес-\nБенц GL \n350 CDI	Mersedes-Benz", ["Mersedes-Benz"])
 
     def test_car_brand_1000(self):
         brand_finder = CarBrands()
