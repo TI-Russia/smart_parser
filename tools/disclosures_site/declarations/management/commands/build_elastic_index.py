@@ -58,6 +58,7 @@ class TOfficeElasticIndexator:
                         'name': o.name,
                         'parent_id': o.parent_id,
                         'source_document_count': o.source_document_count,
+                        'rubric_id': o.rubric_id,
                     }
                 }
 

@@ -11,6 +11,7 @@ from operator import attrgetter
 from itertools import groupby
 import os
 
+
 def get_django_language():
     lang = get_language().lower()
     if len(lang) > 2:
@@ -112,7 +113,7 @@ class TOfficeTableInMemory:
             id = parent['id']
         return id
 
-    def get_parent_office(self, office_id):
+    def get_parent_office_id(self, office_id):
         return self.transitive_top[int(office_id)]
 
     def __init__(self, use_office_types=True, init_from_json=None):
@@ -379,7 +380,9 @@ class Section(models.Model):
     dedupe_score = models.FloatField(blank=True, null=True, default=0.0)
     surname_rank = models.IntegerField(null=True)
     name_rank = models.IntegerField(null=True)
-    rubric_id = models.IntegerField(null=True, default=None)  # see TOfficeRubrics
+
+    # sometimes Section.rubric_id overrides Office.rubric_id, see function convert_municipality_to_education for example
+    rubric_id = models.IntegerField(null=True, default=None)
 
     @property
     def section_parts(self):

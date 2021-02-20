@@ -1,10 +1,12 @@
+from declarations.models import Section, Person, Office, Source_Document, TOfficeTableInMemory
+from .rubrics import get_russian_rubric_str
+
 from django_elasticsearch_dsl import Document, IntegerField, TextField, ListField, KeywordField
 from django_elasticsearch_dsl.registries import registry
-from declarations.models import Section, Person, Office, Source_Document, TOfficeTableInMemory
 from django.conf import settings
 from elasticsearch_dsl import Index
 from django.db.utils import DatabaseError
-from datetime import datetime
+
 
 #We do not support elaastic index updates on a single sql db edit.
 #Elastic indices are created in disclosures_site/declarations/management/commands/build_elastic_index.py via sql queries,
@@ -79,7 +81,16 @@ class ElasticOfficeDocument(Document):
         fields = [
             'id',
             'name',
+            'rubric_id'
         ]
+
+    @property
+    def rubric_str(self):
+        if self.rubric_id is None:
+            return "unknown"
+        else:
+            return get_russian_rubric_str(self.rubric_id)
+
 
 
 file_search_index = Index(settings.ELASTICSEARCH_INDEX_NAMES['file_index_name'])

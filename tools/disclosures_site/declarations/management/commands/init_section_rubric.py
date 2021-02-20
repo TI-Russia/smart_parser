@@ -19,6 +19,9 @@ def set_rubric(document_id):
     src_doc = models.Source_Document.objects.get(id=document_id)
     with transaction.atomic():
         for section in src_doc.section_set.all():
+            if section.rubric_id is not None and section.rubric_id != src_doc.office.rubric_id:
+                sys.stdout.write('set rubric {} to section {}\n'.format(src_doc.office.rubric_id, section.id))
+
             section.rubric_id = src_doc.office.rubric_id
             if section.position is not None and section.rubric_id == TOfficeRubrics.Municipality:
                 res = convert_municipality_to_education(section.position)

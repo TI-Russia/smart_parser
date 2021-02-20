@@ -61,7 +61,7 @@ class TSectionPassportFactory:
              (office_id, year, person_name, income_sum)
         ]
         if office_hierarchy is not None:
-            parent_office_id = str(office_hierarchy.get_parent_office(office_id))
+            parent_office_id = str(office_hierarchy.get_parent_office_id(office_id))
             if parent_office_id != office_id:
                 variants.append((parent_office_id, year, person_name, income_sum, square_sum, vehicle_count))
                 variants.append((parent_office_id, year, family_name, income_sum)) #t is the most abstract passport parent office and family_name
