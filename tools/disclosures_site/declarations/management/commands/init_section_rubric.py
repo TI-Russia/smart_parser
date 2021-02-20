@@ -36,7 +36,7 @@ class Command(BaseCommand):
         super(Command, self).__init__(*args, **kwargs)
 
     def handle(self, *args, **options):
-        pool = ProcessPoolExecutor(max_workers=4)
+        pool = ProcessPoolExecutor(max_workers=2)
         documents_ids = models.Source_Document.objects.values_list('id')
         pool.map(set_rubric, documents_ids)
 
