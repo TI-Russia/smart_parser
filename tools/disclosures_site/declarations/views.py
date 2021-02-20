@@ -6,6 +6,7 @@ from .rubrics import fill_combo_box_with_rubrics
 from common.content_types import file_extension_to_content_type
 from declarations.apps import DeclarationsConfig
 from declarations.car_brands import CAR_BRANDS
+from common.primitives import prepare_russian_names_for_search_index
 
 from django.views import generic
 from django.views.generic.edit import FormView
@@ -222,7 +223,7 @@ class CommonSearchView(FormView, generic.ListView):
 
     def get_initial(self):
         return {
-            'person_name': self.request.GET.get('person_name'),
+            'person_name': prepare_russian_names_for_search_index(self.request.GET.get('person_name')),
             'office_request': self.request.GET.get('office_request'),
             'rubric_id': self.request.GET.get('rubric_id'),
             'income_year': self.request.GET.get('income_year'),

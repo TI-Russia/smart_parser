@@ -2,6 +2,7 @@ import declarations.models as models
 import declarations.documents as elastic_documents
 from elasticsearch import helpers
 from declarations.car_brands import CAR_BRANDS
+from common.primitives import prepare_russian_names_for_search_index
 
 from itertools import groupby
 from operator import itemgetter
@@ -11,7 +12,7 @@ import os
 from django.conf import settings
 from elasticsearch import Elasticsearch
 from django.db import connection
-import time
+
 
 def setup_logging(logfilename):
     logger = logging.getLogger("import_json")
@@ -188,7 +189,7 @@ class TSectionElasticIndexator:
                         'person_id': person_id,
                         'region_id': int(region_id),
                         'car_brands': car_brands,
-                        'person_name': person_name,
+                        'person_name': prepare_russian_names_for_search_index(person_name),
                         'rubric_id': rubric_id,
                         'income_year': income_year
                     }
@@ -229,7 +230,7 @@ class TPersonElasticIndexator:
                 "_index": self.index_name,
                 "_source": {
                         'id': person_id,
-                        'person_name': person_name,
+                        'person_name': prepare_russian_names_for_search_index(person_name),
                         'section_count': section_count
                     }
                 }
