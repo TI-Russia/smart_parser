@@ -41,6 +41,7 @@ class TRussianFio:
     def resolve_fullname(self, person_name):
         # clean up
         # Мурашев J1.JI.
+        person_name = person_name.strip()
         person_name = re.sub(r"J[1I].", "Л.", person_name)
         person_name = re.sub(r"\s+\(м/с\)", "", person_name, flags=re.U)
         person_name = re.sub(r"\W+$", "", person_name)
@@ -100,7 +101,7 @@ class TRussianFio:
         # Иванов Иван
         # Иванов И.И.
         # Иванов Иван Иванович
-        items = list(re.split("[ .]+", person_name))
+        items = list(re.split("[ .]+", person_name.strip()))
         if len(items) > 0:
             self.family_name = items[0].lower()
         else:

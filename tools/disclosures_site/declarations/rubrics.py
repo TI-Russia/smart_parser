@@ -38,7 +38,7 @@ RubricsInRussian = {
         "keywords": ["министерство обороны"]
     },
     TOfficeRubrics.Siloviki: {
-        "name": "МВД, ФСБ и другие силовики",
+        "name": "Cиловики",
         "keywords": ["министерство внутренних дел", "мвд", "фмс", "фсб", "фсо", "росгвардия",
                      "миграцио", "безопасности", "федеральная служба охраны", "гвардии",
                      "cлужба внешней разведки"],
@@ -46,7 +46,7 @@ RubricsInRussian = {
 
     },
     TOfficeRubrics.Medicine: {
-        "name": "Медицина",
+        "name": "Здравоохранение",
         "keywords": ["здравоохранения", "больница"]
     },
     TOfficeRubrics.Prosecutor: {
@@ -59,7 +59,7 @@ RubricsInRussian = {
         "antikeywords": ["сельсовет"]
     },
     TOfficeRubrics.Election: {
-        "name": "Избирательные комиссии",
+        "name": "Избиркомы",
         "keywords": ["избиратель", "тик "]
     },
     TOfficeRubrics.Gulag: {

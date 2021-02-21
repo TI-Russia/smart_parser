@@ -34,6 +34,16 @@ class ResolveFullNameTestCase(TestCase):
         self.assertEqual(_P("Журавлев А.В. Супруга").is_resolved, False)
 
         self.assertTrue(_P("Иванов Иван Иванович").is_compatible_to(_P("Иванов И. И.")))
+        self.assertTrue(_P("Иванов Иван Иванович").is_compatible_to(_P(" Иванов Иван Иванович ")))
         self.assertTrue(_P("Иванов Иван Иванович").is_compatible_to(_F("Иванов", "И", "")))
         self.assertTrue(_P("Иванов Иван Иванович").is_compatible_to(_F("Иванов", "", "")))
+
+    def test_resolve_person_name_search_request(self):
+        def _P(fio):
+            return TRussianFio(fio, from_search_request=True)
+        def _F(family_name, first_name, patronymic):
+            return TRussianFio("").build_from_parts(family_name, first_name, patronymic)
+
+        self.assertEqual(_P("Иванов Иван Иванович"), _F("Иванов", "Иван", "Иванович"))
+        self.assertEqual(_P(" Иванов Иван  Иванович "), _F("Иванов", "Иван", "Иванович"))
 

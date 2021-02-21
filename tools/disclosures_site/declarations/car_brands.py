@@ -21,8 +21,9 @@ class CarBrands:
             for s in brand_info['synonyms']:
                 words = s.lower().split(' ')
                 if words[0] in self.brand_first_words:
-                    print ("{} is ambiguous".format(words[0]))
-                    assert (words[0] not in self.brand_first_words)
+                    if self.brand_first_words[words[0]] != brand_id:
+                        print ("{} is ambiguous".format(words[0]))
+                        assert (words[0] not in self.brand_first_words)
                 self.brand_first_words[words[0]] = brand_id
 
     def get_brand_info(self, brand_id):

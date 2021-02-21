@@ -42,6 +42,13 @@ class ElasticSectionDocument(Document):
             'rubric_id'
         ]
 
+    @property
+    def rubric_str(self):
+        if self.rubric_id is None:
+            return "unknown"
+        else:
+            return get_russian_rubric_str(self.rubric_id)
+
 
 person_search_index = Index(settings.ELASTICSEARCH_INDEX_NAMES['person_index_name'])
 person_search_index.settings(

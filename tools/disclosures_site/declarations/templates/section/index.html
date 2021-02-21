@@ -49,6 +49,10 @@
     {% if fuzzy_search %}
         <small>(точного вхождения не найдено, ищем без фильтра по ФИО) </small>
     {% endif %}
+    {% if skip_rubric_filtering %}
+        <small>(ничего не найдено в указанной рубрике, убираем фильтр по рубрике) </small>
+    {% endif %}
+
 
 
     <br/>
@@ -60,6 +64,7 @@
             <th><a href="?{{sort_by_income_year}}">Год</a></th>
             <th><a href="?{{sort_by_person_id}}">Декларант</a></th>
             <th><a href="?{{sort_by_income_size}}">Доход</a></th>
+            <th>Рубрика</th>
         </tr>
         {% for section in object_list %}
         <tr>
@@ -72,6 +77,7 @@
                 {% endif %}
             </td>
             <td>{{ section.income_size }}</td>
+            <td><small>{{ section.rubric_str }}</small></td>
         </tr>
         {% endfor %}
     </table>
