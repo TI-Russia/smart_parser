@@ -147,6 +147,8 @@ def string_contains_Russian_name(name):
 
 
 def prepare_russian_names_for_search_index(str):
+    if str is None:
+        return None
     str = str.replace("Ё", "Е").replace("ё", "е")
     return str
 
