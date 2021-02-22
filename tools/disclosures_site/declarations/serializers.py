@@ -127,9 +127,13 @@ class TSectionPassportFactory:
         return res, search_results
 
 
-def normalize_fio(fio):
+def normalize_fio_before_db_insert(fio):
     fio = normalize_whitespace(fio)
     fio = fio.replace('"', ' ').strip()
+    fio = fio.strip('-')
+    if len(fio) > 0 and fio[0].isdigit():
+        while len(fio) > 0 and (fio[0].isdigit() or fio[0] == ' ' or fio[0] == '.'):
+            fio = fio[1:]
     return fio.title()
 
 
@@ -168,7 +172,7 @@ class TSmartParserJsonReader:
             fio = person_info.get('name', person_info.get('name_raw'))
             if fio is None:
                 raise TSmartParserJsonReader.SerializerException("cannot find 'name' or 'name_raw'in json")
-        self.section.person_name = normalize_fio(fio)
+        self.section.person_name = normalize_fio_before_db_insert(fio)
         self.section.position = person_info.get("role")
         self.section.department = person_info.get("department")
 

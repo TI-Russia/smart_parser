@@ -1,15 +1,19 @@
 import declarations.models as models
 from declarations.tests.smart_parser_for_testing import SmartParserServerForTesting
 from declarations.management.commands.permalinks import TPermaLinksDB
-from disclosures_site.declarations.tests.source_doc_for_testing import SourceDocServerForTesting
 from declarations.management.commands.import_json import ImportJsonCommand
-
+from declarations.serializers import normalize_fio_before_db_insert
 
 from django.test import TestCase
 import os
 
 
 class SimpleImportTestCase(TestCase):
+
+    def test_normalize_fio_before_db_insert(self):
+        self.assertEqual(normalize_fio_before_db_insert('"Иванов Иван Иванович"'), "Иванов Иван Иванович")
+        self.assertEqual(normalize_fio_before_db_insert("Иванов  Иван Иванович "), "Иванов Иван Иванович")
+        self.assertEqual(normalize_fio_before_db_insert("12. Иванов Иван Иванович "), "Иванов Иван Иванович")
 
     def test_simple_import(self):
         models.Section.objects.all().delete()
