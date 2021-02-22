@@ -1,3 +1,27 @@
+@font-face {
+    font-family: 'Futura Medium';
+    src: local('/static/fonts/FuturaMediumC.eot');
+    src: url('/static/fonts/FuturaMediumC.eot?#iefix') format('embedded-opentype'),
+         url('/static/fonts/FuturaMediumC.woff') format('woff'),
+         url('/static/fonts/FuturaMediumC.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Futura Light';
+    src: local('/static/fonts/FuturaLightC.eot');
+    src: url('/static/fonts/FuturaLightC.eot?#iefix') format('embedded-opentype'),
+         url('/static/fonts/FuturaLightC.woff') format('woff'),
+         url('/static/fonts/FuturaLightC.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: "Futura Light", serif;
+}
+
 @media screen and (max-device-width: 480px) /* Mobile */ {
     body {
         background-color: #F3F3F3;
@@ -73,3 +97,4 @@ table.solid_table  {
 div.clickable {
   cursor: pointer;
 }
+
