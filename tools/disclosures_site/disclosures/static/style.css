@@ -28,7 +28,6 @@ br.responsive {
     }
 }
 
-}
 @media screen and (min-device-width: 480px)  /* Desktop */ {
     body {
         background-color: #F3F3F3;
