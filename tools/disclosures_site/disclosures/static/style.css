@@ -6,9 +6,12 @@
     font-style: normal;
 }
 
-/* Sokirko likes font Roboto Light */
-body {
-    font-family: "Roboto Light", serif;
+@font-face {
+    font-family: 'Roboto';
+    src: url('/static/fonts/Roboto.woff') format('woff'),
+         url('/static/fonts/Roboto.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
 br.responsive {
@@ -18,16 +21,20 @@ br.responsive {
 @media screen and (max-device-width: 480px) /* Mobile */ {
     body {
         background-color: #F3F3F3;
+        font-family: "Roboto", serif;
     }
     html {
         font-size: 36px
     }
+}
+
 }
 @media screen and (min-device-width: 480px)  /* Desktop */ {
     body {
         background-color: #F3F3F3;
         text-color: black;
         link-color: black;
+        font-family: "Roboto Light", serif;
     }
     br.responsive {
          display: none; // Hide BR tag for wider screens
