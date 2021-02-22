@@ -22,6 +22,10 @@ body {
     font-family: "Futura Light", serif;
 }
 
+br.responsive {
+  display: inline; // Show BR tag for narrow screens
+}
+
 @media screen and (max-device-width: 480px) /* Mobile */ {
     body {
         background-color: #F3F3F3;
@@ -35,6 +39,9 @@ body {
         background-color: #F3F3F3;
         text-color: black;
         link-color: black;
+    }
+    br.responsive {
+         display: none; // Hide BR tag for wider screens
     }
 }
 

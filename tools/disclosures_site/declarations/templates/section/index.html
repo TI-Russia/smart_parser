@@ -11,30 +11,31 @@
 </style>
 <form action="{% url 'section_search' %}" method="get">
     <div class="search_input">
-        <abbr title="Начинайте с фамилии...">
+        <abbr title="Начинайте с фамилии, например, Иванов Иван Иванович или Иванов И.И.">
             {{form.person_name.label_tag}}
-            {{form.person_name}}
         </abbr>
-        &nbsp;&nbsp;&nbsp;
-        {{form.rubric_id.label_tag}}
-        {{form.rubric_id}}
+           {{form.person_name}}
+        &#32;&#32;&#32;<br class="responsive" />
+
+        <span>{{form.rubric_id.label_tag}}{{form.rubric_id}}</span>
         &nbsp;&nbsp;&nbsp;
         <input type="submit" value="Поиск">
     </div>
     <div class="search_input">
         {{form.income_year.label_tag}}
         {{form.income_year}}
-        &nbsp;&nbsp;&nbsp;
+        &#32;&#32;&#32;<br class="responsive" />
+
         {{form.region_id.label_tag}}
         {{form.region_id}}
-        &nbsp;&nbsp;&nbsp;
+        &#32;&#32;&#32;<br class="responsive" />
         {{form.car_brands.label_tag}}
         {{form.car_brands}}
     </div>
     <div class="search_input">
         {{form.position_and_department.label_tag}}
         {{form.position_and_department}}
-        &nbsp;
+        &#32;&#32;&#32;<br class="responsive" />
         <abbr title="Часть названия или числовой идентификатор">
             {{form.office_request.label_tag}}
             {{form.office_request}}
