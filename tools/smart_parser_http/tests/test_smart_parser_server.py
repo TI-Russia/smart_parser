@@ -118,3 +118,24 @@ class TestSyncByTimeout(TestCase):
         stats = self.env.client.get_stats()
         self.assertEqual(stats['unsynced_records_count'], 0)
 
+class TestRebuild(TestCase):
+    def setUp(self):
+        self.env = TTestEnv(8392)
+        self.env.setUp(1)
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def test_sync_by_timeout(self):
+        file_path1 = os.path.join(os.path.dirname(__file__), "files/MainWorkPositionIncome.docx")
+        self.assertTrue(self.env.client.send_file(file_path1))
+        time.sleep(6)
+        self.assertEqual(self.env.client.get_stats()['session_write_count'], 1)
+
+        self.assertTrue(self.env.client.send_file(file_path1))
+        time.sleep(6)
+        self.assertEqual(self.env.client.get_stats()['session_write_count'], 1)
+
+        self.assertTrue(self.env.client.send_file(file_path1, rebuild=True))
+        time.sleep(6)
+        self.assertEqual(self.env.client.get_stats()['session_write_count'], 2)

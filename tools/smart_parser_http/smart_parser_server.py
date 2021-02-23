@@ -139,16 +139,17 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         self.logger.debug("found value of length {} by key {}".format(len(js), key))
         return js
 
-    def put_to_task_queue(self, file_bytes, file_extension):
+    def put_to_task_queue(self, file_bytes, file_extension, rebuild=False):
         sha256 = hashlib.sha256(file_bytes).hexdigest()
         file_name = os.path.join(self.args.input_task_directory, sha256 + file_extension)
         if os.path.exists(file_name):
             self.logger.debug("file {} already exists in the input queue".format(file_name))
             return
         key = self.build_key(sha256, None)
-        if self.json_cache_dbm.get(key) is not None:
-            self.logger.debug("file {} already exists in the db".format(file_name))
-            return
+        if not rebuild:
+            if self.json_cache_dbm.get(key) is not None:
+                self.logger.debug("file {} already exists in the db".format(file_name))
+                return
 
         if not self.check_file_extension(str(file_name)):
             self.logger.debug("bad file extension  {}".format(file_name))
@@ -290,13 +291,18 @@ class TSmartParserRequestHandler(http.server.BaseHTTPRequestHandler):
             self.server.logger.error(exp)
             return
 
-
     def do_PUT(self):
         if self.path is None:
             self.send_error_wrapper("no file specified")
             return
 
-        _, file_extension = os.path.splitext(os.path.basename(self.path))
+        query_components = dict()
+        if not self.parse_cgi(query_components):
+            self.send_error_wrapper('bad request', log_error=False)
+            return
+
+        file_path = urllib.parse.urlparse(self.path).path
+        _, file_extension = os.path.splitext(os.path.basename(file_path))
 
         file_length = self.headers.get('Content-Length')
         if file_length is None or not file_length.isdigit():
@@ -305,7 +311,7 @@ class TSmartParserRequestHandler(http.server.BaseHTTPRequestHandler):
         file_length = int(file_length)
 
         self.server.logger.debug(
-            "start reading file {} file size {} from {}".format(self.path, file_length, self.client_address[0]))
+            "start reading file {} file size {} from {}".format(file_path, file_length, self.client_address[0]))
 
         try:
             file_bytes = self.rfile.read(file_length)
@@ -314,7 +320,7 @@ class TSmartParserRequestHandler(http.server.BaseHTTPRequestHandler):
             return
 
         try:
-            self.server.put_to_task_queue(file_bytes, file_extension)
+            self.server.put_to_task_queue(file_bytes, file_extension, ('rebuild' in query_components))
         except Exception as exp:
             self.send_error_wrapper('register_task_result failed: {}'.format(str(exp)))
             return
