@@ -39,7 +39,6 @@ def setup_logging(logfilename):
 
 
 
-
 class TSmartParserHTTPServer(http.server.HTTPServer):
     SMART_PARSE_FAIL_CONSTANT = b"no_json_found"
     TASK_TIMEOUT = 10
@@ -54,7 +53,8 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         parser.add_argument("--input-task-directory", dest='input_task_directory',
                             required=False, default="input_tasks")
         parser.add_argument("--worker-count", dest='worker_count', default=2, type=int)
-
+        parser.add_argument("--disk-sync-rate", dest='disk_sync_rate', default=3, type=int)
+        parser.add_argument("--heart-rate", dest='heart_rate', type=int, required=False, default=600)
         args = parser.parse_args(arg_list)
         if args.server_address is None:
             args.server_address = os.environ['SMART_PARSER_SERVER_ADDRESS']
@@ -63,7 +63,7 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
     def __init__(self, args):
         self.args = args
         self.logger = setup_logging(self.args.log_file_name)
-        self.json_cache_dbm = dbm.gnu.open(args.cache_file, "ws" if os.path.exists(args.cache_file) else "cs")
+        self.json_cache_dbm = dbm.gnu.open(args.cache_file, "w" if os.path.exists(args.cache_file) else "c")
         self.last_version = self.read_smart_parser_versions()
         self.task_queue = self.initialize_input_queue()
         self.session_write_count = 0
@@ -71,6 +71,8 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         host, port = self.args.server_address.split(":")
         self.logger.debug("start server on {}:{}".format(host, int(port)))
         self.working = True
+        self.unsynced_records_count = 0
+        self.last_heart_beat = time.time()
         try:
             super().__init__((host, int(port)), TSmartParserRequestHandler)
         except Exception as exp:
@@ -81,6 +83,8 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         self.smart_parser_thread.start()
 
     def stop_server(self):
+        self.json_cache_dbm.sync()
+        self.json_cache_dbm.close()
         self.working = False
         self.server_close()
         time.sleep(self.TASK_TIMEOUT)
@@ -155,12 +159,20 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         self.task_queue.put(os.path.basename(file_name))
         self.logger.debug("put {} to queue".format(file_name))
 
+    def sync_to_disc(self, force=False):
+        if self.unsynced_records_count > 0:
+            if force or (self.unsynced_records_count >= self.args.disk_sync_rate):
+                self.json_cache_dbm.sync()
+                self.unsynced_records_count = 0
+            self.logger.debug("there are {} records to be stored to disk".format(self.unsynced_records_count))
+
     def register_built_smart_parser_json(self, sha256, json_data):
         key = self.build_key(sha256, None)
         self.logger.debug("add json to key  {}".format(key))
         self.session_write_count += 1
-        # do we need here a thread lock?
         self.json_cache_dbm[key] = json_data
+        self.unsynced_records_count += 1
+        self.sync_to_disc()
 
     def get_tasks(self):
         while self.working:
@@ -207,8 +219,15 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
     def get_stats(self):
         return {
             'queue_size': self.task_queue.qsize(),
-            'session_write_count': self.session_write_count
+            'session_write_count': self.session_write_count,
+            'unsynced_records_count': self.unsynced_records_count
         }
+
+    def service_actions(self):
+        current_time = time.time()
+        if current_time - self.last_heart_beat >= self.args.heart_rate:
+            self.sync_to_disc(True)
+            self.last_heart_beat = time.time()
 
 
 class TSmartParserRequestHandler(http.server.BaseHTTPRequestHandler):
