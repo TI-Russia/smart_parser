@@ -37,7 +37,7 @@ class TSmartParserCacheClient(object):
         parser = argparse.ArgumentParser()
         parser.add_argument("--server-address", dest='server_address', default=None,
                             help="by default read it from environment variable SMART_PARSER_SERVER_ADDRESS")
-        parser.add_argument("--action", dest='action', default=None, help="can be put, get or stats", required=False)
+        parser.add_argument("--action", dest='action', default=None, help="can be put, get, get_by_sha256 or stats", required=False)
         parser.add_argument("--walk-folder-recursive", dest='walk_folder_recursive', default=None, required=False)
         parser.add_argument("--timeout", dest='timeout', default=300, type=int)
         parser.add_argument("--rebuild", dest='rebuild', action="store_true", default=False)
@@ -143,7 +143,13 @@ class TSmartParserCacheClient(object):
             print(json.dumps(self.get_stats()))
         else:
             for f in self.get_files():
-                if self.args.action == "get":
+                if self.args.action == "get_by_sha256":
+                    js = self.retrieve_json_by_sha256(f)
+                    if js is None:
+                        print("not found")
+                    else:
+                        print(json.dumps(js, ensure_ascii=False))
+                elif self.args.action == "get":
                     js = self.retrieve_json_by_source_file(f)
                     if js is None:
                         print("not found")
