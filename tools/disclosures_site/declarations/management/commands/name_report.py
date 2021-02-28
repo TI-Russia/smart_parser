@@ -232,20 +232,20 @@ class Command(BaseCommand):
 
 
     def handle(self, *args, **options):
-        # self.gender_recognizer.build_masc_and_fem_names(options.get('limit', 100000000), "names.masc_and_fem.txt")
-        # self.gender_recognizer.build_masc_and_fem_surnames(options.get('limit', 100000000), "surnames.masc_and_fem.txt")
-        # self.gender_recognizer.build_person_gender_by_years_report(options.get('limit', 100000000), "person.gender_by_years.txt")
-        #
-        #
-        # surnames_region, names_region = self.build_surname_and_name_by_regions(options.get('limit', 100000000))
-        # #self.calc_region_distribution(surnames_region, "surnames.region.txt")
-        # self.calc_region_distribution(names_region, "names.region.txt")
-        #
-        # surnames_year, names_year = self.build_surname_and_name_by_years(options.get('limit', 1000000000))
-        # #self.calc_year_distribution(surnames_year, "surnames.years.txt")
-        # self.calc_year_distribution(names_year, "names.years.txt")
-        # self.calc_popular_russian_names_ratio(names_year, "names.popularity_years.txt")
-        # self.calc_increasing_popularity_names(names_year, "names.2010_2019_increase.txt")
+        self.gender_recognizer.build_masc_and_fem_names(options.get('limit', 100000000), "names.masc_and_fem.txt")
+        self.gender_recognizer.build_masc_and_fem_surnames(options.get('limit', 100000000), "surnames.masc_and_fem.txt")
+        self.gender_recognizer.build_person_gender_by_years_report(options.get('limit', 100000000), "person.gender_by_years.txt")
+
+
+        surnames_region, names_region = self.build_surname_and_name_by_regions(options.get('limit', 100000000))
+        #self.calc_region_distribution(surnames_region, "surnames.region.txt")
+        self.calc_region_distribution(names_region, "names.region.txt")
+
+        surnames_year, names_year = self.build_surname_and_name_by_years(options.get('limit', 1000000000))
+        #self.calc_year_distribution(surnames_year, "surnames.years.txt")
+        self.calc_year_distribution(names_year, "names.years.txt")
+        self.calc_popular_russian_names_ratio(names_year, "names.popularity_years.txt")
+        self.calc_increasing_popularity_names(names_year, "names.2010_2019_increase.txt")
 
         self.calc_income_by_name(options.get('limit', 1000000000), "name.income.txt")
         self.logger.info("all done")
