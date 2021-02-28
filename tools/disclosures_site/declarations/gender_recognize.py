@@ -3,9 +3,14 @@ from django.db import connection
 
 from declarations.russian_fio import TRussianFio, POPULAR_RUSSIAN_NAMES
 
+
 class TGender:
     masculine = 1
     feminine = 2
+
+    @staticmethod
+    def gender_list():
+        return [TGender.masculine, TGender.feminine]
 
     @staticmethod
     def gender_to_str(gender_id):
