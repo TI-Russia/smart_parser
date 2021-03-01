@@ -54,9 +54,7 @@ source $(dirname $0)/update_common.sh
     python3 manage.py create_database --settings disclosures.settings.dev --skip-checks --username db_creator --password root
     python3 manage.py makemigrations --settings disclosures.settings.dev
     python3 manage.py migrate --settings disclosures.settings.dev
-    python3 manage.py search_index --rebuild  --settings disclosures.settings.dev -f
     python3 manage.py test declarations/tests --settings disclosures.settings.dev
-    #python3 manage.py search_index   --rebuild --settings disclosures.settings.prod --models declarations.Source_Document
 
 #9
     cd $DLROBOT_FOLDER
@@ -66,7 +64,7 @@ source $(dirname $0)/update_common.sh
 #10  Импорт json в dislosures_db
    python3 $TOOLS/disclosures_site/manage.py clear_database --settings disclosures.settings.dev
 
-   #15 hours
+   #18 hours
    python3 $TOOLS/disclosures_site/manage.py import_json \
                --settings disclosures.settings.dev \
                --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER \

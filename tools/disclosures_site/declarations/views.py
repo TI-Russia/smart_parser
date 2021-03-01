@@ -181,6 +181,7 @@ class CommonSearchForm(forms.Form):
         required=False,
         empty_value="",
         label="Sha256")
+    match_phrase = forms.BooleanField(label="Фраза")
 
 
 def compare_Russian_fio(search_query, person_name):
@@ -224,7 +225,7 @@ class CommonSearchView(FormView, generic.ListView):
         return context
 
     def get_initial(self):
-        return {
+        dct =  {
             'person_name': prepare_russian_names_for_search_index(self.request.GET.get('person_name')),
             'office_request': self.request.GET.get('office_request'),
             'rubric_id': self.request.GET.get('rubric_id'),
@@ -243,7 +244,13 @@ class CommonSearchView(FormView, generic.ListView):
             'parent_id': self.request.GET.get('parent_id'),
             'sha256': self.request.GET.get('sha256'),
             'car_brands': self.request.GET.get('car_brands'),
+            'match_phrase': self.request.GET.get('match_phrase'),
         }
+
+        if self.request.GET.get('match_phrase'):
+            dct['match_operator'] = 'match_phrase'
+
+        return dct
 
     def build_person_name_elastic_search_query(self, should_items):
         person_name = self.get_initial().get("person_name")
@@ -258,7 +265,7 @@ class CommonSearchView(FormView, generic.ListView):
             if office_query.isdigit():
                 should_items.append({"terms": {"office_id": [int(office_query)]}})
             else:
-                oqd = {"query": {"match": {"name": {"query": office_query, "operator": "and"}}}}
+                oqd = {"query": {self.get_initial().get('match_operator'): {"name": {"query": office_query, "operator": "and"}}}}
                 search_results = ElasticOfficeDocument.search().update_from_dict(oqd)
                 total = search_results.count()
                 if total == 0:
@@ -280,7 +287,7 @@ class CommonSearchView(FormView, generic.ListView):
             add_should_item("region_id", "term", int, should_items)
             add_should_item("car_brands", "term", str, should_items)
             add_should_item("income_year", "term", int, should_items)
-            add_should_item("position_and_department", "match", str, should_items)
+            add_should_item("position_and_department", self.get_initial().get("match_operator"), str, should_items)
             add_should_item("web_domains", "match", str, should_items)
             add_should_item("source_document_id", "term", int, should_items)
             add_should_item("office_id", "term", int, should_items)

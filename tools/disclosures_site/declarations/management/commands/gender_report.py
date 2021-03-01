@@ -8,6 +8,8 @@ import logging
 import os
 from collections import defaultdict
 from django.db import connection
+from statistics import median
+import gc
 
 
 def setup_logging(logfilename="gender_report.log"):
@@ -30,6 +32,18 @@ def setup_logging(logfilename="gender_report.log"):
     logger.addHandler(ch)
 
     return logger
+
+
+def fetch_cursor(sql_query):
+    with connection.cursor() as cursor:
+        cursor.execute(sql_query)
+        while True:
+            results = cursor.fetchmany(10000)
+            if not results:
+                break
+            for x in results:
+                yield x
+            gc.collect()
 
 
 class Command(BaseCommand):
@@ -55,13 +69,7 @@ class Command(BaseCommand):
             default=100000000
         )
 
-    def get_surname_and_names(self, person_name):
-        fio = TRussianFio(person_name)
-        if not fio.is_resolved:
-            return None, None
-        return fio.family_name, fio.first_name
-
-    def build_genders_report(self, max_count, filename):
+    def build_genders_rubrics(self, max_count, filename):
         query = """
             select p.id, p.person_name, o.region_id, s.rubric_id 
             from declarations_person p
@@ -109,6 +117,100 @@ class Command(BaseCommand):
                                 round(100.0 * rubric_genders[(gender, rubric)] / all_cnt, 2),
                                 ))
 
+    def filter_incomes(self, query):
+        unique_name_and_income = set()
+        for items in fetch_cursor(query):
+            person_name = items[0] if items[0] is not None else items[1]
+            income_size = items[2]
+            income_year = items[3]
+            key = (person_name, income_year, income_size)
+            if key in unique_name_and_income:
+                continue
+            unique_name_and_income.add(key)
+            fio = TRussianFio(person_name)
+            if not fio.is_resolved:
+                continue
+            gender = self.gender_recognizer.recognize_gender(fio)
+            if gender is None:
+                continue
+            yield [gender] + list(items[2:])
+
+    def report_income_by_genders(self, incomes_by_genders, outp):
+        outp.write("Пол\tЧисло учтенных деклараций\tМедианный доход\tГендерный перекос\n")
+        for k, v in incomes_by_genders.items():
+            outp.write("{}\t{}\t{}\t{}\n".format(
+                TGender.gender_to_Russian_str(k),
+                len(v),
+                median(v),
+                int(100.0 * (median(incomes_by_genders[TGender.masculine]) - median(v)) / median(v))
+                )
+            )
+
+    def report_income_by_genders_group(self, incomes_by_genders_group, groups, group_name, group_id_to_str_func, outp):
+        outp.write("\n\nРубрика\tПол\t{}\tМедианный доход\tГендерный перекос\n".format(group_name))
+        for group_id in groups:
+            all_cnt = sum(median(incomes_by_genders_group[(gender, group_id)]) for gender in TGender.gender_list())
+            if all_cnt > 0:
+                for gender in TGender.gender_list():
+                    med = median(incomes_by_genders_group[(gender, group_id)])
+                    outp.write("{}\t{}\t{}\t{}\t{}\n".format(
+                        group_id_to_str_func(group_id),
+                        TGender.gender_to_Russian_str(gender),
+                        all_cnt,
+                        int(med),
+                        int(100.0 * (median(incomes_by_genders_group[(TGender.masculine, group_id)]) - med) / med)
+                    ))
+
+    def build_genders_incomes(self, max_count, filename, start_year=2010, last_year=2019):
+        query = """
+            select p.person_name, s.person_name, i.size, s.income_year, s.rubric_id  
+            from declarations_section s
+            join declarations_income i on i.section_id=s.id
+            left join declarations_person p on s.person_id=p.id
+            where i.relative = 'D' and i.size > 10000
+            limit {}  
+        """.format(max_count)
+        rubric_genders = defaultdict(list)
+        year_genders = defaultdict(list)
+        incomes_by_genders = defaultdict(list)
+        for gender, income_size, income_year, rubric_id in self.filter_incomes(query):
+            incomes_by_genders[gender].append(income_size)
+            rubric_genders[(gender, rubric_id)].append(income_size)
+            year_genders[(gender, int(income_year))].append(income_size)
+
+        with open(filename, "w") as outp:
+            self.report_income_by_genders(incomes_by_genders, outp)
+            self.report_income_by_genders_group(rubric_genders, get_all_rubric_ids(),
+                                                "Деклараций в рубрике", get_russian_rubric_str, outp)
+            self.report_income_by_genders_group(year_genders, range(start_year, last_year + 1),
+                                                "Деклараций за этот год", (lambda x: x), outp)
+
+
+    def build_income_with_spouse(self, max_count, filename, start_year=2010, last_year=2019):
+        query = """
+            select p.person_name, s.person_name, i.size, s.income_year, s.rubric_id  
+            from declarations_section s
+            join declarations_income i on i.section_id=s.id
+            left join declarations_person p on s.person_id=p.id
+            where i.size > 10000 and i.relative = 'S'
+            limit {}  
+        """.format(max_count)
+        rubric_genders = defaultdict(list)
+        year_genders = defaultdict(list)
+        incomes_by_genders = defaultdict(list)
+        for gender, income_size, income_year, rubric_id in self.filter_incomes(query):
+            incomes_by_genders[TGender.opposite_gender(gender)].append(income_size)
+            incomes_by_genders[gender].append(income_size)
+            rubric_genders[(gender, rubric_id)].append(income_size)
+            year_genders[(gender, int(income_year))].append(income_size)
+
+        with open(filename, "w") as outp:
+            self.report_income_by_genders(incomes_by_genders, outp)
+            self.report_income_by_genders_group(rubric_genders, get_all_rubric_ids(),
+                                                "Деклараций в рубрике", get_russian_rubric_str, outp)
+            self.report_income_by_genders_group(year_genders, range(start_year, last_year + 1),
+                                                "Деклараций за этот год", (lambda x: x), outp)
+
     def handle(self, *args, **options):
         self.logger.info("build_masc_and_fem_names")
         self.gender_recognizer.build_masc_and_fem_names(options.get('limit', 100000000), "names.masc_and_fem.txt")
@@ -119,7 +221,11 @@ class Command(BaseCommand):
         #self.logger.info("build_person_gender_by_years_report")
         #self.gender_recognizer.build_person_gender_by_years_report(options.get('limit', 100000000), "person.gender_by_years.txt")
 
-        self.logger.info("gender_report")
-        self.build_genders_report(100000000, "gender_report.txt")
+        #self.logger.info("gender_rubric_report")
+        #self.build_genders_rubrics(100000000, "gender_report.txt")
 
+        #self.logger.info("gender_income_report")
+        #self.build_genders_incomes(100000000, "gender_income_report.txt")
 
+        self.logger.info("gender_income_spouse_report")
+        self.build_income_with_spouse(100000000, "gender_income_spouse.txt")

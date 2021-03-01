@@ -21,6 +21,24 @@ class TGender:
         else:
             return "None"
 
+    @staticmethod
+    def gender_to_Russian_str(gender_id):
+        if gender_id == TGender.masculine:
+            return "мужской"
+        elif gender_id == TGender.feminine:
+            return "женский"
+        else:
+            return "None"
+
+    @staticmethod
+    def opposite_gender(gender_id):
+        if gender_id == TGender.masculine:
+            return TGender.feminine
+        elif gender_id == TGender.feminine:
+            return TGender.masculine
+        else:
+            return None
+
 
 class TGenderRecognizer:
 
