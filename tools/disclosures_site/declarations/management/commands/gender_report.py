@@ -10,7 +10,7 @@ from collections import defaultdict
 from django.db import connection
 from statistics import median
 import gc
-
+import re
 
 def setup_logging(logfilename="gender_report.log"):
     logger = logging.getLogger("surname_rank")
@@ -149,7 +149,7 @@ class Command(BaseCommand):
     def report_income_by_genders_group(self, incomes_by_genders_group, groups, group_name, group_id_to_str_func, outp):
         outp.write("\n\nРубрика\tПол\t{}\tМедианный доход\tГендерный перекос\n".format(group_name))
         for group_id in groups:
-            all_cnt = sum(median(incomes_by_genders_group[(gender, group_id)]) for gender in TGender.gender_list())
+            all_cnt = sum(len(incomes_by_genders_group[(gender, group_id)]) for gender in TGender.gender_list())
             if all_cnt > 0:
                 for gender in TGender.gender_list():
                     med = median(incomes_by_genders_group[(gender, group_id)])
@@ -171,12 +171,10 @@ class Command(BaseCommand):
             limit {}  
         """.format(max_count)
         rubric_genders = defaultdict(list)
-        year_genders = defaultdict(list)
         incomes_by_genders = defaultdict(list)
         for gender, income_size, income_year, rubric_id in self.filter_incomes(query):
             incomes_by_genders[gender].append(income_size)
             rubric_genders[(gender, rubric_id)].append(income_size)
-            year_genders[(gender, int(income_year))].append(income_size)
 
         with open(filename, "w") as outp:
             self.report_income_by_genders(incomes_by_genders, outp)
@@ -199,7 +197,7 @@ class Command(BaseCommand):
         year_genders = defaultdict(list)
         incomes_by_genders = defaultdict(list)
         for gender, income_size, income_year, rubric_id in self.filter_incomes(query):
-            incomes_by_genders[TGender.opposite_gender(gender)].append(income_size)
+            gender = TGender.opposite_gender(gender)
             incomes_by_genders[gender].append(income_size)
             rubric_genders[(gender, rubric_id)].append(income_size)
             year_genders[(gender, int(income_year))].append(income_size)
@@ -210,6 +208,90 @@ class Command(BaseCommand):
                                                 "Деклараций в рубрике", get_russian_rubric_str, outp)
             self.report_income_by_genders_group(year_genders, range(start_year, last_year + 1),
                                                 "Деклараций за этот год", (lambda x: x), outp)
+
+    def build_income_first_word_position(self, max_count, filename, start_year=2010, last_year=2019):
+        query = """
+            select p.person_name, s.person_name, i.size, s.income_year, s.rubric_id, s.position  
+            from declarations_section s
+            join declarations_income i on i.section_id=s.id
+            left join declarations_person p on s.person_id=p.id
+            where i.size > 10000 and i.relative = 'D' and length(position) > 0
+            limit {}  
+        """.format(max_count)
+
+        rubric_genders = defaultdict(list)
+        rubric_first_word = defaultdict(int)
+        for gender, income_size, income_year, rubric_id, position_str in self.filter_incomes(query):
+            position_words = re.split("[\s,;.]", position_str)
+            if len(position_words) == 0:
+                continue
+            first_position_word = position_words[0].lower()
+            gender = TGender.opposite_gender(gender)
+            rubric_genders[(rubric_id, first_position_word, gender )].append(income_size)
+            rubric_first_word[(rubric_id, first_position_word)] += 1
+
+        with open(filename, "w") as outp:
+            outp.write("\n\nРубрика\tПол\t{}\tМедианный доход\tДолжность\tГендерный перекос\n")
+            for (rubric_id, first_position_word), all_cnt in rubric_first_word.items():
+                if all_cnt > 10:
+                    masc_med = median(rubric_genders[(rubric_id, first_position_word, TGender.masculine)])
+                    for gender in TGender.gender_list():
+                        incomes = rubric_genders[(rubric_id, first_position_word, gender)]
+                        if len(incomes) == 0:
+                            continue
+                        med = median(incomes)
+                        outp.write("{}\t{}\t{}\t{}\t{}\t{}\n".format(
+                            get_russian_rubric_str(rubric_id),
+                            first_position_word,
+                            TGender.gender_to_Russian_str(gender),
+                            all_cnt,
+                            int(med),
+                            int(100.0 * (masc_med - med) / med)
+                        ))
+
+    def build_vehicles(self, max_count, filename):
+        with connection.cursor() as cursor:
+            cursor.execute('select section_id from declarations_vehicle where relative="D"')
+            section_with_vehicles = set(section_id for section_id, in cursor)
+
+        query = """
+            select p.person_name, s.person_name, d.office_id, s.income_year, s.rubric_id, s.id  
+            from declarations_section s
+            left join declarations_person p on s.person_id=p.id
+            join declarations_source_document d on d.id=s.source_document_id
+            limit {}  
+        """.format(max_count)
+
+        rubric_vehicle_positive = defaultdict(int)
+        rubric_vehicle_negative = defaultdict(int)
+        rubric_vehicle_all = defaultdict(int)
+        for gender, office_id, income_year, rubric_id, section_id in self.filter_incomes(query):
+            key = (gender, rubric_id)
+            if section_id in section_with_vehicles:
+                rubric_vehicle_positive[key] += 1
+            else:
+                rubric_vehicle_negative[key] += 1
+            rubric_vehicle_all[rubric_id] += 1
+
+        with open(filename, "w") as outp:
+            outp.write("\n\nРубрика\tПол\tКол-во автомобилей в рубрике\tАвтомобилизация\tГендерный перекос\n")
+            for rubric_id in get_all_rubric_ids():
+                if rubric_vehicle_all[rubric_id] > 0:
+                    k = (TGender.masculine, rubric_id)
+                    vehicle_index_masc = 100.0 * rubric_vehicle_positive[k] / float (
+                            rubric_vehicle_positive[k] + rubric_vehicle_negative[k] + 0.0000001)
+
+                    for gender in TGender.gender_list():
+                        k = (gender, rubric_id)
+                        vehicle_index = 100.0 * rubric_vehicle_positive[k] / float( rubric_vehicle_positive[k] + rubric_vehicle_negative[k] + 0.0000001)
+                        outp.write("{}\t{}\t{}\t{}\t{}\n".format(
+                            get_russian_rubric_str(rubric_id),
+                            TGender.gender_to_Russian_str(gender),
+                            rubric_vehicle_all[rubric_id],
+                            int(vehicle_index),
+                            int(100.0 * (vehicle_index_masc - vehicle_index) / (vehicle_index + 0.0000001))
+                        ))
+
 
     def handle(self, *args, **options):
         self.logger.info("build_masc_and_fem_names")
@@ -227,5 +309,12 @@ class Command(BaseCommand):
         #self.logger.info("gender_income_report")
         #self.build_genders_incomes(100000000, "gender_income_report.txt")
 
-        self.logger.info("gender_income_spouse_report")
-        self.build_income_with_spouse(100000000, "gender_income_spouse.txt")
+        #self.logger.info("gender_income_spouse_report")
+        #self.build_income_with_spouse(100000000, "gender_income_spouse.txt")
+
+        #self.logger.info("gender_income_first_word")
+        #self.build_income_first_word_position(10000, "gender_income_first_word.txt")
+
+        self.logger.info("vehicles")
+        self.build_vehicles(10000000, "vehicles.txt")
+

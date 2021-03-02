@@ -181,7 +181,7 @@ class CommonSearchForm(forms.Form):
         required=False,
         empty_value="",
         label="Sha256")
-    match_phrase = forms.BooleanField(label="Фраза")
+    match_phrase = forms.BooleanField(label="Фраза", required=False)
 
 
 def compare_Russian_fio(search_query, person_name):
