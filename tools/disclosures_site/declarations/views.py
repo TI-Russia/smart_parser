@@ -249,6 +249,8 @@ class CommonSearchView(FormView, generic.ListView):
 
         if self.request.GET.get('match_phrase'):
             dct['match_operator'] = 'match_phrase'
+        else:
+            dct['match_operator'] = 'match'
 
         return dct
 
