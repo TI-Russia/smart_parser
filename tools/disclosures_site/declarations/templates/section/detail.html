@@ -26,28 +26,19 @@
 <br/><br/>
 
 Рубрика: {{section.rubric_str}}
-<br/>
+<br/><br/>
 
 Источник декларации: <a href="/file/{{ section.source_document.id }}"> файл id={{ section.source_document.id }} </a>
 <br/><br/>
 
 
 {% if section.person_id %}
-<a href="/section/?person_id={{ section.person_id }}" > Остальные декларации этого человека</a>
-(person_id={{ section.person_id }}, уверенность
-                {% if section.dedupe_score > 0 %}
-                    {{ section.dedupe_score | floatformat:2}}
-                {% else %}
-                    1.0
-                {% endif %}
-) </a>
-<br/> <br/>
+    <a href="/section/?person_id={{ section.person_id }}" > Остальные декларации этого человека</a>
+    <br/> <br/>
 
-{% if section.person.declarator_person_id %}
-    <a href="http://declarator.org/person/{{section.person.declarator_person_id}}"> Ссылка на Декларатор </a>
-{% endif %}
-
-
+    {% if section.person.declarator_person_id %}
+        <a href="http://declarator.org/person/{{section.person.declarator_person_id}}"> Ссылка на Декларатор </a>
+    {% endif %}
 {% endif %}
 
 {% endblock content %}
