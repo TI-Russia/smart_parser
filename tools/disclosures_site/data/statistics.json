@@ -110,5 +110,19 @@
             "sections_dedupe_score_greater_0": 4337869,
             "person_count": 1523882
         }
+    },
+    {
+        "crawl_epoch": 1614530031,
+        "metrics": {
+            "source_document_count": 592559,
+            "source_document_only_dlrobot_count": 331649,
+            "source_document_only_human_count": 146904,
+            "source_document_both_found_count": 114006,
+            "sections_count": 4903528,
+            "sections_count_only_dlrobot": 1594099,
+            "sections_count_both_found": 1574507,
+            "sections_dedupe_score_greater_0": 4430524,
+            "person_count": 1549726
+        }
     }
 ]
