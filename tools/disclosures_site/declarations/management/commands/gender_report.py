@@ -236,7 +236,10 @@ class Command(BaseCommand):
             outp.write("\n\nРубрика\tПол\t{}\tМедианный доход\tДолжность\tГендерный перекос\n")
             for (rubric_id, first_position_word), all_cnt in rubric_first_word.items():
                 if all_cnt > 10:
-                    masc_med = median(rubric_genders[(rubric_id, first_position_word, TGender.masculine)])
+                    masc_incomes = rubric_genders[(rubric_id, first_position_word, TGender.masculine)]
+                    if len(masc_incomes) == 0:
+                        continue
+                    masc_med = median(masc_incomes)
                     for gender in TGender.gender_list():
                         incomes = rubric_genders[(rubric_id, first_position_word, gender)]
                         if len(incomes) == 0:
@@ -360,11 +363,11 @@ class Command(BaseCommand):
         #self.logger.info("gender_income_spouse_report")
         #self.build_income_with_spouse(100000000, "gender_income_spouse.txt")
 
-        #self.logger.info("gender_income_first_word")
-        #self.build_income_first_word_position(10000000, "gender_income_first_word.txt")
+        self.logger.info("gender_income_first_word")
+        self.build_income_first_word_position(10000000, "gender_income_first_word.txt")
 
-        #self.logger.info("vehicles")
-        #self.build_vehicles(10000000, "vehicles.txt")
+        self.logger.info("vehicles")
+        self.build_vehicles(10000000, "vehicles.txt")
 
         self.logger.info("incomplete_family")
         self.build_incomplete_family(100000000, "incomplete_family.txt")

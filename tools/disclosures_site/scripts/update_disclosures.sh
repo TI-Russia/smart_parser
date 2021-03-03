@@ -140,7 +140,7 @@ python3 $TOOLS/disclosures_site/manage.py build_ratings --settings disclosures.s
     # move dev elastic index  to prod elastic index
     python3 manage.py elastic_manage --action dev-to-prod --settings disclosures.settings.dev
     # move dev db to prod db
-    bash scripts/rename_db.sh disclosures_db_dev disclosures
+    bash scripts/rename_db.sh disclosures_db_dev disclosures_db
     sudo systemctl restart gunicorn
 
 #18 копируем файлы sitemap
