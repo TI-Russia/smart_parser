@@ -172,9 +172,11 @@ class Command(BaseCommand):
         """.format(max_count)
         rubric_genders = defaultdict(list)
         incomes_by_genders = defaultdict(list)
+        year_genders = defaultdict(list)
         for gender, income_size, income_year, rubric_id in self.filter_incomes(query):
             incomes_by_genders[gender].append(income_size)
             rubric_genders[(gender, rubric_id)].append(income_size)
+            year_genders[(gender, int(income_year))].append(income_size)
 
         with open(filename, "w") as outp:
             self.report_income_by_genders(incomes_by_genders, outp)
@@ -292,6 +294,52 @@ class Command(BaseCommand):
                             int(100.0 * (vehicle_index_masc - vehicle_index) / (vehicle_index + 0.0000001))
                         ))
 
+    def get_sections_with_relative_type(self, relative_code):
+        sql = """
+            (select section_id from declarations_vehicle where relative="{}") 
+            union
+            (select section_id from declarations_income where relative="{}")
+            union
+            (select section_id from declarations_realestate where relative="{}")
+        """.format(relative_code, relative_code, relative_code)
+        with connection.cursor() as cursor:
+            cursor.execute(sql)
+            return set(section_id for section_id, in cursor)
+
+    def build_incomplete_family(self, max_count, filename, start_year=2010, last_year=2019):
+
+        section_with_children = self.get_sections_with_relative_type(models.Relative.child_code)
+        self.logger.info("section with children: {}".format(len(section_with_children)))
+
+        section_with_spouse = self.get_sections_with_relative_type(models.Relative.spouse_code)
+        self.logger.info("section with spouse: {}".format(len(section_with_spouse)))
+
+        query = """
+            select p.person_name, s.person_name, i.size, s.income_year, s.rubric_id, s.id  
+            from declarations_section s
+            join declarations_income i on i.section_id=s.id
+            left join declarations_person p on s.person_id=p.id
+            where i.relative = 'D' and i.size > 10000
+            limit {}  
+        """.format(max_count)
+        rubric_genders = defaultdict(list)
+        incomes_by_genders = defaultdict(list)
+        year_genders = defaultdict(list)
+        for gender, income_size, income_year, rubric_id, section_id in self.filter_incomes(query):
+            if section_id in section_with_spouse:
+                continue
+            if section_id not in section_with_children:
+                continue
+            incomes_by_genders[gender].append(income_size)
+            rubric_genders[(gender, rubric_id)].append(income_size)
+            year_genders[(gender, int(income_year))].append(income_size)
+
+        with open(filename, "w") as outp:
+            self.report_income_by_genders(incomes_by_genders, outp)
+            self.report_income_by_genders_group(rubric_genders, get_all_rubric_ids(),
+                                                "Деклараций в рубрике", get_russian_rubric_str, outp)
+            self.report_income_by_genders_group(year_genders, range(start_year, last_year + 1),
+                                                "Деклараций за этот год", (lambda x: x), outp)
 
     def handle(self, *args, **options):
         self.logger.info("build_masc_and_fem_names")
@@ -313,8 +361,10 @@ class Command(BaseCommand):
         #self.build_income_with_spouse(100000000, "gender_income_spouse.txt")
 
         #self.logger.info("gender_income_first_word")
-        #self.build_income_first_word_position(10000, "gender_income_first_word.txt")
+        #self.build_income_first_word_position(10000000, "gender_income_first_word.txt")
 
-        self.logger.info("vehicles")
-        self.build_vehicles(10000000, "vehicles.txt")
+        #self.logger.info("vehicles")
+        #self.build_vehicles(10000000, "vehicles.txt")
 
+        self.logger.info("incomplete_family")
+        self.build_incomplete_family(100000000, "incomplete_family.txt")
