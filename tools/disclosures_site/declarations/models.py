@@ -342,6 +342,7 @@ class RealEstate(models.Model):
     owntype = models.CharField(max_length=1)
     square = models.IntegerField(null=True)
     share = models.FloatField(null=True)
+    relative_index = models.PositiveSmallIntegerField(null=True)
 
     @property
     def own_type_str(self):
@@ -356,6 +357,7 @@ class RealEstate(models.Model):
 class Vehicle(models.Model):
     section = models.ForeignKey('declarations.Section', on_delete=models.CASCADE)
     relative = models.CharField(max_length=1)
+    relative_index = models.PositiveSmallIntegerField(null=True)
     name = models.TextField()
 
 
@@ -363,10 +365,11 @@ class Income(models.Model):
     section = models.ForeignKey('declarations.Section', on_delete=models.CASCADE)
     size = models.IntegerField(null=True)
     relative = models.CharField(max_length=1)
+    relative_index = models.PositiveSmallIntegerField(null=True)
 
 
-def get_relatives(records):
-    return set( Relative(x.relative) for x in records.all())
+def get_distinct_relative_types(records):
+    return set(Relative(x.relative) for x in records.all())
 
 
 class Section(models.Model):
@@ -388,9 +391,9 @@ class Section(models.Model):
     def section_parts(self):
         relatives = set()
         relatives.add(Relative(Relative.main_declarant_code))
-        relatives |= get_relatives(self.income_set)
-        relatives |= get_relatives(self.realestate_set)
-        relatives |= get_relatives(self.vehicle_set)
+        relatives |= get_distinct_relative_types(self.income_set)
+        relatives |= get_distinct_relative_types(self.realestate_set)
+        relatives |= get_distinct_relative_types(self.vehicle_set)
         relative_list = Relative.sort_by_visual_order(list(relatives))
         return relative_list
 

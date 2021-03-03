@@ -126,7 +126,7 @@ python3 $TOOLS/disclosures_site/manage.py build_ratings --settings disclosures.s
  mysqldump -u disclosures -pdisclosures disclosures_db_dev  |  gzip -c > $DLROBOT_FOLDER/disclosures.sql.gz
 
 #17 обновление prod
-    wait $ELASTIC_PID
+    wait $ELASTIC_PID  # надо дождаться generate_static_sections
     cd $TOOLS_PROD
     git pull
 

@@ -1,16 +1,22 @@
 from . import models
 from common.primitives import normalize_whitespace
 from declarations.countries import get_country_code
+from declarations.rubrics import convert_municipality_to_education, TOfficeRubrics
+from declarations.documents import OFFICES
+
 from django.db import connection
 import re
+
 
 def read_incomes(section_json):
     for i in section_json.get('incomes', []):
         size = i.get('size')
         if isinstance(size, float) or (isinstance(size, str) and size.isdigit()):
             size = int(size)
+
         yield models.Income(size=size,
-                     relative=models.Relative.get_relative_code(i.get('relative'))
+                     relative=models.Relative.get_relative_code(i.get('relative')),
+                     relative_index=i.get('relative_index')
                      )
 
 
@@ -24,7 +30,8 @@ def read_real_estates(section_json):
             relative=models.Relative.get_relative_code(i.get('relative')),
             owntype=models.OwnType.get_own_type_code(own_type_str),
             square=i.get("square"),
-            share=i.get("share_amount")
+            share=i.get("share_amount"),
+            relative_index=i.get('relative_index')
         )
 
 
@@ -34,7 +41,8 @@ def read_vehicles(section_json):
         if text is not None:
             yield models.Vehicle(
                 name=text,
-                relative=models.Relative.get_relative_code( i.get('relative'))
+                relative=models.Relative.get_relative_code( i.get('relative')),
+                relative_index=i.get('relative_index')
             )
 
 
@@ -137,7 +145,7 @@ def normalize_fio_before_db_insert(fio):
     return fio.title()
 
 
-class TSmartParserJsonReader:
+class TSmartParserSectionJson:
 
     class SerializerException(Exception):
         def __init__(self, value):
@@ -146,32 +154,47 @@ class TSmartParserJsonReader:
         def __str__(self):
             return repr(self.value)
 
-    def __init__(self, income_year, source_document, section_json, id=None):
-        self.section_json = section_json
+    def __init__(self, income_year, source_document):
         self.section = models.Section(
             source_document=source_document,
             income_year=income_year,
         )
-        self.init_person_info()
+        self.incomes = None
+        self.real_estates = None
+        self.vehicles = None
+
+    def init_rubric(self):
+        # json_reader.section.rubric_id = source_document_in_db.office.rubric_id does not work
+        # may be we should call source_document_in_db.refresh_from_db
+        self.section.rubric_id = OFFICES.offices[self.section.source_document.office.id]['rubric_id']
+
+        if self.section.rubric_id == TOfficeRubrics.Municipality and \
+                convert_municipality_to_education(self.section.position):
+            self.section.rubric_id = TOfficeRubrics.Education
+
+    def read_raw_json(self, section_json):
+        self.init_person_info(section_json)
         self.incomes = list(read_incomes(section_json))
         self.real_estates = list(read_real_estates(section_json))
         self.vehicles = list(read_vehicles(section_json))
+        self.init_rubric()
+        return self
 
     def get_main_declarant_income_size(self):
         for i in self.incomes:
             if i.relative == models.Relative.main_declarant_code:
                 return i.size
 
-    def init_person_info(self):
-        person_info = self.section_json.get('person')
+    def init_person_info(self, section_json):
+        person_info = section_json.get('person')
         if person_info is None:
-            fio = self.section_json.get('fio')
+            fio = section_json.get('fio')
             if fio is None:
-                raise TSmartParserJsonReader.SerializerException("cannot find nor 'person' neither 'fio' key in json")
+                raise TSmartParserSectionJson.SerializerException("cannot find nor 'person' neither 'fio' key in json")
         else:
             fio = person_info.get('name', person_info.get('name_raw'))
             if fio is None:
-                raise TSmartParserJsonReader.SerializerException("cannot find 'name' or 'name_raw'in json")
+                raise TSmartParserSectionJson.SerializerException("cannot find 'name' or 'name_raw'in json")
         self.section.person_name = normalize_fio_before_db_insert(fio)
         self.section.position = person_info.get("role")
         self.section.department = person_info.get("department")
