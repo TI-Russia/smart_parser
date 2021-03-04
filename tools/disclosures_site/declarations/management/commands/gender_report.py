@@ -228,14 +228,13 @@ class Command(BaseCommand):
             if len(position_words) == 0:
                 continue
             first_position_word = position_words[0].lower()
-            gender = TGender.opposite_gender(gender)
             rubric_genders[(rubric_id, first_position_word, gender )].append(income_size)
             rubric_first_word[(rubric_id, first_position_word)] += 1
 
         with open(filename, "w") as outp:
             outp.write("\n\nРубрика\tПол\t{}\tМедианный доход\tДолжность\tГендерный перекос\n")
             for (rubric_id, first_position_word), all_cnt in rubric_first_word.items():
-                if all_cnt > 10:
+                if all_cnt > 100:
                     masc_incomes = rubric_genders[(rubric_id, first_position_word, TGender.masculine)]
                     if len(masc_incomes) == 0:
                         continue
@@ -351,17 +350,17 @@ class Command(BaseCommand):
         self.logger.info("build_masc_and_fem_surnames")
         self.gender_recognizer.build_masc_and_fem_surnames(options.get('limit', 100000000), "surnames.masc_and_fem.txt")
 
-        #self.logger.info("build_person_gender_by_years_report")
-        #self.gender_recognizer.build_person_gender_by_years_report(options.get('limit', 100000000), "person.gender_by_years.txt")
+        self.logger.info("build_person_gender_by_years_report")
+        self.gender_recognizer.build_person_gender_by_years_report(options.get('limit', 100000000), "person.gender_by_years.txt")
 
-        #self.logger.info("gender_rubric_report")
-        #self.build_genders_rubrics(100000000, "gender_report.txt")
+        self.logger.info("gender_rubric_report")
+        self.build_genders_rubrics(100000000, "gender_report.txt")
 
-        #self.logger.info("gender_income_report")
-        #self.build_genders_incomes(100000000, "gender_income_report.txt")
+        self.logger.info("gender_income_report")
+        self.build_genders_incomes(100000000, "gender_income_report.txt")
 
-        #self.logger.info("gender_income_spouse_report")
-        #self.build_income_with_spouse(100000000, "gender_income_spouse.txt")
+        self.logger.info("gender_income_spouse_report")
+        self.build_income_with_spouse(100000000, "gender_income_spouse.txt")
 
         self.logger.info("gender_income_first_word")
         self.build_income_first_word_position(10000000, "gender_income_first_word.txt")
