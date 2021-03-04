@@ -1,5 +1,6 @@
 from django.urls import path, re_path
 from . import views
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('', views.HomePageView.as_view(), name='home_page'),
@@ -23,4 +24,10 @@ urlpatterns = [
     path('file/', views.FileSearchView.as_view(), name='file_search'),
     path('sourcedoc/<str:sha256_and_file_extension>', views.source_doc_getter, name='source_doc_getter'),
 
+    path('reports/genders/index.html', views.anyUrlView),
+    path('reports/names/index.html', views.anyUrlView),
+    path('reports/car-brands/index.html', views.anyUrlView),
+    path('reports/car-brands/car-brands-by-years.html', views.anyUrlView),
+    path('reports/offices/index.html', views.anyUrlView),
+    path('reports/regions/index.html', views.anyUrlView),
 ]

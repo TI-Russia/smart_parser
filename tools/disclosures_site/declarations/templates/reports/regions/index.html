@@ -1,13 +1,9 @@
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title> Средний доход российских чиновников по регионам </title>
+{% extends 'base.html' %}
+{% block title %}Средний доход российских чиновников по регионам 2010-2019 гг{% endblock title %}
 
-    <meta name="description" content="Средний доход российских чиновников (государственных и муниципальных служащих) по регионам, собранные по декларациям о доходах">
-</head>
-<body>
+{% block content %}
 
-<h1> Средний доход российских чиновников по регионам </h1>
+<h1> Средний доход российских чиновников по регионам 2010-2019 гг </h1>
 
 <h4> Алексей Сокирко, декабрь 2020, sokirko@yandex.ru</h4>
 
@@ -56,12 +52,11 @@
 </p>
 <p>
     Данные по регионам за разные года:
-    <br/> <a href=region-income-report-2019.html> 2019 год </a>
-    <br/> <a href=region-income-report-2017.html> 2017 год </a>
-    <br/> <a href=region-income-report-2015.html> 2015 год </a>
-    <br/> <a href=region-income-report-2013.html> 2013 год </a>
-    <br/> <a href=region-income-report-2011.html> 2011 год </a>
+    <br/> <a href=/static/regionreports/region-income-report-2019.html> 2019 год </a>
+    <br/> <a href=/static/regionreports/region-income-report-2017.html> 2017 год </a>
+    <br/> <a href=/static/regionreports/region-income-report-2015.html> 2015 год </a>
+    <br/> <a href=/static/regionreports/region-income-report-2013.html> 2013 год </a>
+    <br/> <a href=/static/regionreports/region-income-report-2011.html> 2011 год </a>
 </p>
-</body>
 
-</html>
+{% endblock content %}

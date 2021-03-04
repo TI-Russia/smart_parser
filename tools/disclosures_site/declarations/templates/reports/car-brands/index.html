@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>На каких машинах ездят чиновники (только автомобильные бренды)</title>
-    <link rel="stylesheet" type="text/css" href="/static/style.css">
-</head>
-<body>
+{% extends 'base.html' %}
+{% block title %}На каких машинах ездят чиновники (только автомобильные бренды){% endblock title %}
 
-<h1> Автомобильные бренды в декларациях о доходах</h1>
+{% block content %}
+
+<h1> Автомобильные бренды в декларациях о доходах (2010-2019 гг)</h1>
 
 <h4> Алексей Сокирко, февраль 2021, sokirko@yandex.ru</h4>
 
@@ -157,5 +153,4 @@
 </p>
 <br/><br/><br/>
 
-</body>
-</html>
+{% endblock content %}

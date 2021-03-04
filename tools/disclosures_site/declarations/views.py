@@ -16,6 +16,7 @@ from django_elasticsearch_dsl import TextField
 from django.http import HttpResponse
 import os
 import urllib
+from django.shortcuts import render
 
 
 class SectionView(generic.DetailView):
@@ -44,6 +45,13 @@ class OfficeView(generic.DetailView):
 
 class AboutPageView(generic.TemplateView):
     template_name = 'morda/about.html'
+
+
+def anyUrlView(request):
+    path = request.path
+    if path.startswith('/'):
+        path = path[1:]
+    return render(request, path)
 
 
 def sitemapView(request):

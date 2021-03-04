@@ -197,7 +197,7 @@ class Command(BaseCommand):
             <meta charset="UTF-8">
             <title>{}</title>
             <h1>{}</h1>
-            <h3>см. <a href="/static/officereports/report.html"> описание построенных показателей </a> </h3>
+            <h3>см. <a href="/reports/offices/index.html"> описание построенных показателей </a> </h3>
             <link rel="stylesheet" type="text/css" href="/static/style.css">
             <meta name="description" content="Средний доход российских чиновников (государственных и муниципальных служащих) по ведомствам">
         </head>

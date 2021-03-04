@@ -127,9 +127,12 @@ class Command(BaseCommand):
                      "about.html",
                      "statistics",
                      "office",
-                     "static/car-brands/car-brands-by-years.html",
-                     "static/car-brands/report.html",
-                     "static/namereport/report.html",
+                     "reports/car-brands/car-brands-by-years.html",
+                     "reports/car-brands/index.html",
+                     "reports/names/index.html",
+                     "reports/genders/index.html",
+                     "reports/offices/index.html",
+                     "reports/regions/index.html",
                      ""]
         self.write_sitemap(url_paths, sitemap_path, priority=1.0)
         return 'sitemap-main.xml'
