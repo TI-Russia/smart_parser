@@ -447,6 +447,10 @@ namespace Smart.Parser.Adapters
                 {
                     Department = GetDeclarationField(DeclarationField.Department).Text;
                 }
+                else if (adapter.GetDocumentDepartmentFromMetaTag() != null)
+                {
+                    Department = adapter.GetDocumentDepartmentFromMetaTag();
+                }
                 if (!DataHelper.IsEmptyValue(nameOrRelativeType))
                 {
                     if (DataHelper.IsRelativeInfo(nameOrRelativeType))
