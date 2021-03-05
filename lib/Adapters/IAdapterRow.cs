@@ -451,6 +451,7 @@ namespace Smart.Parser.Adapters
                 {
                     Department = adapter.GetDocumentDepartmentFromMetaTag();
                 }
+                
                 if (!DataHelper.IsEmptyValue(nameOrRelativeType))
                 {
                     if (DataHelper.IsRelativeInfo(nameOrRelativeType))

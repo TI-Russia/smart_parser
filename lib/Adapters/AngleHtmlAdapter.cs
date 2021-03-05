@@ -204,6 +204,7 @@ namespace Smart.Parser.Adapters
         private List<List<HtmlAdapterCell>> TableRows;
         private string Title;
         private string Department = null;
+        private string DocumentUrl = null;
         private int UnmergedColumnsCount;
         private int TablesCount;
 
@@ -234,6 +235,10 @@ namespace Smart.Parser.Adapters
                 if (meta_tag.GetAttribute("name") == "smartparser_department")
                 {
                     Department = meta_tag.GetAttribute("content");
+                }
+                if (meta_tag.GetAttribute("name") == "smartparser_url")
+                {
+                    DocumentUrl = meta_tag.GetAttribute("content");
                 }
             }
         }
@@ -453,6 +458,10 @@ namespace Smart.Parser.Adapters
         public override string GetDocumentDepartmentFromMetaTag()
         {
             return Department;
+        }
+        public override string GetDocumentUrlFromMetaTag()
+        {
+            return DocumentUrl;
         }
     }
 

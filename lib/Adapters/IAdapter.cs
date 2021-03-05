@@ -113,6 +113,10 @@ namespace Smart.Parser.Adapters
         {
             return null;
         }
+        public virtual string GetDocumentUrlFromMetaTag()
+        {
+            return null;
+        }
 
         public int GetUnmergedColumnsCountByFirstRow()
         {

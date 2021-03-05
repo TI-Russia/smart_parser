@@ -51,7 +51,8 @@ namespace Smart.Parser.Lib
                 Year = columnOrdering.Year,
                 DocumentFileId = documentfile_id,
                 ArchiveFileName = archive,
-                SheetNumber = Adapter.GetWorksheetIndex()
+                SheetNumber = Adapter.GetWorksheetIndex(),
+                DocumentUrl = Adapter.GetDocumentUrlFromMetaTag()
             };
             if (properties.Year == null)
             {
