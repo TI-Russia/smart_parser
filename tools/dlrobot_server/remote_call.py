@@ -1,7 +1,10 @@
+from common.robot_project import TRobotProject
+
 import os
 import time
 import json
 import sys
+
 
 class TRemoteDlrobotCall:
 
@@ -55,24 +58,19 @@ class TRemoteDlrobotCall:
                 'reach_status': self.reach_status
         }
 
-    def calc_project_stats(self):
+    def calc_project_stats(self, logger):
         if self.project_folder is None:
             return
-        summary_file = os.path.join(self.project_folder,  self.project_file + '.result_summary')
-        if os.path.exists(summary_file):
-            with open(summary_file) as inp:
-                json_dict = json.load(inp)
-                self.result_files_count = json_dict['files_count']
-        project_file = os.path.join(self.project_folder,  self.project_file + ".visited_pages")
-        if os.path.exists(project_file):
-            try:
-                with open(project_file) as inp:
-                    js = json.load(inp)
-                    sites = js.get('sites', [])
-                    if len(sites) == 1:
-                        self.reach_status = sites[0]['reach_status']
-            except Exception as exp:
-                pass
+        try:
+            path = os.path.join(self.project_folder, self.project_file)
+            with TRobotProject(logger, path, [], None, enable_selenium=False,
+                               enable_search_engine=False) as project:
+                project.read_project(check_step_names=False)
+                office_info = project.offices[0]
+                self.result_files_count = len(office_info.export_env.exported_files)
+                self.reach_status = office_info.reach_status
+        except Exception as exp:
+            pass
 
     @staticmethod
     def read_remote_calls_from_file(filename, allow_history_formats=False):

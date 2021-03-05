@@ -117,10 +117,7 @@ class TestDeclarationLink(TestCase):
         TDownloadEnv.clear_cache_folder()
         self.logger = setup_logging("dlrobot.log")
         self.project_path = os.path.join(self.data_folder, "project.txt")
-        with open(self.project_path, "w") as outp:
-            s = {"sites":[{"morda_url":"http://127.0.0.1:{}".format(self.web_site_port)}],
-                 "disable_search_engine": True}
-            json.dump(s, outp)
+        TRobotProject.create_project(self.project_path, "http://127.0.0.1:{}".format(self.web_site_port))
 
     def tearDown(self):
         self.web_server.shutdown()

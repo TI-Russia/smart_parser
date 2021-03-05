@@ -57,7 +57,7 @@ class TRobotWebSite:
         self.enable_urllib = True
         self.morda_url = ""
         self.office_name = ""
-        self.reach_status = "normal"
+        self.reach_status = TWebSiteReachStatus.normal
         self.robot_steps = list()
         self.reach_status = None
         self.protocol = "http"

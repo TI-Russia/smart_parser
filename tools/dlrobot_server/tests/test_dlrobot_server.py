@@ -1,5 +1,6 @@
 from dlrobot_server.dlrobot_central import TDlrobotHTTPServer
 from dlrobot_server.dlrobot_worker import TDlrobotWorker
+from dlrobot_server.unzip_archive import TUnzipper
 from disclosures_site.scripts.dl_monitoring import TDlrobotAllStats
 from smart_parser_http.smart_parser_server import TSmartParserHTTPServer
 from source_doc_http.source_doc_server import TSourceDocHTTPServer
@@ -112,7 +113,8 @@ class TTestEnv:
             '--dlrobot-project-timeout', str(dlrobot_project_timeout),
             '--log-file-name', os.path.join(self.data_folder, "dlrobot_central.log"),
             '--disable-search-engines',
-            '--disable-telegram'
+            '--disable-telegram',
+            '--disable-pdf-conversion-server-checking'
         ]
         if not enable_smart_parser:
             server_args.append('--disable-smart-parser-server')
@@ -173,7 +175,7 @@ class TTestEnv:
         result_summary_count = 0
         for root, dirs, files in os.walk(self.result_folder):
             for filename in files:
-                if filename.endswith('.result_summary'):
+                if filename.endswith('.visited_pages'):
                     result_summary_count += 1
         return result_summary_count
 
@@ -200,7 +202,7 @@ class TestAotRu(TestCase):
         stats = self.env.central.get_stats()
         self.assertEqual(stats['running_count'], 1)
         self.env.worker_thread.join(200)
-        self.assertEqual(self.env.count_projects_results(), 0)
+        self.assertEqual(1, self.env.count_projects_results())
         self.assertEqual(self.env.get_last_reach_status(), TWebSiteReachStatus.normal)
         # one more time
         self.env.start_worker_thread()
@@ -220,7 +222,7 @@ class TestBadDomain(TestCase):
 
     def test_bad_domain_and_two_retries(self):
         self.env.worker_thread.join(200)
-        self.assertEqual(self.env.count_projects_results(), 0)
+        self.assertEqual(1, self.env.count_projects_results())
         self.assertEqual(self.env.central.get_stats()['processed_tasks'], 1)
         self.assertEqual(self.env.get_last_reach_status(), TWebSiteReachStatus.abandoned)
 
@@ -365,7 +367,8 @@ class DlrobotWithSmartParserAndSourceDocServer(TestCase):
 
 
 class TestHistoryFiles(TestCase):
-    central_port = 8300
+    central_port = 8305
+
     def setUp(self):
         self.env = TTestEnv(self.central_port)
         history_file = os.path.join(self.env.data_folder, "history.txt")
@@ -377,3 +380,42 @@ class TestHistoryFiles(TestCase):
 
     def test_task_order(self):
         self.assertEqual( self.env.central.input_web_sites[0], "newdomain.ru")
+
+
+class TestUnzipArchive(TestCase):
+    central_port = 8306
+    website_port = 8307
+    smart_parser_server_port = 8308
+    source_doc_server_port = 8309
+
+    def setUp(self):
+        self.env = TTestEnv(self.central_port)
+        self.env.setup_website(self.website_port)
+        self.env.setup_smart_parser_server(self.smart_parser_server_port)
+        self.env.setup_source_doc_server(self.source_doc_server_port)
+
+        self.env.setup_central(True, "127.0.0.1:{}".format(self.website_port), enable_source_doc_server=True)
+
+        os.mkdir(self.env.worker_folder)
+        worker_args = [
+            '--server-address', self.env.central_address,
+            '--archive', os.path.join(os.path.dirname(__file__), 'page.zip'),
+            '--web-domain', 'service.nalog.ru',
+        ]
+        self.unzipper = TUnzipper(TUnzipper.parse_args(worker_args))
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def test_unzip(self):
+        self.unzipper.dearchive_and_send()
+
+        time.sleep(5)
+        self.assertEqual(1, self.env.count_projects_results())
+
+        time.sleep(5)
+        self.assertEqual(1, self.env.smart_parser_server.get_stats()['session_write_count'])
+
+        stats = self.env.source_doc_server.get_stats()
+        self.assertEqual(1, stats['source_doc_count'])
+

@@ -89,6 +89,8 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                             default=None,  required=False)
         parser.add_argument("--disable-telegram", dest="enable_telegram",
                             default=True,  required=False, action="store_false")
+        parser.add_argument("--disable-pdf-conversion-server-checking", dest="pdf_conversion_server_checking",
+                            default=True,  required=False, action="store_false")
 
         args = parser.parse_args(arg_list)
         args.central_heart_rate = convert_timeout_to_seconds(args.central_heart_rate)
@@ -313,7 +315,16 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         if self.args.skip_worker_check:
             remote_call = TRemoteDlrobotCall(worker_ip, project_file)
         else:
-            remote_call = self.pop_project_from_running_tasks(worker_ip, project_file)
+            try:
+                remote_call = self.pop_project_from_running_tasks(worker_ip, project_file)
+            except:
+                if ipaddress.ip_address(worker_ip).is_private:
+                    self.logger.debug("try to get a result {} from a local ip {}, though this task was not dispatched".format(
+                        project_file, worker_ip))
+                    remote_call = TRemoteDlrobotCall(worker_ip, project_file)
+                else:
+                    raise
+
         if exit_code == 0:
             self.worker_2_continuous_failures_count[worker_ip] = 0
         else:
@@ -322,7 +333,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         remote_call.exit_code = exit_code
         remote_call.end_time = int(time.time())
         remote_call.project_folder = self.untar_file(project_file, result_archive)
-        remote_call.calc_project_stats()
+        remote_call.calc_project_stats(self.logger)
         if not TWebSiteReachStatus.can_communicate(remote_call.reach_status):
             remote_call.exit_code = -1
         self.send_declaraion_files_to_other_servers(remote_call.project_folder)
@@ -384,6 +395,12 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         except Exception as exp:
             self.logger.error(exp)
 
+    def check_pdf_conversion_server(self):
+        if not self.args.pdf_conversion_server_checking:
+            return True
+        return not self.conversion_client.server_is_too_busy()
+
+
     def service_actions(self):
         current_time = time.time()
         if current_time - self.last_service_action_time_stamp >= self.args.central_heart_rate:
@@ -396,7 +413,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                 os.unlink(PITSTOP_FILE)
             if self.stop_process and self.get_running_jobs_count() == 0:
                 raise Exception("exit for pit stop")
-            if self.conversion_client.server_is_too_busy():
+            if not self.check_pdf_conversion_server():
                 self.logger.debug("stop sending tasks, because conversion pdf queue length is {}".format(
                     self.conversion_client.last_pdf_conversion_queue_length))
 
@@ -475,7 +492,7 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             send_error('cannot find header {}'.format(DLROBOT_HEADER_KEYS.WORKER_HOST_NAME))
             return
 
-        if self.server.conversion_client.server_is_too_busy():
+        if not self.server.check_pdf_conversion_server():
             send_error("pdf conversion server is too busy", DLROBOT_HTTP_CODE.TOO_BUSY)
             return
     
