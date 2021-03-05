@@ -55766,5 +55766,425 @@
     "ctu.customs.gov.ru": {
         "events": [],
         "calc_office_id": 5510
+    },
+    "1.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 1305,
+        "status": "abandoned"
+    },
+    "63.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 1306,
+        "status": "abandoned"
+    },
+    "3.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5737,
+        "status": "abandoned"
+    },
+    "6.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5738,
+        "status": "abandoned"
+    },
+    "24.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5739,
+        "status": "abandoned"
+    },
+    "33.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5740,
+        "status": "abandoned"
+    },
+    "37.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5741,
+        "status": "abandoned"
+    },
+    "38.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5742,
+        "status": "abandoned"
+    },
+    "4.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5743,
+        "status": "abandoned"
+    },
+    "96.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5744,
+        "status": "abandoned"
+    },
+    "35.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5745,
+        "status": "abandoned"
+    },
+    "5.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5746,
+        "status": "abandoned"
+    },
+    "36.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5747,
+        "status": "abandoned"
+    },
+    "41.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5748,
+        "status": "abandoned"
+    },
+    "42.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5749,
+        "status": "abandoned"
+    },
+    "43.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5750,
+        "status": "abandoned"
+    },
+    "59.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5751,
+        "status": "abandoned"
+    },
+    "93.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5752,
+        "status": "abandoned"
+    },
+    "44.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5753,
+        "status": "abandoned"
+    },
+    "99.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5754,
+        "status": "abandoned"
+    },
+    "8.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5755,
+        "status": "abandoned"
+    },
+    "45.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5756,
+        "status": "abandoned"
+    },
+    "9.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5757,
+        "status": "abandoned"
+    },
+    "46.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5758,
+        "status": "abandoned"
+    },
+    "47.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5759,
+        "status": "abandoned"
+    },
+    "97.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5760,
+        "status": "abandoned"
+    },
+    "48.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5761,
+        "status": "abandoned"
+    },
+    "11.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5762,
+        "status": "abandoned"
+    },
+    "12.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5763,
+        "status": "abandoned"
+    },
+    "50.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5764,
+        "status": "abandoned"
+    },
+    "51.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5765,
+        "status": "abandoned"
+    },
+    "13.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5766,
+        "status": "abandoned"
+    },
+    "53.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5767,
+        "status": "abandoned"
+    },
+    "27.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5768,
+        "status": "abandoned"
+    },
+    "28.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5769,
+        "status": "abandoned"
+    },
+    "98.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5770,
+        "status": "abandoned"
+    },
+    "55.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5771,
+        "status": "abandoned"
+    },
+    "56.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5772,
+        "status": "abandoned"
+    },
+    "57.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5773,
+        "status": "abandoned"
+    },
+    "58.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5774,
+        "status": "abandoned"
+    },
+    "61.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5775,
+        "status": "abandoned"
+    },
+    "62.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5776,
+        "status": "abandoned"
+    },
+    "64.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5777,
+        "status": "abandoned"
+    },
+    "65.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5778,
+        "status": "abandoned"
+    },
+    "66.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5779,
+        "status": "abandoned"
+    },
+    "67.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5780,
+        "status": "abandoned"
+    },
+    "68.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5781,
+        "status": "abandoned"
+    },
+    "69.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5782,
+        "status": "abandoned"
+    },
+    "105.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5783,
+        "status": "abandoned"
+    },
+    "70.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5784,
+        "status": "abandoned"
+    },
+    "72.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5785,
+        "status": "abandoned"
+    },
+    "29.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5786,
+        "status": "abandoned"
+    },
+    "74.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5787,
+        "status": "abandoned"
+    },
+    "75.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5788,
+        "status": "abandoned"
+    },
+    "76.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5789,
+        "status": "abandoned"
+    },
+    "103.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5790,
+        "status": "abandoned"
+    },
+    "77.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5791,
+        "status": "abandoned"
+    },
+    "79.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5792,
+        "status": "abandoned"
+    },
+    "92.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5793,
+        "status": "abandoned"
+    },
+    "94.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5794,
+        "status": "abandoned"
+    },
+    "80.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5795,
+        "status": "abandoned"
+    },
+    "17.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5796,
+        "status": "abandoned"
+    },
+    "100.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5797,
+        "status": "abandoned"
+    },
+    "81.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5798,
+        "status": "abandoned"
+    },
+    "82.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5799,
+        "status": "abandoned"
+    },
+    "18.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5800,
+        "status": "abandoned"
+    },
+    "101.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5801,
+        "status": "abandoned"
+    },
+    "106.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5802,
+        "status": "abandoned"
+    },
+    "85.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5803,
+        "status": "abandoned"
+    },
+    "84.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5804,
+        "status": "abandoned"
+    },
+    "86.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5805,
+        "status": "abandoned"
+    },
+    "20.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5806,
+        "status": "abandoned"
+    },
+    "88.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5807,
+        "status": "abandoned"
+    },
+    "32.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5808,
+        "status": "abandoned"
+    },
+    "21.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5809,
+        "status": "abandoned"
+    },
+    "108.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5810,
+        "status": "abandoned"
+    },
+    "89.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5811,
+        "status": "abandoned"
+    },
+    "90.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5812,
+        "status": "abandoned"
+    },
+    "91.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5813,
+        "status": "abandoned"
+    },
+    "95.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5814,
+        "status": "abandoned"
+    },
+    "104.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5815,
+        "status": "abandoned"
+    },
+    "107.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 5816,
+        "status": "abandoned"
+    },
+    "109.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 6551,
+        "status": "abandoned"
+    },
+    "110.service.nalog.ru": {
+        "events": [],
+        "calc_office_id": 6552,
+        "status": "abandoned"
     }
 }

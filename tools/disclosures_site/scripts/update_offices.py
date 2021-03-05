@@ -1,6 +1,6 @@
 from disclosures_site.declarations.web_sites import TDeclarationWebSites, TDeclarationWebSite
 from common.primitives import get_site_domain_wo_www
-from declarations.russian_regions import TRussianRegions
+from common.russian_regions import TRussianRegions
 
 import json
 import argparse

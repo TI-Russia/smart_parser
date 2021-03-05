@@ -400,7 +400,7 @@ class TestUnzipArchive(TestCase):
         worker_args = [
             '--server-address', self.env.central_address,
             '--archive', os.path.join(os.path.dirname(__file__), 'page.zip'),
-            '--web-domain', 'service.nalog.ru',
+            '--web-domain', 'service.nalog.ru'
         ]
         self.unzipper = TUnzipper(TUnzipper.parse_args(worker_args))
 
@@ -419,3 +419,5 @@ class TestUnzipArchive(TestCase):
         stats = self.env.source_doc_server.get_stats()
         self.assertEqual(1, stats['source_doc_count'])
 
+        js = json.loads(self.env.smart_parser_server.get_smart_parser_json('84795afe56f38bce3240beff80e8a1a66bf0d19224cac6a9b6c2b55e2e0ca22c'))
+        print (js)

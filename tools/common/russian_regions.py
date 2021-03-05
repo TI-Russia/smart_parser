@@ -1,4 +1,8 @@
-[
+import sys
+from common.primitives import normalize_whitespace
+
+
+RUSSIAN_REGIONS = [
 {"id":1,"name":"Санкт-Петербург","code":78,"short_name":"Санкт-Петербург","extra_short_name":"Санкт-Петербург","name_ru":"Санкт-Петербург","name_en":"Saint Petersburg","short_name_ru":"Санкт-Петербург","short_name_en":"Saint Petersburg","extra_short_name_ru":"Санкт-Петербург","extra_short_name_en":"","slug":"RU.SP","federal_district_id":2},
 {"id":3,"name":"Республика Адыгея","code":1,"short_name":"Адыгея","extra_short_name":"Адыгея","name_ru":"Республика Адыгея","name_en":"Republic of Adygea","short_name_ru":"Адыгея","short_name_en":"Republic of Adygea","extra_short_name_ru":"Адыгея","extra_short_name_en":"","slug":"RU.AD","federal_district_id":6},
 {"id":4,"name":"Республика Башкортостан","code":2,"short_name":"Башкортостан","extra_short_name":"Башкортостан","name_ru":"Республика Башкортостан","name_en":"Republic of Bashkortostan","short_name_ru":"Башкортостан","short_name_en":"Republic of Bashkortostan","extra_short_name_ru":"Башкортостан","extra_short_name_en":"","slug":"RU.BK","federal_district_id":7},
@@ -85,3 +89,178 @@
 {"id":109,"name":"Республика Крым*","code":82,"short_name":"Крым*","extra_short_name":"Crimea","name_ru":"Республика Крым*","name_en":"","short_name_ru":"Крым*","short_name_en":"","extra_short_name_ru":"Crimea","extra_short_name_en":"","slug":"Cr","federal_district_id":6},
 {"id":110,"name":"Севастополь*","code":92,"short_name":"Севастополь*","extra_short_name":"Sevast","name_ru":"Севастополь*","name_en":"","short_name_ru":"Севастополь*","short_name_en":"","extra_short_name_ru":"Sevast","extra_short_name_en":"","slug":"Sevast","federal_district_id":6}
 ]
+
+#region in dative case -> (code and region_id)
+REGIONS_DATIVE = {
+"по санкт-петербургу": (78, 1),
+"по г.санкт-петербургу": (78, 1),
+"по г. санкт-петербургу": (78, 1),
+"по республике адыгея": (1, 3),
+"по республике башкортостан": (2, 4),
+"по республике бурятия": (3, 5),
+"по республике алтай": (4, 6),
+"по республике ингушетия": (6, 8),
+"по кабардино-балкарской республике": (7, 9),
+"по карачаево-черкесской республике": (9, 11),
+"по республике карелия": (10, 12),
+"по республике коми": (11, 13),
+"по республике северная осетия-алания": (15, 17),
+"по республике татарстан": (16, 18),
+"по удмуртской республике": (18, 20),
+"по республике хакасия": (19, 21),
+"по алтайскому краю": (22, 24),
+"по краснодарскому краю": (23, 27),
+"по красноярскому краю": (24, 28),
+"по пермскому краю": (59, 29),
+"по хабаровскому краю": (27, 32),
+"по амурской области": (28, 33),
+"по брянской области": (32, 35),
+"по владимирской области": (33, 36),
+"по архангельской области": (29, 37),
+"по архангельской области и ненецкому автономному округу": (29, 37),
+"по астраханской области": (30, 38),
+"по волгоградской области": (34, 41),
+"по вологодской области": (35, 42),
+"по воронежской области": (36, 43),
+"по забайкальскому краю": (75, 44),
+"по иркутской области": (38, 45),
+"по калининградской области": (39, 46),
+"по республике калмыкия": (8, 47),
+"по камчатскому краю": (41, 48),
+"по кемеровской области": (42, 50),
+"по кемеровской области - кузбассу": (42, 50),
+"по кировской области": (43, 51),
+"по костромской области": (44, 53),
+"по курской области": (46, 55),
+"по ленинградской области": (47, 56),
+"по липецкой области": (48, 57),
+"по магаданской области": (49, 58),
+"по республике дагестан": (5, 59),
+"по республике марий эл": (12, 61),
+"по республике мордовия": (13, 62),
+"по москве": (77, 63),
+"по г.москве": (77, 63),
+"по г. москве": (77, 63),
+"по московской области": (50, 64),
+"по мурманской области": (51, 65),
+"по нижегородской области": (52, 66),
+"по новгородской области": (53, 67),
+"по новосибирской области": (54, 68),
+"по омской области": (55, 69),
+"по орловской области": (57, 70),
+"по пензенской области": (58, 72),
+"по приморскому краю": (25, 74),
+"по псковской области": (60, 75),
+"по ростовской области": (61, 76),
+"по самарской области": (63, 77),
+"по саратовской области": (64, 79),
+"по свердловской области": (66, 80),
+"по ставропольскому краю": (26, 81),
+"по тамбовской области": (68, 82),
+"по тульской области": (71, 84),
+"по республике тыва": (17, 85),
+"по республике тува": (17, 85),
+"по тюменской области": (72, 86),
+"по ульяновской области": (73, 88),
+"по челябинской области": (74, 89),
+"по чеченской республике": (95, 90),
+"по чувашской республике": (21, 91),
+"по республике саха (якутия)": (14, 92),
+"по еврейской автономной области": (79, 93),
+"по сахалинской области": (65, 94),
+"по чукотскому автономному округу": (87, 95),
+"по белгородской области": (31, 96),
+"по калужской области": (40, 97),
+"по курганской области": (45, 98),
+"по ивановской области": (37, 99),
+"по смоленской области": (67, 100),
+"по тверской области": (69, 101),
+"по ненецкому автономному округу": (83, 102),
+"по рязанской области": (62, 103),
+"по ямало-ненецкому автономному округу": (89, 104),
+"по оренбургской области": (56, 105),
+"по томской области": (70, 106),
+"по ярославской области": (76, 107),
+"по ханты-мансийскому автономному округу - югре": (86, 108),
+"по республике крым": (82, 109),
+"по г. севастополю": (92, 110),
+"по севастополю": (92, 110)
+}
+
+
+class TRegion:
+    def __init__(self):
+        self.id = None
+        self.name = None
+        self.short_name = None
+        self.extra_short_name = None
+        self.short_name_en = None
+        self.extra_short_name_en  = None
+        self.name_en = None
+        self.name = None
+
+    def from_json(self, r):
+        self.id = int(r['id'])
+
+        self.name = r['name']
+        self.short_name = r['short_name']
+        self.extra_short_name = r['extra_short_name']
+
+        self.name_en = r['name_en']
+        self.short_name_en = r['short_name_en']
+        self.extra_short_name_en = r['extra_short_name_en']
+        return self
+
+
+class TRussianRegions:
+    def __init__(self):
+        self.regions = list()
+        for region in RUSSIAN_REGIONS:
+            self.regions.append(TRegion().from_json(region))
+        self.region_name_to_region = dict()
+        self.region_id_to_region = dict()
+        for r in self.regions:
+            self.region_name_to_region[r.name.lower().strip('*')] = r
+            self.region_name_to_region[r.short_name.lower().strip('*')] = r
+            self.region_id_to_region[r.id] = r
+
+    def get_region_by_str(self, russian_name):
+        russian_name = russian_name.lower()
+        if russian_name == "территории за пределами рф":
+            return None
+        elif russian_name.find('якутия') != -1:
+            return self.region_id_to_region[92]
+        elif russian_name.find('москва') != -1:
+            return self.region_id_to_region[63]
+        elif russian_name.find('санкт-петербург') != -1:
+            return self.region_id_to_region[1]
+        elif russian_name.find('севастополь') != -1:
+            return self.region_id_to_region[110]
+        elif russian_name.find('ханты') != -1:
+            return self.region_id_to_region[108]
+        elif russian_name.find('алания') != -1:
+            return self.region_id_to_region[17]
+        elif russian_name.find(' тыва') != -1:
+            return self.region_id_to_region[85]
+        elif russian_name.find('карачаево-') != -1:
+            return self.region_id_to_region[11]
+        elif russian_name.find('северная осетия') != -1:
+            return self.region_id_to_region[17]
+        return self.region_name_to_region.get(russian_name)
+
+    def get_region_by_str_all_forms(self, russian_name):
+        russian_name = normalize_whitespace(russian_name.strip().lower())
+        for x in REGIONS_DATIVE.keys():
+            if russian_name.endswith(x):
+                return self.region_id_to_region[REGIONS_DATIVE[x][1]]
+        return self.get_region_by_str(russian_name)
+
+
+if __name__ == "__main__":
+    regions = TRussianRegions()
+    for x in sys.stdin:
+        region = regions.get_region_by_str_all_forms(x)
+        if region is None:
+            print ("{} is not found".format(x.strip()))
+        else:
+            print("{} -> {}".format(x.strip(), region.name))

@@ -127,7 +127,7 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
             smart_parser_version = self.last_version
         return ",".join([sha256, smart_parser_version])
 
-    def get_smart_parser_json(self, sha256, smart_parser_version):
+    def get_smart_parser_json(self, sha256, smart_parser_version=None):
         key = self.build_key(sha256, smart_parser_version)
         js = self.json_cache_dbm.get(key)
         if js is None:

@@ -1,5 +1,5 @@
 import declarations.models as models
-from declarations.russian_regions import TRussianRegions
+from common.russian_regions import TRussianRegions
 
 from django.core.management import BaseCommand
 from itertools import groupby
