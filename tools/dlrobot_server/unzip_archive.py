@@ -32,6 +32,35 @@ def setup_logging(logfilename):
     logger.addHandler(ch)
     return logger
 
+def include_fns_json_to_html(json_path, html_path):
+    assert json_path.endswith('json')
+    assert html_path.endswith('html')
+    with open(json_path) as inp:
+        filters = json.load(inp)['filters']
+
+    if 'insp_name' in filters:
+        department = filters['insp_name']
+    else:
+        department = filters.get('upr_name', '')
+
+    if filters.get('otdel_name') is not None:
+        if len(department) > 0:
+            department += '; '
+        department += filters.get('otdel_name')
+
+    with open(html_path, "rb") as inp:
+        file_data = inp.read().strip()
+        if file_data.endswith(b'<html>'):
+            file_data = file_data[:-len('<html>')] + b'</html>'
+        soup = BeautifulSoup(file_data, "html.parser")
+    metatag = soup.new_tag('meta')
+    metatag.attrs['name'] = 'smartparser_department'
+    metatag.attrs['content'] = department
+    soup.html.insert(2, metatag)
+
+    with open(html_path, "w") as outp:
+        outp.write(str(soup))
+
 
 class TUnzipper:
     def __init__(self, args):
@@ -49,6 +78,7 @@ class TUnzipper:
         parser.add_argument("--log-file-name", dest='log_file_name', required=False, default="unzip_archive.log")
         parser.add_argument("--http-put-timeout", dest='http_put_timeout', required=False, type=int, default=60 * 10)
         parser.add_argument("--web-domain", dest='web_domain', required=True)
+        parser.add_argument("--fns-prepare", dest='fns_prepare', required=False, action="store_true")
         args = parser.parse_args(arg_list)
         return args
 
@@ -157,6 +187,10 @@ class TUnzipper:
         files = list()
         for archive_index, filename, normalized_file_name in unzip.dearchive_one_archive(ext, self.args.archive_path, "base"):
             cnt += 1
+            if self.args.fns_prepare:
+                json_path = os.path.splitext(normalized_file_name)[0] + ".json"
+                if os.path.exists(json_path):
+                    include_fns_json_to_html(json_path, normalized_file_name)
             files.append(os.path.abspath(normalized_file_name))
             if cnt >= 1000:
                 cnt = 0
