@@ -117,7 +117,7 @@ class TestDeclarationLink(TestCase):
         TDownloadEnv.clear_cache_folder()
         self.logger = setup_logging("dlrobot.log")
         self.project_path = os.path.join(self.data_folder, "project.txt")
-        TRobotProject.create_project(self.project_path, "http://127.0.0.1:{}".format(self.web_site_port))
+        TRobotProject.create_project("http://127.0.0.1:{}".format(self.web_site_port), self.project_path)
 
     def tearDown(self):
         self.web_server.shutdown()

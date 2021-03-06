@@ -12,6 +12,7 @@ class TOfficeRubrics:
     Election = 8
     Legislature = 9
     Gulag = 10
+    Tax = 11
     ExecutivePower = 19
     Other = 20
 
@@ -65,6 +66,11 @@ RubricsInRussian = {
     TOfficeRubrics.Gulag: {
         "name": "ФСИН",
         "keywords": ["фсин", "наказан", "колония", "изолятор"]
+    },
+    TOfficeRubrics.Tax: {
+        "name": "Налоги",
+        "keywords": ["федеральная налоговая"],
+        "top_parent": 470
     },
     TOfficeRubrics.ExecutivePower: {
         "name": "Исполнительная власть",
