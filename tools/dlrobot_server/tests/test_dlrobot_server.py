@@ -419,5 +419,5 @@ class TestUnzipArchive(TestCase):
         stats = self.env.source_doc_server.get_stats()
         self.assertEqual(1, stats['source_doc_count'])
 
-        js = json.loads(self.env.smart_parser_server.get_smart_parser_json('84795afe56f38bce3240beff80e8a1a66bf0d19224cac6a9b6c2b55e2e0ca22c'))
-        print (js)
+        js = json.loads(self.env.smart_parser_server.get_smart_parser_json('52a4a58b58f62456e7d978ec0acb1d8e55747daaf8f14a36d928a546ccc4383a'))
+        self.assertEqual('51.service.nalog.ru', js['document_sheet_props'][0]['url'])

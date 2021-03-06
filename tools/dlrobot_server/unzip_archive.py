@@ -13,8 +13,7 @@ import http.server
 import shutil
 import tarfile
 import platform
-
-
+from bs4 import BeautifulSoup
 
 def setup_logging(logfilename):
     logger = logging.getLogger("archiver")
@@ -49,8 +48,17 @@ class TUnzipper:
         parser.add_argument("--log-file-name", dest='log_file_name', required=False, default="unzip_archive.log")
         parser.add_argument("--http-put-timeout", dest='http_put_timeout', required=False, type=int, default=60 * 10)
         parser.add_argument("--web-domain", dest='web_domain', required=True)
+        parser.add_argument("--wait-after-each-doc", dest='wait_after_each_doc', type=int, default=1)
         args = parser.parse_args(arg_list)
         return args
+
+    def get_url_from_meta_tag(self, html_path, default=None):
+        with open(html_path, "rb") as inp:
+            soup = BeautifulSoup(inp.read(), "html.parser")
+            for meta_tag in soup.find_all("meta"):
+                if meta_tag.attrs.get('name') == 'smartparser_url':
+                    return meta_tag.attrs.get('content')
+        return default
 
     def send_files_to_central(self, files):
         project_folder = self.args.web_domain
@@ -60,14 +68,17 @@ class TUnzipper:
 
         robot_project_path = os.path.join(self.args.web_domain + ".txt")
         TRobotProject.create_project(self.args.web_domain, robot_project_path)
-        os.makedirs(os.path.join("result", self.args.web_domain), exist_ok=True)
         with TRobotProject(self.logger, robot_project_path, [], None, enable_selenium=False,
                            enable_search_engine=False) as project:
             project.add_office(self.args.web_domain)
             project.offices[0].reach_status = TWebSiteReachStatus.normal
             export_env = project.offices[0].export_env
             for file_name in files:
-                export_path = os.path.join("result", self.args.web_domain, os.path.basename(file_name))
+                web_domain = self.args.web_domain
+                if file_name.endswith('.html'):
+                    web_domain = self.get_url_from_meta_tag(file_name, web_domain)
+                export_path = os.path.join("result", web_domain, os.path.basename(file_name))
+                os.makedirs(os.path.dirname(export_path), exist_ok=True)
                 shutil.move(file_name, export_path)
                 export_file = TExportFile(url=self.args.web_domain, export_path=export_path)
                 export_env.exported_files.append(export_file)
@@ -121,6 +132,7 @@ class TUnzipper:
         self.logger.debug("delete file {}".format(dlrobot_results_file_name))
         os.unlink(dlrobot_results_file_name)
         shutil.rmtree(project_folder, ignore_errors=True)
+        time.sleep(self.args.wait_after_each_doc * len(files))
 
     def ping_central(self):
         self.logger.debug("pinging {}".format(self.args.server_address))
@@ -156,10 +168,6 @@ class TUnzipper:
         files = list()
         for archive_index, filename, normalized_file_name in unzip.dearchive_one_archive(ext, self.args.archive_path, "base"):
             cnt += 1
-            if self.args.fns_prepare:
-                json_path = os.path.splitext(normalized_file_name)[0] + ".json"
-                if os.path.exists(json_path):
-                    include_fns_json_to_html(json_path, normalized_file_name)
             files.append(os.path.abspath(normalized_file_name))
             if cnt >= 1000:
                 cnt = 0
