@@ -1,5 +1,4 @@
 import declarations.models as models
-import declarations.documents as elastic_documents
 from elasticsearch import helpers
 from declarations.car_brands import CAR_BRANDS
 from common.primitives import prepare_russian_names_for_search_index
@@ -12,6 +11,7 @@ import os
 from django.conf import settings
 from elasticsearch import Elasticsearch
 from django.db import connection
+from elasticsearch_dsl import Index
 
 
 def setup_logging(logfilename):
@@ -43,10 +43,10 @@ def fetch_cursor(sql_query):
 
 
 class TOfficeElasticIndexator:
-    def __init__(self, logger):
+    def __init__(self, logger, es):
         self.logger = logger
         self.index_name = settings.ELASTICSEARCH_INDEX_NAMES['office_index_name']
-        self.index = elastic_documents.office_search_index
+        self.index = Index(self.index_name, es)
         self.logger.debug("index offices")
 
     def gen_documents(self):
@@ -149,10 +149,10 @@ def prepare_position_and_department(position, department):
 class TSectionElasticIndexator:
     chunk_size = 100000
 
-    def __init__(self, logger):
+    def __init__(self, logger, es):
         self.logger = logger
         self.index_name = settings.ELASTICSEARCH_INDEX_NAMES['section_index_name']
-        self.index = elastic_documents.section_search_index
+        self.index = Index(self.index_name, es)
         self.logger.debug("index sections")
 
     def gen_document_portion(self, begin, end):
@@ -210,10 +210,10 @@ class TPersonElasticIndexator:
 
     chunk_size = 100000
 
-    def __init__(self, logger):
+    def __init__(self, logger, es):
         self.logger = logger
         self.index_name = settings.ELASTICSEARCH_INDEX_NAMES['person_index_name']
-        self.index = elastic_documents.person_search_index
+        self.index = Index(self.index_name, es)
         self.logger.debug("index persons")
 
     def gen_document_portion(self, begin, end):
@@ -319,10 +319,10 @@ class TDeclaratorFileReferenceIterator:
 
 
 class TSourceDocumentElasticIndexator:
-    def __init__(self, logger):
+    def __init__(self, logger, es):
         self.logger = logger
         self.index_name = settings.ELASTICSEARCH_INDEX_NAMES['file_index_name']
-        self.index = elastic_documents.file_search_index
+        self.index = Index(self.index_name, es)
         self.logger.debug("index source documents")
 
     def gen_documents(self):
@@ -357,19 +357,6 @@ class TSourceDocumentElasticIndexator:
         self.logger.debug("number of sent documents: {}".format(cnt))
 
 
-def rebuild(indexator):
-    indexator.logger.debug("delete {}".format(indexator.index_name))
-    indexator.index.delete()
-
-    indexator.logger.debug("create {}".format(indexator.index_name))
-    indexator.index.create()
-    es = Elasticsearch()
-    helpers.bulk(es, indexator.gen_documents())
-    indexator.index.flush()
-    indexator.index.refresh()
-    indexator.logger.debug("all done")
-
-
 class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -388,17 +375,42 @@ class Command(BaseCommand):
             default="build_elastic.log"
         )
 
+    def rebuild(self, indexator_type):
+        es = Elasticsearch(timeout=60 * 60, max_retries=10, retry_on_timeout=True)
+        indexator = indexator_type(self.logger, es)
+        if indexator.index.exists():
+            indexator.logger.debug("delete {}".format(indexator.index_name))
+            indexator.index.delete()
+
+        indexator.logger.debug("create {}".format(indexator.index_name))
+        indexator.index.create()
+        helpers.bulk(es, indexator.gen_documents())
+
+        indexator.logger.debug("flush")
+        indexator.index.flush()
+
+        indexator.logger.debug("refresh")
+        indexator.index.refresh()
+        indexator.logger.debug("all done")
+
     def handle(self, *args, **options):
         self.logger = setup_logging(options.get('logfile', 'build_elastic.log'))
         model = options.get('model')
-        if model == 'office' or model is None:
-            rebuild(TOfficeElasticIndexator(self.logger))
-        if model == 'section' or model is None:
-            rebuild(TSectionElasticIndexator(self.logger))
-        if model == 'person' or model is None:
-            rebuild(TPersonElasticIndexator(self.logger))
-        if model == 'source_document' or model is None:
-            rebuild(TSourceDocumentElasticIndexator(self.logger))
+        if model is None:
+            self.rebuild(TOfficeElasticIndexator)
+            self.rebuild(TSectionElasticIndexator)
+            self.rebuild(TPersonElasticIndexator)
+            self.rebuild(TSourceDocumentElasticIndexator)
+        elif model == 'office':
+            self.rebuild(TOfficeElasticIndexator)
+        elif model == 'section':
+            self.rebuild(TSectionElasticIndexator)
+        elif model == 'person':
+            self.rebuild(TPersonElasticIndexator)
+        elif model == 'source_document':
+            self.rebuild(TSourceDocumentElasticIndexator)
+        else:
+            raise Exception("unknown elastic search index name: {}".format(model))
 
 
 BuildElasticIndex=Command

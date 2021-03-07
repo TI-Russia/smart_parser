@@ -1,27 +1,6 @@
 1. follow ~/smart_parser/tools/INSTALL.txt
 
-2. install mysql 8
 
-3. login root without sudo
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
-FLUSH PRIVILEGES;
-
-
-4 enable qcache in mysql: https://codebeer.ru/nastrojka-raboty-mysql-query-cache
-query_cache_type        = ON
-query_cache_limit       = 1M
-query_cache_size        = 128M
-
-
-5 Install elastic search, follow https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
-    sudo apt-get install apt-transport-https
-    echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
-    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D27D666CD88E42B4
-    sudo apt-get update
-    sudo apt-get install elasticsearch
-    sudo /bin/systemctl daemon-reload
-    sudo /bin/systemctl enable elasticsearch.service
-    sudo systemctl start elasticsearch.service
 
 6. create db and user
     cd ~/smart_parser/tools/disclosures_site
