@@ -6,7 +6,7 @@ DEBUG = False
 if socket.gethostname() == "dell-7440":
     DEBUG = True
 
-ALLOWED_HOSTS = ['disclosures.ru', '95.165.96.61', 'localhost', '192.168.100.151']
+ALLOWED_HOSTS = ['disclosures.ru', '95.165.96.61', 'localhost', '192.168.100.151', '192.168.100.206']
 
 ELASTICSEARCH_INDEX_NAMES = {
     'section_index_name': 'declaration_sections_prod',
