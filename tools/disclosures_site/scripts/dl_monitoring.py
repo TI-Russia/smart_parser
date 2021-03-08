@@ -205,6 +205,7 @@ class TDlrobotAllStats:
         build_html(self.args, fig, "ocr_pending_file_sizes.html")
 
     def process_cpu_and_mem_stats(self):
+        # input file is built by ~/smart_parser/tools/workstation_monitoring.py
         with open(self.args.central_server_cpu_and_mem) as inp:
             data_points = json.load(inp)
         cpu_stats = list()

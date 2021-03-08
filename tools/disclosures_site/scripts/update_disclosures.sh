@@ -3,7 +3,6 @@
 #0 ~/smart_parser/tools/INSTALL.txt are prerequisites
 
 set -e
-
 source $(dirname $0)/update_common.sh
 
 

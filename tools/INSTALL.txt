@@ -35,7 +35,7 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
 2.1 sudo apt update
    sudo apt install -y  curl p7zip-full unrar libcurl4-openssl-dev libssl-dev libreoffice \
         python3-wheel calibre  catdoc xlsx2csv default-libmysqlclient-dev libgdiplus python3-pip python3.8-dev \
-        firefox git
+        firefox git  sshfs
 
 2.2 git clone https://github.com/TI-Russia/smart_parser.git ~/smart_parser
 
@@ -115,13 +115,25 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
                 --input-task-list ~/smart_parser/tools/disclosures_site/data/web_sites.json \
                 --result-folder processed_projects --read-previous-results --check-yandex-cloud
 
-3.6  init crontab in central for monitoring (crontab -e), add lines from $TOOLS/disclosures_site/scripts/crontab.txt
+3.6 install sshfs and create link to frontend
+    mkdir /mnt/frontend
+    sudo chmod a+rwx /mnt/frontend
+    #add the following line /etc/fstab
+    sudo nano /etc/fstab
+    sshfs#sokirko@frontend:/ /mnt/frontend  fuse defaults,allow_other,IdentityFile=/home/sokirko/.ssh/id_rsa 0 0
 
-3.7  Get api-token from telegram BotFather and give it to
+3.7  init crontab in central for monitoring (crontab -e), add lines from $TOOLS/disclosures_server/crontab.txt
+
+3.8  Get api-token from telegram BotFather and give it to
     telegram-send --configure
 
-3.8 sudo apt install parallel
+3.9 sudo apt install parallel
 
+3.10 Install workstation monitoring
+  sudo cp ~/smart_parser/tools/workstation_monitoring/workstation_monitoring.service /etc/systemd/system
+  sudo systemctl enable workstation_monitoring
+  sudo systemctl daemon-reload
+  sudo systemctl start workstation_monitoring
 
 
 =====================================================================================
@@ -151,28 +163,28 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
 
 Following https://habr.com/ru/post/501414/
 
-5.0 install mysql 8
-sudo apt update
-sudo apt install mysql-server
-# root password is "root"
-sudo mysql_secure_installation
+#5.0 install mysql 8
+    sudo apt update
+    sudo apt install mysql-server
+    # root password is "root"
+    sudo mysql_secure_installation
 
-#login root without sudo
-ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
-FLUSH PRIVILEGES;
+    #login root without sudo
+    ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
+    FLUSH PRIVILEGES;
 
-CREATE USER 'db_creator'@'localhost' IDENTIFIED BY 'root';
-GRANT ALL PRIVILEGES ON *.* TO 'db_creator'@'localhost' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
+    CREATE USER 'db_creator'@'localhost' IDENTIFIED BY 'root';
+    GRANT ALL PRIVILEGES ON *.* TO 'db_creator'@'localhost' WITH GRANT OPTION;
+    FLUSH PRIVILEGES;
 
-GRANT ALL PRIVILEGES ON *.* TO 'disclosures'@'' WITH GRANT OPTION;
-FLUSH PRIVILEGES;
+    GRANT ALL PRIVILEGES ON *.* TO 'disclosures'@'' WITH GRANT OPTION;
+    FLUSH PRIVILEGES;
 
-# may be it is optional in mysql 8.0
-#4 enable qcache in mysql: https://codebeer.ru/nastrojka-raboty-mysql-query-cache
-query_cache_type        = ON
-query_cache_limit       = 1M
-query_cache_size        = 128M
+    # may be it is optional in mysql 8.0
+    #4 enable qcache in mysql: https://codebeer.ru/nastrojka-raboty-mysql-query-cache
+    query_cache_type        = ON
+    query_cache_limit       = 1M
+    query_cache_size        = 128M
 
 
 #5.1 Install elastic search, follow https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
@@ -187,19 +199,28 @@ query_cache_size        = 128M
 
 
 #5.2   Install python environment in /var/www/smart_parser
-cd /var/www
-sudo chmod a+rwx .
-git clone https://github.com/TI-Russia/smart_parser.git
+    cd /var/www
+    sudo chmod a+rwx .
+    git clone https://github.com/TI-Russia/smart_parser.git
 
-cd /var/www/smart_parser/tools
-sudo apt-get install python3-venv
-python3 -m venv  venv
-source venv/bin/activate
-pip3 install -r requirements.txt
+    cd /var/www/smart_parser/tools
+    pip3 install -r requirements.txt
+    #add to ~/.profile
+    export TOOLS=/var/www/smart_parser/tools
+    export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
+    export SOURCE_DOC_SERVER_ADDRESS=migalka:8090
 
-5.3 create gunicorn service
+#5.3 create database
+    cd /var/www/smart_parser/tools/disclosures_site
+    python3 manage.py makemigrations --settings disclosures.settings.dev
+    python3 manage.py migrate --settings disclosures.settings.dev
+    python3 manage.py create_database --settings disclosures.settings.dev  --skip-checks
+    #download disclosures.sql.gz from disclosures.ru
+    zcat disclosures.sql.gz| mysql -D disclosures_db -u disclosures -pdisclosures
 
- 5.3.1  create gunicorn service
+
+#5.4 create gunicorn service
+
     sudo cp /var/www/smart_parser/tools/disclosures_site/scripts/etc/systemd/system/gunicorn.* /etc/systemd/system
 
     sudo systemctl start gunicorn.socket
@@ -208,51 +229,33 @@ pip3 install -r requirements.txt
     sudo systemctl restart gunicorn.service
     sudo systemctl status gunicorn.service
 
-  5.3.2 test gunicorn (optional)
-     /var/www/smart_parser/env/bin/gunicorn --env DJANGO_SETTINGS_MODULE=disclosures.settings.prod --bind localhost:8000 disclosures.wsgi
+    #test gunicorn (optional)
+    /var/www/smart_parser/env/bin/gunicorn --env DJANGO_SETTINGS_MODULE=disclosures.settings.prod --bind localhost:8000 disclosures.wsgi
 
 
-5.4 install nginx and certbot
-
+#5.5 install nginx
     sudo apt install nginx
+    sudo cp /var/www/smart_parser/tools/disclosures_site/scripts/etc/nginx/sites-available/disclosures.ru /etc/nginx/sites-available
+    sudo ln -s  /etc/nginx/sites-available/disclosures.ru  /etc/nginx/sites-enabled
+    sudo rm /etc/nginx/sites-enabled/default
+
+# 5.6 install certbot
     sudo apt-get install certbot python3-certbot-nginx
-    #https://certbot.eff.org/lets-encrypt/ubuntuxenial-nginx.html
-    #copy certificate
+
+    # add the following line to /etc/sudoers
+    user sokirko = (root) NOPASSWD: /usr/bin/certbot
+
+    #to create a new certificate follow https://certbot.eff.org/lets-encrypt/ubuntuxenial-nginx.html
+    #o copy the certificate from the old frontend
     ssh migalka
     sudo tar zpcvf backup_etc-letsencrypt.tar.gz /etc/letsencrypt/
     scp backup_etc-letsencrypt.tar.gz frontend:~
     ssh frontend
     sudo tar zxvf backup_etc-letsencrypt.tar.gz -C /
-    #sudo certbot --nginx
 
-    sudo cp /var/www/smart_parser/tools/disclosures_site/scripts/etc/nginx/sites-available/disclosures.ru /etc/nginx/sites-available
-    sudo ln -s  /etc/nginx/sites-available/disclosures.ru  /etc/nginx/sites-enabled
-    sudo rm /etc/nginx/sites-enabled/default
+
+    # start nginx, check https and http manually
     sudo systemctl restart nginx
     sudo systemctl status nginx
 
-5.5  add to .profile
-export TOOLS=/var/www/smart_parser/tools
-export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
-export SOURCE_DOC_SERVER_ADDRESS=migalka:8090
-
-
-#5.5 install https
-    #sudo apt-get install certbot python3-certbot-nginx
-    #https://certbot.eff.org/lets-encrypt/ubuntuxenial-nginx.html
-    #sudo certbot --nginx
-
-
-#5.7  Install workstation monitoring
-  sudo cp /var/www/smart_parser/tools/workstation_monitoring/workstation_monitoring.service /etc/systemd/system
-  sudo systemctl enable workstation_monitoring
-  sudo systemctl daemon-reload
-  sudo systemctl start workstation_monitoring
-
-#5.9 create database
-    cd /var/www/smart_parser/tools/disclosures_site
-    python3 manage.py makemigrations --settings disclosures.settings.dev
-    python3 manage.py migrate --settings disclosures.settings.dev
-    python3 manage.py create_database --settings disclosures.settings.dev  --skip-checks
-    #download disclosures.sql.gz from disclosures.ru
-    zcat disclosures.sql.gz| mysql -D disclosures_db -u disclosures -pdisclosures
+#5.7  init crontab  (run crontab -e, add lines from $TOOLS/disclosures_site/scripts/crontab.txt)
