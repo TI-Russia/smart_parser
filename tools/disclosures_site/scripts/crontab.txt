@@ -16,3 +16,4 @@ LOG_ARCHIVE=/home/sokirko/declarator_hdd/Yandex.Disk/declarator/nginx_logs/
 0          */1   *        *      *    certbot -q renew
 57 23 * * * gzip -c /var/log/nginx/access.log  > $LOG_ARCHIVE/access.`date "+\%Y-\%m-\%d"`.gz
 57 23 * * * gzip -c /var/log/nginx/error.log  > $LOG_ARCHIVE/error.`date "+\%Y-\%m-\%d"`.gz
+*/11 *  * * * goaccess /var/log/nginx/access.log --log-format=COMBINED --ignore-crawlers -o /var/www/smart_parser/tools/disclosures_site/disclosures/static/site_access.html

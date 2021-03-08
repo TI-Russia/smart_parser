@@ -1,5 +1,5 @@
 import declarations.models as models
-from declarations.russian_regions import TRussianRegions
+from common.russian_regions import TRussianRegions
 
 from django.core.management import BaseCommand
 from itertools import groupby
@@ -146,6 +146,7 @@ class Command(BaseCommand):
     <meta charset="UTF-8">
     <title>Средний доход чиновников за {} год по регионам</title>
     <h1>Средний доход чиновников за {} год по регионам</h1>
+    <h4> из <a href="/reports/regions/index.html"> отчета</a> </h4>
     <meta name="description" content="Средний доход российских чиновников (государственных и муниципальных служащих) по регионам за {} год">
     <style>
            table {{ 

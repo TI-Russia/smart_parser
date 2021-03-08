@@ -46,6 +46,10 @@ namespace Smart.Parser.Adapters
             return Text;
         }
 
+        // This function (graphics.MeasureString in particular) can work differently on Unix and Windows, may be because the default 
+        // font on Linux is Liberation Serif and the default font on Windows is Times New Roman.
+        // See the first column of sud_2016.doc from the test cases.  
+
         public List<string> GetLinesWithSoftBreaks()
         {
             var res = new List<string>();
@@ -443,6 +447,11 @@ namespace Smart.Parser.Adapters
                 {
                     Department = GetDeclarationField(DeclarationField.Department).Text;
                 }
+                else if (adapter.GetDocumentDepartmentFromMetaTag() != null)
+                {
+                    Department = adapter.GetDocumentDepartmentFromMetaTag();
+                }
+                
                 if (!DataHelper.IsEmptyValue(nameOrRelativeType))
                 {
                     if (DataHelper.IsRelativeInfo(nameOrRelativeType))

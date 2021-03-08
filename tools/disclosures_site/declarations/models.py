@@ -2,10 +2,14 @@ from django.db import models
 from django.utils.translation import  get_language
 from .countries import get_country_str
 from .rubrics import get_russian_rubric_str
-from declarations.nominal_income import get_average_nominal_incomes
+from declarations.nominal_income import get_average_nominal_incomes, YearIncome
+from declarations.ratings import TPersonRatings
+from declarations.car_brands import CAR_BRANDS
 
 from collections import defaultdict
 from operator import attrgetter
+from itertools import groupby
+import os
 
 
 def get_django_language():
@@ -109,7 +113,7 @@ class TOfficeTableInMemory:
             id = parent['id']
         return id
 
-    def get_parent_office(self, office_id):
+    def get_parent_office_id(self, office_id):
         return self.transitive_top[int(office_id)]
 
     def __init__(self, use_office_types=True, init_from_json=None):
@@ -251,22 +255,12 @@ class Person(models.Model):
         return self.section_set.all().count()
 
     @property
+    def last_section(self):
+        return max( (s for s in self.section_set.all()), key=attrgetter("income_year"))
+
+    @property
     def last_position_and_office_str(self):
-        last_section = max( (s for s in self.section_set.all()), key=attrgetter("income_year"))
-        str = last_section.source_document.office.name
-
-        position_and_department = ""
-        if last_section.department is not None:
-            position_and_department += last_section.department
-
-        if last_section.position is not None:
-            if position_and_department != "":
-                position_and_department += ", "
-            position_and_department += last_section.position
-
-        if position_and_department != "":
-            str += " ({})".format(position_and_department)
-        return str
+        return self.last_section.position_and_office_str
 
     @property
     def declaraion_count_str(self):
@@ -279,8 +273,15 @@ class Person(models.Model):
             return "{} деклараций".format(cnt)
 
     @property
+    def has_spouse(self):
+        for s in self.section_set.all():
+            if s.has_spouse():
+                return True
+        return False
+
+    @property
     def years_str(self):
-        years = list(s.income_year for s in self.section_set.all())
+        years = list(set(s.income_year for s in self.section_set.all()))
         years.sort()
         if len(years) == 1:
             return "{} год".format(years[0])
@@ -289,19 +290,48 @@ class Person(models.Model):
 
     @property
     def sections_ordered_by_year(self):
-        return list(sorted(self.section_set.all(), key=attrgetter("income_year")))
+        sections = list()
+        for _, year_sections in groupby(sorted(self.section_set.all(), key=attrgetter("income_year")), key=attrgetter("income_year")):
+            for s in year_sections:
+                sections.append(s) # one section per year
+                break
+        return sections
 
     def income_growth_yearly(self):
-        sections = self.sections_ordered_by_year
-        years = list(s.income_year for s in sections)
-        incomes = list(s.get_declarant_income_size() for s in sections)
-        return get_average_nominal_incomes(years, incomes)
+        incomes = list()
+        for s in self.sections_ordered_by_year:
+            incomes.append(YearIncome(s.income_year, s.get_declarant_income_size()))
+        return get_average_nominal_incomes(incomes)
 
     def get_permalink_passport(self):
         if self.declarator_person_id is not None:
             return "psd;" + str(self.declarator_person_id)
         else:
             return None
+
+    @property
+    def ratings(self):
+        s = ""
+        for r in self.person_rating_items_set.all():
+            if r.rating.id == TPersonRatings.LuxuryCarRating:
+                image_path = CAR_BRANDS.get_image_url(str(r.rating_value))
+                rating_info = ""
+            else:
+                image_path = os.path.join("/static/images/", r.rating.image_file_path)
+                rating_info = ", {} место, {} {}, число участников:{}".format(
+                    r.person_place,
+                    r.rating_value,
+                    r.rating.rating_unit_name,
+                    r.competitors_number
+                )
+            rating = '<abbr title="{} ({} год {})"> <image src="{}"/></abbr>'.format(
+                r.rating.name,
+                r.rating_year,
+                rating_info,
+                image_path)
+            rating = "<a href={}>{}</a>".format(TPersonRatings.get_search_params_by_rating(r), rating)
+            s += rating
+        return s
 
 
 class RealEstate(models.Model):
@@ -312,6 +342,7 @@ class RealEstate(models.Model):
     owntype = models.CharField(max_length=1)
     square = models.IntegerField(null=True)
     share = models.FloatField(null=True)
+    relative_index = models.PositiveSmallIntegerField(null=True)
 
     @property
     def own_type_str(self):
@@ -326,6 +357,7 @@ class RealEstate(models.Model):
 class Vehicle(models.Model):
     section = models.ForeignKey('declarations.Section', on_delete=models.CASCADE)
     relative = models.CharField(max_length=1)
+    relative_index = models.PositiveSmallIntegerField(null=True)
     name = models.TextField()
 
 
@@ -333,10 +365,11 @@ class Income(models.Model):
     section = models.ForeignKey('declarations.Section', on_delete=models.CASCADE)
     size = models.IntegerField(null=True)
     relative = models.CharField(max_length=1)
+    relative_index = models.PositiveSmallIntegerField(null=True)
 
 
-def get_relatives(records):
-    return set( Relative(x.relative) for x in records.all())
+def get_distinct_relative_types(records):
+    return set(Relative(x.relative) for x in records.all())
 
 
 class Section(models.Model):
@@ -350,15 +383,17 @@ class Section(models.Model):
     dedupe_score = models.FloatField(blank=True, null=True, default=0.0)
     surname_rank = models.IntegerField(null=True)
     name_rank = models.IntegerField(null=True)
-    rubric_id = models.IntegerField(null=True, default=None)  # see TOfficeRubrics
+
+    # sometimes Section.rubric_id overrides Office.rubric_id, see function convert_municipality_to_education for example
+    rubric_id = models.IntegerField(null=True, default=None)
 
     @property
     def section_parts(self):
         relatives = set()
         relatives.add(Relative(Relative.main_declarant_code))
-        relatives |= get_relatives(self.income_set)
-        relatives |= get_relatives(self.realestate_set)
-        relatives |= get_relatives(self.vehicle_set)
+        relatives |= get_distinct_relative_types(self.income_set)
+        relatives |= get_distinct_relative_types(self.realestate_set)
+        relatives |= get_distinct_relative_types(self.vehicle_set)
         relative_list = Relative.sort_by_visual_order(list(relatives))
         return relative_list
 
@@ -378,9 +413,22 @@ class Section(models.Model):
                 return i.size
         return 0
 
+    def get_spouse_income_size(self):
+        for i in self.income_set.all():
+            if i.relative == Relative.spouse_code:
+                if i.size is None:
+                    return None
+                else:
+                    return i.size
+        return None
+
     @property
     def declarant_income_size(self):
         return self.get_declarant_income_size()
+
+    @property
+    def spouse_income_size(self):
+        return self.get_spouse_income_size()
 
     def get_permalink_passport(self):
         main_income = self.get_declarant_income_size()
@@ -404,15 +452,65 @@ class Section(models.Model):
         return [type_str, square_str, r.own_type_str]
 
     @property
-    def realty_square_sum(self):
+    def declarant_realty_square_sum(self):
         sum = 0
+        cnt = 0
         for r in self.realestate_set.all():
-            sum += 0 if r.square is None else r.square
-        return sum
+            if r.relative == Relative.main_declarant_code:
+                if r.square is not None:
+                    sum += r.square
+                    cnt += 1
+        if cnt > 0:
+            return sum
+        else:
+            return None
+
+    @property
+    def spouse_realty_square_sum(self):
+        sum = 0
+        has_realty = 0
+        for r in self.realestate_set.all():
+            if r.relative == Relative.spouse_code:
+                if r.square is not None:
+                    sum += r.square
+                    has_realty = True
+        if has_realty:
+            return sum
+        else:
+            return None
 
     @property
     def vehicle_count(self):
         return len(list(self.vehicle_set.all()))
+
+    def has_spouse(self):
+        for r in self.realestate_set.all():
+            if r.relative == Relative.spouse_code:
+                return True
+        for r in self.income_set.all():
+            if r.relative == Relative.spouse_code:
+                return True
+        for r in self.vehicle_set.all():
+            if r.relative == Relative.spouse_code:
+                return True
+        return False
+
+    @property
+    def position_and_office_str(self):
+        str = self.source_document.office.name
+
+        position_and_department = ""
+        if self.department is not None:
+            position_and_department += self.department
+
+        if self.position is not None:
+            if position_and_department != "":
+                position_and_department += ", "
+            position_and_department += self.position
+
+        if position_and_department != "":
+            str += " ({})".format(position_and_department.strip())
+        return str
 
     @property
     def html_table_data_rows(self):
@@ -440,9 +538,9 @@ class Section(models.Model):
                 if cnt == 0:
                     rowspan = len(realties[relative.code])
                     if relative.code == Relative.main_declarant_code:
-                        cells = [(self.person_name, rowspan), (self.position, rowspan)]
+                        cells = [(self.person_name, rowspan)]
                     else:
-                        cells = [(relative.name, rowspan), ("", rowspan)]
+                        cells = [(relative.name, rowspan)]
                     cells.extend([(realty_type, 1), (realty_square, 1), (own_type, 1),
                                   (vehicles[relative.code], rowspan), (incomes[relative.code], rowspan)])
                 else:
@@ -450,3 +548,50 @@ class Section(models.Model):
                 cnt += 1
                 table.append(cells)
         return table
+
+    def get_car_brands(self):
+        car_brands = set()
+        for v in self.vehicle_set.all():
+            if v.name is not None and len(v.name) > 1:
+                car_brands.update(CAR_BRANDS.find_brands(v.name))
+        return list(car_brands)
+
+
+class Person_Rating(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.TextField(verbose_name='rating name')
+    image_file_path = models.TextField(verbose_name='file path')
+    rating_unit_name = models.TextField(verbose_name='rating_unit')
+
+    @staticmethod
+    def create_ratings():
+        Person_Rating(
+            id=TPersonRatings.MaxDeclarantOfficeIncomeRating,
+            name="Самый высокий доход внутри ведомства",
+            image_file_path="declarant_office_income.png",
+            rating_unit_name="руб.",
+            ).save()
+
+        Person_Rating(
+            id=TPersonRatings.MaxSpouseOfficeIncomeRating,
+            name="Самый высокий доход супруги(а) внутри ведомства",
+            image_file_path="spouse_office_income.png",
+            rating_unit_name= "руб.",
+            ).save()
+
+        Person_Rating(
+            id=TPersonRatings.LuxuryCarRating,
+            name="Дорогой автомобиль",
+            image_file_path="",
+            rating_unit_name="",
+            ).save()
+
+
+class Person_Rating_Items(models.Model):
+    rating = models.ForeignKey('declarations.Person_Rating', on_delete=models.CASCADE)
+    person = models.ForeignKey('declarations.Person', on_delete=models.CASCADE)
+    person_place = models.IntegerField()
+    rating_year = models.IntegerField()
+    rating_value = models.IntegerField()
+    competitors_number = models.IntegerField(default=0)
+    office = models.ForeignKey('declarations.Office', on_delete=models.CASCADE, null=True)

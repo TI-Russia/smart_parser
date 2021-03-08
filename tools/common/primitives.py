@@ -144,3 +144,11 @@ def string_contains_Russian_name(name):
     if re.search('[А-Я]\s*[.]\s*[А-Я]\s*[.][А-Я][а-я]+$', name) is not None:
         return True
     return False
+
+
+def prepare_russian_names_for_search_index(str):
+    if str is None:
+        return None
+    str = str.replace("Ё", "Е").replace("ё", "е")
+    return str
+

@@ -1,4 +1,3 @@
-u
 # Процесс создание базы disclosures = dlrobot+declarator (раз в месяц?)
 
 #0 ~/smart_parser/tools/INSTALL.txt are prerequisites
@@ -52,22 +51,20 @@ source $(dirname $0)/update_common.sh
 
 #8.  инициализация базы disclosures
     cd ~/smart_parser/tools/disclosures_site
-    python3 manage.py create_database --settings disclosures.settings.dev --skip-checks --username
+    python3 manage.py create_database --settings disclosures.settings.dev --skip-checks --username db_creator --password root
     python3 manage.py makemigrations --settings disclosures.settings.dev
     python3 manage.py migrate --settings disclosures.settings.dev
-    python3 manage.py search_index --rebuild  --settings disclosures.settings.dev -f
     python3 manage.py test declarations/tests --settings disclosures.settings.dev
-    #python3 manage.py search_index   --rebuild --settings disclosures.settings.prod --models declarations.Source_Document
 
 #9
     cd $DLROBOT_FOLDER
     python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev --permanent-links-db permalinks.dbm
 
 
-#10  Импорт json в dislosures_db (может быть, стоит запускать в 2 потока, а то памяти на мигалке не хватает)
+#10  Импорт json в dislosures_db
    python3 $TOOLS/disclosures_site/manage.py clear_database --settings disclosures.settings.dev
 
-   #15 hours
+   #>24 hours
    python3 $TOOLS/disclosures_site/manage.py import_json \
                --settings disclosures.settings.dev \
                --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER \
@@ -79,22 +76,23 @@ source $(dirname $0)/update_common.sh
    python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric sections_count  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
 
 
-#11 создание surname_rank (30 мин)
+#10.1  остановка dlrobot на $DEDUPE_HOSTS_SPACES в параллель (максмимум 3 часа), может немного одновременно проработать со сливалкой
+echo $DEDUPE_HOSTS_SPACES | tr " " "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/git_update_cloud_worker.py --action stop --host &
+
+#11 создание surname_rank (40 мин)
 python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclosures.settings.dev
 
-
 #12.  запуск сливалки, 4 gb memory each family portion, 30 GB temp files, no more than one process per workstation
-   #optional, clear person table
-   python3 $TOOLS/disclosures_site/manage.py clear_dedupe_artefacts --settings disclosures.settings.dev
+   #optional, if you have to run dedupe more than one time
+   #python3 $TOOLS/disclosures_site/manage.py clear_dedupe_artefacts --settings disclosures.settings.dev
 
    #1 hour
    python3 $TOOLS/disclosures_site/manage.py copy_person_id --settings disclosures.settings.dev --permanent-links-db permalinks.dbm
 
    python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs  --print-family-prefixes   --permanent-links-db $DLROBOT_FOLDER/permalinks.dbm --settings disclosures.settings.dev > surname_spans.txt
    echo $DEDUPE_HOSTS_SPACES | tr " " "\n"  | xargs  --verbose -P 4 -I {} -n 1 scp $DLROBOT_FOLDER/permalinks.dbm {}:/tmp
-   echo $DEDUPE_HOSTS_SPACES | tr " " "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/git_update_cloud_worker.py --action stop --host
 
-   #18 hours
+   #22 hours
    parallel --halt soon,fail=1 -a surname_spans.txt --jobs 2 --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $DEDUPE_HOSTS --basefile $DEDUPE_MODEL  --verbose --workdir /tmp \
         python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --permanent-links-db /tmp/permalinks.dbm --ml-model-file $DEDUPE_MODEL  \
                 --threshold 0.61  --surname-bounds {} --write-to-db --settings disclosures.settings.dev --logfile dedupe.{}.log
@@ -114,39 +112,36 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
 
 #14 создание индекса для elasticsearch, создание sitemap   в фоновом режиме
    {
-     python3 $TOOLS/disclosures_site/manage.py search_index --rebuild  --settings disclosures.settings.dev -f
+     python3 $TOOLS/disclosures_site/manage.py build_elastic_index --settings disclosures.settings.dev
      cd $DLROBOT_FOLDER
      python3 $TOOLS/disclosures_site/manage.py generate_static_sections --settings disclosures.settings.dev --output-folder sections
    } &
    ELASTIC_PID=$!
 
+#15 создание рейтингов
+python3 $TOOLS/disclosures_site/manage.py build_ratings --settings disclosures.settings.dev
 
 #16 создание дампа базы
  cd $DLROBOT_FOLDER
  mysqldump -u disclosures -pdisclosures disclosures_db_dev  |  gzip -c > $DLROBOT_FOLDER/disclosures.sql.gz
 
 #17 обновление prod
-    wait $ELASTIC_PID
+    wait $ELASTIC_PID  # надо дождаться generate_static_sections
     cd $TOOLS_PROD
     git pull
 
-    export DISCLOSURES_DATABASE_NAME=disclosures_prod_temp
-    python3 manage.py create_database --settings disclosures.settings.prod --skip-checks
-    zcat $DLROBOT_FOLDER/disclosures.sql.gz | mysql -u disclosures -pdisclosures -D $DISCLOSURES_DATABASE_NAME
+    #backup prod
+    export DISCLOSURES_DATABASE_NAME=disclosures_prod_sav
+    { mysqladmin drop  $DISCLOSURES_DATABASE_NAME -u disclosures -pdisclosures -f || true }
+    bash scripts/rename_db.sh disclosures_db $DISCLOSURES_DATABASE_NAME
     python3 manage.py elastic_manage --action backup-prod --settings disclosures.settings.dev
+
+
+    # move dev elastic index  to prod elastic index
     python3 manage.py elastic_manage --action dev-to-prod --settings disclosures.settings.dev
+    # move dev db to prod db
+    bash scripts/rename_db.sh disclosures_db_dev disclosures_db
     sudo systemctl restart gunicorn
-    # now prod works on database disclosures_prod_temp
-
-
-    export DISCLOSURES_DATABASE_NAME=disclosures_db
-    mysqladmin drop  $DISCLOSURES_DATABASE_NAME -u disclosures -pdisclosures -f
-    python3 manage.py create_database --settings disclosures.settings.prod --skip-checks
-    zcat $DLROBOT_FOLDER/disclosures.sql.gz | mysql -u disclosures -pdisclosures -D $DISCLOSURES_DATABASE_NAME
-    sudo systemctl restart gunicorn
-    # now prod works on database disclosures_db
-
-    mysqladmin drop  disclosures_prod_temp -u disclosures -pdisclosures -f
 
 #18 копируем файлы sitemap
     rm -rf disclosures/static/sections

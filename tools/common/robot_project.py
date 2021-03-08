@@ -61,6 +61,14 @@ class TRobotProject:
             if not self.enable_search_engine:
                 output["disable_search_engine"] = True
             outf.write(json.dumps(output, ensure_ascii=False, indent=4))
+    @staticmethod
+    def create_project(url, file_path):
+        with open(file_path, "w") as outp:
+            s = {
+                 "sites":[ {"morda_url":  url} ],
+                 "disable_search_engine": True
+            }
+            json.dump(s, outp)
 
     def add_office(self, morda_url):
         office_info = TRobotWebSite(self)
@@ -158,6 +166,7 @@ class TRobotProject:
         morda_url = step_info.website.morda_url
         site = step_info.website.get_domain_name()
         serp_urls = list()
+        search_engine = None
         for search_engine in range(0, SearchEngineEnum.SearchEngineCount):
             try:
                 serp_urls = SearchEngine.site_search(search_engine, site, request, self.selenium_driver)

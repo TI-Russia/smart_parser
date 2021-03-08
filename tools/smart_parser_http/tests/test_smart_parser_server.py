@@ -12,16 +12,15 @@ def start_server(server):
 
 
 class TTestEnv:
-    def __init__(self, port, worker_count):
+    def __init__(self, port):
         self.port = port
         self.data_folder = os.path.join(os.path.dirname(__file__), "data.{}".format(port))
         self.server_address = "localhost:{}".format(self.port)
         self.server = None
         self.server_thread = None
         self.client = None
-        self.setUp(worker_count)
 
-    def setUp(self, worker_count):
+    def setUp(self, worker_count, disk_sync_rate=1, heart_rate=600):
         TSmartParserHTTPServer.TASK_TIMEOUT = 1
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
@@ -31,7 +30,9 @@ class TTestEnv:
             '--input-task-directory', os.path.join(self.data_folder, "input"),
             '--server-address', self.server_address,
             '--log-file-name', os.path.join(self.data_folder, "smart_parser_server.log"),
-            '--worker-count', str(worker_count)
+            '--worker-count', str(worker_count),
+            '--disk-sync-rate', str(disk_sync_rate),
+            '--heart-rate', str(heart_rate)
         ]
         self.server = TSmartParserHTTPServer(TSmartParserHTTPServer.parse_args(server_args))
         self.server_thread = threading.Thread(target=start_server, args=(self.server,))
@@ -52,7 +53,8 @@ class TTestEnv:
 
 class TestBasic(TestCase):
     def setUp(self):
-        self.env = TTestEnv(8390, 1)
+        self.env = TTestEnv(8390)
+        self.env.setUp(1)
 
     def tearDown(self):
         self.env.tearDown()
@@ -72,7 +74,8 @@ class TestBasic(TestCase):
 
 class TestMultiThreaded(TestCase):
     def setUp(self):
-        self.env = TTestEnv(8391, 2)
+        self.env = TTestEnv(8391)
+        self.env.setUp(2)
 
     def tearDown(self):
         self.env.tearDown()
@@ -95,3 +98,44 @@ class TestMultiThreaded(TestCase):
 
         stats = self.env.client.get_stats()
         self.assertEqual(stats["session_write_count"], 2)
+
+
+class TestSyncByTimeout(TestCase):
+    def setUp(self):
+        self.env = TTestEnv(8392)
+        self.env.setUp(2, disk_sync_rate=5, heart_rate=1)
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def test_sync_by_timeout(self):
+        file_path1 = os.path.join(os.path.dirname(__file__), "files/MainWorkPositionIncome.docx")
+        self.assertTrue(self.env.client.send_file(file_path1))
+        file_path2 = os.path.join(os.path.dirname(__file__), "files/RealtyNaturalText.docx")
+        self.assertTrue(self.env.client.send_file(file_path2))
+
+        time.sleep(8)
+        stats = self.env.client.get_stats()
+        self.assertEqual(stats['unsynced_records_count'], 0)
+
+class TestRebuild(TestCase):
+    def setUp(self):
+        self.env = TTestEnv(8392)
+        self.env.setUp(1)
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def test_sync_by_timeout(self):
+        file_path1 = os.path.join(os.path.dirname(__file__), "files/MainWorkPositionIncome.docx")
+        self.assertTrue(self.env.client.send_file(file_path1))
+        time.sleep(6)
+        self.assertEqual(self.env.client.get_stats()['session_write_count'], 1)
+
+        self.assertTrue(self.env.client.send_file(file_path1))
+        time.sleep(6)
+        self.assertEqual(self.env.client.get_stats()['session_write_count'], 1)
+
+        self.assertTrue(self.env.client.send_file(file_path1, rebuild=True))
+        time.sleep(6)
+        self.assertEqual(self.env.client.get_stats()['session_write_count'], 2)

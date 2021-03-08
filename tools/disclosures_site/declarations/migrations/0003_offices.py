@@ -1,7 +1,6 @@
 from django.db import migrations
-import gzip
 import json
-from declarations.rubrics import build_one_rubric
+from declarations.rubrics import build_office_rubric
 import declarations.models as models
 import os
 
@@ -20,7 +19,7 @@ def add_offices(apps, schema_editor):
                    type_id=office['type_id'],
                    parent_id=office['parent_id'],
                    region_id=office['region_id'],
-                   rubric_id=build_one_rubric(None, office_hierarchy, office['id'])
+                   rubric_id=build_office_rubric(None, office_hierarchy, office['id'])
                    )
         c.save()
 

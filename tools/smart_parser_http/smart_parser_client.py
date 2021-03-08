@@ -37,9 +37,10 @@ class TSmartParserCacheClient(object):
         parser = argparse.ArgumentParser()
         parser.add_argument("--server-address", dest='server_address', default=None,
                             help="by default read it from environment variable SMART_PARSER_SERVER_ADDRESS")
-        parser.add_argument("--action", dest='action', default=None, help="can be put, get or stats", required=False)
+        parser.add_argument("--action", dest='action', default=None, help="can be put, get, get_by_sha256 or stats", required=False)
         parser.add_argument("--walk-folder-recursive", dest='walk_folder_recursive', default=None, required=False)
         parser.add_argument("--timeout", dest='timeout', default=300, type=int)
+        parser.add_argument("--rebuild", dest='rebuild', action="store_true", default=False)
         parser.add_argument('files', nargs='*')
         args = parser.parse_args(arg_list)
         if args.server_address is None:
@@ -77,12 +78,15 @@ class TSmartParserCacheClient(object):
         self.assert_server_alive()
         self.args = args
 
-    def send_file(self, file_path):
+    def send_file(self, file_path, rebuild=False):
         conn = http.client.HTTPConnection(self.server_address)
         with open(file_path, "rb") as inp:
             file_contents = inp.read()
         self.logger.debug("send {} to smart parser cache".format(file_path))
-        conn.request("PUT", os.path.basename(file_path), file_contents)
+        path = os.path.basename(file_path)
+        if rebuild:
+            path += "?rebuild=1"
+        conn.request("PUT", path, file_contents)
         response = conn.getresponse()
         if response.code != 201:
             self.logger.error("could not put a task to smart parser cache")
@@ -139,14 +143,20 @@ class TSmartParserCacheClient(object):
             print(json.dumps(self.get_stats()))
         else:
             for f in self.get_files():
-                if self.args.action == "get":
+                if self.args.action == "get_by_sha256":
+                    js = self.retrieve_json_by_sha256(f)
+                    if js is None:
+                        print("not found")
+                    else:
+                        print(json.dumps(js, ensure_ascii=False))
+                elif self.args.action == "get":
                     js = self.retrieve_json_by_source_file(f)
                     if js is None:
                         print("not found")
                     else:
                         print(json.dumps(js, ensure_ascii=False))
                 else:
-                    self.send_file(f)
+                    self.send_file(f, self.args.rebuild)
 
 
 if __name__ == "__main__":

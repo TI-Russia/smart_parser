@@ -1,0 +1,1710 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Егоров Даниил Вячеславович",
+        "role": "Руководитель",
+        "department": "Руководство; Руководство"
+      },
+      "year": 2019,
+      "incomes": [
+        {
+          "size": 44958971.47,
+          "size_raw": "44958971,47",
+          "relative": null
+        },
+        {
+          "size": 28627280.84,
+          "size_raw": "28627280,84",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "size": 0.0,
+          "size_raw": "0",
+          "relative": "Ребенок",
+          "relative_index": 2
+        },
+        {
+          "size": 0.0,
+          "size_raw": "0",
+          "relative": "Ребенок",
+          "relative_index": 3
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 28.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "28",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 52.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "52",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "земельный участок",
+          "square": 800.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "800",
+          "country_raw": "Российская Федерация",
+          "type_raw": "земельный участок",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 50.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "50",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 187.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "187,6",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "машиноместо",
+          "square": 13.3,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "13,3",
+          "country_raw": "Российская Федерация",
+          "type_raw": "машиноместо",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 50.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "50",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 50.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "50",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобили легковые Lexus RX 350",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "Автомобили легковые"
+        }
+      ],
+      "person_index": 1
+    },
+    {
+      "person": {
+        "name_raw": "Аракелов Сергей Ашотович",
+        "role": "Заместитель руководителя",
+        "department": "Руководство; Руководство"
+      },
+      "year": 2019,
+      "incomes": [
+        {
+          "size": 8123151.8,
+          "size_raw": "8123151,8",
+          "relative": null
+        },
+        {
+          "size": 3656928.57,
+          "size_raw": "3656928,57",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "size": 0.0,
+          "size_raw": "0",
+          "relative": "Ребенок",
+          "relative_index": 2
+        },
+        {
+          "size": 0.0,
+          "size_raw": "0",
+          "relative": "Ребенок",
+          "relative_index": 3
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 102.4,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "102,4",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Общая долевая - 1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 62.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "62",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 102.4,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "102,4",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Общая долевая - 1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 78.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "78",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "гараж",
+          "square": 16.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "16",
+          "country_raw": "Российская Федерация",
+          "type_raw": "гараж",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 78.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "78",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 102.4,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "102,4",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 78.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "78",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 102.4,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "102,4",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобили легковые Тойота Лексус LX450D",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "Автомобили легковые"
+        }
+      ],
+      "person_index": 2
+    },
+    {
+      "person": {
+        "name_raw": "Бондарчук Светлана Леонидовна",
+        "role": "Заместитель руководителя",
+        "department": "Руководство; Руководство"
+      },
+      "year": 2019,
+      "incomes": [
+        {
+          "size": 8040282.6,
+          "size_raw": "8040282,6",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 44.7,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "44,7",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Общая долевая - 1/3 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 37.7,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "37,7",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 74.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "74,6",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобили легковые Ауди Q5",
+          "relative": null,
+          "type_raw": "Автомобили легковые",
+          "model": "Ауди Q5"
+        },
+        {
+          "text": "Автомобили легковые Мицубиши ASX",
+          "relative": null,
+          "type_raw": "Автомобили легковые",
+          "model": "Мицубиши ASX"
+        }
+      ],
+      "person_index": 3
+    },
+    {
+      "person": {
+        "name_raw": "Бударин Андрей Владимирович",
+        "role": "Заместитель руководителя",
+        "department": "Руководство; Руководство"
+      },
+      "year": 2019,
+      "incomes": [
+        {
+          "size": 6326878.28,
+          "size_raw": "6326878,28",
+          "relative": null
+        },
+        {
+          "size": 393328.84,
+          "size_raw": "393328,84",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "size": 0.0,
+          "size_raw": "0",
+          "relative": "Ребенок",
+          "relative_index": 2
+        },
+        {
+          "size": 0.0,
+          "size_raw": "0",
+          "relative": "Ребенок",
+          "relative_index": 3
+        },
+        {
+          "size": 0.0,
+          "size_raw": "0",
+          "relative": "Ребенок",
+          "relative_index": 4
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 77.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "77,5",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 77.5,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "77,5",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 77.5,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "77,5",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 77.5,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "77,5",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 77.5,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "77,5",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобили легковые Тойота Рав4",
+          "relative": null,
+          "type_raw": "Автомобили легковые",
+          "model": "Тойота Рав4"
+        },
+        {
+          "text": "Моторные лодки Silver Condor star cabin 730",
+          "relative": null,
+          "type_raw": "Моторные лодки",
+          "model": "Silver Condor star cabin 730"
+        },
+        {
+          "text": "Автоприцепы Вектор ЛАВ 81018",
+          "relative": null,
+          "type_raw": "Автоприцепы",
+          "model": "Вектор ЛАВ 81018"
+        }
+      ],
+      "person_index": 4
+    },
+    {
+      "person": {
+        "name_raw": "Вольвач Дмитрий Валерьевич",
+        "role": "Заместитель руководителя",
+        "department": "Руководство; Руководство"
+      },
+      "year": 2019,
+      "incomes": [
+        {
+          "size": 6635483.62,
+          "size_raw": "6635483,62",
+          "relative": null
+        },
+        {
+          "size": 820886.59,
+          "size_raw": "820886,59",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "size": 0.0,
+          "size_raw": "0",
+          "relative": "Ребенок",
+          "relative_index": 2
+        },
+        {
+          "size": 0.0,
+          "size_raw": "0",
+          "relative": "Ребенок",
+          "relative_index": 3
+        },
+        {
+          "size": 0.0,
+          "size_raw": "0",
+          "relative": "Ребенок",
+          "relative_index": 4
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 1500.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1500",
+          "country_raw": "Российская Федерация",
+          "type_raw": "земельный участок",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 38.8,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "38,8",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "земельный участок",
+          "square": 586.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "586",
+          "country_raw": "Российская Федерация",
+          "type_raw": "земельный участок",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 58.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "58,5",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 100.2,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "100,2",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "гараж",
+          "square": 18.7,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "18,7",
+          "country_raw": "Российская Федерация",
+          "type_raw": "гараж",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 129.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "129",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 38.8,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "38,8",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "Манино-место",
+          "square": 14.3,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "14,3",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Манино-место",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "объект незавершенного строительства",
+          "square": 280.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "280",
+          "country_raw": "Российская Федерация",
+          "type_raw": "объект незавершенного строительства"
+        },
+        {
+          "text": "квартира",
+          "square": 38.8,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "38,8",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Общая долевая - 1/2 доли"
+        },
+        {
+          "text": "объект незавершенного строительства",
+          "square": 280.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "280",
+          "country_raw": "Российская Федерация",
+          "type_raw": "объект незавершенного строительства"
+        },
+        {
+          "text": "квартира",
+          "square": 38.8,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "38,8",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "объект незавершенного строительства",
+          "square": 280.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "280",
+          "country_raw": "Российская Федерация",
+          "type_raw": "объект незавершенного строительства"
+        },
+        {
+          "text": "квартира",
+          "square": 38.8,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "38,8",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "объект незавершенного строительства",
+          "square": 280.0,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "280",
+          "country_raw": "Российская Федерация",
+          "type_raw": "объект незавершенного строительства"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобили легковые Лексус ES200, 2018",
+          "relative": null,
+          "type_raw": "Автомобили легковые",
+          "model": "Лексус ES200, 2018"
+        }
+      ],
+      "person_index": 5
+    },
+    {
+      "person": {
+        "name_raw": "Егоричев Александр Валерьевич",
+        "role": "Заместитель руководителя",
+        "department": "Руководство; Руководство"
+      },
+      "year": 2019,
+      "incomes": [
+        {
+          "size": 8634339.58,
+          "size_raw": "8634339,58",
+          "relative": null
+        },
+        {
+          "size": 0.0,
+          "size_raw": "0",
+          "relative": "Ребенок",
+          "relative_index": 1
+        },
+        {
+          "size": 0.0,
+          "size_raw": "0",
+          "relative": "Ребенок",
+          "relative_index": 2
+        },
+        {
+          "size": 367857.04,
+          "size_raw": "367857,04",
+          "relative": "Супруг(а)",
+          "relative_index": 3
+        },
+        {
+          "size": 0.0,
+          "size_raw": "0",
+          "relative": "Ребенок",
+          "relative_index": 4
+        },
+        {
+          "size": 0.0,
+          "size_raw": "0",
+          "relative": "Ребенок",
+          "relative_index": 5
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 31.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "31,9",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 41.6,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "41,6",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 77.8,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "77,8",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 68.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "68,9",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Общая долевая - 1/4 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 52.6,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "52,6",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 77.8,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "77,8",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 52.6,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "52,6",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 77.8,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "77,8",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 41.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "41,6",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 41.6,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "41,6",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 41.6,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "41,6",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобили легковые Киа Сиид",
+          "relative": null,
+          "type_raw": "Автомобили легковые",
+          "model": "Киа Сиид"
+        },
+        {
+          "text": "Автомобили легковые Киа Спортедж",
+          "relative": null,
+          "type_raw": "Автомобили легковые",
+          "model": "Киа Спортедж"
+        }
+      ],
+      "person_index": 6
+    },
+    {
+      "person": {
+        "name_raw": "Колесников Виталий Григорьевич",
+        "role": "Заместитель руководителя",
+        "department": "Руководство; Руководство"
+      },
+      "year": 2019,
+      "incomes": [
+        {
+          "size": 7996249.8,
+          "size_raw": "7996249,8",
+          "relative": null
+        },
+        {
+          "size": 2044083.05,
+          "size_raw": "2044083,05",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "size": 0.0,
+          "size_raw": "0",
+          "relative": "Ребенок",
+          "relative_index": 2
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 65.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "65,6",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 81.1,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "81,1",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 48.7,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "48,7",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 38.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "38,5",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "гараж",
+          "square": 16.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "16,5",
+          "country_raw": "Российская Федерация",
+          "type_raw": "гараж",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "гараж",
+          "square": 16.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "16,6",
+          "country_raw": "Российская Федерация",
+          "type_raw": "гараж",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 81.1,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "81,1",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 101.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "101,6",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "гараж",
+          "square": 30.2,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "30,2",
+          "country_raw": "Российская Федерация",
+          "type_raw": "гараж",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 52.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "52,9",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 81.1,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "81,1",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобили легковые Audi Q5",
+          "relative": null,
+          "type_raw": "Автомобили легковые",
+          "model": "Audi Q5"
+        },
+        {
+          "text": "Автомобили легковые Ауди А8",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "Автомобили легковые"
+        }
+      ],
+      "person_index": 7
+    },
+    {
+      "person": {
+        "name_raw": "Петрушин Андрей Станиславович",
+        "role": "Заместитель руководителя",
+        "department": "Руководство; Руководство"
+      },
+      "year": 2019,
+      "incomes": [
+        {
+          "size": 9100868.78,
+          "size_raw": "9100868,78",
+          "relative": null
+        },
+        {
+          "size": 16100.0,
+          "size_raw": "16100",
+          "relative": "Ребенок",
+          "relative_index": 1
+        },
+        {
+          "size": 5844392.88,
+          "size_raw": "5844392,88",
+          "relative": "Супруг(а)",
+          "relative_index": 2
+        },
+        {
+          "size": 0.0,
+          "size_raw": "0",
+          "relative": "Ребенок",
+          "relative_index": 3
+        },
+        {
+          "size": 0.0,
+          "size_raw": "0",
+          "relative": "Ребенок",
+          "relative_index": 4
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 1500.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1500",
+          "country_raw": "Российская Федерация",
+          "type_raw": "земельный участок",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "земельный участок",
+          "square": 1239.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1239",
+          "country_raw": "Российская Федерация",
+          "type_raw": "земельный участок",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "дача",
+          "square": 158.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "158",
+          "country_raw": "Российская Федерация",
+          "type_raw": "дача",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 87.8,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "87,8",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "гараж",
+          "square": 18.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "18",
+          "country_raw": "Российская Федерация",
+          "type_raw": "гараж",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "гараж",
+          "square": 18.2,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "18,2",
+          "country_raw": "Российская Федерация",
+          "type_raw": "гараж",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 108.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "108,9",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Общая совместная"
+        },
+        {
+          "text": "здание, строение, сооружение",
+          "square": 56.7,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "56,7",
+          "country_raw": "Российская Федерация",
+          "type_raw": "здание, строение, сооружение",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "гараж",
+          "square": 70.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "70,5",
+          "country_raw": "Российская Федерация",
+          "type_raw": "гараж",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "ЛЭП в дачном товариществе",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "0",
+          "country_raw": "Российская Федерация",
+          "type_raw": "ЛЭП в дачном товариществе",
+          "own_type_raw": "Общая долевая - 1/59 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 65.2,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "65,2",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 76.7,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "76,7",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 87.8,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "87,8",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 108.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "108,9",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Общая совместная"
+        },
+        {
+          "text": "квартира",
+          "square": 87.8,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "87,8",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "гараж",
+          "square": 18.4,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "18,4",
+          "country_raw": "Российская Федерация",
+          "type_raw": "гараж",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "гараж",
+          "square": 24.1,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "24,1",
+          "country_raw": "Российская Федерация",
+          "type_raw": "гараж",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 64.8,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "64,8",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "гараж",
+          "square": 13.8,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "13,8",
+          "country_raw": "Российская Федерация",
+          "type_raw": "гараж",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "гараж",
+          "square": 13.8,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "13,8",
+          "country_raw": "Российская Федерация",
+          "type_raw": "гараж",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "ЛЭП в дачном товариществе",
+          "square": null,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "0",
+          "country_raw": "Российская Федерация",
+          "type_raw": "ЛЭП в дачном товариществе",
+          "own_type_raw": "Общая долевая - 1/59 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 70.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "70,9",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Общая долевая - 1/6 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 87.8,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "87,8",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 87.8,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "87,8",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автоприцепы THULE 1205S",
+          "relative": null,
+          "type_raw": "Автоприцепы",
+          "model": "THULE 1205S"
+        },
+        {
+          "text": "Автомобили легковые Mercedes Bens GLS",
+          "relative": "Супруг(а)",
+          "relative_index": 2,
+          "type_raw": "Автомобили легковые"
+        }
+      ],
+      "person_index": 8
+    },
+    {
+      "person": {
+        "name_raw": "Сатин Дмитрий Станиславович",
+        "role": "Заместитель руководителя",
+        "department": "Руководство; Руководство"
+      },
+      "year": 2019,
+      "incomes": [
+        {
+          "size": 8066167.97,
+          "size_raw": "8066167,97",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 61.3,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "61,3",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 60.3,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "60,3",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобили легковые Форд Фокус",
+          "relative": null,
+          "type_raw": "Автомобили легковые",
+          "model": "Форд Фокус"
+        },
+        {
+          "text": "Автомобили легковые Вольво XC60",
+          "relative": null,
+          "type_raw": "Автомобили легковые",
+          "model": "Вольво XC60"
+        }
+      ],
+      "person_index": 9
+    },
+    {
+      "person": {
+        "name_raw": "Чекмышев Константин Николаевич",
+        "role": "Заместитель руководителя",
+        "department": "Руководство; Руководство"
+      },
+      "year": 2019,
+      "incomes": [
+        {
+          "size": 7920289.6,
+          "size_raw": "7920289,6",
+          "relative": null
+        },
+        {
+          "size": 584985.73,
+          "size_raw": "584985,73",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "size": 14.78,
+          "size_raw": "14,78",
+          "relative": "Ребенок",
+          "relative_index": 2
+        },
+        {
+          "size": 0.0,
+          "size_raw": "0",
+          "relative": "Ребенок",
+          "relative_index": 3
+        },
+        {
+          "size": 0.0,
+          "size_raw": "0",
+          "relative": "Ребенок",
+          "relative_index": 4
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 1500.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1500",
+          "country_raw": "Российская Федерация",
+          "type_raw": "земельный участок",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 109.2,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "109,2",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "земельный участок",
+          "square": 1500.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "1500",
+          "country_raw": "Российская Федерация",
+          "type_raw": "земельный участок",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 109.2,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "109,2",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 95.2,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "95,2",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Общая долевая - 16/100 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 95.2,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "95,2",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Общая долевая - 16/100 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 109.2,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "109,2",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 95.2,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "95,2",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Общая долевая - 16/100 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 109.2,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "109,2",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 95.2,
+          "relative": "Ребенок",
+          "own_type_by_column": "В собственности",
+          "square_raw": "95,2",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Общая долевая - 16/100 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 109.2,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "109,2",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобили легковые Инфинити QX60",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "Автомобили легковые"
+        }
+      ],
+      "person_index": 10
+    },
+    {
+      "person": {
+        "name_raw": "Шепелева Юлия Вячеславовна",
+        "role": "Заместитель руководителя",
+        "department": "Руководство; Руководство"
+      },
+      "year": 2019,
+      "incomes": [
+        {
+          "size": 10977903.8,
+          "size_raw": "10977903,8",
+          "relative": null
+        },
+        {
+          "size": 0.0,
+          "size_raw": "0",
+          "relative": "Ребенок",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 68.1,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "68,1",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 68.1,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "68,1",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобили легковые МЕРСЕДЕС БЕНЦ С 200 4МАТ, 2016г.",
+          "relative": null,
+          "type_raw": "Автомобили легковые",
+          "model": "МЕРСЕДЕС БЕНЦ С 200 4МАТ, 2016г."
+        }
+      ],
+      "person_index": 11
+    },
+    {
+      "person": {
+        "name_raw": "Каменчук Юлия Григорьевна",
+        "role": "Советник руководителя",
+        "department": "Руководство; Руководство"
+      },
+      "year": 2019,
+      "incomes": [
+        {
+          "size": 2336555.25,
+          "size_raw": "2336555,25",
+          "relative": null
+        },
+        {
+          "size": 520735.76,
+          "size_raw": "520735,76",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок",
+          "square": 600.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "600",
+          "country_raw": "Российская Федерация",
+          "type_raw": "земельный участок",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 48.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "48",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "жилой дом",
+          "square": 61.9,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "61,9",
+          "country_raw": "Российская Федерация",
+          "type_raw": "жилой дом",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 43.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "43",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Общая долевая - 1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 43.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "43",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Общая долевая - 1/2 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 53.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "53",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 53.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "53",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Общая долевая - 1/3 доли"
+        },
+        {
+          "text": "квартира",
+          "square": 48.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "48",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобили легковые TOYOTA Camry, 2014 г.",
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "type_raw": "Автомобили легковые"
+        }
+      ],
+      "person_index": 12
+    },
+    {
+      "person": {
+        "name_raw": "Маркарян Гамлет Костниевич",
+        "role": "Советник руководителя",
+        "department": "Руководство; Руководство"
+      },
+      "year": 2019,
+      "incomes": [
+        {
+          "size": 3339581.34,
+          "size_raw": "3339581,34",
+          "relative": null
+        },
+        {
+          "size": 0.0,
+          "size_raw": "0",
+          "relative": "Ребенок",
+          "relative_index": 1
+        },
+        {
+          "size": 0.0,
+          "size_raw": "0",
+          "relative": "Супруг(а)",
+          "relative_index": 2
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 37.4,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "37,4",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "квартира",
+          "square": 37.4,
+          "relative": "Ребенок",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "37,4",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "земельный участок",
+          "square": 600.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "600",
+          "country_raw": "Российская Федерация",
+          "type_raw": "земельный участок",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 37.4,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В пользовании",
+          "square_raw": "37,4",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира"
+        },
+        {
+          "text": "дача",
+          "square": 75.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "75",
+          "country_raw": "Российская Федерация",
+          "type_raw": "дача",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "Дачный дом (баня)",
+          "square": 20.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "20",
+          "country_raw": "Российская Федерация",
+          "type_raw": "Дачный дом (баня)",
+          "own_type_raw": "Индивидуальная"
+        },
+        {
+          "text": "квартира",
+          "square": 48.2,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "48,2",
+          "country_raw": "Российская Федерация",
+          "type_raw": "квартира",
+          "own_type_raw": "Индивидуальная"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобили легковые ХЕНДЭ x35. 2011г.",
+          "relative": null,
+          "type_raw": "Автомобили легковые",
+          "model": "ХЕНДЭ x35. 2011г."
+        }
+      ],
+      "person_index": 13
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения о доходах, об имуществе и обязательствах имущественного характера\n        государственных гражданских служащих ФНС России, а также сведения о доходах, об имуществе и обязательствах\n        имущественного характера их супругов и несовершеннолетних детей за период с 1 января 2019 ",
+    "year": 2019,
+    "url": "51.service.nalog.ru"
+  }
+}

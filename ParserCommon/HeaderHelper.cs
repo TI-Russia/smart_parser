@@ -130,7 +130,7 @@ namespace TI.Declarator.ParserCommon
 
         private static bool IsRelativeType(this string s) => s.ContainsAny("члены семьи", "степень родства") && !s.IsName();
 
-        private static bool IsOccupation(this string s) => s
+        public static bool IsOccupation(this string s) => s
             .RemoveCharacters('-', ' ').ToLowerInvariant()
             .ContainsAny("должность", "должности", "должностей");
 
@@ -232,7 +232,7 @@ namespace TI.Declarator.ParserCommon
                 && clean.Contains("марка") && !clean.Contains("вид");
         }
 
-        private static bool IsDeclaredYearlyIncome(this string str)
+        public static bool IsDeclaredYearlyIncome(this string str)
         {
             var strLower = str.OnlyRussianLowercase();
             return strLower.ContainsAny("годовойдоход", "годовогодохода", "суммадохода", "суммадоходов", "декларированныйдоход", "декларированныйгодовой", "декларированногодохода", "декларированногогодовогодоход", "общаясуммадохода")

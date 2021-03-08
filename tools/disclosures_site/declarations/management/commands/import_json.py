@@ -1,11 +1,8 @@
 import declarations.models as models
-from declarations.serializers import TSmartParserJsonReader
-from declarations.documents import stop_elastic_indexing, start_elastic_indexing
+from declarations.serializers import TSmartParserSectionJson
 from declarations.management.commands.permalinks import TPermaLinksDB
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from declarations.input_json import TDlrobotHumanFile
-from declarations.rubrics import convert_municipality_to_education, TOfficeRubrics
-from declarations.documents import OFFICES
 
 from multiprocessing import Pool
 import os
@@ -134,36 +131,30 @@ class TImporter:
         section_index = 0
         TImporter.logger.debug("try to import {} declarants".format(len(input_json['persons'])))
         incomes = list()
-        for p in input_json['persons']:
+        for raw_section in input_json['persons']:
             section_index += 1
-            income_year = p.get('year', common_income_year)
+            income_year = raw_section.get('year', common_income_year)
             if income_year is None:
-                raise TSmartParserJsonReader.SerializerException("year is not defined: section No {}".format(section_index))
+                raise TSmartParserSectionJson.SerializerException("year is not defined: section No {}".format(section_index))
             with transaction.atomic():
                 try:
-                    json_reader = TSmartParserJsonReader(income_year, source_document_in_db, p)
-                    passport = json_reader.get_passport_factory().get_passport_collection()[0]
+                    prepared_section = TSmartParserSectionJson(income_year, source_document_in_db)
+                    prepared_section.read_raw_json(raw_section)
+                    passport = prepared_section.get_passport_factory().get_passport_collection()[0]
                     if self.register_section_passport(passport):
-                        json_reader.section.tmp_income_set = json_reader.incomes
-                        section_id = self.permalinks_db.get_section_id(json_reader.section)
+                        prepared_section.section.tmp_income_set = prepared_section.incomes
+                        section_id = self.permalinks_db.get_section_id(prepared_section.section)
                         if section_id >= self.first_new_section_id_for_print:
                             TImporter.logger.debug("found a new section {}, set section.id to {}".format(
-                                json_reader.section.get_permalink_passport(), section_id))
+                                prepared_section.section.get_permalink_passport(), section_id))
 
-                        # json_reader.section.rubric_id = source_document_in_db.office.rubric_id does not work
-                        # may be we should call source_document_in_db.refresh_from_db
-                        json_reader.section.rubric_id = OFFICES.offices[source_document_in_db.office.id]['rubric_id']
-
-                        if json_reader.section.rubric_id == TOfficeRubrics.Municipality and  \
-                                convert_municipality_to_education(json_reader.section.position):
-                            json_reader.section.rubric_id = TOfficeRubrics.Education
-                        main_income = json_reader.get_main_declarant_income_size()
+                        main_income = prepared_section.get_main_declarant_income_size()
                         if main_income is not None and main_income > 0:
                             incomes.append(main_income)
-                        json_reader.save_to_database(section_id)
+                        prepared_section.save_to_database(section_id)
                         imported_section_years.append(income_year)
 
-                except (DatabaseError, TSmartParserJsonReader.SerializerException) as exp:
+                except (DatabaseError, TSmartParserSectionJson.SerializerException) as exp:
                     TImporter.logger.error("Error! cannot import section N {}: {} ".format(section_index, exp))
 
         if len(imported_section_years) > 0:
@@ -201,7 +192,7 @@ class TImporter:
                 try:
                     sections_count = self.import_one_smart_parser_json(src_doc.get_declarator_income_year(), doc_file_in_db, smart_parser_json)
                     TImporter.logger.debug("import {} sections from {}".format(sections_count, sha256))
-                except TSmartParserJsonReader.SerializerException as exp:
+                except TSmartParserSectionJson.SerializerException as exp:
                     TImporter.logger.error("Error! cannot import smart parser json for file {}: {} ".format(sha256, exp))
 
 
@@ -210,7 +201,7 @@ def process_one_file_in_subprocess(importer: TImporter, office_id):
     try:
         importer.import_office(office_id)
         gc.collect()
-    except TSmartParserJsonReader.SerializerException as exp:
+    except TSmartParserSectionJson.SerializerException as exp:
         TImporter.logger.error("cannot import office {}, exception: {}".format(office_id), exp)
 
 
@@ -255,7 +246,6 @@ class ImportJsonCommand(BaseCommand):
     def handle(self, *args, **options):
         TImporter.logger = setup_logging("import_json.log")
         importer = TImporter(options)
-        stop_elastic_indexing()
 
         self.stdout.write("start importing")
         if options.get('process_count', 0) > 1:
@@ -272,7 +262,6 @@ class ImportJsonCommand(BaseCommand):
                 importer.import_office(office_id)
                 cnt += 1
 
-        start_elastic_indexing()
         TImporter.logger.info("Section count={}".format(models.Section.objects.all().count()))
         TImporter.logger.info("all done")
 

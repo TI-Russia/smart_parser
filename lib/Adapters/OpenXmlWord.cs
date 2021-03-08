@@ -13,6 +13,7 @@ using Parser.Lib;
 using System.Xml.Linq;
 using Smart.Parser.Lib.Adapters.AdapterSchemes;
 using Smart.Parser.Lib.Adapters.DocxSchemes;
+using Smart.Parser.Lib; 
 
 namespace Smart.Parser.Adapters
 {
@@ -644,11 +645,13 @@ namespace Smart.Parser.Adapters
                     break;
                 }
             }
-
-            if (maxCellsCount <= 4 || CheckNameColumnIsEmpty(TableRows, saveRowsCount))
+            if ((TableRows.Count > 0) && !ColumnDetector.IsNamePositionAndIncomeTable(GetCells(0)))
             {
-                //remove this suspicious table 
-                TableRows.RemoveRange(saveRowsCount, TableRows.Count - saveRowsCount);
+                if (maxCellsCount <= 4 || CheckNameColumnIsEmpty(TableRows, saveRowsCount))
+                {
+                    //remove this suspicious table 
+                    TableRows.RemoveRange(saveRowsCount, TableRows.Count - saveRowsCount);
+                }
             }
         }
 

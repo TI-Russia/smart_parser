@@ -11,26 +11,38 @@
 </style>
 <form action="{% url 'section_search' %}" method="get">
     <div class="search_input">
-        {{form.person_name.label_tag}}
-        {{form.person_name}}
+        <abbr title="Начинайте с фамилии, например, Иванов Иван Иванович или Иванов И.И.">
+            {{form.person_name.label_tag}}
+        </abbr>
+           {{form.person_name}}
+        &#32;&#32;&#32;<br class="responsive" />
+
+        <span>{{form.rubric_id.label_tag}}{{form.rubric_id}}</span>
+        &nbsp;&nbsp;&nbsp;
         <input type="submit" value="Поиск">
     </div>
     <div class="search_input">
-        {{form.rubric_id.label_tag}}
-        {{form.rubric_id}}
-        &nbsp;&nbsp;&nbsp;
         {{form.income_year.label_tag}}
         {{form.income_year}}
-        &nbsp;&nbsp;&nbsp;
+        &#32;&#32;&#32;<br class="responsive" />
+
         {{form.region_id.label_tag}}
         {{form.region_id}}
+        &#32;&#32;&#32;<br class="responsive" />
+        {{form.car_brands.label_tag}}
+        {{form.car_brands}}
     </div>
     <div class="search_input">
         {{form.position_and_department.label_tag}}
         {{form.position_and_department}}
-        &nbsp;
-        {{form.office_request.label_tag}}
-        {{form.office_request}}
+        &#32;&#32;&#32;<br class="responsive" />
+        <abbr title="Часть названия или числовой идентификатор">
+            {{form.office_request.label_tag}}
+            {{form.office_request}}
+        </abbr>
+        &#32;&#32;&#32;<br class="responsive" />
+        {{form.match_phrase.label_tag}}
+        {{form.match_phrase}}
     </div>
 </form>
 
@@ -41,6 +53,10 @@
     {% if fuzzy_search %}
         <small>(точного вхождения не найдено, ищем без фильтра по ФИО) </small>
     {% endif %}
+    {% if skip_rubric_filtering %}
+        <small>(ничего не найдено в указанной рубрике, убираем фильтр по рубрике) </small>
+    {% endif %}
+
 
 
     <br/>
@@ -52,6 +68,7 @@
             <th><a href="?{{sort_by_income_year}}">Год</a></th>
             <th><a href="?{{sort_by_person_id}}">Декларант</a></th>
             <th><a href="?{{sort_by_income_size}}">Доход</a></th>
+            <th>Рубрика</th>
         </tr>
         {% for section in object_list %}
         <tr>
@@ -64,6 +81,7 @@
                 {% endif %}
             </td>
             <td>{{ section.income_size }}</td>
+            <td><small>{{ section.rubric_str }}</small></td>
         </tr>
         {% endfor %}
     </table>

@@ -1,6 +1,6 @@
 from django.db import migrations, models
 from declarations.models import SynonymClass
-from declarations.russian_regions import TRussianRegions
+from common.russian_regions import TRussianRegions
 
 import gzip
 import json

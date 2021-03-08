@@ -9,64 +9,36 @@
 {% block content %}
 
 <h1>
-     {{ section.source_document.office.name }} <br/>
-     Cведения о доходах за {{ section.income_year }} год <br/>
-     {% if section.department %}
-        {{ section.department }}
-     {% endif %}
-
+    {% if section.person_id %}
+        {{section.person.person_name}}
+    {% else %}
+        {{section.person_name}}
+    {% endif %}
 </h1>
 
+<h2>
+     {{section.position_and_office_str}} <br/> <br/>
+     Cведения о доходах за {{ section.income_year }} год <br/>
+</h2>
 
-<table class="declaration_table">
-    <tr>
-       <th rowspan="2">ФИО</th>
-       <th rowspan="2">Должность</th>
-       <th colspan="3">Недвижимость</th>
-       <th rowspan="2">Транспорт</th>
-       <th rowspan="2" width="10%">Доход</th>
-    </tr>
-    <tr>
-        <th>Тип</th>
-        <th>Площадь</th>
-        <th>Владение</th>
-    </tr>
-
-    {% for cells in section.html_table_data_rows %}
-        <tr>
-            {% for value_and_rowspan in cells %}
-                <td rowspan="{{value_and_rowspan.1}}"> {{value_and_rowspan.0 |safe}} </td>
-            {% endfor %}
-        </tr>
-    {% endfor %}
-
-</table>
+{% include "section/section_table.html" %}
 
 <br/><br/>
 
 Рубрика: {{section.rubric_str}}
-<br/>
+<br/><br/>
 
 Источник декларации: <a href="/file/{{ section.source_document.id }}"> файл id={{ section.source_document.id }} </a>
 <br/><br/>
 
 
 {% if section.person_id %}
-<a href="/section/?person_id={{ section.person_id }}" > Остальные декларации этого человека</a>
-(person_id={{ section.person_id }}, уверенность
-                {% if section.dedupe_score > 0 %}
-                    {{ section.dedupe_score | floatformat:2}}
-                {% else %}
-                    1.0
-                {% endif %}
-) </a>
-<br/> <br/>
+    <a href="/section/?person_id={{ section.person_id }}" > Остальные декларации этого человека</a>
+    <br/> <br/>
 
-{% if section.person.declarator_person_id %}
-    <a href="http://declarator.org/person/{{section.person.declarator_person_id}}"> Ссылка на Декларатор </a>
-{% endif %}
-
-
+    {% if section.person.declarator_person_id %}
+        <a href="http://declarator.org/person/{{section.person.declarator_person_id}}"> Ссылка на Декларатор </a>
+    {% endif %}
 {% endif %}
 
 {% endblock content %}

@@ -11,48 +11,61 @@
 {% block content %}
 
 <h1>
-     {{person.person_name}}
+     {{person.person_name}} {{person.ratings |safe}}
 </h1>
 
 <h2>
-     {{ person.last_position_and_office_str }}
+    1. Последняя известная декларация ({{person.last_section.income_year}} год)
 </h2>
 
 <h3>
-     Cведения о доходах за {{person.years_str}}
+     {{ person.last_position_and_office_str }}
 </h3>
+
+{% with section=person.last_section %}
+    {% include "section/section_table.html" %}
+{% endwith %}
+
+<br/>
+
+<h2>
+     2. Исторические сведения о доходах чиновника за {{person.years_str}}
+</h2>
 
 
 <table class="solid_table">
     <tr>
        <th>Год</th>
-       <th>Недвижимость(кв.м)</th>
+       <th>Недвижимость (кв.м)</th>
        <th>Транспорт</th>
        <th>Доход</th>
+        {% if person.has_spouse %}
+          <th>Недвижимость супруги/а (кв.м)</th>
+          <th>Доход супруги/а</th>
+        {% endif %}
     </tr>
 
     {% for s in person.sections_ordered_by_year %}
         <tr>
             <td> <a href="/section/{{ s.id }}">{{s.income_year}} </a>  </td>
-            <td align="right"> {{s.realty_square_sum}} </td>
+            <td align="right"> {{s.declarant_realty_square_sum|default_if_none:""}} </td>
             <td align="right"> {{s.vehicle_count}} </td>
             <td align="right"> &nbsp;{{s.declarant_income_size}}&nbsp; </td>
+            {% if person.has_spouse %}
+              <td>{{s.spouse_realty_square_sum|default_if_none:""}}</td>
+              <td>{{s.spouse_income_size|default_if_none:""}}</td>
+            {% endif %}
         </tr>
     {% endfor %}
 
 </table>
-
-<br/><br/>
-
-{% if person.declarator_person_id %}
-    <a href="http://declarator.org/person/{{person.declarator_person_id}}"> Ссылка на Декларатор </a>
-{% endif %}
+<br/>
 
 {% with comp=person.income_growth_yearly %}
     {% if comp %}
-    <h4>
-         Сравнение роста номинальных доходов со средним ростом доходов по всей стране
-    </h4>
+    <h2>
+         3. Сравнение роста номинальных доходов чиновника со средним ростом зарплат по всей стране
+    </h2>
       <table class="solid_table">
           <tr>
               <th>Мин. год</th>
@@ -71,5 +84,12 @@
     {% endif %}
 {% endwith %}
 
+<br/><br/>
+
+{% if person.declarator_person_id %}
+    <a href="http://declarator.org/person/{{person.declarator_person_id}}"> Ссылка на Декларатор </a>
+{% endif %}
+
 
 {% endblock content %}
+

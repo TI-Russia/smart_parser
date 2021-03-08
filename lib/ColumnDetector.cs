@@ -78,6 +78,16 @@ namespace Smart.Parser.Lib
             return false;
         }
 
+        // special abridged format for Moscow courts, see sud_2016.doc in the test cases 
+        public static bool IsNamePositionAndIncomeTable(List<Cell> cells)
+        {
+            if (cells.Count != 3) return false;
+
+            return HeaderHelpers.IsName(cells[0].Text)
+                 && HeaderHelpers.IsOccupation(cells[1].Text)
+                 && HeaderHelpers.IsDeclaredYearlyIncome(cells[2].Text);
+        }
+
         static int ProcessTitle(IAdapter adapter, ColumnOrdering columnOrdering)
         {
             int row = 0;
@@ -351,9 +361,24 @@ namespace Smart.Parser.Lib
                 {
                     foreach (var underCell in underCells)
                     {
-                        underCell.TextAbove = cell.Text.NormSpaces();
-                        columnCells.Add(underCell);
-                        texts.Add(underCell.TextAbove + "^" + underCell.Text.NormSpaces());
+                        var underCells2 = FindSubcellsUnder(adapter, underCell);
+                        if ((underCells2.Count() <= 1) || (maxMergedRows != 3))
+                        {
+                            underCell.TextAbove = cell.Text.NormSpaces();
+                            columnCells.Add(underCell);
+                            texts.Add(underCell.TextAbove + "^" + underCell.Text.NormSpaces());
+                        }
+                        else
+                        {
+                            // three merged rows in the header, see pudoz_01.docx
+                            foreach (var underCell2 in underCells2)
+                            {
+                                underCell2.TextAbove = cell.Text.NormSpaces() + " " + underCell.Text.NormSpaces();
+                                columnCells.Add(underCell2);
+                                texts.Add(underCell2.TextAbove + "^" + underCell2.Text.NormSpaces());
+                            }
+                        }
+
                     }
                     headerEndRow = Math.Max(headerEndRow, underCells[0].Row + underCells[0].MergedRowsCount);
                 }
@@ -433,7 +458,7 @@ namespace Smart.Parser.Lib
             {
                 string cellText1 = adapter.GetCell(firstDataRow, 0).GetText();
                 string cellText2 = adapter.GetCell(firstDataRow, 1).GetText();
-                if (cellText1 == "1" && cellText2 == "2")
+                if (cellText1.StartsWith("1") && cellText2.StartsWith("2"))
                 {
                     firstDataRow++;
                 }

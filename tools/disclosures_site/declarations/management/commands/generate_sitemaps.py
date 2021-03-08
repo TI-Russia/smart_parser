@@ -54,6 +54,11 @@ class Command(BaseCommand):
             default=os.path.join(os.path.dirname(__file__), "../../../disclosures/static/regionreports")
         )
         parser.add_argument(
+            '--office-report-folder',
+            dest='office_report_folder',
+            default=os.path.join(os.path.dirname(__file__), "../../../disclosures/static/officereports")
+        )
+        parser.add_argument(
             '--static-section-folder',
             dest='static_section_folder',
             default=os.path.join(os.path.dirname(__file__), "../../../disclosures/static/sections")
@@ -109,23 +114,28 @@ class Command(BaseCommand):
             self.write_sitemap(url_paths, chunk_output_sitemap)
         return result_sitemaps
 
-    def build_region_report_sitemap(self, region_report_folder):
-        sitemap_path = os.path.join(region_report_folder, "sitemap.xml")
-        url_paths = ("static/regionreports/{}".format(f) for f in os.listdir(region_report_folder) if f.endswith('.html'))
+    def build_report_sitemap(self, report_folder):
+        subfolder = os.path.basename(report_folder)
+        sitemap_path = os.path.join(report_folder, "sitemap.xml")
+        url_paths = ("static/{}/{}".format(subfolder, f) for f in os.listdir(report_folder) if f.endswith('.html'))
         self.write_sitemap(url_paths, sitemap_path, priority=0.8)
-        return 'static/regionreports/sitemap.xml'
+        return 'static/{}/sitemap.xml'.format(subfolder)
 
     def build_main_sitemap(self):
         sitemap_path = os.path.join(os.path.dirname(__file__), "../../../disclosures/static/sitemap-main.xml")
-        url_paths = ["", "about.html", "statistics", "office"]
+        url_paths = ["",
+                     "about.html",
+                     "statistics",
+                     "office",
+                     "reports/car-brands/car-brands-by-years.html",
+                     "reports/car-brands/index.html",
+                     "reports/names/index.html",
+                     "reports/genders/index.html",
+                     "reports/offices/index.html",
+                     "reports/regions/index.html",
+                     ""]
         self.write_sitemap(url_paths, sitemap_path, priority=1.0)
         return 'sitemap-main.xml'
-
-    def build_office_section_sitemap(self, static_section_folder):
-        sitemap_path = os.path.join(static_section_folder, "sitemap.xml")
-        url_paths = ("static/sections/{}".format(f) for f in os.listdir(static_section_folder) if f.endswith('.html'))
-        self.write_sitemap(url_paths, sitemap_path)
-        return 'static/sections/sitemap.xml'
 
     def write_sitemap_index_entry(self, sitemap_url_path, outp):
         url = urllib.parse.urljoin("https://disclosures.ru", sitemap_url_path)
@@ -135,9 +145,12 @@ class Command(BaseCommand):
         self.logger = setup_logging()
         self.delete_rare_people_xml(options['rare_people_file_pattern'])
         rare_people_sitemaps = self.build_rare_people_sitemaps(options['rare_people_file_pattern'])
-        region_sitemap = self.build_region_report_sitemap(options["region_report_folder"])
+
+        region_sitemap = self.build_report_sitemap(options["region_report_folder"])
+        office_sitemap = self.build_report_sitemap(options["office_report_folder"])
+        office_section_sitemap = self.build_report_sitemap(options["static_section_folder"])
+
         main_sitemap = self.build_main_sitemap()
-        office_section_sitemap = self.build_office_section_sitemap(options["static_section_folder"])
 
         sitemap_index_path = os.path.join(os.path.dirname(__file__), "../../../disclosures/static/sitemap.xml")
         with open(sitemap_index_path, "w") as outp:
@@ -148,4 +161,5 @@ class Command(BaseCommand):
                 self.write_sitemap_index_entry(s, outp)
             self.write_sitemap_index_entry(region_sitemap, outp)
             self.write_sitemap_index_entry(office_section_sitemap, outp)
+            self.write_sitemap_index_entry(office_sitemap, outp)
             outp.write("</sitemapindex>\n")

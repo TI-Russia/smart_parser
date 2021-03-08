@@ -1,4 +1,3 @@
-from declarations.documents import stop_elastic_indexing
 from declarations.management.commands.permalinks import TPermaLinksDB
 import declarations.models as models
 from .random_forest_adapter import TDeduplicationObject, TFioClustering, TMLModel
@@ -317,7 +316,6 @@ class Command(BaseCommand):
                 sys.stdout.write("{},{}\n".format(lower_bound, upper_bound))
             return
         self.logger.info('surname bounds are {}'.format(options.get('surname_bounds', "")))
-        stop_elastic_indexing()
         self.load_dedupe_model()
         dump_stream = None
         dump_file_name = self.options.get("result_pairs_file")

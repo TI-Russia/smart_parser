@@ -5,7 +5,7 @@ import logging
 from django.core.management import BaseCommand
 from declarations.russian_fio import TRussianFio
 import declarations.models as models
-from declarations.serializers import TSmartParserJsonReader, TSectionPassportFactory
+from declarations.serializers import TSmartParserSectionJson, TSectionPassportFactory
 import pickle
 
 
@@ -123,7 +123,7 @@ class Command(BaseCommand):
             assert section_or_person_id.startswith('section-')
             year = sections[0].get('year', 0)
             json_file = models.Source_Document(office_id=sections[0].get('office_id', -1))
-            passport_factory = TSmartParserJsonReader(year, json_file, sections[0]).get_passport_factory(
+            passport_factory = TSmartParserSectionJson(year, json_file).read_raw_json(sections[0]).get_passport_factory(
                 self.squeeze.office_hierarchy)
             section_id, search_results = passport_factory.search_by_passports(self.squeeze.stable_key_to_sections)
             if section_id is not None:

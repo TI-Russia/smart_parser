@@ -5,6 +5,8 @@ from disclosures_site.declarations.statistics import TDisclosuresStatisticsHisto
 from .rubrics import fill_combo_box_with_rubrics
 from common.content_types import file_extension_to_content_type
 from declarations.apps import DeclarationsConfig
+from declarations.car_brands import CAR_BRANDS
+from common.primitives import prepare_russian_names_for_search_index
 
 from django.views import generic
 from django.views.generic.edit import FormView
@@ -14,6 +16,7 @@ from django_elasticsearch_dsl import TextField
 from django.http import HttpResponse
 import os
 import urllib
+from django.shortcuts import render
 
 
 class SectionView(generic.DetailView):
@@ -42,6 +45,13 @@ class OfficeView(generic.DetailView):
 
 class AboutPageView(generic.TemplateView):
     template_name = 'morda/about.html'
+
+
+def anyUrlView(request):
+    path = request.path
+    if path.startswith('/'):
+        path = path[1:]
+    return render(request, path)
 
 
 def sitemapView(request):
@@ -97,6 +107,19 @@ def fill_combo_box_with_regions():
     return CACHED_REGIONS
 
 
+CACHED_CAR_BRANDS = None
+
+
+def fill_combo_box_with_car_brands():
+    global CACHED_CAR_BRANDS
+    if CACHED_CAR_BRANDS is None:
+        CACHED_CAR_BRANDS = list()
+        CACHED_CAR_BRANDS.append(('', ''))
+        for id, brand_info in CAR_BRANDS.brand_dict.items():
+            CACHED_CAR_BRANDS.append((id, brand_info['name']))
+    return CACHED_CAR_BRANDS
+
+
 def fill_combo_box_with_first_crawl_epochs():
     values = list()
     values.append(('', ''))
@@ -143,6 +166,10 @@ class CommonSearchForm(forms.Form):
         required=False,
         label="Регион",
         choices=fill_combo_box_with_regions)
+    car_brands = forms.ChoiceField(
+        required=False,
+        label="Машина",
+        choices=fill_combo_box_with_car_brands)
     office_request = forms.CharField(
         widget=forms.TextInput(attrs={'size': 25}),
         required=False,
@@ -162,6 +189,7 @@ class CommonSearchForm(forms.Form):
         required=False,
         empty_value="",
         label="Sha256")
+    match_phrase = forms.BooleanField(label="Фраза", required=False)
 
 
 def compare_Russian_fio(search_query, person_name):
@@ -190,6 +218,8 @@ class CommonSearchView(FormView, generic.ListView):
             context['hits_count'] = self.hits_count
             if hasattr(self, "fuzzy_search"):
                 context['fuzzy_search'] = self.fuzzy_search
+            if hasattr(self, "skip_rubric_filtering"):
+                context['skip_rubric_filtering'] = self.skip_rubric_filtering
             context['query_fields'] = self.get_query_in_cgi()
             old_sort_by, old_order = self.get_sort_order()
             old_cgi_fields = self.get_initial()
@@ -203,8 +233,8 @@ class CommonSearchView(FormView, generic.ListView):
         return context
 
     def get_initial(self):
-        return {
-            'person_name': self.request.GET.get('person_name'),
+        dct =  {
+            'person_name': prepare_russian_names_for_search_index(self.request.GET.get('person_name')),
             'office_request': self.request.GET.get('office_request'),
             'rubric_id': self.request.GET.get('rubric_id'),
             'income_year': self.request.GET.get('income_year'),
@@ -221,7 +251,16 @@ class CommonSearchView(FormView, generic.ListView):
             'first_crawl_epoch': self.request.GET.get('first_crawl_epoch'),
             'parent_id': self.request.GET.get('parent_id'),
             'sha256': self.request.GET.get('sha256'),
+            'car_brands': self.request.GET.get('car_brands'),
+            'match_phrase': self.request.GET.get('match_phrase'),
         }
+
+        if self.request.GET.get('match_phrase'):
+            dct['match_operator'] = 'match_phrase'
+        else:
+            dct['match_operator'] = 'match'
+
+        return dct
 
     def build_person_name_elastic_search_query(self, should_items):
         person_name = self.get_initial().get("person_name")
@@ -233,15 +272,18 @@ class CommonSearchView(FormView, generic.ListView):
     def build_office_full_text_elastic_search_query(self, should_items):
         office_query = self.get_initial().get('office_request')
         if office_query is not None and len(office_query) > 0:
-            oqd = {"query": {"match": {"name": {"query": office_query, "operator": "and"}}}}
-            search_results = ElasticOfficeDocument.search().update_from_dict(oqd)
-            total = search_results.count()
-            if total == 0:
-                return None
-            offices = list(o.id for o in search_results[0:total])
-            should_items.append({"terms": {"office_id": offices}})
+            if office_query.isdigit():
+                should_items.append({"terms": {"office_id": [int(office_query)]}})
+            else:
+                oqd = {"query": {self.get_initial().get('match_operator'): {"name": {"query": office_query, "operator": "and"}}}}
+                search_results = ElasticOfficeDocument.search().update_from_dict(oqd)
+                total = search_results.count()
+                if total == 0:
+                    return None
+                offices = list(o.id for o in search_results[0:total])
+                should_items.append({"terms": {"office_id": offices}})
 
-    def query_elastic_search(self):
+    def query_elastic_search(self, use_rubric_filtering):
         def add_should_item(field_name, elastic_search_operaror, field_type, should_items):
             field_value = self.get_initial().get(field_name)
             if field_value is not None and field_value != '':
@@ -250,10 +292,12 @@ class CommonSearchView(FormView, generic.ListView):
             should_items = []
             self.build_person_name_elastic_search_query(should_items)
             add_should_item("name", "match", str, should_items)
-            add_should_item("rubric_id", "term", int, should_items)
+            if use_rubric_filtering:
+                add_should_item("rubric_id", "term", int, should_items)
             add_should_item("region_id", "term", int, should_items)
+            add_should_item("car_brands", "term", str, should_items)
             add_should_item("income_year", "term", int, should_items)
-            add_should_item("position_and_department", "match", str, should_items)
+            add_should_item("position_and_department", self.get_initial().get("match_operator"), str, should_items)
             add_should_item("web_domains", "match", str, should_items)
             add_should_item("source_document_id", "term", int, should_items)
             add_should_item("office_id", "term", int, should_items)
@@ -340,10 +384,17 @@ class CommonSearchView(FormView, generic.ListView):
         return query_fields
 
     def get_queryset_common(self):
-        search_results = self.query_elastic_search()
+        search_results = self.query_elastic_search(True)
         if search_results is None:
             return []
         object_list = self.filter_search_results(search_results)
+        if len(object_list) == 0 and self.get_initial().get("rubric_id") is not None:
+            search_results = self.query_elastic_search(False)
+            if search_results is None:
+                return []
+            object_list = self.filter_search_results(search_results)
+            self.skip_rubric_filtering = True
+
         sort_by, order = self.get_sort_order()
         if sort_by == "person_name":
             object_list.sort(key=lambda x: x.person_name, reverse=(order=="desc"))
