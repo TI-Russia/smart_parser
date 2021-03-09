@@ -55,9 +55,8 @@ class Office(models.Model):
     def region_name(self):
         if self.region is None:
             return ""
-        
+
         try:
-            if
             return self.region.name
         except Exception as exp:
             raise
