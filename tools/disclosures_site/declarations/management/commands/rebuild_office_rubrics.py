@@ -1,25 +1,7 @@
 from declarations.rubrics import build_office_rubric, get_russian_rubric_str
 from django.core.management import BaseCommand
+from common.logging_wrapper import setup_logging
 import declarations.models as models
-import logging
-import os
-
-
-def setup_logging(logfilename="build_rubric.log"):
-    logger = logging.getLogger("build_rubric")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    return logger
 
 
 class Command(BaseCommand):
@@ -38,7 +20,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        logger = setup_logging()
+        logger = setup_logging(log_file_name="build_rubric.log")
         office_hierarchy = models.TOfficeTableInMemory(use_office_types=False)
         for office in models.Office.objects.all():
             rubric_id = build_office_rubric(logger, office_hierarchy, office.id)

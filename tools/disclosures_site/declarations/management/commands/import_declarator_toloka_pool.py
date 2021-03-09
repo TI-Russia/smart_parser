@@ -1,12 +1,12 @@
 import csv
 import json
 import os
-import logging
 from django.core.management import BaseCommand
 from declarations.russian_fio import TRussianFio
 import declarations.models as models
 from declarations.serializers import TSmartParserSectionJson, TSectionPassportFactory
 import pickle
+from common.logging_wrapper import setup_logging
 
 
 class ConvertException(Exception):
@@ -23,28 +23,6 @@ def check_family_name(n1, n2):
     if not fio1.is_resolved or not fio2.is_resolved:
         return n1[0:3].lower() == n2[0:3].lower()
     return fio1.family_name == fio2.family_name
-
-
-def setup_logging(logfilename="convert_pool.log"):
-    logger = logging.getLogger("convert_pool")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-
-    return logger
 
 
 class TDbSqueeze:
@@ -172,7 +150,7 @@ class Command(BaseCommand):
                 tsv_writer.writerow(row)
 
     def handle(self, *args, **options):
-        self.logger = setup_logging()
+        self.logger = setup_logging(log_file_name="convert_pool.log")
         action = options['action']
         if action == "prepare":
             self.squeeze.build_squeeze(self.logger)

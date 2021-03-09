@@ -3,35 +3,18 @@ from declarations.serializers import TSmartParserSectionJson
 from declarations.management.commands.permalinks import TPermaLinksDB
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from declarations.input_json import TDlrobotHumanFile
+from common.logging_wrapper import setup_logging
 
 from multiprocessing import Pool
 import os
 from functools import partial
 import json
-import logging
 from collections import defaultdict
 from django.core.management import BaseCommand
 from django.db import transaction
 from django.db import DatabaseError
 import gc
 from statistics import median
-
-
-def setup_logging(logfilename):
-    logger = logging.getLogger("import_json")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    return logger
 
 
 class TImporter:
@@ -244,7 +227,7 @@ class ImportJsonCommand(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        TImporter.logger = setup_logging("import_json.log")
+        TImporter.logger = setup_logging(log_file_name="import_json.log")
         importer = TImporter(options)
 
         self.stdout.write("start importing")

@@ -1,33 +1,11 @@
 from .random_forest_adapter import pool_to_random_forest, TMLModel
 from deduplicate.toloka import TToloka
+from common.logging_wrapper import setup_logging
 
 from django.core.management import BaseCommand
-import logging
 import json
 import os
 from sklearn.metrics import precision_recall_curve
-
-
-def setup_logging(logfilename="test_ml_pool.log"):
-    logger = logging.getLogger("test_ml_pool")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-    return logger
-
 
 
 class Command(BaseCommand):
@@ -62,7 +40,7 @@ class Command(BaseCommand):
         self.test_objects = None
         self.test_data = None
         self.options = None
-        self.logger = setup_logging()
+        self.logger = setup_logging(log_file_name="test_ml_pool.log")
         self.ml_model = None
         self.X = None
         self.y_true = None

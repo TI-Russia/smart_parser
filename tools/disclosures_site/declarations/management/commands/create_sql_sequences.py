@@ -1,7 +1,4 @@
 from django.core.management import BaseCommand
-from django.conf import settings
-import pymysql
-import sys
 from declarations.management.commands.permalinks import TPermaLinksDB
 
 

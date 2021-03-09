@@ -2,36 +2,15 @@ import declarations.models as models
 from declarations.russian_fio import TRussianFio
 from declarations.rubrics import get_all_rubric_ids, get_russian_rubric_str
 from declarations.gender_recognize import TGender, TGenderRecognizer
+from common.logging_wrapper import setup_logging
+
 
 from django.core.management import BaseCommand
-import logging
-import os
 from collections import defaultdict
 from django.db import connection
 from statistics import median
 import gc
 import re
-
-def setup_logging(logfilename="gender_report.log"):
-    logger = logging.getLogger("surname_rank")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-
-    return logger
 
 
 def fetch_cursor(sql_query):
@@ -51,7 +30,7 @@ class Command(BaseCommand):
 
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
-        self.logger = setup_logging()
+        self.logger = setup_logging(logger_name="gender_report")
         self.regions = dict()
         for r in models.Region.objects.all():
             self.regions[r.id] = r.name

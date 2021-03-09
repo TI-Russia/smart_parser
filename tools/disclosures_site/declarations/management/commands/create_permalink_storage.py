@@ -1,27 +1,9 @@
 from declarations.management.commands.permalinks import TPermaLinksDB
 from common.primitives import queryset_iterator
 import declarations.models as models
+from common.logging_wrapper import setup_logging
 
 from django.core.management import BaseCommand
-import logging
-import os
-
-
-def setup_logging(logfilename="create_permalink_storage.log"):
-    logger = logging.getLogger("copy_primary_keys")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    return logger
 
 
 class Command(BaseCommand):
@@ -57,7 +39,7 @@ class Command(BaseCommand):
             db.save_max_plus_one_primary_key(model_type, max_value + 1)
 
     def handle(self, *args, **options):
-        self.logger = setup_logging()
+        self.logger = setup_logging(logger_name="create_permalink_storage")
 
         db = TPermaLinksDB(options.get('output_dbm_file'))
         db.create_db()

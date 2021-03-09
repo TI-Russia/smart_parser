@@ -1,32 +1,8 @@
 from .random_forest_adapter import check_pool_after_real_clustering
 from deduplicate.toloka import TToloka
+from common.logging_wrapper import setup_logging
 
 from django.core.management import BaseCommand
-import logging
-import os
-from sklearn.metrics import precision_score, recall_score
-
-
-def setup_logging(logfilename="test_real_clustering.log"):
-    logger = logging.getLogger("test_real_clustering")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-    return logger
-
 
 
 class Command(BaseCommand):
@@ -41,7 +17,7 @@ class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
         self.options = None
-        self.logger = setup_logging()
+        self.logger = setup_logging(log_file_name="test_real_clustering.log")
 
     def handle(self, *args, **options):
         self.options = options

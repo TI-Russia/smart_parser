@@ -3,13 +3,13 @@ from common.archives import TDearchiver
 from source_doc_http.source_doc_client import TSourceDocClient
 from ConvStorage.conversion_client import TDocConversionClient
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
+from common.logging_wrapper import setup_logging
 
 import pymysql
 import os
 import argparse
 import hashlib
 from urllib.parse import urlparse
-import logging
 import requests
 import urllib.parse
 import sys
@@ -19,23 +19,6 @@ import shutil
 import tempfile
 
 DECLARATOR_DOMAIN = 'https://declarator.org'
-
-
-def setup_logging(logfilename):
-    logger = logging.getLogger("export")
-    logger.setLevel(logging.DEBUG)
-
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    fh = logging.FileHandler(logfilename, "a+", encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-    return logger
 
 
 def build_sha256(filename):
@@ -67,7 +50,7 @@ class TExportHumanFiles:
         return parser.parse_args(arg_list)
 
     def __init__(self, args):
-        self.logger = setup_logging("download.log")
+        self.logger = setup_logging(log_file_name="export_human_files.log")
         self.args = args
         if self.args.tmp_folder is None:
             self.args.tmp_folder = tempfile.mkdtemp("export_human")

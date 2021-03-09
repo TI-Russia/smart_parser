@@ -3,24 +3,7 @@ import os
 import urllib.parse
 import declarations.models as models
 from django.db import connection
-import logging
-
-
-def setup_logging(logfilename="generate_sitemap.log"):
-    logger = logging.getLogger("sitemap")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    return logger
+from common.logging_wrapper import setup_logging
 
 
 def build_rare_people(limit=200000):
@@ -142,7 +125,7 @@ class Command(BaseCommand):
         outp.write("<sitemap><loc>{}</loc></sitemap>\n".format(url))
 
     def handle(self, *args, **options):
-        self.logger = setup_logging()
+        self.logger = setup_logging(log_file_name="generate_sitemap.log")
         self.delete_rare_people_xml(options['rare_people_file_pattern'])
         rare_people_sitemaps = self.build_rare_people_sitemaps(options['rare_people_file_pattern'])
 

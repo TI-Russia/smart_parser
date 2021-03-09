@@ -2,29 +2,11 @@ import declarations.models as models
 from django.core.management import BaseCommand
 from declarations.management.commands.permalinks import TPermaLinksDB
 from declarations.russian_fio import TRussianFio
+from common.logging_wrapper import setup_logging
 
-import logging
 import pymysql
-import os
 import json
 from django.db import connection
-
-
-def setup_logging(logfilename="copy_person.log"):
-    logger = logging.getLogger("copy_person")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    return logger
 
 
 def build_section_passport(document_id, fio, income_main):
@@ -213,7 +195,7 @@ class Command(BaseCommand):
         self.logger.info("set human person id to {} records".format(merge_count))
 
     def handle(self, *args, **options):
-        self.logger = setup_logging()
+        self.logger = setup_logging(logger_name="copy_person")
         self.options = options
         self.logger.debug("models.Person.objects.count()={}".format(models.Person.objects.count()))
         assert models.Person.objects.count() == 0

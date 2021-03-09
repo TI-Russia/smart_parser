@@ -1,39 +1,16 @@
 import declarations.models as models
 from common.primitives import string_contains_Russian_name
+from common.logging_wrapper import setup_logging
 
 from django.core.management import BaseCommand
-import logging
-import os
 from collections import defaultdict
-
-
-def setup_logging(logfilename="bad_fio.log"):
-    logger = logging.getLogger("bad_fio")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-
-    return logger
 
 
 class Command(BaseCommand):
 
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
-        self.logger = setup_logging()
+        self.logger = setup_logging(logger_name="bad_fio.log")
 
 
     def process_sections(self):

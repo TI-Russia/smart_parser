@@ -2,33 +2,15 @@ import declarations.models as models
 from elasticsearch import helpers
 from declarations.car_brands import CAR_BRANDS
 from common.primitives import prepare_russian_names_for_search_index
+from common.logging_wrapper import setup_logging
 
 from itertools import groupby
 from operator import itemgetter
 from django.core.management import BaseCommand
-import logging
-import os
 from django.conf import settings
 from elasticsearch import Elasticsearch
 from django.db import connection
 from elasticsearch_dsl import Index
-
-
-def setup_logging(logfilename):
-    logger = logging.getLogger("import_json")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    return logger
 
 
 def fetch_cursor(sql_query):
@@ -394,7 +376,7 @@ class Command(BaseCommand):
         indexator.logger.debug("all done")
 
     def handle(self, *args, **options):
-        self.logger = setup_logging(options.get('logfile', 'build_elastic.log'))
+        self.logger = setup_logging(log_file_name=options.get('logfile', 'build_elastic.log'))
         model = options.get('model')
         if model is None:
             self.rebuild(TOfficeElasticIndexator)

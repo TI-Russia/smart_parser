@@ -3,6 +3,7 @@ import declarations.models as models
 from django.core.management import BaseCommand
 from declarations.car_brands import CAR_BRANDS
 
+
 class Command(BaseCommand):
 
     def __init__(self, *args, **kwargs):

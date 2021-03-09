@@ -1,7 +1,6 @@
 import zipfile
 import os
 import shutil
-import logging
 from common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_ZIP_EXTENSION, DEFAULT_RAR_EXTENSION, \
     DEFAULT_7Z_EXTENSION
 import tempfile

@@ -1,33 +1,11 @@
 from .random_forest_adapter import pool_to_random_forest, TDeduplicationObject
 from deduplicate.toloka import TToloka
+from common.logging_wrapper import setup_logging
 
 from django.core.management import BaseCommand
 from sklearn.ensemble import RandomForestClassifier
 import json
-import logging
-import os
 import pickle
-
-
-def setup_logging(logfilename="train_ml_pool.log"):
-    logger = logging.getLogger("train_ml_pool")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-    return logger
 
 
 class Command(BaseCommand):
@@ -70,7 +48,7 @@ class Command(BaseCommand):
         self.y_true = None
         self.threshold = None
         self.options = None
-        self.logger = setup_logging()
+        self.logger = setup_logging(log_file_name="train_ml_pool.log")
 
     def build_train_objects_and_pairs(self):
         self.train_objects, self.X, self.y_true = pool_to_random_forest(self.logger, self.train_pool)

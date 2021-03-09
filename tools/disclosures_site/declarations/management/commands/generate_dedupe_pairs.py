@@ -1,33 +1,12 @@
 from declarations.management.commands.permalinks import TPermaLinksDB
 import declarations.models as models
 from .random_forest_adapter import TDeduplicationObject, TFioClustering, TMLModel
+from common.logging_wrapper import setup_logging
 
-import logging
 from django.core.management import BaseCommand
 import sys
 import json
 from collections import defaultdict
-
-
-def setup_logging(logfilename):
-    if logfilename is None:
-        logfilename = "generate_dedupe_pairs.log"
-    logger = logging.getLogger("generate_dedupe_pairs")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-
-    return logger
 
 
 class Command(BaseCommand):
@@ -110,7 +89,7 @@ class Command(BaseCommand):
         self.section_cache = dict()
 
     def init_options(self, options):
-        self.logger = setup_logging(options.get('logfile'))
+        self.logger = setup_logging(log_file_name=options.get('logfile'))
         self.options = options
         self.rebuild = options.get('rebuild', False)
         if self.rebuild and not options['write_to_db']:

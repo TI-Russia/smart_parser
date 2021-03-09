@@ -1,39 +1,20 @@
+from common.logging_wrapper import setup_logging
+from deduplicate.toloka import TToloka
+from declarations.russian_fio import TRussianFio
+from declarations.rubrics import get_russian_rubric_str
+from declarations.serializers import get_section_json
+import declarations.models as models
+
 import pickle
 import csv
 import json
 import os
 from collections import defaultdict
-from deduplicate.toloka import TToloka
 from django.core.management import BaseCommand
 from django.core.exceptions import ObjectDoesNotExist
-import declarations.models as models
 import django.db.utils
-from declarations.russian_fio import TRussianFio
-from declarations.rubrics import get_russian_rubric_str
-from declarations.serializers import get_section_json
 import random
 import logging
-
-
-def setup_logging(logfilename="new_toloka_tasks.log"):
-    logger = logging.getLogger("toloka")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-    return logger
 
 
 class TDBSqueeze:
@@ -225,7 +206,7 @@ class Command(BaseCommand):
 
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
-        self.logger = setup_logging()
+        self.logger = setup_logging(log_file_name="new_toloka_tasks.log")
         self.db_squeeze = TDBSqueeze(self.logger)
         self.db_squeeze_pickled_file_path = "squeeze.pickle"
         self.region_id_to_name = self.read_regions()

@@ -1,28 +1,10 @@
 import declarations.models as models
 from django.core.management import BaseCommand
-import logging
+from common.logging_wrapper import setup_logging
 import os
 from collections import defaultdict
 import shutil
 from datetime import datetime
-import urllib.parse
-
-
-def setup_logging(logfilename="static_sections.log"):
-    logger = logging.getLogger("static_sections")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    return logger
 
 
 def build_html_table_line(person_name, id, person_id, income, official_position, income_year, print_year=False):
@@ -70,7 +52,7 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        self.logger = setup_logging()
+        self.logger = setup_logging("static_sections")
         output_folder = options['output_folder']
         if os.path.exists(output_folder):
             shutil.rmtree(output_folder, ignore_errors=True)
