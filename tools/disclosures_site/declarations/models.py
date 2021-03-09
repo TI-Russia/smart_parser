@@ -18,10 +18,28 @@ def get_django_language():
         lang = lang[:2]
     return lang
 
+class Region(models.Model):
+    name = models.TextField(verbose_name='region name')
+    wikibase_id = models.CharField(max_length=10, null=True)
+
+
+class SynonymClass:
+    Russian = 0
+    English = 1
+    EnglishShort = 2
+    RussianShort = 3
+
+
+class Region_Synonyms(models.Model):
+    region = models.ForeignKey('declarations.Region', verbose_name="region", on_delete=models.CASCADE)
+    synonym = models.TextField(verbose_name='region synonym')
+    synonym_class = models.IntegerField(null=True) #see SynonymClass
+
 
 class Office(models.Model):
     name = models.TextField(verbose_name='office name')
-    region_id = models.IntegerField(null=True)
+    #region_id = models.IntegerField(null=True)
+    region = models.ForeignKey('declarations.Region', verbose_name="region", on_delete=models.CASCADE, null=True)
     type_id = models.IntegerField(null=True)
     parent_id = models.IntegerField(null=True)
     rubric_id = models.IntegerField(null=True, default=None) # see TOfficeRubrics
@@ -30,6 +48,13 @@ class Office(models.Model):
     def source_document_count(self):
         try:
             return self.source_document_set.all().count()
+        except Exception as exp:
+            raise
+
+    @property
+    def region_name(self):
+        try:
+            return self.region.name
         except Exception as exp:
             raise
 
@@ -75,24 +100,6 @@ class Office(models.Model):
             return "unknown"
         else:
             return get_russian_rubric_str(self.rubric_id)
-
-
-class Region(models.Model):
-    name = models.TextField(verbose_name='region name')
-    wikibase_id = models.CharField(max_length=10, null=True)
-
-
-class SynonymClass:
-    Russian = 0
-    English = 1
-    EnglishShort = 2
-    RussianShort = 3
-
-
-class Region_Synonyms(models.Model):
-    region = models.ForeignKey('declarations.Region', verbose_name="region", on_delete=models.CASCADE)
-    synonym = models.TextField(verbose_name='region synonym')
-    synonym_class = models.IntegerField(null=True) #see SynonymClass
 
 
 class TOfficeTableInMemory:

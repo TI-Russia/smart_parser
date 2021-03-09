@@ -38,7 +38,8 @@ class Migration(migrations.Migration):
                 ('name', models.TextField(verbose_name='office name')),
                 ('type_id', models.IntegerField(null=True)),
                 ('parent_id', models.IntegerField(null=True)),
-                ('region_id', models.IntegerField(null=True)),
+                ('region', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='declarations.region',
+                                   verbose_name='region', null=True)),
                 ('rubric_id', models.IntegerField(default=None, null=True))
             ],
         ),
