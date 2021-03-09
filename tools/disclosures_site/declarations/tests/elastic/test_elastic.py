@@ -3,6 +3,9 @@ import declarations.models as models
 import time
 from declarations.documents import ElasticSectionDocument
 from declarations.management.commands.build_elastic_index import BuildElasticIndex, TSectionElasticIndexator
+from elasticsearch_dsl import Index
+from django.conf import settings
+from elasticsearch import Elasticsearch
 
 
 class ElasticTestCase(TestCase):
@@ -11,8 +14,9 @@ class ElasticTestCase(TestCase):
         self.assertGreater(models.Office.objects.count(), 0)
 
         #delete all documents
-        ElasticSectionDocument.init()
-        ElasticSectionDocument.search().query().delete()
+        index = Index(settings.ELASTICSEARCH_INDEX_NAMES['section_index_name'], Elasticsearch())
+        index.delete()
+        index.create()
         time.sleep(2)
 
         #search to get no results
