@@ -1,9 +1,9 @@
 from common.file_storage import TFileStorage
 from common.logging_wrapper import setup_logging
+
 from urllib.parse import urlparse
 import argparse
 import sys
-import logging
 import os
 import json
 import urllib
@@ -115,7 +115,6 @@ class TSourceDocRequestHandler(http.server.BaseHTTPRequestHandler):
         except Exception as exp:
             self.server.logger.error(exp)
             return
-
 
     def do_PUT(self):
         if self.path is None:
