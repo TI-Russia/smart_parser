@@ -1,5 +1,5 @@
 from common.file_storage import TFileStorage
-
+from common.logging_wrapper import setup_logging
 from urllib.parse import urlparse
 import argparse
 import sys
@@ -8,23 +8,6 @@ import os
 import json
 import urllib
 import http.server
-
-
-def setup_logging(logfilename):
-    logger = logging.getLogger("source_doc_server")
-    logger.setLevel(logging.DEBUG)
-
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    fh = logging.FileHandler(logfilename, "a+", encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-    return logger
 
 
 class TSourceDocHTTPServer(http.server.HTTPServer):
@@ -38,6 +21,7 @@ class TSourceDocHTTPServer(http.server.HTTPServer):
         parser.add_argument("--log-file-name", dest='log_file_name', required=False, default="source_doc_server.log")
         parser.add_argument("--data-folder", dest='data_folder', required=False, default=".")
         parser.add_argument('--max-bin-file-size', dest='max_bin_file_size', required=False, default=10 * (2 ** 30), type=int)
+        parser.add_argument('--read-only', dest='read_only', required=False, default=False, action="store_true")
 
         args = parser.parse_args(arg_list)
         if args.server_address is None:
@@ -47,8 +31,8 @@ class TSourceDocHTTPServer(http.server.HTTPServer):
     def __init__(self, args, logger=None):
         self.args = args
         self.max_bin_file_size = self.args.max_bin_file_size
-        self.logger = logger if logger is not None else setup_logging(args.log_file_name)
-        self.file_storage = TFileStorage(self.logger, self.args.data_folder, self.max_bin_file_size)
+        self.logger = logger if logger is not None else setup_logging(log_file_name=args.log_file_name)
+        self.file_storage = TFileStorage(self.logger, self.args.data_folder, self.max_bin_file_size, read_only=self.args.read_only)
         host, port = self.args.server_address.split(":")
         self.logger.debug("start server on {}:{}".format(host, int(port)))
         try:
@@ -56,7 +40,6 @@ class TSourceDocHTTPServer(http.server.HTTPServer):
         except Exception as exp:
             self.logger.error(exp)
             raise
-
 
     def stop_server(self):
         self.file_storage.close_file_storage()

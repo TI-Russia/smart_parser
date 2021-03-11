@@ -30,4 +30,6 @@ psycopg2-binary
 matplotlib
 telegram_send
 pytest
-cryptography
+setuptools_rust
+#cryptography
+pymysql

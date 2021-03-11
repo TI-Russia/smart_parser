@@ -8,6 +8,8 @@ import logging.handlers
 import datetime
 import pytz
 
+# see smart_parser/tools/disclosures_site/scripts/etc/systemd/system/check_disclosures_health.service
+# for installing this script as a unix service
 MOSCOW_TIME_ZONE = pytz.timezone("Europe/Moscow")
 
 

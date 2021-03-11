@@ -13,7 +13,7 @@ def start_server(server):
 
 
 class TTestEnv:
-    def __init__(self, port, max_bin_file_size=None):
+    def __init__(self, port, max_bin_file_size=None, read_only=False):
         self.port = port
         self.max_bin_file_size = max_bin_file_size
         self.data_folder = "data.{}".format(port)
@@ -21,9 +21,9 @@ class TTestEnv:
         self.server = None
         self.server_thread = None
         self.client = None
-        self.setUp()
+        self.setUp(read_only)
 
-    def setUp(self):
+    def setUp(self, read_only):
         os.chdir(os.path.dirname(__file__))
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
@@ -35,7 +35,8 @@ class TTestEnv:
         ]
         if self.max_bin_file_size is not None:
             server_args.extend(['--max-bin-file-size', str(self.max_bin_file_size)])
-
+        if read_only:
+            server_args.extend(['--read-only'])
         self.server = TSourceDocHTTPServer(TSourceDocHTTPServer.parse_args(server_args))
         self.server_thread = threading.Thread(target=start_server, args=(self.server,))
         self.server_thread.start()
@@ -122,3 +123,33 @@ class TestReload(TestCase):
         file_data_, _ = self.env.client.retrieve_file_data_by_sha256(hashlib.sha256(file_data1).hexdigest())
         self.assertEqual(file_data1, file_data_)
 
+
+class TestReadOnly(TestCase):
+    def setUp(self):
+        self.env = TTestEnv(8495)
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def test_read_only(self):
+        file_data1 = b"12345_1"
+        with open("test8484.txt", "wb") as outp:
+            outp.write(file_data1)
+
+        self.assertTrue(self.env.client.send_file("test8484.txt"))
+
+        stats = self.env.client.get_stats()
+        self.assertEqual(1, stats['source_doc_count'])
+
+
+        self.env.server.file_storage.close_file_storage()
+        self.env.server.file_storage.read_only = True
+        self.env.server.file_storage.load_from_disk()
+
+        file_data2 = b"12345_2"
+        with open("test2.txt", "wb") as outp:
+            outp.write(file_data2)
+
+        self.assertTrue(self.env.client.send_file("test2.txt"))
+        stats = self.env.client.get_stats()
+        self.assertEqual(1, stats['source_doc_count'])

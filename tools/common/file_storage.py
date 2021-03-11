@@ -21,8 +21,9 @@ class TFileStorage:
 
     # disc_sync_rate means that we sync with disk after each sync_period db update
     # disc_sync_rate=1 means sync after each db update
-    def __init__(self, logger, data_folder, max_bin_file_size=default_max_bin_file_size, disc_sync_rate=1):
+    def __init__(self, logger, data_folder, max_bin_file_size=default_max_bin_file_size, disc_sync_rate=1, read_only=False):
         self.data_folder =  data_folder
+        self.read_only = read_only
         self.max_bin_file_size = max_bin_file_size
         self.logger = logger
         self.stats = None
@@ -47,15 +48,18 @@ class TFileStorage:
             self.write_without_sync_count = 0
 
     def open_dbm(self):
-        if os.path.exists(self.dbm_path):
-            open_mode = "w"
+        if self.read_only:
+            open_mode = "r"
         else:
-            open_mode = "c"
-        if os.name != "nt":
-            open_mode += "s"
+            if os.path.exists(self.dbm_path):
+                open_mode = "w"
+            else:
+                open_mode = "c"
+            if os.name != "nt":
+                open_mode += "s"
         self.logger.info("open dbm file {} with mode: {}".format(self.dbm_path, open_mode))
         self.saved_file_params = gdbm.open(self.dbm_path, open_mode)
-        if open_mode[0] == "w":
+        if open_mode[0] == "w" or open_mode[0] == "r":
             self.stats = json.loads(self.saved_file_params.get('stats'))
 
     def load_from_disk(self):
@@ -74,9 +78,10 @@ class TFileStorage:
             assert fp is not None
             self.bin_files.append(fp)
 
-        fp = open(self.get_bin_file_path(self.stats['bin_files_count'] - 1), "ab+")
-        assert fp is not None
-        self.bin_files.append(fp)
+        last_file_mode = "ab+" if not self.read_only else "rb"
+        last_fp = open(self.get_bin_file_path(self.stats['bin_files_count'] - 1), last_file_mode)
+        assert last_fp is not None
+        self.bin_files.append(last_fp)
 
     def clear_db(self):
         self.close_file_storage()
@@ -132,6 +137,9 @@ class TFileStorage:
         self.write_key_to_dbm("stats", json.dumps(self.stats))
 
     def save_file(self, file_bytes, file_extension, aux_params=None, force=False, sha256=None):
+        if self.read_only:
+            self.logger.error("cannot save file since the db is opened in read-only mode")
+            return
         if sha256 is None:
             sha256 = hashlib.sha256(file_bytes).hexdigest()
         if not force and self.saved_file_params.get(sha256) is not None:
@@ -177,6 +185,7 @@ class TFileStorage:
 
     def close_file_storage(self):
         if self.saved_file_params is not None:
-            self.saved_file_params.sync() # for nt
+            if not self.read_only:
+                self.saved_file_params.sync() # for nt
             self.saved_file_params.close()
             self.bin_files[-1].close()

@@ -35,15 +35,16 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
 2.1 sudo apt update
    sudo apt install -y  curl p7zip-full unrar libcurl4-openssl-dev libssl-dev libreoffice \
         python3-wheel calibre  catdoc xlsx2csv default-libmysqlclient-dev libgdiplus python3-pip python3.8-dev \
-        firefox git  sshfs
+        firefox git  sshfs libcurl4
 
 2.2 git clone https://github.com/TI-Russia/smart_parser.git ~/smart_parser
 
-2.3 Install python3
+2.3 Install python3 modules
+   #curl https://sh.rustup.rs -sSf | sh   # for module cryptography
    pip3 install -r /home/sokirko/smart_parser/tools/requirements.txt
 
 2.4. install dotnet according  sudo apt-get install -y dotnet-runtime-3.1
-      wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+      wget  https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
       sudo dpkg -i packages-microsoft-prod.deb
       sudo apt-get update
       sudo apt-get install -y apt-transport-https
@@ -167,9 +168,11 @@ Following https://habr.com/ru/post/501414/
     sudo apt update
     sudo apt install mysql-server
     # root password is "root"
-    sudo mysql_secure_installation
+    #sudo mysql_secure_installation
 
     #login root without sudo
+    sudo mysql -u root -proot
+
     ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
     FLUSH PRIVILEGES;
 
@@ -177,8 +180,8 @@ Following https://habr.com/ru/post/501414/
     GRANT ALL PRIVILEGES ON *.* TO 'db_creator'@'localhost' WITH GRANT OPTION;
     FLUSH PRIVILEGES;
 
-    GRANT ALL PRIVILEGES ON *.* TO 'disclosures'@'' WITH GRANT OPTION;
-    FLUSH PRIVILEGES;
+    #GRANT ALL PRIVILEGES ON *.* TO 'disclosures'@'' WITH GRANT OPTION;
+    #FLUSH PRIVILEGES;
 
     # may be it is optional in mysql 8.0
     #4 enable qcache in mysql: https://codebeer.ru/nastrojka-raboty-mysql-query-cache
@@ -212,9 +215,12 @@ Following https://habr.com/ru/post/501414/
 
 #5.3 create database
     cd /var/www/smart_parser/tools/disclosures_site
-    python3 manage.py makemigrations --settings disclosures.settings.dev
-    python3 manage.py migrate --settings disclosures.settings.dev
-    python3 manage.py create_database --settings disclosures.settings.dev  --skip-checks
+    python3 manage.py create_database --settings disclosures.settings.prod  --skip-checks
+    python3 manage.py makemigrations --settings disclosures.settings.prod
+    python3 manage.py migrate --settings disclosures.settings.prod
+    python3 manage.py test declarations/tests --settings disclosures.settings.prod  --keepdb
+
+
     #download disclosures.sql.gz from disclosures.ru
     zcat disclosures.sql.gz| mysql -D disclosures_db -u disclosures -pdisclosures
 
