@@ -77,7 +77,7 @@ if __name__ == "__main__":
         #if res.status == 301
         print("{}\t{}\t{}".format(request, res.status, len(data)))
         request_count += 1
-        break
+        
     end_time = time.time()
     rps = round((float)(request_count) / (end_time - start_time), 2)
     print ("request_count = {}, rps = {} ".format(request_count, rps))
