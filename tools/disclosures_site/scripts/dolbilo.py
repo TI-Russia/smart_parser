@@ -47,7 +47,7 @@ if __name__ == "__main__":
 
     with gzip.open(args.input_access_log) as inp:
         for line in inp:
-            request = access_log_parser(line)
+            request = access_log_parser(line.decode("utf8"))
             if not is_bot_request(request):
                 if request['request'].startswith("GET "):
                     requests.append(request['request'].split()[1])
