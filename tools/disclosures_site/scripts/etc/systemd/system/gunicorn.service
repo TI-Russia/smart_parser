@@ -12,7 +12,7 @@ Environment=PYTHONPATH=/var/www/smart_parser/tools:/var/www/smart_parser/tools/d
 Environment=SOURCE_DOC_SERVER_ADDRESS=migalka:8090
 ExecStart=/var/www/smart_parser/tools/venv/bin/gunicorn \
           --access-logfile - \
-          --env DJANGO_SETTINGS_MODULE=disclosures.settings.prod \
+              --env DJANGO_SETTINGS_MODULE=disclosures.settings.prod \
           --workers 3 \
           --bind unix:/run/gunicorn.sock \
           disclosures.wsgi:application
