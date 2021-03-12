@@ -3,7 +3,7 @@ import sys
 import re
 import http.client
 import gzip
-
+import time
 
 def parse_args(arg_list):
     parser = argparse.ArgumentParser()
@@ -51,7 +51,8 @@ if __name__ == "__main__":
             if not is_bot_request(request):
                 if request['request'].startswith("GET "):
                     requests.append(request['request'].split()[1])
-
+    start_time = time.time()
+    request_count = 0
     for request in requests:
         if args.use_http:
             conn = http.client.HTTPConnection(args.host)
@@ -74,4 +75,9 @@ if __name__ == "__main__":
         if res.status == 200:
             data = res.read()
         #if res.status == 301
-        print("{}\t{}\t{}\n".format(request, res.status, len(data)))
+        print("{}\t{}\t{}".format(request, res.status, len(data)))
+        request_count += 1
+        break
+    end_time = time.time()
+    rps = round((float)(request_count) / (end_time - start_time), 2)
+    print ("request_count = {}, rps = {} ".format(request_count, rps))
