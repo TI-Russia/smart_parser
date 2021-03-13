@@ -61,6 +61,7 @@ if __name__ == "__main__":
         headers = {
             'User-Agent': args.user_agent
         }
+        req_start = time.time()
         conn.request("GET", request, headers=headers)
         res = conn.getresponse()
         data = b""
@@ -75,7 +76,9 @@ if __name__ == "__main__":
         if res.status == 200:
             data = res.read()
         #if res.status == 301
-        print("{}\t{}\t{}".format(request, res.status, len(data)))
+        req_end = time.time()
+        req_time = int(1000.0*(req_end - req_start))
+        print("{}\t{}\t{}\t{}".format(request, res.status, len(data), req_time))
         request_count += 1
 
     end_time = time.time()
