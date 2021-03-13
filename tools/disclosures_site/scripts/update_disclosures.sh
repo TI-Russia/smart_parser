@@ -3,7 +3,7 @@
 #0 ~/smart_parser/tools/INSTALL.txt are prerequisites
 
 set -e
-source $(dirname $0)/update_common.sh
+source ~/smart_parser/tools/disclosures_site/scripts/update_common.sh
 
 
 #1 создание нового каталога и файла настройки .profile
