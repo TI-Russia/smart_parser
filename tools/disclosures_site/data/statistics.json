@@ -118,6 +118,8 @@
             "source_document_only_dlrobot_count": 331649,
             "source_document_only_human_count": 146904,
             "source_document_both_found_count": 114006,
+            "sections_person_name_income_year_declarant_income_size": 4355321,
+            "sections_person_name_income_year_spouse_income_size": 2630509,
             "sections_count": 4903528,
             "sections_count_only_dlrobot": 1594099,
             "sections_count_both_found": 1574507,

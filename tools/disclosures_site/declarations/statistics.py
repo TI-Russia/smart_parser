@@ -4,6 +4,7 @@ import json
 import os
 import sys
 from declarations.input_json import TIntersectionStatus
+from django.db import connection
 
 
 ALL_METRIC_NAMES = {
@@ -11,12 +12,24 @@ ALL_METRIC_NAMES = {
     'source_document_only_dlrobot_count': 'Source document count (only_dlrobot)',
     'source_document_only_human_count': 'Source document count (only_human)',
     'source_document_both_found_count': 'Source document count (both found)',
-    'sections_count': 'All sections count',
-    'sections_count_only_dlrobot': 'Sections (only_dlrobot)',
-    'sections_count_both_found': 'Sections (both found)',
+    'sections_person_name_income_year_declarant_income_size': 'Count distinct (person_name, income_year, declarant_income_size)',
+    'sections_person_name_income_year_spouse_income_size': 'Count distinct (person_name, income_year, spouse_income_size)',
     'sections_dedupe_score_greater_0': 'Sections (dedupe_score > 0)',
     'person_count': 'People count'
 }
+
+
+def sections_person_name_income_year_declarant_income_size(relative_code):
+    query = """
+        select count(distinct s.person_name, s.income_year, i.size) 
+            from declarations_section s 
+            join declarations_income i on s.id=i.section_id 
+            where i.relative='{}'
+    """.format(relative_code)
+    with connection.cursor() as cursor:
+        cursor.execute(query)
+        for count, in cursor:
+            return count
 
 
 class TDisclosuresStatistics:
@@ -30,11 +43,10 @@ class TDisclosuresStatistics:
         self.metrics['source_document_only_human_count'] = models.Source_Document.objects.filter(intersection_status=TIntersectionStatus.only_human).count()
         self.metrics['source_document_both_found_count'] = models.Source_Document.objects.filter(intersection_status=TIntersectionStatus.both_found).count()
 
-        self.metrics['sections_count'] = models.Section.objects.all().count()
-        self.metrics['sections_count_only_dlrobot'] = models.Section.objects.filter(
-            source_document__intersection_status=TIntersectionStatus.only_dlrobot).count()
-        self.metrics['sections_count_both_found'] = models.Section.objects.filter(
-            source_document__intersection_status=TIntersectionStatus.both_found).count()
+        self.metrics['sections_person_name_income_year_declarant_income_size'] = \
+            sections_person_name_income_year_declarant_income_size(models.Relative.main_declarant_code)
+        self.metrics['sections_person_name_income_year_spouse_income_size'] = \
+            sections_person_name_income_year_declarant_income_size(models.Relative.spouse_code)
         self.metrics['sections_dedupe_score_greater_0'] = models.Section.objects.filter(
             dedupe_score__gt=0).count()
         self.metrics['person_count'] = models.Person.objects.all().count()
@@ -73,8 +85,9 @@ class TDisclosuresStatisticsHistory:
         old = sum(last_good.metrics[x] for x in values_to_sum)
         new = sum(curr_unknown.metrics[x] for x in values_to_sum)
         if old > new:
-            raise Exception("metric {} is less than in the last db ({} < {}) ".format(
+            raise Exception("Fail! metric value {} is less than in the last db ({} < {}) ".format(
                 metric_str, new, old))
+        sys.stderr.write("success: {} < {}\n".format(old, new))
 
     def check_statistics(self,  curr):
         self.check_sum_metric_increase(curr, ["source_document_count"])
