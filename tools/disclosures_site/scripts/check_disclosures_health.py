@@ -7,6 +7,7 @@ import logging
 import logging.handlers
 import datetime
 import pytz
+import ssl
 
 # see smart_parser/tools/disclosures_site/scripts/etc/systemd/system/check_disclosures_health.service
 # for installing this script as a unix service
@@ -60,7 +61,7 @@ def check_ping(hostname):
 
 def read_morda(url):
     try:
-        f = urllib.request.urlopen(url, timeout=30)
+        f = urllib.request.urlopen(url, timeout=30, context=ssl.SSLContext())
         s = f.read().decode('utf-8')
         return len(s) > 100
     except Exception as exp:

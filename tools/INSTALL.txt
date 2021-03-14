@@ -180,8 +180,8 @@ Following https://habr.com/ru/post/501414/
     GRANT ALL PRIVILEGES ON *.* TO 'db_creator'@'localhost' WITH GRANT OPTION;
     FLUSH PRIVILEGES;
 
-    #GRANT ALL PRIVILEGES ON *.* TO 'disclosures'@'' WITH GRANT OPTION;
-    #FLUSH PRIVILEGES;
+    GRANT ALL PRIVILEGES ON *.* TO 'disclosures'@'' WITH GRANT OPTION;
+    FLUSH PRIVILEGES;
 
     # may be it is optional in mysql 8.0
     #4 enable qcache in mysql: https://codebeer.ru/nastrojka-raboty-mysql-query-cache
@@ -246,7 +246,6 @@ Following https://habr.com/ru/post/501414/
     sudo rm /etc/nginx/sites-enabled/default
 
 # 5.6 install certbot
-    sudo apt-get install certbot python3-certbot-nginx
 
     # add the following line to /etc/sudoers
     user sokirko = (root) NOPASSWD: /usr/bin/certbot
@@ -259,6 +258,8 @@ Following https://habr.com/ru/post/501414/
     ssh frontend
     sudo tar zxvf backup_etc-letsencrypt.tar.gz -C /
 
+    sudo apt-get install certbot python3-certbot-nginx
+    sudo certbot --nginx
 
     # start nginx, check https and http manually
     sudo systemctl restart nginx

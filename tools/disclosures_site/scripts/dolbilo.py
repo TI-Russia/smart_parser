@@ -79,6 +79,7 @@ if __name__ == "__main__":
         req_end = time.time()
         req_time = int(1000.0*(req_end - req_start))
         print("{}\t{}\t{}\t{}".format(request, res.status, len(data), req_time))
+        sys.stdout.flush()
         request_count += 1
 
     end_time = time.time()

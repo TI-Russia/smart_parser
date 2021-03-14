@@ -63,7 +63,7 @@ source ~/smart_parser/tools/disclosures_site/scripts/update_common.sh
 #10  Импорт json в dislosures_db
    python3 $TOOLS/disclosures_site/manage.py clear_database --settings disclosures.settings.dev
 
-   #>24 hours
+   #32 hours
    python3 $TOOLS/disclosures_site/manage.py import_json \
                --settings disclosures.settings.dev \
                --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER \
