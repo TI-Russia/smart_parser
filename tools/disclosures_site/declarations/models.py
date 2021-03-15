@@ -393,6 +393,7 @@ class Section(models.Model):
     dedupe_score = models.FloatField(blank=True, null=True, default=0.0)
     surname_rank = models.IntegerField(null=True)
     name_rank = models.IntegerField(null=True)
+    gender = models.CharField(max_length=1, null=True)
 
     # sometimes Section.rubric_id overrides Office.rubric_id, see function convert_municipality_to_education for example
     rubric_id = models.IntegerField(null=True, default=None)
