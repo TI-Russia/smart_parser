@@ -1,5 +1,4 @@
 import declarations.models as models
-from declarations.russian_fio import TRussianFio
 from declarations.rubrics import get_all_rubric_ids, get_russian_rubric_str
 from declarations.gender_recognize import TGender, TGenderRecognizer
 from common.logging_wrapper import setup_logging
@@ -9,7 +8,7 @@ from django.core.management import BaseCommand
 from collections import defaultdict
 from django.db import connection
 from statistics import median
-
+import re
 
 class Command(BaseCommand):
 
@@ -33,36 +32,64 @@ class Command(BaseCommand):
             default=100000000
         )
 
+    def build_person_gender_by_years_report(self, max_count, filename, start_year=2010, last_year=2019):
+        query = """
+            select p.id, min(s.gender), min(s.income_year), p.person_name 
+            from declarations_section s
+            join declarations_person p on s.person_id=p.id
+            where {} <= s.income_year and s.income_year <= {} and s.gender is not null
+            group by p.id
+            limit {}  
+        """.format(start_year, last_year, max_count)
+        masc = defaultdict(int)
+        fem = defaultdict(int)
+        with open(filename, "w") as outp:
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                for person_id, gender, min_year, person_name in cursor:
+                    if gender == TGender.masculine:
+                        masc[min_year] += 1
+                    elif gender == TGender.feminine:
+                        fem[min_year] += 1
+                    outp.write("{}\t{}\t{}\n".format(
+                        person_name,
+                        min_year,
+                        TGender.gender_to_str(gender)
+                    ))
+        #echo "select count(o.region_id), r.name from declarations_section s join declarations_source_document d on d.id=s.source_document_id join declarations_office o on o.id = d.office_id  join declarations_region r on r.id=o.region_id where s.person_name like '% миляуша %' group by o.region_id " | mysql -u disclosures -D disclosures_db -pdisclosures | sort -nr
+
+        with open(filename + ".sum", "w") as outp:
+            outp.write("year\tmasc\tfem\tfem_ratio\n")
+            for year in range(start_year, last_year + 1):
+                fam_ratio = round(100.0 * fem[year] / (fem[year] + masc[year] + 0.000001), 2)
+                outp.write("{}\t{}\t{}\t{}\n".format(
+                    year,
+                    masc[year],
+                    fem[year],
+                    fam_ratio,
+                ))
+
     def build_genders_rubrics(self, max_count, filename):
         query = """
-            select p.id, p.person_name, o.region_id, s.rubric_id 
+            select distinct p.id, s.gender, o.region_id, s.rubric_id 
             from declarations_person p
             join declarations_section s on s.person_id=p.id
             join declarations_source_document d on d.id=s.source_document_id 
             join declarations_office o on d.office_id=o.id
+            where s.gender is not null
             limit {}  
         """.format(max_count)
         rubric_genders = defaultdict(int)
         genders_in_db = defaultdict(int)
-        people = set()
         section_count = 0
         with connection.cursor() as cursor:
             cursor.execute(query)
-            for person_id, person_name, region_id, rubric_id in cursor:
-                if person_id in people:
-                    continue
-                people.add(person_id)
-                fio = TRussianFio(person_name)
-                if not fio.is_resolved:
-                    continue
-                gender = self.gender_recognizer.recognize_gender(fio)
-                if gender is None:
-                    continue
+            for person_id, gender, region_id, rubric_id in cursor:
                 section_count += 1
                 genders_in_db[gender] += 1
                 rubric_genders[(gender, rubric_id)] += 1
 
-        with open (filename, "w") as outp:
+        with open(filename, "w") as outp:
             outp.write("Genders in DB: ")
             outp.write("Gender\tPerson Count\n")
             for k, v in genders_in_db.items():
@@ -80,24 +107,6 @@ class Command(BaseCommand):
                                 all_cnt,
                                 round(100.0 * rubric_genders[(gender, rubric)] / all_cnt, 2),
                                 ))
-
-    def filter_incomes(self, query):
-        unique_name_and_income = set()
-        for items in fetch_cursor_by_chunks(query):
-            person_name = items[0] if items[0] is not None else items[1]
-            income_size = items[2]
-            income_year = items[3]
-            key = (person_name, income_year, income_size)
-            if key in unique_name_and_income:
-                continue
-            unique_name_and_income.add(key)
-            fio = TRussianFio(person_name)
-            if not fio.is_resolved:
-                continue
-            gender = self.gender_recognizer.recognize_gender(fio)
-            if gender is None:
-                continue
-            yield [gender] + list(items[2:])
 
     def report_income_by_genders(self, incomes_by_genders, outp):
         outp.write("Пол\tЧисло учтенных деклараций\tМедианный доход\tГендерный перекос\n")
@@ -125,19 +134,22 @@ class Command(BaseCommand):
                         int(100.0 * (median(incomes_by_genders_group[(TGender.masculine, group_id)]) - med) / med)
                     ))
 
-    def build_genders_incomes(self, max_count, filename, start_year=2010, last_year=2019):
-        query = """
-            select p.person_name, s.person_name, i.size, s.income_year, s.rubric_id  
+    def build_income_query(self, max_count, relative_code):
+        return """
+            select distinct p.id, s.gender, i.size, s.income_year, s.rubric_id  
             from declarations_section s
             join declarations_income i on i.section_id=s.id
             left join declarations_person p on s.person_id=p.id
-            where i.relative = 'D' and i.size > 10000
+            where i.relative = '{}' and i.size > 10000 and s.gender is not null
             limit {}  
-        """.format(max_count)
+        """.format(relative_code, max_count)
+
+    def build_genders_incomes(self, max_count, filename, start_year=2010, last_year=2019):
+        query = self.build_income_query(max_count, models.Relative.main_declarant_code)
         rubric_genders = defaultdict(list)
         incomes_by_genders = defaultdict(list)
         year_genders = defaultdict(list)
-        for gender, income_size, income_year, rubric_id in self.filter_incomes(query):
+        for person_id, gender, income_size, income_year, rubric_id in fetch_cursor_by_chunks(query):
             incomes_by_genders[gender].append(income_size)
             rubric_genders[(gender, rubric_id)].append(income_size)
             year_genders[(gender, int(income_year))].append(income_size)
@@ -149,20 +161,12 @@ class Command(BaseCommand):
             self.report_income_by_genders_group(year_genders, range(start_year, last_year + 1),
                                                 "Деклараций за этот год", (lambda x: x), outp)
 
-
     def build_income_with_spouse(self, max_count, filename, start_year=2010, last_year=2019):
-        query = """
-            select p.person_name, s.person_name, i.size, s.income_year, s.rubric_id  
-            from declarations_section s
-            join declarations_income i on i.section_id=s.id
-            left join declarations_person p on s.person_id=p.id
-            where i.size > 10000 and i.relative = 'S'
-            limit {}  
-        """.format(max_count)
+        query = self.build_income_query(max_count, models.Relative.spouse_code)
         rubric_genders = defaultdict(list)
         year_genders = defaultdict(list)
         incomes_by_genders = defaultdict(list)
-        for gender, income_size, income_year, rubric_id in self.filter_incomes(query):
+        for person_id, gender, income_size, income_year, rubric_id in fetch_cursor_by_chunks(query):
             gender = TGender.opposite_gender(gender)
             incomes_by_genders[gender].append(income_size)
             rubric_genders[(gender, rubric_id)].append(income_size)
@@ -177,17 +181,17 @@ class Command(BaseCommand):
 
     def build_income_first_word_position(self, max_count, filename, start_year=2010, last_year=2019):
         query = """
-            select p.person_name, s.person_name, i.size, s.income_year, s.rubric_id, s.position  
+            select distinct p.id, s.gender, i.size, s.income_year, s.rubric_id, s.position  
             from declarations_section s
             join declarations_income i on i.section_id=s.id
             left join declarations_person p on s.person_id=p.id
-            where i.size > 10000 and i.relative = 'D' and length(position) > 0
+            where i.size > 10000 and i.relative = 'D' and length(position) > 0 and s.gender is not null
             limit {}  
         """.format(max_count)
 
         rubric_genders = defaultdict(list)
         rubric_first_word = defaultdict(int)
-        for gender, income_size, income_year, rubric_id, position_str in self.filter_incomes(query):
+        for person_id, gender, income_size, income_year, rubric_id, position_str in fetch_cursor_by_chunks(query):
             position_words = re.split("[\s,;.]", position_str)
             if len(position_words) == 0:
                 continue
@@ -223,17 +227,18 @@ class Command(BaseCommand):
             section_with_vehicles = set(section_id for section_id, in cursor)
 
         query = """
-            select p.person_name, s.person_name, d.office_id, s.income_year, s.rubric_id, s.id  
+            select distinct s.id, s.gender, d.office_id, s.income_year, s.rubric_id  
             from declarations_section s
             left join declarations_person p on s.person_id=p.id
             join declarations_source_document d on d.id=s.source_document_id
+            where s.gender is not null
             limit {}  
         """.format(max_count)
 
         rubric_vehicle_positive = defaultdict(int)
         rubric_vehicle_negative = defaultdict(int)
         rubric_vehicle_all = defaultdict(int)
-        for gender, office_id, income_year, rubric_id, section_id in self.filter_incomes(query):
+        for section_id, gender, office_id, income_year, rubric_id in fetch_cursor_by_chunks(query):
             key = (gender, rubric_id)
             if section_id in section_with_vehicles:
                 rubric_vehicle_positive[key] += 1
@@ -281,17 +286,17 @@ class Command(BaseCommand):
         self.logger.info("section with spouse: {}".format(len(section_with_spouse)))
 
         query = """
-            select p.person_name, s.person_name, i.size, s.income_year, s.rubric_id, s.id  
+            select s.id, s.gender, i.size, s.income_year, s.rubric_id  
             from declarations_section s
             join declarations_income i on i.section_id=s.id
             left join declarations_person p on s.person_id=p.id
-            where i.relative = 'D' and i.size > 10000
+            where i.relative = 'D' and i.size > 10000 and s.gender is not null
             limit {}  
         """.format(max_count)
         rubric_genders = defaultdict(list)
         incomes_by_genders = defaultdict(list)
         year_genders = defaultdict(list)
-        for gender, income_size, income_year, rubric_id, section_id in self.filter_incomes(query):
+        for section_id, gender, income_size, income_year, rubric_id in fetch_cursor_by_chunks(query):
             if section_id in section_with_spouse:
                 continue
             if section_id not in section_with_children:
@@ -307,74 +312,24 @@ class Command(BaseCommand):
             self.report_income_by_genders_group(year_genders, range(start_year, last_year + 1),
                                                 "Деклараций за этот год", (lambda x: x), outp)
 
-
-    def build_person_gender_by_years_report(self, max_count, filename, start_year=2010, last_year=2019):
-        query = """
-            select p.id, p.person_name, min(s.income_year) 
-            from declarations_section s
-            join declarations_person p on s.person_id=p.id
-            where s.person_id is not null and s.income_year > 2009
-            group by s.person_id
-            limit {}  
-        """.format(max_count)
-        masc = defaultdict(int)
-        fem = defaultdict(int)
-        with open(filename, "w") as outp:
-            with connection.cursor() as cursor:
-                cursor.execute(query)
-                for person_id, person_name, min_year in cursor:
-                    fio = TRussianFio(person_name)
-                    if not fio.is_resolved:
-                        continue
-
-                    gender = self.gender_recognizer.recognize_gender(fio)
-                    if start_year <= min_year <= last_year:
-                        if gender == TGender.masculine:
-                            masc[min_year] += 1
-                        elif gender == TGender.feminine:
-                            fem[min_year] += 1
-                    outp.write("{}\t{}\t{}\n".format(
-                        person_name,
-                        min_year,
-                        TGender.gender_to_str(gender)
-                    ))
-        #echo "select count(o.region_id), r.name from declarations_section s join declarations_source_document d on d.id=s.source_document_id join declarations_office o on o.id = d.office_id  join declarations_region r on r.id=o.region_id where s.person_name like '% миляуша %' group by o.region_id " | mysql -u disclosures -D disclosures_db -pdisclosures | sort -nr
-
-        with open(filename + ".sum", "w") as outp:
-            outp.write("year\tmasc\tfem\tfem_ratio\n")
-            for year in range(start_year, last_year + 1):
-                fam_ratio = round(100.0 * fem[year] / (fem[year] + masc[year]), 2)
-                outp.write("{}\t{}\t{}\t{}\n".format(
-                    year,
-                    masc[year],
-                    fem[year],
-                    fam_ratio,
-                ))
-
     def handle(self, *args, **options):
-        # self.logger.info("build_masc_and_fem_names")
-        # self.gender_recognizer.build_masc_and_fem_names(options.get('limit', 100000000), "names.masc_and_fem.txt")
-        #
-        # self.logger.info("build_masc_and_fem_surnames")
-        # self.gender_recognizer.build_masc_and_fem_surnames(options.get('limit', 100000000), "surnames.masc_and_fem.txt")
-
-        self.logger.info("build_person_gender_by_years_report")
+        self.logger.info("person.gender_by_years.txt")
         self.build_person_gender_by_years_report(options.get('limit', 100000000), "person.gender_by_years.txt")
 
-        self.logger.info("gender_rubric_report")
+        self.logger.info("gender_report.txt")
         self.build_genders_rubrics(100000000, "gender_report.txt")
 
-        self.logger.info("gender_income_report")
+        self.logger.info("gender_income_report.txt")
         self.build_genders_incomes(100000000, "gender_income_report.txt")
 
-        self.logger.info("gender_income_spouse_report")
+        self.logger.info("gender_income_spouse.txt")
         self.build_income_with_spouse(100000000, "gender_income_spouse.txt")
 
-        self.logger.info("gender_income_first_word")
+        self.logger.info("gender_income_first_word.txt")
         self.build_income_first_word_position(10000000, "gender_income_first_word.txt")
 
-        self.logger.info("vehicles")
+        self.logger.info("vehicles.txt")
         self.build_vehicles(10000000, "vehicles.txt")
 
-        self.logger.info("incomplete_family")
+        self.logger.info("incomplete_family.txt")
         self.build_incomplete_family(100000000, "incomplete_family.txt")

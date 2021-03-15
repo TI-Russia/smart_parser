@@ -1,7 +1,6 @@
 import urllib.parse
 import re
 import socket
-import gc
 
 
 def normalize_whitespace(str):
@@ -98,17 +97,6 @@ def check_internet(host="8.8.8.8", port=53, timeout=3):
     except socket.error as ex:
         print(ex)
         return False
-
-
-def queryset_iterator(queryset, chunksize=1000):
-    pk = 0
-    last_pk = queryset.order_by('-pk')[0].pk
-    queryset = queryset.order_by('pk')
-    while pk < last_pk:
-        for row in queryset.filter(pk__gt=pk)[:chunksize]:
-            pk = row.pk
-            yield row
-        gc.collect()
 
 
 def string_contains_Russian_name(name):

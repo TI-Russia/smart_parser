@@ -8,8 +8,8 @@ import os
 
 
 class TGender:
-    feminine = '1'
-    masculine = '2'
+    feminine = 1
+    masculine = 2
 
     @staticmethod
     def gender_list():

@@ -10,8 +10,6 @@ from statistics import median
 
 
 class Command(BaseCommand):
-    help = 'create rubric for offices'
-
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
         self.logger = setup_logging(log_file_name="name_report.log")
@@ -208,9 +206,8 @@ class Command(BaseCommand):
                     ))
 
     def handle(self, *args, **options):
-        self.gender_recognizer.build_masc_and_fem_names(options.get('limit', 100000000), "names.masc_and_fem.txt")
-        self.gender_recognizer.build_masc_and_fem_surnames(options.get('limit', 100000000), "surnames.masc_and_fem.txt")
-        self.gender_recognizer.build_person_gender_by_years_report(options.get('limit', 100000000), "person.gender_by_years.txt")
+        self.gender_recognizer.build_masc_and_fem_names(report_filename="names.masc_and_fem.txt")
+        self.gender_recognizer.build_masc_and_fem_surnames(report_filename="surnames.masc_and_fem.txt")
 
 
         surnames_region, names_region = self.build_surname_and_name_by_regions(options.get('limit', 100000000))
