@@ -716,6 +716,13 @@ namespace RegressionTesting
             TestSmartParser("pudoz_01.docx", "prod");
         }
 
+        [TestMethod]
+        [TestCategory("docx")]
+        public void SovetFederazii()
+        {
+            TestSmartParser("sov_fed.docx", "prod");
+        }
+
         private static void SetupLog4Net()
         {
             log4net.Repository.ILoggerRepository repo = log4net.LogManager.GetRepository(Assembly.GetEntryAssembly());

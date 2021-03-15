@@ -36,6 +36,10 @@ namespace Smart.Parser.Lib.Adapters.AdapterSchemes
                 x => x.Descendants<TableRow>().Any(
                     y => y.InnerText.OnlyRussianLowercase().Contains("ппвиддоходавеличинадоходаруб")));
 
+            if (tables.Count > 8)
+                return false; // we cannot process all declarations in one file
+
+
             return firstTableTitlesOk;
         }
 
