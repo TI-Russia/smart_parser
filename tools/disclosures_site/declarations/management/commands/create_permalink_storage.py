@@ -1,5 +1,5 @@
 from declarations.management.commands.permalinks import TPermaLinksDB
-from common.primitives import queryset_iterator
+from declarations.sql_helpers import queryset_iterator
 import declarations.models as models
 from common.logging_wrapper import setup_logging
 

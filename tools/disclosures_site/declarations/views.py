@@ -2,11 +2,12 @@ from . import models
 from .documents import ElasticSectionDocument, ElasticPersonDocument, ElasticOfficeDocument, ElasticFileDocument
 from declarations.russian_fio import TRussianFio
 from disclosures_site.declarations.statistics import TDisclosuresStatisticsHistory
-from .rubrics import fill_combo_box_with_rubrics
+from declarations.rubrics import fill_combo_box_with_rubrics
 from common.content_types import file_extension_to_content_type
 from declarations.apps import DeclarationsConfig
 from declarations.car_brands import CAR_BRANDS
 from common.primitives import prepare_russian_names_for_search_index
+from declarations.gender_recognize import TGender
 
 from django.views import generic
 from django.views.generic.edit import FormView
@@ -89,7 +90,6 @@ def fill_combo_box_with_section_years():
     for year in range(2008, datetime.now().year):
         res.append((str(year), str(year)))
     return res
-
 
 CACHED_REGIONS = None
 
@@ -190,6 +190,10 @@ class CommonSearchForm(forms.Form):
         empty_value="",
         label="Sha256")
     match_phrase = forms.BooleanField(label="Фраза", required=False)
+    gender = forms.ChoiceField(
+        required=False,
+        label="Пол",
+        choices=TGender.fill_combo_box_with_genders)
 
 
 def compare_Russian_fio(search_query, person_name):
@@ -253,6 +257,7 @@ class CommonSearchView(FormView, generic.ListView):
             'sha256': self.request.GET.get('sha256'),
             'car_brands': self.request.GET.get('car_brands'),
             'match_phrase': self.request.GET.get('match_phrase'),
+            'gender': self.request.GET.get('gender'),
         }
 
         if self.request.GET.get('match_phrase'):
@@ -308,6 +313,7 @@ class CommonSearchView(FormView, generic.ListView):
             add_should_item("max_income_year", "term", int, should_items)
             add_should_item("section_count", "term", int, should_items)
             add_should_item("parent_id", "term", int, should_items)
+            add_should_item("gender", "term", int, should_items)
             self.build_office_full_text_elastic_search_query(should_items)
 
             if len(should_items) == 0:

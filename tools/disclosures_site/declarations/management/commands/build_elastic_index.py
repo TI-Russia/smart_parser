@@ -140,7 +140,7 @@ class TSectionElasticIndexator:
     def gen_document_portion(self, begin, end):
         query = """
             select s.id, d.id, d.office_id, s.position, s.department, s.person_id, o.region_id, 
-                  s.income_year, d.office_id, s.person_name, s.rubric_id, s.income_year
+                  s.income_year, d.office_id, s.person_name, s.rubric_id, s.income_year, s.gender
             from declarations_section s 
             join declarations_source_document d on d.id=s.source_document_id 
             join declarations_office o on d.office_id=o.id
@@ -151,7 +151,8 @@ class TSectionElasticIndexator:
         vehicle_iterator = TVehicleIterator(begin, end)
         sections_iterator = fetch_cursor(query)
         for section_id, source_document_id, office_id, position, department, \
-            person_id, region_id, income_year, office_id, person_name, rubric_id, income_year in sections_iterator:
+            person_id, region_id, income_year, office_id, person_name, rubric_id, income_year,\
+            gender_code in sections_iterator:
 
             declarant_income, spouse_income = income_iterator.get_incomes_by_section_id(section_id)
             car_brands = vehicle_iterator.get_vehicles_by_section_id(section_id)
@@ -173,7 +174,8 @@ class TSectionElasticIndexator:
                         'car_brands': car_brands,
                         'person_name': prepare_russian_names_for_search_index(person_name),
                         'rubric_id': rubric_id,
-                        'income_year': income_year
+                        'income_year': income_year,
+                        'gender': gender_code
                     }
                 }
 

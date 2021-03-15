@@ -1,50 +1,17 @@
-import declarations.models as models
-from django.core.management import BaseCommand
-import logging
-import os
-import sys
-from collections import defaultdict
 from declarations.russian_fio import TRussianFio
-from django.conf import settings
+from declarations.sql_helpers import run_sql_script
+import declarations.models as models
+from common.logging_wrapper import setup_logging
 
-
-def setup_logging(logfilename="surname_rank.log"):
-    logger = logging.getLogger("surname_rank")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-
-    return logger
+from django.core.management import BaseCommand
+import os
+from collections import defaultdict
 
 
 class Command(BaseCommand):
-    help = 'create rubric for offices'
-
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
-        self.logger = setup_logging()
-
-    def add_arguments(self, parser):
-        parser.add_argument(
-            '--verbose',
-            dest='verbose',
-            type=int,
-            help='set verbosity, default is DEBUG',
-            default=0
-        )
+        self.logger = setup_logging(log_file_name="surname_rank.log")
 
     def get_surname_and_names(self, person_name):
         fio = TRussianFio(person_name)
@@ -108,24 +75,11 @@ class Command(BaseCommand):
                     s.name_rank=r.name_rank;
                 """)
 
-    def run_script(self, temp_path):
-        cmd = "mysql -u {} -p{} -D {} <  {}".format(
-            settings.DATABASES['default']['USER'],
-            settings.DATABASES['default']['PASSWORD'],
-            settings.DATABASES['default']['NAME'],
-            temp_path
-        )
-
-        self.logger.info(cmd)
-        if os.system(cmd) != 0:
-            self.logger.error("running mysql failed!")
-            sys.exit(1)
-
     def handle(self, *args, **options):
         surname_rank_dict, name_rank_dict, all_ids = self.build_dicts()
         temp_path = "tmp.sql"
         self.write_temp_file(all_ids, surname_rank_dict, name_rank_dict, temp_path)
-        self.run_script(temp_path)
+        run_sql_script(self.logger, temp_path)
         os.unlink(temp_path)
         self.logger.info("all done")
 

@@ -28,9 +28,16 @@
 
         {{form.region_id.label_tag}}
         {{form.region_id}}
+
         &#32;&#32;&#32;<br class="responsive" />
         {{form.car_brands.label_tag}}
         {{form.car_brands}}
+
+        &#32;&#32;&#32;<br class="responsive" />
+        <abbr title="Осторожно! Eсть ФИО, для которых пол мы не можем определить.">
+            {{form.gender.label_tag}}
+            {{form.gender}}
+        </abbr>
     </div>
     <div class="search_input">
         {{form.position_and_department.label_tag}}
@@ -43,6 +50,7 @@
         &#32;&#32;&#32;<br class="responsive" />
         {{form.match_phrase.label_tag}}
         {{form.match_phrase}}
+
     </div>
 </form>
 

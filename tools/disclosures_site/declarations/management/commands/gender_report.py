@@ -3,30 +3,15 @@ from declarations.russian_fio import TRussianFio
 from declarations.rubrics import get_all_rubric_ids, get_russian_rubric_str
 from declarations.gender_recognize import TGender, TGenderRecognizer
 from common.logging_wrapper import setup_logging
-
+from declarations.sql_helpers import fetch_cursor_by_chunks
 
 from django.core.management import BaseCommand
 from collections import defaultdict
 from django.db import connection
 from statistics import median
-import gc
-import re
-
-
-def fetch_cursor(sql_query):
-    with connection.cursor() as cursor:
-        cursor.execute(sql_query)
-        while True:
-            results = cursor.fetchmany(10000)
-            if not results:
-                break
-            for x in results:
-                yield x
-            gc.collect()
 
 
 class Command(BaseCommand):
-    help = 'create rubric for offices'
 
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
@@ -98,7 +83,7 @@ class Command(BaseCommand):
 
     def filter_incomes(self, query):
         unique_name_and_income = set()
-        for items in fetch_cursor(query):
+        for items in fetch_cursor_by_chunks(query):
             person_name = items[0] if items[0] is not None else items[1]
             income_size = items[2]
             income_year = items[3]
@@ -322,15 +307,59 @@ class Command(BaseCommand):
             self.report_income_by_genders_group(year_genders, range(start_year, last_year + 1),
                                                 "Деклараций за этот год", (lambda x: x), outp)
 
-    def handle(self, *args, **options):
-        self.logger.info("build_masc_and_fem_names")
-        self.gender_recognizer.build_masc_and_fem_names(options.get('limit', 100000000), "names.masc_and_fem.txt")
 
-        self.logger.info("build_masc_and_fem_surnames")
-        self.gender_recognizer.build_masc_and_fem_surnames(options.get('limit', 100000000), "surnames.masc_and_fem.txt")
+    def build_person_gender_by_years_report(self, max_count, filename, start_year=2010, last_year=2019):
+        query = """
+            select p.id, p.person_name, min(s.income_year) 
+            from declarations_section s
+            join declarations_person p on s.person_id=p.id
+            where s.person_id is not null and s.income_year > 2009
+            group by s.person_id
+            limit {}  
+        """.format(max_count)
+        masc = defaultdict(int)
+        fem = defaultdict(int)
+        with open(filename, "w") as outp:
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                for person_id, person_name, min_year in cursor:
+                    fio = TRussianFio(person_name)
+                    if not fio.is_resolved:
+                        continue
+
+                    gender = self.gender_recognizer.recognize_gender(fio)
+                    if start_year <= min_year <= last_year:
+                        if gender == TGender.masculine:
+                            masc[min_year] += 1
+                        elif gender == TGender.feminine:
+                            fem[min_year] += 1
+                    outp.write("{}\t{}\t{}\n".format(
+                        person_name,
+                        min_year,
+                        TGender.gender_to_str(gender)
+                    ))
+        #echo "select count(o.region_id), r.name from declarations_section s join declarations_source_document d on d.id=s.source_document_id join declarations_office o on o.id = d.office_id  join declarations_region r on r.id=o.region_id where s.person_name like '% миляуша %' group by o.region_id " | mysql -u disclosures -D disclosures_db -pdisclosures | sort -nr
+
+        with open(filename + ".sum", "w") as outp:
+            outp.write("year\tmasc\tfem\tfem_ratio\n")
+            for year in range(start_year, last_year + 1):
+                fam_ratio = round(100.0 * fem[year] / (fem[year] + masc[year]), 2)
+                outp.write("{}\t{}\t{}\t{}\n".format(
+                    year,
+                    masc[year],
+                    fem[year],
+                    fam_ratio,
+                ))
+
+    def handle(self, *args, **options):
+        # self.logger.info("build_masc_and_fem_names")
+        # self.gender_recognizer.build_masc_and_fem_names(options.get('limit', 100000000), "names.masc_and_fem.txt")
+        #
+        # self.logger.info("build_masc_and_fem_surnames")
+        # self.gender_recognizer.build_masc_and_fem_surnames(options.get('limit', 100000000), "surnames.masc_and_fem.txt")
 
         self.logger.info("build_person_gender_by_years_report")
-        self.gender_recognizer.build_person_gender_by_years_report(options.get('limit', 100000000), "person.gender_by_years.txt")
+        self.build_person_gender_by_years_report(options.get('limit', 100000000), "person.gender_by_years.txt")
 
         self.logger.info("gender_rubric_report")
         self.build_genders_rubrics(100000000, "gender_report.txt")

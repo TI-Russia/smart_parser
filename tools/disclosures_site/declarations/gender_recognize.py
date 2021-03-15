@@ -1,16 +1,26 @@
+from declarations.sql_helpers import fetch_cursor_by_chunks
+from declarations.russian_fio import TRussianFio, POPULAR_RUSSIAN_NAMES
+from declarations.sql_helpers import run_sql_script
+
 from collections import defaultdict
 from django.db import connection
-
-from declarations.russian_fio import TRussianFio, POPULAR_RUSSIAN_NAMES
+import os
 
 
 class TGender:
-    masculine = 1
-    feminine = 2
+    feminine = '1'
+    masculine = '2'
 
     @staticmethod
     def gender_list():
         return [TGender.masculine, TGender.feminine]
+
+    @staticmethod
+    def fill_combo_box_with_genders():
+        res = [("", "")]
+        for g in TGender.gender_list():
+            res.append((str(g), str(TGender.gender_to_Russian_str(g))))
+        return res
 
     @staticmethod
     def gender_to_str(gender_id):
@@ -54,12 +64,11 @@ class TGenderRecognizer:
     def is_feminine_patronymic(self, s):
         return s.endswith("вна") or s.endswith("чна")
 
-    def build_masc_and_fem_names(self, max_count, filename):
+    def build_masc_and_fem_names(self, report_filename="names.masc_and_fem.txt"):
         query = """
             select person_name 
             from declarations_person
-            limit {}  
-        """.format(max_count)
+        """
         names_fem_frq = defaultdict(int)
         names_masc_frq = defaultdict(int)
         surnames = defaultdict(int)
@@ -88,7 +97,7 @@ class TGenderRecognizer:
 
         self.names_masc.clear()
         self.names_fem.clear()
-        with open(filename, "w") as outp:
+        with open(report_filename, "w") as outp:
             names = set(names_masc_frq.keys())
             names.update(names_fem_frq.keys())
             for name in names:
@@ -107,12 +116,11 @@ class TGenderRecognizer:
                 if fem_ratio < 10:
                     self.names_masc.add(name)
 
-    def build_masc_and_fem_surnames(self, max_count, filename):
+    def build_masc_and_fem_surnames(self, report_filename="surnames.masc_and_fem.txt"):
         query = """
             select person_name 
             from declarations_person
-            limit {}  
-        """.format(max_count)
+        """
 
         surnames_fem_frq = defaultdict(int)
         surnames_masc_frq = defaultdict(int)
@@ -131,7 +139,7 @@ class TGenderRecognizer:
 
         self.surnames_masc.clear()
         self.surnames_fem.clear()
-        with open(filename, "w") as outp:
+        with open(report_filename, "w") as outp:
             for surname in surnames:
                 all_surname_freq = surnames_fem_frq[surname] + surnames_masc_frq[surname] + 0.00000001
                 fem_ratio = int(100.0 * surnames_fem_frq[surname] / float(all_surname_freq))
@@ -193,45 +201,48 @@ class TGenderRecognizer:
             return TGender.masculine
         return None
 
-    def build_person_gender_by_years_report(self, max_count, filename, start_year=2010, last_year=2019):
+    def update_by_sql_script(self, logger, genders):
+        output_script_path = "update_gender.sql"
+        with open(output_script_path, "w") as outp:
+            outp.write("""
+                create temporary table tmp_gender_table 
+                (
+                      `id` int,
+                      `gender` varchar(1)
+                );
+                """)
+            max_items_in_line = 10000
+            all_ids = list(genders.keys())
+            for i in range(0, len(all_ids), max_items_in_line):
+                outp.write("insert into tmp_gender_table values ")
+                pairs = ("({},\"{}\")".format(section_id, genders[section_id]) for section_id in all_ids[i:i+max_items_in_line])
+                outp.write(",".join(pairs))
+                outp.write(";\n")
+
+            outp.write(
+                """
+                update declarations_section s 
+                join tmp_gender_table r on s.id=r.id
+                set s.gender=r.gender
+                """)
+        run_sql_script(logger, output_script_path)
+        os.unlink(output_script_path)
+
+    def build_genders_for_sections(self, logger):
         query = """
-            select p.id, p.person_name, min(s.income_year) 
+            select distinct s.id, p.person_name, s.person_name  
             from declarations_section s
-            join declarations_person p on s.person_id=p.id
-            where s.person_id is not null and s.income_year > 2009
-            group by s.person_id
-            limit {}  
-        """.format(max_count)
-        masc = defaultdict(int)
-        fem = defaultdict(int)
-        with open(filename, "w") as outp:
-            with connection.cursor() as cursor:
-                cursor.execute(query)
-                for person_id, person_name, min_year in cursor:
-                    fio = TRussianFio(person_name)
-                    if not fio.is_resolved:
-                        continue
+            left join declarations_person p on s.person_id=p.id
+        """
+        genders = dict()
+        for section_id, p_person_name, s_person_name in fetch_cursor_by_chunks(query):
+            person_name = p_person_name if p_person_name is not None else s_person_name
+            fio = TRussianFio(person_name)
+            if not fio.is_resolved:
+                continue
+            gender = self.recognize_gender(fio)
+            if gender is None:
+                continue
+            genders[section_id] = gender
 
-                    gender = self.recognize_gender(fio)
-                    if start_year <= min_year <= last_year:
-                        if gender == TGender.masculine:
-                            masc[min_year] += 1
-                        elif gender == TGender.feminine:
-                            fem[min_year] += 1
-                    outp.write("{}\t{}\t{}\n".format(
-                        person_name,
-                        min_year,
-                        TGender.gender_to_str(gender)
-                    ))
-        #echo "select count(o.region_id), r.name from declarations_section s join declarations_source_document d on d.id=s.source_document_id join declarations_office o on o.id = d.office_id  join declarations_region r on r.id=o.region_id where s.person_name like '% миляуша %' group by o.region_id " | mysql -u disclosures -D disclosures_db -pdisclosures | sort -nr
-
-        with open(filename + ".sum", "w") as outp:
-            outp.write("year\tmasc\tfem\tfem_ratio\n")
-            for year in range(start_year, last_year + 1):
-                fam_ratio = round(100.0 * fem[year] / (fem[year] + masc[year]), 2)
-                outp.write("{}\t{}\t{}\t{}\n".format(
-                    year,
-                    masc[year],
-                    fem[year],
-                    fam_ratio,
-                ))
+        self.update_by_sql_script(logger, genders)

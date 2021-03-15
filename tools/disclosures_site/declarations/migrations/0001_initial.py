@@ -105,7 +105,7 @@ class Migration(migrations.Migration):
                 ('surname_rank', models.IntegerField(null=True)),
                 ('name_rank', models.IntegerField(null=True)),
                 ('rubric_id', models.IntegerField(null=True, default=None)),
-                ('gender', models.CharField(max_length=1, null=True)),
+                ('gender', models.PositiveSmallIntegerField(default=None, null=True)),
             ]
 
         ),

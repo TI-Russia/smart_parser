@@ -1,7 +1,7 @@
 from declarations.models import Section, Person, Office, Source_Document, TOfficeTableInMemory
 from .rubrics import get_russian_rubric_str
 
-from django_elasticsearch_dsl import Document, IntegerField, TextField, ListField, KeywordField
+from django_elasticsearch_dsl import Document, IntegerField, TextField, ByteField, KeywordField
 from django_elasticsearch_dsl.registries import registry
 from django.conf import settings
 from elasticsearch_dsl import Index
@@ -39,7 +39,8 @@ class ElasticSectionDocument(Document):
             'id',
             'person_name',
             'income_year',
-            'rubric_id'
+            'rubric_id',
+            'gender'
         ]
 
     @property

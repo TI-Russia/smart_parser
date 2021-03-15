@@ -114,6 +114,9 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
    git commit -m "new statistics" data/statistics.json
    git push
 
+#13.1 построение пола (gender)
+  python3 $TOOLS/disclosures_site/manage.py build_genders --settings disclosures.settings.dev
+
 #14 создание индекса для elasticsearch, создание sitemap   в фоновом режиме
    {
      python3 $TOOLS/disclosures_site/manage.py build_elastic_index --settings disclosures.settings.dev
