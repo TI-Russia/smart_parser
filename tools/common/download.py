@@ -3,13 +3,13 @@ from common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_H
             content_type_to_file_extension
 from ConvStorage.conversion_client import TDocConversionClient
 from common.http_request import RobotHttpException
+from common.primitives import build_dislosures_sha256
 
 import json
 import re
 import urllib.parse
 import urllib.error
 import hashlib
-import logging
 from unidecode import unidecode
 import os
 import shutil
@@ -95,15 +95,13 @@ def get_content_charset(headers):
         return params.get('charset')
 
 
-
 # save from selenium
 def save_downloaded_file(logger, filename):
     download_folder = TDownloadEnv.get_download_folder()
     if not os.path.exists(download_folder):
         os.makedirs(download_folder)
     assert (os.path.exists(filename))
-    with open(filename, "rb") as f:
-        sha256 = hashlib.sha256(f.read()).hexdigest()
+    sha256 = build_dislosures_sha256(filename)
     file_extension = os.path.splitext(filename)[1]
     saved_filename = os.path.join(download_folder, sha256 + file_extension)
     logger.debug("save file {} as {}".format(filename, saved_filename))

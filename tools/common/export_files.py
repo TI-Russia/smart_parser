@@ -1,25 +1,16 @@
-from common.html_parser import THtmlParser
-import os
-from collections import defaultdict
-import shutil
-import hashlib
+from common.primitives import build_dislosures_sha256
 from common.archives import TDearchiver
 from common.download import ACCEPTED_DECLARATION_FILE_EXTENSIONS, TDownloadEnv, TDownloadedFile
 from common.content_types import DEFAULT_HTML_EXTENSION, DEFAULT_PDF_EXTENSION
 from DeclDocRecognizer.dlrecognizer import run_dl_recognizer, DL_RECOGNIZER_ENUM
 from common.find_link import TLinkInfo
+
 import re
 import copy
 import time
-
-
-def build_sha256(filename):
-    with open(filename, "rb") as f:
-        file_data = f.read()
-        if filename.endswith(DEFAULT_HTML_EXTENSION):
-            text = THtmlParser(file_data).get_text()
-            file_data = text.encode("utf-8", errors="ignore")
-        return hashlib.sha256(file_data).hexdigest()
+import os
+from collections import defaultdict
+import shutil
 
 
 class TExportFile:
@@ -35,7 +26,7 @@ class TExportFile:
         if init_json is not None:
             self.from_json(init_json)
         else:
-            self.sha256 = build_sha256(export_path)
+            self.sha256 = build_dislosures_sha256(export_path)
         self.file_extension = os.path.splitext(self.export_path)[1]
         self.smart_parser_json_sha256 = None
 

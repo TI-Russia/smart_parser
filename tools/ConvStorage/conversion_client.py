@@ -1,4 +1,5 @@
 from common.archives import TDearchiver
+from common.primitives import build_dislosures_sha256
 from common.content_types import DEFAULT_PDF_EXTENSION
 from ConvStorage.convert_storage import TConvertStorage
 
@@ -8,7 +9,6 @@ import logging
 import urllib.request
 import urllib.error
 import threading
-import hashlib
 import os
 import queue
 import json
@@ -126,9 +126,9 @@ class TDocConversionClient(object):
             if starter != '%PDF-':
                 self.logger.debug("{} has bad pdf starter, do  not send it".format(filename))
                 return
-            hashcode = hashlib.sha256(file_contents).hexdigest()
-            if hashcode in self._sent_tasks:
-                return
+        hashcode = build_dislosures_sha256(filename)
+        if hashcode in self._sent_tasks:
+            return
 
         if not rebuild:
             if self.check_file_was_converted(hashcode):
@@ -256,8 +256,7 @@ class TDocConversionClient(object):
         errors_count = 0
         for filepath in sent_files:
             self.logger.debug("download docx for {}".format(filepath))
-            with open(filepath, "rb") as f:
-                sha256hash = hashlib.sha256(f.read()).hexdigest()
+            sha256hash = build_dislosures_sha256(filepath)
             outfile = filepath + ".docx"
             if self.args.output_folder is not None:
                 outfile = os.path.join(self.args.output_folder, os.path.basename(outfile))

@@ -1,9 +1,13 @@
+from common.primitives import  build_dislosures_sha256_by_file_data
+
 import glob
 import os
 import argparse
 import hashlib
 import json 
 import shutil
+
+
 TMPDIR = "tmp"
 assert os.path.exists(TMPDIR)
 
@@ -55,10 +59,8 @@ if __name__ == '__main__':
     processed_files = {}
     for some_file in all_files:
         try:
-            sha256hash = ""
-            with open(some_file, "rb") as f:
-                sha256hash = hashlib.sha256(f.read()).hexdigest()
-        
+            sha256hash = build_dislosures_sha256_by_file_data(some_file)
+
             if sha256hash in processed_files:
                 print ("skip " + some_file + " already found in the input files ")
                 continue

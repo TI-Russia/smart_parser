@@ -4,11 +4,11 @@ from source_doc_http.source_doc_client import TSourceDocClient
 from ConvStorage.conversion_client import TDocConversionClient
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from common.logging_wrapper import setup_logging
+from common.primitives import build_dislosures_sha256
 
 import pymysql
 import os
 import argparse
-import hashlib
 from urllib.parse import urlparse
 import requests
 import urllib.parse
@@ -19,12 +19,6 @@ import shutil
 import tempfile
 
 DECLARATOR_DOMAIN = 'https://declarator.org'
-
-
-def build_sha256(filename):
-    with open(filename, "rb") as f:
-        file_data = f.read()
-        return hashlib.sha256(file_data).hexdigest()
 
 
 class TExportHumanFiles:
@@ -140,7 +134,7 @@ class TExportHumanFiles:
             if file_name.lower().endswith('.pdf'):
                 _, extension = os.path.splitext(file_name)
                 self.pdf_conversion_client.start_conversion_task_if_needed(file_name, extension)
-                self.new_pdfs.add(build_sha256(file_name))
+                self.new_pdfs.add(build_dislosures_sha256(file_name))
             else:
                 self.smart_parser_server_client.send_file(file_name)
             yield file_name, declarator_url
@@ -177,7 +171,7 @@ class TExportHumanFiles:
             self.logger.debug("export document_file_id={}".format(document_file_id))
             for local_file_path, declarator_url in self.download_unzip_and_send_file_source_doc_server(file_path,
                                                                                                     document_file_id):
-                sha256 = build_sha256(local_file_path)
+                sha256 = build_dislosures_sha256(local_file_path)
                 self.logger.debug("add {}, sha256={}".format(local_file_path, sha256))
                 source_document = TSourceDocument()
                 _, source_document.file_extension = os.path.splitext(local_file_path)

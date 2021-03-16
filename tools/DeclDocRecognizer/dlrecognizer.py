@@ -2,15 +2,13 @@ from DeclDocRecognizer.document_types import TCharCategory, SOME_OTHER_DOCUMENTS
         get_russian_normal_text_ratio
 from ConvStorage.conversion_client import TDocConversionClient
 from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
-from common.primitives import normalize_whitespace, string_contains_Russian_name
-
+from common.primitives import normalize_whitespace, string_contains_Russian_name, build_dislosures_sha256
 
 from collections import defaultdict
 import argparse
 import json
 import re
 import os
-import hashlib
 import shutil
 import sys
 
@@ -335,13 +333,12 @@ def get_text_of_a_document(source_file, keep_txt=False, reuse_txt=False, output_
         ec.run_office2txt(source_file, txt_file)
     elif file_extension == ".pdf":
         temp_file = source_file + ".docx"
-        with open(source_file, "rb") as f:
-            sha256 = hashlib.sha256(f.read()).hexdigest()
-            if TDocConversionClient(TDocConversionClient.parse_args([])).retrieve_document(sha256, temp_file) and os.path.exists(temp_file):
-                ec.run_office2txt(temp_file, txt_file)
-            else:
-                # the worse case, let's use calibre
-                ec.run_calibre(source_file, txt_file)
+        sha256 = build_dislosures_sha256(source_file)
+        if TDocConversionClient(TDocConversionClient.parse_args([])).retrieve_document(sha256, temp_file) and os.path.exists(temp_file):
+            ec.run_office2txt(temp_file, txt_file)
+        else:
+            # the worse case, let's use calibre
+            ec.run_calibre(source_file, txt_file)
         if os.path.exists(temp_file):
             os.unlink(temp_file)
     elif file_extension in {".html", ".rtf", ".htm"}:

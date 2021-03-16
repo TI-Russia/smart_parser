@@ -3,9 +3,9 @@ from common.archives import TDearchiver
 from common.robot_project import TRobotProject
 from common.robot_web_site import TWebSiteReachStatus
 from common.export_files import TExportFile
+from common.logging_wrapper import setup_logging
 
 import argparse
-import logging
 import os
 import sys
 import time
@@ -15,28 +15,13 @@ import tarfile
 import platform
 from bs4 import BeautifulSoup
 
-def setup_logging(logfilename):
-    logger = logging.getLogger("archiver")
-    logger.setLevel(logging.DEBUG)
-
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    fh = logging.FileHandler(logfilename, "a+", encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-    return logger
-
+#see smart_parser/tools/dl_robot/scripts/add_fns_json_to_html.sh to know how to use it
 
 class TUnzipper:
     def __init__(self, args):
         self.args = args
         self.working = True
-        self.logger = setup_logging(self.args.log_file_name)
+        self.logger = setup_logging(log_file_name=self.args.log_file_name)
         self.setup_environment()
 
     @staticmethod

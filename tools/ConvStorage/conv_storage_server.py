@@ -1,4 +1,5 @@
 from ConvStorage.convert_storage import TConvertStorage
+from common.primitives import build_dislosures_sha256_by_file_data
 
 import argparse
 import json
@@ -7,7 +8,6 @@ import http.server
 import os
 import re
 import urllib
-import hashlib
 import shutil
 import subprocess
 import logging
@@ -548,7 +548,7 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
             return
         self.server.logger.debug("receive file {} length {}".format(self.path, file_length))
         file_bytes = self.rfile.read(file_length)
-        sha256 = hashlib.sha256(file_bytes).hexdigest()
+        sha256 = build_dislosures_sha256_by_file_data(file_bytes, file_extension)
         if not rebuild and self.server.convert_storage.has_converted_file(sha256):
             self.send_response(201, 'Already exists')
             self.end_headers()

@@ -1,7 +1,9 @@
 import urllib.parse
 import re
 import socket
-
+from .html_parser import THtmlParser
+import hashlib
+import os
 
 def normalize_whitespace(str):
     str = re.sub(r'\s+', ' ', str)
@@ -140,3 +142,15 @@ def prepare_russian_names_for_search_index(str):
     str = str.replace("Ё", "Е").replace("ё", "е")
     return str
 
+
+def build_dislosures_sha256_by_file_data(file_data, file_extension):
+    if file_extension == '.html':
+        text = THtmlParser(file_data).get_text()
+        file_data = text.encode("utf-8", errors="ignore")
+    return hashlib.sha256(file_data).hexdigest()
+
+
+def build_dislosures_sha256(file_path):
+    _, file_extension = os.path.splitext(file_path)
+    with open(file_path, "rb") as f:
+        return build_dislosures_sha256_by_file_data(f.read(), file_extension)

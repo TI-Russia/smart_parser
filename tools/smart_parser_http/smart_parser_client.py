@@ -1,11 +1,11 @@
 from common.content_types import ACCEPTED_DOCUMENT_EXTENSIONS
 from smart_parser_http.smart_parser_server import TSmartParserHTTPServer
+from common.primitives import build_dislosures_sha256
 
 import http.client
 import logging
 import urllib.request
 import urllib.error
-import hashlib
 import os
 import json
 import sys
@@ -123,9 +123,7 @@ class TSmartParserCacheClient(object):
             return None
 
     def retrieve_json_by_source_file(self, file_path):
-        with open(file_path, "rb") as inp:
-            sha256 = hashlib.sha256(inp.read()).hexdigest()
-            return self.retrieve_json_by_sha256(sha256)
+        return self.retrieve_json_by_sha256(build_dislosures_sha256(file_path))
 
     def get_files(self):
         if self.args.walk_folder_recursive is not None:

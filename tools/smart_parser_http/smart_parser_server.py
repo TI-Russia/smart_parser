@@ -1,10 +1,10 @@
 from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
 from urllib.parse import urlparse
 from common.content_types import ACCEPTED_DOCUMENT_EXTENSIONS
+from common.primitives import build_dislosures_sha256_by_file_data
 
 from multiprocessing.pool import ThreadPool
 from functools import partial
-import hashlib
 import argparse
 import sys
 import logging
@@ -140,7 +140,7 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         return js
 
     def put_to_task_queue(self, file_bytes, file_extension, rebuild=False):
-        sha256 = hashlib.sha256(file_bytes).hexdigest()
+        sha256 = build_dislosures_sha256_by_file_data(file_bytes, file_extension)
         file_name = os.path.join(self.args.input_task_directory, sha256 + file_extension)
         if os.path.exists(file_name):
             self.logger.debug("file {} already exists in the input queue".format(file_name))

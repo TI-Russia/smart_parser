@@ -1,4 +1,5 @@
-import hashlib
+from common.primitives import build_dislosures_sha256_by_file_data
+
 import json
 import os
 import shutil
@@ -142,7 +143,7 @@ class TSnowBallFileStorage:
 
     def save_file(self, file_bytes, file_extension, aux_params=None, force=False, sha256=None):
         if sha256 is None:
-            sha256 = hashlib.sha256(file_bytes).hexdigest()
+            sha256 = build_dislosures_sha256_by_file_data(file_bytes, file_extension)
         if not force and self.saved_file_params.get(sha256) is not None:
             return
         output_bin_file = self.bin_files[-1]

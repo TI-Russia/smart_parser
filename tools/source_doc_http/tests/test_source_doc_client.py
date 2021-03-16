@@ -1,10 +1,10 @@
 from source_doc_http.source_doc_server import TSourceDocHTTPServer
 from source_doc_http.source_doc_client import TSourceDocClient
+from common.primitives import build_dislosures_sha256
 
 from unittest import TestCase
 import os
 import threading
-import hashlib
 import shutil
 
 
@@ -68,7 +68,7 @@ class TestTSourceDocClient1(TestCase):
         self.assertTrue(self.env.client.send_file("test.txt"))
         stats = self.env.client.get_stats()
         self.assertEqual(stats['source_doc_count'], 1)
-        sha256 = hashlib.sha256(file_data).hexdigest()
+        sha256 = build_dislosures_sha256("test.txt")
         file_data1, file_extension = self.env.client.retrieve_file_data_by_sha256(sha256)
         self.assertEqual(file_data1, file_data)
         self.assertEqual(file_extension, ".txt")
@@ -95,10 +95,10 @@ class TestTSourceDocClient2(TestCase):
         stats = self.env.client.get_stats()
         self.assertEqual(stats['bin_files_count'], 2)
 
-        file_data_, _ = self.env.client.retrieve_file_data_by_sha256(hashlib.sha256(file_data1).hexdigest())
+        file_data_, _ = self.env.client.retrieve_file_data_by_sha256(build_dislosures_sha256("test1.txt"))
         self.assertEqual(file_data1, file_data_)
 
-        file_data_, _ = self.env.client.retrieve_file_data_by_sha256(hashlib.sha256(file_data2).hexdigest())
+        file_data_, _ = self.env.client.retrieve_file_data_by_sha256(build_dislosures_sha256("test2.txt"))
         self.assertEqual(file_data2, file_data_)
 
 
@@ -111,7 +111,8 @@ class TestReload(TestCase):
 
     def test_reload(self):
         file_data1 = b"12345_1"
-        with open("test8484.txt", "wb") as outp:
+        file_path = "test8484.txt"
+        with open(file_path, "wb") as outp:
             outp.write(file_data1)
 
         self.assertTrue(self.env.client.send_file("test8484.txt"))
@@ -120,7 +121,7 @@ class TestReload(TestCase):
         self.env.server.file_storage.close_file_storage()
         self.env.server.file_storage.load_from_disk()
 
-        file_data_, _ = self.env.client.retrieve_file_data_by_sha256(hashlib.sha256(file_data1).hexdigest())
+        file_data_, _ = self.env.client.retrieve_file_data_by_sha256(build_dislosures_sha256(file_path))
         self.assertEqual(file_data1, file_data_)
 
 
@@ -140,7 +141,6 @@ class TestReadOnly(TestCase):
 
         stats = self.env.client.get_stats()
         self.assertEqual(1, stats['source_doc_count'])
-
 
         self.env.server.file_storage.close_file_storage()
         self.env.server.file_storage.read_only = True

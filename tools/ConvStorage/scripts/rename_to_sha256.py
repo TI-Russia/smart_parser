@@ -1,5 +1,6 @@
+from common.primitives import  build_dislosures_sha256_by_file_data
+
 import os
-import hashlib
 import sys
 
 if __name__ == '__main__':
@@ -13,8 +14,7 @@ if __name__ == '__main__':
                 sys.stderr.write("delete {}\n".format(pdf_file))
                 os.unlink(pdf_file)
                 continue
-            with open(pdf_file, "rb") as f:
-                sha256hash = hashlib.sha256(f.read()).hexdigest()
+            sha256hash = build_dislosures_sha256_by_file_data(pdf_file)
             new_pdf_file = os.path.join(folder, sha256hash + ".pdf")
             if os.path.exists(new_pdf_file):
                 sys.stderr.write("{} already exists, skip renaming\n".format(pdf_file))

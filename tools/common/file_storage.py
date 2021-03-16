@@ -1,4 +1,5 @@
-import hashlib
+from common.primitives import build_dislosures_sha256_by_file_data
+
 import json
 import os
 if os.name != "nt":
@@ -141,7 +142,7 @@ class TFileStorage:
             self.logger.error("cannot save file since the db is opened in read-only mode")
             return
         if sha256 is None:
-            sha256 = hashlib.sha256(file_bytes).hexdigest()
+            sha256 = build_dislosures_sha256_by_file_data(file_bytes, file_extension)
         if not force and self.saved_file_params.get(sha256) is not None:
             return
         output_bin_file = self.bin_files[-1]

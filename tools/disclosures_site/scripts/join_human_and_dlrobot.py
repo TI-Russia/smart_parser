@@ -7,7 +7,6 @@ import os
 import sys
 import re
 import argparse
-import hashlib
 import logging
 
 
@@ -26,12 +25,6 @@ def setup_logging(logfilename):
     ch.setLevel(logging.INFO)
     logger.addHandler(ch)
     return logger
-
-
-def build_sha256(filename):
-    with open(filename, "rb") as f:
-        file_data = f.read()
-        return hashlib.sha256(file_data).hexdigest()
 
 
 class TJoiner:
