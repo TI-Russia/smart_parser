@@ -79,7 +79,9 @@ class TImporter:
                                                        sha256=sha256,
                                                        intersection_status=src_doc.get_intersection_status(),
                                                        )
-        source_document_in_db.id = self.permalinks_db.get_source_doc_id_by_sha256(sha256)
+        source_document_in_db.id, new_file = self.permalinks_db.get_source_doc_id_by_sha256(sha256)
+        assert not models.Source_Document.objects.filter(id=source_document_in_db.id).exists()
+        self.logger.debug("register doc sha256={} id={}, new_file={}".format(sha256, source_document_in_db.id, new_file))
         source_document_in_db.file_extension = src_doc.file_extension
         source_document_in_db.save()
         for ref in src_doc.decl_references:

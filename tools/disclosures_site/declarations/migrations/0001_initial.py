@@ -116,6 +116,7 @@ class Migration(migrations.Migration):
                 ('relative', models.CharField(max_length=1)),
                 ('name', models.TextField()),
                 ('section', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='declarations.Section')),
+                ('relative_index', models.PositiveSmallIntegerField(default=None, null=True)),
             ],
         ),
         migrations.CreateModel(
@@ -129,6 +130,7 @@ class Migration(migrations.Migration):
                 ('square', models.IntegerField(null=True)),
                 ('share', models.FloatField(null=True)),
                 ('section', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='declarations.Section')),
+                ('relative_index', models.PositiveSmallIntegerField(default=None, null=True)),
             ],
         ),
         migrations.CreateModel(
@@ -138,6 +140,7 @@ class Migration(migrations.Migration):
                 ('size', models.IntegerField(null=True)),
                 ('relative', models.CharField(max_length=1)),
                 ('section', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='declarations.Section')),
+                ('relative_index', models.PositiveSmallIntegerField(default=None, null=True)),
             ],
         ),
         migrations.CreateModel(

@@ -104,8 +104,8 @@ class TPermaLinksDB:
         passport = TPermaLinksDB.get_source_doc_sha256_passport(sha256)
         old_id = self.db.get(passport)
         if old_id is not None:
-            return int(old_id)
-        return self.get_new_id(models.Source_Document)
+            return int(old_id), False
+        return self.get_new_id(models.Source_Document), True
 
     #============  section ===============
     @staticmethod
