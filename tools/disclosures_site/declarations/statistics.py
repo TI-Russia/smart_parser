@@ -87,7 +87,7 @@ class TDisclosuresStatisticsHistory:
         if old > new:
             raise Exception("Fail! metric value {} is less than in the last db ({} < {}) ".format(
                 metric_str, new, old))
-        sys.stderr.write("success: {} < {}\n".format(old, new))
+        sys.stderr.write("success: {} <= {}\n".format(old, new))
 
     def check_statistics(self,  curr):
         self.check_sum_metric_increase(curr, ["source_document_count"])

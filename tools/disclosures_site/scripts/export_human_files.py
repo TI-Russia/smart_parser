@@ -195,7 +195,6 @@ class TExportHumanFiles:
         human_files_db.write()
         self.send_new_pdfs_to_smart_parser()
 
-
     def send_new_pdfs_to_smart_parser(self):
         self.logger.debug("wait pdf conversion for {} seconds".format(self.args.pdf_conversion_timeout))
         self.pdf_conversion_client.wait_doc_conversion_finished(self.args.pdf_conversion_timeout)
@@ -222,7 +221,6 @@ def main():
     args = TExportHumanFiles.parse_args(sys.argv[1:])
     with TExportHumanFiles(args) as exporter:
         exporter.export_files()
-
 
 
 if __name__ == '__main__':
