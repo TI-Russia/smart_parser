@@ -49,15 +49,14 @@ source ~/smart_parser/tools/disclosures_site/scripts/update_common.sh
 
 
 #8.  инициализация базы disclosures
-    cd ~/smart_parser/tools/disclosures_site
-    python3 manage.py create_database --settings disclosures.settings.dev --skip-checks --username db_creator --password root
-    python3 manage.py makemigrations --settings disclosures.settings.dev
-    python3 manage.py migrate --settings disclosures.settings.dev
-    python3 manage.py test declarations/tests --settings disclosures.settings.dev
+    python3 $TOOLS/disclosures_site/manage.py create_database --settings disclosures.settings.dev --skip-checks --username db_creator --password root
+    python3 $TOOLS/disclosures_site/manage.py makemigrations --settings disclosures.settings.dev
+    python3 $TOOLS/disclosures_site/manage.py migrate --settings disclosures.settings.dev
+    python3 $TOOLS/disclosures_site/manage.py test declarations/tests --settings disclosures.settings.dev
 
 #9
-    cd $DLROBOT_FOLDER
-    python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev --permanent-links-db permalinks.dbm
+    cd $DLROBOT_FOLDER # important
+    python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev --permanent-links-db $DLROBOT_FOLDER/permalinks.dbm
 
 
 #10  Импорт json в dislosures_db

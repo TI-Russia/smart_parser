@@ -352,7 +352,7 @@ class RealEstate(models.Model):
     owntype = models.CharField(max_length=1)
     square = models.IntegerField(null=True)
     share = models.FloatField(null=True)
-    relative_index = models.PositiveSmallIntegerField(null=True)
+    relative_index = models.PositiveSmallIntegerField(null=True, default=None)
 
     @property
     def own_type_str(self):
@@ -367,7 +367,7 @@ class RealEstate(models.Model):
 class Vehicle(models.Model):
     section = models.ForeignKey('declarations.Section', on_delete=models.CASCADE)
     relative = models.CharField(max_length=1)
-    relative_index = models.PositiveSmallIntegerField(null=True)
+    relative_index = models.PositiveSmallIntegerField(null=True, default=None)
     name = models.TextField()
 
 
@@ -375,7 +375,7 @@ class Income(models.Model):
     section = models.ForeignKey('declarations.Section', on_delete=models.CASCADE)
     size = models.IntegerField(null=True)
     relative = models.CharField(max_length=1)
-    relative_index = models.PositiveSmallIntegerField(null=True)
+    relative_index = models.PositiveSmallIntegerField(null=True, default=None)
 
 
 def get_distinct_relative_types(records):
