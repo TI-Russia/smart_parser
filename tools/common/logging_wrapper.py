@@ -20,7 +20,7 @@ def setup_logging(logger_name=None, log_file_name=None, append_mode=False):
     # create file handler which logs even debug messages
     if log_file_name is not None:
         if append_mode:
-            fh = logging.FileHandler(logfilename, "a+", encoding="utf8")
+            fh = logging.FileHandler(log_file_name, "a+", encoding="utf8")
         else:
             if os.path.exists(log_file_name):
                 os.remove(log_file_name)

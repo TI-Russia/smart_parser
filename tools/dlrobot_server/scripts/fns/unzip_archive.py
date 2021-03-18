@@ -15,7 +15,7 @@ import tarfile
 import platform
 from bs4 import BeautifulSoup
 
-#see smart_parser/tools/dl_robot/scripts/add_fns_json_to_html.sh to know how to use it
+#see add_fns_json_to_html.sh to know how to use it
 
 class TUnzipper:
     def __init__(self, args):
@@ -68,7 +68,7 @@ class TUnzipper:
                 export_file = TExportFile(url=self.args.web_domain, export_path=export_path)
                 export_env.exported_files.append(export_file)
             project.write_project()
-        os.chdir("..")
+        os.chdir("../../..")
 
         headers = {
             DLROBOT_HEADER_KEYS.EXIT_CODE: 0,

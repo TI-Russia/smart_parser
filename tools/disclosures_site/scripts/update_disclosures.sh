@@ -75,7 +75,7 @@ source ~/smart_parser/tools/disclosures_site/scripts/update_common.sh
    python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric sections_person_name_income_year_spouse_income_size  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
 
 #10.1  остановка dlrobot на $DEDUPE_HOSTS_SPACES в параллель (максмимум 3 часа), может немного одновременно проработать со сливалкой
-echo $DEDUPE_HOSTS_SPACES | tr " " "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/git_update_cloud_worker.py --action stop --host &
+echo $DEDUPE_HOSTS_SPACES | tr " " "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/scripts/git_update_cloud_worker.py --action stop --host &
 
 #11 создание surname_rank (40 мин)
 python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclosures.settings.dev
