@@ -2,12 +2,13 @@ from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
 from urllib.parse import urlparse
 from common.content_types import ACCEPTED_DOCUMENT_EXTENSIONS
 from common.primitives import build_dislosures_sha256_by_file_data
+from common.logging_wrapper import setup_logging
+
 
 from multiprocessing.pool import ThreadPool
 from functools import partial
 import argparse
 import sys
-import logging
 import time
 import os
 import json
@@ -18,25 +19,6 @@ import dbm.gnu
 import threading
 import queue
 from pathlib import Path
-
-
-def setup_logging(logfilename):
-    logger = logging.getLogger("spc")
-    logger.setLevel(logging.DEBUG)
-
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    fh = logging.FileHandler(logfilename, "a+", encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-
-    # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-    return logger
-
 
 
 class TSmartParserHTTPServer(http.server.HTTPServer):
@@ -62,7 +44,7 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
 
     def __init__(self, args):
         self.args = args
-        self.logger = setup_logging(self.args.log_file_name)
+        self.logger = setup_logging(self.args.log_file_name, append_mode=True)
         self.json_cache_dbm = dbm.gnu.open(args.cache_file, "w" if os.path.exists(args.cache_file) else "c")
         self.last_version = self.read_smart_parser_versions()
         self.task_queue = self.initialize_input_queue()

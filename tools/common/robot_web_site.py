@@ -33,12 +33,13 @@ class TWebSiteReachStatus:
 
     @staticmethod
     def can_communicate(reach_status):
-        return reach_status == "normal" or reach_status == "only_selenium"
+        return reach_status == TWebSiteReachStatus.normal or reach_status == TWebSiteReachStatus.only_selenium
 
     @staticmethod
     def check_status(status):
         return status in {TWebSiteReachStatus.normal, TWebSiteReachStatus.only_selenium,
                            TWebSiteReachStatus.out_of_reach, TWebSiteReachStatus.abandoned}
+
 
 class TRobotWebSite:
     SINGLE_DECLARATION_TIMEOUT = 60 * 30 # half an hour in seconds,

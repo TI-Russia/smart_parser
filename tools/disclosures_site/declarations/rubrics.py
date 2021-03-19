@@ -70,7 +70,7 @@ RubricsInRussian = {
     TOfficeRubrics.Tax: {
         "name": "Налоги",
         "keywords": ["федеральная налоговая"],
-        "top_parent": 470
+        "immediate_parent": 470
     },
     TOfficeRubrics.ExecutivePower: {
         "name": "Исполнительная власть",
@@ -81,6 +81,39 @@ RubricsInRussian = {
         "name": "Остальные",
     }
 }
+
+
+class TOfficeProps:
+    def __init__(self, name, top_parent=None, immediate_parent=None):
+        self.name = " " + name.lower() + " "  # search for ' суд '
+        self.top_parent = top_parent
+        self.immediate_parent = immediate_parent
+
+    def check_rubric(self, rubric):
+        if self.top_parent is not None:
+            if self.top_parent == RubricsInRussian[rubric].get('top_parent'):
+                return True
+
+        if self.immediate_parent is not None:
+            if self.immediate_parent == RubricsInRussian[rubric].get('immediate_parent'):
+                return True
+
+        for keyword in RubricsInRussian[rubric].get('antikeywords', []):
+            if self.name.find(keyword) != -1:
+                return False
+
+        for keyword in RubricsInRussian[rubric].get('keywords', []):
+            if self.name.find(keyword) != -1:
+                return True
+
+        if rubric == TOfficeRubrics.ExecutivePower:
+            if 'федеральная служба' in self.name and \
+                    not self.check_rubric(TOfficeRubrics.Siloviki) and \
+                    not self.check_rubric(TOfficeRubrics.Tax):
+                return True
+
+        return False
+
 
 def get_all_rubric_ids():
     return RubricsInRussian.keys()
@@ -94,36 +127,15 @@ def get_russian_rubric_str(rubric_id):
     return RubricsInRussian[rubric_id]['name']
 
 
-def check_rubric(office_name, parent_office_id, rubric):
-    top_parent = RubricsInRussian[rubric].get('top_parent')
-    if top_parent is not None:
-        if parent_office_id == top_parent:
-            return True
-
-    name = " " + office_name.lower() + " "  # search for ' суд '
-
-    for keyword in RubricsInRussian[rubric].get('antikeywords', []):
-        if name.find(keyword) != -1:
-            return False
-
-    for keyword in RubricsInRussian[rubric].get('keywords', []):
-        if name.find(keyword) != -1:
-            return True
-
-
-    if rubric == TOfficeRubrics.ExecutivePower:
-        if 'федеральная служба' in office_name.lower() and not check_rubric(office_name, parent_office_id, TOfficeRubrics.Siloviki):
-            return True
-
-    return False
-
-
 def get_all_rubrics(office_hierarchy, office_id):
     all_rubrics = set()
+    pattern = TOfficeProps(
+        office_hierarchy.offices[office_id]['name'],
+        top_parent=office_hierarchy.get_top_parent_office_id(office_id),
+        immediate_parent=office_hierarchy.get_immediate_parent_office_id(office_id))
+
     for rubric in RubricsInRussian.keys():
-        if check_rubric(office_hierarchy.offices[office_id]['name'],
-                        office_hierarchy.get_parent_office_id(office_id),
-                        rubric):
+        if pattern.check_rubric(rubric):
             all_rubrics.add(rubric)
     return all_rubrics
 

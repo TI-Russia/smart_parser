@@ -123,8 +123,13 @@ class TOfficeTableInMemory:
             id = parent['id']
         return id
 
-    def get_parent_office_id(self, office_id):
+    def get_top_parent_office_id(self, office_id):
         return self.transitive_top[int(office_id)]
+
+    def get_immediate_parent_office_id(self, office_id):
+        if office_id is None:
+            return None
+        return self.offices[int(office_id)]['parent_id']
 
     def __init__(self, use_office_types=True, init_from_json=None):
         self.use_office_types = use_office_types

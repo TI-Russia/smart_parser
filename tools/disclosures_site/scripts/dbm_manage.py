@@ -1,5 +1,6 @@
 import dbm.gnu as gdbm
 import argparse
+import zlib
 
 
 def parse_args():
@@ -7,7 +8,18 @@ def parse_args():
     parser.add_argument("--db", dest='dbm_file')
     parser.add_argument("--action", dest='action', help="can be print, get")
     parser.add_argument("--key", dest='key', help="key to get")
+    parser.add_argument("--zlib-value", dest='use_zlib', action="store_true", default=False)
     return parser.parse_args()
+
+
+def read_value(args, db, key):
+    if args.use_zlib:
+        data = db[key]
+        if data == b"no_json_found":
+            return data.decode("utf8")
+        return zlib.decompress(data).decode('utf8')
+    else:
+        return db[key].decode('utf8')
 
 
 if __name__ == '__main__':
@@ -16,10 +28,12 @@ if __name__ == '__main__':
         if args.action == "print":
             k = db.firstkey()
             while k is not None:
-                print("{}\t{}".format(k.decode('utf8'), db[k].decode('utf8')))
+                value = read_value(args, db, k)
+                print("{}\t{}".format(k.decode('utf8'), value))
                 k = db.nextkey(k)
         else:
             if args.action == "get":
-                print(db[args.key].decode('utf8'))
+                value = read_value(args, db, args.key)
+                print(value)
 
 
