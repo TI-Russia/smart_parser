@@ -91,7 +91,8 @@ class TDisclosuresStatisticsHistory:
 
     def check_statistics(self,  curr):
         self.check_sum_metric_increase(curr, ["source_document_count"])
-        self.check_sum_metric_increase(curr, ["sections_count"])
+        self.check_sum_metric_increase(curr, ['sections_person_name_income_year_declarant_income_size'])
+        self.check_sum_metric_increase(curr, ['sections_person_name_income_year_spouse_income_size'])
         self.check_sum_metric_increase(curr, ["person_count"])
         self.check_sum_metric_increase(curr, ['source_document_only_dlrobot_count', 'source_document_both_found_count'])
         self.check_sum_metric_increase(curr, ['source_document_only_human_count', 'source_document_both_found_count'])
