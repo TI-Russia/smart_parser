@@ -6,6 +6,7 @@ import time
 from common_server_worker import PITSTOP_FILE, TYandexCloud
 import subprocess
 
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--cloud",  dest='cloud', default=False, action="store_true",
