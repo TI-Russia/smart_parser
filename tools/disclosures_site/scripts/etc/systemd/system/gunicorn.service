@@ -7,12 +7,15 @@ Wants=network-online.target
 
 [Service]
 User=sokirko
-WorkingDirectory=/var/www/smart_parser/tools/disclosures_site
-Environment=PYTHONPATH=/var/www/smart_parser/tools:/var/www/smart_parser/tools/disclosures_site
-Environment=SOURCE_DOC_SERVER_ADDRESS=migalka:8090
-ExecStart=/var/www/smart_parser/tools/venv/bin/gunicorn \
+WorkingDirectory=/home/sokirko/smart_parser/tools/disclosures_site
+Environment=PYTHONPATH=/home/sokirko/smart_parser/tools:/home/sokirko/smart_parser/tools/disclosures_site
+
+#to iphil
+Environment=SOURCE_DOC_SERVER_ADDRESS=195.70.213.239:443
+
+ExecStart=/home/sokirko/smart_parser/tools/venv/bin/gunicorn \
           --access-logfile - \
               --env DJANGO_SETTINGS_MODULE=disclosures.settings.prod \
-          --workers 3 \
+          --workers 2 \
           --bind unix:/run/gunicorn.sock \
           disclosures.wsgi:application
