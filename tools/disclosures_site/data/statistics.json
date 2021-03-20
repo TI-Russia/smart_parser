@@ -126,5 +126,18 @@
             "sections_dedupe_score_greater_0": 4430524,
             "person_count": 1549726
         }
+    },
+    {
+        "crawl_epoch": 1615729870,
+        "metrics": {
+            "source_document_count": 652022,
+            "source_document_only_dlrobot_count": 391112,
+            "source_document_only_human_count": 146610,
+            "source_document_both_found_count": 114300,
+            "sections_person_name_income_year_declarant_income_size": 4999796,
+            "sections_person_name_income_year_spouse_income_size": 2994309,
+            "sections_dedupe_score_greater_0": 5079235,
+            "person_count": 1746700
+        }
     }
 ]
