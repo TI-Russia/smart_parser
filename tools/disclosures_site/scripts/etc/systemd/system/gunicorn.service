@@ -1,7 +1,6 @@
 [Unit]
 Description=gunicorn daemon
 Requires=gunicorn.socket
-Requires=source_declaration_doc
 After=network-online.target
 Wants=network-online.target
 
@@ -13,7 +12,7 @@ Environment=PYTHONPATH=/home/sokirko/smart_parser/tools:/home/sokirko/smart_pars
 #to iphil
 Environment=SOURCE_DOC_SERVER_ADDRESS=195.70.213.239:443
 
-ExecStart/home/sokirko/.local/bin/gunicorn \
+ExecStart=/home/sokirko/.local/bin/gunicorn \
           --access-logfile - \
               --env DJANGO_SETTINGS_MODULE=disclosures.settings.prod \
           --workers 2 \
