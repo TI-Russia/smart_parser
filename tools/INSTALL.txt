@@ -165,6 +165,7 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
 Following https://habr.com/ru/post/501414/
 
 #5.0 install mysql 8
+    #wget -c https://dev.mysql.com/get/mysql-apt-config_0.8.23-1_all.deb
     sudo apt update
     sudo apt install mysql-server
     # root password is "root"
@@ -183,11 +184,9 @@ Following https://habr.com/ru/post/501414/
     GRANT ALL PRIVILEGES ON *.* TO 'disclosures'@'' WITH GRANT OPTION;
     FLUSH PRIVILEGES;
 
-    # may be it is optional in mysql 8.0
-    #4 enable qcache in mysql: https://codebeer.ru/nastrojka-raboty-mysql-query-cache
-    query_cache_type        = ON
-    query_cache_limit       = 1M
-    query_cache_size        = 128M
+    #add to /etc/mysql/my.cnf
+    [mysqld]
+    wait_timeout = 28800
 
 
 #5.1 Install elastic search, follow https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
@@ -196,8 +195,16 @@ Following https://habr.com/ru/post/501414/
     sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D27D666CD88E42B4
     sudo apt-get update
     sudo apt-get install elasticsearch
-    sudo /bin/systemctl daemon-reload
-    sudo /bin/systemctl enable elasticsearch.service
+
+    #sudo nano /etc/elasticsearch/jvm.options
+    # add -Xmx512m это не работает, elastic не хочет уходить в swap
+
+    sudo nano /etc/systemd/system/multi-user.target.wants/elasticsearch.service
+    #set
+    #TimeoutStartSec=750
+
+    sudo systemctl daemon-reload
+    sudo systemctl enable elasticsearch.service
     sudo systemctl start elasticsearch.service
 
 
@@ -229,10 +236,12 @@ Following https://habr.com/ru/post/501414/
 
     sudo cp /var/www/smart_parser/tools/disclosures_site/scripts/etc/systemd/system/gunicorn.* /etc/systemd/system
 
-    sudo systemctl start gunicorn.socket
     sudo systemctl enable gunicorn.socket
+    sudo systemctl start gunicorn.socket
 
-    sudo systemctl restart gunicorn.service
+
+    sudo systemctl enable gunicorn.service
+    sudo systemctl start gunicorn.service
     sudo systemctl status gunicorn.service
 
     #test gunicorn (optional)
