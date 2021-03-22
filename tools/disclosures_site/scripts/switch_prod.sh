@@ -28,7 +28,7 @@ mv $NEW_MYSQL $PROD_MYSQL
 systemctl start mysql
 
 #1.3 test
-sudo -u $SERVICE_USER bash -c '
+sudo -u $SERVICE_USER bash -c -l '
   python3 manage.py external_link_surname_checker --links-input-file data/external_links.json  --settings disclosures.settings.prod
 '
 if [ $? != 0]; then
@@ -68,17 +68,16 @@ if [ "$putin" != "Путин Владимир Владимирович" ]; then
 fi
 
 #3.  sitemaps
-sudo -u $SERVICE_USER bash -c '
-  cd ~/smart_parser/tools/disclosures_site;
+sudo -u $SERVICE_USER bash -c -l '
   tar --file /tmp/static_sections.tar.gz --gzip --directory disclosures/static --extract ;
   python3 manage.py generate_sitemaps --settings disclosures.settings.prod --output-file disclosures/static/sitemap.xml
-  '
+'
 
 #4  restart
 systemctl restart gunicorn
 
 #5 testing
-sudo -u $SERVICE_USER bash -c '
+sudo -u $SERVICE_USER bash -c -l '
 req_count=`python3 scripts/dolbilo.py --input-access-log data/access.test.log.gz  --host disclosures.ru| jq ".normal_response_count"`
 
 if [ "$req_count" != "349" ]; then
