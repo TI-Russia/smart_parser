@@ -3,7 +3,10 @@
 #0 ~/smart_parser/tools/INSTALL.txt are prerequisites
 
 set -e
-source ~/smart_parser/tools/disclosures_site/scripts/update_common.sh
+COMMON_SCRIPT=$(dirname $0)/update_common.sh
+source $COMMON_SCRIPT
+
+
 
 
 #1 создание нового каталога и файла настройки .profile
@@ -15,7 +18,7 @@ source ~/smart_parser/tools/disclosures_site/scripts/update_common.sh
 
     mkdir -p $CRAWL_EPOCH
     cd $CRAWL_EPOCH
-    cp ~/smart_parser/tools/disclosures_site/scripts/update_common.sh  .profile
+    cp $COMMON_SCRIPT .profile
     echo "" >> .profile
     echo "" >> .profile
     echo "export DLROBOT_FOLDER=$DLROBOT_FOLDER" >> .profile
@@ -23,7 +26,7 @@ source ~/smart_parser/tools/disclosures_site/scripts/update_common.sh
     echo "export OLD_DLROBOT_FOLDER=$OLD_DLROBOT_FOLDER" >> .profile
     source .profile
 
-    cp $DLROBOT_CENTRAL_FOLDER/dlrobot_central.log $YANDEX_DISK_FOLDER
+    cp $DLROBOT_CENTRAL_FOLDER/dlrobot_central.log $YANDEX_DISK_FOLDER/dlrobot_updates
 
 #2  слияние по файлам dlrobot, declarator  и старого disclosures, получение dlrobot_human.json
     python3 $TOOLS/disclosures_site/scripts/join_human_and_dlrobot.py \
@@ -45,7 +48,7 @@ source ~/smart_parser/tools/disclosures_site/scripts/update_common.sh
 
 
 #7  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод (7-8 часов)
-   python3 $TOOLS_PROD/manage.py create_permalink_storage --settings disclosures.settings.prod --output-dbm-file permalinks.dbm
+   python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.prod --output-dbm-file permalinks.dbm
 
 
 #8.  инициализация базы disclosures
@@ -154,5 +157,5 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
 #21  посылаем данные dlrobot в каталог, который синхронизирутеся с облаком, очищаем dlrobot_central (без возврата)
     cd $DLROBOT_FOLDER
     python3 $TOOLS/disclosures_site/scripts/send_dlrobot_projects_to_cloud.py  --max-ctime $CRAWL_EPOCH \
-        --input-dlrobot-folder $DLROBOT_CENTRAL_FOLDER"/processed_projects" --output-cloud-folder $YANDEX_DISK_FOLDER
+        --input-dlrobot-folder $DLROBOT_CENTRAL_FOLDER"/processed_projects" --output-cloud-folder $YANDEX_DISK_FOLDER/dlrobot_updates
 

@@ -116,13 +116,6 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
                 --input-task-list ~/smart_parser/tools/disclosures_site/data/web_sites.json \
                 --result-folder processed_projects --read-previous-results --check-yandex-cloud
 
-3.6 install sshfs and create link to frontend
-    mkdir /mnt/frontend
-    sudo chmod a+rwx /mnt/frontend
-    #add the following line /etc/fstab
-    sudo nano /etc/fstab
-    sshfs#sokirko@frontend:/ /mnt/frontend  fuse defaults,allow_other,IdentityFile=/home/sokirko/.ssh/id_rsa 0 0
-
 3.7  init crontab in central for monitoring (crontab -e), add lines from $TOOLS/disclosures_server/crontab.txt
 
 3.8  Get api-token from telegram BotFather and give it to
