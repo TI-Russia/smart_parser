@@ -39,8 +39,11 @@ def read_geo_with_sites(file_name):
             urls[url] = wikidata_item
     return urls
 
+
 #https://www.mediawiki.org/wiki/Manual:Pywikibot/Wikidata/ru
-def delete_link(url, wikidata_item):
+def deprecate_link(logger, url, wikidata_item):
+    if wikidata_item.startswith('http://www.wikidata.org/entity/'):
+        wikidata_item = wikidata_item[len('http://www.wikidata.org/entity/'):]
     repo = pywikibot.Site().data_repository()
     wikidata_bot = pywikibot.WikidataBot(always=True)
     wikidata_bot.options['always'] = True
@@ -50,11 +53,28 @@ def delete_link(url, wikidata_item):
     item_page.get()
     if item_page.claims:
         if 'P856' in item_page.claims:
-            print(item_page.claims['P856'][0].getTarget())
-            print ("aaa")
+            claim = item_page.claims['P856'][0]
+            wikidata_url = claim.getTarget()
+            if url in wikidata_url.lower():
+                #item_page.re
+                qualifier = pywikibot.Claim(repo, 'P2241')
+                target = pywikibot.ItemPage(repo, "Q21441764")
+                qualifier.setTarget(target)
+                if claim.qualifiers.get('P2241'):
+                    logger.info("{} from {} is already deprecated".format(wikidata_url, wikidata_item))
+                    return False
+                else:
+                    logger.info("deprecate {} from {}".format(wikidata_url, wikidata_item))
+                    claim.addQualifier(qualifier, summary='the site was abandoned or used for spam.')
+                    #  cannot remove it
+                    # item_page.removeClaims(claim)
+                    return True
+    logger.debug("{} has no official site ".format(wikidata_url))
+    return False
 
 
-def delete_links(logger, urls, markup_file):
+def deprecate_links(logger, urls, markup_file):
+    edit_counts = 0
     with gzip.open(markup_file) as inp:
         for line in inp:
             mark, url, reach_status, title = line.decode('utf8').strip().split("\t")
@@ -64,19 +84,22 @@ def delete_links(logger, urls, markup_file):
                 url = url.strip('/')
                 if url in urls:
                     logger.info("{}\t{}".format(url, urls[url]))
+                    if deprecate_link(logger, url, urls[url]):
+                        edit_counts += 1
+                    if edit_counts >= 20:
+                        break
 
 
 if __name__ == '__main__':
-    logger = setup_logging(log_file_name="dlwikibot.log")
+    logger = setup_logging(log_file_name="delete_spam.log")
 
     wikidata_file = "geo_from_wikidata.json"
     #data = send_sparql_request(sparql)
     #with open (wikidata_file, "w") as outp:
     #    json.dump(data, outp)
-    #urls = read_geo_with_sites(wikidata_file)
-    #markup_file = "../disclosures_site/data/web_sites_markup.txt.gz"
-    #delete_links(logger, urls, markup_file)
-    #delete_link("http://www.verhnedon.ru/", "https://www.wikidata.org/wiki/Q2220876")
-    delete_link("http://www.verhnedon.ru/", "Q2220876")
-#https://www.wikidata.org/wiki/Q2220876
+    urls = read_geo_with_sites(wikidata_file)
+    markup_file = "../disclosures_site/data/web_sites_markup.txt.gz"
+    deprecate_links(logger, urls, markup_file)
+    #deprecate_link(logger, "http://www.verhnedon.ru/", "Q2220876")
+    #https://www.wikidata.org/wiki/Q2220876
 
