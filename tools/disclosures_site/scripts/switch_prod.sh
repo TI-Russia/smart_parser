@@ -2,6 +2,10 @@
 
 MYSQL_TAR=$1
 ELASTICSEARCH_TAR=$2
+SERVICE_USER=sokirko
+DISCLOSURES_FOlDER=/home/$SERVICE_USER/smart_parser/tools/disclosures_site
+cd $DISCLOSURES_FOlDER
+
 
 #1. mysql
 NEW_MYSQL=/var/lib/mysql.new
@@ -24,7 +28,9 @@ mv $NEW_MYSQL $PROD_MYSQL
 systemctl start mysql
 
 #1.3 test
-python3 manage.py external_link_surname_checker --links-input-file data/external_links.json  --settings disclosures.settings.prod
+sudo -u $SERVICE_USER bash -c '
+  python3 manage.py external_link_surname_checker --links-input-file data/external_links.json  --settings disclosures.settings.prod
+'
 if [ $? != 0]; then
     echo "external_link_surname_checker failed, roll back"
     systemctl stop mysql
@@ -62,7 +68,7 @@ if [ "$putin" != "Путин Владимир Владимирович" ]; then
 fi
 
 #3.  sitemaps
-sudo -u sokirko bash -c '
+sudo -u $SERVICE_USER bash -c '
   cd ~/smart_parser/tools/disclosures_site;
   tar --file /tmp/static_sections.tar.gz --gzip --directory disclosures/static --extract ;
   python3 manage.py generate_sitemaps --settings disclosures.settings.prod --output-file disclosures/static/sitemap.xml
@@ -72,11 +78,12 @@ sudo -u sokirko bash -c '
 systemctl restart gunicorn
 
 #5 testing
-cd ~/smart_parser/tools/disclosures_site
-req_count=`python3 scripts/dolbilo.py --input-access-log data/access.test.log.gz  --host disclosures.ru| jq '.normal_response_count'`
+sudo -u $SERVICE_USER bash -c '
+req_count=`python3 scripts/dolbilo.py --input-access-log data/access.test.log.gz  --host disclosures.ru| jq ".normal_response_count"`
+
 if [ "$req_count" != "349" ]; then
   echo "site testing returns only $req_count requests with 200 http code, must be 349"
   exit 1
 fi
-
+'
 echo "all done"

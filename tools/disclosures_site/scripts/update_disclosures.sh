@@ -130,7 +130,7 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
     bash scripts/rename_db.sh disclosures_db_dev disclosures_db
     python3 manage.py build_elastic_index --settings disclosures.settings.prod
 
-#18 создание sitemap (rare-sections)  и отсылка на frontend
+#18 создание sitemap (rare-sections) и копирование на frontend
     python3 $TOOLS/disclosures_site/manage.py generate_static_sections --settings disclosures.settings.prod --output-folder sections
     tar cfz static_sections.tar.gz sections
     scp static_sections.tar.gz $FRONTEND:/tmp
@@ -148,7 +148,7 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
 
 #20 обновление prod
     ssh $FRONTEND git -C ~/smart_parser pull
-    ssh $FRONTEND sudo /home/sokirko/smart_parser/tools/disclosures_site/scripts/switch_prod.sh /tmp/mysql.tar.gz /tmp/elastic.tar.gz
+    ssh $FRONTEND sudo bash -x /home/sokirko/smart_parser/tools/disclosures_site/scripts/switch_prod.sh /tmp/mysql.tar.gz /tmp/elastic.tar.gz
 
 
 #21  посылаем данные dlrobot в каталог, который синхронизирутеся с облаком, очищаем dlrobot_central (без возврата)
