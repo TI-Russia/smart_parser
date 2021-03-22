@@ -2,6 +2,7 @@
 
 MYSQL_TAR=$1
 ELASTICSEARCH_TAR=$2
+STATIC_SECTIONS=$3
 SERVICE_USER=sokirko
 DISCLOSURES_FOlDER=/home/$SERVICE_USER/smart_parser/tools/disclosures_site
 cd $DISCLOSURES_FOlDER
@@ -12,7 +13,7 @@ NEW_MYSQL=/var/lib/mysql.new
 BACKUP_MYSQL=/var/lib/mysql.old
 PROD_MYSQL=/var/lib/mysql
 
-#1.1unpack
+#1.1 unpack
 if [ -d $NEW_MYSQL ]; then rm -rf $NEW_MYSQL; fi
 mkdir $NEW_MYSQL
 chmod a+rxw $NEW_MYSQL
@@ -31,7 +32,7 @@ systemctl start mysql
 sudo -u $SERVICE_USER bash -c -l '
   python3 manage.py external_link_surname_checker --links-input-file data/external_links.json  --settings disclosures.settings.prod
 '
-if [ $? != 0]; then
+if [ $? != 0 ]; then
     echo "external_link_surname_checker failed, roll back"
     systemctl stop mysql
     mv $PROD_MYSQL $NEW_MYSQL
@@ -57,7 +58,7 @@ mv $PROD_ES $BACKUP_ES
 mv $NEW_ES $PROD_ES
 systemctl start elasticsearch
 sleep 10
-putin=`curl localhost:9200/declaration_person_prod/_search -H 'Content-Type: application/json' -d '{ "query": { "term": {"id": 1409527}}}' | jq -r '.hits["hits"][0]["_source"]["person_name"]'`
+putin=`curl -s localhost:9200/declaration_person_prod/_search -H 'Content-Type: application/json' -d '{ "query": { "term": {"id": 1409527}}}' | jq -r '.hits["hits"][0]["_source"]["person_name"]'`
 if [ "$putin" != "Путин Владимир Владимирович" ]; then
     echo "Fatal error! Cannot find a person in elasticsearch, roll back"
     systemctl stop elasticsearch
@@ -68,16 +69,16 @@ if [ "$putin" != "Путин Владимир Владимирович" ]; then
 fi
 
 #3.  sitemaps
-sudo -u $SERVICE_USER bash -c -l '
-  tar --file /tmp/static_sections.tar.gz --gzip --directory disclosures/static --extract ;
+sudo -u $SERVICE_USER bash -c -l -x "
+  tar --file $STATIC_SECTIONS --gzip --directory disclosures/static --extract ;
   python3 manage.py generate_sitemaps --settings disclosures.settings.prod --output-file disclosures/static/sitemap.xml
-'
+"
 
 #4  restart
 systemctl restart gunicorn
 
 #5 testing
-sudo -u $SERVICE_USER bash -c -l '
+sudo -u $SERVICE_USER bash -c -l -x '
 req_count=`python3 scripts/dolbilo.py --input-access-log data/access.test.log.gz  --host disclosures.ru| jq ".normal_response_count"`
 
 if [ "$req_count" != "349" ]; then
@@ -85,4 +86,7 @@ if [ "$req_count" != "349" ]; then
   exit 1
 fi
 '
+if [ $? != 0 ]; then
+  exit 1
+fi
 echo "all done"

@@ -120,7 +120,7 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
 #15 создание рейтингов
     python3 $TOOLS/disclosures_site/manage.py build_ratings --settings disclosures.settings.dev
 
-#16 создание дампа базы
+#16 создание дампа базы (для debug)
     cd $DLROBOT_FOLDER
     mysqldump -u disclosures -pdisclosures disclosures_db_dev  |  gzip -c > $DLROBOT_FOLDER/disclosures.sql.gz
     scp disclosures.sql.gz $FRONTEND:/home/sokirko/smart_parser/tools/disclosures_site
@@ -148,7 +148,7 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
 
 #20 обновление prod
     ssh $FRONTEND git -C ~/smart_parser pull
-    ssh $FRONTEND sudo bash -x /home/sokirko/smart_parser/tools/disclosures_site/scripts/switch_prod.sh /tmp/mysql.tar.gz /tmp/elastic.tar.gz
+    ssh $FRONTEND sudo bash -x /home/sokirko/smart_parser/tools/disclosures_site/scripts/switch_prod.sh /tmp/mysql.tar.gz /tmp/elastic.tar.gz /tmp/static_sections.tar.gz
 
 
 #21  посылаем данные dlrobot в каталог, который синхронизирутеся с облаком, очищаем dlrobot_central (без возврата)
