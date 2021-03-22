@@ -1,9 +1,8 @@
 MYSQL_TAR=$1
 ELASTICSEARCH_TAR=$2
 STATIC_SECTIONS=$3
-HOST=${4:"disclosures.ru"}
-SERVICE_USER=sokirko
-DISCLOSURES_FOlDER=/home/$SERVICE_USER/smart_parser/tools/disclosures_site
+HOST=${4:-"disclosures.ru"}
+DISCLOSURES_FOlDER=/home/sokirko/smart_parser/tools/disclosures_site
 cd $DISCLOSURES_FOlDER
 
 function switch_service() {
@@ -34,9 +33,8 @@ sudo rm -rf $BACKUP_MYSQL
 switch_service mysql $PROD_MYSQL $NEW_MYSQL $BACKUP_MYSQL
 
 #1.3 test
-sudo -u $SERVICE_USER bash -c -l '
-  python3 manage.py external_link_surname_checker --links-input-file data/external_links.json  --settings disclosures.settings.prod
-'
+python3 manage.py external_link_surname_checker --links-input-file data/external_links.json  --settings disclosures.settings.prod
+
 if [ $? != 0 ]; then
     echo "external_link_surname_checker failed, roll back"
     switch_service mysql $PROD_MYSQL $BACKUP_MYSQL $NEW_MYSQL
@@ -72,11 +70,11 @@ python3 manage.py generate_sitemaps --settings disclosures.settings.prod --outpu
 #4  restart
 sudo systemctl restart gunicorn
 
-#5 testing
+#5 testing by curl
 req_count=`python3 scripts/dolbilo.py --input-access-log data/access.test.log.gz  --host $HOST | jq ".normal_response_count"`
-
-if [ "$req_count" != "349" ]; then
-  echo "site testing returns only $req_count requests with 200 http code, must be 349"
+canon_req_count="349"
+if [ "$req_count" != $canon_req_count ]; then
+  echo "site testing returns only $req_count requests with 200 http code, while it must be $canon_req_count requests"
   exit 1
 fi
 
