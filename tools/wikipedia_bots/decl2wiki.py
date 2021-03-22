@@ -1,96 +1,13 @@
+from common.logging_wrapper import setup_logging
+from common.wiki_bots import send_json_request_to_ruwiki, send_sparql_request, get_title_from_wiki_link
+
 import json
-import logging
-import ssl
 import pymysql
 import pywikibot
-import urllib.parse
 import argparse
-import urllib.parse
 import re
 import time
 import random
-# Create a custom logger
-def setup_logging( logger, logfilename):
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename)
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.DEBUG)
-    logger.addHandler(ch)
-
-
-
-
-def send_json_request_to_ruwiki(title, api_action):
-    title = title.replace(' ', '_')
-    title = urllib.parse.quote(title)
-    url = 'http://ru.wikipedia.org/w/api.php?action=query&format=json&formatversion=2'
-    url += '&titles='+title
-    if not api_action.startswith('&'):
-        url += '&'
-    url += api_action
-
-    context = ssl._create_unverified_context()
-    req = urllib.request.Request(
-        url,
-        data=None,
-        headers={
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
-        }
-    )
-    with urllib.request.urlopen(req, context=context, timeout=20.0) as request:
-        return json.loads(request.read().decode('utf-8'))
-
-def send_sparql_request(sparql):
-    sparql = urllib.parse.quote(sparql)
-    url = 'https://query.wikidata.org/sparql?format=json&query=' + sparql
-    context = ssl._create_unverified_context()
-    req = urllib.request.Request(
-        url,
-        data=None,
-        headers={
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
-        }
-    )
-    with urllib.request.urlopen(req, context=context, timeout=20.0) as request:
-        return json.loads(request.read().decode('utf-8'))
-
-
-#def get_wikidata_id_from_ruwiki(title):
-#    response = send_json_request_to_ruwiki(title, 'prop=pageprops&ppprop=wikibase_item')
-#    pages = response.get ("query", dict()).get("pages", list())
-#    if len (pages) > 0:
-#        return pages[0].get("pageprops", dict()).get("wikibase_item")
-#    return None
-
-
-def get_title_from_wiki_link(url, normalize=False):
-    prefix = 'https://ru.wikipedia.org/wiki/'
-    if url.startswith(prefix):
-        fio = url[len(prefix):]
-        fio = urllib.parse.unquote(fio)
-        fio = fio.replace('_', ' ')
-        if normalize:
-            response = send_json_request_to_ruwiki(fio, 'redirects')
-            redirects = response.get('query', dict()).get('redirects', list())
-            if len(redirects) > 0:
-                 return redirects[0]['to']
-            normalized = response.get('query', dict()).get('normalized', list())
-            if len(normalized) > 0:
-                return normalized[0]['to']
-        return fio
-    else:
-        logger = logging.getLogger("dlwikibot")
-        logger.error("unknown link type {}".format(url))
-        return url
 
 
 def get_wikidata_item(title):
@@ -105,12 +22,13 @@ def read_json(filename):
     with open(filename, "r", encoding="utf8") as inp:
         return json.load(inp)
 
+
 def write_json(filename, records):
     with open(filename, "w", encoding="utf8") as outf:
         json.dump(records, outf, ensure_ascii=False, indent=4)
 
 
-def get_all_wiki_links_from_db():
+def get_all_wiki_links_from_db(logger):
     db = pymysql.connect(db="declarator",user="declarator",password="declarator", unix_socket="/var/run/mysqld/mysqld.sock" )
     cursor = db.cursor()
     query = ("select id, wikipedia from declarations_person where wikipedia is not null and wikipedia <> '';")
@@ -118,7 +36,7 @@ def get_all_wiki_links_from_db():
     result = dict()
     for (id, wikipedia_link) in cursor:
         normalize = True if wikipedia_link.find(',') == -1 else False
-        fio = get_title_from_wiki_link(wikipedia_link, normalize=normalize)
+        fio = get_title_from_wiki_link(logger, wikipedia_link, normalize=normalize)
         result[str(id)] = fio
     cursor.close()
     db.close()
@@ -166,17 +84,11 @@ def print_all (diff):
         print(json.dumps(res_comp, ensure_ascii=False))
 
 
-def get_wikidata_data_repository(wikidata_id):
-    page = pywikibot.ItemPage(wikidata_id)
-    return page.data_repository()
-
-
-def add_missing_to_wikidata (diff):
+def add_missing_to_wikidata (logger, diff):
     repo = pywikibot.Site().data_repository()
     wikidata_bot = pywikibot.WikidataBot(always=True)
     wikidata_bot.options['always'] = True
     cnt = 0
-    logger = logging.getLogger("dlwikibot")
     for res_comp in diff:
         ruwiki_title = res_comp['wikidata'].get('ruwiki_title')
         if ruwiki_title is not None: # there is a link from wikidata to ruwiki
@@ -196,6 +108,8 @@ def add_missing_to_wikidata (diff):
         cnt += 1
         #if cnt >= 0:
         #    break
+
+
 
 def get_template_regexp(wiki_template):
     vars = set()
@@ -220,11 +134,11 @@ def get_template_regexp(wiki_template):
     return re.compile(regexp)
 
 
-def add_missing_template_to_ruwiki (diff, sleep_after_insert, max_insert_count):
+
+def add_missing_template_to_ruwiki (logger, diff, sleep_after_insert, max_insert_count):
     site = pywikibot.Site('ru', 'wikipedia')
     wiki_template = 'Внешние ссылки'
     wiki_template_regexp = get_template_regexp(wiki_template)
-    logger = logging.getLogger("dlwikibot")
     insert_count = 0
     for res_comp in diff:
         ruwiki_title = res_comp['wikidata'].get('ruwiki_title')
@@ -258,7 +172,8 @@ def add_missing_template_to_ruwiki (diff, sleep_after_insert, max_insert_count):
             time.sleep(sleep_after_insert)
 
 
-def request_wikidata_pages_with_declarator_links():
+
+def request_wikidata_pages_with_declarator_links(logger):
     query = """
     SELECT ?wikidata_id ?sitelink ?person_id
     WHERE 
@@ -277,7 +192,7 @@ def request_wikidata_pages_with_declarator_links():
         ruwiki_link = item.get('sitelink', {}).get("value")
         if ruwiki_link is None:
             continue
-        fio = get_title_from_wiki_link(ruwiki_link)
+        fio = get_title_from_wiki_link(logger, ruwiki_link)
         record = {
             'wikidata_url': item['wikidata_id']["value"],
             'person_id': item['person_id']["value"],
@@ -285,6 +200,7 @@ def request_wikidata_pages_with_declarator_links():
         }
         records.append(record)
     return records
+
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -305,13 +221,12 @@ if __name__ == '__main__':
     #request_wikidata_pages_with_declarator_links()
 
     args = parse_args()
-    logger = logging.getLogger("dlwikibot")
-    setup_logging(logger, "dlwikibot.log")
+    logger = setup_logging(log_file_name="dlwikibot.log")
 
     if args.action == "build_wikidata_squeeze_file":
-        write_json( args.wikidata_squeeze_file, request_wikidata_pages_with_declarator_links())
+        write_json( args.wikidata_squeeze_file, request_wikidata_pages_with_declarator_links(logger))
     elif args.action == "build_db_squeeze_file":
-        write_json( args.db_squeeze_file, get_all_wiki_links_from_db())
+        write_json( args.db_squeeze_file, get_all_wiki_links_from_db(logger))
     else:
         db_links = read_json(args.db_squeeze_file)
         wikidata_links = read_json(args.wikidata_squeeze_file)
@@ -319,11 +234,11 @@ if __name__ == '__main__':
         if args.action == "print":
             print_all(diff)
         elif args.action == "add_missing_to_wikidata":
-            add_missing_to_wikidata(diff)
+            add_missing_to_wikidata(logger, diff)
         elif args.action == "add_template_to_ruwiki":
-            add_missing_template_to_ruwiki(diff, args.sleep_after_insert, args.max_insert_count)
+            add_missing_template_to_ruwiki(logger, diff, args.sleep_after_insert, args.max_insert_count)
         else:
-            print ("unknown action")
+            print("unknown action")
 
       
 

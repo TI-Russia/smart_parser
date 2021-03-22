@@ -113,13 +113,9 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
    git commit -m "new statistics" data/statistics.json
    git push
 
-#13.1 построение пола (gender)
+#14 построение пола (gender)
   python3 $TOOLS/disclosures_site/manage.py build_genders --settings disclosures.settings.dev
 
-#14 создание sitemap (rare-sections)
-    python3 $TOOLS/disclosures_site/manage.py generate_static_sections --settings disclosures.settings.dev --output-folder sections
-    tar cfz static_sections.tar.gz sections
-    scp static_sections.tar.gz $FRONTEND:/home/sokirko/smart_parser/tools/disclosures_site
 
 #15 создание рейтингов
     python3 $TOOLS/disclosures_site/manage.py build_ratings --settings disclosures.settings.dev
@@ -129,45 +125,33 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
     mysqldump -u disclosures -pdisclosures disclosures_db_dev  |  gzip -c > $DLROBOT_FOLDER/disclosures.sql.gz
     scp disclosures.sql.gz $FRONTEND:/home/sokirko/smart_parser/tools/disclosures_site
 
-
-#17 обновление prod
-    ssh $FRONTEND
-    cd ~/smart_parser/tools/disclosures_site
-    git pull
-
-
-#18 recreate dev-base
-    python3 manage.py create_database --settings disclosures.settings.dev --skip-checks --username db_creator --password root
-    python3 manage.py makemigrations --settings disclosures.settings.dev
-    python3 manage.py migrate --settings disclosures.settings.dev
-    zcat disclosures.sql.gz| mysql -D disclosures_db_dev -u disclosures -pdisclosures
-    python3 manage.py build_elastic_index --settings disclosures.settings.dev
-
-
-#19 switch dev to  prod
-    export DISCLOSURES_DATABASE_NAME=disclosures_prod_sav
-    { mysqladmin drop  $DISCLOSURES_DATABASE_NAME -u disclosures -pdisclosures -f || true }
-    bash scripts/rename_db.sh disclosures_db $DISCLOSURES_DATABASE_NAME
-    python3 manage.py elastic_manage --action backup-prod --settings disclosures.settings.dev
-
-
-    # move dev elastic index  to prod elastic index
-    python3 manage.py elastic_manage --action dev-to-prod --settings disclosures.settings.dev
-    # move dev db to prod db
+#17 switch dev to  prod in backend
     mysqladmin drop  disclosures_db -u disclosures -pdisclosures -f
     bash scripts/rename_db.sh disclosures_db_dev disclosures_db
-    sudo systemctl restart gunicorn
+    python3 manage.py build_elastic_index --settings disclosures.settings.prod
 
-#19 файлы sitemap
-    tar xfz static_sections.tar.gz
-    rm -rf disclosures/static/sections
-    mv sections disclosures/static
+#18 создание sitemap (rare-sections)  и отсылка на frontend
+    python3 $TOOLS/disclosures_site/manage.py generate_static_sections --settings disclosures.settings.prod --output-folder sections
+    tar cfz static_sections.tar.gz sections
+    scp static_sections.tar.gz $FRONTEND:/tmp
 
-    rm -rf disclosures/static/sitemap.xml
-    python3 manage.py generate_sitemaps --settings disclosures.settings.prod --output-file disclosures/static/sitemap.xml
+#19 make binary archives and copy to frontend
+    sudo systemctl stop mysql
+    cd /var/lib/mysql
+    sudo find * sys performance_schema mysql disclosures_db -maxdepth 1 -type f  | sudo xargs tar cfvz $DLROBOT_FOLDER/mysql.tar.gz
+    cd -
+    scp $DLROBOT_FOLDER/mysql.tar.gz $FRONTEND:/tmp
 
-#20  посылаем данные dlrobot в каталог, который синхронизирутеся с облаком, очищаем dlrobot_central (без возврата)
-    #back to dlrobot_central (migalka)
+    sudo systemctl stop elasticsearch
+    sudo tar --create --file elastic.tar.gz --gzip  --directory /var/lib/elasticsearch   .
+    scp $DLROBOT_FOLDER/elastic.tar.gz $FRONTEND:/tmp
+
+#20 обновление prod
+    ssh $FRONTEND git -C ~/smart_parser pull
+    ssh $FRONTEND sudo /home/sokirko/smart_parser/tools/disclosures_site/scripts/switch_prod.sh /tmp/mysql.tar.gz /tmp/elastic.tar.gz
+
+
+#21  посылаем данные dlrobot в каталог, который синхронизирутеся с облаком, очищаем dlrobot_central (без возврата)
     cd $DLROBOT_FOLDER
     python3 $TOOLS/disclosures_site/scripts/send_dlrobot_projects_to_cloud.py  --max-ctime $CRAWL_EPOCH \
         --input-dlrobot-folder $DLROBOT_CENTRAL_FOLDER"/processed_projects" --output-cloud-folder $YANDEX_DISK_FOLDER

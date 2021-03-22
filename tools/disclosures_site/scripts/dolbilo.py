@@ -1,9 +1,12 @@
+from common.logging_wrapper import setup_logging
 import argparse
 import sys
 import re
 import http.client
 import gzip
 import time
+import json
+
 
 def parse_args(arg_list):
     parser = argparse.ArgumentParser()
@@ -41,18 +44,29 @@ def is_bot_request(request):
     return False
 
 
-if __name__ == "__main__":
-    args = parse_args(sys.argv[1:])
+def read_requests(input_access_log_path):
     requests = list()
 
-    with gzip.open(args.input_access_log) as inp:
+    with gzip.open(input_access_log_path) as inp:
         for line in inp:
             request = access_log_parser(line.decode("utf8"))
-            if not is_bot_request(request):
-                if request['request'].startswith("GET "):
-                    requests.append(request['request'].split()[1])
+            if is_bot_request(request):
+                continue
+            if request['request'].startswith("GET "):
+                path = request['request'].split()[1]
+                if path.startswith('/static/dlrobot/'):
+                    continue
+                requests.append(path)
+        return requests
+
+
+if __name__ == "__main__":
+    logger = setup_logging(log_file_name="dolbilo.log")
+    args = parse_args(sys.argv[1:])
+    requests = read_requests(args.input_access_log)
     start_time = time.time()
     request_count = 0
+    normal_response_count = 0
     for request in requests:
         if args.use_http:
             conn = http.client.HTTPConnection(args.host)
@@ -75,13 +89,19 @@ if __name__ == "__main__":
             res = conn.getresponse()
         if res.status == 200:
             data = res.read()
-        #if res.status == 301
+            normal_response_count += 1
         req_end = time.time()
         req_time = int(1000.0*(req_end - req_start))
-        print("{}\t{}\t{}\t{}".format(request, res.status, len(data), req_time))
+        logger.debug("{}\t{}\t{}\t{}".format(request, res.status, len(data), req_time))
         sys.stdout.flush()
         request_count += 1
 
     end_time = time.time()
     rps = round((float)(request_count) / (end_time - start_time), 2)
-    print ("request_count = {}, rps = {} ".format(request_count, rps))
+    metrics = {
+        'normal_response_count': normal_response_count,
+        'rps': rps,
+        'request_count': request_count
+    }
+    logger.debug(json.dumps(metrics))
+    print(json.dumps(metrics))

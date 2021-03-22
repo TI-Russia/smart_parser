@@ -184,10 +184,11 @@ Following https://habr.com/ru/post/501414/
     GRANT ALL PRIVILEGES ON *.* TO 'disclosures'@'' WITH GRANT OPTION;
     FLUSH PRIVILEGES;
 
-    #add to /etc/mysql/my.cnf
+    #sudo nano /etc/mysql/my.cnf and add the following lines
     [mysqld]
     wait_timeout = 28800
-
+    skip-log-bin
+    secure-file-priv = ""
 
 #5.1 Install elastic search, follow https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
     sudo apt-get install apt-transport-https
@@ -234,7 +235,7 @@ Following https://habr.com/ru/post/501414/
 
 #5.4 create gunicorn service
 
-    sudo cp /var/www/smart_parser/tools/disclosures_site/scripts/etc/systemd/system/gunicorn.* /etc/systemd/system
+    sudo cp /home/sokirko/smart_parser/tools/disclosures_site/scripts/etc/systemd/system/gunicorn.* /etc/systemd/system
 
     sudo systemctl enable gunicorn.socket
     sudo systemctl start gunicorn.socket
@@ -250,7 +251,7 @@ Following https://habr.com/ru/post/501414/
 
 #5.5 install nginx
     sudo apt install nginx
-    sudo cp /var/www/smart_parser/tools/disclosures_site/scripts/etc/nginx/sites-available/disclosures.ru /etc/nginx/sites-available
+    sudo cp /home/sokirko/smart_parser/tools/disclosures_site/scripts/etc/nginx/sites-available/disclosures.ru /etc/nginx/sites-available
     sudo ln -s  /etc/nginx/sites-available/disclosures.ru  /etc/nginx/sites-enabled
     sudo rm /etc/nginx/sites-enabled/default
 

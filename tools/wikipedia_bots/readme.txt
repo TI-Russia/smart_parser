@@ -1,14 +1,17 @@
-1. Download and  unpack pywikibot to core
-https://www.mediawiki.org/wiki/Manual:Pywikibot/Installation
+#1. Download and  unpack pywikibot to core follo https://www.mediawiki.org/wiki/Manual:Pywikibot/Installation
+wget https://pywikibot.toolforge.org/core_stable.tar.gz
+tar xfz core_stable.tar.gz
+mv core_stable pywikibot
+cd core_stable
 
-2. cd core_stable
-   python pwb.py generate_user_files
-   wikidata
-   language code: wikidata
-   python pwb.py login
+python pwb.py generate_user_files
+# Select family of sites: 13
+# select language code: wikidata
+#user name Declaratorbot
+#password in password storage
+python pwb.py login
  
-3. 
-https://www.wikidata.org/wiki/Wikidata:Pywikibot_-_Python_3_Tutorial/Setting_up_Shop
+#3. https://www.wikidata.org/wiki/Wikidata:Pywikibot_-_Python_3_Tutorial/Setting_up_Shop
 
 4. get wikidata 
   wget https://dumps.wikimedia.org/wikidatawiki/entities/latest-all.json.bz2 (50 GB) 
