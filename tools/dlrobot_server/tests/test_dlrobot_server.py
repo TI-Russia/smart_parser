@@ -4,7 +4,8 @@ from dlrobot_server.scripts.fns.unzip_archive import TUnzipper
 from smart_parser_http.smart_parser_server import TSmartParserHTTPServer
 from source_doc_http.source_doc_server import TSourceDocHTTPServer
 from common.robot_web_site import TWebSiteReachStatus
-
+from common.primitives import build_dislosures_sha256
+from common.archives import TDearchiver
 from unittest import TestCase
 import os
 import threading
@@ -388,6 +389,7 @@ class TestUnzipArchive(TestCase):
     source_doc_server_port = 8309
 
     def setUp(self):
+        self.input_archive_path = os.path.join(os.path.dirname(__file__), 'page.zip')
         self.env = TTestEnv(self.central_port)
         self.env.setup_website(self.website_port)
         self.env.setup_smart_parser_server(self.smart_parser_server_port)
@@ -398,7 +400,7 @@ class TestUnzipArchive(TestCase):
         os.mkdir(self.env.worker_folder)
         worker_args = [
             '--server-address', self.env.central_address,
-            '--archive', os.path.join(os.path.dirname(__file__), 'page.zip'),
+            '--archive', self.input_archive_path,
             '--web-domain', 'service.nalog.ru'
         ]
         self.unzipper = TUnzipper(TUnzipper.parse_args(worker_args))
@@ -417,6 +419,9 @@ class TestUnzipArchive(TestCase):
 
         stats = self.env.source_doc_server.get_stats()
         self.assertEqual(1, stats['source_doc_count'])
-
-        js = json.loads(self.env.smart_parser_server.get_smart_parser_json('52a4a58b58f62456e7d978ec0acb1d8e55747daaf8f14a36d928a546ccc4383a'))
+        for _, _, file_path in TDearchiver(self.env.smart_parser_server.logger, "/tmp").unzip_one_archive(self.input_archive_path, "1"):
+            sha256 = build_dislosures_sha256(file_path)
+            os.remove(file_path)
+            break
+        js = json.loads(self.env.smart_parser_server.get_smart_parser_json(sha256))
         self.assertEqual('51.service.nalog.ru', js['document_sheet_props'][0]['url'])

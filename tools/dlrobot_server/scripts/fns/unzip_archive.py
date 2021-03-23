@@ -49,6 +49,7 @@ class TUnzipper:
         project_folder = self.args.web_domain
         shutil.rmtree(project_folder, ignore_errors=True)
         os.mkdir(project_folder)
+        save_dir = os.path.abspath(os.curdir)
         os.chdir(project_folder)
 
         robot_project_path = os.path.join(self.args.web_domain + ".txt")
@@ -68,7 +69,7 @@ class TUnzipper:
                 export_file = TExportFile(url=self.args.web_domain, export_path=export_path)
                 export_env.exported_files.append(export_file)
             project.write_project()
-        os.chdir("../../..")
+        os.chdir(save_dir)
 
         headers = {
             DLROBOT_HEADER_KEYS.EXIT_CODE: 0,
