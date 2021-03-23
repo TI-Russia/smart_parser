@@ -321,7 +321,7 @@ class TDlrobotWorker:
         self.logger.debug("current dir: {}".format(os.path.realpath(os.path.curdir)))
         os.environ['ASPOSE_LIC'] = os.path.join(self.args.home, "lic.bin")
         os.environ['PYTHONPATH'] = os.path.join(self.args.home, "smart_parser/tools")
-        os.environ['DECLARATOR_CONV_URL'] = "disclosures.ru:8091"
+        os.environ['DECLARATOR_CONV_URL'] = "c.disclosures.ru:8091"
         self.logger .debug("PYTHONPATH={}".format(os.environ.get("PYTHONPATH")))
 
         if self.args.server_address is None:

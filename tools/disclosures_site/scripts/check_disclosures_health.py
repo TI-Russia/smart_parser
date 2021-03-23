@@ -70,7 +70,7 @@ def read_morda(url):
 
 def check_pdf_converter_server():
     try:
-        f = urllib.request.urlopen('http://disclosures.ru:8091/ping', timeout=30)
+        f = urllib.request.urlopen('http://c.disclosures.ru:8091/ping', timeout=30)
         s = f.read().decode('utf-8')
         return s == "yes"
     except Exception as exp:

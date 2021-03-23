@@ -4,12 +4,12 @@ TOOLS=/home/sokirko/smart_parser/tools/
 PYTHONPATH=/home/sokirko/smart_parser/tools
 CONV_STATS=/home/sokirko/declarator_hdd/declarator/convert_stats.txt
 CENTRAL_STATS=/home/sokirko/declarator_hdd/declarator/dlrobot_central/processed_projects/dlrobot_remote_calls.dat
-DECLARATOR_CONV_URL=192.168.100.152:8091
+DECLARATOR_CONV_URL=c.disclosures.ru:8091
 SOURCE_DOC_SERVER_ADDRESS=192.168.100.151:8090
 
 ##Mins  Hours  Days   Months  Day of the week
 */10       *     *        *      *    python3 $TOOLS/ConvStorage/scripts/get_stats.py --history-file $CONV_STATS
 */10       *     *        *      *    python3 $TOOLS/disclosures_site/scripts/dl_monitoring.py --central-stats-file  $CENTRAL_STATS --conversion-server-stats $CONV_STATS --central-server-cpu-and-mem  /tmp/glances.dat --output-folder /tmp/dlrobot; scp /tmp/dlrobot/* $FRONTEND:$FRONTEND_OUTPUT_FOLDER
 */20       */5   *        *      *    yandex-disk sync
-57   23 * * * python3 $TOOLS/disclosures_site/scripts/copy_nginx_logs.sh
+57   23 * * *   /bin/bash $TOOLS/disclosures_site/scripts/copy_nginx_logs.sh
 
