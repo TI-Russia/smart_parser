@@ -9,7 +9,7 @@ python pwb.py generate_user_files
 # select language code: wikidata
 #user name Declaratorbot
 #password in password storage
-python pwb.py login
+python3  pwb.py login
  
 #3. https://www.wikidata.org/wiki/Wikidata:Pywikibot_-_Python_3_Tutorial/Setting_up_Shop
 
