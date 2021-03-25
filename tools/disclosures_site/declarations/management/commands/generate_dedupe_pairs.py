@@ -9,6 +9,7 @@ import json
 from collections import defaultdict
 import itertools
 
+
 class Command(BaseCommand):
     help = ''
 
@@ -69,6 +70,12 @@ class Command(BaseCommand):
             dest='fake_dedupe',
             required=False,
             help='create one person for all sections without dedupe (test purpose)'
+        )
+        parser.add_argument(
+            '--separate-sections',
+            dest='separate_sections',
+            required=False,
+            help='put all sections in a separate cluster (test purpose)'
         )
         parser.add_argument(
             '--logfile',
@@ -272,9 +279,6 @@ class Command(BaseCommand):
                 self.logger.debug("  cluster sections: ".format(left_sections))
                 self.logger.debug("  cluster persons: ".format(persons))
 
-
-
-
     def get_family_name_bounds(self):
         if self.options.get('surname_bounds') is not None:
             yield self.options.get('surname_bounds').split(',')
@@ -296,10 +300,19 @@ class Command(BaseCommand):
 
     def cluster_sections_by_minimal_fio(self):
         if self.options.get("fake_dedupe", False):
-            # all records in one cluster
-            c = defaultdict(list)
-            c[0] = [(i, 0.5) for i in self.get_all_leaf_objects()]
-            yield c
+            if self.options.get("separate_sections", False):
+                # each record to a separate cluster
+                c = defaultdict(list)
+                k = 0
+                for i in self.get_all_leaf_objects():
+                    c[k] = [(i, 0.1)]
+                    k += 1
+                yield c
+            else:
+                # all records in one cluster
+                c = defaultdict(list)
+                c[0] = [(i, 0.5) for i in self.get_all_leaf_objects()]
+                yield c
         else:
             all_objects_count = sum(len(v) for v in self.cluster_by_minimal_fio.values())
             self.logger.info('Clustering {} objects with threshold={}, len(self.cluster_by_minimal_fio) = {}'.format(

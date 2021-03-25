@@ -203,3 +203,4 @@ class AddNewSectionsToOldPersonId(TestCase):
 
         sec3 = models.Section.objects.get(id=3)
         self.assertEqual(sec3.person_id, person_id)
+

@@ -104,6 +104,13 @@ class TPermaLinksSourceDocument(TPermaLinksDB):
     def get_source_doc_sha256_passport(sha256):
         return str(sha256)
 
+    def get_old_source_doc_id_by_sha256(self, sha256):
+        passport = TPermaLinksSourceDocument.get_source_doc_sha256_passport(sha256)
+        doc_id = self.db.get(passport)
+        if doc_id is None:
+            return None
+        return int(doc_id)
+
     def get_source_doc_id_by_sha256(self, sha256):
         passport = TPermaLinksSourceDocument.get_source_doc_sha256_passport(sha256)
         old_id = self.db.get(passport)

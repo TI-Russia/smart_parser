@@ -167,8 +167,16 @@ class TImporter:
 
     def import_office(self, office_id):
         all_imported_human_jsons = set()
-
+        max_doc_id = 2**32
+        ordered_documents = list()
         for sha256 in self.office_to_source_documents[office_id]:
+            doc_id = self.permalinks_db_source_document.get_old_source_doc_id_by_sha256(sha256)
+            if doc_id is None:
+                doc_id = max_doc_id
+            ordered_documents.append((doc_id, sha256))
+        ordered_documents.sort()
+
+        for _, sha256 in ordered_documents:
             src_doc = self.dlrobot_human.document_collection[sha256]
             assert src_doc.calculated_office_id == office_id
             smart_parser_json = self.get_smart_parser_json(all_imported_human_jsons, sha256, src_doc)
