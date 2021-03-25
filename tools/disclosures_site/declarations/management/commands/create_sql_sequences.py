@@ -1,5 +1,6 @@
 from django.core.management import BaseCommand
-from declarations.management.commands.permalinks import TPermaLinksDB
+from declarations.permalinks import TPermalinksManager
+from common.logging_wrapper import setup_logging
 
 
 class Command(BaseCommand):
@@ -7,13 +8,8 @@ class Command(BaseCommand):
         super(Command, self).__init__(*args, **kwargs)
 
     def add_arguments(self, parser):
-        parser.add_argument(
-            '--permanent-links-db',
-            dest='permanent_links_db',
-            required=True
-        )
+        TPermalinksManager.add_arguments(parser)
 
     def handle(self, *args, **options):
-        self.primary_keys_builder = TPermaLinksDB(options['permanent_links_db'])
-        self.primary_keys_builder.open_db_read_only()
-        self.primary_keys_builder.create_sql_sequences()
+        logger = setup_logging(logger_name="create_sql_sequences")
+        TPermalinksManager(logger, options).create_sql_sequences()

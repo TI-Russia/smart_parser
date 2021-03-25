@@ -1,6 +1,6 @@
 import declarations.models as models
 from declarations.serializers import TSmartParserSectionJson
-from declarations.management.commands.permalinks import TPermaLinksDB
+from declarations.permalinks import TPermaLinksSection, TPermaLinksSourceDocument
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from declarations.input_json import TDlrobotHumanFile
 from common.logging_wrapper import setup_logging
@@ -44,19 +44,21 @@ class TImporter:
         if models.Section.objects.count() > 0:
             raise Exception("implement all section passports reading from db if you want to import to non-empty db! ")
         self.office_to_source_documents = self.build_office_to_file_mapping()
-        self.permalinks_db = TPermaLinksDB(args['permanent_links_db'])
-        self.permalinks_db.open_db_read_only()
-        self.first_new_section_id_for_print = self.permalinks_db.get_max_plus_one_primary_key_from_the_old_db(models.Section)
+        self.permalinks_db_section = None
+        self.permalinks_db_source_document = None
         self.smart_parser_cache_client = None
 
     def delete_before_fork(self):
-        self.permalinks_db.close_db()
         from django import db
         db.connections.close_all()
 
     def init_non_pickable(self):
         self.smart_parser_cache_client = TSmartParserCacheClient(TSmartParserCacheClient.parse_args([]), TImporter.logger)
-        self.permalinks_db.open_db_read_only()
+
+        self.permalinks_db_section = TPermaLinksSection(self.args['permalinks_folder'])
+        self.permalinks_db_section.open_db_read_only()
+        self.permalinks_db_source_document = TPermaLinksSourceDocument(self.args['permalinks_folder'])
+        self.permalinks_db_source_document.open_db_read_only()
 
     def init_after_fork(self):
         from django.db import connection
@@ -79,7 +81,7 @@ class TImporter:
                                                        sha256=sha256,
                                                        intersection_status=src_doc.get_intersection_status(),
                                                        )
-        source_document_in_db.id, new_file = self.permalinks_db.get_source_doc_id_by_sha256(sha256)
+        source_document_in_db.id, new_file = self.permalinks_db_source_document.get_source_doc_id_by_sha256(sha256)
         assert not models.Source_Document.objects.filter(id=source_document_in_db.id).exists()
         self.logger.debug("register doc sha256={} id={}, new_file={}".format(sha256, source_document_in_db.id, new_file))
         source_document_in_db.file_extension = src_doc.file_extension
@@ -125,11 +127,11 @@ class TImporter:
                 try:
                     prepared_section = TSmartParserSectionJson(income_year, source_document_in_db)
                     prepared_section.read_raw_json(raw_section)
-                    passport = prepared_section.get_passport_factory().get_passport_collection()[0]
+                    passport = prepared_section.get_passport_components().get_main_section_passport()
                     if self.register_section_passport(passport):
                         prepared_section.section.tmp_income_set = prepared_section.incomes
-                        section_id = self.permalinks_db.get_section_id(prepared_section.section)
-                        if section_id >= self.first_new_section_id_for_print:
+                        section_id, is_new = self.permalinks_db_section.get_section_id(passport)
+                        if is_new:
                             TImporter.logger.debug("found a new section {}, set section.id to {}".format(
                                 prepared_section.section.get_permalink_passport(), section_id))
 
@@ -223,8 +225,8 @@ class ImportJsonCommand(BaseCommand):
             type=int,
         )
         parser.add_argument(
-            '--permanent-links-db',
-            dest='permanent_links_db',
+            '--permalinks-folder',
+            dest='permalinks_folder',
             required=True
         )
 

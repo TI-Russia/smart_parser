@@ -1,6 +1,6 @@
 import declarations.models as models
 from django.core.management import BaseCommand
-from declarations.management.commands.permalinks import TPermaLinksDB
+from declarations.permalinks import TPermaLinksPerson
 from declarations.russian_fio import TRussianFio
 from common.logging_wrapper import setup_logging
 
@@ -80,8 +80,8 @@ class Command(BaseCommand):
             help='read person info  from json for testing'
         )
         parser.add_argument(
-            '--permanent-links-db',
-            dest='permanent_links_db',
+            '--permalinks-folder',
+            dest='permalinks_folder',
             required=True
         )
         parser.add_argument(
@@ -96,7 +96,7 @@ class Command(BaseCommand):
         )
 
     def open_permalinks_db(self):
-        self.permalinks_db = TPermaLinksDB(self.options['permanent_links_db'])
+        self.permalinks_db = TPermaLinksPerson(self.options['permalinks_folder'])
         self.permalinks_db.open_db_read_only()
 
     def build_passport_to_person_id_mapping_from_declarator(self):

@@ -1,4 +1,4 @@
-from declarations.management.commands.permalinks import TPermaLinksDB
+from declarations.permalinks import TPermaLinksPerson
 import declarations.models as models
 from .random_forest_adapter import TDeduplicationObject, TFioClustering, TMLModel
 from common.logging_wrapper import setup_logging
@@ -7,7 +7,7 @@ from django.core.management import BaseCommand
 import sys
 import json
 from collections import defaultdict
-
+import itertools
 
 class Command(BaseCommand):
     help = ''
@@ -60,8 +60,8 @@ class Command(BaseCommand):
             help='write back to DB',
         )
         parser.add_argument(
-            '--permanent-links-db',
-            dest='permanent_links_db',
+            '--permalinks-folder',
+            dest='permalinks_folder',
             required=True
         )
         parser.add_argument(
@@ -94,7 +94,7 @@ class Command(BaseCommand):
         self.rebuild = options.get('rebuild', False)
         if self.rebuild and not options['write_to_db']:
             self.logger.info("please add --write-to-db  option if you use --rebuild")
-        self.permalinks_db = TPermaLinksDB(options['permanent_links_db'])
+        self.permalinks_db = TPermaLinksPerson(options['permalinks_folder'])
         self.permalinks_db.open_db_read_only()
         if options.get('threshold', 0) != 0:
             self.threshold = options.get('threshold')
@@ -203,32 +203,50 @@ class Command(BaseCommand):
             person.person_name = section.person_name
             person.save()
 
-    def link_sections_to_a_new_person(self, sections, section_distances):
+    def link_sections_to_a_new_person(self, sections, section_distances, person_id):
         assert len(section_distances) == len(sections)
-        person_variants = defaultdict(int)
-        for section in sections:
-            person_id = self.permalinks_db.get_person_id_by_section(section)
-            if person_id is not None:
-                person_variants[person_id] += 1
-
-        if len(person_variants) > 0:
-            max_person_id_count, max_person_id = sorted( list( (v, k) for (k, v) in person_variants.items()))[-1]
-            section_count_in_old_cluster = self.permalinks_db.get_section_count_by_person_id(max_person_id)
-            if section_count_in_old_cluster is not None and max_person_id_count * 2 > section_count_in_old_cluster:
-                self.logger.debug("use old person.id, max_person_id={}, section_count_in_old_cluster={}, max_person_id_count={}".format(
-                    max_person_id, max_person_id_count, section_count_in_old_cluster
-                ))
-                person_id = max_person_id
-
         if person_id is None:
-            person_id = self.permalinks_db.get_new_id(models.Person)
+            person_id = self.permalinks_db._get_new_id()
+            self.logger.debug("create new person.id: {}".format(person_id))
+        else:
+            self.logger.debug("use old person.id: {}".format(person_id))
+
         person = models.Person(id=person_id)
         person.save()
 
         for (section, distance) in zip(sections,section_distances):
             self.link_section_to_person(section, person, distance)
 
+    def build_cluster_to_old_person_id(self, clusters):
+        old_to_new_sections = defaultdict(list)
+
+        for cluster_id, items in clusters.items():
+            for obj, distance in items:
+                if obj.record_id.source_table == TDeduplicationObject.SECTION:
+                    section_id = obj.record_id.id
+                    person_id = self.permalinks_db.get_person_id_by_section_id(section_id)
+                    if person_id is not None:
+                        old_to_new_sections[person_id].append((cluster_id, section_id))
+                else:
+                    # a person is already in this cluster, use it
+                    if cluster_id in old_to_new_sections:
+                        del old_to_new_sections[person_id]
+                    break
+
+        old_to_new_clusters = dict()
+        for person_id, sections in old_to_new_sections.items():
+            sections.sort()  # take always the cluster with that the minimal section_id
+            max_cluster_size = 0
+            for cluster_id, items in itertools.groupby(sections, lambda x: x[0]):
+                items_len = len(list(items))
+                if items_len > max_cluster_size:
+                    max_cluster_size = items_len
+                    old_to_new_clusters[cluster_id] = person_id
+        return old_to_new_clusters
+
     def write_results_to_db(self, clusters):
+        clusters_to_old_person_ids = self.build_cluster_to_old_person_id(clusters)
+
         for cluster_id, items in clusters.items():
             person_ids = list()
             sections = list()
@@ -241,7 +259,8 @@ class Command(BaseCommand):
                     sections.append(section)
                     section_distances.append(distance)
             if len(person_ids) == 0:
-                self.link_sections_to_a_new_person(sections, section_distances)
+                self.link_sections_to_a_new_person(sections, section_distances,
+                                                   clusters_to_old_person_ids.get(cluster_id))
             elif len(person_ids) == 1:
                 person = models.Person.objects.get(id=person_ids[0])
                 for section, distance in zip(sections, section_distances):

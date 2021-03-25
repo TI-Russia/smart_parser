@@ -1,12 +1,15 @@
+#obsolete script, it is cheapier and better to create a new toloka pool than to import old pools
+from declarations.russian_fio import TRussianFio
+import declarations.models as models
+from declarations.serializers import TSmartParserSectionJson
+from declarations.section_passport import TSectionPassportItems
+from common.logging_wrapper import setup_logging
+
+from django.core.management import BaseCommand
 import csv
 import json
 import os
-from django.core.management import BaseCommand
-from declarations.russian_fio import TRussianFio
-import declarations.models as models
-from declarations.serializers import TSmartParserSectionJson, TSectionPassportFactory
 import pickle
-from common.logging_wrapper import setup_logging
 
 
 class ConvertException(Exception):
@@ -25,19 +28,36 @@ def check_family_name(n1, n2):
     return fio1.family_name == fio2.family_name
 
 
+
+
 class TDbSqueeze:
+    AMBIGUOUS_KEY = "AMBIGUOUS_KEY"
+
     def __init__(self):
         self.office_hierarchy = None
         self.stable_key_to_sections = None
         self.declarator_person_id_to_person_id = None
+
+    #was not tested!
+    def get_all_passports_dict(self):
+        passport_to_id = dict()
+        section_passport_items = TSectionPassportItems.get_section_passport_components()
+
+        for (id, passport_items) in section_passport_items:
+            for passport in passport_items.get_all_passport_variants_for_toloka_pool(self.office_hierarchy):
+                search_result = passport_to_id.get(passport)
+                if search_result is None:
+                    passport_to_id[passport] = id
+                elif search_result != id:  # ignore the same passport
+                    passport_to_id[passport] = TDbSqueeze.AMBIGUOUS_KEY
+        return passport_to_id
 
     def build_squeeze(self, logger):
         logger.info("build office hierarchy")
         self.office_hierarchy = models.TOfficeTableInMemory()
 
         logger.info("build all passports")
-        factories = TSectionPassportFactory.get_all_passport_factories(self.office_hierarchy)
-        self.stable_key_to_sections = TSectionPassportFactory.get_all_passports_dict(factories)
+        self.stable_key_to_sections = self.get_all_passports_dict()
 
         logger.info("build declarator person id to person id")
         self.declarator_person_id_to_person_id = dict()
@@ -72,6 +92,21 @@ class Command(BaseCommand):
         self.squeeze = TDbSqueeze()
         self.squeeze_pickled_file_path = "squeeze.pickle"
 
+    def search_by_passports(self, passport_items):
+        # used only in toloka pool import
+        search_results = list()
+        res = None
+        passport_variants = passport_items.get_all_passport_variants_for_toloka_pool(self.squeeze.office_hierarchy)
+        for passport in passport_variants:
+            res = self.squeeze.stable_key_to_sections.get(passport)
+            if res is not None and res != TDbSqueeze.AMBIGUOUS_KEY:
+                return res, search_results
+            search_results.append(res)
+
+        if res == TDbSqueeze.AMBIGUOUS_KEY:
+            res = None
+        return res, search_results
+
     def convert_one_id(self, header, section_or_person_id_key, json_key, row):
         id_index = header.index(section_or_person_id_key)
         assert id_index != -1
@@ -101,16 +136,15 @@ class Command(BaseCommand):
             assert section_or_person_id.startswith('section-')
             year = sections[0].get('year', 0)
             json_file = models.Source_Document(office_id=sections[0].get('office_id', -1))
-            passport_factory = TSmartParserSectionJson(year, json_file).read_raw_json(sections[0]).get_passport_factory(
-                self.squeeze.office_hierarchy)
-            section_id, search_results = passport_factory.search_by_passports(self.squeeze.stable_key_to_sections)
+            passport_items = TSmartParserSectionJson(year, json_file).read_raw_json(sections[0]).get_passport_components()
+            section_id, search_results = self.search_by_passports(passport_items)
             if section_id is not None:
                 row[id_index] = str("section-") + str(section_id)
             else:
                 raise ConvertException("cannot find in disclosures declarator section_id={}, passport={}, "
                                        "search_results={} ".format(
                     section_or_person_id,
-                    passport_factory.get_passport_collection()[0],
+                    passport_items.get_main_section_passport(),
                     search_results))
 
     def convert_pool(self, input_file_name, output_folder):
