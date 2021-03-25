@@ -1,0 +1,74 @@
+
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Средний доход чиновников по ведомствам (Военные)</title>
+            <h1>Средний доход чиновников по ведомствам (Военные)</h1>
+            <h3>см. <a href="/reports/offices/index.html"> описание построенных показателей </a> </h3>
+            <link rel="stylesheet" type="text/css" href="/static/style.css">
+            <meta name="description" content="Средний доход российских чиновников (государственных и муниципальных служащих) по ведомствам">
+        </head>
+        <table id="statstable" class="solid_table">
+        <tr>
+            <th>Id</th>
+            <th style="width: 30%">Ведомство</th>
+        <th><div class="clickable">2011↑↓</div></th>
+<th><div class="clickable">#↑↓</div></th>
+<th><div class="clickable">2012↑↓</div></th>
+<th><div class="clickable">#↑↓</div></th>
+<th><div class="clickable">2013↑↓</div></th>
+<th><div class="clickable">#↑↓</div></th>
+<th><div class="clickable">2014↑↓</div></th>
+<th><div class="clickable">#↑↓</div></th>
+<th><div class="clickable">2015↑↓</div></th>
+<th><div class="clickable">#↑↓</div></th>
+<th><div class="clickable">2016↑↓</div></th>
+<th><div class="clickable">#↑↓</div></th>
+<th><div class="clickable">2017↑↓</div></th>
+<th><div class="clickable">#↑↓</div></th>
+<th><div class="clickable">2018↑↓</div></th>
+<th><div class="clickable">#↑↓</div></th>
+<th><div class="clickable">2019↑↓</div></th>
+<th><div class="clickable">#↑↓</div></th>
+<th><div class="clickable">PI↑↓</div></th>
+<th><div class="clickable">D1(%)↑↓</div></th>
+<th><div class="clickable">D2(%)↑↓</div></th>
+<th><div class="clickable">V1(%)↑↓</div></th>
+</tr>
+<tr> <td>450</td>
+ <td><a href=/office/450><a href=/office/450>Министерство обороны </a></a></td>
+ <td>65480</td>
+ <td>43374</td>
+ <td>80900</td>
+ <td>46723</td>
+ <td>98668</td>
+ <td>17760</td>
+ <td>94593</td>
+ <td>30090</td>
+ <td>95981</td>
+ <td>31537</td>
+ <td>102024</td>
+ <td>33870</td>
+ <td>107837</td>
+ <td>27454</td>
+ <td>107812</td>
+ <td>28706</td>
+ <td>112051</td>
+ <td>27747</td>
+ <td>68</td>
+ <td>71</td>
+ <td>37</td>
+ <td>1.11</td>
+</tr>
+
+        </table>
+        <br/>
+        <a href=rubric-4-income-report.csv> Данные в сsv-формате</a>
+        <script src="/static/sorttable.js"></script>
+        <script>
+            var table = document.getElementById("statstable");
+            table.querySelectorAll(`th`).forEach((th, position) => {
+                th.addEventListener(`click`, evt => sortTable(position + 1));
+            });
+        </script>
+        </html>

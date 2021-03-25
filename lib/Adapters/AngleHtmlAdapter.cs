@@ -203,6 +203,8 @@ namespace Smart.Parser.Adapters
     {
         private List<List<HtmlAdapterCell>> TableRows;
         private string Title;
+        private string Department = null;
+        private string DocumentUrl = null;
         private int UnmergedColumnsCount;
         private int TablesCount;
 
@@ -228,6 +230,17 @@ namespace Smart.Parser.Adapters
             Title = holder.FindTitleAboveTheTable();
             CollectRows(holder, maxRowsToProcess);
             UnmergedColumnsCount = GetUnmergedColumnsCountByFirstRow();
+            foreach (var meta_tag in holder.HtmlDocument.QuerySelectorAll("*").Where(m => m.LocalName == "meta").ToList())
+            {
+                if (meta_tag.GetAttribute("name") == "smartparser_department")
+                {
+                    Department = meta_tag.GetAttribute("content");
+                }
+                if (meta_tag.GetAttribute("name") == "smartparser_url")
+                {
+                    DocumentUrl = meta_tag.GetAttribute("content");
+                }
+            }
         }
 
         public static IAdapter CreateAdapter(string fileName, int maxRowsToProcess)
@@ -442,6 +455,14 @@ namespace Smart.Parser.Adapters
             return TablesCount;
         }
 
+        public override string GetDocumentDepartmentFromMetaTag()
+        {
+            return Department;
+        }
+        public override string GetDocumentUrlFromMetaTag()
+        {
+            return DocumentUrl;
+        }
     }
 
 }

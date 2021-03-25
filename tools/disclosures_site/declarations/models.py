@@ -1,6 +1,15 @@
 from django.db import models
 from django.utils.translation import  get_language
-from .countries import  get_country_str
+from .countries import get_country_str
+from .rubrics import get_russian_rubric_str
+from declarations.nominal_income import get_average_nominal_incomes, YearIncome
+from declarations.ratings import TPersonRatings
+from declarations.car_brands import CAR_BRANDS
+
+from collections import defaultdict
+from operator import attrgetter
+from itertools import groupby
+import os
 
 
 def get_django_language():
@@ -9,10 +18,28 @@ def get_django_language():
         lang = lang[:2]
     return lang
 
+class Region(models.Model):
+    name = models.TextField(verbose_name='region name')
+    wikibase_id = models.CharField(max_length=10, null=True)
+
+
+class SynonymClass:
+    Russian = 0
+    English = 1
+    EnglishShort = 2
+    RussianShort = 3
+
+
+class Region_Synonyms(models.Model):
+    region = models.ForeignKey('declarations.Region', verbose_name="region", on_delete=models.CASCADE)
+    synonym = models.TextField(verbose_name='region synonym')
+    synonym_class = models.IntegerField(null=True) #see SynonymClass
+
 
 class Office(models.Model):
     name = models.TextField(verbose_name='office name')
-    region_id = models.IntegerField(null=True)
+    #region_id = models.IntegerField(null=True)
+    region = models.ForeignKey('declarations.Region', verbose_name="region", on_delete=models.CASCADE, null=True)
     type_id = models.IntegerField(null=True)
     parent_id = models.IntegerField(null=True)
     rubric_id = models.IntegerField(null=True, default=None) # see TOfficeRubrics
@@ -24,10 +51,20 @@ class Office(models.Model):
         except Exception as exp:
             raise
 
+    @property
+    def region_name(self):
+        if self.region is None:
+            return ""
+
+        try:
+            return self.region.name
+        except Exception as exp:
+            raise
+
     def get_source_documents(self, max_count=10):
         cnt = 0
         for src_doc in self.source_document_set.all():
-            yield src_doc.id, src_doc.file_path
+            yield src_doc.id
             cnt += 1
             if cnt >= max_count:
                 break
@@ -60,23 +97,12 @@ class Office(models.Model):
     def child_offices(self):
         return self.get_child_offices(max_count=5)
 
-
-class Region(models.Model):
-    name = models.TextField(verbose_name='region name')
-    wikibase_id = models.CharField(max_length=10, null=True)
-
-
-class SynonymClass:
-    Russian = 0
-    English = 1
-    EnglishShort = 2
-    RussianShort = 3
-
-
-class Region_Synonyms(models.Model):
-    region = models.ForeignKey('declarations.Region', verbose_name="region", on_delete=models.CASCADE)
-    synonym = models.TextField(verbose_name='region synonym')
-    synonym_class = models.IntegerField(null=True) #see SynonymClass
+    @property
+    def rubric_str(self):
+        if self.rubric_id is None:
+            return "unknown"
+        else:
+            return get_russian_rubric_str(self.rubric_id)
 
 
 class TOfficeTableInMemory:
@@ -97,8 +123,13 @@ class TOfficeTableInMemory:
             id = parent['id']
         return id
 
-    def get_parent_office(self, office_id):
+    def get_top_parent_office_id(self, office_id):
         return self.transitive_top[int(office_id)]
+
+    def get_immediate_parent_office_id(self, office_id):
+        if office_id is None:
+            return None
+        return self.offices[int(office_id)]['parent_id']
 
     def __init__(self, use_office_types=True, init_from_json=None):
         self.use_office_types = use_office_types
@@ -200,6 +231,7 @@ class Web_Reference(models.Model):
     source_document = models.ForeignKey('declarations.source_document', verbose_name="source document", on_delete=models.CASCADE)
     dlrobot_url = models.TextField(null=True)
     crawl_epoch = models.IntegerField(null=True)
+    web_domain = models.TextField(null=True)
 
 
 class Declarator_File_Reference(models.Model):
@@ -208,24 +240,24 @@ class Declarator_File_Reference(models.Model):
     declarator_documentfile_id = models.IntegerField(null=True)
     declarator_document_id = models.IntegerField(null=True)
     declarator_document_file_url = models.TextField(null=True)
+    web_domain = models.TextField(null=True)
 
 
 class Source_Document(models.Model):
     id = models.IntegerField(primary_key=True)
     office = models.ForeignKey('declarations.Office', verbose_name="office name", on_delete=models.CASCADE)
     sha256 = models.CharField(max_length=200)
-    file_path = models.CharField(max_length=128)
+    file_extension = models.CharField(max_length=16)
     intersection_status = models.CharField(max_length=16)
 
-    @property
-    def doc_path(self):
-        doc_path = self.file_path
-        if doc_path.endswith('.json'):
-            doc_path = doc_path[:-len('.json')]
-        return doc_path
+    # calculated fields (from sql table section)
+    min_income_year = models.IntegerField(null=True, default=None)
+    max_income_year = models.IntegerField(null=True, default=None)
+    section_count = models.IntegerField(null=True, default=0)
+    median_income = models.IntegerField(null=True, default=0)
 
-    def permalink_passports(self):
-        yield "sd;{}".format(self.sha256)
+    def get_permalink_passport(self):
+        return "sd;{}".format(self.sha256)
 
 
 class Person(models.Model):
@@ -237,20 +269,84 @@ class Person(models.Model):
     def section_count(self):
         return self.section_set.all().count()
 
-    def permalink_passports(self):
-        if hasattr(self, "tmp_section_set"):
-            sections = self.tmp_section_set
-        else:
-            sections = list(str(s.id) for s in self.section_set.all())
-            sections.sort()
-        if len(sections) > 0:
-            #a person without sections exists before  saving to the db in copy_person_id.py
-            yield "ps;" + ";".join(sections)
-        else:
-            assert self.declarator_person_id is not None
+    @property
+    def last_section(self):
+        return max( (s for s in self.section_set.all()), key=attrgetter("income_year"))
 
+    @property
+    def last_position_and_office_str(self):
+        return self.last_section.position_and_office_str
+
+    @property
+    def declaraion_count_str(self):
+        cnt = len(self.section_set.all())
+        if cnt == 1:
+            return "{} декларация".format(cnt)
+        elif cnt < 5:
+            return "{} декларации".format(cnt)
+        else:
+            return "{} деклараций".format(cnt)
+
+    @property
+    def has_spouse(self):
+        for s in self.section_set.all():
+            if s.has_spouse():
+                return True
+        return False
+
+    @property
+    def years_str(self):
+        years = list(set(s.income_year for s in self.section_set.all()))
+        years.sort()
+        if len(years) == 1:
+            return "{} год".format(years[0])
+        else:
+            return "{} годы".format(", ".join(map(str, years)))
+
+    @property
+    def sections_ordered_by_year(self):
+        sections = list()
+        for _, year_sections in groupby(sorted(self.section_set.all(), key=attrgetter("income_year")), key=attrgetter("income_year")):
+            for s in year_sections:
+                sections.append(s) # one section per year
+                break
+        return sections
+
+    def income_growth_yearly(self):
+        incomes = list()
+        for s in self.sections_ordered_by_year:
+            incomes.append(YearIncome(s.income_year, s.get_declarant_income_size()))
+        return get_average_nominal_incomes(incomes)
+
+    def get_permalink_passport(self):
         if self.declarator_person_id is not None:
-            yield "psd;" + str(self.declarator_person_id)
+            return "psd;" + str(self.declarator_person_id)
+        else:
+            return None
+
+    @property
+    def ratings(self):
+        s = ""
+        for r in self.person_rating_items_set.all():
+            if r.rating.id == TPersonRatings.LuxuryCarRating:
+                image_path = CAR_BRANDS.get_image_url(str(r.rating_value))
+                rating_info = ""
+            else:
+                image_path = os.path.join("/static/images/", r.rating.image_file_path)
+                rating_info = ", {} место, {} {}, число участников:{}".format(
+                    r.person_place,
+                    r.rating_value,
+                    r.rating.rating_unit_name,
+                    r.competitors_number
+                )
+            rating = '<abbr title="{} ({} год {})"> <image src="{}"/></abbr>'.format(
+                r.rating.name,
+                r.rating_year,
+                rating_info,
+                image_path)
+            rating = "<a href={}>{}</a>".format(TPersonRatings.get_search_params_by_rating(r), rating)
+            s += rating
+        return s
 
 
 class RealEstate(models.Model):
@@ -261,6 +357,7 @@ class RealEstate(models.Model):
     owntype = models.CharField(max_length=1)
     square = models.IntegerField(null=True)
     share = models.FloatField(null=True)
+    relative_index = models.PositiveSmallIntegerField(null=True, default=None)
 
     @property
     def own_type_str(self):
@@ -275,6 +372,7 @@ class RealEstate(models.Model):
 class Vehicle(models.Model):
     section = models.ForeignKey('declarations.Section', on_delete=models.CASCADE)
     relative = models.CharField(max_length=1)
+    relative_index = models.PositiveSmallIntegerField(null=True, default=None)
     name = models.TextField()
 
 
@@ -282,10 +380,11 @@ class Income(models.Model):
     section = models.ForeignKey('declarations.Section', on_delete=models.CASCADE)
     size = models.IntegerField(null=True)
     relative = models.CharField(max_length=1)
+    relative_index = models.PositiveSmallIntegerField(null=True, default=None)
 
 
-def get_relatives(records):
-    return set( Relative(x.relative) for x in records.all())
+def get_distinct_relative_types(records):
+    return set(Relative(x.relative) for x in records.all())
 
 
 class Section(models.Model):
@@ -297,15 +396,28 @@ class Section(models.Model):
     department = models.TextField(null=True)
     position = models.TextField(null=True)
     dedupe_score = models.FloatField(blank=True, null=True, default=0.0)
+    surname_rank = models.IntegerField(null=True)
+    name_rank = models.IntegerField(null=True)
+    gender = models.PositiveSmallIntegerField(null=True, default=None)
+
+    # sometimes Section.rubric_id overrides Office.rubric_id, see function convert_municipality_to_education for example
+    rubric_id = models.IntegerField(null=True, default=None)
 
     @property
     def section_parts(self):
         relatives = set()
-        relatives |= get_relatives(self.income_set)
-        relatives |= get_relatives(self.realestate_set)
-        relatives |= get_relatives(self.vehicle_set)
-        result = Relative.sort_by_visual_order(list(relatives))
-        return result
+        relatives.add(Relative(Relative.main_declarant_code))
+        relatives |= get_distinct_relative_types(self.income_set)
+        relatives |= get_distinct_relative_types(self.realestate_set)
+        relatives |= get_distinct_relative_types(self.vehicle_set)
+        relative_list = Relative.sort_by_visual_order(list(relatives))
+        return relative_list
+
+    def get_surname_rank(self):
+        return self.surname_rank if self.surname_rank is not None else 100
+
+    def get_name_rank(self):
+        return self.name_rank if self.name_rank is not None else 100
 
     def get_declarant_income_size(self):
         if hasattr(self, "tmp_income_set"):
@@ -317,10 +429,185 @@ class Section(models.Model):
                 return i.size
         return 0
 
-    def permalink_passports(self):
+    def get_spouse_income_size(self):
+        for i in self.income_set.all():
+            if i.relative == Relative.spouse_code:
+                if i.size is None:
+                    return None
+                else:
+                    return i.size
+        return None
+
+    @property
+    def declarant_income_size(self):
+        return self.get_declarant_income_size()
+
+    @property
+    def spouse_income_size(self):
+        return self.get_spouse_income_size()
+
+    def get_permalink_passport(self):
         main_income = self.get_declarant_income_size()
-        yield "sc;{};{};{};{}".format(self.source_document.id, self.person_name.lower(), self.income_year, main_income)
+        return "sc;{};{};{};{}".format(self.source_document.id, self.person_name.lower(), self.income_year, main_income)
+
+    @property
+    def rubric_str(self):
+        if self.rubric_id is None:
+            return "unknown"
+        else:
+            return get_russian_rubric_str(self.rubric_id)
+
+    @staticmethod
+    def describe_realty(r: RealEstate):
+        if r is None:
+            return ["", "", ""]
+        type_str = r.type
+        if r.country != "RU":
+            type_str += " ({})".format(r.country_str)
+        square_str = "none" if r.square is None else str(r.square)
+        return [type_str, square_str, r.own_type_str]
+
+    @property
+    def declarant_realty_square_sum(self):
+        sum = 0
+        cnt = 0
+        for r in self.realestate_set.all():
+            if r.relative == Relative.main_declarant_code:
+                if r.square is not None:
+                    sum += r.square
+                    cnt += 1
+        if cnt > 0:
+            return sum
+        else:
+            return None
+
+    @property
+    def spouse_realty_square_sum(self):
+        sum = 0
+        has_realty = 0
+        for r in self.realestate_set.all():
+            if r.relative == Relative.spouse_code:
+                if r.square is not None:
+                    sum += r.square
+                    has_realty = True
+        if has_realty:
+            return sum
+        else:
+            return None
+
+    @property
+    def vehicle_count(self):
+        return len(list(self.vehicle_set.all()))
+
+    def has_spouse(self):
+        for r in self.realestate_set.all():
+            if r.relative == Relative.spouse_code:
+                return True
+        for r in self.income_set.all():
+            if r.relative == Relative.spouse_code:
+                return True
+        for r in self.vehicle_set.all():
+            if r.relative == Relative.spouse_code:
+                return True
+        return False
+
+    @property
+    def position_and_office_str(self):
+        str = self.source_document.office.name
+
+        position_and_department = ""
+        if self.department is not None:
+            position_and_department += self.department
+
+        if self.position is not None:
+            if position_and_department != "":
+                position_and_department += ", "
+            position_and_department += self.position
+
+        if position_and_department != "":
+            str += " ({})".format(position_and_department.strip())
+        return str
+
+    @property
+    def html_table_data_rows(self):
+        secton_parts = self.section_parts
+
+        realties = defaultdict(list)
+        for r in self.realestate_set.all():
+            realties[r.relative].append(Section.describe_realty(r))
+        for x in secton_parts:
+            if len(realties[x.code]) == 0:
+                realties[x.code].append(Section.describe_realty(None))
+
+        vehicles = defaultdict(str)
+        for v in self.vehicle_set.all():
+            vehicles[v.relative] += v.name + "<br/>"
+
+        incomes = defaultdict(str)
+        for i in self.income_set.all():
+            incomes[i.relative] = str(i.size)
+
+        table = list()
+        for relative in secton_parts:
+            cnt = 0
+            for (realty_type, realty_square, own_type) in realties[relative.code]:
+                if cnt == 0:
+                    rowspan = len(realties[relative.code])
+                    if relative.code == Relative.main_declarant_code:
+                        cells = [(self.person_name, rowspan)]
+                    else:
+                        cells = [(relative.name, rowspan)]
+                    cells.extend([(realty_type, 1), (realty_square, 1), (own_type, 1),
+                                  (vehicles[relative.code], rowspan), (incomes[relative.code], rowspan)])
+                else:
+                    cells = [(realty_type, 1), (realty_square, 1), (own_type, 1)]
+                cnt += 1
+                table.append(cells)
+        return table
+
+    def get_car_brands(self):
+        car_brands = set()
+        for v in self.vehicle_set.all():
+            if v.name is not None and len(v.name) > 1:
+                car_brands.update(CAR_BRANDS.find_brands(v.name))
+        return list(car_brands)
 
 
+class Person_Rating(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.TextField(verbose_name='rating name')
+    image_file_path = models.TextField(verbose_name='file path')
+    rating_unit_name = models.TextField(verbose_name='rating_unit')
+
+    @staticmethod
+    def create_ratings():
+        Person_Rating(
+            id=TPersonRatings.MaxDeclarantOfficeIncomeRating,
+            name="Самый высокий доход внутри ведомства",
+            image_file_path="declarant_office_income.png",
+            rating_unit_name="руб.",
+            ).save()
+
+        Person_Rating(
+            id=TPersonRatings.MaxSpouseOfficeIncomeRating,
+            name="Самый высокий доход супруги(а) внутри ведомства",
+            image_file_path="spouse_office_income.png",
+            rating_unit_name= "руб.",
+            ).save()
+
+        Person_Rating(
+            id=TPersonRatings.LuxuryCarRating,
+            name="Дорогой автомобиль",
+            image_file_path="",
+            rating_unit_name="",
+            ).save()
 
 
+class Person_Rating_Items(models.Model):
+    rating = models.ForeignKey('declarations.Person_Rating', on_delete=models.CASCADE)
+    person = models.ForeignKey('declarations.Person', on_delete=models.CASCADE)
+    person_place = models.IntegerField()
+    rating_year = models.IntegerField()
+    rating_value = models.IntegerField()
+    competitors_number = models.IntegerField(default=0)
+    office = models.ForeignKey('declarations.Office', on_delete=models.CASCADE, null=True)

@@ -1,0 +1,15 @@
+[Unit]
+Description=workstation monitoring daemon
+After=network.target
+
+
+[Service]
+User=sokirko
+Environment=PYTHONPATH=/home/sokirko/smart_parser/tools
+
+ExecStart=/usr/bin/python3 /home/sokirko/smart_parser/tools/workstation_monitoring/workstation_monitoring_service.py \
+          --time-rate 15 \
+          --output-file /tmp/glances.dat
+
+[Install]
+WantedBy=multi-user.target

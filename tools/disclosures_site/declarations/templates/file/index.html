@@ -4,15 +4,28 @@
 
 {% block content %}
 
+<style>
+    div.search_input {
+        padding-top: 5x;
+        padding-bottom: 5px;
+    }
+</style>
+
 <form action="{% url 'file_search' %}" method="get">
-    <table>
-        <tr>
-            <td>{{form.file_path.label_tag}}</td>
-            <td>{{form.file_path}}</td>
-            <td><input type="submit" value="Поиск"></td>
-       </tr>
-    </table>
-    </form>
+    <div class="search_input">
+        {{form.web_domains.label_tag}}
+        {{form.web_domains}}
+        <input type="submit" value="Поиск">
+    </div>
+    <div class="search_input">
+        {{form.first_crawl_epoch.label_tag}}
+        {{form.first_crawl_epoch}}
+
+        {{form.sha256.label_tag}}
+        {{form.sha256}}
+
+    </div>
+</form>
 
 {% if hits_count is not None %}
 
@@ -21,12 +34,25 @@
     <br/>
 
     <table>
+        <tr>
+            <th><a href="?{{sort_by_id}}">ID</a></th>
+            <th><a href="?{{sort_by_web_domains}}">Web Domain</a></th>
+            <th><a href="?{{sort_by_intersection_status}}">Sources</a></th>
+            <th><a href="?{{sort_by_min_income_year}}">Min Year</a></th>
+            <th><a href="?{{sort_by_max_income_year}}">Max Year</a></th>
+            <th><a href="?{{sort_by_section_count}}">Section Count</a></th>
+            <th><a href="?{{sort_by_first_crawl_epoch}}">First crawl epoch</a></th>
+        </tr>
+
       {% for file in object_list %}
         <tr>
-          <td> {{ file.id }}: </td>
-          <td>
-              <a href="/file/{{ file.id }}"> {{ file.file_path }} </a>
-          </td>
+            <td> <a href="/file/{{ file.id }}"> {{ file.id }} </a> </td>
+            <td> {{ file.web_domains }} </td>
+            <td> {{ file.intersection_status }} </td>
+            <td> {{ file.min_income_year }} </td>
+            <td> {{ file.max_income_year }} </td>
+            <td> {{ file.section_count }} </td>
+            <td> {{ file.get_first_crawl_epoch_str }} </td>
         </tr>
       {% endfor %}
     </table>

@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 
+
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock meta_robots %}
+
 {% block title %}Информация об исходном файле деклараций{% endblock title %}
 
 {% block content %}
@@ -8,11 +11,19 @@
 
 <b>Ведомство:</b> <a href="/office/{{ source_document.office.id }}"> {{ source_document.office.name }} </a><br/><br/>
 
-<b>Скаченный файл:</b> <a href="/static/domains/{{ source_document.file_path }}"> {{ source_document.file_path }} </a> <br/><br/>
+<b>Скаченный файл:</b> <a href="/sourcedoc/{{ source_document.sha256 }}{{ source_document.file_extension }}"> {{ source_document.sha256 }}{{ source_document.file_extension }} </a> <br/><br/>
 
-<b>Sha256:</b> {{ source_document.sha256 }} <br/><br/>
+<b>File extension:</b> {{ source_document.file_extension }} <br/><br/>
 
 <b>Intersection status:</b> {{ source_document.intersection_status }} <br/><br/>
+
+<b>Min Income Year:</b> {{ source_document.min_income_year }} <br/><br/>
+
+<b>Max Income Year:</b> {{ source_document.max_income_year }} <br/><br/>
+
+<b>Section Count:</b> {{ source_document.section_count }} <br/><br/>
+
+<b>Median Income:</b> {{ source_document.median_income }} <br/><br/>
 
 {% for web_location in source_document.web_reference_set.all %}
     <b>Сайт:</b> <a href="{{ web_location.dlrobot_url }}"> {{ web_location.dlrobot_url }}</a> , обход № {{ web_location.crawl_epoch }}  <br/>

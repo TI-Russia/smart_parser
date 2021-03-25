@@ -126,7 +126,7 @@ def run_smart_parser(filepath, args):
             # logger.info("Skipping existed JSON file %s.json" % sourcefile)
             return 1, ""
 
-    smart_parser_options = "-adapter prod -converted-storage-url http://disclosures.ru:8091"
+    smart_parser_options = "-adapter prod -converted-storage-url http://c.disclosures.ru:8091"
 
     log = filepath + ".log"
     if os.path.exists(log):

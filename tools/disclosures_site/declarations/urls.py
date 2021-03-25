@@ -1,9 +1,14 @@
-from django.urls import path
+from django.urls import path, re_path
 from . import views
+from django.views.generic import TemplateView
 
 urlpatterns = [
     path('', views.HomePageView.as_view(), name='home_page'),
     path('about.html', views.AboutPageView.as_view(), name='about_page'),
+    path('sitemap.txt', views.sitemapView, name='sitemap'),
+    path('sitemap.xml', views.sitemapXmlView, name='sitemapxml'),
+    re_path('sitemap(?P<sitemapid>[0-9a-z-]+)?.xml', views.sitemapAuxXmlView, name='sitemapauxxml'),
+    re_path('static/(?P<sitemapid>[0-9a-z-]+)?/sitemap.xml', views.sitemapAuxXmlView, name='sitemapauxxml'),
     path('statistics/', views.StatisticsView.as_view(), name='statistics'),
 
     path('person/', views.PersonSearchView.as_view(), name='person_search'),
@@ -17,5 +22,12 @@ urlpatterns = [
 
     path('file/<int:pk>/', views.FileView.as_view(), name='file_detail'),
     path('file/', views.FileSearchView.as_view(), name='file_search'),
+    path('sourcedoc/<str:sha256_and_file_extension>', views.source_doc_getter, name='source_doc_getter'),
 
+    path('reports/genders/index.html', views.anyUrlView),
+    path('reports/names/index.html', views.anyUrlView),
+    path('reports/car-brands/index.html', views.anyUrlView),
+    path('reports/car-brands/car-brands-by-years.html', views.anyUrlView),
+    path('reports/offices/index.html', views.anyUrlView),
+    path('reports/regions/index.html', views.anyUrlView),
 ]

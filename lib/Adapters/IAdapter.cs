@@ -34,8 +34,8 @@ namespace Smart.Parser.Adapters
         {
             return "R" + (row + 1).ToString() + "C" + (col + 1).ToString();
         }
-        
-        
+
+
         abstract public Cell GetCell(int row, int column);
         public virtual List<Cell> GetCells(int row, int maxColEnd=MaxColumnsCount)
         {
@@ -109,6 +109,15 @@ namespace Smart.Parser.Adapters
             }
             return true;
         }
+        public virtual string GetDocumentDepartmentFromMetaTag()
+        {
+            return null;
+        }
+        public virtual string GetDocumentUrlFromMetaTag()
+        {
+            return null;
+        }
+
         public int GetUnmergedColumnsCountByFirstRow()
         {
             if (GetRowsCount() == 0) return -1;

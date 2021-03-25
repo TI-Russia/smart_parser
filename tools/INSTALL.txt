@@ -35,15 +35,16 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
 2.1 sudo apt update
    sudo apt install -y  curl p7zip-full unrar libcurl4-openssl-dev libssl-dev libreoffice \
         python3-wheel calibre  catdoc xlsx2csv default-libmysqlclient-dev libgdiplus python3-pip python3.8-dev \
-        firefox git
+        firefox git  sshfs libcurl4
 
 2.2 git clone https://github.com/TI-Russia/smart_parser.git ~/smart_parser
 
-2.3 Install python3
+2.3 Install python3 modules
+   #curl https://sh.rustup.rs -sSf | sh   # for module cryptography
    pip3 install -r /home/sokirko/smart_parser/tools/requirements.txt
 
 2.4. install dotnet according  sudo apt-get install -y dotnet-runtime-3.1
-      wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+      wget  https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
       sudo dpkg -i packages-microsoft-prod.deb
       sudo apt-get update
       sudo apt-get install -y apt-transport-https
@@ -51,16 +52,9 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
       sudo apt-get install -y dotnet-sdk-3.1
 
 
-2.6 update ~/.profile
-    export ASPOSE_LIC=~/lic.bin
-    export PYTHONPATH=~/smart_parser/tools:$PYTHONPATH
-    export DECLARATOR_CONV_URL=disclosures.ru:8091
+2.6 add  ~/smart_parser/tools/disclosures_site/tools/update_common.sh to  ~/.profile
 
-    # local central network names
-    export CENTRAL_HOST_NAME=migalka
-    export SMART_PARSER_SERVER_ADDRESS=$CENTRAL_HOST_NAME:8165
-    export DLROBOT_CENTRAL_SERVER_ADDRESS=$CENTRAL_HOST_NAME:8089
-
+    cat ~/smart_parser/tools/disclosures_site/tools/update_common.sh >> ~/.profile
     source ~/.profile
 
 2.7 compile and test smart_parser (c#, ~/smart_parser/src)
@@ -77,8 +71,11 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
       sudo tar xfz geckodriver-v0.26.0-linux64.tar.gz
 
 2.10. Test dlrobot
-    cd ~/smart_parser/tools/robots/dlrobot/tests
-    bash run_tests.sh
+    cd ~/smart_parser/dl_robot/tests
+    bash tests.sh
+
+    cd ~/smart_parser/tools/dlrobot_server
+    python3 -m unittest
 
 
 =====================================================================================
@@ -93,35 +90,44 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
    Which zone do you want to use as a profile default ru-central1-c
    yc compute instance list
 
-3.2 Запуск сервиса smart_parser_cache
-    export SMART_PARSER_CACHE_FOLDER=~/declarator_hdd/declarator/smart_parser_cache
-    mkdir -p $SMART_PARSER_CACHE_FOLDER
-    cd $SMART_PARSER_CACHE_FOLDER
-    rm nohup.out; nohup python3 ~/smart_parser/tools/robots/dlrobot/scripts/cloud/smart_parser_cache.py &
+3.2 Запуск сервиса smart_parser_server
+    cd ~/smart_parser/tools/smart_parser_http && python3 -m unittest
+    export SMART_PARSER_SERVER_FOLDER=~/declarator_hdd/declarator/smart_parser_server
+    mkdir -p $SMART_PARSER_SERVER_FOLDER
+    cd $SMART_PARSER_SERVER_FOLDER
+    rm nohup.out; nohup python3 ~/smart_parser/tools/smart_parser_http/smart_parser_server.py &
 
-3.3 Построение списка всех входных доменов
-    # optional python $TOOLS/robots/dlrobot/scripts/check_domains.py --human-files $HUMAN_FILES_JSON --reached-domains ../domains/new_domains.txt  --timeouted-domains timeouted-domains.txt
-    python $TOOLS/robots/dlrobot/scripts/create_by_domains.py --domains $TOOLS/robots/dlrobot/domains.txt --domains $TOOLS/robots/dlrobot/domains/fix_region.txt --output-folder $INPUT_DLROBOT_PROJECTS
+3.3 Запуск сервера исходных документов
+    export SOURCE_DOC_SERVER_FOLDER=~/declarator_hdd/Yandex.Disk/declarator/source_doc
+    mkdir -p $SOURCE_DOC_SERVER_FOLDER
+    cd $SOURCE_DOC_SERVER_FOLDER
+    rm nohup.out; nohup python3 ~/smart_parser/tools/source_doc_http/source_doc_server.py --data-folder bin_files --log-file-name  /tmp/source_doc_server.log
+
+3.4 Обновление списка всех входных доменов (опционально)
+    python $TOOLS/disclosures_site/scripts/update_offices.py
 
 
-3.4  Запуск сервиса dlrobot_central
+3.5  Запуск сервиса dlrobot_central
    export DLROBOT_CENTRAL_FOLDER=~/declarator_hdd/declarator/dlrobot_central
    mkdir $DLROBOT_CENTRAL_FOLDER
    cd $DLROBOT_CENTRAL_FOLDER
-   nohup python3 $TOOLS/robots/dlrobot/scripts/cloud/dlrobot_central.py  \
-                 --input-folder input_projects \
-                 --result-folder processed_projects \
-                 --read-previous-results --check-yandex-cloud &
+   rm nohup.out nohup python3 ~/smart_parser/tools/dlrobot_server/dlrobot_central.py  \
+                --server-address $DLROBOT_CENTRAL_SERVER_ADDRESS \
+                --input-task-list ~/smart_parser/tools/disclosures_site/data/web_sites.json \
+                --result-folder processed_projects --read-previous-results --check-yandex-cloud
 
-3.5  init crontab in central for monitoring:
-crontab -e
+3.7  init crontab in central for monitoring (crontab -e), add lines from $TOOLS/disclosures_server/crontab.txt
 
-SHELL=/bin/bash
-MAILTO=username
-#Mins  Hours  Days   Months  Day of the week
-*/10       *     *        *      *      python /home/sokirko/smart_parser/tools/ConvStorage/scripts/get_stats.py --history-file /home/sokirko/declarator_hdd/declarator/convert_stats.txt
-*/10       *     *        *      *      python /home/sokirko/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_stats.py --central-stats-file  /home/sokirko/declarator_hdd/declarator/2020-09-29/processed_projects/dlrobot_remote_calls.dat --conversion-server-stats /home/sokirko/declarator_hdd/declarator/convert_stats.txt --output-folder ~/smart_parser.disclosures_prod/tools/disclosures_site/disclosures/static/dlrobot
+3.8  Get api-token from telegram BotFather and give it to
+    telegram-send --configure
 
+3.9 sudo apt install parallel
+
+3.10 Install workstation monitoring
+  sudo cp ~/smart_parser/tools/workstation_monitoring/workstation_monitoring.service /etc/systemd/system
+  sudo systemctl enable workstation_monitoring
+  sudo systemctl daemon-reload
+  sudo systemctl start workstation_monitoring
 
 
 =====================================================================================
@@ -129,7 +135,7 @@ MAILTO=username
 =====================================================================================
 
 4.1 Create dlrobot worker service:
-    sudo cp ~/smart_parser/tools/robots/dlrobot/scripts/cloud/dlrobot_worker.service /etc/systemd/system
+    sudo cp ~/smart_parser/tools/robots/dlrobot_server/dlrobot_worker.service /etc/systemd/system
     sudo chmod 644 /etc/systemd/system/dlrobot_worker.service
     sudo systemctl enable dlrobot_worker
     sudo systemctl daemon-reload
@@ -151,50 +157,115 @@ MAILTO=username
 
 Following https://habr.com/ru/post/501414/
 
-5.1   Install python environment in /var/www/smart_parser
-cd /var/www
-sudo chmod a+rwx .
-git clone https://github.com/TI-Russia/smart_parser.git
+#5.0 install mysql 8
+    #wget -c https://dev.mysql.com/get/mysql-apt-config_0.8.23-1_all.deb
+    sudo apt update
+    sudo apt install mysql-server
+    # root password is "root"
+    #sudo mysql_secure_installation
 
-cd /var/www/smart_parser/tools
-python3 -m venv  venv
-source venv/bin/activate
-pip3 install -r requirements.txt
+    #login root without sudo
+    sudo mysql -u root -proot
 
-5.2 install disclosures service
-    cd /var/www/smart_parser/tools/disclosures_site/scripts/disclosures.service
-    sudo cp disclosures.service  /etc/systemd/system
-    sudo systemctl restart disclosures
-    sudo systemctl enable disclosures
+    ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
+    FLUSH PRIVILEGES;
 
-5.3 create gunicorn service
+    CREATE USER 'db_creator'@'localhost' IDENTIFIED BY 'root';
+    GRANT ALL PRIVILEGES ON *.* TO 'db_creator'@'localhost' WITH GRANT OPTION;
+    FLUSH PRIVILEGES;
 
- 5.3.1  create gunicorn service
-    cd /var/www/smart_parser/tools/disclosures_site/scripts/disclosures.service
-    sudo cp gunicorn.socket  /etc/systemd/system
-    sudo cp gunicorn.service /etc/systemd/system
+    GRANT ALL PRIVILEGES ON *.* TO 'disclosures'@'' WITH GRANT OPTION;
+    FLUSH PRIVILEGES;
 
-    sudo systemctl start gunicorn.socket
+    #sudo nano /etc/mysql/my.cnf and add the following lines
+    [mysqld]
+    wait_timeout = 28800
+    skip-log-bin
+    secure-file-priv = ""
+
+#5.1 Install elastic search, follow https://www.elastic.co/guide/en/elasticsearch/reference/current/deb.html
+    sudo apt-get install apt-transport-https
+    echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
+    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys D27D666CD88E42B4
+    sudo apt-get update
+    sudo apt-get install elasticsearch
+
+    #sudo nano /etc/elasticsearch/jvm.options
+    # add -Xmx512m это не работает, elastic не хочет уходить в swap
+
+    sudo nano /etc/systemd/system/multi-user.target.wants/elasticsearch.service
+    #set
+    #TimeoutStartSec=750
+
+    sudo systemctl daemon-reload
+    sudo systemctl enable elasticsearch.service
+    sudo systemctl start elasticsearch.service
+
+
+#5.2   Install python environment in /var/www/smart_parser
+    cd /var/www
+    sudo chmod a+rwx .
+    git clone https://github.com/TI-Russia/smart_parser.git
+
+    cd /var/www/smart_parser/tools
+    pip3 install -r requirements.txt
+    #add to ~/.profile
+    export TOOLS=/var/www/smart_parser/tools
+    export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
+    export SOURCE_DOC_SERVER_ADDRESS=migalka:8090
+
+#5.3 create database
+    cd /var/www/smart_parser/tools/disclosures_site
+    python3 manage.py create_database --settings disclosures.settings.prod  --skip-checks
+    python3 manage.py makemigrations --settings disclosures.settings.prod
+    python3 manage.py migrate --settings disclosures.settings.prod
+    python3 manage.py test declarations/tests --settings disclosures.settings.prod  --keepdb
+
+
+    #download disclosures.sql.gz from disclosures.ru
+    zcat disclosures.sql.gz| mysql -D disclosures_db -u disclosures -pdisclosures
+
+
+#5.4 create gunicorn service
+
+    sudo cp /home/sokirko/smart_parser/tools/disclosures_site/scripts/etc/systemd/system/gunicorn.* /etc/systemd/system
+
     sudo systemctl enable gunicorn.socket
+    sudo systemctl start gunicorn.socket
 
-    sudo systemctl restart gunicorn.service
+
+    sudo systemctl enable gunicorn.service
+    sudo systemctl start gunicorn.service
     sudo systemctl status gunicorn.service
 
-  5.3.2 test gunicorn (optional)
-     /var/www/smart_parser/env/bin/gunicorn --env DJANGO_SETTINGS_MODULE=disclosures.settings.prod --bind localhost:8000 disclosures.wsgi
+    #test gunicorn (optional)
+    /var/www/smart_parser/env/bin/gunicorn --env DJANGO_SETTINGS_MODULE=disclosures.settings.prod --bind localhost:8000 disclosures.wsgi
 
 
-5.4 install nginx
-
+#5.5 install nginx
     sudo apt install nginx
-    cd /var/www/smart_parser/tools/disclosures_site/scripts/disclosures.service
-    sudo cp nginx.config /etc/nginx/sites-available/disclosures.ru
+    sudo cp /home/sokirko/smart_parser/tools/disclosures_site/scripts/etc/nginx/sites-available/disclosures.ru /etc/nginx/sites-available
     sudo ln -s  /etc/nginx/sites-available/disclosures.ru  /etc/nginx/sites-enabled
     sudo rm /etc/nginx/sites-enabled/default
+
+# 5.6 install certbot
+
+    # add the following line to /etc/sudoers
+    user sokirko = (root) NOPASSWD: /usr/bin/certbot
+
+    #to create a new certificate follow https://certbot.eff.org/lets-encrypt/ubuntuxenial-nginx.html
+    #o copy the certificate from the old frontend
+    ssh migalka
+    sudo tar zpcvf backup_etc-letsencrypt.tar.gz /etc/letsencrypt/
+    scp backup_etc-letsencrypt.tar.gz frontend:~
+    ssh frontend
+    sudo tar zxvf backup_etc-letsencrypt.tar.gz -C /
+
+    sudo apt-get install certbot python3-certbot-nginx
+    sudo certbot --nginx
+
+    # start nginx, check https and http manually
     sudo systemctl restart nginx
     sudo systemctl status nginx
 
-5.5 install https
-    sudo apt-get install certbot python3-certbot-nginx
-    sudo certbot --nginx
-    (здесь точно все дописано?)
+#5.7  init crontab  (run crontab -e, add lines from $TOOLS/disclosures_site/scripts/crontab.txt)

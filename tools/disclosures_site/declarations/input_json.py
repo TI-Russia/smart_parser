@@ -1,6 +1,9 @@
 import os
 import json
 
+from common.primitives import get_site_domain_wo_www
+from collections import defaultdict
+
 
 class TIntersectionStatus:
     both_found = "both_found"
@@ -40,15 +43,19 @@ class TDeclaratorReference:
 
 
 class TWebReference:
-    def __init__(self, from_json=dict(), url=None, crawl_epoch=None):
+    def __init__(self, from_json=dict(), url=None, crawl_epoch=None, web_domain=None):
         self.url = from_json.get('url', url)
+        self.web_domain = from_json.get('web_domain', web_domain)
+        if self.web_domain is None:
+            self.web_domain = get_site_domain_wo_www(self.url)
         self.crawl_epoch = from_json.get('crawl_epoch', crawl_epoch)
-        assert len(from_json) == 0 or len(from_json) == 2
+
 
     def write_to_json(self):
         return {
             'url': self.url,
-            'crawl_epoch': self.crawl_epoch
+            'crawl_epoch': self.crawl_epoch,
+            'web_domain': self.web_domain,
         }
 
     def __eq__(self, other):
@@ -61,8 +68,11 @@ class TSourceDocument:
     only_human = "only_human"
 
     def __init__(self, from_json=dict()):
-        self.document_path = from_json.get('document_path')
-        self.intersection_status = from_json.get('intersection_status')
+        self.document_path_obsolete = from_json.get('document_path')
+        if self.document_path_obsolete is not None:
+            _, self.file_extension = os.path.splitext(self.document_path_obsolete)   #old version
+        else:
+            self.file_extension = from_json.get('file_ext')
         self.calculated_office_id = from_json.get('office_id')
         self.web_references = list()
         self.decl_references = list()
@@ -71,14 +81,22 @@ class TSourceDocument:
         for ref in from_json.get('w_refs', []):
             self.web_references.append(TWebReference(from_json=ref))
 
-    def update_intersection_status(self, new_status):
-        if self.intersection_status is None:
-            self.intersection_status = new_status
-        elif self.intersection_status != new_status:
-            self.intersection_status = TSourceDocument.both_found
+    def get_intersection_status(self):
+        if len(self.web_references) > 0 and len(self.decl_references) > 0:
+            return TSourceDocument.both_found
+        elif len(self.web_references) > 0:
+            return TSourceDocument.only_dlrobot
+        elif len(self.decl_references) > 0:
+            return TSourceDocument.only_human
+        else:
+            assert False
 
     def get_web_site(self):
-        return os.path.dirname(self.document_path)
+        for r in self.decl_references:
+            return r.web_domain
+        for r in self.web_references:
+            return get_site_domain_wo_www(r.url)
+        return ""
 
     def get_declarator_income_year(self):
         for r in self.decl_references:
@@ -96,8 +114,7 @@ class TSourceDocument:
 
     def write_to_json(self):
         res = {
-            'document_path': self.document_path,
-            'intersection_status': self.intersection_status,
+            'file_ext': self.file_extension,
             'office_id': self.calculated_office_id
         }
         if len(self.web_references) > 0:
@@ -127,12 +144,6 @@ class TDlrobotHumanFile:
     def add_source_document(self, sha256, src_doc: TSourceDocument):
         self.document_collection[sha256] = src_doc
 
-    def get_document_path(self, src_doc: TSourceDocument, absolute=False):
-        if absolute:
-            return os.path.join(self.db_file_dirname, self.document_folder, src_doc.document_path)
-        else:
-            return os.path.join(self.document_folder, src_doc.document_path)
-
     def write(self):
         with open(self.db_file_path, "w", encoding="utf8") as out:
             output_json = {
@@ -143,3 +154,36 @@ class TDlrobotHumanFile:
 
     def get_documents_count(self):
         return len(self.document_collection)
+
+    def get_stats(self):
+        websites = set()
+        files_count = 0
+        both_found = 0
+        only_dlrobot = 0
+        only_human = 0
+        extensions = defaultdict(int)
+        crawl_epochs = defaultdict(int)
+
+        for src_doc in self.document_collection.values():
+            websites.add(src_doc.get_web_site())
+            files_count += 1
+            intersection_status = src_doc.get_intersection_status()
+            if intersection_status == TIntersectionStatus.both_found:
+                both_found += 1
+            if intersection_status == TIntersectionStatus.only_dlrobot:
+                only_dlrobot += 1
+            if intersection_status == TIntersectionStatus.only_human:
+                only_human += 1
+            for ref in src_doc.web_references:
+                crawl_epochs[ref.crawl_epoch] += 1
+            extensions[src_doc.file_extension] += 1
+
+        return {
+            "web_sites_count": len(websites),
+            "files_count": files_count,
+            "both_found": both_found,
+            "only_human": only_human,
+            "only_dlrobot": only_dlrobot,
+            "crawl_epochs": dict(crawl_epochs),
+            "extensions": dict(extensions),
+        }

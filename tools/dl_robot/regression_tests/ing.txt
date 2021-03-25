@@ -1,0 +1,9 @@
+{
+    "sites": [
+        {
+            "morda_url": "http://voronovskoe.ru",
+            "name": ""
+        }
+    ]
+}
+

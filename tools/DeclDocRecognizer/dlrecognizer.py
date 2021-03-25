@@ -1,21 +1,16 @@
-import argparse
-import json
-import re
-import os
-import hashlib
-import shutil
-import sys
 from DeclDocRecognizer.document_types import TCharCategory, SOME_OTHER_DOCUMENTS, VEHICLE_REGEXP_STR, russify, \
         get_russian_normal_text_ratio
 from ConvStorage.conversion_client import TDocConversionClient
 from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
+from common.primitives import normalize_whitespace, string_contains_Russian_name, build_dislosures_sha256
+
 from collections import defaultdict
-
-
-def normalize_whitespace(str):
-    str = re.sub(r'\s+', ' ', str)
-    str = str.strip()
-    return str
+import argparse
+import json
+import re
+import os
+import shutil
+import sys
 
 
 class DL_RECOGNIZER_ENUM:
@@ -35,6 +30,7 @@ class FEATURE_ENUM:
     vehicles_word = "vehicles_word"
     vehicles = "vehicles"
     relative = "relative"
+    other_document_type_smart_parser_title = "other_document_type_smart_parser_title"
 
 
 def parse_args():
@@ -42,11 +38,18 @@ def parse_args():
     parser.add_argument("--source-file", dest='source_file', required=True)
     parser.add_argument("--keep-txt", dest='keep_txt', action="store_true", default=False)
     parser.add_argument("--reuse-txt", dest='reuse_txt', action="store_true", default=False)
-    parser.add_argument("--output", dest='output', default=None)
+    parser.add_argument("--output-verdict", dest='output_verdict', default=None)
     parser.add_argument("--delete-negative", dest='delete_negative', default=False, action="store_true")
+    parser.add_argument("--output-folder", dest='output_folder', default=None,
+                        help="save all temp files to this folder")
     args = parser.parse_args()
-    if args.output is None:
-        args.output = args.source_file + ".verdict"
+    if args.output_folder is not None:
+        os.makedirs(args.output_folder, exist_ok=True)
+    if args.output_verdict is None:
+        if args.output_folder is None:
+            args.output_verdict = args.source_file + ".verdict"
+        else:
+            args.output_verdict = os.path.join(args.output_folder,  os.path.basename(args.source_file) + ".verdict")
     return args
 
 
@@ -64,17 +67,29 @@ class TMatch:
 
 
 def get_smart_parser_result(source_file):
-    global EXTERNAl_CONVERTORS
     if source_file.endswith("pdf"):  # cannot process new pdf without conversion
-        return 0
+        return 0, ""
     EXTERNAl_CONVERTORS.run_smart_parser_short(source_file)
     json_file = source_file + ".json"
     if not os.path.exists(json_file):
-        return 0
+        return 0, ""
     with open(json_file, "r", encoding="utf8") as inpf:
         smart_parser_json = json.load(inpf)
     os.remove(json_file)
-    return len(smart_parser_json.get("persons", []))
+    good_names_count = 0
+    bad_names_count = 0
+    for p in smart_parser_json.get("persons", []):
+        name = p.get('person', {}).get('name_raw','')
+        if string_contains_Russian_name(name):
+            good_names_count += 1
+        else:
+            bad_names_count += 1
+    #good_names_ratio = good_names_count*5 > (good_names_count + bad_names_count)
+    #number_of_persons = len(smart_parser_json.get("persons", []))
+    if good_names_count*5 < (good_names_count + bad_names_count):
+        good_names_count = 0
+    number_of_persons = good_names_count
+    return number_of_persons, smart_parser_json.get('document', {}).get("sheet_title", "")
 
 
 class TTextFeature:
@@ -89,11 +104,18 @@ class TTextFeature:
         }
 
 
+SOME_OTHER_DOCUMENTS_REGEXP = '(' + "|".join(list('(' + " *".join(w) + ')' for w in SOME_OTHER_DOCUMENTS)) + ")" + r"\b"
+
+
 class TClassificationVerdict:
 
-    def __init__(self, input_text, smart_parser_person_count):
+    def __init__(self, source_file, input_text):
+        self.source_file = source_file
         self.verdict = DL_RECOGNIZER_ENUM.UNKNOWN
-        self.smart_parser_person_count = smart_parser_person_count
+        if self.source_file is not None:
+            self.smart_parser_person_count, self.smart_parser_title = get_smart_parser_result(self.source_file)
+        else:
+            self.smart_parser_person_count, self.smart_parser_title = 0, ""
         input_text = normalize_whitespace(input_text)
         self.start_text = input_text[0:500]
         self.input_text = input_text
@@ -102,6 +124,7 @@ class TClassificationVerdict:
         self.normal_russian_text_coef = get_russian_normal_text_ratio(self.input_text)
         self.find_other_document_types()
         self.find_header()
+        self.find_other_document_types_in_smart_parser_title()
 
     def to_json(self):
         rec = {
@@ -197,12 +220,84 @@ class TClassificationVerdict:
         self.add_matches(re.finditer(regexp, input_text, re.IGNORECASE), FEATURE_ENUM.header)
 
     def find_other_document_types(self):
-        global SOME_OTHER_DOCUMENTS
-        words = list()
-        for w in SOME_OTHER_DOCUMENTS:
-            words.append('(' + " *".join(w) + ')')
-        regexp = '(' + "|".join(words) + ")" + r"\b"
-        self.add_matches(re.finditer(regexp, self.input_text, re.IGNORECASE), FEATURE_ENUM.other_document_type)
+        self.add_matches(re.finditer(SOME_OTHER_DOCUMENTS_REGEXP,
+                                     self.input_text, re.IGNORECASE),
+                                    FEATURE_ENUM.other_document_type)
+
+    def find_other_document_types_in_smart_parser_title(self):
+        self.add_matches(re.finditer(SOME_OTHER_DOCUMENTS_REGEXP,
+                                     self.smart_parser_title, re.IGNORECASE),
+                                    FEATURE_ENUM.other_document_type_smart_parser_title)
+
+    def apply_first_rules(self):
+        _, file_extension = os.path.splitext(self.source_file)
+        if len(self.input_text) < 200:
+            if file_extension in {".html", ".htm", ".docx", ".doc", ".xls", ".xlsx"}:
+                if len(self.input_text) == 0:
+                    self.description = "file is too short"  # jpeg in document
+                else:
+                    self.verdict = DL_RECOGNIZER_ENUM.NEGATIVE  # fast empty files, but not empty
+                    self.description = "file is too short"  # jpeg in document
+            else:
+                self.description = "file is too short"
+        elif self.get_first_features_match("header") < 20:
+            self.verdict = DL_RECOGNIZER_ENUM.POSITIVE
+            self.description = "header < 20"
+        elif self.get_first_features_match('other_document_type') == 0:
+            self.verdict = DL_RECOGNIZER_ENUM.NEGATIVE
+            self.description = "other_document_type=0"
+        elif self.get_first_features_match('other_document_type_smart_parser_title') == 0:
+            self.verdict = DL_RECOGNIZER_ENUM.NEGATIVE
+            self.description = "other_document_type_smart_parser_title=0"
+        elif TCharCategory.get_most_popular_char_category(self.start_text) != 'RUSSIAN_CHAR':
+            self.verdict = DL_RECOGNIZER_ENUM.UNKNOWN
+            self.description = "cannot find Russian chars, may be encoding problems"
+        elif file_extension not in {".html", ".htm"} and self.get_first_features_match('other_document_type') < 400:
+            self.verdict = DL_RECOGNIZER_ENUM.NEGATIVE
+            self.description = "other_document_type<400"
+        elif self.smart_parser_person_count > 0 and len(self.input_text) / self.smart_parser_person_count < 2048:
+            self.verdict = DL_RECOGNIZER_ENUM.POSITIVE
+            self.description = "found smart_parser results"
+        elif self.normal_russian_text_coef > 0.19:
+            self.verdict = DL_RECOGNIZER_ENUM.NEGATIVE
+            self.description = "normal_russian_text_coef > 0.19"
+        else:
+            return False
+        return True
+
+    def apply_second_rules(self):
+        self.find_person()
+        self.find_relatives()
+        self.find_vehicles()
+        self.find_vehicles_word()
+        self.find_income()
+        self.find_realty()
+        self.find_surname_word()
+        person_count = self.get_features_match_count(FEATURE_ENUM.person)
+        realty_count = self.get_features_match_count(FEATURE_ENUM.realty)
+        vehicle_count = self.get_features_match_count(FEATURE_ENUM.vehicles)
+        header_count = self.get_features_match_count(FEATURE_ENUM.header)
+        self.verdict = DL_RECOGNIZER_ENUM.NEGATIVE
+        if float(vehicle_count)/float(len(self.input_text)) > 0.0001 and self.get_features_match_count(FEATURE_ENUM.surname_word) > 0:
+            self.verdict = DL_RECOGNIZER_ENUM.POSITIVE
+            self.description = "enough vehicles and surnames_word"
+        elif self.get_first_features_match(FEATURE_ENUM.surname_word) == 0 and len(self.input_text) < 2000 \
+                and person_count > 0 and realty_count > 0:
+            self.verdict = DL_RECOGNIZER_ENUM.POSITIVE
+            self.description = "person name is at start and realty_count > 0"
+        elif header_count > 0:
+            if realty_count > 5:
+                self.verdict = DL_RECOGNIZER_ENUM.POSITIVE
+                self.description = "header is found and realty_count > 5"
+            elif person_count > 2 and self.get_first_features_match(FEATURE_ENUM.header) < self.get_first_features_match(FEATURE_ENUM.person):
+                self.verdict = DL_RECOGNIZER_ENUM.POSITIVE
+                self.description = "person_count > 2  and header is before person"
+            elif person_count > 0 and realty_count > 0:
+                self.verdict = DL_RECOGNIZER_ENUM.POSITIVE
+                self.description = "header found and person_count > 0  and realties are found"
+            elif vehicle_count > 0 and self.get_features_match_count(FEATURE_ENUM.surname_word) > 0:
+                self.verdict = DL_RECOGNIZER_ENUM.POSITIVE
+                self.description = "headers and vehicles and surnames_word"
 
 
 def read_input_text(filename):
@@ -213,86 +308,16 @@ def read_input_text(filename):
         return input_text
 
 
-def initialize_classification_vedict(source_file, input_text):
-    verdict = TClassificationVerdict(input_text, get_smart_parser_result(source_file))
-    return verdict
-
-
-def apply_first_rules(source_file, verdict):
-    _, file_extension = os.path.splitext(source_file)
-    if len(verdict.input_text) < 200:
-        if file_extension in {".html", ".htm", ".docx", ".doc", ".xls", ".xlsx"}:
-            if len(verdict.input_text) == 0:
-                verdict.description = "file is too short"  # jpeg in document
-            else:
-                verdict.verdict = DL_RECOGNIZER_ENUM.NEGATIVE  # fast empty files, but not empty
-                verdict.description = "file is too short"  # jpeg in document
-        else:
-            verdict.description = "file is too short"
-    elif verdict.get_first_features_match("header") < 20:
-        verdict.verdict = DL_RECOGNIZER_ENUM.POSITIVE
-        verdict.description = "header < 20"
-    elif verdict.get_first_features_match('other_document_type') == 0:
-        verdict.verdict = DL_RECOGNIZER_ENUM.NEGATIVE
-        verdict.description = "other_document_type=0"
-    elif TCharCategory.get_most_popular_char_category(verdict.start_text) != 'RUSSIAN_CHAR':
-        verdict.verdict = DL_RECOGNIZER_ENUM.UNKNOWN
-        verdict.description = "cannot find Russian chars, may be encoding problems"
-    elif file_extension not in {".html", ".htm"} and verdict.get_first_features_match('other_document_type') < 400:
-        verdict.verdict = DL_RECOGNIZER_ENUM.NEGATIVE
-        verdict.description = "other_document_type<400"
-    elif verdict.smart_parser_person_count > 0 and len(verdict.input_text) / verdict.smart_parser_person_count < 2048:
-        verdict.verdict = DL_RECOGNIZER_ENUM.POSITIVE
-        verdict.description = "found smart_parser results"
-    elif verdict.normal_russian_text_coef > 0.19:
-        verdict.verdict = DL_RECOGNIZER_ENUM.NEGATIVE
-        verdict.description = "normal_russian_text_coef > 0.19"
-    else:
-        return False
-    return True
-
-
-def apply_second_rules(verdict):
-    verdict.find_person()
-    verdict.find_relatives()
-    verdict.find_vehicles()
-    verdict.find_vehicles_word()
-    verdict.find_income()
-    verdict.find_realty()
-    verdict.find_surname_word()
-    person_count = verdict.get_features_match_count(FEATURE_ENUM.person)
-    realty_count = verdict.get_features_match_count(FEATURE_ENUM.realty)
-    vehicle_count = verdict.get_features_match_count(FEATURE_ENUM.vehicles)
-    header_count = verdict.get_features_match_count(FEATURE_ENUM.header)
-    verdict.verdict = DL_RECOGNIZER_ENUM.NEGATIVE
-    if float(vehicle_count)/float(len(verdict.input_text)) > 0.0001 and verdict.get_features_match_count(FEATURE_ENUM.surname_word) > 0:
-        verdict.verdict = DL_RECOGNIZER_ENUM.POSITIVE
-        verdict.description = "enough vehicles and surnames_word"
-    elif verdict.get_first_features_match(FEATURE_ENUM.surname_word) == 0 and len(verdict.input_text) < 2000 \
-            and person_count > 0 and realty_count > 0:
-        verdict.verdict = DL_RECOGNIZER_ENUM.POSITIVE
-        verdict.description = "person name is at start and realty_count > 0"
-    elif header_count > 0:
-        if realty_count > 5:
-            verdict.verdict = DL_RECOGNIZER_ENUM.POSITIVE
-            verdict.description = "header is found and realty_count > 5"
-        elif person_count > 2 and verdict.get_first_features_match(FEATURE_ENUM.header) < verdict.get_first_features_match(FEATURE_ENUM.person):
-            verdict.verdict = DL_RECOGNIZER_ENUM.POSITIVE
-            verdict.description = "person_count > 2  and header is before person"
-        elif person_count > 0 and realty_count > 0:
-            verdict.verdict = DL_RECOGNIZER_ENUM.POSITIVE
-            verdict.description = "header found and person_count > 0  and realties are found"
-        elif vehicle_count > 0 and verdict.get_features_match_count(FEATURE_ENUM.surname_word) > 0:
-            verdict.verdict = DL_RECOGNIZER_ENUM.POSITIVE
-            verdict.description = "headers and vehicles and surnames_word"
-
-
-def get_text_of_a_document(source_file, keep_txt=False, reuse_txt=False):
+def get_text_of_a_document(source_file, keep_txt=False, reuse_txt=False, output_folder=None):
     global EXTERNAl_CONVERTORS
     ec = EXTERNAl_CONVERTORS
     _, file_extension = os.path.splitext(source_file)
     file_extension = file_extension.lower()
-    txt_file = source_file + ".txt"
+    if output_folder is None:
+        txt_file = source_file + ".txt"
+    else:
+        txt_file = os.path.join(output_folder, os.path.basename(source_file) + ".txt")
+
     if reuse_txt and os.path.exists(txt_file):
         pass
     elif file_extension == ".xlsx":
@@ -308,13 +333,12 @@ def get_text_of_a_document(source_file, keep_txt=False, reuse_txt=False):
         ec.run_office2txt(source_file, txt_file)
     elif file_extension == ".pdf":
         temp_file = source_file + ".docx"
-        with open(source_file, "rb") as f:
-            sha256 = hashlib.sha256(f.read()).hexdigest()
-            if TDocConversionClient().retrieve_document(sha256, temp_file):
-                ec.run_office2txt(temp_file, txt_file)
-            else:
-                # the worse case, let's use calibre
-                ec.run_calibre(source_file, txt_file)
+        sha256 = build_dislosures_sha256(source_file)
+        if TDocConversionClient(TDocConversionClient.parse_args([])).retrieve_document(sha256, temp_file) and os.path.exists(temp_file):
+            ec.run_office2txt(temp_file, txt_file)
+        else:
+            # the worse case, let's use calibre
+            ec.run_calibre(source_file, txt_file)
         if os.path.exists(temp_file):
             os.unlink(temp_file)
     elif file_extension in {".html", ".rtf", ".htm"}:
@@ -337,27 +361,27 @@ def get_text_of_a_document(source_file, keep_txt=False, reuse_txt=False):
         return None
 
 
-def run_dl_recognizer(source_file, keep_txt=False, reuse_txt=False):
-    input_text = get_text_of_a_document(source_file, keep_txt, reuse_txt)
+def run_dl_recognizer(source_file, keep_txt=False, reuse_txt=False, output_folder=None):
+    input_text = get_text_of_a_document(source_file, keep_txt, reuse_txt, output_folder)
     if input_text is None:
-        v = TClassificationVerdict("", 0)
+        v = TClassificationVerdict(None, "")
         v.verdict = DL_RECOGNIZER_ENUM.NEGATIVE
         v.description = "cannot parse document"
         return v
     else:
-        verdict = initialize_classification_vedict(source_file, input_text)
-        if not apply_first_rules(source_file, verdict):
-            apply_second_rules(verdict)
+        verdict = TClassificationVerdict(source_file, input_text)
+        if not verdict.apply_first_rules():
+            verdict.apply_second_rules()
         return verdict
     return verdict
 
 
 if __name__ == "__main__":
     args = parse_args()
-    verdict = run_dl_recognizer(args.source_file, args.keep_txt, args.reuse_txt)
+    verdict = run_dl_recognizer(args.source_file, args.keep_txt, args.reuse_txt, args.output_folder)
     if args.delete_negative:
         if verdict.verdict == DL_RECOGNIZER_ENUM.NEGATIVE:
             os.unlink(args.source_file)
     else:
-        with open(args.output, "w", encoding="utf8") as outf:
+        with open(args.output_verdict, "w", encoding="utf8") as outf:
             outf.write(json.dumps(verdict.to_json(), ensure_ascii=False, indent=4))

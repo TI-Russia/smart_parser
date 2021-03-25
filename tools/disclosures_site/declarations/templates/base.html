@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <title>{% block title %}Home {% endblock title %}</title>
 
+    <link rel="stylesheet" type="text/css" href="/static/style.css" %}">
+
     {% block head_favicon %}
-    <link rel="icon" type="image/png" href="/static/images/favicon.ico">
+    <link rel="icon" type="image/png" href="/static/images/favicon.png">
     {% endblock head_favicon %}
 
     {% block head_meta %}
@@ -16,28 +18,45 @@
     <meta name="yandex-verification" content="5c8f653019005048" />
     <meta name="google-site-verification" content="z3C44ad-5G9K768OYL0xzTf6xtJeshD-WMGmdqMe9oU" />
     {% endblock head_meta %}
+    {% block serp_description %} {% endblock serp_description %}
+    {% block meta_robots %} {% endblock meta_robots %}
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6WBY07BML5"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-6WBY07BML5');
+    </script>
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+       m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+       (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+       ym(74114962, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true
+       });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/74114962" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
 </head>
 
 
-<body bgcolor="#F3F3F3" text="#000000" link="#000000" vlink="#999999" alink="#000000">
+<body vlink="#999999" alink="#000000">
 
 <header>
-    <table border="0" cellspacing="0" cellpadding="5">
-        <tbody>
-        <tr>
-            <td width="20%"><font size="+3" face="Arial, Helvetica, sans-serif"><b>Дискложес</b></font></td>
-            <td width="1%">&nbsp;</td>
-            <td width="60%" valign="baseline"><font size="+1" face="Arial, Helvetica, sans-serif">
-                Автоматизированный сбор деклараций о доходах</font></td>
-        </tr>
-        <tr>
-            <td >
-                <div id="menu_div">
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <div>
+        <div class="header1">Дискложес&nbsp;</div>
+        <div class="header2">Автоматизированный сбор деклараций о доходах</div>
+    </div>
+    <div id="menu_div"></div>
     <hr/>
 </header>
 
@@ -48,69 +67,7 @@
     {% endblock content %}
 </div>
 
-
-<script>
-  function menuCreate() {
-      var menu_div = document.getElementById("menu_div");
-      var tbl = document.createElement('table');
-      tbl.style.width = "100%";
-      tbl.border = "0";
-      menu = [{
-                "text":"главная",
-                "href":"/",
-              },
-              {
-                "text":"о&nbsp;проекте",
-                "href":"/about.html",
-              },
-              {
-                "text":"ведомства",
-                "href":"/office/",
-              },
-              {
-                "text":"декларанты",
-                "href":"/person/",
-              },
-              {
-                "text":"декларации",
-                "href":"/section/",
-              },
-              {
-                "text":"документы",
-                "href":"/file/",
-              },
-              {
-                "text":"статистика",
-                "href":"/statistics/",
-              },
-             ]
-
-      tbl.appendChild(  document.createElement('tr').appendChild( document.createElement('td')) );
-      var tr = document.createElement('tr');
-
-      for (var i = 0; i < menu.length; i++) {
-          var td = document.createElement('td');
-          td.width = "20%";
-          var anchor = menu[i].text;
-          var link =  document.createElement('a');
-          link.href = menu[i].href;
-          if (window.location.pathname == menu[i].href) {
-                var spanNode = document.createElement('span');
-                spanNode.style.backgroundColor = "black";
-                spanNode.style.color = "white";
-                spanNode.innerHTML = anchor;
-                link.appendChild(spanNode);
-          } else {
-                link.innerHTML = anchor;
-          }
-          td.appendChild(link);
-          tr.appendChild(td);
-      }
-      tbl.appendChild( tr );
-      menu_div.appendChild(tbl);
-  }
-  menuCreate();
-</script>
+<script type="text/javascript" src="/static/main_menu.js"></script>
 
 </body>
 </html>

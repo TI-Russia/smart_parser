@@ -1,0 +1,11 @@
+[Unit]
+Description=check disclosures.ru and pdf conversion server
+After=network.target
+
+
+[Service]
+Environment=PYTHONPATH=/root/smart_parser/tools
+ExecStart=/usr/bin/python3 /root/smart_parser/tools/disclosures_site/scripts/check_disclosures_health.py
+
+[Install]
+WantedBy=multi-user.target

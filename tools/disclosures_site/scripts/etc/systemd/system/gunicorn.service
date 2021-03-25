@@ -1,0 +1,20 @@
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=sokirko
+WorkingDirectory=/home/sokirko/smart_parser/tools/disclosures_site
+Environment=PYTHONPATH=/home/sokirko/smart_parser/tools:/home/sokirko/smart_parser/tools/disclosures_site
+
+#to iphil
+Environment=SOURCE_DOC_SERVER_ADDRESS=195.70.213.239:443
+
+ExecStart=/home/sokirko/.local/bin/gunicorn \
+          --access-logfile - \
+              --env DJANGO_SETTINGS_MODULE=disclosures.settings.prod \
+          --workers 2 \
+          --bind unix:/run/gunicorn.sock \
+          disclosures.wsgi:application

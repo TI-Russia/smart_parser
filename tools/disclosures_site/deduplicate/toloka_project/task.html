@@ -1,0 +1,170 @@
+    <!-- copy this file to toloka -->
+
+    <div class="content clearfix">
+
+        <table class="main_task_table">
+            <thead>
+            <tr>
+                <th class="first_line" />
+                {{#each json_left.sections}}
+                    <th class="first_line">
+                        <span style="font-weight:normal"><sup>{{surname_rank}}</sup></span>{{ person.name_raw }}
+                    </th>
+                {{/each}}
+                <th class="central_cell" >{{field type="checkbox" name="person_name"}} </th>
+                {{#each json_right.sections}}
+                    <th class="first_line">
+                        <span style="font-weight:normal"><sup>{{surname_rank}}</sup></span>{{ person.name_raw }}
+                    </th>
+                {{/each}}
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr>
+                <th><span class="section_subpart_title">Годы:</span></th>
+                {{#each json_left.sections}}
+                    <td> {{this.year}}</td>
+                {{/each}}
+                <th class="central_cell"/>
+                {{#each json_right.sections}}
+                    <td >{{this.year}}</td>
+                {{/each}}
+            </tr>
+
+            {{#each (get_relatives) as | relative | }}
+                <tr>
+                    <th>
+                        {{#if relative}}
+                            <span class="relative_name">{{relative}}</span>
+                        {{else}}
+                            <span class="section_subpart_title">Доход:</span>
+                        {{/if}}
+                    </th>
+                    {{#each ../json_left.sections }}
+                        <td>
+                            {{get_income this relative }}
+                        </td>
+                    {{/each}}
+                    <th class="central_cell" >
+                        {{#unless relative}}
+                            {{field type="checkbox" name="income"}}
+                        {{/unless}}
+                        </th>
+                    {{#each ../json_right.sections}}
+                        <td>
+                            {{get_income this relative }}
+                        </td>
+                    {{/each}}
+                </tr>
+            {{/each}}
+
+            <tr>
+                <th><span class="section_subpart_title">Должность:</span></th>
+                {{#each json_left.sections}}
+                    <td>{{{ person.role }}}</td>
+                {{/each}}
+                <th class="central_cell">{{field type="checkbox" name="position"}} </th>
+                {{#each json_right.sections}}
+                    <td>{{{ person.role }}}</td>
+                {{/each}}
+            </tr>
+
+            <tr>
+                <th><span class="section_subpart_title">Регион:</span></th>
+                {{#each json_left.sections}}
+                    <td>{{office_region}}</td>
+                {{/each}}
+                <th class="central_cell">{{field type="checkbox" name="region"}} </th>
+                {{#each json_right.sections}}
+                    <td>{{office_region}}</td>
+                {{/each}}
+            </tr>
+
+            <tr>
+                <th><span class="section_subpart_title">Организация:</span></th>
+                {{#each json_left.sections}}
+                    <td>{{{office}}} <small>({{office_section_count}})</small></td>
+                {{/each}}
+                <th class="central_cell">{{field type="checkbox" name="office"}} </th>
+                {{#each json_right.sections}}
+                    <td>{{{office}}} <small>({{office_section_count}})</small></td>
+                {{/each}}
+            </tr>
+
+            <tr>
+                <th><span class="section_subpart_title">Рубрика:</span></th>
+                {{#each json_left.sections}}
+                    <td>{{{office_rubric}}}</td>
+                {{/each}}
+                <th class="central_cell">{{field type="checkbox" name="rubric"}}</th>
+                {{#each json_right.sections}}
+                    <td>{{{office_rubric}}}</td>
+                {{/each}}
+            </tr>
+
+            {{#each (get_relatives) as | relative | }}
+                <tr>
+                    <th>
+                        {{#if relative}}
+                            <span class="relative_name">{{relative}}</span>
+                        {{else}}
+                            <span class="section_subpart_title">Транспорт:</span>
+                        {{/if}}
+                    </th>
+                    {{#each ../json_left.sections }}
+                        <td>
+                            {{ get_vehicles this relative }}
+                        </td>
+                    {{/each}}
+                    <th class="central_cell">
+                        {{#unless relative}}
+                            {{field type="checkbox" name="vehicle"}}
+                        {{/unless}}
+                    </th>
+                    {{#each ../json_right.sections}}
+                        <td>
+                            {{ get_vehicles this relative }}
+                        </td>
+                    {{/each}}
+                </tr>
+            {{/each}}
+
+            {{#each (get_relatives) as | relative | }}
+                <tr>
+                    <th>
+                        {{#if relative}}
+                            <span class="relative_name">{{relative}} </span>
+                        {{else}}
+                            <span class="section_subpart_title">Недвижимость:</span>
+                        {{/if}}
+                    </th>
+                    {{#each ../json_left.sections }}
+                        <td>
+                            {{{ get_realty this relative }}}
+                        </td>
+                    {{/each}}
+                    <th class="central_cell">
+                          {{#unless relative}}
+                          {{field type="checkbox" name="realty"}}
+                          {{/unless}}
+                    </th>
+                    {{#each ../json_right.sections}}
+                        <td>
+                            {{{ get_realty this relative }}}
+                        </td>
+                    {{/each}}
+                </tr>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+   <div style="footer">
+    <span style="width:400px;display: inline-block"/>
+   </div>    <div style="footer">
+        <span style="width:200px;display: inline-block"/>
+        {{field type="radio" name="result" label="Это один человек" value="YES" hotkey="1"}}
+        {{field type="radio" name="result" label="Это разные люди" value="NO" hotkey="2"}}
+        {{field type="radio" name="result" label="Мало информации" value="UNK" hotkey="3"}}
+        &nbsp;Комментарий:&nbsp;{{field type="input" name="comments"}}
+    </div>

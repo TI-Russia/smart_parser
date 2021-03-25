@@ -10,17 +10,24 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
+                '--host',
+            dest='host',
+            required=False,
+            default="localhost",
+        )
+        parser.add_argument(
                 '--username',
             dest='username',
             required=False,
             default="root",
-            help="mysql user name, default  root",
+            help="mysql user name that can create db, default  root",
         )
         parser.add_argument(
                 '--password',
             dest='password',
-            required=True,
-            help="mysql root password"
+            required=False,
+            help="mysql root password",
+            default="root"
         )
 
     def run_sql(self, cursor, cmd):
@@ -35,7 +42,7 @@ class Command(BaseCommand):
         db_connection = pymysql.connect(
             user=options.get('username'),
             password=options.get('password'),
-            unix_socket = "/var/run/mysqld/mysqld.sock")
+            )
         if db_connection is None:
             sys.stdout.write("cannot make local connection to the database\n")
         else:
@@ -44,9 +51,6 @@ class Command(BaseCommand):
             disclosures_password = settings.DATABASES['default']['PASSWORD']
             with db_connection.cursor() as cursor:
                 if self.check_database_exists(cursor, database_name):
-                    answer = input("delete database {} (yes, no)? ".format(database_name))
-                    if answer != "yes":
-                        return
                     sys.stdout.write("recreate database {}\n".format(database_name))
                 else:
                     sys.stdout.write("create new database {}\n".format(database_name))

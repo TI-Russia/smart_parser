@@ -1,7 +1,11 @@
 from django.test import TestCase
 import declarations.models as models
 import time
-from declarations.documents import ElasticSectionDocument, section_search_index
+from declarations.documents import ElasticSectionDocument
+from declarations.management.commands.build_elastic_index import BuildElasticIndex, TSectionElasticIndexator
+from elasticsearch_dsl import Index
+from django.conf import settings
+from elasticsearch import Elasticsearch
 
 
 class ElasticTestCase(TestCase):
@@ -9,15 +13,17 @@ class ElasticTestCase(TestCase):
     def test_elastic(self):
         self.assertGreater(models.Office.objects.count(), 0)
 
-        ElasticSectionDocument.init()
-        ElasticSectionDocument._index._name.endswith("_test")
-        ElasticSectionDocument.search().query().delete()
+        #delete all documents
+        index = Index(settings.ELASTICSEARCH_INDEX_NAMES['section_index_name'], Elasticsearch())
+        index.delete()
+        index.create()
         time.sleep(2)
+
+        #search to get no results
         people = list(ElasticSectionDocument.search().query('match', person_name='Иванов'))
         self.assertEqual(len(people), 0)
-        people = list(ElasticSectionDocument.search().query('match', person_name='Иванов'))
+
         models.Section.objects.all().delete()
-        self.assertEqual(models.Section.objects.count(), 0)
         models.Source_Document.objects.all().delete()
 
         ofc = models.Office.objects.get(id=1)
@@ -27,16 +33,22 @@ class ElasticTestCase(TestCase):
         src_doc.office = ofc
         src_doc.save()
 
-        section = models.Section()
-        section.id = 1
-        section.person_name = "Иванов Иван"
-        section.source_document = src_doc
-        section.save()
+        models.Section(id=1, person_name="Иванов Иван", source_document=src_doc).save()
+        models.Section(id=2, person_name="Петров Петр", source_document=src_doc).save()
+        models.Section(id=3, person_name="Сидоров Федор", source_document=src_doc).save()
 
-        if section_search_index.exists():
-            section_search_index.delete()
-        section_search_index.create()
-        qs = ElasticSectionDocument().get_indexing_queryset()
-        ElasticSectionDocument().update(qs)
+        #reindex section index
+        TSectionElasticIndexator.chunk_size = 2
+        BuildElasticIndex(None, None).handle(None, model="section")
+        time.sleep(2)
         people = list(ElasticSectionDocument.search().query('match', person_name='Иванов'))
         self.assertEqual(len(people), 1)
+
+        people = list(ElasticSectionDocument.search().query('match', person_name='Петров'))
+        self.assertEqual(len(people), 1)
+
+        people = list(ElasticSectionDocument.search().query('match', person_name='Сидоров'))
+        self.assertEqual(len(people), 1)
+
+        people = list(ElasticSectionDocument.search().query('match', person_name='Сокирко'))
+        self.assertEqual(len(people), 0)

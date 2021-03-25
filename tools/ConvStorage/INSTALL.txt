@@ -4,6 +4,12 @@
     2.1. https://www.cleverfiles.com/howto/disable-update-windows-10.html
     2.2. login as User1 (как в  https://www.thewindowsclub.com/windows-10-update-enables-even-turning-off)
     2.3. В групповой политике отключены автоматические обновления (как в https://www.drivereasy.com/knowledge/how-to-stop-windows-10-update/ )
+    2.4. follow https://www.pandasecurity.com/en/mediacenter/tips/how-to-free-up-ram/#:~:text=To%20locate%20your%20computer%20memory,space%20they%20are%20taking%20up.
+        Switch off many background apps (leave security)
+
+2.0  Make your network private (not public) and enabe file sharing to let ping go
+
+2.1 net stop windows search (руками в панели services)
 
 3. Install Microsoft Word 2019
 
@@ -66,10 +72,17 @@
   pip3 install servicemanager
   pip3 install pywin32
   copy C:\Python37\Lib\site-packages\pywin32_system32\*.dll c:\windows\system32
+  #adjust SERVER_ADDRESS and WORKING_DIR in ConvStorage\convert_pdf_service.py
   python3 C:\tmp\smart_parser\smart_parser\tools\ConvStorage\DisclosuresPdfConvService.py install
+  #adjust login as sokirko in windows services GUI
   net start DisclosuresPdfConvService
 
-22.  Add a firewall rule for C:\Python37\Lib\site-packages\win32\pythonservice.exe 
+
+22.  Add a firewall rule for C:\Python37\Lib\site-packages\win32\pythonservice.exe
+   Remember that in esset nod by default firewall rules are "DENY" rules not "ALLOW"
 
 23. optional add copy_to_converter2.sh to windows task sheduler 
- 
+
+
+24.
+    to

@@ -75,7 +75,7 @@ namespace Smart.Parser
             CMDLineParser.Option docFileIdOpt = parser.AddStringParameter("-docfile-id",
                 "document id to initialize document/documentfile_id", false);
             CMDLineParser.Option convertedFileStorageUrlOpt = parser.AddStringParameter("-converted-storage-url",
-                "document id to initialize document/documentfile_id for example http://disclosures.ru:8091, the default value is read from env variable DECLARATOR_CONV_URL",
+                "document id to initialize document/documentfile_id for example http://c.disclosures.ru:8091, the default value is read from env variable DECLARATOR_CONV_URL",
                 false);
             CMDLineParser.Option fioOnlyOpt = parser.AddBoolSwitch("-fio-only", "");
             CMDLineParser.Option useDecimalRawNormalizationOpt = parser.AddBoolSwitch("-decimal-raw-normalization",

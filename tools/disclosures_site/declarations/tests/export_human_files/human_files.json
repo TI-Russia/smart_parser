@@ -1,5 +1,5 @@
 {
-    "document_folder": "human_files",
+    "document_folder": null,
     "documents": {
         "7b7995e792823a1daa65008a8045677c052338eb7052dac09029f19ce2fd7a00": {
             "d_refs": [
@@ -12,8 +12,7 @@
                     "web_domain": "vladprok.ru"
                 }
             ],
-            "document_path": "4915.doc",
-            "intersection_status": "only_human",
+            "file_ext": ".doc",
             "office_id": null
         }
     }

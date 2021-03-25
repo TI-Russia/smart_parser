@@ -1,9 +1,16 @@
-from django_elasticsearch_dsl import Document, IntegerField, TextField
-from django_elasticsearch_dsl.registries import registry
 from declarations.models import Section, Person, Office, Source_Document, TOfficeTableInMemory
+from .rubrics import get_russian_rubric_str
+
+from django_elasticsearch_dsl import Document, IntegerField, TextField, ByteField, KeywordField
+from django_elasticsearch_dsl.registries import registry
 from django.conf import settings
 from elasticsearch_dsl import Index
 from django.db.utils import DatabaseError
+
+
+#We do not support elaastic index updates on a single sql db edit.
+#Elastic indices are created in disclosures_site/declarations/management/commands/build_elastic_index.py via sql queries,
+#since it is faster than prepare_field* mechanics.
 
 section_search_index = Index(settings.ELASTICSEARCH_INDEX_NAMES['section_index_name'])
 section_search_index.settings(
@@ -19,11 +26,12 @@ class ElasticSectionDocument(Document):
     default_field_name = "person_name"
     source_document_id = IntegerField()
     office_id = IntegerField()
-    rubric_id = IntegerField()
     position_and_department = TextField()
     income_size = IntegerField()
+    spouse_income_size = IntegerField()
     person_id = IntegerField()
     region_id = IntegerField()
+    car_brands = KeywordField()
 
     class Django:
         model = Section
@@ -31,35 +39,16 @@ class ElasticSectionDocument(Document):
             'id',
             'person_name',
             'income_year',
+            'rubric_id',
+            'gender'
         ]
 
-    def prepare_source_document_id(self, instance):
-        return instance.source_document_id
-
-    def prepare_office_id(self, instance):
-        return instance.source_document.office.id
-
-    def prepare_region_id(self, instance):
-        return instance.source_document.office.region_id
-
-    def prepare_rubric_id(self, instance):
-        return OFFICES.offices[instance.source_document.office.id]['rubric_id']
-
-    def prepare_position_and_department(self, instance):
-        str = ""
-        if instance.position is not None:
-            str += instance.position
-        if instance.department is not None:
-            if len(str) > 0:
-                str += " "
-            str += instance.department
-        return str
-
-    def prepare_income_size(self, instance):
-        return instance.get_declarant_income_size()
-
-    def prepare_person_id(self, instance):
-        return instance.person_id
+    @property
+    def rubric_str(self):
+        if self.rubric_id is None:
+            return "unknown"
+        else:
+            return get_russian_rubric_str(self.rubric_id)
 
 
 person_search_index = Index(settings.ELASTICSEARCH_INDEX_NAMES['person_index_name'])
@@ -80,8 +69,6 @@ class ElasticPersonDocument(Document):
             'id',
             'person_name',
         ]
-    def prepare_section_count(self, instance):
-        return instance.section_count
 
 
 office_search_index = Index(settings.ELASTICSEARCH_INDEX_NAMES['office_index_name'])
@@ -102,14 +89,16 @@ class ElasticOfficeDocument(Document):
         fields = [
             'id',
             'name',
+            'rubric_id'
         ]
 
-    def prepare_parent_id(self, instance):
-        assert OFFICES is not None
-        return instance.parent_id
+    @property
+    def rubric_str(self):
+        if self.rubric_id is None:
+            return "unknown"
+        else:
+            return get_russian_rubric_str(self.rubric_id)
 
-    def prepare_source_document_count(self, instance):
-        return instance.source_document_count
 
 
 file_search_index = Index(settings.ELASTICSEARCH_INDEX_NAMES['file_index_name'])
@@ -122,17 +111,19 @@ file_search_index.settings(
 @file_search_index.document
 class ElasticFileDocument(Document):
     office_id = IntegerField()
-    default_field_name = "file_path"
+    first_crawl_epoch = IntegerField()
+    web_domains = TextField()
 
     class Django:
         model = Source_Document
         fields = [
             'id',
-            'file_path',
+            'intersection_status',
+            'min_income_year',
+            'max_income_year',
+            'section_count',
+            'sha256'
         ]
-
-    def prepare_office_id(self, instance):
-        return instance.office_id
 
 
 def stop_elastic_indexing():
@@ -142,15 +133,9 @@ def stop_elastic_indexing():
     ElasticFileDocument.django.ignore_signals = True
 
 
-def start_elastic_indexing():
-    ElasticOfficeDocument.django.ignore_signals = False
-    ElasticSectionDocument.django.ignore_signals = False
-    ElasticPersonDocument.django.ignore_signals = False
-    ElasticFileDocument.django.ignore_signals = False
-
+stop_elastic_indexing()
 
 try:
-    OFFICES = TOfficeTableInMemory()
+     OFFICES = TOfficeTableInMemory()
 except DatabaseError as exp:
-    stop_elastic_indexing()
-    print("stop_elastic_indexing because there is no offices")
+    pass

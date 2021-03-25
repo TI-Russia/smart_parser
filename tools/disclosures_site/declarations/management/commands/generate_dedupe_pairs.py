@@ -1,48 +1,18 @@
-from __future__ import unicode_literals
-import dedupe
-import logging
-from datetime import datetime
-from django.core.management import BaseCommand
-from .dedupe_adapter import TPersonFields, dedupe_object_reader, dedupe_object_writer, describe_dedupe, \
-    get_pairs_from_clusters
-import sys
-from declarations.documents import stop_elastic_indexing, start_elastic_indexing
 from declarations.management.commands.permalinks import TPermaLinksDB
 import declarations.models as models
+from .random_forest_adapter import TDeduplicationObject, TFioClustering, TMLModel
+from common.logging_wrapper import setup_logging
 
-
-def setup_logging(logfilename):
-    if logfilename is None:
-        logfilename = "generate_dedupe_pairs.log"
-    logger = logging.getLogger("generate_dedupe_pairs")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-
-    return logger
+from django.core.management import BaseCommand
+import sys
+import json
+from collections import defaultdict
 
 
 class Command(BaseCommand):
     help = ''
 
     def add_arguments(self, parser):
-        parser.add_argument(
-            '--verbose',
-            dest='verbose',
-            type=int,
-            help='set verbosity, default is DEBUG',
-            default=0
-        )
         parser.add_argument(
             '--surname-bounds',
             dest='surname_bounds',
@@ -57,30 +27,13 @@ class Command(BaseCommand):
             help='print family prefixes and exit',
         )
         parser.add_argument(
-            '--num-cores',
-            dest='num_cores',
-            type=int,
-            default=1,
-            help='num cores for dedupe',
-        )
-        parser.add_argument(
-            '--dedupe-model-file',
+            '--ml-model-file',
             dest='model_file',
-            default="dedupe.info",
-            help='dedupe settings (trained model)',
-        )
-        parser.add_argument(
-            '--dedupe-trained-other-settings',
-            dest='dedupe_aux_json',
-            default="dedupe_aux.json",
-            help='a file to write the trained threshold',
         )
         parser.add_argument(
             '--threshold',
             dest='threshold',
-            default=0.0,
             type=float,
-            help='a custom threshold',
         )
         parser.add_argument(
             '--result-pairs-file',
@@ -93,11 +46,6 @@ class Command(BaseCommand):
             action="store_true",
             default=False,
             help='rebuild old persom, declaration pairs',
-        )
-        parser.add_argument(
-            '--input-dedupe-objects',
-            dest='input_dedupe_objects',
-            help='',
         )
         parser.add_argument(
             '--dump-dedupe-objects-file',
@@ -131,29 +79,23 @@ class Command(BaseCommand):
 
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
-        self.dedupe = None
-        self.dedupe_objects = None
+        self.ml_model = None
         self.options = None
         self.logger = None
-        self.primary_keys_builder = None
+        self.permalinks_db = None
         self.rebuild = False
         self.threshold = 0
+        self.cluster_by_minimal_fio = defaultdict(list)
+        self.section_cache = dict()
 
     def init_options(self, options):
-        self.logger = setup_logging(options.get('logfile'))
+        self.logger = setup_logging(log_file_name=options.get('logfile'))
         self.options = options
         self.rebuild = options.get('rebuild', False)
-        log_level = logging.WARNING
-        if options.get("verbose"):
-            if options.get("verbose") == 1:
-                log_level = logging.INFO
-            elif options.get("verbose") >= 2:
-                log_level = logging.DEBUG
-        self.logger.setLevel(log_level)
         if self.rebuild and not options['write_to_db']:
             self.logger.info("please add --write-to-db  option if you use --rebuild")
-        self.primary_keys_builder = TPermaLinksDB(options['permanent_links_db'])
-        self.primary_keys_builder.open_db_read_only()
+        self.permalinks_db = TPermaLinksDB(options['permanent_links_db'])
+        self.permalinks_db.open_db_read_only()
         if options.get('threshold', 0) != 0:
             self.threshold = options.get('threshold')
         else:
@@ -174,6 +116,7 @@ class Command(BaseCommand):
         if not self.rebuild:
             sections = sections.filter(person=None)
         cnt = 0
+        take_sections_with_empty_income = self.options.get('take_sections_with_empty_income', False)
         for s in sections.all():
             if s.person is not None:
                 if s.person.declarator_person_id is not None:
@@ -185,11 +128,15 @@ class Command(BaseCommand):
                         s.dedupe_score = None
                         s.person_id = None
                         s.save() # do it to disable constraint delete
-            k, v = TPersonFields(None, s).get_dedupe_id_and_object()
-            assert k is not None
-            if len(v['family_name']) == 0:
-                continue # ignore sections with broken person names, because dedupe fails
-            self.dedupe_objects[k] = v
+            o = TDeduplicationObject().initialize_from_section(s)
+            if not o.fio.is_resolved:
+                self.logger.debug("ignore section id={} person_name={}, cannot find family name".format(s.id, s.person_name))
+                continue
+            if not take_sections_with_empty_income and o.average_income == 0:
+                self.logger.debug("ignore section id={} person_name={}, no income or zero-income".format(s.id, s.person_name))
+                continue
+            self.section_cache[s.id] = s
+            self.cluster_by_minimal_fio[o.fio.build_fio_with_initials()].append(o)
             cnt += 1
             if cnt % 10000 == 0:
                 self.logger.info("Read {} records from section table".format(cnt))
@@ -205,126 +152,149 @@ class Command(BaseCommand):
                 p.delete()
                 deleted_cnt += 1
             else:
-                #p.refresh_from_db()
-                k, v = TPersonFields(p).get_dedupe_id_and_object()
-                if k is None:
-                    continue
-                    # no sections for this person, ignore this person
-                self.dedupe_objects[k] = v
-            cnt += 1
-            if cnt % 1000 == 0:
-                self.logger.info("Read {} records from person table".format(cnt))
+                o = TDeduplicationObject().initialize_from_person(p)
+                if len(o.years) > 0:
+                    self.cluster_by_minimal_fio[o.fio.build_fio_with_initials()].append(o)
+                cnt += 1
+                if cnt % 1000 == 0:
+                    self.logger.info("Read {} records from person table".format(cnt))
         self.logger.info("Read {} records from person table".format(cnt))
         if deleted_cnt > 0:
             self.logger.info("Deleted {} records from person table".format(deleted_cnt))
 
-    def fill_dedupe_data(self, lower_bound, upper_bound):
-        self.dedupe_objects = {}
+    def get_all_leaf_objects(self):
+        for l in self.cluster_by_minimal_fio.values():
+            for o in l:
+                yield o
 
-        input_dump_file = self.options.get("input_dedupe_objects")
-        if input_dump_file is not None:
-            with open(input_dump_file, "r", encoding="utf-8") as fp:
-                for line in fp:
-                    (k, v) = line.strip().split("\t")
-                    self.dedupe_objects[str(k)] = dedupe_object_reader(v)
-            return
+    def fill_dedupe_data(self, lower_bound, upper_bound):
+        self.cluster_by_minimal_fio = defaultdict(list)
 
         self.read_sections(lower_bound, upper_bound)
         self.read_people(lower_bound, upper_bound)
 
-        self.logger.info("All objects  for dedupe = {} ".format(len(self.dedupe_objects)))
-
         dump_file_name = self.options.get("dump_dedupe_objects_file")
         if dump_file_name:
             with open(dump_file_name, "w", encoding="utf-8") as of:
-                for k, v in self.dedupe_objects.items():
-                    json_value = dedupe_object_writer(v)
-                    of.write("\t".join((k, json_value)) + "\n")
+                for o in self.get_all_leaf_objects():
+                    js = json.dumps(o.to_json(), ensure_ascii=False)
+                    of.write(js + "\n")
 
-    def write_results_to_file(self, clustered_dupes, dump_stream):
-        self.logger.info('{} clusters generated'.format(len(clustered_dupes)))
-        for id1, id2, score1, score2 in get_pairs_from_clusters(clustered_dupes):
-            dump_stream.write("\t".join((id1, id2, str(score1), str(score2))) + "\n")
+    def write_results_to_file(self, clusters, dump_stream):
+        self.logger.info('{} clusters generated'.format(len(clusters)))
+        for cluster_id, items in clusters.items():
+            dump_stream.write("cluster {}\n".format(cluster_id))
+            for obj, distance in items:
+                dump_stream.write("\t{} {} {} {}\n".format(
+                    obj.record_id,
+                    1.0 - distance,
+                    obj.person_name,
+                    min(obj.years)))
 
-    def link_section_to_person(self, section, person, dedupe_score):
+    def link_section_to_person(self, section, person, distance):
+        if section.person_id == person.id:
+            #dedupe score is not set to these records, they are from declarator
+            return
+        self.logger.debug("link section {} to person {}".format(section.id, person.id))
         section.person_id = person.id
-        section.dedupe_score = dedupe_score
+        section.dedupe_score = 1.0 - distance
         section.save()
         if len(person.person_name) < len(section.person_name):
             person.person_name = section.person_name
             person.save()
 
-    def link_sections_to_a_new_person(self, section_ids):
-        person = models.Person()
-        person.tmp_section_set = set(str(id) for (id, score) in section_ids)
-        person.id = self.primary_keys_builder.get_record_id(person)
-        person.save()
-        for (section_id, score) in section_ids:
-            section = models.Section.objects.get(id=section_id)
-            self.link_section_to_person(section, person, score)
+    def link_sections_to_a_new_person(self, sections, section_distances):
+        assert len(section_distances) == len(sections)
+        person_variants = defaultdict(int)
+        for section in sections:
+            person_id = self.permalinks_db.get_person_id_by_section(section)
+            if person_id is not None:
+                person_variants[person_id] += 1
 
-    def write_results_to_db(self, dedupe_clusters):
-        self.logger.info('write {} results to db'.format(len(dedupe_clusters)))
-        for id_set, scores in dedupe_clusters:
-            self.logger.debug("process cluster {}".format(";".join((id for id in id_set))))
-            person_ids = set()
-            section_ids = set()
-            for id, score in zip(id_set, scores):
-                if id.startswith("person-"):
-                    person_ids.add((int(id[len("person-"):]), score))
+        if len(person_variants) > 0:
+            max_person_id_count, max_person_id = sorted( list( (v, k) for (k, v) in person_variants.items()))[-1]
+            section_count_in_old_cluster = self.permalinks_db.get_section_count_by_person_id(max_person_id)
+            if section_count_in_old_cluster is not None and max_person_id_count * 2 > section_count_in_old_cluster:
+                self.logger.debug("use old person.id, max_person_id={}, section_count_in_old_cluster={}, max_person_id_count={}".format(
+                    max_person_id, max_person_id_count, section_count_in_old_cluster
+                ))
+                person_id = max_person_id
+
+        if person_id is None:
+            person_id = self.permalinks_db.get_new_id(models.Person)
+        person = models.Person(id=person_id)
+        person.save()
+
+        for (section, distance) in zip(sections,section_distances):
+            self.link_section_to_person(section, person, distance)
+
+    def write_results_to_db(self, clusters):
+        for cluster_id, items in clusters.items():
+            person_ids = list()
+            sections = list()
+            section_distances = list()
+            for obj, distance in items:
+                if obj.record_id.source_table == TDeduplicationObject.PERSON:
+                    person_ids.append(obj.record_id.id)
                 else:
-                    section_ids.add((int(id[len("section-"):]), score))
+                    section = self.section_cache[obj.record_id.id]
+                    sections.append(section)
+                    section_distances.append(distance)
             if len(person_ids) == 0:
-                self.link_sections_to_a_new_person(section_ids)
+                self.link_sections_to_a_new_person(sections, section_distances)
             elif len(person_ids) == 1:
-                person_id = list(person_ids)[0][0]
-                person = models.Person.objects.get(id=person_id)
-                for section_id, score in section_ids:
-                    section = models.Section.objects.get(id=section_id)
-                    self.link_section_to_person(section, person, score)
+                person = models.Person.objects.get(id=person_ids[0])
+                for section, distance in zip(sections, section_distances):
+                    self.link_section_to_person(section, person, distance)
             else:
-                self.logger.error("a cluster with two people found, I do not know what to do")
+                left_sections = ",".join((str(section.id) for section in sections))
+                persons = ",".join((str(id) for id in person_ids))
+                self.logger.debug("a cluster with two people found, I do not know what to do".format(left_sections))
+                self.logger.debug("  cluster sections: ".format(left_sections))
+                self.logger.debug("  cluster persons: ".format(persons))
+
+
+
 
     def get_family_name_bounds(self):
         if self.options.get('surname_bounds') is not None:
             yield self.options.get('surname_bounds').split(',')
-        elif self.options.get("input_dedupe_objects") is not None:
-            yield None, None
         else:
-            all_borders = ',А,Б,БП,В,Г,ГП,Д,Е,Ж,З,И,К,КЛ,КС,Л,М,МН,Н,О,П,ПН,Р,С,СН,Т,У,Ф,Х,Ц,Ч,Ш,ШП,Щ,Э,Ю,Я,'.split(',')
+            all_borders = ',А,Б,БП,В,Г,ГП,Д,Е,Ж,ЖР,З,И,К,КИ,КП,КС,Л,М,МН,Н,О,П,ПН,Р,С,СН,Т,ТП,У,Ф,Х,Ц,Ч,Ш,ШП,Щ,Э,Ю,Я,'.split(',')
             for x in range(1, len(all_borders)):
                 yield all_borders[x-1], all_borders[x]
 
     def load_dedupe_model(self):
         if not self.options.get("fake_dedupe", False):
-            with open(self.options["model_file"], 'rb') as sf:
-                self.logger.info('read dedupe settings from {}'.format(sf.name))
-                self.dedupe = dedupe.StaticDedupe(sf, num_cores=self.options['num_cores'])
-                if logging.getLogger().getEffectiveLevel() > 1:
-                    describe_dedupe(self.stdout, self.dedupe)
+            self.logger.info('read ml model from {}'.format(self.options["model_file"]))
+            self.ml_model = TMLModel(self.options["model_file"])
 
-    def cluster_with_dedupe(self):
+    def cluster_sections(self):
+        for _, leaf_clusters in self.cluster_by_minimal_fio.items():
+            clustering = TFioClustering(leaf_clusters, self.ml_model, self.threshold)
+            clustering.cluster()
+            yield clustering.clusters
+
+    def cluster_sections_by_minimal_fio(self):
         if self.options.get("fake_dedupe", False):
             # all records in one cluster
-            ids = list(k for k in self.dedupe_objects.keys())
-            return [(ids, [50]*len(ids))]
+            c = defaultdict(list)
+            c[0] = [(i, 0.5) for i in self.get_all_leaf_objects()]
+            yield c
         else:
-            try:
-                self.logger.debug(
-                    'Clustering {} objects with threshold={}.'.format(len(self.dedupe_objects), self.threshold))
-                return self.dedupe.match(self.dedupe_objects, self.threshold)
-            except Exception as e:
-                self.logger.error(
-                    'Dedupe failed for this cluster, possibly no blocks found, ignore result: {0}'.format(e))
+            all_objects_count = sum(len(v) for v in self.cluster_by_minimal_fio.values())
+            self.logger.info('Clustering {} objects with threshold={}, len(self.cluster_by_minimal_fio) = {}'.format(
+                all_objects_count, self.threshold, len(self.cluster_by_minimal_fio)))
+            for c in self.cluster_sections():
+                yield c
 
     def handle(self, *args, **options):
         self.init_options(options)
-        self.logger.info('Started at: {}'.format(datetime.now()))
         if options.get('print_family_prefixes'):
             for lower_bound, upper_bound in self.get_family_name_bounds():
                 sys.stdout.write("{},{}\n".format(lower_bound, upper_bound))
             return
-        stop_elastic_indexing()
+        self.logger.info('surname bounds are {}'.format(options.get('surname_bounds', "")))
         self.load_dedupe_model()
         dump_stream = None
         dump_file_name = self.options.get("result_pairs_file")
@@ -333,16 +303,17 @@ class Command(BaseCommand):
             self.logger.debug('write result pairs to {}\n'.format(dump_file_name))
 
         for lower_bound, upper_bound in self.get_family_name_bounds():
-            self.logger.debug("lower_bound={}, upper_bound={}".format(lower_bound, upper_bound))
+            self.logger.info("lower_bound={}, upper_bound={}".format(lower_bound, upper_bound))
             self.fill_dedupe_data(lower_bound, upper_bound)
-            clustered_dupes = self.cluster_with_dedupe()
-            if clustered_dupes is not None:
+            for clusters_for_one_fio in self.cluster_sections_by_minimal_fio():
                 if dump_stream is not None:
-                    self.write_results_to_file(clustered_dupes, dump_stream)
+                    self.write_results_to_file(clusters_for_one_fio, dump_stream)
                 if options['write_to_db']:
-                    self.write_results_to_db(clustered_dupes)
+                    self.write_results_to_db(clusters_for_one_fio)
 
         if dump_stream is not None:
             dump_stream.close()
+        self.logger.debug("all done")
+
 
 RunDedupe=Command

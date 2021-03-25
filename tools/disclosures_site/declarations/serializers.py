@@ -1,7 +1,11 @@
 from . import models
-from declarations.common import normalize_whitespace
+from common.primitives import normalize_whitespace
 from declarations.countries import get_country_code
+from declarations.rubrics import convert_municipality_to_education, TOfficeRubrics
+from declarations.documents import OFFICES
+
 from django.db import connection
+import re
 
 
 def read_incomes(section_json):
@@ -9,8 +13,10 @@ def read_incomes(section_json):
         size = i.get('size')
         if isinstance(size, float) or (isinstance(size, str) and size.isdigit()):
             size = int(size)
+
         yield models.Income(size=size,
-                     relative=models.Relative.get_relative_code(i.get('relative'))
+                     relative=models.Relative.get_relative_code(i.get('relative')),
+                     relative_index=i.get('relative_index')
                      )
 
 
@@ -24,7 +30,8 @@ def read_real_estates(section_json):
             relative=models.Relative.get_relative_code(i.get('relative')),
             owntype=models.OwnType.get_own_type_code(own_type_str),
             square=i.get("square"),
-            share=i.get("share_amount")
+            share=i.get("share_amount"),
+            relative_index=i.get('relative_index')
         )
 
 
@@ -34,7 +41,8 @@ def read_vehicles(section_json):
         if text is not None:
             yield models.Vehicle(
                 name=text,
-                relative=models.Relative.get_relative_code( i.get('relative'))
+                relative=models.Relative.get_relative_code( i.get('relative')),
+                relative_index=i.get('relative_index')
             )
 
 
@@ -47,24 +55,24 @@ def convert_to_int_with_nones(v):
 class TSectionPassportFactory:
     AMBIGUOUS_KEY = "AMBIGUOUS_KEY"
 
-    def __init__(self, office_id, year, person_name, sum_income,  sum_square, vehicle_count, office_hierarchy=None):
-        sum_income = str(convert_to_int_with_nones(sum_income))
-        sum_square = str(convert_to_int_with_nones(sum_square))
+    def __init__(self, office_id, year, person_name, income_sum, square_sum, vehicle_count, office_hierarchy=None):
+        income_sum = str(convert_to_int_with_nones(income_sum))
+        square_sum = str(convert_to_int_with_nones(square_sum))
         vehicle_count = str(convert_to_int_with_nones(vehicle_count))
         office_id = str(office_id)
         year = str(year)
         person_name = normalize_whitespace(person_name).lower()
         family_name = person_name.split(" ")[0]
         variants = [
-             (office_id, year, person_name, sum_income, sum_square, vehicle_count), # the most detailed is the first
-             (office_id, year, family_name, sum_income, sum_square, vehicle_count),
-             (office_id, year, person_name, sum_income)
+             (office_id, year, person_name, income_sum, square_sum, vehicle_count), # the most detailed is the first
+             (office_id, year, family_name, income_sum, square_sum, vehicle_count),
+             (office_id, year, person_name, income_sum)
         ]
         if office_hierarchy is not None:
-            parent_office_id = str(office_hierarchy.get_parent_office(office_id))
+            parent_office_id = str(office_hierarchy.get_top_parent_office_id(office_id))
             if parent_office_id != office_id:
-                variants.append((parent_office_id, year, person_name, sum_income, sum_square, vehicle_count))
-                variants.append((parent_office_id, year, family_name, sum_income)) #t is the most abstract passport parent office and family_name
+                variants.append((parent_office_id, year, person_name, income_sum, square_sum, vehicle_count))
+                variants.append((parent_office_id, year, family_name, income_sum)) #t is the most abstract passport parent office and family_name
 
         self.passport_variants = list(map((lambda x: "\t".join(x)), variants))
 
@@ -94,9 +102,9 @@ class TSectionPassportFactory:
                 )
         with connection.cursor() as cursor:
             cursor.execute(query)
-            for section_id, office_id, sum_income, person_name, year, sum_square, vehicle_count in cursor.fetchall():
-                yield section_id, TSectionPassportFactory(office_id, year, person_name, sum_income,
-                                                              sum_square, vehicle_count, office_hierarchy=office_hierarchy)
+            for section_id, office_id, income_sum, person_name, year, square_sum, vehicle_count in cursor.fetchall():
+                yield section_id, TSectionPassportFactory(office_id, year, person_name, income_sum,
+                                                              income_sum, vehicle_count, office_hierarchy=office_hierarchy)
 
     @staticmethod
     def get_all_passports_dict(iterator):
@@ -127,42 +135,69 @@ class TSectionPassportFactory:
         return res, search_results
 
 
-def normalize_fio(fio):
+def normalize_fio_before_db_insert(fio):
     fio = normalize_whitespace(fio)
     fio = fio.replace('"', ' ').strip()
+    fio = fio.strip('-')
+    if len(fio) > 0 and fio[0].isdigit():
+        while len(fio) > 0 and (fio[0].isdigit() or fio[0] == ' ' or fio[0] == '.'):
+            fio = fio[1:]
     return fio.title()
 
 
-class TSmartParserJsonReader:
+class TSmartParserSectionJson:
 
     class SerializerException(Exception):
         def __init__(self, value):
             self.value = value
 
         def __str__(self):
-            return (repr(self.value))
+            return repr(self.value)
 
-    def __init__(self, income_year, source_document, section_json, id=None):
-        self.section_json = section_json
+    def __init__(self, income_year, source_document):
         self.section = models.Section(
             source_document=source_document,
             income_year=income_year,
         )
-        self.init_person_info()
+        self.incomes = None
+        self.real_estates = None
+        self.vehicles = None
+
+    def init_rubric(self):
+        # json_reader.section.rubric_id = source_document_in_db.office.rubric_id does not work
+        # may be we should call source_document_in_db.refresh_from_db
+        self.section.rubric_id = OFFICES.offices[self.section.source_document.office.id]['rubric_id']
+
+        if self.section.rubric_id == TOfficeRubrics.Municipality and \
+                convert_municipality_to_education(self.section.position):
+            self.section.rubric_id = TOfficeRubrics.Education
+
+    def read_raw_json(self, section_json):
+        self.init_person_info(section_json)
         self.incomes = list(read_incomes(section_json))
         self.real_estates = list(read_real_estates(section_json))
         self.vehicles = list(read_vehicles(section_json))
+        self.init_rubric()
+        return self
 
-    def init_person_info(self):
-        person_info = self.section_json.get('person')
+    def get_main_declarant_income_size(self):
+        for i in self.incomes:
+            if i.relative == models.Relative.main_declarant_code:
+                return i.size
+
+    def init_person_info(self, section_json):
+        person_info = section_json.get('person')
         if person_info is None:
-            raise TSmartParserJsonReader.SerializerException("cannot find 'person'  key in json")
-        fio = person_info.get('name', person_info.get('name_raw'))
-        if fio is None:
-            raise TSmartParserJsonReader.SerializerException("cannot find 'name' or 'name_raw'in json")
-        self.section.person_name = normalize_fio(fio)
+            fio = section_json.get('fio')
+            if fio is None:
+                raise TSmartParserSectionJson.SerializerException("cannot find nor 'person' neither 'fio' key in json")
+        else:
+            fio = person_info.get('name', person_info.get('name_raw'))
+            if fio is None:
+                raise TSmartParserSectionJson.SerializerException("cannot find 'name' or 'name_raw'in json")
+        self.section.person_name = normalize_fio_before_db_insert(fio)
         self.section.position = person_info.get("role")
-        self.section.department =  person_info.get("department")
+        self.section.department = person_info.get("department")
 
     def get_passport_factory(self, office_hierarchy=None):
         return TSectionPassportFactory(
@@ -187,3 +222,65 @@ class TSmartParserJsonReader:
         models.Vehicle.objects.bulk_create(self.set_section(self.vehicles))
 
 
+def whitespace_remover(val):
+    """
+    Return modified val where all consequent
+    whitespaces replaced with space
+    """
+    return (re.sub('\s+', ' ', val)).strip()
+
+
+def build_person_info_json(section):
+    fio = section.person_name
+    if fio is None or len(fio) == 0 and section.person is not None:
+        fio = section.person.person_name
+
+    person_info = {
+        "name_raw": fio
+    }
+    if section.position:
+        person_info['role'] = whitespace_remover(section.position)
+    if section.department:
+        person_info['department'] = whitespace_remover(section.department)
+    return person_info
+
+
+def get_relative_str(some_record):
+    name = models.Relative(some_record.relative).name
+    if len(name) == 0:
+        return None
+    else:
+        return name
+
+
+def get_section_json(section):
+    """Returns Json section representation for yandex.toloka TSV """
+    section_json = {"person": build_person_info_json(section)}
+
+    section_json['incomes'] = []
+    for income in section.income_set.all():
+        section_json['incomes'].append ({"size": income.size, "relative": get_relative_str(income)})
+
+    for v in section.vehicle_set.all():
+        if 'vehicles' not in section_json:
+            section_json['vehicles'] = []
+        section_json['vehicles'].append({"text": v.name, "relative": get_relative_str(v)})
+
+    for v in section.realestate_set.all():
+        if 'real_estates' not in section_json:
+            section_json['real_estates'] = []
+        r = {
+            "square": v.square,
+            "type_raw": "" if v.type is None else v.type,
+            "owntype_raw": "" if v.owntype is None else v.own_type_str,
+            "relative": get_relative_str(v),
+            "country_raw": "" if v.country is None  else v.country_str
+        }
+        section_json['real_estates'].append(r)
+
+    section_json['year'] = str(section.income_year)
+    section_json['source'] = "disclosures"
+    section_json['office'] = whitespace_remover(section.source_document.office.name)
+    section_json['office_id'] = section.source_document.office.id
+
+    return section_json

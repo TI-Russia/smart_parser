@@ -1,30 +1,12 @@
 import declarations.models as models
-from declarations.documents import stop_elastic_indexing, start_elastic_indexing
 from django.core.management import BaseCommand
-from django_elasticsearch_dsl.management.commands.search_index import Command as ElasticManagement
-import logging
-import pymysql
-import os
-import gc
-import json
 from declarations.management.commands.permalinks import TPermaLinksDB
+from declarations.russian_fio import TRussianFio
+from common.logging_wrapper import setup_logging
 
-
-def setup_logging(logfilename="copy_person.log"):
-    logger = logging.getLogger("copy_person")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    return logger
+import pymysql
+import json
+from django.db import connection
 
 
 def build_section_passport(document_id, fio, income_main):
@@ -33,13 +15,18 @@ def build_section_passport(document_id, fio, income_main):
     return "{}_{}_{}".format(document_id, fio.lower(), int(income_main))
 
 
-def get_all_section_from_declarator_with_person_id():
-    # query to declarator db
-    db_connection = pymysql.connect(db="declarator", user="declarator", password="declarator",
-                                    unix_socket="/var/run/mysqld/mysqld.sock")
+def get_all_section_from_declarator_with_person_id(declarator_host):
+    # запрос в Декларатор, поиск секций, которые руками (s.dedupe_score = 0) привязаны к персонам
+    if declarator_host is None:
+        db_connection = pymysql.connect(db="declarator", user="declarator", password="declarator",
+                                        unix_socket="/var/run/mysqld/mysqld.sock")
+    else:
+        db_connection = pymysql.connect(db="declarator", user="declarator", password="declarator",
+                                        host=declarator_host)
     in_cursor = db_connection.cursor()
+
     in_cursor.execute("""
-                    select  s.person_id, 
+                    select  s.person_id,
                             d.id, 
                             floor(i.size),
                             s.original_fio, 
@@ -49,7 +36,8 @@ def get_all_section_from_declarator_with_person_id():
                     inner join declarations_document d on s.document_id = d.id
                     left join declarations_income i on i.section_id = s.id
                     where s.person_id is not null
-                          and i.relative_id is null;
+                          and i.relative_id is null
+                          and s.dedupe_score = 0;
 
     """)
     props_to_person_id = dict()
@@ -62,24 +50,16 @@ def get_all_section_from_declarator_with_person_id():
             props_to_person_id[key1] = "AMBIGUOUS_KEY"
         else:
             props_to_person_id[key1] = person_id
-        key2 = build_section_passport(document_id, fio.split(" ")[0], income_main)
-        if key2 in props_to_person_id:
-            props_to_person_id[key2] = "AMBIGUOUS_KEY"
-        else:
-            props_to_person_id[key2] = person_id
+
+        fio = TRussianFio(fio)
+        if fio.is_resolved:
+            key2 = build_section_passport(document_id, fio.family_name, income_main)
+            if key2 in props_to_person_id:
+                props_to_person_id[key2] = "AMBIGUOUS_KEY"
+            else:
+                props_to_person_id[key2] = person_id
 
     return props_to_person_id
-
-
-def queryset_iterator(queryset, chunksize=1000):
-    pk = 0
-    last_pk = queryset.order_by('-pk')[0].pk
-    queryset = queryset.order_by('pk')
-    while pk < last_pk:
-        for row in queryset.filter(pk__gt=pk)[:chunksize]:
-            pk = row.pk
-            yield row
-        gc.collect()
 
 
 class Command(BaseCommand):
@@ -88,8 +68,9 @@ class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
         self.options = None
-        self.primary_keys_builder = None
+        self.permalinks_db = None
         self.logger = None
+        self.declarator_person_id_to_disclosures_person = dict()
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -103,31 +84,45 @@ class Command(BaseCommand):
             dest='permanent_links_db',
             required=True
         )
+        parser.add_argument(
+            '--declarator-host',
+            dest='declarator_host',
+            required=False
+        )
+        parser.add_argument(
+            '--person-name-prefix',
+            dest='person_name_prefix',
+            required=False
+        )
 
     def open_permalinks_db(self):
-        self.primary_keys_builder = TPermaLinksDB(self.options['permanent_links_db'])
-        self.primary_keys_builder.open_db_read_only()
-
-    def update_primary_keys(self):
-        self.primary_keys_builder.close()
-        self.primary_keys_builder.update_person_records_count_and_close()
+        self.permalinks_db = TPermaLinksDB(self.options['permanent_links_db'])
+        self.permalinks_db.open_db_read_only()
 
     def build_passport_to_person_id_mapping_from_declarator(self):
         if self.options.get('read_person_from_json') is not None:
             with open(self.options.get('read_person_from_json'), "r", encoding="utf8") as inpf:
                 return json.load(inpf)
         else:
-            return get_all_section_from_declarator_with_person_id()
+            return get_all_section_from_declarator_with_person_id(self.options['declarator_host'])
 
     def copy_human_merge(self, section, declarator_person_id):
-        # we think that person ids in declarator db are stable
-        person = models.Person(declarator_person_id=declarator_person_id)
-        person.id = self.primary_keys_builder.get_record_id(person)
+        person = self.declarator_person_id_to_disclosures_person.get(declarator_person_id)
+        if person is None:
+            # we think that person ids in declarator db are stable
+            person = models.Person(
+                id=self.permalinks_db.get_person_id_by_declarator_id(declarator_person_id),
+                declarator_person_id=declarator_person_id,
+                person_name=section.person_name)
+            person.save()
+            self.declarator_person_id_to_disclosures_person[declarator_person_id] = person
+        elif person.person_name is None or len(person.person_name) < len(section.person_name):
+            person.person_name = section.person_name
+            person.save()
+
         self.logger.debug("connect section {} to person {}, declarator_person_id={}".format(
             section.id, person.id, declarator_person_id))
-        if person.person_name is None or len(person.person_name) < len(section.person_name):
-            person.person_name = section.person_name
-        person.save()
+
         section.person = person
         section.dedupe_score = None
         section.save()
@@ -137,47 +132,78 @@ class Command(BaseCommand):
         for i in section.income_set.all():
             if i.relative == models.Relative.main_declarant_code:
                 main_income = i.size
-        checked_results = set()
+        found_results = list()
         for declaration_info in section.source_document.declarator_file_reference_set.all():
             key1 = build_section_passport(declaration_info.declarator_document_id, section.person_name, main_income)
-            checked_results.add(section_passports.get(key1))
-            words = section.person_name.split()
-            if len(words) > 0:
-                key2 = build_section_passport(declaration_info.declarator_document_id, words[0], main_income)
-                checked_results.add(section_passports.get(key2))
+            found_res1 = section_passports.get(key1)
+            if found_res1 is not None:
+                found_results.append(found_res1)
+            fio = TRussianFio(section.person_name)
+            if fio.is_resolved:
+                key2 = build_section_passport(declaration_info.declarator_document_id, fio.family_name, main_income)
+                found_res2 = section_passports.get(key2)
+                if found_res2 is not None:
+                    found_results.append(found_res2)
             else:
                 self.logger.error(
-                    "section {} fio={} cannot find surname(first word)".format(section.id, section.person_name))
+                    "section {} fio={} cannot find surname".format(section.id, section.person_name))
 
-        if len(checked_results) == 1 and None in checked_results:
+        if len(found_results) == 0:
             self.logger.debug("section {} fio={} cannot be found in declarator".format(section.id, section.person_name))
         else:
-            for person_id in checked_results:
-                if person_id is not None and person_id != "AMBIGUOUS_KEY":
+            for person_id  in found_results:
+                if person_id != "AMBIGUOUS_KEY":
                     self.copy_human_merge(section, person_id)
                     return True
             self.logger.debug("section {} fio={} is ambiguous".format(section.id, section.person_name))
         return False
 
+    def copy_declarator_person_ids_fast(self, section_passports):
+        query = """
+            select s.id, r.declarator_document_id, s.person_name, i.size
+            from declarations_section s
+            join declarations_income i on i.section_id = s.id
+            join declarations_source_document d on s.source_document_id = d.id
+            join declarations_declarator_file_reference r on r.source_document_id = d.id
+            where i.relative = '{}'
+        """.format(models.Relative.main_declarant_code)
+        merge_count = 0
+        with connection.cursor() as cursor:
+            cursor.execute(query)
+            for section_id, declarator_document_id, person_name, main_income in cursor:
+                found_results = list()
+                key1 = build_section_passport(declarator_document_id, person_name, main_income)
+                found_res1 = section_passports.get(key1)
+                if found_res1 is not None:
+                    found_results.append(found_res1)
+                fio = TRussianFio(person_name)
+                if fio.is_resolved:
+                    key2 = build_section_passport(declarator_document_id, fio.family_name, main_income)
+                    found_res2 = section_passports.get(key2)
+                    if found_res2 is not None:
+                        found_results.append(found_res2)
+                if len(found_results) > 0:
+                    success = False
+                    for person_id in found_results:
+                        if person_id != "AMBIGUOUS_KEY":
+                            self.copy_human_merge(models.Section.objects.get(id=section_id), person_id)
+                            success = True
+                            merge_count += 1
+                            break
+                    if not success:
+                        self.logger.debug("section {} fio={} is ambiguous".format(section_id, person_name))
+        self.logger.info("set human person id to {} records".format(merge_count))
+
     def handle(self, *args, **options):
-        self.logger = setup_logging()
+        self.logger = setup_logging(logger_name="copy_person")
         self.options = options
+        self.logger.debug("models.Person.objects.count()={}".format(models.Person.objects.count()))
+        assert models.Person.objects.count() == 0
         self.open_permalinks_db()
         section_passports = self.build_passport_to_person_id_mapping_from_declarator()
-        self.logger.info("found {} merges in declarator".format(len(section_passports)))
-        self.logger.info("stop_elastic_indexing")
-        stop_elastic_indexing()
-        cnt = 0
-        merge_count = 0
-        for section  in queryset_iterator(models.Section.objects):
-            cnt += 1
-            if (cnt % 10000) == 0:
-                self.logger.debug("number processed sections = {}".format(cnt))
-            if self.process_section(section, section_passports):
-                merge_count += 1
-
-        self.logger.info("set human person id to {} records".format(merge_count))
-        self.update_primary_keys()
+        self.logger.info("merge by {} passports from declarator".format(len(section_passports)))
+        self.copy_declarator_person_ids_fast(section_passports)
+        self.permalinks_db.close_db()
         self.logger.info("all done")
 
 CopyPersonIdCommand=Command

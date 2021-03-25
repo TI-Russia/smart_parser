@@ -1,0 +1,66 @@
+.task {
+  display: block;
+}
+
+.image {
+  display: inline-block;
+  width: 50%;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.clearfix {
+  overflow: hidden;
+  width: 100%;
+}
+
+.ffio {
+  font-weight: bold;
+}
+
+table.main_task_table table {
+  width: 100%
+}
+
+/* all cells */
+th,  td {
+  padding: 5px;
+  vertical-align: top;
+}
+
+/* central vertical column that divides the left person and the right person */
+.central_cell {
+  border-collapse:collapse;
+  border-bottom: 0px;
+  border-top: 0px;
+  border-left: 1px solid rgb(211,211,211);
+  border-right: 1px solid rgb(211,211,211);
+  width: 3%;
+}
+
+/* section subpart title (Year, Income, Vehicles) */
+.section_subpart_title {
+  font-weight: bold;
+  float: left;
+}
+
+/* the first line with person names */
+.first_line {
+  border-bottom: 1px solid rgb(211,211,211);
+  text-align: left;
+  padding-left: 10px;
+}
+
+
+/* relative name */
+.relative_name {
+  font-weight: lighter;
+  font-style: italic;
+}
+

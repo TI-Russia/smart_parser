@@ -1,0 +1,8 @@
+SHELL=/bin/bash
+MAILTO=sokirko@yandex.ru
+
+NGINX_LOGS=/var/log/nginx
+
+##Mins  Hours  Days   Months  Day of the week
+0          */1   *        *      *    certbot -q renew
+*/11 *  * * * goaccess $NGINX_LOGS/access.log --log-format=COMBINED --ignore-crawlers -o /var/www/smart_parser/tools/disclosures_site/disclosures/static/site_access.html

@@ -26,5 +26,121 @@
             "sections_dedupe_score_greater_0": 2628820,
             "person_count": 801713
         }
+    },
+    {
+        "crawl_epoch": 1604794168,
+        "metrics": {
+            "source_document_count": 456705,
+            "source_document_only_dlrobot_count": 202240,
+            "source_document_only_human_count": 160447,
+            "source_document_both_found_count": 94018,
+            "sections_count": 4311005,
+            "sections_count_only_dlrobot": 1115733,
+            "sections_count_both_found": 1318389,
+            "sections_dedupe_score_greater_0": 2637124,
+            "person_count": 850829
+        }
+    },
+    {
+        "crawl_epoch": 1606184616,
+        "metrics": {
+            "source_document_count": 482831,
+            "source_document_only_dlrobot_count": 228366,
+            "source_document_only_human_count": 153945,
+            "source_document_both_found_count": 100520,
+            "sections_count": 4401569,
+            "sections_count_only_dlrobot": 1215281,
+            "sections_count_both_found": 1378831,
+            "sections_dedupe_score_greater_0": 2689365,
+            "person_count": 860003
+        }
+    },
+    {
+        "crawl_epoch": 1607785119,
+        "metrics": {
+            "source_document_count": 488962,
+            "source_document_only_dlrobot_count": 228052,
+            "source_document_only_human_count": 157590,
+            "source_document_both_found_count": 103320,
+            "sections_count": 4448485,
+            "sections_count_only_dlrobot": 1141512,
+            "sections_count_both_found": 1425570,
+            "sections_dedupe_score_greater_0": 2602477,
+            "person_count": 854749
+        }
+    },
+    {
+        "crawl_epoch": 1608576691,
+        "metrics": {
+            "source_document_count": 498965,
+            "source_document_only_dlrobot_count": 238055,
+            "source_document_only_human_count": 154771,
+            "source_document_both_found_count": 106139,
+            "sections_count": 4460187,
+            "sections_count_only_dlrobot": 1154339,
+            "sections_count_both_found": 1443630,
+            "sections_dedupe_score_greater_0": 3974544,
+            "person_count": 1450640
+        }
+    },
+    {
+        "crawl_epoch": 1611030521,
+        "metrics": {
+            "source_document_count": 533206,
+            "source_document_only_dlrobot_count": 272296,
+            "source_document_only_human_count": 148315,
+            "source_document_both_found_count": 112595,
+            "sections_count": 4679739,
+            "sections_count_only_dlrobot": 1386675,
+            "sections_count_both_found": 1554101,
+            "sections_dedupe_score_greater_0": 4177777,
+            "person_count": 1485380
+        }
+    },
+    {
+        "crawl_epoch": 1613314239,
+        "metrics": {
+            "source_document_count": 573344,
+            "source_document_only_dlrobot_count": 312434,
+            "source_document_only_human_count": 147407,
+            "source_document_both_found_count": 113503,
+            "sections_count": 4853209,
+            "sections_count_only_dlrobot": 1540891,
+            "sections_count_both_found": 1568536,
+            "sections_dedupe_score_greater_0": 4337869,
+            "person_count": 1523882
+        }
+    },
+    {
+        "crawl_epoch": 1614530031,
+        "metrics": {
+            "source_document_count": 592559,
+            "source_document_only_dlrobot_count": 331649,
+            "source_document_only_human_count": 146904,
+            "source_document_both_found_count": 114006,
+            "sections_person_name_income_year_declarant_income_size": 4355321,
+            "sections_person_name_income_year_spouse_income_size": 2630509,
+            "sections_count": 4903528,
+            "sections_count_only_dlrobot": 1594099,
+            "sections_count_both_found": 1574507,
+            "sections_dedupe_score_greater_0": 4430524,
+            "person_count": 1549726
+        }
+    },
+    {
+        "crawl_epoch": 1615729870,
+        "metrics": {
+            "source_document_count": 652022,
+            "source_document_only_dlrobot_count": 391112,
+            "source_document_only_human_count": 146610,
+            "source_document_both_found_count": 114300,
+            "sections_person_name_income_year_declarant_income_size": 4999796,
+            "sections_person_name_income_year_spouse_income_size": 2994309,
+            "sections_count": 5568355,
+            "sections_count_only_dlrobot": 2269066,
+            "sections_count_both_found": 1583302,
+            "sections_dedupe_score_greater_0": 5079235,
+            "person_count": 1746700
+        }
     }
 ]

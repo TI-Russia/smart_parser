@@ -1,37 +1,9 @@
-import declarations.models as models
-from django.core.management import BaseCommand
-import logging
-import os
 from declarations.management.commands.permalinks import TPermaLinksDB
-import gc
+from declarations.sql_helpers import queryset_iterator
+import declarations.models as models
+from common.logging_wrapper import setup_logging
 
-
-def setup_logging(logfilename="create_permalink_storage.log"):
-    logger = logging.getLogger("copy_primary_keys")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    return logger
-
-
-def queryset_iterator(queryset, chunksize=1000):
-    pk = 0
-    last_pk = queryset.order_by('-pk')[0].pk
-    queryset = queryset.order_by('pk')
-    while pk < last_pk:
-        for row in queryset.filter(pk__gt=pk)[:chunksize]:
-            pk = row.pk
-            yield row
-        gc.collect()
+from django.core.management import BaseCommand
 
 
 class Command(BaseCommand):
@@ -40,6 +12,7 @@ class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
         self.options = None
+        self.logger = None
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -50,31 +23,36 @@ class Command(BaseCommand):
             help='write mapping to this fiie'
         )
 
-    def save_permalinks(self, logger, django_db_model, db:TPermaLinksDB):
-        if django_db_model.objects.count() == 0:
-            db.save_next_primary_key_value(django_db_model, 0)
+    def save_dataset(self, db: TPermaLinksDB, model_type, save_function):
+        if model_type.objects.count() == 0:
+            db.save_max_plus_one_primary_key(model_type, 0)
         else:
             cnt = 0
             max_value = 0
-            for record in queryset_iterator(django_db_model.objects.all()):
+            for record in queryset_iterator(model_type.objects.all()):
                 cnt += 1
                 if (cnt % 3000) == 0:
-                    logger.debug("{}:{}".format(str(django_db_model), cnt))
-                db.put_record_id(record)
+                    self.logger.debug("{}".format(cnt))
+                save_function(record)
                 max_value = max(record.id, max_value)
 
-            db.save_next_primary_key_value(django_db_model, max_value + 1)
+            db.save_max_plus_one_primary_key(model_type, max_value + 1)
 
     def handle(self, *args, **options):
-        logger = setup_logging()
+        self.logger = setup_logging(logger_name="create_permalink_storage")
 
         db = TPermaLinksDB(options.get('output_dbm_file'))
         db.create_db()
-        self.save_permalinks(logger, models.Source_Document, db)
-        self.save_permalinks(logger, models.Section, db)
-        self.save_permalinks(logger, models.Person, db)
-        db.close()
 
-        logger.info("all done")
+        self.save_dataset(db, models.Source_Document, db.save_source_doc)
+        db.sync_db()
 
-CreatePermalinksStorage=Command
+        self.save_dataset(db, models.Section, db.save_section)
+        db.sync_db()
+
+        self.save_dataset(db, models.Person, db.save_person)
+        db.close_db()
+
+        self.logger.info("all done")
+
+CreatePermalinksStorageCommand=Command

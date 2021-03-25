@@ -1,0 +1,102 @@
+@font-face {
+    font-family: 'Roboto Light';
+    src: url('/static/fonts/Robotolight.woff') format('woff'),
+         url('/static/fonts/Robotolight.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/static/fonts/Roboto.woff') format('woff'),
+         url('/static/fonts/Roboto.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+br.responsive {
+  display: inline; // Show BR tag for narrow screens
+}
+
+@media screen and (max-device-width: 480px) /* Mobile */ {
+    body {
+        background-color: #F3F3F3;
+        font-family: "Roboto", serif;
+    }
+    html {
+        font-size: 36px
+    }
+}
+
+@media screen and (min-device-width: 480px)  /* Desktop */ {
+    body {
+        background-color: #F3F3F3;
+        text-color: black;
+        link-color: black;
+        font-family: "Roboto Light", serif;
+    }
+    br.responsive {
+         display: none; // Hide BR tag for wider screens
+    }
+}
+
+div.header1 {
+    display: inline;
+    font-size: 200%;
+    font-weight: bold;
+    text-align: left;
+}
+
+div.header2 {
+    display: inline;
+    margin: 10px;
+    font-size: 100%;
+}
+
+span.selected_menu {
+    color: white;
+    background-color: black;
+}
+
+span.not_selected_menu {
+    color: black;
+    background-color: #F3F3F3;
+}
+
+span.menu_space {
+     width: 10px;
+     display: inline-block;
+}
+
+input {
+  font-size: 100%;
+}
+
+select {
+  font-size: 100%;
+}
+
+.declaration_table td, .declaration_table th {
+    border: solid;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+table.declaration_table  {
+    border: solid;
+    border-collapse: collapse;
+}
+
+.solid_table td, .solid_table th {
+    border: solid;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+table.solid_table  {
+    border: solid;
+    border-collapse: collapse;
+}
+
+div.clickable {
+  cursor: pointer;
+}
+

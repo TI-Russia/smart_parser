@@ -51,7 +51,8 @@ namespace Smart.Parser.Lib
                 Year = columnOrdering.Year,
                 DocumentFileId = documentfile_id,
                 ArchiveFileName = archive,
-                SheetNumber = Adapter.GetWorksheetIndex()
+                SheetNumber = Adapter.GetWorksheetIndex(),
+                DocumentUrl = Adapter.GetDocumentUrlFromMetaTag()
             };
             if (properties.Year == null)
             {
@@ -592,7 +593,7 @@ namespace Smart.Parser.Lib
                 if (!DataHelper.IsEmptyValue(s))
                     person.Vehicles.Add(new Vehicle(s));
             }
-            else
+            else if (r.ColumnOrdering.ColumnOrder.ContainsKey(DeclarationField.VehicleType))
             {
                 var t = r.GetContents(DeclarationField.VehicleType).Replace("не имеет", "");
                 var m = r.GetContents(DeclarationField.VehicleModel, false).Replace("не имеет", "");

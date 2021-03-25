@@ -1,50 +1,95 @@
 {% extends 'base.html' %}
 
-{% block title %}Информация о декларанте {% endblock title %}
+{% block title %}
+{{ person.person_name }}, {{person.last_position_and_office_str}}, {{person.declaraion_count_str }} {{ person.years_str}}
+{% endblock title %}
+
+{% block serp_description %}
+<meta name="description" CONTENT="{{ person.person_name }}, {{person.last_position_and_office_str}}, {{person.declaraion_count_str }} {{ person.years_str}}">
+{% endblock serp_description %}
 
 {% block content %}
 
-<h1>Person (person_id={{ person.id }}) </h1>
+<h1>
+     {{person.person_name}} {{person.ratings |safe}}
+</h1>
 
-<style>
-   .section_table.table, .section_table.td, .section_table.th {
-        border: solid;
-        word-break: break-all;
-        border-collapse: collapse;
-        padding-left: 4px;
-        padding-right: 4px;
+<h2>
+    1. Последняя известная декларация ({{person.last_section.income_year}} год)
+</h2>
 
-   }
-</style>
+<h3>
+     {{ person.last_position_and_office_str }}
+</h3>
 
-<table class="section_table">
+{% with section=person.last_section %}
+    {% include "section/section_table.html" %}
+{% endwith %}
+
+<br/>
+
+<h2>
+     2. Исторические сведения о доходах чиновника за {{person.years_str}}
+</h2>
+
+
+<table class="solid_table">
     <tr>
-        <th> section_id </th>
-        <th> ФИО </th>
-        <th> Год </th>
-        <th> Ведомство, где была найдена декларация </th>
-        <th> Уверенность </th>
+       <th>Год</th>
+       <th>Недвижимость (кв.м)</th>
+       <th>Транспорт</th>
+       <th>Доход</th>
+        {% if person.has_spouse %}
+          <th>Недвижимость супруги/а (кв.м)</th>
+          <th>Доход супруги/а</th>
+        {% endif %}
     </tr>
-    {% for section in person.section_set.all %}
+
+    {% for s in person.sections_ordered_by_year %}
         <tr>
-            <td> {{ section.id }} </td>
-            <td> <a href="/section/{{ section.id }}"> {{ section.person_name }} </a> </td>
-            <td> {{ section.income_year }} </td>
-            <td> <a href="/office/{{section.source_document.office_id}}"> {{section.source_document.office.name}} </a> </td>
-            <td> 
-                {% if section.dedupe_score > 0 %}
-                    {{ section.dedupe_score | floatformat:2}}
-                {% else %}
-                    1.0
-                {% endif %}
-            </td>
+            <td> <a href="/section/{{ s.id }}">{{s.income_year}} </a>  </td>
+            <td align="right"> {{s.declarant_realty_square_sum|default_if_none:""}} </td>
+            <td align="right"> {{s.vehicle_count}} </td>
+            <td align="right"> &nbsp;{{s.declarant_income_size}}&nbsp; </td>
+            {% if person.has_spouse %}
+              <td>{{s.spouse_realty_square_sum|default_if_none:""}}</td>
+              <td>{{s.spouse_income_size|default_if_none:""}}</td>
+            {% endif %}
         </tr>
     {% endfor %}
-</table>
 
+</table>
+<br/>
+
+{% with comp=person.income_growth_yearly %}
+    {% if comp %}
+    <h2>
+         3. Сравнение роста номинальных доходов чиновника со средним ростом зарплат по всей стране
+    </h2>
+      <table class="solid_table">
+          <tr>
+              <th>Мин. год</th>
+              <th>Макс. год</th>
+              <th>Рост доходов этого чиновника</th>
+              <th>Рост доходов населения России</th>
+          </tr>
+          <tr>
+              <td align="center">{{comp.min_year}}</td>
+              <td align="center">{{comp.max_year}}</td>
+              <td align="center">{{comp.declarant_income}}%</td>
+              <td align="center">{{comp.population_income}}%</td>
+          </tr>
+      </table>
+
+    {% endif %}
+{% endwith %}
+
+<br/><br/>
 
 {% if person.declarator_person_id %}
     <a href="http://declarator.org/person/{{person.declarator_person_id}}"> Ссылка на Декларатор </a>
 {% endif %}
 
+
 {% endblock content %}
+

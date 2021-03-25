@@ -20,7 +20,7 @@ ELASTICSEARCH_INDEX_NAMES = {
 }
 
 
-os.environ['DISCLOSURES_DATABASE_NAME'] = 'disclosures_db_dev'
+os.environ['DISCLOSURES_DATABASE_NAME'] = os.environ.get('DISCLOSURES_DATABASE_NAME', 'disclosures_db_dev')
 
 
 from .common import *

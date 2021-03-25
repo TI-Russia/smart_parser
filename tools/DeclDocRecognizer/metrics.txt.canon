@@ -1,0 +1,5 @@
+false negative:
+plus/4061_2.htm.verdict:    "verdict": "some_other_document_result",
+plus/4061_4.htm.verdict:    "verdict": "some_other_document_result",
+false positives:
+minus/14.pdf.verdict:    "verdict": "declaration_result",
