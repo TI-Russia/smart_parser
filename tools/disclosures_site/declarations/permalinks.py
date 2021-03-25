@@ -218,7 +218,7 @@ class TPermaLinksPerson(TPermaLinksDB):
 
 class TPermalinksManager:
     @staticmethod
-    def add_arguments(self, parser):
+    def add_arguments(parser):
         parser.add_argument(
                 '--model',
             dest='model',

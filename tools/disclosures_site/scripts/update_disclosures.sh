@@ -7,8 +7,6 @@ COMMON_SCRIPT=$(dirname $0)/update_common.sh
 source $COMMON_SCRIPT
 
 
-
-
 #1 создание нового каталога и файла настройки .profile
     cd $DLROBOT_UPDATES_FOLDER/
     export OLD_DLROBOT_FOLDER=`find -mindepth 1 -maxdepth 1 -xtype d  | sort | tail -n 1 | xargs -n 1 realpath`
@@ -48,7 +46,7 @@ source $COMMON_SCRIPT
 
 
 #7  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод (7-8 часов)
-   python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.prod --output-dbm-file permalinks.dbm
+   python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.prod --directory $DLROBOT_FOLDER
 
 
 #8.  инициализация базы disclosures
@@ -59,7 +57,7 @@ source $COMMON_SCRIPT
 
 #9
     cd $DLROBOT_FOLDER # important
-    python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev --permanent-links-db $DLROBOT_FOLDER/permalinks.dbm
+    python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev --directory $DLROBOT_FOLDER
 
 
 #10  Импорт json в dislosures_db
@@ -71,7 +69,7 @@ source $COMMON_SCRIPT
                --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER \
                --dlrobot-human dlrobot_human.json   \
                --process-count 2  \
-               --permanent-links-db permalinks.dbm
+               --permalinks-folder $DLROBOT_FOLDER
 
    python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric source_document_count  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
    python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric sections_person_name_income_year_declarant_income_size  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
@@ -88,14 +86,14 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
    #python3 $TOOLS/disclosures_site/manage.py clear_dedupe_artefacts --settings disclosures.settings.dev
 
    #1 hour
-   python3 $TOOLS/disclosures_site/manage.py copy_person_id --settings disclosures.settings.dev --permanent-links-db permalinks.dbm
+   python3 $TOOLS/disclosures_site/manage.py copy_person_id --settings disclosures.settings.dev --permalinks-folder $DLROBOT_FOLDER
 
-   python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs  --print-family-prefixes   --permanent-links-db $DLROBOT_FOLDER/permalinks.dbm --settings disclosures.settings.dev > surname_spans.txt
-   echo $DEDUPE_HOSTS_SPACES | tr " " "\n"  | xargs  --verbose -P 4 -I {} -n 1 scp $DLROBOT_FOLDER/permalinks.dbm {}:/tmp
+   python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs  --print-family-prefixes   --permalinks-folder $DLROBOT_FOLDER --settings disclosures.settings.dev > surname_spans.txt
+   echo $DEDUPE_HOSTS_SPACES | tr " " "\n"  | xargs  --verbose -P 4 -I {} -n 1 scp $DLROBOT_FOLDER/permalinks_declarations_person.dbm {}:/tmp
 
    #22 hours
    parallel --halt soon,fail=1 -a surname_spans.txt --jobs 2 --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $DEDUPE_HOSTS --basefile $DEDUPE_MODEL  --verbose --workdir /tmp \
-        python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --permanent-links-db /tmp/permalinks.dbm --ml-model-file $DEDUPE_MODEL  \
+        python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --permalinks-folder /tmp --ml-model-file $DEDUPE_MODEL  \
                 --threshold 0.61  --surname-bounds {} --write-to-db --settings disclosures.settings.dev --logfile dedupe.{}.log
 
    if [ $? != "0" ]; then
