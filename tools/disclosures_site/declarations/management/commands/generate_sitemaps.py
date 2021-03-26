@@ -41,11 +41,6 @@ class Command(BaseCommand):
             dest='office_report_folder',
             default=os.path.join(os.path.dirname(__file__), "../../../disclosures/static/officereports")
         )
-        parser.add_argument(
-            '--static-section-folder',
-            dest='static_section_folder',
-            default=os.path.join(os.path.dirname(__file__), "../../../disclosures/static/sections")
-        )
         rare_people_path = os.path.join(os.path.dirname(__file__), "../../../disclosures/static/sitemap-rare-people.xml")
         parser.add_argument(
             '--rare-people-file-pattern',
@@ -132,7 +127,6 @@ class Command(BaseCommand):
 
         region_sitemap = self.build_report_sitemap(options["region_report_folder"])
         office_sitemap = self.build_report_sitemap(options["office_report_folder"])
-        office_section_sitemap = self.build_report_sitemap(options["static_section_folder"])
 
         main_sitemap = self.build_main_sitemap()
 
@@ -144,6 +138,5 @@ class Command(BaseCommand):
             for s in rare_people_sitemaps:
                 self.write_sitemap_index_entry(s, outp)
             self.write_sitemap_index_entry(region_sitemap, outp)
-            self.write_sitemap_index_entry(office_section_sitemap, outp)
             self.write_sitemap_index_entry(office_sitemap, outp)
             outp.write("</sitemapindex>\n")

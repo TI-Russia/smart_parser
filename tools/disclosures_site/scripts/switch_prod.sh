@@ -1,7 +1,6 @@
 MYSQL_TAR=$1
 ELASTICSEARCH_TAR=$2
-STATIC_SECTIONS=$3
-HOST=${4:-"disclosures.ru"}
+HOST=${3:-"disclosures.ru"}
 DISCLOSURES_FOlDER=/home/sokirko/smart_parser/tools/disclosures_site
 cd $DISCLOSURES_FOlDER
 
@@ -64,7 +63,6 @@ if [ "$putin" != "Путин Владимир Владимирович" ]; then
 fi
 
 #3.  sitemaps
-tar --file $STATIC_SECTIONS --gzip --directory disclosures/static --extract ;
 python3 manage.py generate_sitemaps --settings disclosures.settings.prod --output-file disclosures/static/sitemap.xml
 
 #4  restart

@@ -7,6 +7,13 @@ import os
 from django.db import connection
 
 
+def get_max_sql_id(table_name):
+    with connection.cursor() as cursor:
+        cursor.execute("select max(id) from {};".format(table_name))
+        for max_value, in cursor:
+            return max_value
+
+
 class TPermaLinksDB:
     """  provides almost the same primary keys for sections, source_docs and persons to keep external web
      links stable """
@@ -125,13 +132,11 @@ class TPermaLinksSourceDocument(TPermaLinksDB):
         if models.Source_Document.objects.count() == 0:
             self.save_max_plus_one_primary_key(0)
         else:
-            max_value = 0
             sql = "select id, sha256 from declarations_source_document;"
             logger.info(sql)
             for record in models.Source_Document.objects.raw(sql):
                 self.save_source_doc(record.sha256, record.id)
-                max_value = max(record.id, max_value)
-            self.save_max_plus_one_primary_key(max_value + 1)
+            self.save_max_plus_one_primary_key(get_max_sql_id("declarations_source_document") + 1)
 
 
 class TPermaLinksSection(TPermaLinksDB):
@@ -149,7 +154,6 @@ class TPermaLinksSection(TPermaLinksDB):
             self.save_max_plus_one_primary_key(0)
         else:
             cnt = 0
-            max_section_id = 0
             logger.info("build section passport items...")
             passport_factory = TSectionPassportItems.get_section_passport_components()
 
@@ -160,9 +164,7 @@ class TPermaLinksSection(TPermaLinksDB):
                     logger.debug("{}".format(cnt))
                 passport = passport_items.get_main_section_passport()
                 self.db[passport] = str(section_id)
-                max_section_id = max(section_id, max_section_id)
-
-            self.save_max_plus_one_primary_key(max_section_id + 1)
+            self.save_max_plus_one_primary_key(get_max_sql_id("declarations_section") + 1)
 
 
 class TPermaLinksPerson(TPermaLinksDB):
@@ -212,15 +214,13 @@ class TPermaLinksPerson(TPermaLinksDB):
             sql = "select id, declarator_person_id from declarations_person where declarator_person_id is not null"
             logger.info(sql)
             cnt = 0
-            max_value = 0
             for person in models.Person.objects.raw(sql):
                 cnt += 1
                 if (cnt % 100000) == 0:
                     logger.debug("{}".format(cnt))
                 self.db[TPermaLinksPerson.get_person_declarator_passport(person.declarator_person_id)] = str(person.id)
-                max_value = max(person.id, max_value)
 
-            self.save_max_plus_one_primary_key(max_value + 1)
+            self.save_max_plus_one_primary_key(get_max_sql_id("declarations_person") + 1)
 
 
 class TPermalinksManager:
