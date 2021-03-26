@@ -48,6 +48,10 @@ class AboutPageView(generic.TemplateView):
     template_name = 'morda/about.html'
 
 
+class PermalinksPageView(generic.TemplateView):
+    template_name = 'morda/permalinks.html'
+
+
 def anyUrlView(request):
     path = request.path
     if path.startswith('/'):

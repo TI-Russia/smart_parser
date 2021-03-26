@@ -5,6 +5,7 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('', views.HomePageView.as_view(), name='home_page'),
     path('about.html', views.AboutPageView.as_view(), name='about_page'),
+    path('permalinks.html', views.PermalinksPageView.as_view(), name='permalinks'),
     path('sitemap.txt', views.sitemapView, name='sitemap'),
     path('sitemap.xml', views.sitemapXmlView, name='sitemapxml'),
     re_path('sitemap(?P<sitemapid>[0-9a-z-]+)?.xml', views.sitemapAuxXmlView, name='sitemapauxxml'),

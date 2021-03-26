@@ -108,6 +108,7 @@ class Command(BaseCommand):
         sitemap_path = os.path.join(os.path.dirname(__file__), "../../../disclosures/static/sitemap-main.xml")
         url_paths = ["",
                      "about.html",
+                     "permalinks.html",
                      "statistics",
                      "office",
                      "reports/car-brands/car-brands-by-years.html",
