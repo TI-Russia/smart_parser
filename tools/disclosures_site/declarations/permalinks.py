@@ -126,7 +126,9 @@ class TPermaLinksSourceDocument(TPermaLinksDB):
             self.save_max_plus_one_primary_key(0)
         else:
             max_value = 0
-            for record in models.Source_Document.objects.raw('select id, sha256 from declarations_source_document;'):
+            sql = "select id, sha256 from declarations_source_document;"
+            logger.info(sql)
+            for record in models.Source_Document.objects.raw(sql):
                 self.save_source_doc(record.sha256, record.id)
                 max_value = max(record.id, max_value)
             self.save_max_plus_one_primary_key(max_value + 1)
@@ -148,10 +150,13 @@ class TPermaLinksSection(TPermaLinksDB):
         else:
             cnt = 0
             max_section_id = 0
+            logger.info("build section passport items...")
             passport_factory = TSectionPassportItems.get_section_passport_components()
+
+            logger.info("save section passport to db...")
             for section_id, passport_items in passport_factory:
                 cnt += 1
-                if (cnt % 10000) == 0:
+                if (cnt % 100000) == 0:
                     logger.debug("{}".format(cnt))
                 passport = passport_items.get_main_section_passport()
                 self.db[passport] = str(section_id)
@@ -195,20 +200,22 @@ class TPermaLinksPerson(TPermaLinksDB):
         if self.model_type.objects.count() == 0:
             self.save_max_plus_one_primary_key(0)
         else:
-            logger.info("init section_id -> person_id")
+            sql = "select id, person_id from declarations_section where person_id is not null"
+            logger.info(sql)
             cnt = 0
-            for section in models.Section.objects.raw("select id, person_id from declarations_section where person_id is not null"):
+            for section in models.Section.objects.raw(sql):
                 cnt += 1
-                if (cnt % 10000) == 0:
+                if (cnt % 100000) == 0:
                     logger.debug("{}".format(cnt))
                 self.db[TPermaLinksPerson.get_section_passport(section.id)] = str(section.person_id)
 
-            logger.info("init person_id -> declarator_person_id")
+            sql = "select id, declarator_person_id from declarations_person where declarator_person_id is not null"
+            logger.info(sql)
             cnt = 0
             max_value = 0
-            for person in models.Section.objects.raw("select id, declarator_person_id from declarations_person"):
+            for person in models.Person.objects.raw(sql):
                 cnt += 1
-                if (cnt % 10000) == 0:
+                if (cnt % 100000) == 0:
                     logger.debug("{}".format(cnt))
                 self.db[TPermaLinksPerson.get_person_declarator_passport(person.declarator_person_id)] = str(person.id)
                 max_value = max(person.id, max_value)

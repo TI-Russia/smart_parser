@@ -106,6 +106,7 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
      echo "Error! Some linked people are missing in the new db, web-links would be broken if we publish this db"
      exit 1
    fi
+   python3 $TOOLS/disclosures_site/scripts/check_person_id_permanence.py disclosures_db disclosures_db_dev
 
 #13  Коммит статистики
    cd $TOOLS/disclosures_site
