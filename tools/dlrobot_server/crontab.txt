@@ -9,7 +9,7 @@ SOURCE_DOC_SERVER_ADDRESS=192.168.100.151:8090
 
 ##Mins  Hours  Days   Months  Day of the week
 */10       *     *        *      *    python3 $TOOLS/ConvStorage/scripts/get_stats.py --history-file $CONV_STATS
-*/10       *     *        *      *    python3 $TOOLS/disclosures_site/scripts/dl_monitoring.py --central-stats-file  $CENTRAL_STATS --conversion-server-stats $CONV_STATS --central-server-cpu-and-mem  /tmp/glances.dat --output-folder /tmp/dlrobot; scp /tmp/dlrobot/* $FRONTEND:$FRONTEND_OUTPUT_FOLDER
+*/10       *     *        *      *    python3 $TOOLS/disclosures_site/scripts/monitoring/dl_monitoring.py --central-stats-file  $CENTRAL_STATS --conversion-server-stats $CONV_STATS --central-server-cpu-and-mem  /tmp/glances.dat --output-folder /tmp/dlrobot; scp /tmp/dlrobot/* $FRONTEND:$FRONTEND_OUTPUT_FOLDER
 */20       */5   *        *      *    yandex-disk sync
 57   23 * * *   /bin/bash $TOOLS/disclosures_site/scripts/copy_nginx_logs.sh
 

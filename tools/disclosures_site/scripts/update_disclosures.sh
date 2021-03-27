@@ -125,10 +125,11 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
 #16 создание дампа базы (для debug)
     cd $DLROBOT_FOLDER
     mysqldump -u disclosures -pdisclosures disclosures_db_dev  |  gzip -c > $DLROBOT_FOLDER/disclosures.sql.gz
-    scp disclosures.sql.gz $FRONTEND:/home/sokirko/smart_parser/tools/disclosures_site
 
-#17 switch dev to  prod in backend
+
+#17 switch dev to  prod in backend (migalka)
     mysqladmin drop  disclosures_db -u disclosures -pdisclosures -f
+    cd $TOOLS/disclosures_site
     bash scripts/rename_db.sh disclosures_db_dev disclosures_db
     python3 manage.py build_elastic_index --settings disclosures.settings.prod
 
