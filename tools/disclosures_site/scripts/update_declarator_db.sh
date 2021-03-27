@@ -20,7 +20,7 @@ source $(dirname $0)/update_common.sh
     # zcat стал выдавать ошибку gzip: prod20201208_c2e1d1df8952449082527780429c0068.zip: invalid compressed data--length error
     # а unzip не выдает
     unzip prod20201208_c2e1d1df8952449082527780429c0068.zip
-    cat prod20201208.sql  | mysql -D declarator -u declarator -pdeclarator
+      cat prod20201208.sql  | mysql -D declarator -u declarator -pdeclarator
 
 
 #2.2  получить все новые (!) файлы из declarator и создать файл human_files.json

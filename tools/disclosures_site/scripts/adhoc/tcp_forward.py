@@ -1,4 +1,4 @@
-
+# this scrpit is not used, delete it in 2022 year
 import socket
 import threading
 import select

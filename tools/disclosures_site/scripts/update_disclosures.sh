@@ -132,6 +132,12 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
     bash scripts/rename_db.sh disclosures_db_dev disclosures_db
     python3 manage.py build_elastic_index --settings disclosures.settings.prod
 
+#18 sitemaps
+    cd $TOOLS/disclosures_site
+    python3 manage.py generate_sitemaps --settings disclosures.settings.prod --output-file disclosures/static/sitemap.xml \
+      --access-log-folder $ACCESS_LOG_ARCHIVE --tar-path sitemap.tar
+    scp sitemap.tar $FRONTEND:/tmp/sitemap.tar
+
 #19 make binary archives and copy to frontend
     sudo systemctl stop mysql
     cd /var/lib/mysql
@@ -145,7 +151,7 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
 
 #20 обновление prod
     ssh $FRONTEND git -C ~/smart_parser pull
-    ssh $FRONTEND bash -x /home/sokirko/smart_parser/tools/disclosures_site/scripts/switch_prod.sh /tmp/mysql.tar.gz /tmp/elastic.tar.gz
+    ssh $FRONTEND bash -x /home/sokirko/smart_parser/tools/disclosures_site/scripts/switch_prod.sh /tmp/mysql.tar.gz /tmp/elastic.tar.gz /tmp/sitemap.tar
 
 
 #21  посылаем данные dlrobot в каталог, который синхронизирутеся с облаком, очищаем dlrobot_central (без возврата)

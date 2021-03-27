@@ -1,6 +1,7 @@
 MYSQL_TAR=$1
 ELASTICSEARCH_TAR=$2
-HOST=${3:-"disclosures.ru"}
+SITEMAP_ARCHIVE=$3
+HOST=${4:-"disclosures.ru"}
 DISCLOSURES_FOlDER=/home/sokirko/smart_parser/tools/disclosures_site
 cd $DISCLOSURES_FOlDER
 
@@ -63,7 +64,8 @@ if [ "$putin" != "Путин Владимир Владимирович" ]; then
 fi
 
 #3.  sitemaps
-python3 manage.py generate_sitemaps --settings disclosures.settings.prod --output-file disclosures/static/sitemap.xml
+tar xf $SITEMAP_ARCHIVE
+
 
 #4  restart
 sudo systemctl restart gunicorn
