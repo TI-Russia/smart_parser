@@ -72,7 +72,7 @@ sudo systemctl restart gunicorn
 
 #5 testing by curl
 req_count=`python3 scripts/dolbilo.py --input-access-log data/access.test.log.gz  --host $HOST | jq ".normal_response_count"`
-canon_req_count="349"
+canon_req_count="141"
 if [ "$req_count" != $canon_req_count ]; then
   echo "site testing returns only $req_count requests with 200 http code, while it must be $canon_req_count requests"
   exit 1

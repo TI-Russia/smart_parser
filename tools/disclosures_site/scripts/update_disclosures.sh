@@ -142,7 +142,7 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
 #19 make binary archives and copy to frontend
     sudo systemctl stop mysql
     cd /var/lib/mysql
-    sudo find * sys performance_schema mysql disclosures_db -maxdepth 1 -type f  | sudo xargs tar cfvz $DLROBOT_FOLDER/mysql.tar.gz
+    sudo find * -maxdepth 0 -type f | cat -  <( sudo find sys performance_schema mysql disclosures_db) | sudo xargs tar cfvz $DLROBOT_FOLDER/mysql.tar.gz
     cd -
     scp $DLROBOT_FOLDER/mysql.tar.gz $FRONTEND:/tmp
 
