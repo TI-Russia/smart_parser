@@ -3,7 +3,8 @@
 #0 ~/smart_parser/tools/INSTALL.txt are prerequisites
 
 set -e
-COMMON_SCRIPT=$(dirname $0)/update_common.sh
+SOURCE_ROOT=~/smart_parser/tools/disclosures_site
+COMMON_SCRIPT=$SOURCE_ROOT/scripts/update_common.sh
 source $COMMON_SCRIPT
 
 
