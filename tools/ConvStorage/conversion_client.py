@@ -45,17 +45,17 @@ class TDocConversionClient(object):
         self.args = args
         if args.conversion_server is not None:
             TDocConversionClient.DECLARATOR_CONV_URL = args.conversion_server
-        assert_declarator_conv_alive()
+        self.logger = logger if logger is not None else logging.getLogger("dlrobot_logger")
+        if TDocConversionClient.DECLARATOR_CONV_URL is None:
+            print("specify environment variable DECLARATOR_CONV_URL to obtain docx by pdf-files")
+            assert TDocConversionClient.DECLARATOR_CONV_URL is not None
+        assert_declarator_conv_alive(self.logger)
         self.wait_new_tasks = True
         self._input_tasks = queue.Queue()
         self._sent_tasks = list()
         self.conversion_thread = None
-        if TDocConversionClient.DECLARATOR_CONV_URL is None:
-            print("specify environment variable DECLARATOR_CONV_URL to obtain docx by pdf-files")
-            assert TDocConversionClient.DECLARATOR_CONV_URL is not None
         self.db_conv_url = TDocConversionClient.DECLARATOR_CONV_URL
         self.input_task_timeout = 5
-        self.logger = logger if logger is not None else logging.getLogger("dlrobot_logger")
         self.all_pdf_size_sent_to_conversion = 0
         self.default_http_timeout = 60*10
         self.inner_stats_timestamp = None
@@ -287,12 +287,15 @@ class TDocConversionClient(object):
         return 0
 
 
-def assert_declarator_conv_alive():
+def assert_declarator_conv_alive(logger=None):
     if TDocConversionClient.DECLARATOR_CONV_URL is None:
         raise Exception("environment variable DECLARATOR_CONV_URL is not set")
 
     try:
-        with urllib.request.urlopen("http://" + TDocConversionClient.DECLARATOR_CONV_URL+"/ping", timeout=300) as response:
+        url = "http://" + TDocConversionClient.DECLARATOR_CONV_URL+"/ping"
+        if logger is not None:
+            logger.debug ("try to fetch {}".format(url))
+        with urllib.request.urlopen(url, timeout=300) as response:
             if response.read() == "yes":
                 return True
     except Exception as exp:

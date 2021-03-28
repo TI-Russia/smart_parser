@@ -24,7 +24,7 @@ source $(dirname $0)/update_common.sh
 
 
 #2.2  получить все новые (!) файлы из declarator и создать файл human_files.json
-    cp $HUMAN_FILES_JSON human_files.json.sav
+    cp $HUMAN_FILES_JSON $HUMAN_FILES_JSON.sav
     python3 $TOOLS/disclosures_site/scripts/export_human_files.py --table declarations_documentfile  --dlrobot-human-json $HUMAN_FILES_JSON
 
 #2.3 создание ручных json
