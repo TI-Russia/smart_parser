@@ -30,7 +30,11 @@ def kill_crawling():
 
 
 def stop_dlrobot_worker_gently():
-    pitstop_file = os.path.join("/tmp/dlrobot_worker/", PITSTOP_FILE)
+    worker_folder = "/tmp/dlrobot_worker"
+    if not os.path.exists(worker_folder):
+        print("no dlrobot_worker folder found: {}".format(worker_folder))
+        return
+    pitstop_file = os.path.join(worker_folder, PITSTOP_FILE)
     with open(pitstop_file, "w") as outp:
         pass
     assert os.path.exists(pitstop_file)
