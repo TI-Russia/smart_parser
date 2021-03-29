@@ -3,7 +3,7 @@ import os
 import shutil
 import psutil
 import time
-from common_server_worker import PITSTOP_FILE, TYandexCloud
+from dlrobot_server.common_server_worker import PITSTOP_FILE, TYandexCloud
 import subprocess
 
 

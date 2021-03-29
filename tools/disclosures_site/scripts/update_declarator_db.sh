@@ -27,8 +27,12 @@ source $(dirname $0)/update_common.sh
     cp $HUMAN_FILES_JSON $HUMAN_FILES_JSON.sav
     python3 $TOOLS/disclosures_site/scripts/export_human_files.py --table declarations_documentfile  --dlrobot-human-json $HUMAN_FILES_JSON
 
-#2.3 создание ручных json
+#2.3 создание ручных json (опционально)
     [ -d  $HUMAN_JSONS_FOLDER ] || mkdir $HUMAN_JSONS_FOLDER
     cd ~/declarator/transparency
     source ../venv/bin/activate
     python3 manage.py export_in_smart_parser_format --output-folder $HUMAN_JSONS_FOLDER
+
+#2.4 Обновление офисов
+  echo  "select * from declarator.declarations_office  where id not in (select id from disclosures_db.declarations_office)" |  mysqlsh --sql --result-format=json/array --uri=declarator@localhost -pdeclarator -D declarator > new_offices.txt
+  #take new_offices.txt and add it to disclosures_site/data/offices.txt
