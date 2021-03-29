@@ -3,7 +3,9 @@ import os
 import shutil
 import psutil
 import time
-from dlrobot_server.common_server_worker import PITSTOP_FILE, TYandexCloud
+import sys
+sys.path.append(os.path.join( os.path.dirname(__file__), '..'))
+from common_server_worker import PITSTOP_FILE, TYandexCloud
 import subprocess
 
 
