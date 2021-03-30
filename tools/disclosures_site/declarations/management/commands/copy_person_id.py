@@ -120,8 +120,9 @@ class Command(BaseCommand):
             person.person_name = section.person_name
             person.save()
 
+        assert person.declarator_person_id is not None
         self.logger.debug("connect section {} to person {}, declarator_person_id={}".format(
-            section.id, person.id, declarator_person_id))
+            section.id, person.id, person.declarator_person_id))
 
         section.person = person
         section.dedupe_score = None

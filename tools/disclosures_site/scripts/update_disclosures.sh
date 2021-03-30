@@ -151,7 +151,7 @@ echo $DEDUPE_HOSTS_SPACES | tr " " "\n"  | xargs  --verbose -P 4 -n 1 python3 $T
 #20 обновление prod
     ssh $FRONTEND git -C ~/smart_parser pull
     ssh $FRONTEND bash -x /home/sokirko/smart_parser/tools/disclosures_site/scripts/switch_prod.sh /tmp/mysql.tar.gz /tmp/elastic.tar.gz /tmp/sitemap.tar
-
+    ssh $PROD_SOURCE_DOC_SERVER sudo systemctl restart source_declaration_doc
 
 #21  посылаем данные dlrobot в каталог, который синхронизирутеся с облаком, очищаем dlrobot_central (без возврата)
     cd $DLROBOT_FOLDER

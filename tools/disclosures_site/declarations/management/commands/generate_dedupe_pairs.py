@@ -8,6 +8,7 @@ import sys
 import json
 from collections import defaultdict
 import itertools
+from django.db import connection
 
 
 class Command(BaseCommand):
@@ -119,22 +120,13 @@ class Command(BaseCommand):
         return records
 
     def read_sections(self, lower_bound, upper_bound):
-        sections = self.filter_table(models.Section, lower_bound, upper_bound)
-        if not self.rebuild:
-            sections = sections.filter(person=None)
+        sections = self.filter_table(models.Section, lower_bound, upper_bound)\
+
+        # there are sections with person_id != null, person_id was set by  copy_person_id.py,
+        # we need these records to build valid clusters
         cnt = 0
         take_sections_with_empty_income = self.options.get('take_sections_with_empty_income', False)
         for s in sections.all():
-            if s.person is not None:
-                if s.person.declarator_person_id is not None:
-                    # this merging was copied from declarator, do not touch it
-                    continue
-                else:
-                    if self.rebuild:
-                        # this merging was created by the previous dedupe run
-                        s.dedupe_score = None
-                        s.person_id = None
-                        s.save() # do it to disable constraint delete
             o = TDeduplicationObject().initialize_from_section(s)
             if not o.fio.is_resolved:
                 self.logger.debug("ignore section id={} person_name={}, cannot find family name".format(s.id, s.person_name))
@@ -152,30 +144,53 @@ class Command(BaseCommand):
     def read_people(self, lower_bound, upper_bound):
         persons = self.filter_table(models.Person, lower_bound, upper_bound)
         cnt = 0
-        deleted_cnt = 0
         for p in persons.all():
-            if self.rebuild and p.declarator_person_id is None:
-                # the record was created by the previous deduplication run
-                p.delete()
-                deleted_cnt += 1
+            o = TDeduplicationObject().initialize_from_person(p)
+            if len(o.years) > 0:
+                self.cluster_by_minimal_fio[o.fio.build_fio_with_initials()].append(o)
             else:
-                o = TDeduplicationObject().initialize_from_person(p)
-                if len(o.years) > 0:
-                    self.cluster_by_minimal_fio[o.fio.build_fio_with_initials()].append(o)
-                cnt += 1
-                if cnt % 1000 == 0:
-                    self.logger.info("Read {} records from person table".format(cnt))
+                self.logger.debug("skip person id={}, because this record has no related sections with"
+                                  " defined income years".format(p.id))
+            cnt += 1
+            if cnt % 1000 == 0:
+                self.logger.info("Read {} records from person table".format(cnt))
         self.logger.info("Read {} records from person table".format(cnt))
-        if deleted_cnt > 0:
-            self.logger.info("Deleted {} records from person table".format(deleted_cnt))
 
     def get_all_leaf_objects(self):
         for l in self.cluster_by_minimal_fio.values():
             for o in l:
                 yield o
 
+    def filter_sql_by_person_name(self, sql, lower_bound, upper_bound):
+        if lower_bound == '':
+            assert upper_bound == ''
+            return sql
+        if lower_bound != '':
+            assert upper_bound != ''
+        return sql + " and person_name >= '{}' and person_name < '{}' ".format(lower_bound, upper_bound)
+
+    def delete_person_ids_from_previous_deduplication(self, lower_bound, upper_bound):
+        sql = self.filter_sql_by_person_name("update declarations_section set " \
+              "person_id=null, dedupe_score=null " \
+              "where dedupe_score is not null ", lower_bound, upper_bound)
+
+        if lower_bound != '':
+            assert upper_bound != ''
+            sql += ""
+        self.logger.debug(sql)
+        with connection.cursor() as cursor:
+            cursor.execute(sql)
+
+        sql = self.filter_sql_by_person_name("delete from declarations_person " \
+                        "where declarator_person_id is null", lower_bound, upper_bound)
+        self.logger.debug(sql)
+        with connection.cursor() as cursor:
+            cursor.execute(sql)
+
     def fill_dedupe_data(self, lower_bound, upper_bound):
         self.cluster_by_minimal_fio = defaultdict(list)
+        if self.rebuild:
+            self.delete_person_ids_from_previous_deduplication(lower_bound, upper_bound)
 
         self.read_sections(lower_bound, upper_bound)
         self.read_people(lower_bound, upper_bound)
@@ -199,8 +214,10 @@ class Command(BaseCommand):
                     min(obj.years)))
 
     def link_section_to_person(self, section, person, distance):
-        if section.person_id == person.id:
-            #dedupe score is not set to these records, they are from declarator
+        if section.person_id is not None and section.dedupe_score is None:
+            #these person_id's came from declarator, do not touch them
+            self.logger.debug("skip setting person_id={} to section (id={}, person_id=[}, because it is from declarator".format(
+                    person.id, section.id, section.person_id))
             return
         self.logger.debug("link section {} to person {}".format(section.id, person.id))
         section.person_id = person.id
@@ -218,8 +235,15 @@ class Command(BaseCommand):
         else:
             self.logger.debug("use old person.id: {}".format(person_id))
 
-        person = models.Person(id=person_id)
-        person.save()
+        try:
+            person = models.Person.objects.get(id=person_id)
+            #reuse person record from declarator
+            if person.declarator_person_id is None:
+                self.logger.error ("Warning! Reuse person_id = {} for different sections ".format(person_id))
+        except models.Person.DoesNotExist as exp:
+            #create new person record
+            person = models.Person(id=person_id)
+            person.save()
 
         for (section, distance) in zip(sections,section_distances):
             self.link_section_to_person(section, person, distance)

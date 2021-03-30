@@ -54,20 +54,24 @@ class UseOldPersonId(TestCase):
         src_doc = create_default_source_document()
         models.Person.objects.all().delete()
 
-        person = models.Person(id=2, declarator_person_id=1111, person_name="Иванов Иван Иванович")
+        person_id = 2
+        declarator_person_id = 1111
+        person = models.Person(
+            id=person_id,
+            declarator_person_id=declarator_person_id,
+            person_name="Иванов Иван Иванович")
         person.save()
 
         models.Section(id=1, source_document=src_doc, person_name="Иванов Иван Иванович", person=person).save()
         models.Section(id=2, source_document=src_doc, person_name="Иванов И. И.").save()
 
-        person.refresh_from_db()
-
         permalinks_folder = os.path.dirname(__file__)
-        p = TPermaLinksPerson(permalinks_folder)
-        p.create_db()
-        p.save_max_plus_one_primary_key(3)
-        p.recreate_auto_increment_table()
-        p.close_db()
+        db = TPermaLinksPerson(permalinks_folder)
+        db.create_db()
+        db.save_dataset(setup_logging())
+        #db.save_max_plus_one_primary_key(3)
+        db.recreate_auto_increment_table()
+        db.close_db()
 
         run_dedupe = RunDedupe(None, None)
         run_dedupe.handle(None,
@@ -79,6 +83,9 @@ class UseOldPersonId(TestCase):
                           rebuild=True)
 
         self.assertEqual(models.Person.objects.count(), 1)
+        person = models.Person.objects.get(id=person_id)
+        self.assertIsNotNone(person)
+        self.assertEqual(declarator_person_id, person.declarator_person_id)
 
         sec1 = models.Section.objects.get(id=1)
         self.assertEqual(sec1.person_id, person.id)
