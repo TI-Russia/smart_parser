@@ -66,6 +66,7 @@ def deprecate_link(logger, url, wikidata_item):
                 else:
                     logger.info("deprecate {} from {}".format(wikidata_url, wikidata_item))
                     claim.addQualifier(qualifier, summary='the site was abandoned or used for spam.')
+                    claim.changeRank('deprecated')
                     #  cannot remove it
                     # item_page.removeClaims(claim)
                     return True

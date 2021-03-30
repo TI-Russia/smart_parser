@@ -1,0 +1,734 @@
+-- MySQL dump 10.13  Distrib 8.0.23, for Linux (x86_64)
+--
+-- Host: localhost    Database: disclosures_db_dev
+-- ------------------------------------------------------
+-- Server version	8.0.23-0ubuntu0.20.04.1
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `auth_group`
+--
+
+DROP TABLE IF EXISTS `auth_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `auth_group` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group`
+--
+
+LOCK TABLES `auth_group` WRITE;
+/*!40000 ALTER TABLE `auth_group` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_group_permissions`
+--
+
+DROP TABLE IF EXISTS `auth_group_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `auth_group_permissions` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `group_id` int NOT NULL,
+  `permission_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_group_permissions_group_id_permission_id_0cd325b0_uniq` (`group_id`,`permission_id`),
+  KEY `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` (`permission_id`),
+  CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
+  CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group_permissions`
+--
+
+LOCK TABLES `auth_group_permissions` WRITE;
+/*!40000 ALTER TABLE `auth_group_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_group_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_permission`
+--
+
+DROP TABLE IF EXISTS `auth_permission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `auth_permission` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content_type_id` int NOT NULL,
+  `codename` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
+  CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=77 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_permission`
+--
+
+LOCK TABLES `auth_permission` WRITE;
+/*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
+INSERT INTO `auth_permission` VALUES (1,'Can add log entry',1,'add_logentry'),(2,'Can change log entry',1,'change_logentry'),(3,'Can delete log entry',1,'delete_logentry'),(4,'Can view log entry',1,'view_logentry'),(5,'Can add permission',2,'add_permission'),(6,'Can change permission',2,'change_permission'),(7,'Can delete permission',2,'delete_permission'),(8,'Can view permission',2,'view_permission'),(9,'Can add group',3,'add_group'),(10,'Can change group',3,'change_group'),(11,'Can delete group',3,'delete_group'),(12,'Can view group',3,'view_group'),(13,'Can add user',4,'add_user'),(14,'Can change user',4,'change_user'),(15,'Can delete user',4,'delete_user'),(16,'Can view user',4,'view_user'),(17,'Can add content type',5,'add_contenttype'),(18,'Can change content type',5,'change_contenttype'),(19,'Can delete content type',5,'delete_contenttype'),(20,'Can view content type',5,'view_contenttype'),(21,'Can add session',6,'add_session'),(22,'Can change session',6,'change_session'),(23,'Can delete session',6,'delete_session'),(24,'Can view session',6,'view_session'),(25,'Can add region',7,'add_region'),(26,'Can change region',7,'change_region'),(27,'Can delete region',7,'delete_region'),(28,'Can view region',7,'view_region'),(29,'Can add region_ synonyms',8,'add_region_synonyms'),(30,'Can change region_ synonyms',8,'change_region_synonyms'),(31,'Can delete region_ synonyms',8,'delete_region_synonyms'),(32,'Can view region_ synonyms',8,'view_region_synonyms'),(33,'Can add office',9,'add_office'),(34,'Can change office',9,'change_office'),(35,'Can delete office',9,'delete_office'),(36,'Can view office',9,'view_office'),(37,'Can add person',10,'add_person'),(38,'Can change person',10,'change_person'),(39,'Can delete person',10,'delete_person'),(40,'Can view person',10,'view_person'),(41,'Can add source_ document',11,'add_source_document'),(42,'Can change source_ document',11,'change_source_document'),(43,'Can delete source_ document',11,'delete_source_document'),(44,'Can view source_ document',11,'view_source_document'),(45,'Can add declarator_ file_ reference',12,'add_declarator_file_reference'),(46,'Can change declarator_ file_ reference',12,'change_declarator_file_reference'),(47,'Can delete declarator_ file_ reference',12,'delete_declarator_file_reference'),(48,'Can view declarator_ file_ reference',12,'view_declarator_file_reference'),(49,'Can add web_ reference',13,'add_web_reference'),(50,'Can change web_ reference',13,'change_web_reference'),(51,'Can delete web_ reference',13,'delete_web_reference'),(52,'Can view web_ reference',13,'view_web_reference'),(53,'Can add section',14,'add_section'),(54,'Can change section',14,'change_section'),(55,'Can delete section',14,'delete_section'),(56,'Can view section',14,'view_section'),(57,'Can add vehicle',15,'add_vehicle'),(58,'Can change vehicle',15,'change_vehicle'),(59,'Can delete vehicle',15,'delete_vehicle'),(60,'Can view vehicle',15,'view_vehicle'),(61,'Can add real estate',16,'add_realestate'),(62,'Can change real estate',16,'change_realestate'),(63,'Can delete real estate',16,'delete_realestate'),(64,'Can view real estate',16,'view_realestate'),(65,'Can add income',17,'add_income'),(66,'Can change income',17,'change_income'),(67,'Can delete income',17,'delete_income'),(68,'Can view income',17,'view_income'),(69,'Can add person_ rating',18,'add_person_rating'),(70,'Can change person_ rating',18,'change_person_rating'),(71,'Can delete person_ rating',18,'delete_person_rating'),(72,'Can view person_ rating',18,'view_person_rating'),(73,'Can add person_ rating_ items',19,'add_person_rating_items'),(74,'Can change person_ rating_ items',19,'change_person_rating_items'),(75,'Can delete person_ rating_ items',19,'delete_person_rating_items'),(76,'Can view person_ rating_ items',19,'view_person_rating_items');
+/*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_user`
+--
+
+DROP TABLE IF EXISTS `auth_user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `auth_user` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `password` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_login` datetime(6) DEFAULT NULL,
+  `is_superuser` tinyint(1) NOT NULL,
+  `username` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `first_name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_name` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(254) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_staff` tinyint(1) NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `date_joined` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user`
+--
+
+LOCK TABLES `auth_user` WRITE;
+/*!40000 ALTER TABLE `auth_user` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_user_groups`
+--
+
+DROP TABLE IF EXISTS `auth_user_groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `auth_user_groups` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `group_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_user_groups_user_id_group_id_94350c0c_uniq` (`user_id`,`group_id`),
+  KEY `auth_user_groups_group_id_97559544_fk_auth_group_id` (`group_id`),
+  CONSTRAINT `auth_user_groups_group_id_97559544_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
+  CONSTRAINT `auth_user_groups_user_id_6a12ed8b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user_groups`
+--
+
+LOCK TABLES `auth_user_groups` WRITE;
+/*!40000 ALTER TABLE `auth_user_groups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_user_groups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_user_user_permissions`
+--
+
+DROP TABLE IF EXISTS `auth_user_user_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `auth_user_user_permissions` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `permission_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_user_user_permissions_user_id_permission_id_14a6b632_uniq` (`user_id`,`permission_id`),
+  KEY `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` (`permission_id`),
+  CONSTRAINT `auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
+  CONSTRAINT `auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_user_user_permissions`
+--
+
+LOCK TABLES `auth_user_user_permissions` WRITE;
+/*!40000 ALTER TABLE `auth_user_user_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_user_user_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `declarations_declarator_file_reference`
+--
+
+DROP TABLE IF EXISTS `declarations_declarator_file_reference`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `declarations_declarator_file_reference` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `declarator_documentfile_id` int DEFAULT NULL,
+  `declarator_document_id` int DEFAULT NULL,
+  `declarator_document_file_url` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `source_document_id` int NOT NULL,
+  `web_domain` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`id`),
+  KEY `declarations_declara_source_document_id_6b0c9ecd_fk_declarati` (`source_document_id`),
+  CONSTRAINT `declarations_declara_source_document_id_6b0c9ecd_fk_declarati` FOREIGN KEY (`source_document_id`) REFERENCES `declarations_source_document` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=262826 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `declarations_declarator_file_reference`
+--
+
+LOCK TABLES `declarations_declarator_file_reference` WRITE;
+/*!40000 ALTER TABLE `declarations_declarator_file_reference` DISABLE KEYS */;
+/*!40000 ALTER TABLE `declarations_declarator_file_reference` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `declarations_income`
+--
+
+DROP TABLE IF EXISTS `declarations_income`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `declarations_income` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `size` int DEFAULT NULL,
+  `relative` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `section_id` int NOT NULL,
+  `relative_index` smallint unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `declarations_income_section_id_f0bdd38a_fk_declarati` (`section_id`),
+  CONSTRAINT `declarations_income_section_id_f0bdd38a_fk_declarati` FOREIGN KEY (`section_id`) REFERENCES `declarations_section` (`id`),
+  CONSTRAINT `declarations_income_chk_1` CHECK ((`relative_index` >= 0))
+) ENGINE=InnoDB AUTO_INCREMENT=9701210 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `declarations_income`
+--
+
+LOCK TABLES `declarations_income` WRITE;
+/*!40000 ALTER TABLE `declarations_income` DISABLE KEYS */;
+INSERT INTO `declarations_income` VALUES (938896,509869,'D',6437989,NULL),(938897,0,'C',6437989,1),(1984025,598401,'D',6672563,NULL),(1984026,0,'C',6672563,1),(1990359,382373,'D',6674154,NULL),(1990360,0,'C',6674154,1),(2435001,620568,'D',6773981,NULL),(2435002,0,'C',6773981,1),(5227941,513297,'D',451721,NULL),(5227942,278075,'S',451721,1),(5228347,554289,'D',452066,NULL),(5228348,299156,'S',452066,1),(5228635,554384,'D',452420,NULL),(5228636,268013,'S',452420,1),(5229527,501613,'D',453686,NULL),(5229528,205239,'S',453686,1),(5230922,214859,'D',455039,NULL),(5230923,195253,'S',455039,1),(5231932,545435,'D',5105303,NULL),(5231933,327905,'S',5105303,1),(5231934,0,'C',5105303,2),(5231935,0,'C',5105303,3),(8718331,636535,'D',1801614,NULL);
+/*!40000 ALTER TABLE `declarations_income` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `declarations_person`
+--
+
+DROP TABLE IF EXISTS `declarations_person`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `declarations_person` (
+  `id` int NOT NULL,
+  `person_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `declarator_person_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `declarations_person`
+--
+
+LOCK TABLES `declarations_person` WRITE;
+/*!40000 ALTER TABLE `declarations_person` DISABLE KEYS */;
+INSERT INTO `declarations_person` VALUES (5295,'Резанова Юлия Владимировна',5295);
+/*!40000 ALTER TABLE `declarations_person` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `declarations_person_auto_increment`
+--
+
+DROP TABLE IF EXISTS `declarations_person_auto_increment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `declarations_person_auto_increment` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5296 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `declarations_person_auto_increment`
+--
+
+LOCK TABLES `declarations_person_auto_increment` WRITE;
+/*!40000 ALTER TABLE `declarations_person_auto_increment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `declarations_person_auto_increment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `declarations_person_rating`
+--
+
+DROP TABLE IF EXISTS `declarations_person_rating`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `declarations_person_rating` (
+  `id` int NOT NULL,
+  `name` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image_file_path` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rating_unit_name` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `declarations_person_rating`
+--
+
+LOCK TABLES `declarations_person_rating` WRITE;
+/*!40000 ALTER TABLE `declarations_person_rating` DISABLE KEYS */;
+/*!40000 ALTER TABLE `declarations_person_rating` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `declarations_person_rating_items`
+--
+
+DROP TABLE IF EXISTS `declarations_person_rating_items`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `declarations_person_rating_items` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `person_place` int NOT NULL,
+  `rating_year` int NOT NULL,
+  `rating_value` int NOT NULL,
+  `competitors_number` int NOT NULL,
+  `office_id` int DEFAULT NULL,
+  `person_id` int NOT NULL,
+  `rating_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `declarations_person__office_id_c778b00f_fk_declarati` (`office_id`),
+  KEY `declarations_person__person_id_63f97216_fk_declarati` (`person_id`),
+  KEY `declarations_person__rating_id_67bfb9c3_fk_declarati` (`rating_id`),
+  CONSTRAINT `declarations_person__office_id_c778b00f_fk_declarati` FOREIGN KEY (`office_id`) REFERENCES `declarations_office` (`id`),
+  CONSTRAINT `declarations_person__person_id_63f97216_fk_declarati` FOREIGN KEY (`person_id`) REFERENCES `declarations_person` (`id`),
+  CONSTRAINT `declarations_person__rating_id_67bfb9c3_fk_declarati` FOREIGN KEY (`rating_id`) REFERENCES `declarations_person_rating` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=377979 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `declarations_person_rating_items`
+--
+
+LOCK TABLES `declarations_person_rating_items` WRITE;
+/*!40000 ALTER TABLE `declarations_person_rating_items` DISABLE KEYS */;
+/*!40000 ALTER TABLE `declarations_person_rating_items` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `declarations_realestate`
+--
+
+DROP TABLE IF EXISTS `declarations_realestate`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `declarations_realestate` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `type` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `relative` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `owntype` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `square` int DEFAULT NULL,
+  `share` double DEFAULT NULL,
+  `section_id` int NOT NULL,
+  `relative_index` smallint unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `declarations_realest_section_id_47cf26ba_fk_declarati` (`section_id`),
+  CONSTRAINT `declarations_realest_section_id_47cf26ba_fk_declarati` FOREIGN KEY (`section_id`) REFERENCES `declarations_section` (`id`),
+  CONSTRAINT `declarations_realestate_chk_1` CHECK ((`relative_index` >= 0))
+) ENGINE=InnoDB AUTO_INCREMENT=23821113 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `declarations_realestate`
+--
+
+LOCK TABLES `declarations_realestate` WRITE;
+/*!40000 ALTER TABLE `declarations_realestate` DISABLE KEYS */;
+INSERT INTO `declarations_realestate` VALUES (2046849,'квартира','RU','D','P',68,NULL,6437989,NULL),(2046850,'квартира','RU','C','P',68,NULL,6437989,NULL),(4386507,'квартира','RU','D','P',68,NULL,6672563,NULL),(4386508,'дача','RU','D','P',839,NULL,6672563,NULL),(4386509,'гараж','RU','D','P',19,NULL,6672563,NULL),(4386510,'квартира','RU','C','P',68,NULL,6672563,NULL),(5378409,'квартира','RU','D','P',66,NULL,6773981,NULL),(5378410,'дача','RU','D','P',839,NULL,6773981,NULL),(5378411,'гараж','RU','D','P',19,NULL,6773981,NULL),(5378412,'квартира','RU','C','P',66,NULL,6773981,NULL),(12691133,'земли населенных пунктовмалоэтажная застройка, \nиндивидуальная','RU','D','P',800,NULL,451721,NULL),(12691134,'квартира, (1/5) общая долевая','RU','D','P',23,NULL,451721,NULL),(12691135,'квартира, безвозмездное \nпользование','RU','D','P',64,NULL,451721,NULL),(12691136,'квартира, (1/5) общая долевая','RU','S','P',23,NULL,451721,NULL),(12691137,'квартира, \nиндивидуальная','RU','S','P',54,NULL,451721,NULL),(12691138,'квартира, безвозмездное \nпользование','RU','S','P',64,NULL,451721,NULL),(12691139,'квартира, (1/5) общая долевая','RU','C','P',23,NULL,451721,NULL),(12691140,'квартира, безвозмездное \nпользование','RU','C','P',64,NULL,451721,NULL),(12691141,'квартира, (1/5) общая долевая','RU','C','P',23,NULL,451721,NULL),(12691142,'квартира, безвозмездное \nпользование','RU','C','P',64,NULL,451721,NULL),(12691143,'квартира, (1/5) общая долевая','RU','C','P',23,NULL,451721,NULL),(12691144,'квартира, безвозмездное \nпользование','RU','C','P',64,NULL,451721,NULL),(12692300,'земельный участок','RU','D','P',800,NULL,452066,NULL),(12692301,'квартира','RU','D','P',64,NULL,452066,NULL),(12692302,'квартира','RU','D','P',23,NULL,452066,NULL),(12692303,'квартира','RU','S','P',23,NULL,452066,NULL),(12692304,'квартира','RU','S','P',64,NULL,452066,NULL),(12692305,'квартира','RU','S','P',54,NULL,452066,NULL),(12692306,'квартира','RU','C','P',23,NULL,452066,NULL),(12692307,'квартира','RU','C','P',64,NULL,452066,NULL),(12692308,'квартира','RU','C','P',23,NULL,452066,NULL),(12692309,'квартира','RU','C','P',64,NULL,452066,NULL),(12693072,'земельный для размещения ИЖД, индивидуальная','RU','D','P',800,NULL,452420,NULL),(12693073,'квартира, (1/5) общая долевая','RU','D','P',23,NULL,452420,NULL),(12693074,'квартира, безвозмездное пользование','RU','D','P',64,NULL,452420,NULL),(12693075,'квартира, (1/5) общая долевая','RU','S','P',23,NULL,452420,NULL),(12693076,'квартира, индивидуальная','RU','S','P',54,NULL,452420,NULL),(12693077,'квартира, безвозмездное пользование','RU','S','P',64,NULL,452420,NULL),(12693078,'квартира, (1/5) \nобщая долевая','RU','C','P',23,NULL,452420,NULL),(12693079,'квартира, безвозмездное \nпользование','RU','C','P',64,NULL,452420,NULL),(12693080,'квартира, (1/5) \nобщая долевая','RU','C','P',23,NULL,452420,NULL),(12693081,'квартира, безвозмездное пользование','RU','C','P',64,NULL,452420,NULL),(12699542,'земельный участок','RU','D','P',800,NULL,5105303,NULL),(12699543,'квартира','RU','D','P',64,NULL,5105303,NULL),(12699544,'квартира','RU','D','P',23,NULL,5105303,NULL),(12699545,'квартира','RU','S','P',23,NULL,5105303,NULL),(12699546,'квартира','RU','S','P',64,NULL,5105303,NULL),(12699547,'квартира','RU','S','P',54,NULL,5105303,NULL),(12699548,'квартира','RU','C','P',23,NULL,5105303,NULL),(12699549,'квартира','RU','C','P',64,NULL,5105303,NULL),(12699550,'квартира','RU','C','P',23,NULL,5105303,NULL),(12699551,'квартира','RU','C','P',64,NULL,5105303,NULL),(21391071,'квартира','RU','D','P',39,NULL,1801614,NULL);
+/*!40000 ALTER TABLE `declarations_realestate` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `declarations_region`
+--
+
+DROP TABLE IF EXISTS `declarations_region`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `declarations_region` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wikibase_id` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `declarations_region`
+--
+
+LOCK TABLES `declarations_region` WRITE;
+/*!40000 ALTER TABLE `declarations_region` DISABLE KEYS */;
+INSERT INTO `declarations_region` VALUES (1,'Санкт-Петербург',NULL),(3,'Республика Адыгея',NULL),(4,'Республика Башкортостан',NULL),(5,'Республика Бурятия',NULL),(6,'Республика Алтай',NULL),(8,'Республика Ингушетия',NULL),(9,'Кабардино-Балкарская Республика',NULL),(11,'Карачаево-Черкесская республика',NULL),(12,'Республика Карелия',NULL),(13,'Республика Коми',NULL),(17,'Республика Северная Осетия — Алания',NULL),(18,'Республика Татарстан',NULL),(20,'Удмуртская республика',NULL),(21,'Республика Хакасия',NULL),(24,'Алтайский край',NULL),(27,'Краснодарский край',NULL),(28,'Красноярский край',NULL),(29,'Пермский край',NULL),(32,'Хабаровский край',NULL),(33,'Амурская область',NULL),(35,'Брянская область',NULL),(36,'Владимирская область',NULL),(37,'Архангельская область',NULL),(38,'Астраханская область',NULL),(41,'Волгоградская область',NULL),(42,'Вологодская область',NULL),(43,'Воронежская область',NULL),(44,'Забайкальский край',NULL),(45,'Иркутская область',NULL),(46,'Калининградская область',NULL),(47,'Республика Калмыкия',NULL),(48,'Камчатский край',NULL),(50,'Кемеровская область',NULL),(51,'Кировская область',NULL),(53,'Костромская область',NULL),(55,'Курская область',NULL),(56,'Ленинградская область',NULL),(57,'Липецкая область',NULL),(58,'Магаданская область',NULL),(59,'Республика Дагестан',NULL),(61,'Республика Марий Эл',NULL),(62,'Республика Мордовия',NULL),(63,'Москва',NULL),(64,'Московская область',NULL),(65,'Мурманская область',NULL),(66,'Нижегородская область',NULL),(67,'Новгородская область',NULL),(68,'Новосибирская область',NULL),(69,'Омская область',NULL),(70,'Орловская область',NULL),(72,'Пензенская область',NULL),(74,'Приморский край',NULL),(75,'Псковская область',NULL),(76,'Ростовская область',NULL),(77,'Самарская область',NULL),(79,'Саратовская область',NULL),(80,'Свердловская область',NULL),(81,'Ставропольский край',NULL),(82,'Тамбовская область',NULL),(84,'Тульская область',NULL),(85,'Республика Тува (Тыва)',NULL),(86,'Тюменская область',NULL),(88,'Ульяновская область',NULL),(89,'Челябинская область',NULL),(90,'Чеченская республика',NULL),(91,'Чувашская республика - Чувашия',NULL),(92,'Республика Саха (Якутия)',NULL),(93,'Еврейская автономная область',NULL),(94,'Сахалинская область',NULL),(95,'Чукотский автономный округ',NULL),(96,'Белгородская область',NULL),(97,'Калужская область',NULL),(98,'Курганская область',NULL),(99,'Ивановская область',NULL),(100,'Смоленская область',NULL),(101,'Тверская область',NULL),(102,'Ненецкий автономный округ',NULL),(103,'Рязанская область',NULL),(104,'Ямало-Ненецкий автономный округ',NULL),(105,'Оренбургская область',NULL),(106,'Томская область',NULL),(107,'Ярославская область',NULL),(108,'Ханты-Мансийский автономный округ — Югра',NULL),(109,'Республика Крым*',NULL),(110,'Севастополь*',NULL);
+/*!40000 ALTER TABLE `declarations_region` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `declarations_region_synonyms`
+--
+
+DROP TABLE IF EXISTS `declarations_region_synonyms`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `declarations_region_synonyms` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `synonym` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `synonym_class` int DEFAULT NULL,
+  `region_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `declarations_region__region_id_b5d248d6_fk_declarati` (`region_id`),
+  CONSTRAINT `declarations_region__region_id_b5d248d6_fk_declarati` FOREIGN KEY (`region_id`) REFERENCES `declarations_region` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=281 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `declarations_region_synonyms`
+--
+
+LOCK TABLES `declarations_region_synonyms` WRITE;
+/*!40000 ALTER TABLE `declarations_region_synonyms` DISABLE KEYS */;
+INSERT INTO `declarations_region_synonyms` VALUES (1,'Санкт-Петербург',0,1),(2,'Saint Petersburg',1,1),(3,'Адыгея',3,3),(4,'Republic of Adygea',1,3),(5,'Республика Адыгея',0,3),(6,'Башкортостан',3,4),(7,'Republic of Bashkortostan',1,4),(8,'Республика Башкортостан',0,4),(9,'Бурятия',3,5),(10,'Republic of Buryatia',1,5),(11,'Республика Бурятия',0,5),(12,'Алтай',3,6),(13,'Altay Republic',1,6),(14,'Республика Алтай',0,6),(15,'Ингушетия',3,8),(16,'Republic of Ingushetia',1,8),(17,'Республика Ингушетия',0,8),(18,'Кабардино-Балкария',3,9),(19,'Kabardino-Balkar Republic',1,9),(20,'Кабардино-Балкарская Республика',0,9),(21,'Карачаево-Черкессия',3,11),(22,'Karachayevo-Cherkess Republic',1,11),(23,'Карачаево-Черкесская республика',0,11),(24,'Карелия',3,12),(25,'Republic of Karelia',1,12),(26,'Республика Карелия',0,12),(27,'Коми',3,13),(28,'Komi Republic',1,13),(29,'Республика Коми',0,13),(30,'Северная Осетия — Алания',3,17),(31,'Сев. Осетия-Алания',3,17),(32,'Republic of North Ossetia-Alania',1,17),(33,'Республика Северная Осетия — Алания',0,17),(34,'Татарстан',3,18),(35,'Republic of Tatarstan',1,18),(36,'Республика Татарстан',0,18),(37,'Удмуртия',3,20),(38,'Udmurt Republic',1,20),(39,'Удмуртская республика',0,20),(40,'Хакасия',3,21),(41,'Republic of Khakassia',1,21),(42,'Республика Хакасия',0,21),(43,'Алтайский край',0,24),(44,'Altay Kray',1,24),(45,'Краснодарский край',0,27),(46,'Krasnodar Territory',2,27),(47,'Krasnodar Kray',1,27),(48,'Красноярский край',0,28),(49,'Krasnoyarsk Territory',2,28),(50,'Krasnoyars Kray',1,28),(51,'Пермский край',0,29),(52,'Perm Territory',2,29),(53,'Perm Kray',1,29),(54,'Хабаровский край',0,32),(55,'Khabarovsk Kray',1,32),(56,'Амурская область',0,33),(57,'Амурская обл.',3,33),(58,'Amur Region ',2,33),(59,'Amur Oblast',1,33),(60,'Брянская область',0,35),(61,'Брянская обл.',3,35),(62,'Bryansk Region',2,35),(63,'Bryansk Oblast',1,35),(64,'Владимирская область',0,36),(65,'Владимирская обл.',3,36),(66,'Vladimir Region',2,36),(67,'Vladimir Oblast ',1,36),(68,'Архангельская область',0,37),(69,'Архангельская обл.',3,37),(70,'Arkhangelsk Region',2,37),(71,'Arkhangelsk Oblast',1,37),(72,'Астраханская область',0,38),(73,'Астраханская обл.',3,38),(74,'Astrakhan Region',2,38),(75,'Astrakhan Oblast',1,38),(76,'Волгоградская область',0,41),(77,'Волгоградская обл.',3,41),(78,'Volgograd Region',2,41),(79,'Volgograd Oblast ',1,41),(80,'Вологодская область',0,42),(81,'Вологодская обл.',3,42),(82,'Vologda Region',2,42),(83,'Vologoda Oblast ',1,42),(84,'Воронежская область',0,43),(85,'Воронежская обл.',3,43),(86,'Voronezh Region',2,43),(87,'Voronezh Oblast ',1,43),(88,'Забайкальский край',0,44),(89,'Zabaykalsky Kray',1,44),(90,'Иркутская область',0,45),(91,'Иркутская обл.',3,45),(92,'Irkutsk Region',2,45),(93,'Irkutsk Oblast',1,45),(94,'Калининградская область',0,46),(95,'Калининградская обл.',3,46),(96,'Kaliningrad Oblast',1,46),(97,'Калмыкия',3,47),(98,'Republic of Kalmykia',1,47),(99,'Республика Калмыкия',0,47),(100,'Камчатский край',0,48),(101,'Kamchatka Territory',2,48),(102,'Kamchatka Kray',1,48),(103,'Кемеровская область',0,50),(104,'Кемеровская обл.',3,50),(105,'Kemerovo Region',2,50),(106,'Kemerovo Oblast',1,50),(107,'Кировская область',0,51),(108,'Кировская обл.',3,51),(109,'Kirov Region',2,51),(110,'Kirov Oblast ',1,51),(111,'Костромская область',0,53),(112,'Костромская обл.',3,53),(113,'Kostroma Region',2,53),(114,'Kostroma Oblast ',1,53),(115,'Курская область',0,55),(116,'Курская обл.',3,55),(117,'Kursk Region',2,55),(118,'Kursk Oblast',1,55),(119,'Ленинградская область',0,56),(120,'Ленинградская обл.',3,56),(121,'Leningrad Region',2,56),(122,'Leningrad Oblast ',1,56),(123,'Липецкая область',0,57),(124,'Липецкая обл.',3,57),(125,'Lipetsk Region',2,57),(126,'Lipetsk Oblast',1,57),(127,'Магаданская область',0,58),(128,'Магаданская обл.',3,58),(129,'Magadan Region',2,58),(130,'Magadan Oblast ',1,58),(131,'Дагестан',3,59),(132,'Republic of Dagestan',1,59),(133,'Республика Дагестан',0,59),(134,'Марий Эл',3,61),(135,'Mari El Republic',1,61),(136,'Республика Марий Эл',0,61),(137,'Мордовия',3,62),(138,'Republic of Mordovia',1,62),(139,'Республика Мордовия',0,62),(140,'Москва',0,63),(141,'Moscow',1,63),(142,'Московская область',0,64),(143,'Московская обл.',3,64),(144,'Moscow Region',2,64),(145,'Moscow Oblast ',1,64),(146,'Мурманская область',0,65),(147,'Мурманская обл.',3,65),(148,'Murmansk Region',2,65),(149,'Murmansk Oblast',1,65),(150,'Нижегородская область',0,66),(151,'Нижегородская обл.',3,66),(152,'Nizhegorod Oblast',1,66),(153,'Новгородская область',0,67),(154,'Новгородская обл.',3,67),(155,'Novgorod Region',2,67),(156,'Novgorod Oblast ',1,67),(157,'Новосибирская область',0,68),(158,'Новосибирская обл.',3,68),(159,'Novosibirsk Region',2,68),(160,'Novosibirsk Oblast ',1,68),(161,'Омская область',0,69),(162,'Омская обл.',3,69),(163,'Omsk Region',2,69),(164,'Omsk Oblast ',1,69),(165,'Орловская область',0,70),(166,'Орловская обл.',3,70),(167,'Oryol Region',2,70),(168,'Oryol Oblast ',1,70),(169,'Пензенская область',0,72),(170,'Пензенская обл.',3,72),(171,'Penza Region',2,72),(172,'Penza Oblast ',1,72),(173,'Приморский край',0,74),(174,'Primorsky Kray',1,74),(175,'Псковская область',0,75),(176,'Псковская обл.',3,75),(177,'Pskov Region',2,75),(178,'Pskov Oblast ',1,75),(179,'Ростовская область',0,76),(180,'Ростовская обл.',3,76),(181,'Rostov Oblast',2,76),(182,'Rostov Oblast ',1,76),(183,'Самарская область',0,77),(184,'Самарская обл.',3,77),(185,'Samara Oblast',1,77),(186,'Саратовская область',0,79),(187,'Саратовская обл.',3,79),(188,'Saratov Oblast',1,79),(189,'Свердловская область',0,80),(190,'Свердловская обл.',3,80),(191,'Sverdlovsk Oblast',1,80),(192,'Ставропольский край',0,81),(193,'Stavropol Kray',1,81),(194,'Тамбовская область',0,82),(195,'Тамбовская обл.',3,82),(196,'Tambov Oblast',1,82),(197,'Тульская область',0,84),(198,'Тульская обл.',3,84),(199,'Tula Oblast',1,84),(200,'Тува (Тыва)',3,85),(201,'Tyva Republic',1,85),(202,'Республика Тува (Тыва)',0,85),(203,'Тюменская область',0,86),(204,'Тюменская обл.',3,86),(205,'Tyumen Oblast',1,86),(206,'Ульяновская область',0,88),(207,'Ульяновская обл.',3,88),(208,'Ulyanovsk Oblast',1,88),(209,'Челябинская область',0,89),(210,'Челябинская обл.',3,89),(211,'Chelyabinsk Oblast',1,89),(212,'Чечня',3,90),(213,'Chechen Republic',1,90),(214,'Чеченская республика',0,90),(215,'Чувашия',3,91),(216,'Chuvash Republic',1,91),(217,'Чувашская республика - Чувашия',0,91),(218,'Саха (Якутия)',3,92),(219,'Sakha (Yakutia) Republic',1,92),(220,'Республика Саха (Якутия)',0,92),(221,'Еврейская АО',3,93),(222,'Jewish Autonomous Region',2,93),(223,'Jewish Autonomous Oblast',1,93),(224,'Еврейская автономная область',0,93),(225,'Сахалинская область',0,94),(226,'Сахалинская обл.',3,94),(227,'Sakhalin Oblast',1,94),(228,'Чукотский АО',3,95),(229,'Chukotka Autonomous Okrug',1,95),(230,'Чукотский автономный округ',0,95),(231,'Белгородская область',0,96),(232,'Белгородская обл.',3,96),(233,'Belgorod Region',2,96),(234,'Belgorod Oblast',1,96),(235,'Калужская область',0,97),(236,'Калужская обл.',3,97),(237,'Kaluga Oblast',1,97),(238,'Курганская область',0,98),(239,'Курганская обл.',3,98),(240,'Kurgan Region',2,98),(241,'Kurgan Oblast',1,98),(242,'Ивановская область',0,99),(243,'Ивановская обл.',3,99),(244,'Ivanovo Region',2,99),(245,'Ivanovo Oblast',1,99),(246,'Смоленская область',0,100),(247,'Смоленская обл.',3,100),(248,'Smolensk Oblast',1,100),(249,'Тверская область',0,101),(250,'Тверская обл.',3,101),(251,'Tver Oblast',1,101),(252,'Ненецкий АО',3,102),(253,'Nenets Autonomous Okrug',1,102),(254,'Ненецкий автономный округ',0,102),(255,'Рязанская область',0,103),(256,'Рязанская обл.',3,103),(257,'Ryazan Oblast',1,103),(258,'Ямало-Ненецкий АО',3,104),(259,'Yamalo-Nenets Autonomous Okrug',1,104),(260,'Ямало-Ненецкий автономный округ',0,104),(261,'Оренбургская область',0,105),(262,'Оренбургская обл.',3,105),(263,'Orenburg Region',2,105),(264,'Orenburg Oblast ',1,105),(265,'Томская область',0,106),(266,'Томская обл.',3,106),(267,'Tomsk Oblast',1,106),(268,'Ярославская область',0,107),(269,'Ярославская обл.',3,107),(270,'Yaroslavl Region',2,107),(271,'Yaroslavskaya oblast ',1,107),(272,'Ханты-Мансийский АО — Югра',3,108),(273,'Ханты-Манс-ий АО (Югра)',3,108),(274,'Khanty-Mansiysk Autonomous Okrug - Yugra',1,108),(275,'Ханты-Мансийский автономный округ — Югра',0,108),(276,'Крым',3,109),(277,'Crimea',3,109),(278,'Республика Крым',0,109),(279,'Севастополь',0,110),(280,'Sevast',3,110);
+/*!40000 ALTER TABLE `declarations_region_synonyms` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `declarations_section`
+--
+
+DROP TABLE IF EXISTS `declarations_section`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `declarations_section` (
+  `id` int NOT NULL,
+  `person_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `income_year` int DEFAULT NULL,
+  `department` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `position` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `person_id` int DEFAULT NULL,
+  `dedupe_score` double DEFAULT NULL,
+  `source_document_id` int DEFAULT NULL,
+  `surname_rank` int DEFAULT NULL,
+  `name_rank` int DEFAULT NULL,
+  `rubric_id` int DEFAULT NULL,
+  `gender` smallint unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `declarations_section_person_id_b264dbb2_fk_declarati` (`person_id`),
+  KEY `declarations_section_source_document_id_4912ffc0_fk_declarati` (`source_document_id`),
+  CONSTRAINT `declarations_section_person_id_b264dbb2_fk_declarati` FOREIGN KEY (`person_id`) REFERENCES `declarations_person` (`id`),
+  CONSTRAINT `declarations_section_source_document_id_4912ffc0_fk_declarati` FOREIGN KEY (`source_document_id`) REFERENCES `declarations_source_document` (`id`),
+  CONSTRAINT `declarations_section_chk_1` CHECK ((`gender` >= 0))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `declarations_section`
+--
+
+LOCK TABLES `declarations_section` WRITE;
+/*!40000 ALTER TABLE `declarations_section` DISABLE KEYS */;
+INSERT INTO `declarations_section` VALUES (451721,'Резанова Юлия Владимировна',2016,NULL,'Консультант по контролю и учету муниципального имущества отдела по управлению муниципальным имуществом УМИ \nЗО \n',5295,0.9942864496547783,57750,5092,105,2,1),(452066,'Резанова Ю.В.',2018,NULL,'Консультант по контролю и учету муниципального имущества отдела по управлению муниципальным имуществом УМИ ЗО и архитектуры \n',5295,0.9942864496547783,57815,5092,27,2,1),(452420,'Резанова Ю.В.',2017,NULL,'Консультант по контролю и учету муниципального имущества отдела по управлению муниципальным имуществом УМИ ЗО и архитектуры \n',5295,0.9942864496547783,57874,5092,27,2,1),(453686,'Резанова Юлия Владимировна',2014,NULL,'Ведущий специалист управления социальной защиты населения\n',5295,NULL,58014,5092,105,2,1),(455039,'Резанова Юлия Владимировна',2013,NULL,'Ведущий специалист управления социальной защиты населения\n',5295,NULL,58026,5092,105,2,1),(1801614,'Резанова Ю.В.',2015,NULL,'',NULL,1,230729,5092,27,4,1),(5105303,'Резанова Ю.В.',2019,NULL,'Консультант по муниципальному земельному контролю отдела земельных отношений УМИ ЗО и архитектуры\n',5295,0.9942864496547783,503415,5092,27,2,1),(6437989,'Резанова Юлия Владимировна',2012,'7530 - Межрайонная инспекция ФНС № 4 по Забайкальскому краю; Отдел выездных проверок','Ведущий специалист-эксперт',NULL,0.9890775254026122,637439,5092,105,11,1),(6672563,'Резанова Юлия Владимировна',2013,'7530 - Межрайонная инспекция ФНС № 4 по Забайкальскому краю; Отдел общего обеспечения','Ведущий специалист-эксперт',NULL,0.9925116288067308,658252,5092,105,11,1),(6674154,'Резанова Юлия Владимировна',2010,'7530 - Межрайонная инспекция ФНС № 4 по Забайкальскому краю; Отдел финансового и общего обеспечения','Ведущий специалист-эксперт',NULL,0.7540482711391945,658402,5092,105,11,1),(6773981,'Резанова Юлия Владимировна',2014,'7530 - Межрайонная инспекция ФНС № 4 по Забайкальскому краю; Отдел общего обеспечения','Ведущий специалист-эксперт',NULL,0.9925116288067308,667525,5092,105,11,1);
+/*!40000 ALTER TABLE `declarations_section` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `declarations_section_auto_increment`
+--
+
+DROP TABLE IF EXISTS `declarations_section_auto_increment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `declarations_section_auto_increment` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6773982 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `declarations_section_auto_increment`
+--
+
+LOCK TABLES `declarations_section_auto_increment` WRITE;
+/*!40000 ALTER TABLE `declarations_section_auto_increment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `declarations_section_auto_increment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `declarations_source_document`
+--
+
+DROP TABLE IF EXISTS `declarations_source_document`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `declarations_source_document` (
+  `id` int NOT NULL,
+  `sha256` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `file_extension` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `intersection_status` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `office_id` int NOT NULL,
+  `max_income_year` int DEFAULT NULL,
+  `min_income_year` int DEFAULT NULL,
+  `section_count` int DEFAULT NULL,
+  `median_income` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `declarations_source__office_id_ce0f4653_fk_declarati` (`office_id`),
+  CONSTRAINT `declarations_source__office_id_ce0f4653_fk_declarati` FOREIGN KEY (`office_id`) REFERENCES `declarations_office` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `declarations_source_document`
+--
+
+LOCK TABLES `declarations_source_document` WRITE;
+/*!40000 ALTER TABLE `declarations_source_document` DISABLE KEYS */;
+INSERT INTO `declarations_source_document` VALUES (57750,'3b06cd424c4f0918df86b81e11dd3010fc2968b365454551ebce5248ab87336e','.pdf','only_dlrobot',1412,2016,2016,132,428628),(57815,'440a379ba5f1aea8f0d8d08100352cd45f8495efed6119ab3941f763d7697c57','.pdf','only_dlrobot',1412,2018,2018,132,417177),(57874,'4fd5bc56ed8b685e3c43f860fb6243285f39fbbc16d23f02fe3ccb25adea9b75','.pdf','only_human',1412,2017,2017,153,487398),(58014,'884e7307241a2f4d6b8563d3d4107ee43b60e1ec548325081b16df140aa72897','.pdf','only_human',1412,2014,2014,139,411363),(58026,'ce775c5acbc6aef4e1bf9043e403db8bbef22027f7774be45c573a2bc528910a','.pdf','only_human',1412,2013,2013,84,334232),(230729,'d80ea3722829ba9e32f532386f5c57b3447e2b2ddbb0cd98f6ac723bacfd67a6','.xlsx','both_found',450,2015,2015,32205,1156403),(503415,'8fcdc6c3556a8e9066b38a821d1de296bcd49674358abf031347b0563d6096d8','.pdf','both_found',1412,2019,2019,128,466023),(637439,'568bcd7f78a8d2e7dd768972cef2cc49db127e8ea6438e945ce60523fbbb6a98','.html','only_dlrobot',1306,2012,2012,8,288131),(658252,'b740c717d831d1a12de10766b33a047e4c1b1484316c1e598c1c5074d47941fa','.html','only_dlrobot',1306,2013,2013,7,323805),(658402,'b7ed0dcc11ff051191991995079aedd3efc636eef445643998205185a6261489','.html','only_dlrobot',1306,2010,2010,11,309645),(667525,'e260e81eb6020d40976c37f76d2b7add6569aae54283ab107b127185074c3a86','.html','only_dlrobot',1306,2014,2014,7,422649);
+/*!40000 ALTER TABLE `declarations_source_document` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `declarations_source_document_auto_increment`
+--
+
+DROP TABLE IF EXISTS `declarations_source_document_auto_increment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `declarations_source_document_auto_increment` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=667526 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `declarations_source_document_auto_increment`
+--
+
+LOCK TABLES `declarations_source_document_auto_increment` WRITE;
+/*!40000 ALTER TABLE `declarations_source_document_auto_increment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `declarations_source_document_auto_increment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `declarations_vehicle`
+--
+
+DROP TABLE IF EXISTS `declarations_vehicle`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `declarations_vehicle` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `relative` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `section_id` int NOT NULL,
+  `relative_index` smallint unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `declarations_vehicle_section_id_bf0254dd_fk_declarati` (`section_id`),
+  CONSTRAINT `declarations_vehicle_section_id_bf0254dd_fk_declarati` FOREIGN KEY (`section_id`) REFERENCES `declarations_section` (`id`),
+  CONSTRAINT `declarations_vehicle_chk_1` CHECK ((`relative_index` >= 0))
+) ENGINE=InnoDB AUTO_INCREMENT=5142962 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `declarations_vehicle`
+--
+
+LOCK TABLES `declarations_vehicle` WRITE;
+/*!40000 ALTER TABLE `declarations_vehicle` DISABLE KEYS */;
+INSERT INTO `declarations_vehicle` VALUES (2697056,'D','Фольксваген \nТранспортер',451721,NULL),(2697252,'D','Автомобиль легковой: \nФОЛЬКСВАГЕН \nТранспортер',452066,NULL),(2697409,'D','ФОЛЬКСВАГЕН \nТранспортер',452420,NULL),(2697854,'D','Автомобиль Фольксваген\nТранспортер, 1993 г.в.',453686,NULL),(2698479,'D','Автомобиль',455039,NULL),(2698947,'D','Автомобиль легковой: ФОЛЬКСВАГЕН\nТранспортер',5105303,NULL);
+/*!40000 ALTER TABLE `declarations_vehicle` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `declarations_web_reference`
+--
+
+DROP TABLE IF EXISTS `declarations_web_reference`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `declarations_web_reference` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `dlrobot_url` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `crawl_epoch` int DEFAULT NULL,
+  `source_document_id` int NOT NULL,
+  `web_domain` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  PRIMARY KEY (`id`),
+  KEY `declarations_web_ref_source_document_id_11a7845b_fk_declarati` (`source_document_id`),
+  CONSTRAINT `declarations_web_ref_source_document_id_11a7845b_fk_declarati` FOREIGN KEY (`source_document_id`) REFERENCES `declarations_source_document` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=838535 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `declarations_web_reference`
+--
+
+LOCK TABLES `declarations_web_reference` WRITE;
+/*!40000 ALTER TABLE `declarations_web_reference` DISABLE KEYS */;
+/*!40000 ALTER TABLE `declarations_web_reference` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_admin_log`
+--
+
+DROP TABLE IF EXISTS `django_admin_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `django_admin_log` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `action_time` datetime(6) NOT NULL,
+  `object_id` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `object_repr` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `action_flag` smallint unsigned NOT NULL,
+  `change_message` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content_type_id` int DEFAULT NULL,
+  `user_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `django_admin_log_content_type_id_c4bce8eb_fk_django_co` (`content_type_id`),
+  KEY `django_admin_log_user_id_c564eba6_fk_auth_user_id` (`user_id`),
+  CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
+  CONSTRAINT `django_admin_log_user_id_c564eba6_fk_auth_user_id` FOREIGN KEY (`user_id`) REFERENCES `auth_user` (`id`),
+  CONSTRAINT `django_admin_log_chk_1` CHECK ((`action_flag` >= 0))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_admin_log`
+--
+
+LOCK TABLES `django_admin_log` WRITE;
+/*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_content_type`
+--
+
+DROP TABLE IF EXISTS `django_content_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `django_content_type` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `app_label` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_content_type`
+--
+
+LOCK TABLES `django_content_type` WRITE;
+/*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
+INSERT INTO `django_content_type` VALUES (1,'admin','logentry'),(3,'auth','group'),(2,'auth','permission'),(4,'auth','user'),(5,'contenttypes','contenttype'),(12,'declarations','declarator_file_reference'),(17,'declarations','income'),(9,'declarations','office'),(10,'declarations','person'),(18,'declarations','person_rating'),(19,'declarations','person_rating_items'),(16,'declarations','realestate'),(7,'declarations','region'),(8,'declarations','region_synonyms'),(14,'declarations','section'),(11,'declarations','source_document'),(15,'declarations','vehicle'),(13,'declarations','web_reference'),(6,'sessions','session');
+/*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_migrations`
+--
+
+DROP TABLE IF EXISTS `django_migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `django_migrations` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `app` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `applied` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_migrations`
+--
+
+LOCK TABLES `django_migrations` WRITE;
+/*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2021-03-25 20:52:50.102227'),(2,'auth','0001_initial','2021-03-25 20:52:50.406757'),(3,'admin','0001_initial','2021-03-25 20:52:51.541316'),(4,'admin','0002_logentry_remove_auto_add','2021-03-25 20:52:51.759086'),(5,'admin','0003_logentry_add_action_flag_choices','2021-03-25 20:52:51.773914'),(6,'contenttypes','0002_remove_content_type_name','2021-03-25 20:52:51.937606'),(7,'auth','0002_alter_permission_name_max_length','2021-03-25 20:52:52.048091'),(8,'auth','0003_alter_user_email_max_length','2021-03-25 20:52:52.086231'),(9,'auth','0004_alter_user_username_opts','2021-03-25 20:52:52.104167'),(10,'auth','0005_alter_user_last_login_null','2021-03-25 20:52:52.199209'),(11,'auth','0006_require_contenttypes_0002','2021-03-25 20:52:52.204205'),(12,'auth','0007_alter_validators_add_error_messages','2021-03-25 20:52:52.222099'),(13,'auth','0008_alter_user_username_max_length','2021-03-25 20:52:52.343739'),(14,'auth','0009_alter_user_last_name_max_length','2021-03-25 20:52:52.480636'),(15,'auth','0010_alter_group_name_max_length','2021-03-25 20:52:52.539773'),(16,'auth','0011_update_proxy_permissions','2021-03-25 20:52:52.556909'),(17,'auth','0012_alter_user_first_name_max_length','2021-03-25 20:52:52.679169'),(18,'declarations','0001_initial','2021-03-25 20:52:53.338153'),(19,'declarations','0002_region','2021-03-25 20:52:55.031592'),(20,'declarations','0003_offices','2021-03-25 20:53:14.872598'),(21,'sessions','0001_initial','2021-03-25 20:53:14.921430');
+/*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_session`
+--
+
+DROP TABLE IF EXISTS `django_session`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `django_session` (
+  `session_key` varchar(40) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `session_data` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `expire_date` datetime(6) NOT NULL,
+  PRIMARY KEY (`session_key`),
+  KEY `django_session_expire_date_a5c62663` (`expire_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_session`
+--
+
+LOCK TABLES `django_session` WRITE;
+/*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
+/*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2021-03-30 15:16:54

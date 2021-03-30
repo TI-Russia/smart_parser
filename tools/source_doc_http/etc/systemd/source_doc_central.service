@@ -1,17 +1,17 @@
 [Unit]
-Description=source declaration document daemon (production readonly)
+Description=source declaration document daemon (central "migalka")
 After=network-online.target
 Wants=network-online.target
 
 [Service]
+User=sokirko
 Environment=PYTHONPATH=/home/sokirko/smart_parser/tools
-Environment=SOURCE_DOC_SERVER_ADDRESS=195.70.213.239:443
-WorkingDirectory=/data/sokirko/Yandex.disk/declarator/source_doc
+Environment=SOURCE_DOC_SERVER_ADDRESS=192.168.100.151:8090
 
+WorkingDirectory=/home/sokirko/declarator_hdd/Yandex.Disk/declarator/source_doc
 ExecStart=/usr/bin/python3 \
           /home/sokirko/smart_parser/tools/source_doc_http/source_doc_server.py \
           --data-folder bin_files \
-          --read-only
           --log-file-name  /tmp/source_doc_server.log
 
 [Install]

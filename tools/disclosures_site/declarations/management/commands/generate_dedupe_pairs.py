@@ -216,7 +216,7 @@ class Command(BaseCommand):
     def link_section_to_person(self, section, person, distance):
         if section.person_id is not None and section.dedupe_score is None:
             #these person_id's came from declarator, do not touch them
-            self.logger.debug("skip setting person_id={} to section (id={}, person_id=[}, because it is from declarator".format(
+            self.logger.debug("skip setting person_id={} to section (id={}, person_id={}), because it is from declarator".format(
                     person.id, section.id, section.person_id))
             return
         self.logger.debug("link section {} to person {}".format(section.id, person.id))
