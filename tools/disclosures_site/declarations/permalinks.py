@@ -189,13 +189,21 @@ class TPermaLinksPerson(TPermaLinksDB):
         else:
             return None  #a new section that did not exist in the previous db
 
-    def get_person_id_by_declarator_id(self, declarator_person_id):
+    def get_person_id_by_declarator_id(self, declarator_person_id, section_id):
         passport = TPermaLinksPerson.get_person_declarator_passport(declarator_person_id)
         person_id = self.db.get(passport)
         if person_id is not None:
+            # the previous disclosures.ru version  knows already this declarator_person_id
             return int(person_id)
-        # новая персона, которая была сделана руками в деклараторе, - это  источнк изменения в пермалинках персон
-        # поскольку мы могли сливать эту же персону под другим id
+
+        person_id = self.get_person_id_by_section_id(section_id)
+        if person_id is not None:
+            # declarator_person_id is new to disclosures, but the section section_id was already published by the
+            # the previous disclosures.ru version, so we reuse this person_id
+            # though this person_id was not connected to declarator or was connected to the other declarator_person_id
+            return person_id
+
+        # new section and new person_id
         return self._get_new_id()
 
     def save_dataset(self, logger):
