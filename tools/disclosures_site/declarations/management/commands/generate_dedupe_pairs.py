@@ -239,7 +239,9 @@ class Command(BaseCommand):
             person = models.Person.objects.get(id=person_id)
             #reuse person record from declarator
             if person.declarator_person_id is None:
-                self.logger.error ("Warning! Reuse person_id = {} for different sections ".format(person_id))
+                self.logger.error("Warning! Reuse existing person_id = {} for different sections (cluster), it could happen"
+                                  "if this person_id was used for different person created by copy_person_id.py "
+                                  "but should not happen if declarator_person_id is None. ".format(person_id))
         except models.Person.DoesNotExist as exp:
             #create new person record
             person = models.Person(id=person_id)

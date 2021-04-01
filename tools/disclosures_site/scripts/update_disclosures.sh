@@ -141,11 +141,11 @@ echo $DEDUPE_HOSTS_SPACES | tr " " "\n"  | xargs  --verbose -P 4 -n 1 python3 $T
     sudo systemctl stop mysql
     cd /var/lib/mysql
     sudo find * -maxdepth 0 -type f | cat -  <( sudo find sys performance_schema mysql disclosures_db) | sudo xargs tar cfvz $DLROBOT_FOLDER/mysql.tar.gz
-    cd -
+    cd $DLROBOT_FOLDER
     scp $DLROBOT_FOLDER/mysql.tar.gz $FRONTEND:/tmp
 
     sudo systemctl stop elasticsearch
-    sudo tar --create --file elastic.tar.gz --gzip  --directory /var/lib/elasticsearch   .
+    sudo tar --create --file $DLROBOT_FOLDER/elastic.tar.gz --gzip  --directory /var/lib/elasticsearch   .
     scp $DLROBOT_FOLDER/elastic.tar.gz $FRONTEND:/tmp
 
 #20 обновление prod

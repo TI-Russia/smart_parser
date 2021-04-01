@@ -2,7 +2,11 @@ MYSQL_TAR=$1
 ELASTICSEARCH_TAR=$2
 SITEMAP_ARCHIVE=$3
 HOST=${4:-"disclosures.ru"}
-DISCLOSURES_FOlDER=/home/sokirko/smart_parser/tools/disclosures_site
+
+export TOOLS=/home/sokirko/smart_parser/tools
+export DISCLOSURES_FOlDER=$TOOLS/disclosures_site
+export PYTHONPATH=$DISCLOSURES_FOlDER:$TOOLS:$PYTHONPATH
+
 cd $DISCLOSURES_FOlDER
 
 function switch_service() {
