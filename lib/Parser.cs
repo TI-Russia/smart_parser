@@ -499,9 +499,15 @@ namespace Smart.Parser.Lib
             int count = 0;
             int total_count = declaration.PublicServants.Count();
             Decimal totalIncome = 0;
+            int max_relatives_count = 15;
 
             foreach (PublicServant servant in declaration.PublicServants)
             {
+                if (servant.Relatives.Count() > max_relatives_count)
+                {
+                    throw new SmartParserException(String.Format("too many relatives (>{0})", max_relatives_count));
+                }
+            
                 count++;
                 if (count % 1000 == 0)
                 {
