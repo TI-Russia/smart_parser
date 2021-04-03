@@ -120,5 +120,53 @@ namespace TI.Declarator.ParserCommon
         public static bool ContainsAny(this string source, params string[] patterns) => patterns.Any(pattern => source.Contains(pattern, StringComparison.OrdinalIgnoreCase));
 
         public static bool ContainsAll(this string source, params string[] patterns) => patterns.All(pattern => source.Contains(pattern, StringComparison.OrdinalIgnoreCase));
+
+        public static string[] SplitByEmptyLines(string value)
+        {
+            string[] lines = Regex.Split(value, @"\n\s*\n").ToArray();
+            return lines;
+        }
+        public static string[] SplitJoinedLinesByFuzzySeparator(string value, List<int> linesWithNumbers)
+        {
+            string[] lines;
+
+            // Eg: "1. Квартира\n2. Квартира"
+            if (Regex.Matches(value, @"^\d\.\s+.+\n\d\.\s", RegexOptions.Singleline).Count > 0)
+            {
+                lines = (string[])Regex.Split(value, @"\d\.\s").Skip(1).ToArray();
+                return lines;
+            }
+
+            // Eg: "- Квартира\n- Квартира"
+            if (Regex.Matches(value, @"^\p{Pd}\s+.+\n\p{Pd}\s", RegexOptions.Singleline).Count > 0)
+            {
+                lines = (string[])Regex.Split(value, @"\n\p{Pd}");
+                return lines;
+            }
+
+            // Eg: "... собственность) - Жилой дом ..."
+            if (Regex.Matches(value, @"^\p{Pd}.+\)[\s\n]+\p{Pd}\s", RegexOptions.Singleline).Count > 0)
+            {
+                lines = (string[])Regex.Split(value, @"[\s\n]\p{Pd}\s");
+                return lines;
+            }
+
+            // Eg: "Квартира \n(долевая собственность \n\n0,3) \n \n \n \nКвартира \n(индивидуальная собственность) \n"
+            var matches = Regex.Matches(value, @"[^\)]+\([^\)]+\)\;?", RegexOptions.Singleline);
+            if (matches.Count == linesWithNumbers.Count && linesWithNumbers.Count > 0)
+            {
+                lines = matches.Select(m => m.Value).ToArray();
+                return lines;
+            }
+
+            lines = value.Trim(' ', ';').Split(';');
+            if (lines.Length != linesWithNumbers.Count)
+            {
+                lines = value.Split('\n');
+            }
+
+            return lines;
+        }
+
     }
 }

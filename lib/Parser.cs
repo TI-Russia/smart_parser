@@ -10,7 +10,7 @@ namespace Smart.Parser.Lib
 {
     
     public class Parser : RealtyParser
-    {
+    { 
         DateTime FirstPassStartTime;
         DateTime SecondPassStartTime;
         bool FailOnRelativeOrphan;
@@ -601,16 +601,28 @@ namespace Smart.Parser.Lib
             }
             else if (r.ColumnOrdering.ColumnOrder.ContainsKey(DeclarationField.VehicleType))
             {
+                
                 var t = r.GetContents(DeclarationField.VehicleType).Replace("не имеет", "");
                 var m = r.GetContents(DeclarationField.VehicleModel, false).Replace("не имеет", "");
-                var text = t + " " + m;
-                if (t == m)
+                var splitVehicleModels = TextHelpers.SplitByEmptyLines(m);
+                if (splitVehicleModels.Length > 1)
                 {
-                    text = t;
-                    m = "";
+                    for (int i = 0; i < splitVehicleModels.Length; ++i )
+                    {
+                        person.Vehicles.Add(new Vehicle(splitVehicleModels[i], "", splitVehicleModels[i]));
+                    }
                 }
-                if (!DataHelper.IsEmptyValue(m) || !DataHelper.IsEmptyValue(t))
-                    person.Vehicles.Add(new Vehicle(text.Trim(), t, m));
+                else
+                {
+                    var text = t + " " + m;
+                    if (t == m)
+                    {
+                        text = t;
+                        m = "";
+                    }
+                    if (!DataHelper.IsEmptyValue(m) || !DataHelper.IsEmptyValue(t))
+                        person.Vehicles.Add(new Vehicle(text.Trim(), t, m));
+                }
             }
 
         }

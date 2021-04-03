@@ -106,10 +106,6 @@ namespace Smart.Parser.Adapters
                 {
                     i += cell.GetMergedRange().ColumnCount - 1;
                 }
-                //if (result.Count() == 1 && result[0].Col == -1)
-                //{
-                //    result[0].Col = 0; // restore col
-                //}   
             }
             return result;
         }

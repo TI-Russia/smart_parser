@@ -4,6 +4,7 @@ using TI.Declarator.ParserCommon;
 using System.IO;
 using Smart.Parser.Lib;
 using static Algorithms.LevenshteinDistance;
+using System;
 
 namespace test
 {
@@ -34,14 +35,25 @@ namespace test
             Assert.IsTrue(s1.IsNumber());
         }
 
+        public static DeclarationField GetField(string str)
+        {
+            var f = HeaderHelpers.TryGetField("", str);
+            if (f == DeclarationField.None)
+            {
+                throw new Exception($"Could not determine column type for header {str}.");
+            }
+            return f;
+        }
+
+
         [TestMethod]
         public void HeaderDetectionTest()
         {
             string big_header = "Объекты недвижимости, находящиеся в собственности Вид\nсобствен\nности";
-            DeclarationField field = HeaderHelpers.GetField(big_header);
+            DeclarationField field = GetField(big_header);
 
             big_header = "Объекты недвижимости имущества находящиеся в пользовании Вид обьекта";
-            field = HeaderHelpers.GetField(big_header);
+            field = GetField(big_header);
         }
         
      

@@ -225,6 +225,13 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("docx")]
+        public void NizKam()
+        {
+            TestSmartParser("niz_kam.docx", "prod");
+        }
+
+        [TestMethod]
         [TestCategory("doc")]
         public void MinRes2011()
         {
@@ -232,10 +239,38 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("xls")]
+        public void Test28817()
+        {
+            TestSmartParser("28817.xls", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("doc")]
+        public void Test26937_42()
+        {
+            TestSmartParser("26937_42.doc", "prod");
+        }
+
+        [TestMethod]
         [TestCategory("doc")]
         public void MinYust2012()
         {
             TestSmartParser("MinYust2012.doc", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("docx")]
+        public void Test36922()
+        {
+            TestSmartParser("36922.docx", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("docx")]
+        public void Test52991()
+        {
+            TestSmartParser("52991.docx", "prod");
         }
 
         [TestMethod]
