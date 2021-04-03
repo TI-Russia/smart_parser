@@ -11,7 +11,7 @@ namespace TI.Declarator.ParserCommon
             .RemoveCharacters('-', ' ')
             .ContainsAny("недвижим");
 
-        public static DeclarationField TryGet   Field(string parentColumnTitle, string subColumnTitle)
+        public static DeclarationField TryGetField(string parentColumnTitle, string subColumnTitle)
         {
             string str;
             if (parentColumnTitle != null)
