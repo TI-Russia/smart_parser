@@ -273,11 +273,11 @@ namespace Smart.Parser.Adapters
             }
             TColumnInfo colSpan;
             var exactCell = adapter.GetDeclarationFieldWeak(ColumnOrdering, row, field, out colSpan);
-            if (exactCell.Text.Trim() != "" || exactCell.Col == -1)
+            if (exactCell.Text.Trim() != "")
             {
                 return exactCell;
             }
-            for (int i = exactCell.Col + exactCell.MergedColsCount; i < colSpan.EndColumn;)
+            for (int i = colSpan.BeginColumn + exactCell.MergedColsCount; i < colSpan.EndColumn;)
             {
                 var mergedCell = adapter.GetCell(row, i);
                 if (mergedCell == null)

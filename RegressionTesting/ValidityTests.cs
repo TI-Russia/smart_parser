@@ -197,6 +197,13 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("xls")]
+        public void Privol ()
+        {
+            TestSmartParser("privol.xls", "prod");
+        }
+
+        [TestMethod]
         [TestCategory("xlsx")]
         public void TestExcelMinfin2016()
         {
