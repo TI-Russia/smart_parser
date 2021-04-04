@@ -1,0 +1,181 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Кризон А.А.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+        "role": "Депутат избирательный\nокруг № 1\n"
+      },
+      "year": 2015,
+      "incomes": [
+        {
+          "size": 207902.0,
+          "size_raw": "207902",
+          "relative": null
+        },
+        {
+          "size": 174984.0,
+          "size_raw": "174984",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Земли для  строительства жилого дома (индивидуальная  собственность)",
+          "square": 1000.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "1000",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "Земли для  огородничества (индивидуальная  собственность)",
+          "square": 748.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "748",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "Земли для  огородничества (индивидуальная  собственность)",
+          "square": 752.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "752",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "Земли для  ведения  личного подсобного хозяйства",
+          "square": 1000.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "1000",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "(индивидуальная  собственность)",
+          "square": 2655.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "2655",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "Земли для  ведения  личного подсобного хозяйства (индивидуальная  собственность)",
+          "square": 3000.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "3000",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "Земли для  ведения  личного подсобного хозяйства (индивидуальная  собственность)",
+          "square": 1700.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "1700",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "Земли для  ведения  личного подсобного хозяйства (индивидуальная",
+          "square": 600.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "600",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "собственность)",
+          "square": 45.7,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "45,7",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "Земли для  садоводства  (индивидуальная собственность)",
+          "square": 82.2,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "82,2",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "Жилой дом (индивидуальная  собственность)",
+          "square": 68.3,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "68,3",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "Жилой дом (индивидуальная  собственность)",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "",
+          "country_raw": ""
+        },
+        {
+          "text": "Квартира",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "",
+          "country_raw": ""
+        },
+        {
+          "text": "(индивидуальная\n собственность)\n\n\n\n\nКвартира\n(пользование)",
+          "square": 50.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "50,7",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "ЛЕКСУС RX 300,",
+          "relative": null,
+          "type_raw": "",
+          "model": "ЛЕКСУС RX 300,"
+        },
+        {
+          "text": "Трактор МТЗ-80Л",
+          "relative": null,
+          "type_raw": "",
+          "model": "Трактор МТЗ-80Л"
+        },
+        {
+          "text": "Трактор МТЗ-50",
+          "relative": null,
+          "type_raw": "",
+          "model": "Трактор МТЗ-50"
+        },
+        {
+          "text": "Прицеп2 ПТС4",
+          "relative": null,
+          "type_raw": "",
+          "model": "Прицеп2 ПТС4"
+        },
+        {
+          "text": "Катер\n Метчик Ермак",
+          "relative": null,
+          "type_raw": "",
+          "model": "Катер\n Метчик Ермак"
+        },
+        {
+          "text": " Катер ТБС 20",
+          "relative": null,
+          "type_raw": "",
+          "model": " Катер ТБС 20"
+        }
+      ]
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения\nо доходах, об имуществе и обязательствах\nимущественного характера депутатов Совета депутатов Ордынского района Новосибирской области,\nа также их супругов и несовершеннолетних детей за период\nс 1 января 2015 года  по 31 декабря 2015 года \nдля размещения на официальном сайте \n\n",
+    "year": 2015,
+    "documentfile_id": 36922
+  }
+}

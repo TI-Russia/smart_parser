@@ -243,13 +243,22 @@ class ImportJsonCommand(BaseCommand):
             dest='permalinks_folder',
             required=True
         )
+        parser.add_argument(
+            '--office-id',
+            dest='office_id',
+            type=int,
+            required=False
+        )
 
     def handle(self, *args, **options):
         TImporter.logger = setup_logging(log_file_name="import_json.log")
         importer = TImporter(options)
 
         self.stdout.write("start importing")
-        if options.get('process_count', 0) > 1:
+        if options.get('office_id') is not None:
+            importer.init_non_pickable()
+            importer.import_office(options.get('office_id'))
+        elif options.get('process_count', 0) > 1:
             importer.delete_before_fork()
             pool = Pool(processes=options.get('process_count'))
             pool.map(partial(process_one_file_in_subprocess, importer), importer.office_to_source_documents.keys())

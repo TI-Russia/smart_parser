@@ -43,6 +43,7 @@ namespace TI.Declarator.ParserCommon
         DeclaredYearlyIncome = 10 | StartsWithDigitMask,
         DeclaredYearlyIncomeThousands = 11 | StartsWithDigitMask,
         DataSources = 12,
+        VehicleYear = 13,
 
 
         // Для случая, когда один и тот же набор колонок содержит сведения и о частной, и о государственной собственности

@@ -24,7 +24,7 @@ def read_real_estates(section_json):
         own_type_str = i.get("own_type", i.get("own_type_by_column"))
         country_str = i.get("country", i.get("country_raw"))
         yield models.RealEstate(
-            type=i.get("type", i.get("text")),
+            type=i.get("type", i.get("text", i.get('type_raw'))),
             country=get_country_code(country_str),
             relative=models.Relative.get_relative_code(i.get('relative')),
             owntype=models.OwnType.get_own_type_code(own_type_str),
