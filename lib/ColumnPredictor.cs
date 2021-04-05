@@ -230,6 +230,10 @@ namespace Parser.Lib
                 {
                     rowIndex += 1;
                 }
+                else if (IAdapter.IsNumbersRow(cells))
+                {
+                    rowIndex += 1;
+                }
                 else
                 {
                     var c = adapter.GetCell(rowIndex, headerCell.Col);
@@ -262,6 +266,13 @@ namespace Parser.Lib
                 else if (HeaderHelpers.IsOwnedColumn(h))
                 {
                     field |= DeclarationField.Owned;
+                }
+            }
+            if (field == DeclarationField.NameOrRelativeType)
+            {
+                if (TextHelpers.MayContainsRole(String.Join(" ", texts)))
+                {
+                    field = DeclarationField.NameAndOccupationOrRelativeType;
                 }
             }
             Logger.Debug(string.Format("predict by {0}  -> {1}",

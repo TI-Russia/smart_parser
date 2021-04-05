@@ -286,10 +286,6 @@ namespace Smart.Parser.Lib
 
         }
 
-        bool IsNumbersRow(DataRow row) => string
-            .Join(" ", row.Cells.Select(c => c.Text.RemoveCharacters('\n', ' ')))
-            .StartsWith("1 2 3 4");
-
         bool IsHeaderRow(DataRow row, out ColumnOrdering columnOrdering)
         {
             columnOrdering = null;
@@ -333,7 +329,7 @@ namespace Smart.Parser.Lib
                 {
                     continue;
                 }
-                if (IsNumbersRow(currRow))
+                if (IAdapter.IsNumbersRow(currRow.Cells))
                 {
                     continue;
                 }

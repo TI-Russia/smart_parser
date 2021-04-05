@@ -127,7 +127,14 @@ namespace TI.Declarator.ParserCommon
         {
             var clean = s.RemoveCharacters(',', '-', '\n', ' ').ToLowerInvariant();
             return clean.StartsWithAny("лицаодоходах", "подающиесведения", "подающийсведения")
-                    || clean.ContainsAny("фамилия", "фамилимя", "фио", ".иф.о.", "сведенияодепутате", "ф.и.о");
+                    || clean.ContainsAny(
+                        "фамилия", 
+                        "фамилимя", 
+                        "фио", 
+                        ".иф.о.", 
+                        "сведенияодепутате",
+                        "сведенияолице",
+                        "ф.и.о");
         }
 
         public static bool IsNameAndOccupation(this string s) =>

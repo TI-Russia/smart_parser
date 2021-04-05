@@ -103,7 +103,7 @@ namespace TI.Declarator.ParserCommon
         private static readonly string[] RoleStrings = { 
             "заместител", "начальник", "аудитор", "депутат", 
             "секретарь", "уполномоченный", "председатель", "бухгалтер", "руководител", "глава", "главы", "заведующий",
-            "заведующая"
+            "заведующая", "служащий", "служащая"
             };
 
         public static bool MayContainsRole(string s)
