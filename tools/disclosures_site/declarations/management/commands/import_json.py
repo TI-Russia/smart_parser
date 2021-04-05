@@ -19,7 +19,7 @@ from statistics import median
 
 class TImporter:
     logger = None
-
+    max_vehicle_count = 60
     def build_office_to_file_mapping(self):
         db_offices = set(o.id for o in models.Office.objects.all())
         TImporter.logger.debug("there are {} records in table {} ".format(
@@ -118,6 +118,7 @@ class TImporter:
         section_index = 0
         TImporter.logger.debug("try to import {} declarants".format(len(input_json['persons'])))
         incomes = list()
+
         for raw_section in input_json['persons']:
             section_index += 1
             income_year = raw_section.get('year', common_income_year)
@@ -127,6 +128,11 @@ class TImporter:
                 try:
                     prepared_section = TSmartParserSectionJson(income_year, source_document_in_db)
                     prepared_section.read_raw_json(raw_section)
+
+                    if len(prepared_section.vehicles) > TImporter.max_vehicle_count:
+                        TImporter.logger.debug("ignore section {} because it has too many vehicles ( > {})".format(
+                            self.section.person_name, TImporter.max_vehicle_count))
+                        continue
                     passport = prepared_section.get_passport_components().get_main_section_passport()
                     if self.register_section_passport(passport):
                         prepared_section.section.tmp_income_set = prepared_section.incomes
