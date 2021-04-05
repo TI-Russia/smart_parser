@@ -252,6 +252,14 @@ namespace RegressionTesting
             TestSmartParser("26937_42.doc", "prod");
         }
 
+
+        [TestMethod]
+        [TestCategory("doc")]
+        public void Test10639_32()
+        {
+            TestSmartParser("10639_32.doc", "prod");
+        }
+
         [TestMethod]
         [TestCategory("doc")]
         public void MinYust2012()

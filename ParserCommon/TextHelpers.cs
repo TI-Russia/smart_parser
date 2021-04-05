@@ -92,11 +92,19 @@ namespace TI.Declarator.ParserCommon
             {
                 return false;
             }
-
+            if (char.IsUpper(s[0]) && s.EndsWith(".") && s.Length == 4 && s[1] == '.')
+            {
+                //"А.Б."
+                return true;
+            }
             return char.IsUpper(s[0]) && (s.EndsWithAny(PatronymicSuffixStrings) || (s.Length <= 4 && s.EndsWith("."))) /* в., в.п., вяч. */;
         }
 
-        private static readonly string[] RoleStrings = { "заместител", "начальник", "аудитор", "депутат", "секретарь", "уполномоченный", "председатель", "бухгалтер", "руководител" };
+        private static readonly string[] RoleStrings = { 
+            "заместител", "начальник", "аудитор", "депутат", 
+            "секретарь", "уполномоченный", "председатель", "бухгалтер", "руководител", "глава", "главы", "заведующий",
+            "заведующая"
+            };
 
         public static bool MayContainsRole(string s)
         {

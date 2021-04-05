@@ -10,7 +10,7 @@ using TI.Declarator.ParserCommon;
 using System.Text.RegularExpressions;
 using System.Drawing;
 using System.Drawing.Text;
-
+using System.Text.RegularExpressions;
 
 namespace Smart.Parser.Adapters
 {
@@ -390,7 +390,15 @@ namespace Smart.Parser.Adapters
                     PersonName = String.Join(" ", words.Skip(words.Length - 3)).Trim();
                     Occupation = String.Join(" ", words.Take(words.Length - 3)).Trim();
                 }
-                else if (words.Length >= 2 && TextHelpers.CanBeInitials(words[1]) && TextHelpers.MayContainsRole(String.Join(" ", words.Skip(2)).Trim()))
+                else if (Regex.Match(v, @"\w\.\w\.,").Success)
+                {
+                    // ex: "Головачева Н.В., заместитель"
+                    var match = Regex.Match(v, @"\w\.\w\.,");
+                    PersonName = v.Substring(0, match.Index + match.Length - 1).Trim();
+                    Occupation = v.Substring(match.Index + match.Length).Trim();
+                }
+                else if (words.Length >= 2 && TextHelpers.CanBeInitials(words[1]) && 
+                            TextHelpers.MayContainsRole(String.Join(" ", words.Skip(2)).Trim()))
                 {
                     // ex: "Головачева Н.В., заместитель"
                     PersonName = String.Join(" ", words.Take(2)).Trim();
