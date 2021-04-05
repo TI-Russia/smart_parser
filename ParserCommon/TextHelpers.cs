@@ -85,7 +85,7 @@ namespace TI.Declarator.ParserCommon
 
         private static readonly string[] PatronymicSuffixStrings = { "вич", "вна", "вной", "внва", "вны", "тич", "мич", "ьич", "ьича", "ьича", "вича", "тича", "мича", "чны", "чна", "ьичем", "тичем", "мичем", "вичем", "чной", "вной" };
 
-        public static bool CanBePatronymic(string s)
+        public static bool  CanBePatronymic(string s)
         {
             s = s.Replace("-", string.Empty);
             if (s.IsNullOrWhiteSpace())

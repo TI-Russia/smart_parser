@@ -27,6 +27,7 @@ namespace TI.Declarator.ParserCommon
             return str switch
             {
                 _ when str.IsNumber() => Number,
+                _ when IsIncomeYear(str) => IncomeYear,
                 _ when str.IsNameAndOccupation() => NameAndOccupationOrRelativeType,
                 _ when str.IsName() => NameOrRelativeType,
                 _ when str.IsRelativeType() => RelativeTypeStrict,
@@ -121,6 +122,13 @@ namespace TI.Declarator.ParserCommon
             return str.StartsWith("№")
                    || str.ContainsAny("nп/п", "№п/п", "nпп")
                    || str.Replace("\\", "/").Equals("п/п", StringComparison.OrdinalIgnoreCase);
+        }
+
+        public static bool IsIncomeYear(string str)
+        {
+            str = str.OnlyRussianLowercase();
+            return str.ContainsAny("отчетныйгод")
+                   ;
         }
 
         public static bool IsName(this string s)

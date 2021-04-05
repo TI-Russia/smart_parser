@@ -253,6 +253,13 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("xls")]   
+        public void Test13252_58()
+        {
+            TestSmartParser("13252_58.xls", "prod");
+        }
+
+        [TestMethod]
         [TestCategory("doc")]
         public void Test13133_5()
         {
@@ -470,6 +477,13 @@ namespace RegressionTesting
         public void AntlrForRealties()
         {
             TestSmartParser("RealtyNaturalText.docx", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("doc")]
+        public void Test13415_200()
+        {
+            TestSmartParser("13415_200.doc", "prod");
         }
 
         [TestMethod]

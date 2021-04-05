@@ -249,7 +249,16 @@ namespace Parser.Lib
                 }
                 if (rowIndex >= adapter.GetRowsCount()) break;
             }
-            var field = PredictByStrings(texts);
+            var field = DeclarationField.None;
+            if (texts.Count == 1 && headerCell.Col == 0 && TextHelpers.CanBePatronymic(texts[0]))
+            {
+                // not enough data, if texts.Count == 1
+                field = DeclarationField.NameOrRelativeType;
+            }
+            else {
+                field = PredictByStrings(texts);
+            }
+            
             if (headerCell.TextAbove != null && ((field & DeclarationField.AllOwnTypes) > 0))
             {
                 string h = headerCell.TextAbove;

@@ -321,6 +321,7 @@ namespace Smart.Parser.Lib
 
             bool skipEmptyPerson = false;
             string prevPersonName = "";
+            int? yearFromTable = null;
 
             for (int row = rowOffset; row < Adapter.GetRowsCount(); row++)
             {
@@ -392,7 +393,17 @@ namespace Smart.Parser.Lib
                     }
                 }
                 if (!skipEmptyPerson)
+                {
                     borderFinder.AddInputRowToCurrentPerson(columnOrdering, currRow);
+                    if (declaration.Properties.Year == null && columnOrdering.ContainsField(DeclarationField.IncomeYear))
+                    {
+                        var incomeYear = currRow.GetDeclarationField(DeclarationField.IncomeYear);
+                        if (incomeYear != null) {
+                            declaration.Properties.Year = int.Parse(incomeYear.Text);
+                        }
+                    }
+                }
+
             }
             if (updateTrigrams) ColumnPredictor.WriteData();
 
