@@ -257,6 +257,10 @@ namespace Parser.Lib
             }
             else {
                 field = PredictByStrings(texts);
+                if (field == DeclarationField.NameOrRelativeType && String.Join(" ", texts).Contains(","))
+                {
+                    field = DeclarationField.NameAndOccupationOrRelativeType;
+                }
             }
             
             if (headerCell.TextAbove != null && ((field & DeclarationField.AllOwnTypes) > 0))

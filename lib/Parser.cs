@@ -289,7 +289,7 @@ namespace Smart.Parser.Lib
         bool IsHeaderRow(DataRow row, out ColumnOrdering columnOrdering)
         {
             columnOrdering = null;
-            if (!ColumnDetector.WeakHeaderCheck(row.Cells)) 
+            if (!ColumnDetector.WeakHeaderCheck(Adapter, row.Cells)) 
                 return false;
             try
             {
@@ -321,7 +321,6 @@ namespace Smart.Parser.Lib
 
             bool skipEmptyPerson = false;
             string prevPersonName = "";
-            int? yearFromTable = null;
 
             for (int row = rowOffset; row < Adapter.GetRowsCount(); row++)
             {

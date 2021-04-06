@@ -487,6 +487,21 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("doc")]
+        public void Test14712_34()
+        {
+            TestSmartParser("14712_34.doc", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("doc")]
+        public void Test13931_28()
+        {
+            TestSmartParser("13931_28.doc", "prod");
+        }
+
+
+        [TestMethod]
         [TestCategory("docx")]
         public void DividePersonAndRelativesByEoln()
         {

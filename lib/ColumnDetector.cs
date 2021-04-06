@@ -64,7 +64,7 @@ namespace Smart.Parser.Lib
             return true;
         }
 
-        public static bool WeakHeaderCheck(List<Cell> cells)
+        public static bool WeakHeaderCheck(IAdapter adapter, List<Cell> cells)
         {
             int colCount = 0;
             if (cells.Count < 3) return false;
@@ -72,6 +72,13 @@ namespace Smart.Parser.Lib
             {
                 if (colCount == 0 && HeaderHelpers.IsNumber(c.Text)) return true;
                 if (HeaderHelpers.IsName(c.Text)) return true;
+                if (HeaderHelpers.HasOwnedString(c.Text) || HeaderHelpers.HasStateString(c.Text))
+                {
+                    if (FindSubcellsUnder(adapter, c).Count >= 3)
+                    {
+                        return true;
+                    }
+                }
                 colCount += 1;
                 if (colCount > 3) break;
             }
@@ -116,7 +123,7 @@ namespace Smart.Parser.Lib
                         columnOrdering.Section = section_text;
                     }
                 }
-                else if (WeakHeaderCheck(currRow))
+                else if (WeakHeaderCheck(adapter, currRow))
                     break;
 
                 row += 1;

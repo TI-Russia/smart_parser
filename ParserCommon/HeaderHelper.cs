@@ -127,7 +127,7 @@ namespace TI.Declarator.ParserCommon
         public static bool IsIncomeYear(string str)
         {
             str = str.OnlyRussianLowercase();
-            return str.ContainsAny("отчетныйгод")
+            return str.ContainsAny("отчетныйгод") && !str.IsDeclaredYearlyIncome();
                    ;
         }
 
@@ -171,9 +171,15 @@ namespace TI.Declarator.ParserCommon
             return Regex.Match(clean, "вид((собстве..ост)|(правана))").Success;
         }
 
-        private static bool HasStateString(this string s) => s.OnlyRussianLowercase().Contains("пользовани");
+        public static bool HasStateString(string s)
+        {
+            return s.OnlyRussianLowercase().Contains("пользовани");
+        }
 
-        private static bool HasOwnedString(this string s) => s.OnlyRussianLowercase().ContainsAny("собственности", "принадлежащие");
+        public static bool HasOwnedString(string s)
+        {
+            return s.OnlyRussianLowercase().ContainsAny("собственности", "принадлежащие");
+        }
 
         private static bool HasSquareString(this string s) => s.OnlyRussianLowercase().Contains("площадь");
 
