@@ -28,10 +28,11 @@ namespace TI.Declarator.ParserCommon
             {
                 _ when str.IsNumber() => Number,
                 _ when IsIncomeYear(str) => IncomeYear,
-                _ when str.IsNameAndOccupation() => NameAndOccupationOrRelativeType,
+                _ when IsNameAndOccupation(str) => NameAndOccupationOrRelativeType,
+                _ when IsOccupationAndRelative(str) => OccupationOrRelativeType,
                 _ when str.IsName() => NameOrRelativeType,
-                _ when str.IsRelativeType() => RelativeTypeStrict,
-                _ when str.IsOccupation() => Occupation,
+                _ when IsRelativeType(str) => RelativeTypeStrict,
+                _ when IsOccupation(str) => Occupation,
                 _ when str.IsDepartment() && !str.IsDeclaredYearlyIncome() => Department,
 
                 _ when str.IsSpendingsField() => Spendings,
@@ -145,15 +146,25 @@ namespace TI.Declarator.ParserCommon
                         "ф.и.о");
         }
 
-        public static bool IsNameAndOccupation(this string s) =>
-            (s.IsName() && s.IsOccupation())
+        public static bool IsNameAndOccupation(string s)
+        {
+            return (s.IsName() && IsOccupation(s))
             || s.OnlyRussianLowercase().Contains("замещаемаядолжностьстепеньродства");
+        }
+        private static bool IsRelativeType(string s)
+        {
+            return s.ContainsAny("члены семьи", "степень родства") && !s.IsName();
+        }
 
-        private static bool IsRelativeType(this string s) => s.ContainsAny("члены семьи", "степень родства") && !s.IsName();
-
-        public static bool IsOccupation(this string s) => s
-            .RemoveCharacters('-', ' ').ToLowerInvariant()
+        public static bool IsOccupation(string s) 
+        {
+            return s.RemoveCharacters('-', ' ').ToLowerInvariant()
             .ContainsAny("должность", "должности", "должностей");
+        }
+        public static bool IsOccupationAndRelative(string s)
+        {
+            return IsOccupation(s) && IsRelativeType(s);
+        }
 
         private static bool IsDepartment(this string s) => s.ContainsAny("наименование организации", "ерриториальное управление в субъекте");
 

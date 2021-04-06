@@ -270,7 +270,7 @@ namespace Smart.Parser.Lib
             }
             RealEstateProperty stateProperty = new RealEstateProperty();
 
-
+            statePropTypeStr = statePropTypeStr.Trim(' ', '-');
             stateProperty.Text = statePropTypeStr;
             stateProperty.type_raw = statePropTypeStr;
             stateProperty.square = DataHelper.ParseSquare(statePropSquareStr); ;
@@ -287,7 +287,7 @@ namespace Smart.Parser.Lib
 
             SwapCountryAndSquare(ref areaStr, ref countryStr);
 
-            estateTypeStr = estateTypeStr.Trim();
+            estateTypeStr = estateTypeStr.Trim().Trim('-', ' ');
             areaStr = areaStr.ReplaceEolnWithSpace();
             if (DataHelper.IsEmptyValue(estateTypeStr))
             {

@@ -480,6 +480,19 @@ namespace Smart.Parser.Adapters
                     }
                 }
             }
+            if (ColumnOrdering.ContainsField(DeclarationField.OccupationOrRelativeType))
+            {
+                var str = GetDeclarationField(DeclarationField.OccupationOrRelativeType).GetText();
+                var relType = DataHelper.ParseRelationType(str, false);
+                if (relType == RelationType.Error)
+                {
+                    Occupation = str;
+                }
+                else
+                {
+                    RelativeType = str;
+                }
+            }
             return true;
         }
 

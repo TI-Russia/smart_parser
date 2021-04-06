@@ -487,6 +487,13 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("html")]
+        public void Test14421_139()
+        {
+            TestSmartParser("14421_139.htm", "prod");
+        }
+
+        [TestMethod]
         [TestCategory("doc")]
         public void Test14712_34()
         {
