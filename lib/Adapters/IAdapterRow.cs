@@ -486,7 +486,7 @@ namespace Smart.Parser.Adapters
                         SetRelative(Occupation);
                     }
                     else if (nameOrRelativeType.Trim(',').Contains(",") || 
-                                (  nameOrRelativeType.Contains('-') 
+                                (  nameOrRelativeType.Contains(" -") 
                                 && Regex.Split(nameOrRelativeType, @"[\,\s\n]+").Count() > 3))
                     {
                         if (!DivideNameAndOccupation(nameCell))

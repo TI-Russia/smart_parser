@@ -82,6 +82,7 @@ namespace TI.Declarator.ParserCommon
                     _ when str.HasChild() && !(str.HasMainDeclarant() || str.HasSpouse()) => ChildIncome,
                     _ when str.HasSpouse() && !(str.HasMainDeclarant() || str.HasChild()) => SpouseIncome,
                     _ when str.HasMainDeclarant() => DeclarantIncome,
+                    _ when HasOtherWord(str) => DeclaredYearlyOtherIncome,
                     _ => DeclaredYearlyIncome,
                 },
 
@@ -265,6 +266,10 @@ namespace TI.Declarator.ParserCommon
         {
             s = s.OnlyRussianLowercase();
             return s.ContainsAny("служащего", "служащему", "должностлицо", "должнослицо", "должностноелицо") && !HasChild(s) && !HasSpouse(s);
+        }
+        private static bool HasOtherWord(string s)
+        {
+            return s.ContainsAny("иные", "иного");
         }
 
         private static bool HasChild(this string s) => s.ContainsAny("детей", "детям");

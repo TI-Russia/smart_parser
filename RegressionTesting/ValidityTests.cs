@@ -686,7 +686,12 @@ namespace RegressionTesting
         {
             TestSmartParser("MinEkon2015.docx", "prod");
         }
-
+        [TestMethod]
+        [TestCategory("html")]
+        public void Test74()
+        {
+            TestSmartParser("74.html", "prod");
+        }
         [TestMethod]
         [TestCategory("docx")]
         public void Test61662()
