@@ -502,6 +502,13 @@ namespace RegressionTesting
 
         [TestMethod]
         [TestCategory("doc")]
+        public void Test14475_0()
+        {
+            TestSmartParser("14475_0.doc", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("doc")]
         public void Test13931_28()
         {
             TestSmartParser("13931_28.doc", "prod");
