@@ -356,14 +356,12 @@ namespace Smart.Parser.Adapters
                     string.Format("Wrong relative type {0} at row {1}", RelativeType, GetRowIndex()));
             }
         }
-
-        void DivideNameAndOccupation()
+        bool DivideNameAndOccupation(Cell nameCell)
         {
-            var nameCell = GetDeclarationField(DeclarationField.NameAndOccupationOrRelativeType);
             NameDocPosition = adapter.GetDocumentPosition(GetRowIndex(), nameCell.Col);
 
             string v = nameCell.GetText(true);
-            if (DataHelper.IsEmptyValue(v)) return;
+            if (DataHelper.IsEmptyValue(v)) return true;
             if (DataHelper.IsRelativeInfo(v))
             {
                 SetRelative(v);
@@ -411,12 +409,36 @@ namespace Smart.Parser.Adapters
                 }
                 else
                 {
-                    throw new SmartParserException(
-                        string.Format("Cannot parse name+occupation value {0} at row {1}", v, GetRowIndex()));
+                    // maybe PDF has split cells (table on different pages)
+                    // example file: "5966/14 Upravlenie delami.pdf" converted to docx
+                    Logger.Error(string.Format("Cannot parse name+occupation value {0} at row {1}", v, GetRowIndex()));
+                    return false;
                 }
             }
+            return true;
         }
 
+        private static bool CheckPersonName(String s)
+        {
+            if (s.Contains('.')) {
+                return true;
+            }
+
+            bool hasSpaces = s.Trim().Any(Char.IsWhiteSpace);
+            if (!hasSpaces)
+            {
+                return false;
+            }
+            string[] words = Regex.Split(s, @"[\,\s\n]+");
+            if (TextHelpers.CanBePatronymic(words[words.Length - 1])) {
+                return true;
+            }
+            if (words.Count() != 3 && ColumnPredictor.PredictByString(s) != DeclarationField.NameOrRelativeType)
+            {
+                return false;
+            }
+            return true;
+        }
         public bool InitPersonData(string prevPersonName)
         {
             if (this.ColumnOrdering.ContainsField(DeclarationField.RelativeTypeStrict))
@@ -429,15 +451,8 @@ namespace Smart.Parser.Adapters
             {
                 if (!ColumnOrdering.SearchForFioColumnOnly)
                 {
-                    try
+                    if (!DivideNameAndOccupation(GetDeclarationField(DeclarationField.NameAndOccupationOrRelativeType)))
                     {
-                        DivideNameAndOccupation();    
-                    }
-                    catch (SmartParserException) {
-                        // maybe PDF has split cells (table on different pages)
-                        // example file: "5966/14 Upravlenie delami.pdf" converted to docx
-                        var nameCell = GetDeclarationField(DeclarationField.NameAndOccupationOrRelativeType);
-                        Logger.Error("ignore bad person name " + nameCell);
                         return false;
                     }
                 }
@@ -470,10 +485,20 @@ namespace Smart.Parser.Adapters
                     {
                         SetRelative(Occupation);
                     }
+                    else if (nameOrRelativeType.Trim(',').Contains(",") || 
+                                (  nameOrRelativeType.Contains('-') 
+                                && Regex.Split(nameOrRelativeType, @"[\,\s\n]+").Count() > 3))
+                    {
+                        if (!DivideNameAndOccupation(nameCell))
+                        {
+                            return false;
+                        }
+                    }
                     else
                     { 
                         PersonName = nameOrRelativeType;
-                        if (!PersonName.Contains('.') && !PersonName.Trim().Any(Char.IsWhiteSpace)) {
+                        if (!CheckPersonName(PersonName))
+                        {
                             Logger.Error("ignore bad person name " + PersonName);
                             return false;
                         }

@@ -495,6 +495,13 @@ namespace RegressionTesting
 
         [TestMethod]
         [TestCategory("doc")]
+        public void Test11212_66()
+        {
+            TestSmartParser("11212_66.doc", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("doc")]
         public void Test14712_34()
         {
             TestSmartParser("14712_34.doc", "prod");
@@ -505,6 +512,13 @@ namespace RegressionTesting
         public void Test14475_0()
         {
             TestSmartParser("14475_0.doc", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("html")]
+        public void Test15584_0()
+        {
+            TestSmartParser("15584_0.html", "prod");
         }
 
         [TestMethod]
@@ -671,6 +685,13 @@ namespace RegressionTesting
         public void MinEkon2015()
         {
             TestSmartParser("MinEkon2015.docx", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("docx")]
+        public void Test61662()
+        {
+            TestSmartParser("61662.docx", "prod");
         }
 
         [TestMethod]

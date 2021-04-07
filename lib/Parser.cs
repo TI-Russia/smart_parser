@@ -418,6 +418,7 @@ namespace Smart.Parser.Lib
             // the incomes are so high, that we should not multiply incomes by 1000 although the 
             // column title specify this multiplier
             List<Decimal> incomes = new List<Decimal>();
+           
             foreach (PublicServant servant in declaration.PublicServants)
             {
                 foreach (DataRow row in servant.DateRows)
@@ -425,10 +426,12 @@ namespace Smart.Parser.Lib
                     if (row.ColumnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncomeThousands))
                     {
                         PublicServant dummy = new PublicServant();
-                        ParseIncome(row, dummy, true);
-                        if (dummy.DeclaredYearlyIncome != null)
+                        if (ParseIncome(row, dummy, true))
                         {
-                            incomes.Add(dummy.DeclaredYearlyIncome.Value);
+                            if (dummy.DeclaredYearlyIncome != null)
+                            {
+                                incomes.Add(dummy.DeclaredYearlyIncome.Value);
+                            }
                         }
                     }
                 }
@@ -493,7 +496,8 @@ namespace Smart.Parser.Lib
                 }
                 else
                 {
-                    throw e;
+                    Logger.Info("Cannot find or parse income cell, keep going... ");
+                    return true;
                 }
             }
         }
