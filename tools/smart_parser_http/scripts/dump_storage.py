@@ -10,11 +10,9 @@ if __name__ == "__main__":
     k = dbm.firstkey()
     while k is not None:
         value = dbm.get(k)
-        print("key")
-        print("{}".format(k.decode('latin')))
-        print("value")
         if value == TSmartParserHTTPServer.SMART_PARSE_FAIL_CONSTANT:
-            print(value.decode('latin'))
+            value = value.decode('latin')
         else:
-            print(zlib.decompress(value).decode('utf8'))
+            value = zlib.decompress(value).decode('utf8').replace('\n', ' ')
+        print("{}\t{}".format(k.decode('latin'), value))
         k = dbm.nextkey(k)

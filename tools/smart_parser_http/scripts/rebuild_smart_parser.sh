@@ -3,12 +3,13 @@ export HOSTS="frontend,migalka,lena,avito"
 JOBS_COUNT=4
 #export SOURCE_DOC_SERVER_ADDRESS=migalka:8090
 #export SMART_PARSER_SERVER_ADDRESS=migalka:8165
-  export SOURCE_DOC_SERVER_ADDRESS=192.168.100.26:8090
+export SOURCE_DOC_SERVER_ADDRESS=192.168.100.26:8090
 export SMART_PARSER_SERVER_ADDRESS=192.168.100.26:8165
 
 parallel -a all_source_sha256.txt \
      --env SOURCE_DOC_SERVER_ADDRESS \
      --env ASPOSE_LIC \
+     --env DECLARATOR_CONV_URL \
      --env SMART_PARSER_SERVER_ADDRESS \
      --env PYTHONPATH  \
      --jobs $JOBS_COUNT \
