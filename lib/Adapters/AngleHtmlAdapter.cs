@@ -181,20 +181,20 @@ namespace Smart.Parser.Adapters
 
         private void InitTextProperties(HtmlDocHolder docHolder, IElement inputCell)
         {
-            FontName = "";
-            FontSize = 0;
+            string fontName = "";
+            int fontSize = 0;
             var myFormatter = new MyMarkupFormatter();
-            //var myFormatter = new AngleSharp.Html.PrettyMarkupFormatter();
             Text = inputCell.ToHtml(myFormatter);
             IsEmpty = Text.IsNullOrWhiteSpace();
-            if (FontName == null || FontName == "")
+            if (fontName == null || fontName == "")
             {
-                FontName = docHolder.DefaultFontName;
+                fontName = docHolder.DefaultFontName;
             }
-            if (FontSize == 0)
+            if (fontSize == 0)
             {
-                FontSize = docHolder.DefaultFontSize;
+                fontSize = docHolder.DefaultFontSize;
             }
+            TStringMeasure.InitGraphics(fontName, fontSize);
         }
 
     }

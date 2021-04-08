@@ -104,7 +104,7 @@ namespace Smart.Parser.Lib
                 if (!(nameCell is OpenXmlWordCell) && !(nameCell is HtmlAdapterCell)) return false;
                 if (nameCell is null) return false;
                 if (nameCell.IsEmpty) return false;
-                if (nameCell.FontSize == 0) return false; // no font info
+                if (TStringMeasure.DefaultFont == null) return false; // no font info
                 List<string> lines = nameCell.GetLinesWithSoftBreaks();
                 if (lines.Count < 2) return false;
                 List<int> borders  = new List<int>() { 0 };

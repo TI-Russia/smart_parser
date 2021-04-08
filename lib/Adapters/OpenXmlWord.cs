@@ -252,8 +252,8 @@ namespace Smart.Parser.Adapters
         private void InitTextProperties(WordDocHolder docHolder, OpenXmlElement inputCell)
         {
             string s = "";
-            FontName = "";
-            FontSize = 0;
+            string fontName = "";
+            int fontSize = 0;
             foreach (var p in inputCell.Elements<Paragraph>())
             {
                 foreach (var textOrBreak in p.Descendants())
@@ -267,11 +267,11 @@ namespace Smart.Parser.Adapters
                             if (rProps.FontSize != null)
                             {
                                 int runFontSize = Int32.Parse(rProps.FontSize.Val);
-                                if (runFontSize <= 28) FontSize = runFontSize; //  if font is too large, it is is an ocr error, ignore it
+                                if (runFontSize <= 28) fontSize = runFontSize; //  if font is too large, it is is an ocr error, ignore it
                             }
                             if (rProps.RunFonts != null)
                             {
-                                FontName = rProps.RunFonts.ComplexScript;
+                                fontName = rProps.RunFonts.ComplexScript;
                             }
                         }
                     }
@@ -306,15 +306,15 @@ namespace Smart.Parser.Adapters
             }
             Text = s;
             IsEmpty = s.IsNullOrWhiteSpace();
-            if (string.IsNullOrEmpty(FontName))
+            if (string.IsNullOrEmpty(fontName))
             {
-                FontName = docHolder.DefaultFontName;
+                fontName = docHolder.DefaultFontName;
             }
-            if (FontSize == 0)
+            if (fontSize == 0)
             {
-                FontSize = docHolder.DefaultFontSize;
+                fontSize = docHolder.DefaultFontSize;
             }
-
+            TStringMeasure.InitGraphics(fontName, fontSize);
         }
 
     }

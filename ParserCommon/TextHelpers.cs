@@ -69,7 +69,10 @@ namespace TI.Declarator.ParserCommon
             return builder.ToString();
         }
 
-        public static string ReplaceEolnWithSpace(this string str) => str.Replace('\n', ' ').Trim();
+        public static string ReplaceEolnWithSpace(this string str)
+        {
+            return str.Replace('\n', ' ').Trim();
+        }
 
         public static string CoalesceWhitespace(this string str) => Regex.Replace(str, "[ ]+", " ");
 

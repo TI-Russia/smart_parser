@@ -3,17 +3,42 @@ using static Parser.Lib.SmartParserException;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Smart.Parser.Lib;
 using TI.Declarator.ParserCommon;
 using System.Text.RegularExpressions;
 using System.Drawing;
 using System.Drawing.Text;
-using System.Text.RegularExpressions;
+    
 
 namespace Smart.Parser.Adapters
 {
+    public class TStringMeasure
+    {
+        static System.Drawing.Graphics DefaultGraphics;
+        static public System.Drawing.Font DefaultFont = null;
+
+        static public void InitGraphics(string fontName, int fontSize)
+        {
+            DefaultGraphics = System.Drawing.Graphics.FromImage(new Bitmap(1, 1));
+            DefaultGraphics.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
+            DefaultGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
+            DefaultGraphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed;
+            DefaultGraphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
+            DefaultFont = new System.Drawing.Font(fontName, fontSize / 2);
+            //DefaultFont = new System.Drawing.Font("Liberation Serif", fontSize / 2);
+        }
+
+        // This function (graphics.MeasureString in particular) can work differently on Unix and Windows, 
+        // The difference is not caused by the default font on Linux  (Liberation Serif) and the default font on Windows(Times New Roman.
+        // See the first column of sud_2016.doc from the test cases.  
+        // https://stackoverflow.com/questions/8283631/graphics-drawstring-vs-textrenderer-drawtextwhich-can-deliver-better-quality
+        public static float MeasureStringWidth(string s)
+        {
+            var stringSize = DefaultGraphics.MeasureString(s, DefaultFont);
+            return stringSize.Width;
+        }
+
+    }
     public class Cell 
     {
         public virtual bool IsMerged { set; get; } = false;
@@ -46,30 +71,17 @@ namespace Smart.Parser.Adapters
             return Text;
         }
 
-        // This function (graphics.MeasureString in particular) can work differently on Unix and Windows, may be because the default 
-        // font on Linux is Liberation Serif and the default font on Windows is Times New Roman.
-        // See the first column of sud_2016.doc from the test cases.  
-
         public List<string> GetLinesWithSoftBreaks()
         {
             var res = new List<string>();
             if (IsEmpty) return res;
             string[] hardLines = Text.Split('\n');
-            var graphics = System.Drawing.Graphics.FromImage(new Bitmap(1, 1));
-            graphics.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
-            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
-            graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed;
-            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
             
-            var stringSize = new SizeF();
-            var font = new System.Drawing.Font(FontName, FontSize / 2);
             foreach (var hardLine in hardLines)
             {
-                stringSize = graphics.MeasureString(hardLine, font);
-                // Logger.Info("stringSize = {0} (FontName = {2}, fontsize = {1})", stringSize, FontSize / 2, FontName);
-
+                var width  = TStringMeasure.MeasureStringWidth(hardLine);
                 int defaultMargin = 11; //to do calc it really
-                int softLinesCount = (int)(stringSize.Width / (CellWidth - defaultMargin)) + 1;
+                int softLinesCount = (int)(width / (CellWidth - defaultMargin)) + 1;
                 if (softLinesCount == 1)
                 {
                     res.Add(hardLine);
@@ -114,8 +126,6 @@ namespace Smart.Parser.Adapters
 
         public int CellWidth = 0; // in pixels
         public int AdditTableIndention = 0; // only for Word: http://officeopenxml.com/WPtableIndent.php
-        public string FontName;
-        public int FontSize;
 
     };
 
