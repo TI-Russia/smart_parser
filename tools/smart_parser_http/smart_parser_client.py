@@ -1,33 +1,15 @@
 from common.content_types import ACCEPTED_DOCUMENT_EXTENSIONS
 from smart_parser_http.smart_parser_server import TSmartParserHTTPServer
 from common.primitives import build_dislosures_sha256
+from common.logging_wrapper import setup_logging
 
 import http.client
-import logging
 import urllib.request
 import urllib.error
 import os
 import json
 import sys
 import argparse
-
-
-def setup_logging(logfilename="smart_parser_client.log"):
-    logger = logging.getLogger("sc")
-    logger.setLevel(logging.DEBUG)
-
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    fh = logging.FileHandler(logfilename, "a+", encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-
-    # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-    return logger
 
 
 class TSmartParserCacheClient(object):
@@ -37,7 +19,7 @@ class TSmartParserCacheClient(object):
         parser = argparse.ArgumentParser()
         parser.add_argument("--server-address", dest='server_address', default=None,
                             help="by default read it from environment variable SMART_PARSER_SERVER_ADDRESS")
-        parser.add_argument("--action", dest='action', default=None, help="can be put, get, get_by_sha256 or stats", required=False)
+        parser.add_argument("--action", dest='action', default=None, help="can be put, get, get_by_sha256, put_json or stats", required=False)
         parser.add_argument("--walk-folder-recursive", dest='walk_folder_recursive', default=None, required=False)
         parser.add_argument("--timeout", dest='timeout', default=300, type=int)
         parser.add_argument("--rebuild", dest='rebuild', action="store_true", default=False)
@@ -65,7 +47,7 @@ class TSmartParserCacheClient(object):
 
     def __init__(self, args, logger=None):
         if logger is None:
-            self.logger = setup_logging()
+            self.logger = setup_logging(log_file_name="smart_parser_client.log", append_mode=True)
         else:
             self.logger = logger
 
@@ -78,7 +60,7 @@ class TSmartParserCacheClient(object):
         self.assert_server_alive()
         self.args = args
 
-    def send_file(self, file_path, rebuild=False):
+    def send_file(self, file_path, rebuild=False, external_json=False):
         conn = http.client.HTTPConnection(self.server_address)
         with open(file_path, "rb") as inp:
             file_contents = inp.read()
@@ -86,6 +68,11 @@ class TSmartParserCacheClient(object):
         path = os.path.basename(file_path)
         if rebuild:
             path += "?rebuild=1"
+        if external_json:
+            sha256 = os.path.basename(file_path)
+            sha256 = sha256[0:sha256.find('.')] # remember double file extension .docx.json
+            assert len(sha256) == 64
+            path += "?external_json=1&sha256=" + sha256
         conn.request("PUT", path, file_contents)
         response = conn.getresponse()
         if response.code != 201:
@@ -153,6 +140,8 @@ class TSmartParserCacheClient(object):
                         print("not found")
                     else:
                         print(json.dumps(js, ensure_ascii=False))
+                elif self.args.action == "put_json":
+                    self.send_file(f, False, True)
                 else:
                     self.send_file(f, self.args.rebuild)
 

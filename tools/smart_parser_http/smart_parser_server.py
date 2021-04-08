@@ -44,7 +44,7 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
 
     def __init__(self, args):
         self.args = args
-        self.logger = setup_logging(self.args.log_file_name, append_mode=True)
+        self.logger = setup_logging(log_file_name=self.args.log_file_name, append_mode=True)
         self.json_cache_dbm = dbm.gnu.open(args.cache_file, "w" if os.path.exists(args.cache_file) else "c")
         self.last_version = self.read_smart_parser_versions()
         self.task_queue = self.initialize_input_queue()
@@ -153,6 +153,8 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         key = self.build_key(sha256, None)
         self.logger.debug("add json to key  {}".format(key))
         self.session_write_count += 1
+        if json_data != TSmartParserHTTPServer.SMART_PARSE_FAIL_CONSTANT:
+            json_data = zlib.compress(json_data)
         self.json_cache_dbm[key] = json_data
         self.unsynced_records_count += 1
         self.sync_to_disc()
@@ -170,23 +172,10 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
                 pass
 
     def run_smart_parser(self, file_path):
-        try:
-            self.logger.debug("process {} with smart_parser".format(file_path))
-            EXTERNAl_CONVERTORS.run_smart_parser_full(file_path)
-            smart_parser_json = file_path + ".json"
-            json_data = TSmartParserHTTPServer.SMART_PARSE_FAIL_CONSTANT
-            if os.path.exists(smart_parser_json):
-                with open(smart_parser_json, "rb") as inp:
-                    json_data = zlib.compress(inp.read())
-                os.unlink(smart_parser_json)
-            sha256, _ = os.path.splitext(os.path.basename(file_path))
-            self.logger.debug("remove file {}".format(file_path))
-            self.task_queue.task_done()
-            os.unlink(file_path)
-            return sha256, json_data
-        except Exception as exp:
-            self.logger.error("Exception in run_smart_parser_thread:{}".format(exp))
-            raise
+        sha256, json_data = EXTERNAl_CONVERTORS.run_smart_parser_official(
+            file_path, self.logger, TSmartParserHTTPServer.SMART_PARSE_FAIL_CONSTANT)
+        self.task_queue.task_done()
+        return sha256, json_data
 
     def run_smart_parser_thread_pool(self):
         self.logger.debug("run smart_parser in {} threads".format(self.args.worker_count))
@@ -302,7 +291,11 @@ class TSmartParserRequestHandler(http.server.BaseHTTPRequestHandler):
             return
 
         try:
-            self.server.put_to_task_queue(file_bytes, file_extension, ('rebuild' in query_components))
+            if not query_components.get("external_json", False):
+                self.server.put_to_task_queue(file_bytes, file_extension, ('rebuild' in query_components))
+            else:
+                sha256 = query_components['sha256']
+                self.server.register_built_smart_parser_json(sha256, file_bytes)
         except Exception as exp:
             self.send_error_wrapper('register_task_result failed: {}'.format(str(exp)))
             return

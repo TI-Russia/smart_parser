@@ -143,4 +143,25 @@ class TExternalConverters:
             os.unlink(tmp_file)
         return version
 
+    def run_smart_parser_official(self, file_path, logger=None, default_value=None):
+        try:
+            if logger is not None:
+                logger.debug("process {} with smart_parser".format(file_path))
+            self.run_smart_parser_full(file_path)
+            smart_parser_json = file_path + ".json"
+            json_data = default_value
+            if os.path.exists(smart_parser_json):
+                with open(smart_parser_json, "rb") as inp:
+                    json_data = inp.read()
+                os.unlink(smart_parser_json)
+            sha256, _ = os.path.splitext(os.path.basename(file_path))
+            if logger is not None:
+                logger.debug("remove file {}".format(file_path))
+            os.unlink(file_path)
+            return sha256, json_data
+        except Exception as exp:
+            if logger is not None:
+                logger.error("Exception in run_smart_parser_thread:{}".format(exp))
+            raise
+
 EXTERNAl_CONVERTORS = TExternalConverters()

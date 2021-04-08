@@ -1,3 +1,6 @@
+from common.content_types import ACCEPTED_DOCUMENT_EXTENSIONS
+from common.logging_wrapper import setup_logging
+
 import http.client
 import logging
 import urllib.request
@@ -6,25 +9,6 @@ import os
 import json
 import argparse
 import sys
-from common.content_types import ACCEPTED_DOCUMENT_EXTENSIONS
-
-
-def setup_logging(logfilename):
-    logger = logging.getLogger("src_doc_cln")
-    logger.setLevel(logging.DEBUG)
-
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    fh = logging.FileHandler(logfilename, "a+", encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-
-    # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-    return logger
 
 
 class TSourceDocClient(object):
@@ -60,7 +44,7 @@ class TSourceDocClient(object):
 
     def __init__(self, args, logger=None):
         self.args = args
-        self.logger = logger if logger is not None else setup_logging("source_document_client.log")
+        self.logger = logger if logger is not None else setup_logging(log_file_name="source_document_client.log", append_mode=True)
         self.server_address = args.server_address
         if self.server_address is None:
             self.logger.error("specify environment variable SOURCE_DOC_SERVER_ADDRESS")

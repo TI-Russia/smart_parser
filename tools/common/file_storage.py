@@ -16,6 +16,7 @@ default_max_bin_file_size = 10 * (2 ** 30)
 
 class TFileStorage:
     header_repeat_max_len = 20
+    stats_key = "stats"
 
     def get_bin_file_path(self, i):
         return os.path.join(self.data_folder, "{}.bin".format(i))
@@ -48,6 +49,14 @@ class TFileStorage:
             self.saved_file_params.sync()
             self.write_without_sync_count = 0
 
+    def get_all_keys(self):
+        k = self.saved_file_params.firstkey()
+        while k is not None:
+            key = k.decode('latin')
+            if key != TFileStorage.stats_key:
+                yield key
+            k = self.saved_file_params.nextkey(k)
+
     def open_dbm(self):
         if self.read_only:
             open_mode = "r"
@@ -61,7 +70,7 @@ class TFileStorage:
         self.logger.info("open dbm file {} with mode: {}".format(self.dbm_path, open_mode))
         self.saved_file_params = gdbm.open(self.dbm_path, open_mode)
         if open_mode[0] == "w" or open_mode[0] == "r":
-            self.stats = json.loads(self.saved_file_params.get('stats'))
+            self.stats = json.loads(self.saved_file_params.get(TFileStorage.stats_key))
 
     def load_from_disk(self):
         self.stats = {
@@ -135,7 +144,7 @@ class TFileStorage:
         self.stats['all_file_size'] += file_bytes_len + self.header_repeat_max_len
         self.stats['source_doc_count'] += 1
         self.stats['bin_files_count'] = len(self.bin_files)
-        self.write_key_to_dbm("stats", json.dumps(self.stats))
+        self.write_key_to_dbm(TFileStorage.stats_key, json.dumps(self.stats))
 
     def save_file(self, file_bytes, file_extension, aux_params=None, force=False, sha256=None):
         if self.read_only:
