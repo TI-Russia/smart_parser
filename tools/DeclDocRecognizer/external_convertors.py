@@ -46,7 +46,7 @@ class TExternalConverters:
             message = "add ASPOSE_LIC environment variable"
             raise Exception(message)
 
-        if os.path.exists(os.environ.get('ASPOSE_LIC')):
+        if not os.path.exists(os.environ.get('ASPOSE_LIC')):
             message = "cannot find lic file {}, specified by environment variable ASPOSE_LIC".format(os.environ.get('ASPOSE_LIC'))
             raise Exception(message)
 
