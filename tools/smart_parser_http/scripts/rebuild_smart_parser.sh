@@ -1,11 +1,14 @@
 python3 ~/smart_parser/tools/source_doc_http/scripts/print_all_keys.py ~/declarator_hdd/Yandex.Disk/declarator/source_doc >all_source_sha256.txt
-HOSTS="frontend"
-JOBS_COUNT=1
-export SOURCE_DOC_SERVER_ADDRESS=migalka:8090
-export SMART_PARSER_SERVER_ADDRESS=migalka:8165
+export HOSTS="frontend,migalka,lena,avito"
+JOBS_COUNT=4
+#export SOURCE_DOC_SERVER_ADDRESS=migalka:8090
+#export SMART_PARSER_SERVER_ADDRESS=migalka:8165
+  export SOURCE_DOC_SERVER_ADDRESS=192.168.100.26:8090
+export SMART_PARSER_SERVER_ADDRESS=192.168.100.26:8165
 
 parallel -a all_source_sha256.txt \
      --env SOURCE_DOC_SERVER_ADDRESS \
+     --env ASPOSE_LIC \
      --env SMART_PARSER_SERVER_ADDRESS \
      --env PYTHONPATH  \
      --jobs $JOBS_COUNT \

@@ -6,8 +6,7 @@ from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from smart_parser_http.smart_parser_server import TSmartParserHTTPServer
 from common.logging_wrapper import setup_logging
 import sys
-import json
-
+import  os
 
 if __name__ == "__main__":
 
@@ -23,6 +22,7 @@ if __name__ == "__main__":
     file_path = "{}{}".format(INPUT_SHA256, file_extension)
     with open(file_path, "wb") as outp:
         outp.write(file_data)
+
     sha256, json_data = EXTERNAl_CONVERTORS.run_smart_parser_official(file_path,
                                                                       logger=logger,
                                                                       default_value=TSmartParserHTTPServer.SMART_PARSE_FAIL_CONSTANT)

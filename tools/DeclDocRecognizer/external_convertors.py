@@ -41,6 +41,15 @@ class TExternalConverters:
 
         if not os.path.exists(self.smart_parser):
             raise FileNotFoundError("cannot find {}, compile it".format(self.smart_parser))
+
+        if os.environ.get('ASPOSE_LIC') is None:
+            message = "add ASPOSE_LIC environment variable"
+            raise Exception(message)
+
+        if os.path.exists(os.environ.get('ASPOSE_LIC')):
+            message = "cannot find lic file {}, specified by environment variable ASPOSE_LIC".format(os.environ.get('ASPOSE_LIC'))
+            raise Exception(message)
+
         if self.soffice is None or not os.path.exists(self.soffice):
             raise FileNotFoundError("cannot find soffice (libreoffice), install it")
         if self.calibre is None or not os.path.exists(self.calibre):
@@ -122,7 +131,7 @@ class TExternalConverters:
         #run_cmd("rm -f main.txt second.txt smart_parser*log {}.log".format(inp))
         return exit_code
 
-    def run_smart_parser_full(self, inp):
+    def run_smart_parser_full(self, inp, logger):
         cmd = "/usr/bin/timeout 30m {} -disclosures -decimal-raw-normalization -skip-logging -converted-storage-url {} {}".format(
             self.smart_parser,
             TDocConversionClient.DECLARATOR_CONV_URL,
@@ -147,7 +156,7 @@ class TExternalConverters:
         try:
             if logger is not None:
                 logger.debug("process {} with smart_parser".format(file_path))
-            self.run_smart_parser_full(file_path)
+            self.run_smart_parser_full(file_path, logger)
             smart_parser_json = file_path + ".json"
             json_data = default_value
             if os.path.exists(smart_parser_json):
