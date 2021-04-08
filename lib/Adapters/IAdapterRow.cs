@@ -27,7 +27,7 @@ namespace Smart.Parser.Adapters
         {
             if (IsLinux())
             {
-                TestNormalizer = 1.06F;
+                TestNormalizer = 1.07F;
             }
             else
             {
