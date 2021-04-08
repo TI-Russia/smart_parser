@@ -16,15 +16,35 @@ namespace Smart.Parser.Adapters
     {
         static System.Drawing.Graphics DefaultGraphics;
         static public System.Drawing.Font DefaultFont = null;
+        static float TestNormalizer;
 
+        static bool IsLinux()
+        {
+            int p = (int)Environment.OSVersion.Platform;
+            return (p == 4) || (p == 6) || (p == 128);
+        }
         static public void InitGraphics(string fontName, int fontSize)
         {
+            if (IsLinux())
+            {
+                TestNormalizer = 1.06F;
+            }
+            else
+            {
+                TestNormalizer = 1.0F;
+            }
             DefaultGraphics = System.Drawing.Graphics.FromImage(new Bitmap(1, 1));
             DefaultGraphics.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
             DefaultGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
             DefaultGraphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed;
             DefaultGraphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
-            DefaultFont = new System.Drawing.Font(fontName, fontSize / 2);
+            if (fontSize > 0)
+            {
+                DefaultFont = new System.Drawing.Font(fontName, fontSize / 2);
+            }
+            else {
+                DefaultFont = null;
+            }
             //DefaultFont = new System.Drawing.Font("Liberation Serif", fontSize / 2);
         }
 
@@ -35,7 +55,7 @@ namespace Smart.Parser.Adapters
         public static float MeasureStringWidth(string s)
         {
             var stringSize = DefaultGraphics.MeasureString(s, DefaultFont);
-            return stringSize.Width;
+            return stringSize.Width * TestNormalizer;
         }
 
     }
