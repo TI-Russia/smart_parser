@@ -1,4 +1,4 @@
-python3 ~/smart_parser/tools/source_doc_http/scripts/print_all_keys.py ~/declarator_hdd/Yandex.Disk/declarator/source_doc >all_source_sha256.txt
+python3 ~/smart_parser/tools/source_doc_http/scripts/print_all_keys.py ~/declarator_hdd/Yandex.Disk/declarator/source_doc/bin_files >all_source_sha256.txt
 export HOSTS="frontend,migalka,lena,avito"
 JOBS_COUNT=4
 #export SOURCE_DOC_SERVER_ADDRESS=migalka:8090

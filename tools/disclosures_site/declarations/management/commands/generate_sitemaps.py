@@ -141,6 +141,7 @@ class Command(BaseCommand):
         url_paths = ["",
                      "about.html",
                      "permalinks.html",
+                     "smart_parser_spec.html",
                      "statistics",
                      "office",
                      "reports/car-brands/car-brands-by-years.html",

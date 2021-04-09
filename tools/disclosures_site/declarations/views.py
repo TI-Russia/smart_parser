@@ -52,6 +52,10 @@ class PermalinksPageView(generic.TemplateView):
     template_name = 'morda/permalinks.html'
 
 
+class SmartParserSpecView(generic.TemplateView):
+    template_name = 'morda/smart_parser_spec.html'
+
+
 def anyUrlView(request):
     path = request.path
     if path.startswith('/'):
