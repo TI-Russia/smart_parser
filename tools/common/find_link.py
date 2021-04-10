@@ -70,7 +70,14 @@ def web_link_is_absolutely_prohibited(logger, source, href):
 
 def make_link(main_url, href):
     url = urllib.parse.urljoin(main_url, href)
-    # see http://minpromtorg.gov.ru/open_ministry/anti/activities/info/
+
+    # we cannot disable html anchors because it is used as ajax requests:
+    # https://developers.google.com/search/docs/ajax-crawling/docs/specification?csw=1
+    # see an example of ajax urls in
+    # 1. http://minpromtorg.gov.ru/open_ministry/anti/activities/info/
+    #    -> https://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_rukovodstvo_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2019_g_po_31_dekabrya_2019_g
+    # 2. https://minzdrav.gov.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/4/2
+    #    -> https://minzdrav.gov.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/4/2#downloadable
     #i = url.find('#')
     #if i != -1:
     #    url = url[0:i]
