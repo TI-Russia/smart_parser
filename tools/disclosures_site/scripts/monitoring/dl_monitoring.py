@@ -9,7 +9,7 @@ from collections import defaultdict
 import time
 import logging
 
-from dlrobot_server.remote_call import TRemoteDlrobotCall
+from web_site_db.remote_call import TRemoteDlrobotCallList
 from source_doc_http.source_doc_client import TSourceDocClient
 #see examples in crontab.txt
 
@@ -24,7 +24,7 @@ class TDlrobotStats:
     def __init__(self,  args, min_date=None,  min_total_minutes=0):
         self.args = args
         self.min_date = min_date
-        self.remote_calls = TRemoteDlrobotCall.read_remote_calls_from_file(args.central_stats_file)
+        self.remote_calls = TRemoteDlrobotCallList(file_name=args.central_stats_file)
         self.cumulative_declaration_files_count = []
         self.cumulative_processed_websites_count = []
         self.end_times = []

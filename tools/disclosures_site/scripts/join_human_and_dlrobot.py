@@ -1,6 +1,6 @@
 from declarations.input_json import TSourceDocument, TDlrobotHumanFile, TWebReference
-from disclosures_site.declarations.web_sites import TDeclarationWebSites
-from common.robot_project import TRobotProject
+from web_site_db.web_sites import TDeclarationWebSiteList
+from web_site_db.robot_project import TRobotProject
 
 
 import os
@@ -52,7 +52,7 @@ class TJoiner:
         self.args = args
         self.logger = setup_logging("join_human_and_dlrobot.log")
         self.output_dlrobot_human = TDlrobotHumanFile(args.output_json, read_db=False)
-        self.web_sites = TDeclarationWebSites(self.logger)
+        self.web_sites = TDeclarationWebSiteList(self.logger)
         self.web_sites.load_from_disk()
         self.old_files_with_office_count = 0
 

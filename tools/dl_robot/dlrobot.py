@@ -1,7 +1,7 @@
 ﻿from common.download import TDownloadEnv
-from common.robot_project import TRobotProject
-from common.robot_step import TRobotStep
-from common.robot_web_site import TRobotWebSite
+from web_site_db.robot_project import TRobotProject
+from web_site_db.robot_step import TRobotStep
+from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
 from common.link_info import check_link_sitemap, check_anticorr_link_text
 from common.primitives import convert_timeout_to_seconds
 from dl_robot.declaration_link import looks_like_a_declaration_link
@@ -103,7 +103,7 @@ class TDlrobot:
             args.stop_after = args.step
         if args.logfile is None:
             args.logfile = args.project + ".log"
-        TRobotWebSite.CRAWLING_TIMEOUT = convert_timeout_to_seconds(args.crawling_timeout)
+        TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT = convert_timeout_to_seconds(args.crawling_timeout)
         TDownloadEnv.LAST_CONVERSION_TIMEOUT = convert_timeout_to_seconds(args.last_conversion_timeout)
         TDownloadEnv.PDF_QUOTA_CONVERSION = args.pdf_quota_conversion
         TDownloadEnv.init_conversion()

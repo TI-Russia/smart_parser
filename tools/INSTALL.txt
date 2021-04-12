@@ -113,7 +113,7 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
    cd $DLROBOT_CENTRAL_FOLDER
    rm nohup.out nohup python3 ~/smart_parser/tools/dlrobot_server/dlrobot_central.py  \
                 --server-address $DLROBOT_CENTRAL_SERVER_ADDRESS \
-                --input-task-list ~/smart_parser/tools/disclosures_site/data/web_sites.json \
+                --input-task-list ~/smart_parser/tools/web_site_db/data/web_sites.json \
                 --result-folder processed_projects --read-previous-results --check-yandex-cloud
 
 3.7  init crontab in central for monitoring (crontab -e), add lines from $TOOLS/disclosures_server/crontab.txt

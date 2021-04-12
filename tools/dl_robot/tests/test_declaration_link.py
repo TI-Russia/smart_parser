@@ -1,6 +1,6 @@
 from common.download import TDownloadEnv
-from common.robot_step import TRobotStep, TUrlInfo
-from common.robot_project import TRobotProject
+from web_site_db.robot_step import TRobotStep, TUrlInfo
+from web_site_db.robot_project import TRobotProject
 from dl_robot.declaration_link import looks_like_a_declaration_link
 from common.http_request import TRequestPolicy
 from common.simple_logger import close_logger
@@ -10,7 +10,6 @@ from unittest import TestCase
 import time
 import os
 import urllib
-import json
 import threading
 import logging
 import shutil

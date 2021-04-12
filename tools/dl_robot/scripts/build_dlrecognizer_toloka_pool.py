@@ -1,7 +1,7 @@
 import argparse
 import sys
 import os
-from common.robot_project import TRobotProject
+from web_site_db.robot_project import TRobotProject
 from common.download import TDownloadedFile
 from dl_robot.dlrobot import ROBOT_STEPS
 from common.primitives import strip_html_url
