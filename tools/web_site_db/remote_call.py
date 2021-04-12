@@ -11,29 +11,22 @@ from collections import defaultdict
 
 class TRemoteDlrobotCall:
 
-    def __init__(self, worker_ip="", project_file="", exit_code=1, allow_history_formats=False):
+    def __init__(self, worker_ip="", project_file="", web_site=""):
         self.worker_ip = worker_ip
         self.project_file = project_file
-        self.exit_code = exit_code
+        self.web_site = web_site
+        self.exit_code = 1
         self.start_time = int(time.time())
         self.end_time = None
-        self.project_folder = None
         self.result_files_count = 0
         self.worker_host_name = None
         self.reach_status = None
-        self.allow_history_formats = allow_history_formats
+
+    def task_ended(self):
+        return self.end_time is not None
 
     def get_website(self):
-        website = self.project_file
-        if website.endswith(".txt"):
-            website = website[:-len(".txt")]
         return website
-
-    @staticmethod
-    def project_file_to_web_site(s):
-        s = s.replace('_port_delim_', ':')
-        assert s.endswith('.txt')
-        return s[:-4]
 
     @staticmethod
     def web_site_to_project_file(s):
@@ -51,13 +44,10 @@ class TRemoteDlrobotCall:
         self.exit_code = d['exit_code']
         self.start_time = d['start_time']
         self.end_time = d['end_time']
-        self.project_folder = d['result_folder']
         self.result_files_count = d['result_files_count']
         self.worker_host_name = d['worker_host_name']
-        if not self.allow_history_formats:
-            self.reach_status = d['reach_status']
-        else:
-            self.reach_status = d.get('reach_status')
+        self.reach_status = d['reach_status']
+        self.web_site = d['web_site']
 
     def write_to_json(self):
         return {
@@ -66,17 +56,17 @@ class TRemoteDlrobotCall:
                 'exit_code': self.exit_code,
                 'start_time': self.start_time,
                 'end_time': self.end_time,
-                'result_folder': self.project_folder,
                 'result_files_count': self.result_files_count,
                 'worker_host_name': self.worker_host_name,
-                'reach_status': self.reach_status
+                'reach_status': self.reach_status,
+                'web_site': self.web_site
         }
 
-    def calc_project_stats(self, logger):
-        if self.project_folder is None:
+    def calc_project_stats(self, logger, project_folder):
+        if not self.task_ended():
             return
         try:
-            path = os.path.join(self.project_folder, self.project_file)
+            path = os.path.join(project_folder, self.project_file)
             with TRobotProject(logger, path, [], None, enable_selenium=False,
                                enable_search_engine=False) as project:
                 project.read_project(check_step_names=False)
@@ -88,10 +78,9 @@ class TRemoteDlrobotCall:
 
 
 class TRemoteDlrobotCallList:
-    def __init__(self, logger=None, file_name=None, allow_history_formats=False):
+    def __init__(self, logger=None, file_name=None):
         self.remote_calls_by_project_file = defaultdict(list)
         self.logger = logger
-        self.allow_history_formats = allow_history_formats
         if file_name is None:
             self.file_name = os.path.join(os.path.dirname(__file__), "data/dlrobot_remote_calls.dat")
         else:
@@ -119,7 +108,7 @@ class TRemoteDlrobotCallList:
             with open(self.file_name, "r") as inp:
                 for line in inp:
                     line = line.strip()
-                    remote_call = TRemoteDlrobotCall(allow_history_formats=self.allow_history_formats)
+                    remote_call = TRemoteDlrobotCall()
                     remote_call.read_from_json(line)
                     self.remote_calls_by_project_file[remote_call.project_file].append(remote_call)
                     line_no += 1

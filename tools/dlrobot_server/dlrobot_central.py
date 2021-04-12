@@ -147,20 +147,19 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         if remote_call.exit_code != 0:
             max_tries_count = self.args.tries_count
             failures_count = self.dlrobot_remote_calls.get_last_failures_count(remote_call.project_file)
-            if remote_call.project_folder is None and failures_count == max_tries_count:
+            if not remote_call.task_ended() and failures_count == max_tries_count:
                 # if the last result was not obtained, may be,
                 # worker is down, so the problem is not in the task but in the worker
                 # so give this task one more chance
                 max_tries_count += 1
                 self.logger.debug("increase max_tries_count for {} to {}".format(remote_call.project_file, max_tries_count))
 
-            web_site = TRemoteDlrobotCall.project_file_to_web_site(remote_call.project_file)
             if failures_count < max_tries_count:
-                self.web_sites_to_process.append(web_site)
-                self.logger.debug("register retry for {}".format(web_site))
+                self.web_sites_to_process.append(remote_call.web_site)
+                self.logger.debug("register retry for {}".format(remote_call.web_site))
             else:
-                self.logger.debug("set web_site status to {}".format(web_site, TWebSiteReachStatus.out_of_reach2))
-                self.web_sites_db.set_status_to_web_site(web_site, TWebSiteReachStatus.out_of_reach2)
+                self.logger.debug("set web_site status to {}".format(remote_call.web_site, TWebSiteReachStatus.out_of_reach2))
+                self.web_sites_db.set_status_to_web_site(remote_call.web_site, TWebSiteReachStatus.out_of_reach2)
 
     def init_projects_to_process(self):
         self.web_sites_to_process = list()
@@ -185,14 +184,14 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         project_file = TRemoteDlrobotCall.web_site_to_project_file(web_site)
         self.logger.info("start job: {} on {} (host name={}), left jobs: {}, running jobs: {}".format(
                 project_file, worker_ip, worker_host_name, len(self.web_sites_to_process), self.get_running_jobs_count()))
-        res = TRemoteDlrobotCall(worker_ip, project_file)
-        res.worker_host_name = worker_host_name
+        remote_call = TRemoteDlrobotCall(worker_ip=worker_ip, project_file=project_file, web_site=web_site)
+        remote_call.worker_host_name = worker_host_name
         project_content = {"sites": [{"morda_url": "http://" + web_site}]}
         if not self.args.enable_search_engines:
             project_content['disable_search_engine'] = True
         project_content_str = json.dumps(project_content, indent=4, ensure_ascii=False).encode("utf8")
 
-        self.worker_2_running_tasks[worker_ip].append(res)
+        self.worker_2_running_tasks[worker_ip].append(remote_call)
 
         return project_file, project_content_str
 
@@ -256,11 +255,11 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         remote_call.worker_host_name = worker_host_name
         remote_call.exit_code = exit_code
         remote_call.end_time = int(time.time())
-        remote_call.project_folder = self.untar_file(project_file, result_archive)
-        remote_call.calc_project_stats(self.logger)
+        project_folder = self.untar_file(project_file, result_archive)
+        remote_call.calc_project_stats(self.logger, project_folder)
         if not TWebSiteReachStatus.can_communicate(remote_call.reach_status):
             remote_call.exit_code = -1
-        self.send_declaraion_files_to_other_servers(remote_call.project_folder)
+        self.send_declaraion_files_to_other_servers(project_folder)
         self.save_dlrobot_remote_call(remote_call)
         self.last_remote_call = remote_call
         self.logger.debug("got exitcode {} for task result {} from worker {}".format(

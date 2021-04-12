@@ -366,6 +366,7 @@ class TestHistoryFiles(TestCase):
             for web_site in web_sites:
                 rec = {"worker_ip": "95.165.96.61",
                        "project_file": web_site + ".txt",
+                       "web_site": web_site,
                        "exit_code": 0,
                        "start_time": 1601799469,
                        "end_time": None,
