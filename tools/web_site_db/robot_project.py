@@ -1,14 +1,15 @@
+from web_site_db.robot_web_site import TWebSiteCrawlSnapshot, TRobotStep
+from common.selenium_driver import TSeleniumDriver
+from common.link_info import TLinkInfo, TClickEngine
+from common.serp_parser import SearchEngine, SearchEngineEnum, SerpException
+from common.http_request import RobotHttpException
+
+from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
 import json
 import shutil
 import os
 import tempfile
 import time
-from common.selenium_driver import TSeleniumDriver
-from common.link_info import TLinkInfo, TClickEngine
-from common.serp_parser import SearchEngine, SearchEngineEnum, SerpException
-from web_site_db.robot_web_site import TWebSiteCrawlSnapshot, TRobotStep
-from common.http_request import RobotHttpException
-from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
 
 
 class TRobotProject:
@@ -61,14 +62,20 @@ class TRobotProject:
             if not self.enable_search_engine:
                 output["disable_search_engine"] = True
             outf.write(json.dumps(output, ensure_ascii=False, indent=4))
+
+    @staticmethod
+    def create_project_str(sites, disable_search_engine=True):
+        project_content = {
+            "sites": list({"morda_url": s} for s in sites)
+        }
+        if disable_search_engine:
+            project_content['disable_search_engine'] = True
+        return json.dumps(project_content, indent=4, ensure_ascii=False)
+
     @staticmethod
     def create_project(url, file_path):
         with open(file_path, "w") as outp:
-            s = {
-                 "sites":[ {"morda_url":  url} ],
-                 "disable_search_engine": True
-            }
-            json.dump(s, outp)
+            outp.write(TRobotProject.create_project_str([url]))
 
     def add_office(self, morda_url):
         office_info = TWebSiteCrawlSnapshot(self)

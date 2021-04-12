@@ -7,6 +7,7 @@ from web_site_db.remote_call import TRemoteDlrobotCall, TRemoteDlrobotCallList
 from source_doc_http.source_doc_client import TSourceDocClient
 from web_site_db.robot_web_site import TWebSiteReachStatus
 from web_site_db.web_sites import TDeclarationWebSiteList
+from web_site_db.robot_project import TRobotProject
 from common.logging_wrapper import setup_logging
 
 import argparse
@@ -186,14 +187,10 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                 project_file, worker_ip, worker_host_name, len(self.web_sites_to_process), self.get_running_jobs_count()))
         remote_call = TRemoteDlrobotCall(worker_ip=worker_ip, project_file=project_file, web_site=web_site)
         remote_call.worker_host_name = worker_host_name
-        project_content = {"sites": [{"morda_url": "http://" + web_site}]}
-        if not self.args.enable_search_engines:
-            project_content['disable_search_engine'] = True
-        project_content_str = json.dumps(project_content, indent=4, ensure_ascii=False).encode("utf8")
-
+        web_sites = [web_site]
+        project_content_str = TRobotProject.create_project_str(web_sites, not self.args.enable_search_engines)
         self.worker_2_running_tasks[worker_ip].append(remote_call)
-
-        return project_file, project_content_str
+        return project_file, project_content_str.encode("utf8")
 
     def untar_file(self, project_file, result_archive):
         base_folder, _ = os.path.splitext(project_file)

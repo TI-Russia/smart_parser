@@ -2,11 +2,11 @@ from dl_robot.dlrobot import TDlrobot
 from DeclDocRecognizer.external_convertors import TExternalConverters
 from common.download import TDownloadEnv
 from common.simple_logger import close_logger
+from web_site_db.robot_project import TRobotProject
 
 from unittest import TestCase
 import os
 import threading
-import logging
 import shutil
 from datetime import datetime
 import json
@@ -40,9 +40,7 @@ class TTestEnv:
         os.mkdir(self.data_folder)
         os.chdir(self.data_folder)
         self.project_path = os.path.join(self.data_folder, "project.txt")
-        with open(self.project_path, "w") as outp:
-            project = {"sites": [{"morda_url": "http://127.0.0.1:{}".format(port)}], "disable_search_engine": True}
-            json.dump(project, outp)
+        TRobotProject.create_project("http://127.0.0.1:{}".format(port), self.project_path)
         assert is_port_free(port)
         self.web_site_folder = os.path.join(os.path.dirname(__file__), website_folder)
         handler = partial(http.server.SimpleHTTPRequestHandler,
