@@ -5012,6 +5012,7 @@
     },
     "pfr.gov.ru": {
         "calc_office_id": 974,
+        "disable_selenium": true,
         "regional":  ["pfr.gov.ru/branches/moscow/",
                   "pfr.gov.ru/branches/altaikr/",
                   "pfr.gov.ru/branches/amur/",

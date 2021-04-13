@@ -131,7 +131,7 @@ class TImporter:
 
                     if len(prepared_section.vehicles) > TImporter.max_vehicle_count:
                         TImporter.logger.debug("ignore section {} because it has too many vehicles ( > {})".format(
-                            self.section.person_name, TImporter.max_vehicle_count))
+                            prepared_section.section.person_name, TImporter.max_vehicle_count))
                         continue
                     passport = prepared_section.get_passport_components().get_main_section_passport()
                     if self.register_section_passport(passport):

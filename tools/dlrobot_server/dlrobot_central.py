@@ -1,3 +1,5 @@
+import re
+
 from ConvStorage.conversion_client import TDocConversionClient
 from dlrobot_server.common_server_worker import DLROBOT_HTTP_CODE, TTimeouts, TYandexCloud, DLROBOT_HEADER_KEYS, PITSTOP_FILE
 from common.primitives import convert_timeout_to_seconds, check_internet
@@ -39,8 +41,8 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         parser.add_argument("--result-folder", dest='result_folder', required=True)
         parser.add_argument("--tries-count", dest='tries_count', required=False, default=2, type=int)
         parser.add_argument("--central-heart-rate", dest='central_heart_rate', required=False, default='60s')
-        parser.add_argument("--dlrobot-project-timeout", dest='dlrobot_project_timeout',
-                            required=False, default=TTimeouts.OVERALL_HARD_TIMEOUT_IN_CENTRAL)
+        parser.add_argument("--dlrobot-crawling-timeout", dest='dlrobot_crawling_timeout',
+                            required=False, default=TTimeouts.MAIN_CRAWLING_TIMEOUT)
         parser.add_argument("--check-yandex-cloud", dest='check_yandex_cloud', default=False, action='store_true',
                             required=False, help="check yandex cloud health and restart workstations")
         parser.add_argument("--skip-worker-check", dest='skip_worker_check', default=False, action='store_true',
@@ -57,10 +59,11 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                             default=True,  required=False, action="store_false")
         parser.add_argument("--disable-pdf-conversion-server-checking", dest="pdf_conversion_server_checking",
                             default=True,  required=False, action="store_false")
+        parser.add_argument("--web-site-regexp", dest="web_site_regexp", required=False)
 
         args = parser.parse_args(arg_list)
         args.central_heart_rate = convert_timeout_to_seconds(args.central_heart_rate)
-        args.dlrobot_project_timeout = convert_timeout_to_seconds(args.dlrobot_project_timeout)
+        args.dlrobot_crawling_timeout = convert_timeout_to_seconds(args.dlrobot_crawling_timeout)
         if args.server_address is None:
             args.server_address = os.environ['DLROBOT_CENTRAL_SERVER_ADDRESS']
         if args.check_yandex_cloud:
@@ -82,8 +85,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         self.worker_2_running_tasks.clear()
 
     def __init__(self, args):
-        self.timeout = 60 * 10
-        self.logger = setup_logging(args.log_file_name, append_mode=True)
+        self.logger = setup_logging(log_file_name=args.log_file_name, append_mode=True)
         self.conversion_client = TDocConversionClient(TDocConversionClient.parse_args([]), self.logger)
         self.args = args
         self.dlrobot_remote_calls = TRemoteDlrobotCallList(logger=self.logger, file_name=args.remote_calls_file)
@@ -165,8 +167,13 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
     def init_projects_to_process(self):
         self.web_sites_to_process = list()
         for web_site, web_site_info in self.web_sites_db.web_sites.items():
+            if self.args.web_site_regexp is not None:
+                if re.match(self.args.web_site_regexp, web_site) is None:
+                    continue
             if TWebSiteReachStatus.can_communicate(web_site_info.reach_status):
                 self.web_sites_to_process.append(web_site)
+
+        self.logger.info("there are {} sites in the input queue".format(len(self.web_sites_to_process)))
 
         def interaction_count(website):
             project_file = TRemoteDlrobotCall.web_site_to_project_file(website)
@@ -187,10 +194,24 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                 project_file, worker_ip, worker_host_name, len(self.web_sites_to_process), self.get_running_jobs_count()))
         remote_call = TRemoteDlrobotCall(worker_ip=worker_ip, project_file=project_file, web_site=web_site)
         remote_call.worker_host_name = worker_host_name
-        web_sites = [web_site]
-        project_content_str = TRobotProject.create_project_str(web_sites, not self.args.enable_search_engines)
+        remote_call.crawling_timeout = self.args.dlrobot_crawling_timeout
+        web_site_passport = self.web_sites_db.get_web_site(web_site)
+        enable_selenium = True
+        regional_main_pages = list()
+        if web_site_passport is None:
+            self.logger.error("{} is not registered in the web site db, no office information is available for the site")
+        else:
+            if web_site_passport.regional_main_pages is not None:
+                regional_main_pages = web_site_passport.regional_main_pages
+                remote_call.crawling_timeout *= 2
+            if web_site_passport.disable_selenium:
+                enable_selenium = False
+        project_content_str = TRobotProject.create_project_str(web_site,
+                                                               regional_main_pages,
+                                                               not self.args.enable_search_engines,
+                                                               enable_selenium)
         self.worker_2_running_tasks[worker_ip].append(remote_call)
-        return project_file, project_content_str.encode("utf8")
+        return remote_call, project_content_str.encode("utf8")
 
     def untar_file(self, project_file, result_archive):
         base_folder, _ = os.path.splitext(project_file)
@@ -265,14 +286,16 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
     def forget_old_remote_processes(self, current_time):
         for running_procs in self.worker_2_running_tasks.values():
             for i in range(len(running_procs) - 1, -1, -1):
-                rc = running_procs[i]
-                if current_time - rc.start_time > self.args.dlrobot_project_timeout:
-                    self.logger.debug("task {} on worker {} takes {} seconds, probably it failed, stop waiting for a result".format(
-                        rc.project_file, rc.worker_ip, current_time - rc.start_time
+                remote_call = running_procs[i]
+                elapsed_seconds = current_time - remote_call.start_time
+                if elapsed_seconds > TTimeouts.get_kill_timeout_in_central(remote_call.crawling_timeout):
+                    self.logger.debug("task {} on worker {}(host={}) takes {} seconds, probably it failed, stop waiting for a result".format(
+                        remote_call.web_site, remote_call.worker_ip, remote_call.worker_host_name,
+                        elapsed_seconds
                     ))
                     running_procs.pop(i)
-                    rc.exit_code = 126
-                    self.save_dlrobot_remote_call(rc)
+                    remote_call.exit_code = 126
+                    self.save_dlrobot_remote_call(remote_call)
 
     def forget_remote_processes_for_yandex_worker(self, cloud_id):
         worker_ip = self.cloud_id_to_worker_ip.get(cloud_id)
@@ -419,14 +442,15 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             return
 
         try:
-            project_file, project_content = self.server.get_new_project_to_process(worker_host_name, worker_ip)
+            remote_call, project_content = self.server.get_new_project_to_process(worker_host_name, worker_ip)
         except Exception as exp:
-            self.server.logger("Cannot send project, exception = {}".format(exp))
+            self.server.error.logger("Cannot send project, exception = {}".format(exp))
             send_error(str(exp))
             return
 
         self.send_response(200)
-        self.send_header(DLROBOT_HEADER_KEYS.PROJECT_FILE,  project_file)
+        self.send_header(DLROBOT_HEADER_KEYS.PROJECT_FILE, remote_call.project_file)
+        self.send_header(DLROBOT_HEADER_KEYS.CRAWLING_TIMEOUT, remote_call.crawling_timeout)
         self.end_headers()
         self.wfile.write(project_content)
 

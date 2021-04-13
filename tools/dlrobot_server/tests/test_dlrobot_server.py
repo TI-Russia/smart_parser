@@ -1,12 +1,14 @@
 from dlrobot_server.dlrobot_central import TDlrobotHTTPServer
 from dlrobot_server.dlrobot_worker import TDlrobotWorker
 from dlrobot_server.scripts.fns.unzip_archive import TUnzipper
+from dlrobot_server.common_server_worker import TTimeouts
 from smart_parser_http.smart_parser_server import TSmartParserHTTPServer
 from source_doc_http.source_doc_server import TSourceDocHTTPServer
 from web_site_db.robot_web_site import TWebSiteReachStatus
 from common.primitives import build_dislosures_sha256
 from common.archives import TDearchiver
 from unittest import TestCase
+
 import os
 import threading
 import shutil
@@ -104,7 +106,7 @@ class TTestEnv:
             '--server-address', self.central_address,
             '--tries-count', str(tries_count),
             '--central-heart-rate', '1s',
-            '--dlrobot-project-timeout', str(dlrobot_project_timeout),
+            '--dlrobot-crawling-timeout', str(dlrobot_project_timeout),
             '--log-file-name', os.path.join(self.data_folder, "dlrobot_central.log"),
             '--disable-search-engines',
             '--disable-telegram',
@@ -191,10 +193,10 @@ class TestAotRu(TestCase):
     def test_aot_ru(self):
         time.sleep(2)
         stats = self.env.central.get_stats()
-        self.assertEqual(stats['running_count'], 1)
+        self.assertEqual(1, stats['running_count'])
         self.env.worker_thread.join(200)
         self.assertEqual(1, self.env.count_projects_results())
-        self.assertEqual(self.env.get_last_reach_status(), TWebSiteReachStatus.normal)
+        self.assertEqual(TWebSiteReachStatus.normal, self.env.get_last_reach_status())
         # one more time
         self.env.start_worker_thread()
         self.env.worker_thread.join(200)
@@ -275,37 +277,19 @@ class DlrobotTimeout(TestCase):
         self.env.tearDown()
 
     def test_timeout(self):
+        old_timeouts = TTimeouts.save_timeouts()
+        TTimeouts.set_timeouts(0)
         self.assertTrue(self.env.worker_thread.is_alive())
         time.sleep(2)
         self.env.worker.stop_worker()
         time.sleep(2)
+        TTimeouts.restore_timeouts(old_timeouts)
         stats = self.env.central.get_stats()
 
         # still have the project in the input tasks since timeouted project have one more retry
         # remember that yandex cloud workstations are restarted each day, all projects from them are timeouted
         self.assertEqual(stats['input_tasks'], 1)
         self.assertEqual(stats['processed_tasks'], 1)
-
-
-# class DlrobotWebStats(TestCase):
-#     central_port = 8295
-#     website_port = 8296
-#
-#     def setUp(self):
-#         self.env = TTestEnv(self.central_port)
-#         self.env.setup_website(self.website_port)
-#         self.env.setup_central(False, "127.0.0.1:{}".format(self.website_port))
-#         self.env.setup_worker("run_once")
-#
-#     def tearDown(self):
-#         self.env.tearDown()
-#
-#     def test_web_stats(self):
-#         self.env.worker_thread.join(200)
-#         self.assertEqual(self.env.count_projects_results(), 1)
-#         stat_file = os.path.join(self.env.result_folder, "dlrobot_remote_calls.dat")
-#         stats = TDlrobotAllStats(TDlrobotAllStats.parse_args(['--central-stats-file', stat_file]))
-#         stats.build_stats() # check no exceptions
 
 
 class DlrobotWithSmartParser(TestCase):

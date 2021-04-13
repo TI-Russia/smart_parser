@@ -8,10 +8,14 @@ class TDeclarationWebSite:
     def __init__(self):
         self.calculated_office_id = None
         self.reach_status = TWebSiteReachStatus.normal
+        self.regional_main_pages = None
+        self.disable_selenium = None
 
     def read_from_json(self, js):
         self.calculated_office_id = js['calc_office_id']
         self.reach_status = js.get('status', TWebSiteReachStatus.normal)
+        self.regional_main_pages = js.get('regional')
+        self.disable_selenium = js.get('disable_selenium')
         return self
 
     def write_to_json(self):
@@ -20,6 +24,10 @@ class TDeclarationWebSite:
         }
         if self.reach_status != TWebSiteReachStatus.normal:
             rec['status'] = self.reach_status
+        if self.regional_main_pages is not None:
+            rec['regional'] = self.regional_main_pages
+        if self.disable_selenium is not None:
+            rec['disable_selenium'] = self.disable_selenium
         return rec
 
 

@@ -1,10 +1,9 @@
-import os
-
 from  source_doc_http.source_doc_client import TSourceDocClient
 from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from smart_parser_http.smart_parser_server import TSmartParserHTTPServer
 from common.logging_wrapper import setup_logging
+
 import sys
 import  os
 

@@ -21,6 +21,7 @@ class TRemoteDlrobotCall:
         self.result_files_count = 0
         self.worker_host_name = None
         self.reach_status = None
+        self.crawling_timeout = None #not serialized
 
     def task_ended(self):
         return self.end_time is not None

@@ -29,7 +29,7 @@ def is_port_free(port):
 
 class TTestEnv:
 
-    def __init__(self, port, website_folder):
+    def __init__(self, port, website_folder, regional_main_pages=[]):
         self.web_site = None
         self.web_site_folder = None
         name = os.path.basename(website_folder)
@@ -40,7 +40,14 @@ class TTestEnv:
         os.mkdir(self.data_folder)
         os.chdir(self.data_folder)
         self.project_path = os.path.join(self.data_folder, "project.txt")
-        TRobotProject.create_project("http://127.0.0.1:{}".format(port), self.project_path)
+        regional = list("http://127.0.0.1:{}/{}".format(port, url) for url in regional_main_pages)
+
+        project = TRobotProject.create_project_str("http://127.0.0.1:{}".format(port),
+                                                   regional_main_pages=regional,
+                                                   disable_search_engine=True, disable_selenium=False)
+        with open(self.project_path, "w") as outp:
+            outp.write(project)
+
         assert is_port_free(port)
         self.web_site_folder = os.path.join(os.path.dirname(__file__), website_folder)
         handler = partial(http.server.SimpleHTTPRequestHandler,
@@ -159,3 +166,16 @@ class TestWebsiteWithJs(TestCase):
 
     def test_download_with_js2(self):
         self.assertEqual (len(self.env.get_result_files()), 1)
+
+
+class TestRegional(TestCase):
+    web_site_port = 8199
+
+    def setUp(self):
+        self.env = TTestEnv(self.web_site_port, "web_sites/with_regional", regional_main_pages=["magadan.html"])
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def test_regional(self):
+        self.assertEqual(2, len(self.env.get_result_files()))

@@ -63,6 +63,7 @@ class TWebSiteCrawlSnapshot:
         self.office_name = ""
         self.reach_status = TWebSiteReachStatus.normal
         self.robot_steps = list()
+        self.regional_main_pages = list()
         self.reach_status = None
         self.protocol = "http"
         self.only_with_www = False
@@ -153,6 +154,7 @@ class TWebSiteCrawlSnapshot:
         self.office_name = init_json.get('name', '')
         self.enable_urllib = init_json.get('enable_urllib', True)
         self.export_env.from_json(init_json.get('exported_files'))
+        self.regional_main_pages = init_json.get('regional', list())
 
         if init_json.get('steps') is not None:
             self.robot_steps = list()
@@ -166,6 +168,7 @@ class TWebSiteCrawlSnapshot:
         return {
             'reach_status': self.reach_status,
             'morda_url': self.morda_url,
+            'regional': self.regional_main_pages,
             'name': self.office_name,
             'enable_urllib': self.enable_urllib,
             'steps': [s.to_json() for s in self.robot_steps],
@@ -261,7 +264,8 @@ class TWebSiteCrawlSnapshot:
 
     def get_previous_step_urls(self, step_index):
         if step_index == 0:
-            return {self.morda_url: 0}
+            rec = {self.morda_url: 0}
+            return rec
         else:
             return self.robot_steps[step_index - 1].step_urls
 
@@ -300,6 +304,12 @@ class TWebSiteCrawlSnapshot:
 
         if self.parent_project.need_search_engine_after(target):
             self.parent_project.use_search_engine(target)
+
+        if step_index == 0:
+            for url in self.regional_main_pages:
+                link_info = TLinkInfo(TClickEngine.manual, self.morda_url, url)
+                link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
+                target.add_link_wrapper(link_info)
 
         if include_source == "copy_if_empty" and len(target.step_urls) == 0:
             do_not_copy_urls_from_steps = step_passport.get('do_not_copy_urls_from_steps', list())

@@ -64,18 +64,28 @@ class TRobotProject:
             outf.write(json.dumps(output, ensure_ascii=False, indent=4))
 
     @staticmethod
-    def create_project_str(sites, disable_search_engine=True):
+    def create_project_str(main_url, regional_main_pages=[], disable_search_engine=False, disable_selenium=False):
+        site = {"morda_url": main_url}
+        if len(regional_main_pages) > 0:
+            site['regional'] = regional_main_pages
+
         project_content = {
-            "sites": list({"morda_url": s} for s in sites)
+            "sites": [site]
         }
         if disable_search_engine:
             project_content['disable_search_engine'] = True
+        if disable_selenium:
+            project_content['disable_selenium'] = True
         return json.dumps(project_content, indent=4, ensure_ascii=False)
 
     @staticmethod
     def create_project(url, file_path):
         with open(file_path, "w") as outp:
-            outp.write(TRobotProject.create_project_str([url]))
+            outp.write(TRobotProject.create_project_str(
+                url,
+                [],
+                True, #disable_selinium in tests
+                False))
 
     def add_office(self, morda_url):
         office_info = TWebSiteCrawlSnapshot(self)
@@ -95,11 +105,23 @@ class TRobotProject:
                 for step_name in json_dict['step_names']:
                     self.robot_step_passports.append(step_name)
 
+            uniq_domains = set()
             for o in json_dict.get('sites', []):
-                self.offices.append(TWebSiteCrawlSnapshot(self).read_from_json(o))
+                web_site = TWebSiteCrawlSnapshot(self).read_from_json(o)
+
+                web_domain = web_site.get_domain_name()
+                assert web_domain not in uniq_domains  # do not write twice the same web domain in one project,
+                                                  # since the result folder is normally the same web domain
+                uniq_domains.add(web_domain)
+
+                self.offices.append(web_site)
 
             if "disable_search_engine" in json_dict:
                 self.enable_search_engine = False
+
+            if 'disable_selenium':
+                self.logger.debug("disable selenium")
+                self.enable_selenium = False
 
     def fetch_main_pages(self):
         for site in self.offices:

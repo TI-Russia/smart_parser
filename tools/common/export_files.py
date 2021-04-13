@@ -73,8 +73,9 @@ def check_html_can_be_declaration_preliminary(downloaded_file):
         return False
     html = html.lower()
     words = html.find('квартир') != -1 and html.find('доход') != -1 and html.find('должность') != -1
-    numbers = re.search('[0-9]{6}', html) is not None # доход
-    return words and numbers
+    numbers1 = re.search('[0-9]{6}', html) is not None # доход
+    numbers2 = re.search('[0-9]{3}\s[0-9]{3}', html) is not None  # доход
+    return words and (numbers1 or numbers2)
 
 
 class TExportEnvironment:
