@@ -269,6 +269,14 @@ class TWebSiteCrawlSnapshot:
         else:
             return self.robot_steps[step_index - 1].step_urls
 
+    def add_regional_main_pages(self, target: TRobotStep):
+        for url in self.regional_main_pages:
+            if not url.startswith('http'):
+                url = self.protocol + "://" + url
+            link_info = TLinkInfo(TClickEngine.manual, self.morda_url, url)
+            link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
+            target.add_link_wrapper(link_info)
+
     def find_links_for_one_website(self, step_index: int):
         if not TWebSiteReachStatus.can_communicate(self.reach_status):
             return
@@ -306,10 +314,7 @@ class TWebSiteCrawlSnapshot:
             self.parent_project.use_search_engine(target)
 
         if step_index == 0:
-            for url in self.regional_main_pages:
-                link_info = TLinkInfo(TClickEngine.manual, self.morda_url, url)
-                link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
-                target.add_link_wrapper(link_info)
+            self.add_regional_main_pages(target)
 
         if include_source == "copy_if_empty" and len(target.step_urls) == 0:
             do_not_copy_urls_from_steps = step_passport.get('do_not_copy_urls_from_steps', list())

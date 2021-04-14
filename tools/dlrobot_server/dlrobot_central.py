@@ -209,7 +209,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         project_content_str = TRobotProject.create_project_str(web_site,
                                                                regional_main_pages,
                                                                not self.args.enable_search_engines,
-                                                               enable_selenium)
+                                                               not enable_selenium)
         self.worker_2_running_tasks[worker_ip].append(remote_call)
         return remote_call, project_content_str.encode("utf8")
 
