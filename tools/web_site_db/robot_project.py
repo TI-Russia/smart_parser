@@ -61,6 +61,8 @@ class TRobotProject:
             }
             if not self.enable_search_engine:
                 output["disable_search_engine"] = True
+            if not self.enable_selenium:
+                output['disable_selenium'] = True
             outf.write(json.dumps(output, ensure_ascii=False, indent=4))
 
     @staticmethod
@@ -119,7 +121,7 @@ class TRobotProject:
             if "disable_search_engine" in json_dict:
                 self.enable_search_engine = False
 
-            if 'disable_selenium':
+            if 'disable_selenium' in json_dict:
                 self.logger.debug("disable selenium")
                 self.enable_selenium = False
 

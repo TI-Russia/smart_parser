@@ -202,7 +202,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
             self.logger.error("{} is not registered in the web site db, no office information is available for the site")
         else:
             if web_site_passport.regional_main_pages is not None:
-                regional_main_pages = web_site_passport.regional_main_pages
+                regional_main_pages = list(web_site_passport.regional_main_pages.keys())
                 remote_call.crawling_timeout *= 2
             if web_site_passport.disable_selenium:
                 enable_selenium = False

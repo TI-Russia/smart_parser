@@ -39,7 +39,7 @@ def get_all_section_from_declarator_with_person_id(declarator_host):
                     where s.person_id is not null
                           and i.relative_id is null
                           and s.dedupe_score = 0
-                          and DATE(p.created_when) < '2021-01-18';
+                          and (p.created_when is null or DATE(p.created_when) < '2021-01-18');
 
     """)
     props_to_person_id = dict()

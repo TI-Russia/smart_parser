@@ -54,7 +54,9 @@ class TDownloadEnv:
     def send_pdf_to_conversion(filename, file_extension, sha256):
         if TDownloadEnv.CONVERSION_CLIENT is None:
             return
-        TDownloadEnv.CONVERSION_CLIENT.logger.debug('got pdf with sha256={})'.format(sha256))
+        if not TDownloadEnv.CONVERSION_CLIENT.is_acceptable_file_extension(file_extension):
+            return
+        TDownloadEnv.CONVERSION_CLIENT.logger.debug('got pdf or archive with sha256={})'.format(sha256))
         if TDownloadEnv.CONVERSION_CLIENT.all_pdf_size_sent_to_conversion < TDownloadEnv.PDF_QUOTA_CONVERSION:
             TDownloadEnv.CONVERSION_CLIENT.start_conversion_task_if_needed(filename, file_extension)
         else:

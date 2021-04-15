@@ -46,7 +46,8 @@ class TWebSiteReachStatus:
 
 class TWebSiteCrawlSnapshot:
     SINGLE_DECLARATION_TIMEOUT = 60 * 30 # half an hour in seconds,
-    CRAWLING_TIMEOUT = 60 * 60 * 3       # 3 hours
+    DEFAULT_CRAWLING_TIMEOUT = 60 * 60 * 3 # 3 hours
+    CRAWLING_TIMEOUT = DEFAULT_CRAWLING_TIMEOUT
 
     def __init__(self, project):
         #runtime members (no serialization)

@@ -186,7 +186,7 @@ class TDocConversionClient(object):
                 str(exp), self.default_http_timeout))
             return None
 
-    def retrieve_document(self, sha256, output_file_name):
+    def retrieve_document(self, sha256, output_file_name, verbose=False):
         # retrieve_document returns True, if file was processed by the server.
         # If the server  found an error in pdf it returned TConvertStorage.broken_stub.
         # If the server return TConvertStorage.broken_stub we do not create a file, but return True.
@@ -201,6 +201,10 @@ class TDocConversionClient(object):
                         out.write(file_content)
                 return True
             else:
+                if verbose:
+                    self.logger.debug("cannot get docx by sha256={} http code={}".format(
+                        sha256,response.code
+                    ))
                 return False
         except http.client.HTTPException as exp:
             self.logger.error("got exception {} in retrieve_document ".format(str(exp)))
@@ -210,17 +214,21 @@ class TDocConversionClient(object):
                 str(exp), self.default_http_timeout))
             return False
 
+    @staticmethod
+    def is_acceptable_file_extension(file_extension):
+        return file_extension == DEFAULT_PDF_EXTENSION or TDearchiver.is_archive_extension(file_extension)
+
     def start_conversion_task_if_needed(self, filename, file_extension, rebuild=False):
-        if file_extension == DEFAULT_PDF_EXTENSION or TDearchiver.is_archive_extension(file_extension):
-            max_file_size = 2 ** 25
-            if Path(filename).stat().st_size  > max_file_size:
-                self.logger.debug("file {} is too large for conversion (size must less than {} bytes) ".format(
-                    filename, max_file_size))
-                return False
-            assert self.conversion_thread is not None
-            self._input_tasks.put(TInputTask(filename, file_extension, rebuild))
-            return True
-        return False
+        if not self.is_acceptable_file_extension(file_extension):
+            return False
+        max_file_size = 2 ** 25
+        if Path(filename).stat().st_size  > max_file_size:
+            self.logger.debug("file {} is too large for conversion (size must less than {} bytes) ".format(
+                filename, max_file_size))
+            return False
+        assert self.conversion_thread is not None
+        self._input_tasks.put(TInputTask(filename, file_extension, rebuild))
+        return True
 
     def stop_conversion_thread(self, timeout=None):
         if timeout is None:

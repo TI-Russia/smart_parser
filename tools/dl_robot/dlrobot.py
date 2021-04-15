@@ -104,6 +104,8 @@ class TDlrobot:
         if args.logfile is None:
             args.logfile = args.project + ".log"
         TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT = convert_timeout_to_seconds(args.crawling_timeout)
+        if TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT > TWebSiteCrawlSnapshot.DEFAULT_CRAWLING_TIMEOUT:
+            TWebSiteCrawlSnapshot.SINGLE_DECLARATION_TIMEOUT = 60 * 60
         TDownloadEnv.LAST_CONVERSION_TIMEOUT = convert_timeout_to_seconds(args.last_conversion_timeout)
         TDownloadEnv.PDF_QUOTA_CONVERSION = args.pdf_quota_conversion
         TDownloadEnv.init_conversion()

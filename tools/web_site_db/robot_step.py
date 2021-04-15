@@ -156,7 +156,7 @@ class TRobotStep:
                 if downloaded_file.file_extension == DEFAULT_HTML_EXTENSION:
                     self.pages_to_process[href] = link_info.weight
 
-        self.logger.debug("add link {0}".format(href))
+        self.logger.debug("add link {} weight={}".format(href, link_info.weight))
 
     def add_downloaded_file_wrapper(self, link_info: TLinkInfo):
         self.website.url_nodes[link_info.source_url].add_downloaded_file(link_info)
@@ -232,6 +232,8 @@ class TRobotStep:
         assert len(self.pages_to_process) > 0
         self.url_weights = list()
         use_selenium = self.step_passport.get('fallback_to_selenium', True)
+        if not self.website.parent_project.enable_selenium:
+            use_selenium = False
         use_urllib = self.step_passport.get('use_urllib', True)
         if not self.website.enable_urllib:
             use_urllib = False

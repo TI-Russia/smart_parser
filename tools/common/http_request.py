@@ -174,6 +174,9 @@ def make_http_request_urllib(logger, url, method):
     except socket.timeout as exp:
         logger.error("socket timeout, while getting {}: {}".format(url, exp))
         raise RobotHttpException("socket.timeout", url, 504, method)
+    except ssl.SSLError as exp:
+        logger.error("ssl error, while getting {}: {}".format(url, exp))
+        raise RobotHttpException("ssl.SSLError", url, 504, method)
     except urllib.error.URLError as exp:
         code = -1
         if hasattr(exp, 'code'):
