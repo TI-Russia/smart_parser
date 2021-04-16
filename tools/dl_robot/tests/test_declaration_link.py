@@ -88,7 +88,8 @@ class TestDeclarationLink(TestCase):
     def setUp(self):
         self.server_address = '127.0.0.1:{}'.format(self.web_site_port)
         self.web_server = TestHTTPServer(self.web_site_port)
-        threading.Thread(target=start_server, args=(self.web_server,)).start()
+        self.http_server_thread = threading.Thread(target=start_server, args=(self.web_server,))
+        self.http_server_thread.start()
         time.sleep(1)
         self.data_folder = os.path.join(os.path.dirname(__file__), "data.declaration_link")
         if os.path.exists(self.data_folder):
@@ -108,6 +109,9 @@ class TestDeclarationLink(TestCase):
         os.chdir(os.path.dirname(__file__))
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
+        self.http_server_thread.join(1)
+        self.web_server.server_close()
+        time.sleep(1)
 
     def compare_to_file(self, links, file_name):
         with open(os.path.join(os.path.dirname(__file__), file_name)) as inp:
