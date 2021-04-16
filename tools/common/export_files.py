@@ -3,7 +3,7 @@ from common.archives import TDearchiver
 from common.download import ACCEPTED_DECLARATION_FILE_EXTENSIONS, TDownloadEnv, TDownloadedFile
 from common.content_types import DEFAULT_HTML_EXTENSION, DEFAULT_PDF_EXTENSION
 from DeclDocRecognizer.dlrecognizer import run_dl_recognizer, DL_RECOGNIZER_ENUM
-from common.find_link import TLinkInfo
+from common.link_info import TLinkInfo
 
 import re
 import copy

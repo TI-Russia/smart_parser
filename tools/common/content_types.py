@@ -4,6 +4,7 @@ DEFAULT_RAR_EXTENSION = ".rar"
 DEFAULT_7Z_EXTENSION = ".7z"
 DEFAULT_PDF_EXTENSION = ".pdf"
 
+
 ACCEPTED_ARCHIVE_EXTENSION = {
     DEFAULT_7Z_EXTENSION,
     DEFAULT_RAR_EXTENSION,
@@ -22,6 +23,8 @@ ACCEPTED_DOCUMENT_EXTENSIONS = {
 
 ACCEPTED_DECLARATION_FILE_EXTENSIONS = ACCEPTED_DOCUMENT_EXTENSIONS.union(ACCEPTED_ARCHIVE_EXTENSION)
 
+VIDEO_FILE_EXTENSION = ".some_video_format"
+AUDIO_FILE_EXTENSION = ".some_audio_format"
 
 content_types = [
 "application/excel",
@@ -785,3 +788,7 @@ def file_extension_to_content_type(file_extension, default_content_type='applica
         return "text/html"
     else:
         return default_content_type
+
+
+def is_video_or_audio_file_extension(file_extension):
+    return file_extension == VIDEO_FILE_EXTENSION or file_extension == AUDIO_FILE_EXTENSION

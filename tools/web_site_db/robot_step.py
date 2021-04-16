@@ -1,14 +1,17 @@
-from common.download import TDownloadedFile, DEFAULT_HTML_EXTENSION
-from collections import defaultdict
-from common.primitives import prepare_for_logging, strip_viewer_prefix
+from common.download import TDownloadedFile, DEFAULT_HTML_EXTENSION, are_web_mirrors
+from common.primitives import prepare_for_logging, strip_viewer_prefix, get_site_domain_wo_www
 from common.html_parser import THtmlParser
-from selenium.common.exceptions import WebDriverException,InvalidSwitchToTargetException
-from common.find_link import click_all_selenium,  find_links_in_html_by_text, \
-                    web_link_is_absolutely_prohibited
-from common.link_info import TLinkInfo
+from common.link_info import TLinkInfo, TClickEngine
 from common.primitives import get_html_title
 from common.http_request import THttpRequester
+from common.popular_sites import is_super_popular_domain
 
+from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
+import time
+from collections import defaultdict
+import urllib
+import re
+import signal
 
 class TUrlMirror:
     def __init__(self, url):
@@ -60,6 +63,88 @@ class TUrlInfo:
 
     def add_child_link(self, href, record):
         self.linked_nodes[href] = record
+
+# see https://sutr.ru/about_the_university/svedeniya-ob-ou/education/ with 20000 links
+MAX_LINKS_ON_ONE_WEB_PAGE = 1000
+
+
+def get_office_domain(web_domain):
+    index = 2
+    if web_domain.endswith("gov.ru"):
+        index = 3 #minpromtorg.gov.ru
+
+    return ".".join(web_domain.split(".")[-index:])
+
+
+def check_href_elementary(href):
+    if href.startswith('mailto:'):
+        return False
+    if href.startswith('tel:'):
+        return False
+    if href.startswith('javascript:'):
+        return False
+    if href.startswith('about:'):
+        return False
+    if href.startswith('consultantplus:'):
+        return False
+    if href.startswith('#'):
+        if not href.startswith('#!'): # it is a hashbang (a starter for AJAX url) http://minpromtorg.gov.ru/open_ministry/anti/
+            return False
+    return True
+
+
+def web_link_is_absolutely_prohibited(logger, source, href):
+    if len(href) == 0:
+        return True
+
+    #http://adm.ugorsk.ru/about/vacancies/information_about_income/?SECTION_ID=5244&ELEMENT_ID=79278
+    #href = "/bitrix/redirect.php?event1=catalog_out&amp;event2=%2Fupload%2Fiblock%2Fb59%2Fb59f80e6eaf7348f74e713219c169a24.pdf&amp;event3=%D0%9F%D0%B5%D1%87%D0%B5%D0%BD%D0%B5%D0%B2%D0%B0+%D0%9D%D0%98.pdf&amp;goto=%2Fupload%2Fiblock%2Fb59%2Fb59f80e6eaf7348f74e713219c169a24.pdf" > Загрузить < / a > < / b > < br / >
+    #if href.find('redirect') != -1:
+    #    return True
+
+    if not check_href_elementary(href):
+        return True
+    if source.strip('/') == href.strip('/'):
+        return True
+    if href.find(' ') != -1 or href.find('\n') != -1 or href.find('\t') != -1:
+        return True
+    if href.find('print=') != -1:
+        return True
+    href_domain = get_site_domain_wo_www(href)
+    source_domain = get_site_domain_wo_www(source)
+    if is_super_popular_domain(href_domain):
+        return True
+    href_domain = re.sub(':[0-9]+$', '', href_domain) # delete port
+    source_domain = re.sub(':[0-9]+$', '', source_domain)  # delete port
+
+    if get_office_domain(href_domain) != get_office_domain(source_domain):
+        if not are_web_mirrors(source, href):
+            return True
+    return False
+
+
+def make_link(main_url, href):
+    url = urllib.parse.urljoin(main_url, href)
+
+    # we cannot disable html anchors because it is used as ajax requests:
+    # https://developers.google.com/search/docs/ajax-crawling/docs/specification?csw=1
+    # see an example of ajax urls in
+    # 1. http://minpromtorg.gov.ru/open_ministry/anti/activities/info/
+    #    -> https://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_rukovodstvo_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2019_g_po_31_dekabrya_2019_g
+    # 2. https://minzdrav.gov.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/4/2
+    #    -> https://minzdrav.gov.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/4/2#downloadable
+    #i = url.find('#')
+    #if i != -1:
+    #    url = url[0:i]
+    return url
+
+
+def get_base_url(main_url, soup):
+    for l in soup.findAll('base'):
+        href = l.attrs.get('href')
+        if href is not None:
+            return href
+    return main_url
 
 
 class TRobotStep:
@@ -187,7 +272,7 @@ class TRobotStep:
 
         try:
             if use_urllib and already_processed_by_urllib is None:
-                find_links_in_html_by_text(self, url, html_parser)
+                self.find_links_in_html_by_text(url, html_parser)
             else:
                 if use_urllib:
                     self.logger.debug(
@@ -202,7 +287,7 @@ class TRobotStep:
                     # selenium reads only http headers, so downloaded_file.file_extension can be DEFAULT_HTML_EXTENSION
                     self.logger.debug("do not browse {} with selenium, since it has wrong http headers".format(url))
                 else:
-                    click_all_selenium(self, url, self.website.parent_project.selenium_driver)
+                    self.click_all_selenium(url, self.website.parent_project.selenium_driver)
         except (THttpRequester.RobotHttpException, WebDriverException, InvalidSwitchToTargetException) as e:
             self.logger.error('add_links failed on url={}, exception: {}'.format(url, e))
 
@@ -223,10 +308,99 @@ class TRobotStep:
         self.processed_pages.add(best_url)
         del self.pages_to_process[best_url]
         self.last_processed_url_weights.append(max_weight)
-        self.website.logger.debug("max weight={}, index={}, url={} function={}".format(max_weight, url_index,
+        self.logger.debug("max weight={}, index={}, url={} function={}".format(max_weight, url_index,
                                                                                        best_url,
                                                                                        self.get_check_func_name()))
         return best_url
+
+    def find_links_in_html_by_text(self, main_url, html_parser: THtmlParser):
+        base = get_base_url(main_url, html_parser.soup)
+        if base.startswith('/'):
+            base = make_link(main_url, base)
+        element_index = 0
+        links_to_process = list(html_parser.soup.findAll('a'))
+        self.logger.debug("find_links_in_html_by_text url={} links_count={}".format(main_url, len(links_to_process)))
+        for html_link in links_to_process[:MAX_LINKS_ON_ONE_WEB_PAGE]:
+            href = html_link.attrs.get('href')
+            if href is not None:
+                element_index += 1
+                link_info = TLinkInfo(TClickEngine.urllib, main_url, make_link(base, href),
+                                      source_html=html_parser.html_text, anchor_text=html_link.text,
+                                      tag_name=html_link.name,
+                                      element_index=element_index, element_class=html_link.attrs.get('class'),
+                                      source_page_title=html_parser.page_title)
+                if self.normalize_and_check_link(link_info):
+                    self.add_link_wrapper(link_info)
+
+        for frame in html_parser.soup.findAll('iframe')[:MAX_LINKS_ON_ONE_WEB_PAGE]:
+            href = frame.attrs.get('src')
+            if href is not None:
+                element_index += 1
+                link_info = TLinkInfo(TClickEngine.urllib, main_url, make_link(base, href),
+                                      source_html=html_parser.html_text, anchor_text=frame.text, tag_name=frame.name,
+                                      element_index=element_index, source_page_title=html_parser.page_title)
+                if self.normalize_and_check_link(link_info):
+                    self.add_link_wrapper(link_info)
+
+    def click_selenium_if_no_href(self, main_url, driver_holder, element, element_index):
+        tag_name = element.tag_name
+        link_text = element.text.strip('\n\r\t ')  # initialize here, can be broken after click
+        page_html = driver_holder.the_driver.page_source
+        THttpRequester.consider_request_policy(main_url + " elem_index=" + str(element_index), "click_selenium")
+
+        link_info = TLinkInfo(TClickEngine.selenium, main_url, None,
+                              source_html=page_html, anchor_text=link_text, tag_name=tag_name,
+                              element_index=element_index,
+                              source_page_title=driver_holder.the_driver.title)
+
+        driver_holder.click_element(element, link_info)
+
+        if self.normalize_and_check_link(link_info):
+            if link_info.downloaded_file is not None:
+                self.add_downloaded_file_wrapper(link_info)
+            elif link_info.target_url is not None:
+                self.add_link_wrapper(link_info)
+
+    def click_all_selenium(self, main_url, driver_holder):
+        self.logger.debug("find_links_with_selenium url={}".format(main_url))
+        THttpRequester.consider_request_policy(main_url, "GET_selenium")
+        elements = driver_holder.navigate_and_get_links(main_url)
+        page_html = driver_holder.the_driver.page_source
+        for element_index in range(len(elements)):
+            if element_index >= MAX_LINKS_ON_ONE_WEB_PAGE:
+                break
+            element = elements[element_index]
+            link_text = element.text.strip('\n\r\t ') if element.text is not None else ""
+            if len(link_text) == 0:
+                continue
+            href = element.get_attribute('href')
+            if href is not None:
+                href = make_link(main_url, href)  # may be we do not need it in selenium?
+                link_info = TLinkInfo(TClickEngine.selenium,
+                                      main_url, href,
+                                      source_html=page_html, anchor_text=link_text,
+                                      tag_name=element.tag_name, element_index=element_index,
+                                      source_page_title=driver_holder.the_driver.title)
+
+                if self.normalize_and_check_link(link_info):
+                    self.add_link_wrapper(link_info)
+            else:
+                only_anchor_text = TLinkInfo(
+                    TClickEngine.selenium, main_url, None,
+                    source_html=page_html, anchor_text=link_text,
+                    source_page_title=driver_holder.the_driver.title)
+                if self.normalize_and_check_link(only_anchor_text):
+                    self.logger.debug("click element {}".format(element_index))
+                    try:
+                        self.click_selenium_if_no_href(main_url, driver_holder, element, element_index)
+                        elements = driver_holder.get_buttons_and_links()
+                    except (WebDriverException, InvalidSwitchToTargetException) as exp:
+                        self.logger.error("exception: {}, try restart and get the next element".format(str(exp)))
+                        driver_holder.restart()
+                        elements = driver_holder.navigate_and_get_links(main_url)
+
+    def signal_alarm_handler(signum, frame):
+        raise TimeoutError()
 
     def make_one_step(self):
         assert len(self.pages_to_process) > 0
@@ -241,12 +415,20 @@ class TRobotStep:
             url = self.pop_url_with_max_weight(url_index)
             if url is None:
                 break
-
-            self.add_page_links(url, use_selenium, use_urllib)
+            try:
+                signal.signal(signal.SIGALRM, TRobotStep.signal_alarm_handler)
+                signal.alarm(THttpRequester.WEB_PAGE_LINKS_PROCESSING_MAX_TIME)
+                self.add_page_links(url, use_selenium, use_urllib)
+            except TimeoutError as exp:
+                self.logger.error("one web page TimeoutError exception, timeout is {} seconds".format(
+                    THttpRequester.WEB_PAGE_LINKS_PROCESSING_MAX_TIME
+                ))
+            finally:
+                signal.signal(signal.SIGALRM, signal.SIG_DFL)
 
             if use_selenium and len(self.step_urls.keys()) >= TRobotStep.panic_mode_url_count:
                 use_selenium = False
-                self.website.logger.error("too many links (>{}),  switch off fallback_to_selenium".format(
+                self.logger.error("too many links (>{}),  switch off fallback_to_selenium".format(
                     TRobotStep.panic_mode_url_count))
 
 

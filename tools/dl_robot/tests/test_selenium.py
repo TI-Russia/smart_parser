@@ -1,12 +1,11 @@
 from common.selenium_driver import TSeleniumDriver
-from common.find_link import TLinkInfo, TClickEngine
+from common.link_info import TLinkInfo, TClickEngine
 from common.download import TDownloadEnv
 from common.logging_wrapper import close_logger, setup_logging
 
 import os
 import shutil
 from unittest import TestCase
-
 
 
 class TestSelenium(TestCase):

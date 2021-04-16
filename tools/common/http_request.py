@@ -1,3 +1,5 @@
+from common.content_types import content_type_to_file_extension, is_video_or_audio_file_extension
+
 import ssl
 import urllib.error
 import urllib.request
@@ -12,6 +14,7 @@ import socket
 import http.client
 from functools import partial
 import os
+
 #for curl
 import pycurl
 from io import BytesIO
@@ -51,6 +54,8 @@ class THttpRequester:
     logger = None
     LAST_HEAD_REQUEST_TIME = datetime.datetime.now()
     HEADER_MEMORY_CACHE = dict()
+    WEB_PAGE_LINKS_PROCESSING_MAX_TIME = 60 * 10  # 10 minutes
+    ENABLE_VIDEO_AND_AUDIO = False
 
     @staticmethod
     def initialize(logger):
@@ -144,8 +149,26 @@ class THttpRequester:
         THttpRequester.consider_request_policy(url, method)
         return convert_russian_web_domain_if_needed(url)
 
+    @staticmethod
+    def get_content_type_from_headers(headers, default_value="text"):
+        return headers.get('Content-Type', headers.get('Content-type', headers.get('content-type', default_value)))
+
+    @staticmethod
+    def get_file_extension_by_content_type(headers):
+        content_disposition = headers.get('Content-Disposition')
+        if content_disposition is not None:
+            found = re.findall("filename\s*=\s*(.+)", content_disposition.lower())
+            if len(found) > 0:
+                filename = found[0].strip("\"")
+                _, file_extension = os.path.splitext(filename)
+                return file_extension
+        content_type = THttpRequester.get_content_type_from_headers(headers)
+        return content_type_to_file_extension(content_type)
+
+    @staticmethod
     def make_http_request_urllib(url, method):
         assert THttpRequester.logger is not None
+        assert method in {"GET", "HEAD"}
 
         if not url.lower().startswith('http'):
             raise THttpRequester.RobotHttpException('unknown protocol, can be only http or https', url, 520, method)
@@ -162,9 +185,17 @@ class THttpRequester:
 
             THttpRequester.logger.debug("urllib.request.urlopen ({}) method={}".format(url, method))
             with urllib.request.urlopen(req, context=THttpRequester.SSL_CONTEXT, timeout=THttpRequester.HTTP_TIMEOUT) as request:
-                data = '' if method == "HEAD" else request.read()
                 headers = request.info()
+                data = ''
+                if method == 'GET':
+                    file_extension = THttpRequester.get_file_extension_by_content_type(headers)
+                    if not is_video_or_audio_file_extension(file_extension) or THttpRequester.ENABLE_VIDEO_AND_AUDIO:
+                        data =  request.read()
                 THttpRequester.register_successful_request()
+
+                #temporal
+                #THttpRequester.logger.debug("return len(headers)={} len(data)={}".format(len(headers), len(data)))
+
                 return request.geturl(), headers, data
         except UnicodeError as exp:
             raise THttpRequester.RobotHttpException("cannot redirect to cyrillic web domains or some unicode error", url, 520, method)

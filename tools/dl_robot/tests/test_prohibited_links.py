@@ -1,5 +1,5 @@
 from unittest import TestCase
-from common.find_link import web_link_is_absolutely_prohibited
+from web_site_db.robot_step import web_link_is_absolutely_prohibited
 from common.download import TDownloadEnv
 from common.logging_wrapper import setup_logging
 import os

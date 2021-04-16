@@ -1,6 +1,6 @@
-    from common.http_request import THttpRequester
-from common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION, \
-            content_type_to_file_extension
+from common.http_request import THttpRequester
+from common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
+
 from ConvStorage.conversion_client import TDocConversionClient
 from common.primitives import build_dislosures_sha256
 
@@ -82,9 +82,6 @@ def convert_html_to_utf8_using_content_charset(content_charset, html_data):
         raise ValueError('unable to find encoding')
 
 
-def get_content_type_from_headers(headers, default_value="text"):
-    return headers.get('Content-Type', headers.get('Content-type', headers.get('content-type', default_value)))
-
 
 def get_content_charset(headers):
     if hasattr(headers, "_headers"):
@@ -92,7 +89,7 @@ def get_content_charset(headers):
         return headers.get_content_charset()
     else:
         # from curl, headers is a dict
-        content_type = get_content_type_from_headers(headers).lower()
+        content_type = THttpRequester.get_content_type_from_headers(headers).lower()
         _, params = cgi.parse_header(content_type)
         return params.get('charset')
 
@@ -143,18 +140,6 @@ def get_local_file_name_by_url(url):
         if not os.path.exists(folder):
             os.makedirs(folder)
     return os.path.join(folder, "dlrobot_data")
-
-
-def get_file_extension_by_content_type(headers):
-    content_disposition = headers.get('Content-Disposition')
-    if content_disposition is not None:
-        found = re.findall("filename\s*=\s*(.+)", content_disposition.lower())
-        if len(found) > 0:
-            filename = found[0].strip("\"")
-            _, file_extension = os.path.splitext(filename)
-            return file_extension
-    content_type = get_content_type_from_headers(headers)
-    return content_type_to_file_extension(content_type)
 
 
 class TDownloadedFile:
@@ -209,7 +194,7 @@ class TDownloadedFile:
         redirected_url, headers, data = THttpRequester.make_http_request(self.original_url, "GET")
 
         try:
-            if get_content_type_from_headers(headers).lower().startswith('text'):
+            if THttpRequester.get_content_type_from_headers(headers).lower().startswith('text'):
                 try:
                     data_utf8 = convert_html_to_utf8_using_content_charset(get_content_charset(headers), data)
                     redirect_url = self.get_simple_js_redirect(self.original_url, data_utf8)
@@ -245,16 +230,16 @@ class TDownloadedFile:
             if self.original_url.lower().endswith(e):
                 return e
 
-        return get_file_extension_by_content_type(self.get_http_headers())
+        return THttpRequester.get_file_extension_by_content_type(self.get_http_headers())
 
     def get_file_extension_only_by_headers(self):
-        return get_file_extension_by_content_type(self.get_http_headers())
+        return THttpRequester.get_file_extension_by_content_type(self.get_http_headers())
 
 
 # use it preliminary, because ContentDisposition and Content-type often contain errors
 def get_file_extension_only_by_headers(url):
     _, headers = THttpRequester.request_url_headers_with_global_cache(url)
-    ext = get_file_extension_by_content_type(headers)
+    ext = THttpRequester.get_file_extension_by_content_type(headers)
     return ext
 
 
