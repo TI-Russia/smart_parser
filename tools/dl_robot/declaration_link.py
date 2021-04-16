@@ -2,7 +2,7 @@ import re
 from DeclDocRecognizer.document_types import SOME_OTHER_DOCUMENTS
 from common.download import get_file_extension_only_by_headers
 from common.primitives import normalize_and_russify_anchor_text
-from common.http_request import RobotHttpException
+from common.http_request import THttpRequester
 from common.link_info import TLinkInfo, check_sub_page_or_iframe
 from common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
 
@@ -71,9 +71,9 @@ def looks_like_a_document_link(logger, link_info: TLinkInfo):
         if target.endswith('.jpg') or target.endswith('.png'):
             return False
         try:
-            ext = get_file_extension_only_by_headers(logger, link_info.target_url)
+            ext = get_file_extension_only_by_headers(link_info.target_url)
             return ext != DEFAULT_HTML_EXTENSION and ext in ACCEPTED_DECLARATION_FILE_EXTENSIONS
-        except RobotHttpException as err:
+        except THttpRequester.RobotHttpException as err:
             if err.count == 1:
                 logger.error(err)
             return False

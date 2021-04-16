@@ -35,3 +35,10 @@ def setup_logging(logger_name=None, log_file_name=None, append_mode=False):
     logger.addHandler(ch)
 
     return logger
+
+
+def close_logger(logger):
+    for i in logger.handlers:
+        logger.removeHandler(i)
+        i.flush()
+        i.close()

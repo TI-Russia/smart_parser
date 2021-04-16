@@ -1,6 +1,6 @@
 from ConvStorage.conv_storage_server import TConvertProcessor
 from ConvStorage.conversion_client import TDocConversionClient
-from common.simple_logger import close_logger
+from common.logging_wrapper import close_logger
 
 from unittest import TestCase
 import os

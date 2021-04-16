@@ -5,7 +5,6 @@ from common.download import TDownloadEnv
 
 
 import os
-import json
 import shutil
 from unittest import TestCase
 

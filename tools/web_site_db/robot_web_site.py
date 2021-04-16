@@ -1,12 +1,11 @@
 from common.download import TDownloadedFile
-from common.http_request import RobotHttpException
+from common.http_request import THttpRequester
 from collections import defaultdict
 from common.primitives import get_site_domain_wo_www, get_html_title
 import os
 import shutil
 import time
 import datetime
-from common.http_request import TRequestPolicy
 import hashlib
 import re
 from common.link_info import TLinkInfo, TClickEngine
@@ -87,13 +86,13 @@ class TWebSiteCrawlSnapshot:
                         if only_with_www:
                             url += "www."
                         url += self.morda_url
-                        html_data = TDownloadedFile(self.logger, url).data
+                        html_data = TDownloadedFile(url).data
                         self.morda_url = url
                         self.logger.debug('set main url to {}'.format(url))
                         self.protocol = protocol
                         self.only_with_www = only_with_www
                         return
-                    except RobotHttpException as exp:
+                    except THttpRequester.RobotHttpException as exp:
                         self.logger.error("cannot fetch {}  with urllib, sleep 3 sec".format(url))
                         time.sleep(3)
 
@@ -106,12 +105,12 @@ class TWebSiteCrawlSnapshot:
         self.recognize_protocol_and_www()
         for i in range(3):
             try:
-                html_data = TDownloadedFile(self.logger, self.morda_url).data
+                html_data = TDownloadedFile(self.morda_url).data
                 title = get_html_title(html_data)
                 self.reach_status = TWebSiteReachStatus.normal
                 self.url_nodes[self.morda_url] = TUrlInfo(title=title)
                 return
-            except RobotHttpException as exp:
+            except THttpRequester.RobotHttpException as exp:
                 self.logger.error("cannot fetch morda url {} with urllib, sleep 3 sec".format(self.morda_url))
                 time.sleep(3)
         try:
@@ -326,8 +325,8 @@ class TWebSiteCrawlSnapshot:
 
         target.profiler = {
             "elapsed_time":  time.time() - start_time,
-            "step_request_rate": TRequestPolicy.get_request_rate(start_time),
-            "site_request_rate": TRequestPolicy.get_request_rate()
+            "step_request_rate": THttpRequester.get_request_rate(start_time),
+            "site_request_rate": THttpRequester.get_request_rate()
         }
         self.logger.debug("{}".format(str(target.profiler)))
         target.delete_url_mirrors_by_www_and_protocol_prefix()

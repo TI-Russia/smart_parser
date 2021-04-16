@@ -2,7 +2,7 @@ from web_site_db.robot_web_site import TWebSiteCrawlSnapshot, TRobotStep
 from common.selenium_driver import TSeleniumDriver
 from common.link_info import TLinkInfo, TClickEngine
 from common.serp_parser import SearchEngine, SearchEngineEnum, SerpException
-from common.http_request import RobotHttpException
+from common.http_request import THttpRequester
 
 from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
 import json
@@ -202,7 +202,7 @@ class TRobotProject:
             try:
                 serp_urls = SearchEngine.site_search(search_engine, site, request, self.selenium_driver)
                 break
-            except (SerpException, RobotHttpException, WebDriverException, InvalidSwitchToTargetException) as err:
+            except (SerpException, THttpRequester.RobotHttpException, WebDriverException, InvalidSwitchToTargetException) as err:
                 self.logger.error('cannot request search engine, exception: {}'.format(err))
                 self.logger.debug("sleep 10 seconds and retry other search engine")
                 time.sleep(10)

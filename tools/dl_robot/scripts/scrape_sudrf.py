@@ -136,7 +136,7 @@ def main():
                 file_data = inp.read()
         else:
             time.sleep(15)
-            _, _, file_data = make_http_request_urllib(logger, url, "GET")
+            _, _, file_data = make_http_request_urllib(url, "GET")
             with open(cache_file_name, "wb") as outp:
                 outp.write(file_data)
         soup = BeautifulSoup(file_data, "html.parser")

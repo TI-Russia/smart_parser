@@ -4,36 +4,16 @@ from web_site_db.robot_step import TRobotStep
 from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
 from common.link_info import check_link_sitemap, check_anticorr_link_text
 from common.primitives import convert_timeout_to_seconds
+from common.http_request import THttpRequester
 from dl_robot.declaration_link import looks_like_a_declaration_link
+from common.logging_wrapper import setup_logging
 
 import platform
 import tempfile
 import os
 import sys
 import argparse
-import logging
 import traceback
-
-
-def setup_logging(logfilename):
-    logger = logging.getLogger("dlrobot_logger")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-    return logger
 
 
 ROBOT_STEPS = [
@@ -108,12 +88,13 @@ class TDlrobot:
             TWebSiteCrawlSnapshot.SINGLE_DECLARATION_TIMEOUT = 60 * 60
         TDownloadEnv.LAST_CONVERSION_TIMEOUT = convert_timeout_to_seconds(args.last_conversion_timeout)
         TDownloadEnv.PDF_QUOTA_CONVERSION = args.pdf_quota_conversion
-        TDownloadEnv.init_conversion()
         return args
 
     def __init__(self, args):
         self.args = args
-        self.logger = setup_logging(args.logfile)
+        self.logger = setup_logging(log_file_name=args.logfile)
+        TDownloadEnv.init_conversion(self.logger)
+        THttpRequester.initialize(self.logger)
         if args.clear_cache_folder:
             TDownloadEnv.clear_cache_folder()
 

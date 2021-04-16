@@ -1,7 +1,7 @@
 import argparse
 import sys
 import re
-from common.http_request import make_http_request_urllib, RobotHttpException, make_http_request_curl, TRequestPolicy
+from common.http_request import THttpRequester
 from multiprocessing.dummy import Pool as ThreadPool
 import random
 from functools import partial
@@ -45,18 +45,18 @@ def setup_logging(logfilename):
 
 def check_alive(logger, url):
     try:
-        make_http_request_urllib(logger, url, 'HEAD')
+        THttpRequester.make_http_request_urllib(url, 'HEAD')
         logger.debug('urllib {} -> success\n'.format(url))
         return url
-    except RobotHttpException as exp:
+    except THttpRequester.RobotHttpException as exp:
         logger.debug('urllib failed for {}\n'.format(url))
         pass
 
     try:
-        make_http_request_curl(logger, url, 'HEAD')
+        make_http_request_curl(url, 'HEAD')
         logger.debug('try with curl {} -> success\n'.format(url))
         return url
-    except RobotHttpException as exp:
+    except THttpRequester.RobotHttpException as exp:
         logger.debug('curl failed for {}\n'.format(url))
         return None
 
@@ -101,7 +101,7 @@ def write_output(args, urls, results):
 
 
 if __name__ == "__main__":
-    TRequestPolicy.ENABLE = False
+    THttpRequester.ENABLE = False
     logger = setup_logging('check_domains.log')
     args = parse_args()
     urls = read_input(args)

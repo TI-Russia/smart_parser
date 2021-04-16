@@ -1,13 +1,12 @@
 from common.download import TDownloadedFile, TDownloadEnv
-from common.http_request import TRequestPolicy, RobotHttpException
-from common.simple_logger import close_logger
+from common.http_request import THttpRequester
+from common.logging_wrapper import close_logger, setup_logging
 
 import http.server
 from unittest import TestCase
 import time
 import os
 import threading
-import logging
 import shutil
 
 HTTP_HEAD_REQUESTS_COUNT = 0
@@ -25,13 +24,12 @@ class THttpServerHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         global HTTP_GET_REQUESTS_COUNT
         HTTP_GET_REQUESTS_COUNT += 1
-        logger = logging.getLogger("dlrobot_logger")
-        logger.debug("GET {}".format(self.path))
+        THttpRequester.logger.debug("GET {}".format(self.path))
         if self.path == "/somepath":
             self.build_headers()
             self.wfile.write("<html> aaaaaaa </html>".encode("latin"))
         elif self.path == "/very_long":
-            time.sleep(TRequestPolicy.HTTP_TIMEOUT + 10)   # more than HTTP_TIMEOUT
+            time.sleep(THttpRequester.HTTP_TIMEOUT + 10)   # more than HTTP_TIMEOUT
             self.build_headers()
             self.wfile.write("<html> bbbb </html>".encode("latin"))
         else:
@@ -39,30 +37,13 @@ class THttpServerHandler(http.server.BaseHTTPRequestHandler):
 
     def do_HEAD(self):
         global HTTP_HEAD_REQUESTS_COUNT
-        logger = logging.getLogger("dlrobot_logger")
-        logger.debug("HEAD {}".format(self.path))
+        THttpRequester.logger.debug("HEAD {}".format(self.path))
         HTTP_HEAD_REQUESTS_COUNT += 1
         self.build_headers()
 
 
 def start_server(server):
     server.serve_forever()
-
-
-def setup_logging(logfilename):
-    logger = logging.getLogger("dlrobot_logger")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-    return logger
 
 
 class TestHTTPServer(http.server.HTTPServer):
@@ -88,7 +69,8 @@ class TestFileCache(TestCase):
         os.mkdir(self.data_folder)
         os.chdir(self.data_folder)
         TDownloadEnv.clear_cache_folder()
-        self.logger = setup_logging("dlrobot.log")
+        self.logger = setup_logging(log_file_name="dlrobot.log")
+        THttpRequester.initialize(self.logger)
 
     def tearDown(self):
         self.web_server.shutdown()
@@ -99,33 +81,33 @@ class TestFileCache(TestCase):
 
     def test_request_the_same(self):
         url = self.build_url('/somepath')
-        TDownloadedFile(self.logger, url)
+        TDownloadedFile(url)
         self.assertEqual(HTTP_GET_REQUESTS_COUNT, 1)
-        TDownloadedFile(self.logger, url)
+        TDownloadedFile(url)
         self.assertEqual(HTTP_GET_REQUESTS_COUNT, 1)
 
     def test_request_timed_out(self):
         url = self.build_url('/very_long')
         got_timeout_exception = False
         try:
-            TDownloadedFile(self.logger, url)
-        except RobotHttpException as exp:
+            TDownloadedFile(url)
+        except THttpRequester.RobotHttpException as exp:
             got_timeout_exception = True
         self.assertTrue(got_timeout_exception)
 
     # cannot test it with other tests because
     def test_request_too_many_404(self):
-        TRequestPolicy.ENABLE = True
+        THttpRequester.ENABLE = True
         url = self.build_url('/request_too_many_404')
         codes = list()
         for i in range(4):
             try:
-                x = TDownloadedFile(self.logger, url)
-            except RobotHttpException as exp:
+                x = TDownloadedFile(url)
+            except THttpRequester.RobotHttpException as exp:
                 codes.append(exp.http_code)
 
         canon_result = [404, 404, 404, 429]
         if codes != canon_result:
             print("test_request_too_many_404 is going to fail")
-            print("TRequestPolicy.ALL_HTTP_REQUEST={}".format(str(TRequestPolicy.ALL_HTTP_REQUEST)))
+            print("THttpRequester.ALL_HTTP_REQUEST={}".format(str(THttpRequester.ALL_HTTP_REQUEST)))
         self.assertSequenceEqual(codes, canon_result)

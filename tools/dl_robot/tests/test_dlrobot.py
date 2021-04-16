@@ -1,7 +1,7 @@
 from dl_robot.dlrobot import TDlrobot
 from DeclDocRecognizer.external_convertors import TExternalConverters
 from common.download import TDownloadEnv
-from common.simple_logger import close_logger
+from common.logging_wrapper import close_logger
 from web_site_db.robot_project import TRobotProject
 
 from unittest import TestCase
@@ -9,7 +9,6 @@ import os
 import threading
 import shutil
 from datetime import datetime
-import json
 import http.server
 from functools import partial
 

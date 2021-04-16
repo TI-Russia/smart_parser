@@ -40,7 +40,7 @@ def create_toloka_pool(project_path, toloka_stream):
             sys.stderr.flush()
             url = export_record['url']
             cached_file = export_record['cached_file']
-            extension = TDownloadedFile(logger, url).file_extension
+            extension = TDownloadedFile(url).file_extension
             temp_file = "dummy" + extension
             shutil.copy(cached_file, temp_file)
             html = ec.convert_to_html_with_soffice(temp_file)
@@ -66,7 +66,7 @@ def copy_files(args, toloka_results):
             cached_file = export_record['cached_file']
             url = export_record['url']
             print ()
-            extension = TDownloadedFile(logger, url).file_extension
+            extension = TDownloadedFile(url).file_extension
             out_file = "{}_{}_{}{}".format(domain, index, int(time.time()), extension)
             tol_res = toloka_results.get(cached_file)
             if tol_res == "YES":

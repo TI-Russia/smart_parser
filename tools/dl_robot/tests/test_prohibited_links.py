@@ -1,9 +1,10 @@
 from unittest import TestCase
 from common.find_link import web_link_is_absolutely_prohibited
 from common.download import TDownloadEnv
+from common.logging_wrapper import setup_logging
 import os
 import tempfile
-import logging
+
 
 BAD_LINKS = [
 ("www.mvd.ru", "www.yandex.ru", True),
@@ -42,7 +43,7 @@ BAD_LINKS = [
 
 class TestProhibitedLinks(TestCase):
     def test_prohibited_links(self):
-        logger = logging.getLogger('test_prohibited')
+        logger = setup_logging('test_prohibited')
         with tempfile.TemporaryDirectory(dir=os.path.dirname(__file__), prefix="cached_prohibited.") as tmp_folder:
             TDownloadEnv.FILE_CACHE_FOLDER = str(tmp_folder)
             for (source, target, is_prohibited) in BAD_LINKS:

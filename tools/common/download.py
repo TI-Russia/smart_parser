@@ -1,8 +1,7 @@
-from common.http_request import make_http_request, request_url_headers_with_global_cache
+    from common.http_request import THttpRequester
 from common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION, \
             content_type_to_file_extension
 from ConvStorage.conversion_client import TDocConversionClient
-from common.http_request import RobotHttpException
 from common.primitives import build_dislosures_sha256
 
 import json
@@ -19,9 +18,9 @@ import cgi
 class TDownloadEnv:
     FILE_CACHE_FOLDER = "cached"
     CONVERSION_CLIENT: TDocConversionClient = None
-    HTTP_TIMEOUT = 30  # in seconds
     LAST_CONVERSION_TIMEOUT = 30*60  # in seconds
     PDF_QUOTA_CONVERSION = 20 * 2**20 # in bytes
+    logger = None
 
     @staticmethod
     def get_download_folder():
@@ -39,8 +38,9 @@ class TDownloadEnv:
                 raise
 
     @staticmethod
-    def init_conversion():
-        TDownloadEnv.CONVERSION_CLIENT = TDocConversionClient(TDocConversionClient.parse_args([]))
+    def init_conversion(logger):
+        TDownloadEnv.logger = logger
+        TDownloadEnv.CONVERSION_CLIENT = TDocConversionClient(TDocConversionClient.parse_args([]), logger=logger)
         TDownloadEnv.CONVERSION_CLIENT.start_conversion_thread()
 
     @staticmethod
@@ -98,7 +98,7 @@ def get_content_charset(headers):
 
 
 # save from selenium
-def save_downloaded_file(logger, filename):
+def save_downloaded_file(filename):
     download_folder = TDownloadEnv.get_download_folder()
     if not os.path.exists(download_folder):
         os.makedirs(download_folder)
@@ -106,9 +106,9 @@ def save_downloaded_file(logger, filename):
     sha256 = build_dislosures_sha256(filename)
     file_extension = os.path.splitext(filename)[1]
     saved_filename = os.path.join(download_folder, sha256 + file_extension)
-    logger.debug("save file {} as {}".format(filename, saved_filename))
+    TDownloadEnv.logger.debug("save file {} as {}".format(filename, saved_filename))
     if os.path.exists(saved_filename):
-        logger.debug("replace existing {0}".format(saved_filename))
+        TDownloadEnv.logger.debug("replace existing {0}".format(saved_filename))
         os.remove(saved_filename)
     os.rename(filename, saved_filename)
     TDownloadEnv.send_pdf_to_conversion(saved_filename, file_extension, sha256)
@@ -161,8 +161,8 @@ class TDownloadedFile:
     def get_page_info_file_name(self):
         return self.data_file_path + ".page_info"
 
-    def __init__(self, logger, original_url):
-        self.logger = logger
+    def __init__(self, original_url):
+        self.logger = TDownloadEnv.logger
         self.original_url = original_url
         self.page_info = dict()
         self.data_file_path = get_local_file_name_by_url(self.original_url)
@@ -206,7 +206,7 @@ class TDownloadedFile:
         return None
 
     def _http_get_request_with_simple_js_redirect(self):
-        redirected_url, headers, data = make_http_request(self.logger, self.original_url, "GET")
+        redirected_url, headers, data = THttpRequester.make_http_request(self.original_url, "GET")
 
         try:
             if get_content_type_from_headers(headers).lower().startswith('text'):
@@ -214,8 +214,8 @@ class TDownloadedFile:
                     data_utf8 = convert_html_to_utf8_using_content_charset(get_content_charset(headers), data)
                     redirect_url = self.get_simple_js_redirect(self.original_url, data_utf8)
                     if redirect_url is not None:
-                        return make_http_request(self.logger, redirect_url, "GET")
-                except (RobotHttpException, ValueError) as err:
+                        return THttpRequester.make_http_request(redirect_url, "GET")
+                except (THttpRequester.RobotHttpException, ValueError) as err:
                     pass
         except AttributeError:
             pass
@@ -252,18 +252,18 @@ class TDownloadedFile:
 
 
 # use it preliminary, because ContentDisposition and Content-type often contain errors
-def get_file_extension_only_by_headers(logger, url):
-    _, headers = request_url_headers_with_global_cache(logger, url)
+def get_file_extension_only_by_headers(url):
+    _, headers = THttpRequester.request_url_headers_with_global_cache(url)
     ext = get_file_extension_by_content_type(headers)
     return ext
 
 
-def are_web_mirrors(logger, url1, url2):
+def are_web_mirrors(url1, url2):
     try:
         # check all mirrors including simple javascript
-        html1 = TDownloadedFile(logger, url1).data
-        html2 = TDownloadedFile(logger, url2).data
+        html1 = TDownloadedFile(url1).data
+        html2 = TDownloadedFile(url2).data
         res = len(html1) == len(html2)  # it is enough
         return res
-    except RobotHttpException as exp:
+    except THttpRequester.RobotHttpException as exp:
         return False

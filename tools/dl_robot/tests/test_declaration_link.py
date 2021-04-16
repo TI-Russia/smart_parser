@@ -2,8 +2,8 @@ from common.download import TDownloadEnv
 from web_site_db.robot_step import TRobotStep, TUrlInfo
 from web_site_db.robot_project import TRobotProject
 from dl_robot.declaration_link import looks_like_a_declaration_link
-from common.http_request import TRequestPolicy
-from common.simple_logger import close_logger
+from common.http_request import THttpRequester
+from common.logging_wrapper import close_logger, setup_logging
 
 import http.server
 from unittest import TestCase
@@ -11,7 +11,6 @@ import time
 import os
 import urllib
 import threading
-import logging
 import shutil
 
 
@@ -42,22 +41,6 @@ class THttpServerHandler(http.server.BaseHTTPRequestHandler):
 
 def start_server(server):
     server.serve_forever()
-
-
-def setup_logging(logfilename):
-    logger = logging.getLogger("dlrobot_logger")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-    return logger
 
 
 class TestHTTPServer(http.server.HTTPServer):
@@ -112,9 +95,10 @@ class TestDeclarationLink(TestCase):
             shutil.rmtree(self.data_folder, ignore_errors=True)
         os.mkdir(self.data_folder)
         os.chdir(self.data_folder)
-        TRequestPolicy.ENABLE = False
+        THttpRequester.ENABLE = False
         TDownloadEnv.clear_cache_folder()
-        self.logger = setup_logging("dlrobot.log")
+        self.logger = setup_logging(log_file_name="dlrobot.log")
+        THttpRequester.initialize(self.logger)
         self.project_path = os.path.join(self.data_folder, "project.txt")
         TRobotProject.create_project("http://127.0.0.1:{}".format(self.web_site_port), self.project_path)
 

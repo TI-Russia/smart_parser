@@ -7,7 +7,7 @@ from common.find_link import click_all_selenium,  find_links_in_html_by_text, \
                     web_link_is_absolutely_prohibited
 from common.link_info import TLinkInfo
 from common.primitives import get_html_title
-from common.http_request import RobotHttpException
+from common.http_request import THttpRequester
 
 
 class TUrlMirror:
@@ -75,7 +75,7 @@ class TRobotStep:
         # runtime members
         self.processed_pages = None
         self.pages_to_process = dict()
-        self.url_weights = None
+        self.last_processed_url_weights = None
 
         if init_json is not None:
             step_urls = init_json.get('step_urls')
@@ -100,7 +100,7 @@ class TRobotStep:
         new_step_urls = defaultdict(float)
         for urls in mirrors.values():
             urls = sorted(urls, key=(lambda x: len(x.input_url)))
-            max_weight = max(self.step_urls[u] for u in urls)
+            max_weight = max(self.step_urls[u.input_url] for u in urls)
             new_step_urls[urls[-1].input_url] = max_weight  # get the longest url and max weight
         self.step_urls = new_step_urls
 
@@ -130,8 +130,8 @@ class TRobotStep:
     def add_link_wrapper(self, link_info: TLinkInfo):
         assert link_info.target_url is not None
         try:
-            downloaded_file = TDownloadedFile(self.logger, link_info.target_url)
-        except RobotHttpException as err:
+            downloaded_file = TDownloadedFile(link_info.target_url)
+        except THttpRequester.RobotHttpException as err:
             self.logger.error(err)
             return
 
@@ -172,8 +172,8 @@ class TRobotStep:
         downloaded_file = None
         if use_urllib:
             try:
-                downloaded_file = TDownloadedFile(self.logger, url)
-            except RobotHttpException as err:
+                downloaded_file = TDownloadedFile(url)
+            except THttpRequester.RobotHttpException as err:
                 self.logger.error(err)
                 return
             if downloaded_file.file_extension != DEFAULT_HTML_EXTENSION:
@@ -203,13 +203,13 @@ class TRobotStep:
                     self.logger.debug("do not browse {} with selenium, since it has wrong http headers".format(url))
                 else:
                     click_all_selenium(self, url, self.website.parent_project.selenium_driver)
-        except (RobotHttpException, WebDriverException, InvalidSwitchToTargetException) as e:
+        except (THttpRequester.RobotHttpException, WebDriverException, InvalidSwitchToTargetException) as e:
             self.logger.error('add_links failed on url={}, exception: {}'.format(url, e))
 
     def pop_url_with_max_weight(self, url_index):
         if len(self.pages_to_process) == 0:
             return None
-        enough_crawled_urls = url_index > 200 or (url_index > 100 and max(self.url_weights[-10:]) < TLinkInfo.NORMAL_LINK_WEIGHT)
+        enough_crawled_urls = url_index > 200 or (url_index > 100 and max(self.last_processed_url_weights[-10:]) < TLinkInfo.NORMAL_LINK_WEIGHT)
         if not self.website.check_crawling_timeouts(enough_crawled_urls):
             return None
         max_weight = TLinkInfo.MINIMAL_LINK_WEIGHT - 1.0
@@ -222,7 +222,7 @@ class TRobotStep:
             return None
         self.processed_pages.add(best_url)
         del self.pages_to_process[best_url]
-        self.url_weights.append(max_weight)
+        self.last_processed_url_weights.append(max_weight)
         self.website.logger.debug("max weight={}, index={}, url={} function={}".format(max_weight, url_index,
                                                                                        best_url,
                                                                                        self.get_check_func_name()))
@@ -230,7 +230,7 @@ class TRobotStep:
 
     def make_one_step(self):
         assert len(self.pages_to_process) > 0
-        self.url_weights = list()
+        self.last_processed_url_weights = list()
         use_selenium = self.step_passport.get('fallback_to_selenium', True)
         if not self.website.parent_project.enable_selenium:
             use_selenium = False

@@ -140,7 +140,7 @@ class TSeleniumDriver:
                     (len(chrome_temp_file) == 0):
                 files = os.listdir(self.download_folder)
                 if len(files) > 0:
-                    return save_downloaded_file(self.logger, os.path.join(self.download_folder, files[0]))
+                    return save_downloaded_file(os.path.join(self.download_folder, files[0]))
                 return None
             time.sleep(1)
             seconds += 1

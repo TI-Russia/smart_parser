@@ -2,7 +2,7 @@ import urllib.error
 import urllib.parse
 from common.download import are_web_mirrors
 from common.popular_sites import is_super_popular_domain
-from common.http_request import TRequestPolicy
+from common.http_request import THttpRequester
 from common.primitives import get_site_domain_wo_www
 from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
 import re
@@ -63,7 +63,7 @@ def web_link_is_absolutely_prohibited(logger, source, href):
     source_domain = re.sub(':[0-9]+$', '', source_domain)  # delete port
 
     if get_office_domain(href_domain) != get_office_domain(source_domain):
-        if not are_web_mirrors(logger, source, href):
+        if not are_web_mirrors(source, href):
             return True
     return False
 
@@ -126,7 +126,7 @@ def click_selenium_if_no_href(step_info, main_url, driver_holder,  element, elem
     tag_name = element.tag_name
     link_text = element.text.strip('\n\r\t ')  # initialize here, can be broken after click
     page_html = driver_holder.the_driver.page_source
-    TRequestPolicy.consider_request_policy(step_info.logger, main_url + " elem_index=" + str(element_index), "click_selenium")
+    THttpRequester.consider_request_policy(main_url + " elem_index=" + str(element_index), "click_selenium")
 
     link_info = TLinkInfo(TClickEngine.selenium, main_url, None,
                           source_html=page_html, anchor_text=link_text, tag_name=tag_name, element_index=element_index,
@@ -144,7 +144,7 @@ def click_selenium_if_no_href(step_info, main_url, driver_holder,  element, elem
 def click_all_selenium(step_info, main_url, driver_holder):
     logger = step_info.website.logger
     logger.debug("find_links_with_selenium url={}".format(main_url))
-    TRequestPolicy.consider_request_policy(step_info.logger, main_url, "GET_selenium")
+    THttpRequester.consider_request_policy(main_url, "GET_selenium")
     elements = driver_holder.navigate_and_get_links(main_url)
     page_html = driver_holder.the_driver.page_source
     for element_index in range(len(elements)):
