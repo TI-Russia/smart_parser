@@ -1,6 +1,6 @@
 import django.db.models
 import declarations.models as models
-from declarations.section_passport import TSectionPassportItems
+from declarations.section_passport import TSectionPassportItems1, TSectionPassportItems2
 
 import dbm.gnu
 import os
@@ -143,27 +143,34 @@ class TPermaLinksSection(TPermaLinksDB):
     def __init__(self, directory):
         super().__init__(directory, models.Section)
 
-    def get_section_id(self, passport):
-        section_id_str = self.db.get(passport)
+    def get_section_id(self, passport1, passport2):
+        section_id_str = self.db.get(passport1)
+        if section_id_str is not None:
+            return int(section_id_str), False
+
+        section_id_str = self.db.get(passport2)
         if section_id_str is not None:
             return int(section_id_str), False
         return self._get_new_id(), True
+
+    def use_section_passport_factory(self, logger, factory_type):
+        logger.info("build section passport items ({})...".format(factory_type))
+        passport_factory = factory_type.get_section_passport_components()
+        cnt = 0
+        logger.info("save section passport to db ({})...".format(factory_type))
+        for section_id, passport_items in passport_factory:
+            cnt += 1
+            if (cnt % 100000) == 0:
+                logger.debug("{}".format(cnt))
+            passport = passport_items.get_main_section_passport()
+            self.db[passport] = str(section_id)
 
     def save_dataset(self, logger):
         if models.Section.objects.count() == 0:
             self.save_max_plus_one_primary_key(0)
         else:
-            cnt = 0
-            logger.info("build section passport items...")
-            passport_factory = TSectionPassportItems.get_section_passport_components()
-
-            logger.info("save section passport to db...")
-            for section_id, passport_items in passport_factory:
-                cnt += 1
-                if (cnt % 100000) == 0:
-                    logger.debug("{}".format(cnt))
-                passport = passport_items.get_main_section_passport()
-                self.db[passport] = str(section_id)
+            self.use_section_passport_factory(logger, TSectionPassportItems1)
+            self.use_section_passport_factory(logger, TSectionPassportItems2)
             self.save_max_plus_one_primary_key(get_max_sql_id("declarations_section") + 1)
 
 

@@ -3,7 +3,7 @@ from common.primitives import normalize_whitespace
 from declarations.countries import get_country_code
 from declarations.rubrics import convert_municipality_to_education, TOfficeRubrics
 from declarations.documents import OFFICES
-from declarations.section_passport import TSectionPassportItems
+from declarations.section_passport import TSectionPassportItems1,TSectionPassportItems2
 import re
 
 
@@ -115,14 +115,22 @@ class TSmartParserSectionJson:
         self.section.position = person_info.get("role")
         self.section.department = person_info.get("department")
 
-    def get_passport_components(self):
-        return TSectionPassportItems(
+    def get_passport_components1(self):
+        return TSectionPassportItems1(
                     self.section.source_document.office.id,
                     self.section.income_year,
                     self.section.person_name,
                     sum(convert_to_int_with_nones(i.size) for i in self.incomes),
                     sum(convert_to_int_with_nones(r.square) for r in self.real_estates),
                     sum(1 for v in self.vehicles)
+                    )
+
+    def get_passport_components2(self):
+        return TSectionPassportItems2(
+                    self.section.source_document.id,
+                    self.section.income_year,
+                    self.section.person_name,
+                    sum(convert_to_int_with_nones(i.size) for i in self.incomes)
                     )
 
     def set_section(self, related_records):

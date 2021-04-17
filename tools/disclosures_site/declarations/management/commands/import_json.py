@@ -20,6 +20,7 @@ from statistics import median
 class TImporter:
     logger = None
     max_vehicle_count = 60
+
     def build_office_to_file_mapping(self):
         db_offices = set(o.id for o in models.Office.objects.all())
         TImporter.logger.debug("there are {} records in table {} ".format(
@@ -133,10 +134,11 @@ class TImporter:
                         TImporter.logger.debug("ignore section {} because it has too many vehicles ( > {})".format(
                             prepared_section.section.person_name, TImporter.max_vehicle_count))
                         continue
-                    passport = prepared_section.get_passport_components().get_main_section_passport()
-                    if self.register_section_passport(passport):
+                    passport1 = prepared_section.get_passport_components1().get_main_section_passport()
+                    if self.register_section_passport(passport1):
                         prepared_section.section.tmp_income_set = prepared_section.incomes
-                        section_id, is_new = self.permalinks_db_section.get_section_id(passport)
+                        passport2 = prepared_section.get_passport_components2().get_main_section_passport()
+                        section_id, is_new = self.permalinks_db_section.get_section_id(passport1, passport2)
                         if is_new:
                             TImporter.logger.debug("found a new section {}, set section.id to {}".format(
                                 prepared_section.section.get_permalink_passport(), section_id))

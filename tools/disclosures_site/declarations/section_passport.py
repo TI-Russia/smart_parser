@@ -10,7 +10,7 @@ def convert_to_int_with_nones(v):
     return int(v)
 
 
-class TSectionPassportItems:
+class TSectionPassportItems1:
     def __init__(self, office_id, year, person_name, income_sum, square_sum, vehicle_count):
         self.income_sum = str(convert_to_int_with_nones(income_sum))
         self.square_sum = str(convert_to_int_with_nones(square_sum))
@@ -51,23 +51,56 @@ class TSectionPassportItems:
                          s.income_year,
                          sum(r.square) * count(distinct r.id) / count(*),
                          count(distinct v.id)
-                from {} s
-                inner join {} d on s.source_document_id = d.id
-                left  join {} i on i.section_id = s.id
-                left  join {} r on r.section_id = s.id
-                left  join {} v on v.section_id = s.id
+                from declarations_section s
+                inner join declarations_source_document d on s.source_document_id = d.id
+                left  join declarations_income i on i.section_id = s.id
+                left  join declarations_realestate r on r.section_id = s.id
+                left  join declarations_vehicle v on v.section_id = s.id
                 group by s.id
-                """.format(
-            models.Section.objects.model._meta.db_table,
-            models.Source_Document.objects.model._meta.db_table,
-            models.Income.objects.model._meta.db_table,
-            models.RealEstate.objects.model._meta.db_table,
-            models.Vehicle.objects.model._meta.db_table
-        )
+                """
         with connection.cursor() as cursor:
             cursor.execute(query)
             for section_id, office_id, income_sum, person_name, year, square_sum, vehicle_count in cursor.fetchall():
-                yield section_id, TSectionPassportItems(office_id, year, person_name, income_sum,
+                yield section_id, TSectionPassportItems1(office_id, year, person_name, income_sum,
                                                         square_sum, vehicle_count)
 
 
+# Основные паспорта секций TSectionPassportItems1 сделаны не зависимыми от номеров документов.
+# Это позволяет эффективно работать с дублями  документов (уточнениями документов).
+# Но когда мы меняем сам smart_parser, резко меняются количество приписанных машин и недвижимости, из-за этого
+# основные паспорта секций перестают работать.  Придется сделать дополнительные паспорта (TSectionPassportItems2),
+# которые привязаны к документу, но содержат меньше подробностей. Дополнительные паспорта фактически построены так же,
+# как паспорта, которые используются в copy_person_id. Этот комментарий надо добавить в html-описание.
+
+class TSectionPassportItems2:
+    def __init__(self, document_id, year, person_name, income_sum):
+        self.document_id = str(document_id)
+        self.year = str(year)
+        self.person_name = normalize_whitespace(person_name).lower()
+        self.income_sum = str(convert_to_int_with_nones(income_sum))
+
+    def get_main_section_passport(self):
+        return ";".join((self.document_id,
+                         self.year,
+                         self.person_name,
+                         self.income_sum
+                         ))  # the most detailed passport
+
+
+    @staticmethod
+    def get_section_passport_components():
+        # see https://stackoverflow.com/questions/2436284/mysql-sum-for-distinct-rows for arithmetics explanation
+        query = """select  s.id, 
+                           s.source_document_id, 
+                           sum(i.size) * count(distinct i.id) / count(*),
+                           s.person_name, 
+                           s.income_year
+                        from declarations_section s
+                        left  join declarations_income i on i.section_id = s.id
+                        group by s.id
+               """
+
+        with connection.cursor() as cursor:
+            cursor.execute(query)
+        for section_id, document_id, income_sum, person_name, year in cursor.fetchall():
+            yield section_id, TSectionPassportItems2(document_id, year, person_name, income_sum)

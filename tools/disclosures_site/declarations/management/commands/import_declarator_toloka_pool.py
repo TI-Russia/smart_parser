@@ -2,7 +2,7 @@
 from declarations.russian_fio import TRussianFio
 import declarations.models as models
 from declarations.serializers import TSmartParserSectionJson
-from declarations.section_passport import TSectionPassportItems
+from declarations.section_passport import TSectionPassportItems1
 from common.logging_wrapper import setup_logging
 
 from django.core.management import BaseCommand
@@ -41,7 +41,7 @@ class TDbSqueeze:
     #was not tested!
     def get_all_passports_dict(self):
         passport_to_id = dict()
-        section_passport_items = TSectionPassportItems.get_section_passport_components()
+        section_passport_items = TSectionPassportItems1.get_section_passport_components()
 
         for (id, passport_items) in section_passport_items:
             for passport in passport_items.get_all_passport_variants_for_toloka_pool(self.office_hierarchy):
@@ -136,7 +136,7 @@ class Command(BaseCommand):
             assert section_or_person_id.startswith('section-')
             year = sections[0].get('year', 0)
             json_file = models.Source_Document(office_id=sections[0].get('office_id', -1))
-            passport_items = TSmartParserSectionJson(year, json_file).read_raw_json(sections[0]).get_passport_components()
+            passport_items = TSmartParserSectionJson(year, json_file).read_raw_json(sections[0]).get_passport_components1()
             section_id, search_results = self.search_by_passports(passport_items)
             if section_id is not None:
                 row[id_index] = str("section-") + str(section_id)
