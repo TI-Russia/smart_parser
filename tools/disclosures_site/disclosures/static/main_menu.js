@@ -1,3 +1,4 @@
+
 function menuCreate() {
       menu = [{
                 "text":"главная",
@@ -53,3 +54,4 @@ function menuCreate() {
 }
 
 menuCreate();
+

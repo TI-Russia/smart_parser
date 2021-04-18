@@ -47,6 +47,9 @@ class OfficeView(generic.DetailView):
 class AboutPageView(generic.TemplateView):
     template_name = 'morda/about.html'
 
+class NewsPageView(generic.TemplateView):
+    template_name = 'morda/news_mobile.html'
+
 
 class PermalinksPageView(generic.TemplateView):
     template_name = 'morda/permalinks.html'

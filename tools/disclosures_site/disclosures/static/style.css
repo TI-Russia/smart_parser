@@ -14,7 +14,7 @@
     font-style: normal;
 }
 
-br.responsive {
+br.mobile {
   display: inline; // Show BR tag for narrow screens
 }
 
@@ -24,7 +24,17 @@ br.responsive {
         font-family: "Roboto", serif;
     }
     html {
-        font-size: 36px
+        font-size: 36px;
+        /*height:100%;*/
+    }
+    body{
+        height:100%;
+    }
+    .desktop {
+         display: none;
+    }
+    .mobile {
+         display: inline;
     }
 }
 
@@ -35,20 +45,22 @@ br.responsive {
         link-color: black;
         font-family: "Roboto Light", serif;
     }
-    br.responsive {
-         display: none; // Hide BR tag for wider screens
+    .mobile {
+         display: none;
+    }
+    .desktop {
+         display: inline;
     }
 }
 
-div.header1 {
+div.disclosures_top_header {
     display: inline;
     font-size: 200%;
     font-weight: bold;
     text-align: left;
 }
 
-div.header2 {
-    display: inline;
+div.header {
     margin: 10px;
     font-size: 100%;
 }
@@ -81,6 +93,7 @@ select {
     padding-left: 4px;
     padding-right: 4px;
 }
+
 table.declaration_table  {
     border: solid;
     border-collapse: collapse;
@@ -99,4 +112,59 @@ table.solid_table  {
 div.clickable {
   cursor: pointer;
 }
+
+div.menu {
+  width: 35px;
+  height: 5px;
+  background-color: black;
+  margin: 6px 0;
+}
+
+#mobileMenu {
+    display: none;
+    height: 80vh;
+}
+/* ================ mobile menu ==================== */
+/* Style the navigation menu */
+.topnav {
+  overflow: hidden;
+  position: relative;
+}
+
+/* Style navigation menu links */
+
+.topnav a {
+  text-decoration: none;
+  font-size: 70px;
+}
+
+
+/* Add a grey background color on mouse-over */
+.topnav a:hover {
+  color: black;
+}
+
+/* Style the active link (or home/logo) */
+.active {
+  background-color: #4CAF50;
+}
+
+table.mobile_menu {
+    width: 100%;
+    height: 100%;
+    border: 1;
+}
+
+td.mobile_menu_left_column {
+    vertical-align: middle;
+}
+
+td.mobile_menu_right_column {
+    background-color: #E3E3E3;
+    vertical-align: middle;
+    padding: 50px;
+}
+
+
+
 

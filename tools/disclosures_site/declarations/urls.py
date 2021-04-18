@@ -7,6 +7,7 @@ urlpatterns = [
     path('about.html', views.AboutPageView.as_view(), name='about_page'),
     path('permalinks.html', views.PermalinksPageView.as_view(), name='permalinks'),
     path('smart_parser_spec.html', views.SmartParserSpecView.as_view(), name='spv'),
+    path('news.html', views.NewsPageView.as_view(), name='news_page'),
 
     path('sitemap.txt', views.sitemapView, name='sitemap'),
     path('sitemap.xml', views.sitemapXmlView, name='sitemapxml'),
