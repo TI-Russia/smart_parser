@@ -34,5 +34,5 @@ if __name__ == "__main__":
                         value = zlib.decompress(value).decode('utf8').replace('\n', ' ')
                 else:
                     value = value.decode('latin')
-                print("{}\t{}".format(k.decode('latin'), value))
+                print("{}\t{}".format(k.decode('utf8'), value))
             k = dbm.nextkey(k)
