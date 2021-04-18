@@ -63,6 +63,7 @@ class TSectionPassportItems1:
             for section_id, office_id, income_sum, person_name, year, square_sum, vehicle_count in cursor.fetchall():
                 yield section_id, TSectionPassportItems1(office_id, year, person_name, income_sum,
                                                         square_sum, vehicle_count)
+        cursor.close()
 
 
 # Основные паспорта секций TSectionPassportItems1 сделаны не зависимыми от номеров документов.
@@ -71,7 +72,6 @@ class TSectionPassportItems1:
 # основные паспорта секций перестают работать.  Придется сделать дополнительные паспорта (TSectionPassportItems2),
 # которые привязаны к документу, но содержат меньше подробностей. Дополнительные паспорта фактически построены так же,
 # как паспорта, которые используются в copy_person_id. Этот комментарий надо добавить в html-описание.
-
 class TSectionPassportItems2:
     def __init__(self, document_id, year, person_name, income_sum):
         self.document_id = str(document_id)
@@ -102,5 +102,7 @@ class TSectionPassportItems2:
 
         with connection.cursor() as cursor:
             cursor.execute(query)
-        for section_id, document_id, income_sum, person_name, year in cursor.fetchall():
-            yield section_id, TSectionPassportItems2(document_id, year, person_name, income_sum)
+            for section_id, document_id, income_sum, person_name, year in cursor.fetchall():
+                yield section_id, TSectionPassportItems2(document_id, year, person_name, income_sum)
+        cursor.close()
+
