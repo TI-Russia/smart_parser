@@ -57,7 +57,7 @@ source $COMMON_SCRIPT
     python3 $TOOLS/disclosures_site/manage.py test declarations/tests --settings disclosures.settings.dev
 
 #9 (надо включить в import_json?)
-    cd $DLROBOT_FOLDER # important
+    cd $DLROBOT_FOLDER # im portant
     python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev --directory $DLROBOT_FOLDER
 
 
