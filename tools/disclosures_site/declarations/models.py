@@ -512,9 +512,7 @@ class Section(models.Model):
         return False
 
     @property
-    def position_and_office_str(self):
-        str = self.source_document.office.name
-
+    def position_and_department(self):
         position_and_department = ""
         if self.department is not None:
             position_and_department += self.department
@@ -523,9 +521,18 @@ class Section(models.Model):
             if position_and_department != "":
                 position_and_department += ", "
             position_and_department += self.position
+        return position_and_department.strip()
 
+    @property
+    def office_name(self):
+        return self.source_document.office.name
+
+    @property
+    def position_and_office_str(self):
+        str = self.source_document.office.name
+        position_and_department = self.position_and_department
         if position_and_department != "":
-            str += " ({})".format(position_and_department.strip())
+            str += " ({})".format(position_and_department)
         return str
 
     @property
@@ -545,7 +552,7 @@ class Section(models.Model):
 
         incomes = defaultdict(str)
         for i in self.income_set.all():
-            incomes[i.relative] = str(i.size)
+            incomes[i.relative] = '<h3>' + str(i.size) + '</h3>'
 
         table = list()
         for relative in secton_parts:

@@ -54,35 +54,36 @@
 <header>
     <div>
         <div class="disclosures_top_header">Дискложес&nbsp;
-
-                    <span class="mobile" style="float:right; font-size: 150%;">
-                        <a href="javascript:void(0);" style="color: black; text-decoration: none;" onclick="showMobileMenu()">
-                    &#9776; &nbsp;
-                        </a>
-                    </span>
+            <span class="mobile" style="float:right; font-size: 150%;">
+                <a href="javascript:void(0);" style="color: black; text-decoration: none;" onclick="showMobileMenu()">
+            &#9776; &nbsp;
+                </a>
+            </span>
         </div>
         <div class="header2 mobile"><br/>декларации о доходах</div>
         <div class="header2 desktop">Автоматизированный сбор деклараций о доходах</div>
     </div>
     <div class="desktop" id="menu_div"></div>
 
-    <hr/>
+    <hr />
       <div id="mobileMenu" class="topnav">
-        <table class="mobile_menu">
-            <tr>
-                <td class="mobile_menu_left_column" ><a href="/about.html">О проекте</a></td>
-                <td class="mobile_menu_right_column"><a href="/office/">Ведомства</a></td>
-            </tr>
-            <tr>
-                <td class="mobile_menu_left_column"><a href="/section/">Декларации</a></td>
-                <td class="mobile_menu_right_column"><a href="/office/">Документы</a></td>
-            </tr>
-                <td class="mobile_menu_left_column"><a href="/statistics/">Статистика</a></td>
-                <td class="mobile_menu_right_column"><a href="/person/">Декларанты</a></td>
-            <tr>
-                <td class="mobile_menu_left_column" ><a href="/news.html">Новости</a></td>
-            </tr>
-        </table>
+          <div class="menu_table">
+              <row>
+                <a  href="/section/">Декларации</a>
+                <a class="mobile_menu_dark_cell" href="/about.html">О проекте</a>
+              </row>
+              <row>
+                <a class="mobile_menu_dark_cell" href="/office/">Ведомства</a>
+                <a  href="/statistics/">Статистика</a>
+              </row>
+              <row>
+                <a href="/file/">Документы</a>
+                <a class="mobile_menu_dark_cell" href="/news.html">Новости</a>
+              </row>
+              <row>
+                <a class="mobile_menu_dark_cell" href="/person/">Декларанты</a>
+              </row>
+            </div>
       </div>
 
 </header>
@@ -95,26 +96,6 @@
 </div>
 
 <script type="text/javascript" src="/static/main_menu.js"></script>
-<script>
-    function showMobileMenu() {
-      var menu = document.getElementById("mobileMenu");
-      var content = document.getElementById("site-wrapper");
-
-      if (menu.style.display === "block") {
-        menu.style.display = "none";
-        content.style.display = "block";
-      } else {
-        menu.style.display = "block";
-        content.style.display = "none";
-      }
-    };
-    if (window.matchMedia('(max-device-width: 480px)').matches) {
-        if (window.location.pathname == "/") {
-            showMobileMenu();
-        }
-    }
-</script>
 
 </body>
 </html>
-
