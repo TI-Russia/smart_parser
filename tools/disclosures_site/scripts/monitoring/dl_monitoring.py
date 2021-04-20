@@ -44,7 +44,7 @@ class TDlrobotStats:
         min_time_stamp = min_date.timestamp() if min_date is not None else 0;
         website_count = 0
         sum_count = 0
-        for remote_call in self.remote_calls:
+        for remote_call in self.remote_calls.get_all_calls():
             if remote_call.end_time is None or remote_call.end_time < min_time_stamp:
                 continue
             if remote_call.get_total_minutes() < min_total_minutes:

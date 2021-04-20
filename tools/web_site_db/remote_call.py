@@ -27,7 +27,7 @@ class TRemoteDlrobotCall:
         return self.end_time is not None
 
     def get_website(self):
-        return website
+        return self.web_site
 
     @staticmethod
     def web_site_to_project_file(s):
