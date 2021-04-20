@@ -190,15 +190,15 @@ class THttpRequester:
                 if method == 'GET':
                     file_extension = THttpRequester.get_file_extension_by_content_type(headers)
                     if not is_video_or_audio_file_extension(file_extension) or THttpRequester.ENABLE_VIDEO_AND_AUDIO:
-                        data =  request.read()
+                        data = request.read()
                 THttpRequester.register_successful_request()
-
-                #temporal
-                #THttpRequester.logger.debug("return len(headers)={} len(data)={}".format(len(headers), len(data)))
-
                 return request.geturl(), headers, data
+        except IndexError as exp:
+            raise THttpRequester.RobotHttpException("general IndexError inside urllib.request.urlopen",
+                                                    url, 520, method)
         except UnicodeError as exp:
-            raise THttpRequester.RobotHttpException("cannot redirect to cyrillic web domains or some unicode error", url, 520, method)
+            raise THttpRequester.RobotHttpException("cannot redirect to cyrillic web domains or some unicode error",
+                                                    url, 520, method)
         except (ConnectionError, http.client.HTTPException) as exp:
             raise THttpRequester.RobotHttpException(str(exp), url, 520, method)
         except socket.timeout as exp:

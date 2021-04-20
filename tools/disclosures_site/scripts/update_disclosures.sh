@@ -73,8 +73,8 @@ source $COMMON_SCRIPT
    python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric sections_person_name_income_year_declarant_income_size  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
    python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric sections_person_name_income_year_spouse_income_size  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
 
-#10.1  остановка dlrobot на $DEDUPE_HOSTS_SPACES в параллель (максмимум 3 часа), может немного одновременно проработать со сливалкой
-echo $DEDUPE_HOSTS_SPACES | tr " " "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/scripts/git_update_cloud_worker.py --action stop --host &
+#10.1  остановка dlrobot на $DEDUPE_HOSTS в параллель (максмимум 3 часа), может немного одновременно проработать со сливалкой
+echo $DEDUPE_HOSTS | tr "," "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/scripts/git_update_cloud_worker.py --action stop --host &
 
 #11 создание surname_rank (40 мин)
   python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclosures.settings.dev
@@ -87,7 +87,7 @@ echo $DEDUPE_HOSTS_SPACES | tr " " "\n"  | xargs  --verbose -P 4 -n 1 python3 $T
      python3 $TOOLS/disclosures_site/manage.py copy_person_id --settings disclosures.settings.dev --permalinks-folder $DLROBOT_FOLDER
 
      python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs  --print-family-prefixes   --permalinks-folder $DLROBOT_FOLDER --settings disclosures.settings.dev > surname_spans.txt
-     echo $DEDUPE_HOSTS_SPACES | tr " " "\n"  | xargs  --verbose -P 4 -I {} -n 1 scp $DLROBOT_FOLDER/permalinks_declarations_person.dbm {}:/tmp
+     echo $DEDUPE_HOSTS | tr "," "\n"  | xargs  --verbose -P 4 -I {} -n 1 scp $DLROBOT_FOLDER/permalinks_declarations_person.dbm {}:/tmp
 
      #22 hours
      parallel --halt soon,fail=1 -a surname_spans.txt --jobs 2 --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $DEDUPE_HOSTS --basefile $DEDUPE_MODEL  --verbose --workdir /tmp \
