@@ -71,8 +71,8 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
       sudo tar xfz geckodriver-v0.26.0-linux64.tar.gz
 
 2.10. Test dlrobot
-    cd ~/smart_parser/dl_robot/tests
-    bash tests.sh
+    cd ~/smart_parser/tools/dl_robot/tests
+    python3 -m unittest
 
     cd ~/smart_parser/tools/dlrobot_server
     python3 -m unittest
@@ -135,7 +135,7 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
 =====================================================================================
 
 4.1 Create dlrobot worker service:
-    sudo cp ~/smart_parser/tools/robots/dlrobot_server/dlrobot_worker.service /etc/systemd/system
+    sudo cp ~/smart_parser/tools/dlrobot_server/dlrobot_worker.service /etc/systemd/system
     sudo chmod 644 /etc/systemd/system/dlrobot_worker.service
     sudo systemctl enable dlrobot_worker
     sudo systemctl daemon-reload

@@ -84,6 +84,7 @@ def get_hosts(args):
         yield (TYandexCloud.get_worker_ip(m), m['name'])
     yield ("avito", "avito")
     yield ("lena", "lena")
+    yield ("samsung", "samsung")
 
 
 def update_one_worker_on_the_worker(args):
