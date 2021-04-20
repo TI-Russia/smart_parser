@@ -29,7 +29,7 @@ class TOfficeElasticIndexator:
         self.logger = logger
         self.index_name = settings.ELASTICSEARCH_INDEX_NAMES['office_index_name']
         self.index = Index(self.index_name, es)
-        self.logger.debug("index offices")
+        self.logger.debug("index web_site_snapshots")
 
     def gen_documents(self):
         for o in models.Office.objects.all():

@@ -1,6 +1,7 @@
 from common.download import save_downloaded_file
 from common.link_info import TLinkInfo
 from common.content_types import ALL_CONTENT_TYPES
+from common.http_request import THttpRequester
 
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
@@ -87,7 +88,11 @@ class TSeleniumDriver:
         self.the_driver.switch_to.window(self.the_driver.window_handles[0])
 
         # navigation
-        self.the_driver.get(url)
+        try:
+            self.the_driver.get(url)
+        except IndexError as exp:
+            raise THttpRequester.RobotHttpException("general IndexError inside urllib.request.urlopen",
+                                                    url, 520, "GET")
 
     def get_buttons_and_links(self):
         return list(self.the_driver.find_elements_by_xpath('//button | //a'))

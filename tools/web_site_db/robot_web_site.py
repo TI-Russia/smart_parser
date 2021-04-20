@@ -14,16 +14,6 @@ from common.export_files import TExportEnvironment
 from common.serp_parser import SearchEngine, SerpException
 
 
-FIXLIST = {
-    'fsin.su': {
-        "anticorruption_div": "http://www.fsin.su/anticorrup2014/"
-    },
-    'fso.gov.ru': {
-        "anticorruption_div": "http://www.fso.gov.ru/korrup.html"
-    }
-}
-
-
 class TWebSiteReachStatus:
     normal = "normal"
     only_selenium = "only_selenium"
@@ -253,15 +243,6 @@ class TWebSiteCrawlSnapshot:
             self.runtime_processed_files[hash_code] = url
         return None
 
-    def set_fixed_list_url(self, step_info: TRobotStep) -> bool:
-        global FIXLIST
-        fixed_url = FIXLIST.get(self.get_domain_name(), {}).get(step_info.get_step_name())
-        if fixed_url is not None:
-            link_info = TLinkInfo(TClickEngine.manual, self.morda_url, fixed_url)
-            step_info.add_link_wrapper(link_info)
-            return True
-        return False
-
     def get_previous_step_urls(self, step_index):
         if step_index == 0:
             rec = {self.morda_url: 0}
@@ -291,9 +272,6 @@ class TWebSiteCrawlSnapshot:
         start_time = time.time()
         if is_last_step:
             self.create_export_folder()
-        if self.set_fixed_list_url(target):
-            assert not is_last_step
-            return
 
         start_pages = self.get_previous_step_urls(step_index)
 

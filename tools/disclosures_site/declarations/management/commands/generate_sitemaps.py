@@ -148,7 +148,7 @@ class Command(BaseCommand):
                      "reports/car-brands/index.html",
                      "reports/names/index.html",
                      "reports/genders/index.html",
-                     "reports/offices/index.html",
+                     "reports/web_site_snapshots/index.html",
                      "reports/regions/index.html",
                      ""]
         self.write_sitemap(url_paths, sitemap_path, priority=1.0)

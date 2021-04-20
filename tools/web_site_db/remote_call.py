@@ -71,9 +71,9 @@ class TRemoteDlrobotCall:
             with TRobotProject(logger, path, [], None, enable_selenium=False,
                                enable_search_engine=False) as project:
                 project.read_project(check_step_names=False)
-                office_info = project.offices[0]
-                self.result_files_count = len(office_info.export_env.exported_files)
-                self.reach_status = office_info.reach_status
+                web_site_snapshot = project.web_site_snapshots[0]
+                self.result_files_count = len(web_site_snapshot.export_env.exported_files)
+                self.reach_status = web_site_snapshot.reach_status
         except Exception as exp:
             pass
 

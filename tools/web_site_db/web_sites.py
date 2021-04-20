@@ -83,7 +83,7 @@ class TDeclarationWebSiteList:
             with open(file_name, "w") as outp:
                 for x in errors:
                     outp.write(x + "\n")
-            raise Exception ("there are web sites that are referenced in disclosures offices and declarator offices" +
+            raise Exception ("there are web sites that are referenced in disclosures web_site_snapshots and declarator web_site_snapshots" +
                               "we have to office ambiguity. These web sites are written to {}".format(file_name))
 
     def update_from_office_urls(self, offices, logger):

@@ -106,7 +106,7 @@ class Office(models.Model):
 
 
 class TOfficeTableInMemory:
-    group_types = set([10, 12, 16, 17]) # this offices do not exist like all Moscow courts
+    group_types = set([10, 12, 16, 17]) # this web_site_snapshots do not exist like all Moscow courts
 
     def go_to_the_top(self, id):
         cnt = 0

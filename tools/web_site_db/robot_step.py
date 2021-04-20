@@ -13,6 +13,7 @@ import urllib
 import re
 import signal
 
+
 class TUrlMirror:
     def __init__(self, url):
         self.input_url  = url
@@ -308,9 +309,8 @@ class TRobotStep:
         self.processed_pages.add(best_url)
         del self.pages_to_process[best_url]
         self.last_processed_url_weights.append(max_weight)
-        self.logger.debug("max weight={}, index={}, url={} function={}".format(max_weight, url_index,
-                                                                                       best_url,
-                                                                                       self.get_check_func_name()))
+        self.logger.debug("max weight={}, index={}/{}, url={} function={}".format(
+            max_weight, url_index, len(self.pages_to_process.keys()), best_url, self.get_check_func_name()))
         return best_url
 
     def find_links_in_html_by_text(self, main_url, html_parser: THtmlParser):
@@ -424,11 +424,11 @@ class TRobotStep:
                     THttpRequester.WEB_PAGE_LINKS_PROCESSING_MAX_TIME
                 ))
             finally:
+                self.logger.debug("disable signal alarm")
                 signal.signal(signal.SIGALRM, signal.SIG_DFL)
+                signal.alarm(0)
 
             if use_selenium and len(self.step_urls.keys()) >= TRobotStep.panic_mode_url_count:
                 use_selenium = False
                 self.logger.error("too many links (>{}),  switch off fallback_to_selenium".format(
                     TRobotStep.panic_mode_url_count))
-
-

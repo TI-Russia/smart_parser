@@ -189,7 +189,7 @@ class TDeduplicationObject:
             self.surname_rank,
             min(self.name_rank, other.name_rank),
             len(self.rubrics.intersection(other.rubrics)),
-            len(self.offices.intersection(other.offices)),
+            len(self.offices.intersection(other.web_site_snapshots)),
             abs(self.children_real_estates_sum - other.children_real_estates_sum),
             income_past / (income_now + 0.000000001),
             len(self.vehicles.intersection(other.vehicles)),

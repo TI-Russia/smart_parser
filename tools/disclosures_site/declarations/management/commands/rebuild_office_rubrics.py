@@ -5,7 +5,7 @@ import declarations.models as models
 
 
 class Command(BaseCommand):
-    help = 'create rubric for offices'
+    help = 'create rubric for web_site_snapshots'
 
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)

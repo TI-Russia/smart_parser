@@ -130,7 +130,7 @@ def get_russian_rubric_str(rubric_id):
 def get_all_rubrics(office_hierarchy, office_id):
     all_rubrics = set()
     pattern = TOfficeProps(
-        office_hierarchy.offices[office_id]['name'],
+        office_hierarchy.web_site_snapshots[office_id]['name'],
         top_parent=office_hierarchy.get_top_parent_office_id(office_id),
         immediate_parent=office_hierarchy.get_immediate_parent_office_id(office_id))
 
@@ -142,11 +142,11 @@ def get_all_rubrics(office_hierarchy, office_id):
 
 def build_office_rubric(logger, office_hierarchy, office_id):
     rubrics = get_all_rubrics(office_hierarchy, office_id)
-    parent_id = office_hierarchy.offices[office_id]['parent_id']
+    parent_id = office_hierarchy.web_site_snapshots[office_id]['parent_id']
     if len(rubrics) == 0 and parent_id is not None:
         rubrics = get_all_rubrics(office_hierarchy, parent_id)
 
-    office_name = office_hierarchy.offices[office_id]['name']
+    office_name = office_hierarchy.web_site_snapshots[office_id]['name']
     if len(rubrics) > 1 and TOfficeRubrics.ExecutivePower in rubrics:
         rubrics.remove(TOfficeRubrics.ExecutivePower)
     rubric = None

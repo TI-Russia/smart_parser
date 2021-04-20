@@ -56,9 +56,9 @@ class TUnzipper:
         TRobotProject.create_project(self.args.web_domain, robot_project_path)
         with TRobotProject(self.logger, robot_project_path, [], None, enable_selenium=False,
                            enable_search_engine=False) as project:
-            project.add_office(self.args.web_domain)
-            project.offices[0].reach_status = TWebSiteReachStatus.normal
-            export_env = project.offices[0].export_env
+            project.add_web_site(self.args.web_domain)
+            project.web_site_snapshots[0].reach_status = TWebSiteReachStatus.normal
+            export_env = project.web_site_snapshots[0].export_env
             for file_name in files:
                 web_domain = self.args.web_domain
                 if file_name.endswith('.html'):

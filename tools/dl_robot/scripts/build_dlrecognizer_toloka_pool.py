@@ -29,7 +29,7 @@ def create_toloka_pool(project_path, toloka_stream):
     logger = logging.getLogger("")
     with TRobotProject(logger, project_path, ROBOT_STEPS, None) as project:
         project.read_project()
-        office_info = project.offices[0]
+        office_info = project.web_site_snapshots[0]
         toloka_stream.write("INPUT:url\tINPUT:file_link\tINPUT:file_extension\tINPUT:html\n")
         ec = TExternalConverters()
         cnt = 0
@@ -58,7 +58,7 @@ def copy_files(args, toloka_results):
     logger = logging.getLogger("")
     with TRobotProject(args.project, ROBOT_STEPS) as project:
         project.read_project()
-        office_info = project.offices[0]
+        office_info = project.web_site_snapshots[0]
         index = 0
         domain = strip_html_url(office_info.morda_url)
         for export_record in office_info.exported_files:

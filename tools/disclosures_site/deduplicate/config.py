@@ -35,7 +35,7 @@ fields = [
     {'field': 'realestates', 'type': 'Set'},
     {'field': 'vehicles', 'type': 'Set'},
 
-    {'field': 'offices', 'type': 'Set'},
+    {'field': 'web_site_snapshots', 'type': 'Set'},
     {'field': 'roles', 'type': 'Set'},
 
     {'field': 'surname_freq', 'type': 'Custom', 'comparator': num_category},

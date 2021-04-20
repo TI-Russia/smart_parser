@@ -108,7 +108,7 @@ class TOfficeJoiner:
                 self.offices.append(r)
         db_connection.close()
 
-        self.logger.debug("found {} new  offices in  declarator".format(new_offices_count))
+        self.logger.debug("found {} new  web_site_snapshots in  declarator".format(new_offices_count))
 
     def read_fgup(self):
         file_path = os.path.join(os.path.dirname(__file__), "../data/fgup.txt")

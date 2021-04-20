@@ -24,7 +24,7 @@ class TRobotProject:
         self.result_summary_file = filename + ".result_summary"
         if not os.path.exists(self.visited_pages_file):
             shutil.copy2(filename, self.visited_pages_file)
-        self.offices = list()
+        self.web_site_snapshots = list()
         self.robot_step_passports = robot_step_passports
         self.enable_search_engine = enable_search_engine  #switched off in tests, otherwize google shows captcha
         self.export_folder = export_folder
@@ -56,7 +56,7 @@ class TRobotProject:
     def write_project(self):
         with open(self.visited_pages_file, "w", encoding="utf8") as outf:
             output =  {
-                'sites': [o.to_json() for o in self.offices],
+                'sites': [o.to_json() for o in self.web_site_snapshots],
                 'step_names': self.get_robot_step_names()
             }
             if not self.enable_search_engine:
@@ -89,13 +89,13 @@ class TRobotProject:
                 True, #disable_selinium in tests
                 False))
 
-    def add_office(self, morda_url):
-        office_info = TWebSiteCrawlSnapshot(self)
-        office_info.morda_url = morda_url
-        self.offices.append(office_info)
+    def add_web_site(self, morda_url):
+        web_site = TWebSiteCrawlSnapshot(self)
+        web_site.morda_url = morda_url
+        self.web_site_snapshots.append(web_site)
 
     def read_project(self, check_step_names=True):
-        self.offices = list()
+        self.web_site_snapshots = list()
         with open(self.visited_pages_file, "r", encoding="utf8") as inpf:
             json_dict = json.loads(inpf.read())
             if check_step_names:
@@ -116,7 +116,7 @@ class TRobotProject:
                                                   # since the result folder is normally the same web domain
                 uniq_domains.add(web_domain)
 
-                self.offices.append(web_site)
+                self.web_site_snapshots.append(web_site)
 
             if "disable_search_engine" in json_dict:
                 self.enable_search_engine = False
@@ -126,21 +126,21 @@ class TRobotProject:
                 self.enable_selenium = False
 
     def fetch_main_pages(self):
-        for site in self.offices:
+        for site in self.web_site_snapshots:
             site.fetch_the_main_page()
 
     def write_click_features(self, filename):
         self.logger.info("create {}".format(filename))
         result = []
-        for office_info in self.offices:
-            downloaded_files_count =  sum(len(v.downloaded_files) for v in office_info.url_nodes.values())
-            self.logger.info("find useless nodes in {}".format(office_info.morda_url))
+        for web_site in self.web_site_snapshots:
+            downloaded_files_count =  sum(len(v.downloaded_files) for v in web_site.url_nodes.values())
+            self.logger.info("find useless nodes in {}".format(web_site.morda_url))
             self.logger.info("all url nodes and downloaded with selenium: {}".format(
-                len(office_info.url_nodes) + downloaded_files_count))
-            for url, info in office_info.url_nodes.items():
+                len(web_site.url_nodes) + downloaded_files_count))
+            for url, info in web_site.url_nodes.items():
                 if len(info.downloaded_files) > 0:
                     for d in info.downloaded_files:
-                        path = office_info.get_shortest_path_to_root(url)
+                        path = web_site.get_shortest_path_to_root(url)
                         file_info = dict(d.items())
                         file_info['url'] = 'element_index:{}. url:{}'.format(d['element_index'], url)
                         path.append(file_info)
@@ -149,7 +149,7 @@ class TRobotProject:
                             'path': path
                         })
                 elif len(info.linked_nodes) == 0:
-                    path = office_info.get_path_to_root(url)
+                    path = web_site.get_path_to_root(url)
                     result.append({
                         'dl_recognizer_result': info.dl_recognizer_result,
                         'path': path
@@ -162,9 +162,9 @@ class TRobotProject:
 
     def write_export_stats(self):
         files_with_click_path = list()
-        for office_info in self.offices:
-            for export_record in office_info.export_env.exported_files:
-                path = office_info.get_shortest_path_to_root(export_record.url)
+        for web_site in self.web_site_snapshots:
+            for export_record in web_site.export_env.exported_files:
+                path = web_site.get_shortest_path_to_root(export_record.url)
                 rec = {
                     'click_path': path,
                     'cached_file': export_record.cached_file.replace('\\', '/'),
@@ -233,5 +233,5 @@ class TRobotProject:
         return policy == "run_after_if_no_results" and len(step_info.step_urls) == 0
 
     def export_files_to_folder(self):
-        for office_info in self.offices:
-            office_info.export_env.reorder_export_files_and_delete_non_declarations()
+        for web_site in self.web_site_snapshots:
+            web_site.export_env.reorder_export_files_and_delete_non_declarations()

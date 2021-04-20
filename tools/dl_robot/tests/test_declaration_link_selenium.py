@@ -30,7 +30,7 @@ class TestDeclarationLinkSelenium(TestCase):
         with TRobotProject(self.logger, project_path, robot_steps, "result", enable_search_engine=False,
                            enable_selenium=True) as project:
             project.read_project()
-            office_info = project.offices[0]
+            office_info = project.web_site_snapshots[0]
             office_info.create_export_folder()
             office_info.url_nodes[start_url] = TUrlInfo(title="", step_name=None)
 

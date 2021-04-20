@@ -35,4 +35,4 @@ source $(dirname $0)/update_common.sh
 
 #2.4 Обновление офисов
   echo  "select * from declarator.declarations_office  where id not in (select id from disclosures_db.declarations_office)" |  mysqlsh --sql --result-format=json/array --uri=declarator@localhost -pdeclarator -D declarator > new_offices.txt
-  #take new_offices.txt and add it to disclosures_site/data/offices.txt
+  #take new_offices.txt and add it to disclosures_site/data/web_site_snapshots.txt

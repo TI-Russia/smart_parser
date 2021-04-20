@@ -82,7 +82,7 @@ class TSmartParserSectionJson:
     def init_rubric(self):
         # json_reader.section.rubric_id = source_document_in_db.office.rubric_id does not work
         # may be we should call source_document_in_db.refresh_from_db
-        self.section.rubric_id = OFFICES.offices[self.section.source_document.office.id]['rubric_id']
+        self.section.rubric_id = OFFICES.web_site_snapshots[self.section.source_document.office.id]['rubric_id']
 
         if self.section.rubric_id == TOfficeRubrics.Municipality and \
                 convert_municipality_to_education(self.section.position):

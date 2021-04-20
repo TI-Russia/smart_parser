@@ -51,7 +51,7 @@ class TDlrobot:
     def parse_args(arg_list):
         global ROBOT_STEPS
         parser = argparse.ArgumentParser()
-        parser.add_argument("--project", dest='project', default="offices.txt", required=True)
+        parser.add_argument("--project", dest='project', default="web_site_snapshots.txt", required=True)
         parser.add_argument("--step", dest='step', default=None)
         parser.add_argument("--start-from", dest='start_from', default=None)
         parser.add_argument("--stop-after", dest='stop_after', default=None)
@@ -111,8 +111,8 @@ class TDlrobot:
             start = self.step_index_by_name(self.args.start_from) if self.args.start_from is not None else 0
             end = self.step_index_by_name(self.args.stop_after) + 1 if self.args.stop_after is not None else len(ROBOT_STEPS)
             for step_no in range(start, end):
-                for office_info in project.offices:
-                    office_info.find_links_for_one_website(step_no)
+                for web_site in project.web_site_snapshots:
+                    web_site.find_links_for_one_website(step_no)
                 project.write_project()
 
         if self.args.stop_after is not None:

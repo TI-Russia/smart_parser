@@ -235,7 +235,7 @@ class ImportJsonCommand(BaseCommand):
             required=True
         )
         parser.add_argument(
-            '--take-first-n-offices',
+            '--take-first-n-web_site_snapshots',
             dest='take_first_n_offices',
             required=False,
             type=int,

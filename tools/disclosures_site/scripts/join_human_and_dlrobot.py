@@ -72,7 +72,7 @@ class TJoiner:
         try:
             with TRobotProject(self.logger, robot_project_path, [], None, enable_selenium=False, enable_search_engine=False) as project:
                 project.read_project(check_step_names=False)
-                office_info = project.offices[0]
+                office_info = project.web_site_snapshots[0]
                 for export_record in office_info.export_env.exported_files:
                     file_info[export_record.sha256] = export_record
                 return file_info
