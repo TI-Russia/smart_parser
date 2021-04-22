@@ -24,3 +24,4 @@ export FRONTEND_DLROBOT_MONITORING_FOLDER=/home/sokirko/smart_parser/tools/discl
 
 export ACCESS_LOG_ARCHIVE=$YANDEX_DISK_FOLDER/nginx_logs
 export PROD_SOURCE_DOC_SERVER=195.70.213.239
+export ASPOSE_LIC=/home/sokirko/lic.bin

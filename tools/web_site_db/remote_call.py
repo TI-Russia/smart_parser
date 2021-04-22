@@ -22,6 +22,7 @@ class TRemoteDlrobotCall:
         self.worker_host_name = None
         self.reach_status = None
         self.crawling_timeout = None #not serialized
+        self.file_line_index = None
 
     def task_ended(self):
         return self.end_time is not None
@@ -103,14 +104,14 @@ class TRemoteDlrobotCallList:
     def read_remote_calls_from_file(self):
         self.debug("read {}".format(self.file_name))
         self.remote_calls_by_project_file.clear()
-        line_no = 1
-
         try:
             with open(self.file_name, "r") as inp:
+                line_no = 1
                 for line in inp:
                     line = line.strip()
                     remote_call = TRemoteDlrobotCall()
                     remote_call.read_from_json(line)
+                    remote_call.file_line_index = line_no
                     self.remote_calls_by_project_file[remote_call.project_file].append(remote_call)
                     line_no += 1
         except Exception as exp:

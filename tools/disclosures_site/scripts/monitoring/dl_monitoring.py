@@ -37,14 +37,14 @@ class TDlrobotStats:
         self.failures = []
         self.failures_by_hostnames = defaultdict(int)
         self.successes_by_hostnames = defaultdict(int)
-
         self.build_stats(min_date)
 
     def build_stats(self, min_date=None, min_total_minutes=0):
         min_time_stamp = min_date.timestamp() if min_date is not None else 0;
         website_count = 0
         sum_count = 0
-        for remote_call in self.remote_calls.get_all_calls():
+        all_calls_sorted_by_end_time = sorted(self.remote_calls.get_all_calls(), key=lambda x: x.file_line_index)
+        for remote_call in all_calls_sorted_by_end_time:
             if remote_call.end_time is None or remote_call.end_time < min_time_stamp:
                 continue
             if remote_call.get_total_minutes() < min_total_minutes:
