@@ -51,6 +51,7 @@ class TTimeouts:
     def get_timeout_to_delete_files_in_worker(crawling_timeout):
         return TTimeouts.get_kill_timeout_in_central(crawling_timeout) + TTimeouts.DELETE_ABANDONED_FOLDER_TIMEOUT
 
+
 PITSTOP_FILE = ".dlrobot_pit_stop"
 
 

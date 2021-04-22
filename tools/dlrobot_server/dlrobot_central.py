@@ -26,6 +26,7 @@ import telegram_send
 
 
 class TDlrobotHTTPServer(http.server.HTTPServer):
+    max_continuous_failures_count = 7
 
     @staticmethod
     def parse_args(arg_list):
@@ -245,12 +246,20 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                         if self.source_doc_client is not None:
                             self.source_doc_client.send_file(file_path)
 
-    def worker_ip_is_banned(self, worker_ip):
-        if self.worker_2_continuous_failures_count[worker_ip] > 7:
-            if worker_ip not in self.banned_workers:
-                self.banned_workers.add(worker_ip)
-                self.send_to_telegram("too many dlrobot errors from ip {}, the host is completely banned, you have to "
-                                      " restart dlrobot_central to unban it".format(worker_ip))
+    def worker_is_banned(self, worker_ip, host_name):
+        return self.worker_2_continuous_failures_count[(worker_ip, host_name)] > \
+                        TDlrobotHTTPServer.max_continuous_failures_count
+
+    def update_worker_info(self, worker_host_name, worker_ip, exit_code):
+        key = (worker_ip, worker_host_name)
+        if exit_code == 0:
+            self.worker_2_continuous_failures_count[key] = 0
+        else:
+            self.worker_2_continuous_failures_count[key] += 1
+            if self.worker_is_banned(worker_ip, worker_host_name):
+                self.send_to_telegram("too many dlrobot errors from ip {}, hostname={}, the host is banned, "
+                                      "you have to restart dlrobot_central to unban it".format(worker_ip,
+                                                                                               worker_host_name))
 
     def register_task_result(self, worker_host_name, worker_ip, project_file, exit_code, result_archive):
         if self.args.skip_worker_check:
@@ -266,10 +275,8 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                 else:
                     raise
 
-        if exit_code == 0:
-            self.worker_2_continuous_failures_count[worker_ip] = 0
-        else:
-            self.worker_2_continuous_failures_count[worker_ip] += 1
+        self.update_worker_info(worker_host_name, worker_ip, exit_code)
+
         remote_call.worker_host_name = worker_host_name
         remote_call.exit_code = exit_code
         remote_call.end_time = int(time.time())
@@ -436,8 +443,8 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
     
         worker_ip = self.client_address[0]
 
-        if self.server.worker_ip_is_banned(worker_ip):
-            error_msg = "too many dlrobot errors from ip {}".format(worker_ip)
+        if self.server.worker_is_banned(worker_ip, worker_host_name):
+            error_msg = "too many dlrobot errors from ip {} hostname {}".format(worker_ip, worker_host_name)
             send_error(error_msg, DLROBOT_HTTP_CODE.TOO_BUSY)
             return
 
