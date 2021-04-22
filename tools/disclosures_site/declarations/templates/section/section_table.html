@@ -1,20 +1,8 @@
 <table class="declaration_table">
-    <tr>
-       <th rowspan="2">ФИО</th>
-       <th colspan="3">Недвижимость</th>
-       <th rowspan="2">Транспорт</th>
-       <th rowspan="2" width="10%">Доход</th>
-    </tr>
-    <tr>
-        <th>Тип</th>
-        <th>Площадь</th>
-        <th>Владение</th>
-    </tr>
-
-    {% for cells in section.html_table_data_rows %}
+    {% for tr in section.html_table_data_rows %}
         <tr>
-            {% for value_and_rowspan in cells %}
-                <td rowspan="{{value_and_rowspan.1}}"> {{value_and_rowspan.0 |safe}} </td>
+            {% for td in tr %}
+                {{td | safe}}
             {% endfor %}
         </tr>
     {% endfor %}

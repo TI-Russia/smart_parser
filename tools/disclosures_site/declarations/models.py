@@ -106,7 +106,7 @@ class Office(models.Model):
 
 
 class TOfficeTableInMemory:
-    group_types = set([10, 12, 16, 17]) # this web_site_snapshots do not exist like all Moscow courts
+    group_types = set([10, 12, 16, 17]) # this office do not exist like all Moscow courts
 
     def go_to_the_top(self, id):
         cnt = 0
@@ -535,14 +535,22 @@ class Section(models.Model):
             str += " ({})".format(position_and_department)
         return str
 
+    def get_html_table_header(self, has_vehicles):
+        tr1 = ['<th rowspan="2">ФИО</th>', '<th colspan="3">Недвижимость</th>']
+        if has_vehicles:
+            tr1.append('<th rowspan="2">Транспорт</th>')
+        tr1.append('<th rowspan="2" width="10%">Доход</th>')
+        yield tr1
+        yield ['<th>Тип</th>', '<th>Площадь</th>', '<th>Владение</th>']
+
     @property
     def html_table_data_rows(self):
-        secton_parts = self.section_parts
+        section_parts = self.section_parts
 
         realties = defaultdict(list)
         for r in self.realestate_set.all():
             realties[r.relative].append(Section.describe_realty(r))
-        for x in secton_parts:
+        for x in section_parts:
             if len(realties[x.code]) == 0:
                 realties[x.code].append(Section.describe_realty(None))
 
@@ -553,9 +561,9 @@ class Section(models.Model):
         incomes = defaultdict(str)
         for i in self.income_set.all():
             incomes[i.relative] = '<h3>' + str(i.size) + '</h3>'
-
-        table = list()
-        for relative in secton_parts:
+        has_vehicles = len(vehicles.keys()) > 0
+        table = list(self.get_html_table_header(has_vehicles))
+        for relative in section_parts:
             cnt = 0
             for (realty_type, realty_square, own_type) in realties[relative.code]:
                 if cnt == 0:
@@ -564,12 +572,15 @@ class Section(models.Model):
                         cells = [(self.person_name, rowspan)]
                     else:
                         cells = [(relative.name, rowspan)]
-                    cells.extend([(realty_type, 1), (realty_square, 1), (own_type, 1),
-                                  (vehicles[relative.code], rowspan), (incomes[relative.code], rowspan)])
+                    cells.extend([(realty_type, 1), (realty_square, 1), (own_type, 1)])
+                    if has_vehicles:
+                        cells.append((vehicles[relative.code], rowspan))
+                    cells.append((incomes[relative.code], rowspan))
                 else:
                     cells = [(realty_type, 1), (realty_square, 1), (own_type, 1)]
                 cnt += 1
-                table.append(cells)
+                tds = list("<td rowspan=\"{}\">{}</td>".format(rowspan, value) for value, rowspan in cells)
+                table.append(tds)
         return table
 
     def get_car_brands(self):
