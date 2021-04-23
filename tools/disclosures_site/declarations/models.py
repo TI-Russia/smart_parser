@@ -18,6 +18,7 @@ def get_django_language():
         lang = lang[:2]
     return lang
 
+
 class Region(models.Model):
     name = models.TextField(verbose_name='region name')
     wikibase_id = models.CharField(max_length=10, null=True)
