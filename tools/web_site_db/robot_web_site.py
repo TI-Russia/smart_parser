@@ -45,6 +45,7 @@ class TWebSiteCrawlSnapshot:
         self.logger = project.logger
         self.runtime_processed_files = dict()
         self.export_env = TExportEnvironment(self)
+        self.stopped_by_timeout = False
 
         #serialized members
         self.url_nodes = dict()
@@ -130,9 +131,11 @@ class TWebSiteCrawlSnapshot:
         current_time = time.time()
         if enough_crawled_urls and current_time - self.export_env.last_found_declaration_time > TWebSiteCrawlSnapshot.SINGLE_DECLARATION_TIMEOUT:
             self.logger.error("timeout stop crawling: TWebSiteCrawlSnapshot.SINGLE_DECLARATION_TIMEOUT")
+            self.stopped_by_timeout = True
             return False
         if current_time - self.start_crawling_time > TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT:
             self.logger.error("timeout stop crawling: TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT")
+            self.stopped_by_timeout = True
             return False
         return True
 

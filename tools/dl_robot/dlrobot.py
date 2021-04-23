@@ -93,6 +93,7 @@ class TDlrobot:
     def __init__(self, args):
         self.args = args
         self.logger = setup_logging(log_file_name=args.logfile)
+        self.logger.debug("TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT={}".format(TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT))
         TDownloadEnv.init_conversion(self.logger)
         THttpRequester.initialize(self.logger)
         if args.clear_cache_folder:

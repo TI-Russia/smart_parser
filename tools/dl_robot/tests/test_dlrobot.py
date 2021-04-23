@@ -28,7 +28,7 @@ def is_port_free(port):
 
 class TTestEnv:
 
-    def __init__(self, port, website_folder, regional_main_pages=[]):
+    def __init__(self, port, website_folder, regional_main_pages=[], crawling_timeout=None):
         self.web_site = None
         self.web_site_folder = None
         name = os.path.basename(website_folder)
@@ -53,8 +53,12 @@ class TTestEnv:
                           directory=self.web_site_folder)
         self.web_site = http.server.HTTPServer(server_address=("127.0.0.1", port), RequestHandlerClass=handler)
         threading.Thread(target=start_server, args=(self.web_site,)).start()
-        self.dlrobot = TDlrobot(TDlrobot.parse_args(['--clear-cache-folder',  '--project', self.project_path]))
-        self.dlrobot.open_project()
+
+        dlrobot_args = ['--clear-cache-folder',  '--project', self.project_path]
+        if crawling_timeout is not None:
+            dlrobot_args.extend(['--crawling-timeout', str(crawling_timeout)])
+        self.dlrobot = TDlrobot(TDlrobot.parse_args(dlrobot_args))
+        self.dlrobot_project =  self.dlrobot.open_project()
 
     def tearDown(self):
         if self.web_site is not None:
@@ -178,3 +182,17 @@ class TestRegional(TestCase):
 
     def test_regional(self):
         self.assertEqual(2, len(self.env.get_result_files()))
+
+
+class TestCrawlingTimeout(TestCase):
+    web_site_port = 8200
+
+    def setUp(self):
+        self.env = TTestEnv(self.web_site_port, "web_sites/simple", crawling_timeout=1)
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def test_timeout(self):
+        self.assertTrue(self.env.dlrobot_project.web_site_snapshots[0].stopped_by_timeout)
+        self.assertEqual(len(self.env.get_result_files()), 0)
