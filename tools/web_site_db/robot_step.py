@@ -14,6 +14,10 @@ import re
 import signal
 
 
+class OnePageProcessingTimeoutException(Exception):
+    pass
+
+
 class TUrlMirror:
     def __init__(self, url):
         self.input_url  = url
@@ -400,7 +404,7 @@ class TRobotStep:
                         elements = driver_holder.navigate_and_get_links(main_url)
 
     def signal_alarm_handler(signum, frame):
-        raise TimeoutError()
+        raise OnePageProcessingTimeoutException()
 
     def make_one_step(self):
         assert len(self.pages_to_process) > 0
@@ -419,8 +423,8 @@ class TRobotStep:
                 signal.signal(signal.SIGALRM, TRobotStep.signal_alarm_handler)
                 signal.alarm(THttpRequester.WEB_PAGE_LINKS_PROCESSING_MAX_TIME)
                 self.add_page_links(url, use_selenium, use_urllib)
-            except TimeoutError as exp:
-                self.logger.error("one web page TimeoutError exception, timeout is {} seconds".format(
+            except OnePageProcessingTimeoutException as exp:
+                self.logger.error("OnePageProcessingTimeoutException, timeout is {} seconds".format(
                     THttpRequester.WEB_PAGE_LINKS_PROCESSING_MAX_TIME
                 ))
             finally:

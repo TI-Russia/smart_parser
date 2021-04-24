@@ -132,6 +132,7 @@ class TDlrobot:
         self.logger.debug("use {} as a cache folder".format(os.path.realpath(TDownloadEnv.FILE_CACHE_FOLDER)))
         with TRobotProject(self.logger, self.args.project, ROBOT_STEPS, self.args.result_folder) as project:
             project.total_timeout = convert_timeout_to_seconds(self.args.total_timeout)
+            self.logger.debug("total_timeout = {}".format(self.args.total_timeout))
             project.read_project()
             project.fetch_main_pages()
             if self.args.only_click_paths:

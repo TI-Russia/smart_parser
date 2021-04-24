@@ -54,7 +54,7 @@ class THttpRequester:
     logger = None
     LAST_HEAD_REQUEST_TIME = datetime.datetime.now()
     HEADER_MEMORY_CACHE = dict()
-    WEB_PAGE_LINKS_PROCESSING_MAX_TIME = 60 * 10  # 10 minutes
+    WEB_PAGE_LINKS_PROCESSING_MAX_TIME = 60 * 20  # 20 minutes
     ENABLE_VIDEO_AND_AUDIO = False
 
     @staticmethod

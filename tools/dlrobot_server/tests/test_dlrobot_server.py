@@ -1,7 +1,7 @@
 from dlrobot_server.dlrobot_central import TDlrobotHTTPServer
 from dlrobot_server.dlrobot_worker import TDlrobotWorker
 from dlrobot_server.scripts.fns.unzip_archive import TUnzipper
-from dlrobot_server.common_server_worker import TTimeouts
+from dlrobot_server.common_server_worker import TTimeouts, PITSTOP_FILE
 from smart_parser_http.smart_parser_server import TSmartParserHTTPServer
 from source_doc_http.source_doc_server import TSourceDocHTTPServer
 from web_site_db.robot_web_site import TWebSiteReachStatus
@@ -241,7 +241,7 @@ class WorkerPitStop(TestCase):
         self.env.tearDown()
 
     def test_worker_pitstop(self):
-        with open (os.path.join(self.env.worker_folder, ".dlrobot_pit_stop"), "w"):
+        with open(os.path.join(self.env.worker_folder, PITSTOP_FILE), "w"):
             pass
         time.sleep(3)
         self.assertFalse(self.env.worker_thread.is_alive())
@@ -259,9 +259,10 @@ class CentralPitStop(TestCase):
 
     def test_central_pitstop(self):
         self.assertTrue(self.env.central_thread.is_alive())
-        with open (os.path.join(self.env.data_folder, ".dlrobot_pit_stop"), "w"):
+        with open (os.path.join(self.env.data_folder, PITSTOP_FILE), "w"):
             pass
-        time.sleep(3)
+        time.sleep(self.env.central.args.central_heart_rate + 1)
+        self.assertTrue( self.env.central.stop_process )
         self.assertFalse(self.env.central_thread.is_alive())
 
 
@@ -417,3 +418,4 @@ class TestUnzipArchive(TestCase):
             break
         js = json.loads(self.env.smart_parser_server.get_smart_parser_json(sha256))
         self.assertEqual('51.service.nalog.ru', js['document_sheet_props'][0]['url'])
+

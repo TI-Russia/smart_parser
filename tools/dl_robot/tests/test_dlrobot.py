@@ -185,7 +185,7 @@ class TestRegional(TestCase):
 
 
 class TestCrawlingTimeout(TestCase):
-    web_site_port = 8200
+    web_site_port = 8201
 
     def setUp(self):
         self.env = TTestEnv(self.web_site_port, "web_sites/simple", crawling_timeout=1)

@@ -287,8 +287,8 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         self.send_declaraion_files_to_other_servers(project_folder)
         self.save_dlrobot_remote_call(remote_call)
         self.last_remote_call = remote_call
-        self.logger.debug("got exitcode {} for task result {} from worker {}".format(
-            exit_code, project_file, worker_ip))
+        self.logger.debug("got exitcode {} for task result {} from worker {} (host_name = {})".format(
+            exit_code, project_file, worker_ip, worker_host_name))
 
     def forget_old_remote_processes(self, current_time):
         for running_procs in self.worker_2_running_tasks.values():
@@ -352,15 +352,20 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
     def service_actions(self):
         current_time = time.time()
         if current_time - self.last_service_action_time_stamp >= self.args.central_heart_rate:
+            self.logger.debug('alive')
             self.last_service_action_time_stamp = current_time
-            self.forget_old_remote_processes(current_time)
-            self.check_yandex_cloud()
             if os.path.exists(PITSTOP_FILE):
                 self.stop_process = True
-                self.logger.debug("stop sending tasks, exit for a pit stop")
+                self.logger.debug("stop sending tasks, exit for a pit stop after all tasks complete")
                 os.unlink(PITSTOP_FILE)
             if self.stop_process and self.get_running_jobs_count() == 0:
+                self.logger.debug("exit via exception")
                 raise Exception("exit for pit stop")
+            try:
+                self.forget_old_remote_processes(current_time)
+            except Exception as exp:
+                self.logger.error(exp)
+            self.check_yandex_cloud()
             if not self.check_pdf_conversion_server():
                 self.logger.debug("stop sending tasks, because conversion pdf queue length is {}".format(
                     self.conversion_client.last_pdf_conversion_queue_length))
@@ -369,12 +374,17 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         workers = dict((k, list(r.write_to_json() for r in v))
                             for (k, v) in self.worker_2_running_tasks.items())
 
-        return {
+        stats = {
             'running_count': self.get_running_jobs_count(),
             'input_tasks': len(self.web_sites_to_process),
             'processed_tasks': self.get_processed_jobs_count(),
-            'worker_2_running_tasks':  workers
+            'worker_2_running_tasks':  workers,
+            'last_service_action_time_stamp': self.last_service_action_time_stamp,
+            'central_heart_rate': self.args.central_heart_rate
         }
+        if self.stop_process:
+            stats['stop_process'] = True
+        return stats
 
 
 class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
