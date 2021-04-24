@@ -101,6 +101,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         self.logger.debug("start server on {}:{}".format(host, port))
         super().__init__((host, int(port)), TDlrobotRequestHandler)
         self.last_service_action_time_stamp = time.time()
+        self.service_action_count = 0
         self.smart_parser_server_client = None
         if self.args.enable_smart_parser:
             sp_args = TSmartParserCacheClient.parse_args([])
@@ -352,7 +353,9 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
     def service_actions(self):
         current_time = time.time()
         if current_time - self.last_service_action_time_stamp >= self.args.central_heart_rate:
-            self.logger.debug('alive')
+            self.service_action_count += 1
+            if self.service_action_count % 10 == 0:
+                self.logger.debug('alive')
             self.last_service_action_time_stamp = current_time
             if os.path.exists(PITSTOP_FILE):
                 self.stop_process = True
