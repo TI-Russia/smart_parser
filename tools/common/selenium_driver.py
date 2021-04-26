@@ -29,7 +29,7 @@ def make_folder_empty(folder):
 class TSeleniumDriver:
 
     def __init__(self, logger, headless=True, download_folder=None, loglevel=None,
-                 scroll_to_bottom_and_wait_more_results=True):
+                 scroll_to_bottom_and_wait_more_results=True, start_retry_count=3):
         self.logger = logger
         self.the_driver = None
         self.driver_processed_urls_count = 0
@@ -37,6 +37,7 @@ class TSeleniumDriver:
         assert download_folder != "."
         self.headless = headless
         self.loglevel = loglevel
+        self.start_retry_count = start_retry_count
         self.scroll_to_bottom_and_wait_more_results = scroll_to_bottom_and_wait_more_results
 
     def start_executable(self):
@@ -57,13 +58,13 @@ class TSeleniumDriver:
             options.set_preference("pdfjs.disabled", True)
             options.set_preference("plugin.scan.Acrobat", "99.0")
             options.set_preference("plugin.scan.plid.all", False)
-        for retry in range(3):
+        for retry in range(self.start_retry_count):
             try:
                 self.the_driver = webdriver.Firefox(options=options)
                 #self.the_driver.implicitly_wait(10)
                 break
             except (WebDriverException, InvalidSwitchToTargetException) as exp:
-                if retry == 2:
+                if retry == self.start_retry_count - 1:
                     raise
                 self.logger.error("Cannot start selenium, exception:{}, sleep and retry...".format(str(exp)))
                 time.sleep(10)
