@@ -21,3 +21,4 @@ if __name__ == '__main__':
     print("navigate {}".format(url))
     driver.navigate(url)
     print("Title: {}".format(driver.the_driver.title))
+    driver.stop_executable()
