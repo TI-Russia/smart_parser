@@ -159,7 +159,7 @@ class TestDownloadWithJs(TestCase):
 
 
 class TestWebsiteWithJs(TestCase):
-    web_site_port = 8198
+    web_site_port = 8203
 
     def setUp(self):
         self.env = TTestEnv(self.web_site_port, "web_sites/website_with_js")
@@ -185,7 +185,7 @@ class TestRegional(TestCase):
 
 
 class TestCrawlingTimeout(TestCase):
-    web_site_port = 8201
+    web_site_port = 8204
 
     def setUp(self):
         self.env = TTestEnv(self.web_site_port, "web_sites/simple", crawling_timeout=1)
