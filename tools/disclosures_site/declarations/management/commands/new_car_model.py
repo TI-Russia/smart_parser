@@ -9,7 +9,14 @@ from operator import itemgetter
 import json
 from sklearn.ensemble import RandomForestClassifier
 import random
-from sklearn.metrics import precision_score
+from sklearn.metrics import precision_score, accuracy_score
+from sklearn.model_selection import train_test_split
+import numpy as np
+import tensorflow as tf
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import roc_curve, auc
+import matplotlib.pyplot as plt
+import math
 
 # from sklearn.linear_model import LogisticRegression
 # from sklearn.tree import export_graphviz
@@ -109,6 +116,13 @@ class TVehiclePurchase:
 
 
 class Command(BaseCommand):
+    TRAIN_CLASS_WEIGHTS = {0: 1.0, #negative
+                     1: 8.0  #positive
+                     }
+
+    TEST_CLASS_WEIGHTS = {0: 1.0, #negative
+                     1: 5.0  #positive
+                     }
 
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
@@ -166,11 +180,16 @@ class Command(BaseCommand):
                 except Exception as exp:
                     raise
 
-    def read_cases(self, file_name: str):
+    def read_cases(self, file_name: str, row_count=None):
         cases = list()
+        cnt = 0
         with open(file_name, "r") as inp:
             for line in inp:
                 cases.append(TVehiclePurchase.from_json(json.loads(line)))
+                cnt += 1
+                if row_count is not None and cnt >= row_count:
+                    break
+
         self.logger.info("read from {} {} cases".format(file_name, len(cases)))
         return cases
 
@@ -277,49 +296,50 @@ class Command(BaseCommand):
         for c in cases:
             c.has_children = c.person_id in person_id_with_children
 
-    def to_ml_input(self, cases, name):
-        X = list()
-        Y = list()
+    def get_positive_negative_counts(self, labels):
         positive_count = 0
         negative_count = 0
-        for c in cases:
-            X.append(c.build_features())
-            Y.append(1 if c.positive else 0)
-            if c.positive:
-                positive_count += 1
-            else:
-                negative_count += 1
-        self.logger.info("pool {}: positive_count={}, negative_count={}".format(name, positive_count, negative_count))
-
-        return X, Y
-
-    def test_ml(self, ml_model, pool_name, x, y_true):
-        self.logger.info("test ml on {} ({} cases)".format(pool_name,  len(x)))
-        y_predicted = ml_model.predict(x)
-        precision = precision_score(y_true, y_predicted)
-        positive_count = 0
-        negative_count = 0
-        for c in y_predicted:
+        for c in labels:
             if c != 0:
                 positive_count += 1
             else:
                 negative_count += 1
+        return positive_count, negative_count
 
-        self.logger.info("precision on {} = {}, positive_count={}, negative_count={}".format(
-                pool_name, precision, positive_count, negative_count))
+    def to_ml_input(self, cases, name):
+        self.logger.info("build {} pool of {} cases".format(name, len(cases)))
+        features = list()
+        labels = list()
+        for c in cases:
+            features.append(c.build_features())
+            labels.append(1 if c.positive else 0)
+        return np.array(features), np.array(labels)
 
-    def train_ml(self, cases):
-        self.logger.info("train_ml")
-        #sample_size = 30000
-        sample_size = 400000
-        random.shuffle(cases)
-        X_train, Y_train = self.to_ml_input(cases[0:sample_size], "train")
-        X_test, Y_test = self.to_ml_input(cases[-sample_size:], "test")
-        ml_model = RandomForestClassifier(n_jobs=3, n_estimators=200, min_samples_leaf=100, class_weight={0: 1, 1: 5})
+    def print_ml_metrics(self, pool_name, y_predicted, y_true):
+        precision = precision_score(y_true, y_predicted)
+        accuracy = accuracy_score(y_true, y_predicted)
+        weights_by_class = [self.TEST_CLASS_WEIGHTS[y] for y in y_true]
+        accuracy_weighted = accuracy_score(y_true, y_predicted, sample_weight=weights_by_class)
+        predicted_positive_count, predicted_negative_count = self.get_positive_negative_counts(y_predicted)
+        true_positive_count, true_negative_count = self.get_positive_negative_counts(y_true)
 
+        self.logger.info("pool={}, precision={:.4f}, accuracy={:.4f}, accuracy_weighted={:.4f} "
+                         "predicted_positive_count={}, predicted_negative_count={},"
+                         " true_positive_count={}, true_negative_count={}".format(
+                pool_name, precision, accuracy, accuracy_weighted,
+                predicted_positive_count, predicted_negative_count,
+                true_positive_count, true_negative_count))
 
-        self.logger.info("train ml on {} cases out of {} cases...".format(sample_size, len(cases)))
-        ml_model.fit(X_train, Y_train)
+    def train_random_forest(self, train, test, trees_count=200):
+        self.logger.info("train_random_forest")
+        train_x, train_y = self.to_ml_input(train, "train")
+        test_x, test_y = self.to_ml_input(test, "test")
+        ml_model = RandomForestClassifier(
+            n_jobs=3, n_estimators=trees_count, min_samples_leaf=100,
+            class_weight=self.TRAIN_CLASS_WEIGHTS)
+
+        self.logger.info("RandomForestClassifier.fit (trees_count={})...".format(trees_count))
+        ml_model.fit(train_x, train_y)
 
         #export_graphviz(ml_model.estimators_[0],
         #                out_file='tree.dot',
@@ -330,10 +350,67 @@ class Command(BaseCommand):
         for name, value in zip(TVehiclePurchase.get_feature_names(), ml_model.feature_importances_):
             self.logger.info("importance[{}] = {}".format(name, round(value, 3)))
         self.logger.info("ml params = {}".format(ml_model.get_params()))
+        self.print_ml_metrics("train", ml_model.predict(train_x),  train_y)
+        self.print_ml_metrics("test", ml_model.predict(test_x), test_y)
 
-        self.test_ml(ml_model, "train", X_train, Y_train)
-        self.test_ml(ml_model, "test", X_test, Y_test)
+    def show_tf_roc_curve(self, model, test_x, test_y):
+        y_pred_keras = model.predict(test_x).ravel()
+        fpr_keras, tpr_keras, thresholds_keras = roc_curve(test_y, y_pred_keras)
+        gmeans = np.sqrt(tpr_keras * (1 - fpr_keras))
+        ix = np.argmax(gmeans)
+        print('Best Threshold={}, G-Mean={:.3f}'.format(thresholds_keras[ix], gmeans[ix]))
+        auc_keras = auc(fpr_keras, tpr_keras)
+        plt.figure(1)
+        plt.plot([0, 1], [0, 1], 'k--')
+        plt.plot(fpr_keras, tpr_keras, label='Keras (area = {:.3f})'.format(auc_keras))
+        plt.xlabel('False positive rate')
+        plt.ylabel('True positive rate')
+        plt.title('ROC curve')
+        plt.legend(loc='best')
+        plt.show()
 
+    def train_tensorflow(self, train, test, epochs_count=10):
+        self.logger.info("train_tensorflow")
+
+        train_x, train_y = self.to_ml_input(train, "train")
+        test_x, test_y = self.to_ml_input(test, "test")
+        #neg, pos = np.bincount(train_y)
+        #initial_bias = np.log([pos / neg])
+        #initial_bias = 1.0 / 1.0
+        #output_bias = tf.keras.initializers.Constant(initial_bias)
+
+        scaler = StandardScaler()
+        train_x = scaler.fit_transform(train_x)
+        test_x = scaler.transform(test_x)
+
+        model = tf.keras.Sequential([
+             tf.keras.layers.Flatten(input_shape=(9,)),
+             tf.keras.layers.Dense(128, activation='relu'),
+             tf.keras.layers.Dropout(0.5),
+             tf.keras.layers.Dense(1, activation="sigmoid"
+                                   #, bias_initializer=output_bias
+                                   )
+        ])
+        # tf.keras.layers.Dense(2)
+
+        model.compile(optimizer='adam',
+                      #loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+                      loss=tf.keras.losses.BinaryCrossentropy(),
+                      #loss=tf.keras.losses.MeanAbsoluteError(),
+                      weighted_metrics=['accuracy'])
+
+        model.fit(train_x, train_y, epochs=epochs_count,
+                  class_weight=self.TRAIN_CLASS_WEIGHTS, workers=3,
+                  validation_split=0.2)
+
+        def predict_tf(x):
+            #return model.predict(x).argmax(axis=-1)
+            return np.where(model.predict(x) < 0.5, 0, 1)
+        #debug = model.predict(train_x)
+        #debug1 = np.where(debug < 0.5, 0, 1)
+        self.print_ml_metrics("train", predict_tf(train_x),  train_y)
+        self.print_ml_metrics("test", predict_tf(test_x), test_y)
+        self.show_tf_roc_curve(model, test_x, test_y)
 
     def handle(self, *args, **options):
         self.options = options
@@ -361,5 +438,9 @@ class Command(BaseCommand):
         #self.init_children(cases)
         #self.write_cases(file_name + ".6", cases)
 
+        #cases = self.read_cases(file_name + ".6", row_count=1000)
         cases = self.read_cases(file_name + ".6")
-        self.train_ml(cases)
+        random.shuffle(cases)
+        train, test = train_test_split(cases, test_size=0.2)
+        #self.train_random_forest(train, test)
+        self.train_tensorflow(train, test, epochs_count=10)
