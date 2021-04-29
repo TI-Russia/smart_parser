@@ -9,7 +9,7 @@ from operator import itemgetter
 import json
 from sklearn.ensemble import RandomForestClassifier
 import random
-from sklearn.metrics import precision_score, accuracy_score
+from sklearn.metrics import precision_score, accuracy_score, recall_score, f1_score, fbeta_score
 from sklearn.model_selection import train_test_split
 import numpy as np
 import tensorflow as tf
@@ -117,7 +117,7 @@ class TVehiclePurchase:
 
 class Command(BaseCommand):
     TRAIN_CLASS_WEIGHTS = {0: 1.0, #negative
-                     1: 8.0  #positive
+                           1: 8.0  #positive
                      }
 
     TEST_CLASS_WEIGHTS = {0: 1.0, #negative
@@ -317,6 +317,8 @@ class Command(BaseCommand):
 
     def print_ml_metrics(self, pool_name, y_predicted, y_true):
         precision = precision_score(y_true, y_predicted)
+        recall = recall_score(y_true, y_predicted)
+        f1 = f1_score(y_true, y_predicted)
         accuracy = accuracy_score(y_true, y_predicted)
         weights_by_class = [self.TEST_CLASS_WEIGHTS[y] for y in y_true]
         accuracy_weighted = accuracy_score(y_true, y_predicted, sample_weight=weights_by_class)
@@ -324,9 +326,11 @@ class Command(BaseCommand):
         true_positive_count, true_negative_count = self.get_positive_negative_counts(y_true)
 
         self.logger.info("pool={}, precision={:.4f}, accuracy={:.4f}, accuracy_weighted={:.4f} "
+                         "recall={:.4f}, f1={:.4f}, "
                          "predicted_positive_count={}, predicted_negative_count={},"
                          " true_positive_count={}, true_negative_count={}".format(
                 pool_name, precision, accuracy, accuracy_weighted,
+                recall, f1,
                 predicted_positive_count, predicted_negative_count,
                 true_positive_count, true_negative_count))
 
@@ -336,7 +340,8 @@ class Command(BaseCommand):
         test_x, test_y = self.to_ml_input(test, "test")
         ml_model = RandomForestClassifier(
             n_jobs=3, n_estimators=trees_count, min_samples_leaf=100,
-            class_weight=self.TRAIN_CLASS_WEIGHTS)
+            class_weight={0: 1.0, 1: 5.0}
+        )
 
         self.logger.info("RandomForestClassifier.fit (trees_count={})...".format(trees_count))
         ml_model.fit(train_x, train_y)
@@ -369,48 +374,60 @@ class Command(BaseCommand):
         plt.legend(loc='best')
         plt.show()
 
+    def find_threshold_tf(self, train_y_predicted, y_true):
+        max_f1 = 0
+        best_threshold = 0
+        for threshold in np.arange(0.42, 0.60, 0.001):
+            y_predicted = np.where(train_y_predicted < threshold, 0, 1)
+            f1 = fbeta_score(y_true, y_predicted, beta=0.25)
+            print("{:.6f} {:.6f} {:.6f}".format(threshold, f1, precision_score(y_true, y_predicted)))
+            if f1 > max_f1:
+                max_f1 = f1
+                best_threshold = threshold
+        return best_threshold
+
     def train_tensorflow(self, train, test, epochs_count=10):
+        batch_size = 512
         self.logger.info("train_tensorflow")
 
         train_x, train_y = self.to_ml_input(train, "train")
         test_x, test_y = self.to_ml_input(test, "test")
-        #neg, pos = np.bincount(train_y)
-        #initial_bias = np.log([pos / neg])
+        neg, pos = np.bincount(train_y)
+        initial_bias = np.log([pos / neg])
         #initial_bias = 1.0 / 1.0
-        #output_bias = tf.keras.initializers.Constant(initial_bias)
+        output_bias = tf.keras.initializers.Constant(initial_bias)
 
-        scaler = StandardScaler()
-        train_x = scaler.fit_transform(train_x)
-        test_x = scaler.transform(test_x)
+        #scaler = StandardScaler()
+        #train_x = scaler.fit_transform(train_x)
+        #test_x = scaler.transform(test_x)
 
         model = tf.keras.Sequential([
-             tf.keras.layers.Flatten(input_shape=(9,)),
-             tf.keras.layers.Dense(128, activation='relu'),
+             tf.keras.layers.Dense(64, activation='relu', input_shape=(train_x.shape[-1],)),
+             tf.keras.layers.Dense(64),
              tf.keras.layers.Dropout(0.5),
-             tf.keras.layers.Dense(1, activation="sigmoid"
-                                   #, bias_initializer=output_bias
-                                   )
+             tf.keras.layers.Dense(1, activation="sigmoid", bias_initializer=output_bias)
+             #tf.keras.layers.Dense(1, activation="sigmoid")
         ])
         # tf.keras.layers.Dense(2)
 
         model.compile(optimizer='adam',
-                      #loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
                       loss=tf.keras.losses.BinaryCrossentropy(),
-                      #loss=tf.keras.losses.MeanAbsoluteError(),
                       weighted_metrics=['accuracy'])
 
         model.fit(train_x, train_y, epochs=epochs_count,
-                  class_weight=self.TRAIN_CLASS_WEIGHTS, workers=3,
+                  class_weight=self.TRAIN_CLASS_WEIGHTS,
+                  workers=3,
+                  batch_size=batch_size,
                   validation_split=0.2)
-
+        train_y_predicted = model.predict(train_x, batch_size=batch_size)
+        threshold = self.find_threshold_tf(train_y_predicted, train_y)
+        print("threshold={}".format(threshold))
+        #threshold = 0.445
         def predict_tf(x):
-            #return model.predict(x).argmax(axis=-1)
-            return np.where(model.predict(x) < 0.5, 0, 1)
-        #debug = model.predict(train_x)
-        #debug1 = np.where(debug < 0.5, 0, 1)
+            return np.where(model.predict(x, batch_size=batch_size) < threshold, 0, 1)
         self.print_ml_metrics("train", predict_tf(train_x),  train_y)
         self.print_ml_metrics("test", predict_tf(test_x), test_y)
-        self.show_tf_roc_curve(model, test_x, test_y)
+        #self.show_tf_roc_curve(model, test_x, test_y)
 
     def handle(self, *args, **options):
         self.options = options
@@ -442,5 +459,5 @@ class Command(BaseCommand):
         cases = self.read_cases(file_name + ".6")
         random.shuffle(cases)
         train, test = train_test_split(cases, test_size=0.2)
-        #self.train_random_forest(train, test)
-        self.train_tensorflow(train, test, epochs_count=10)
+        self.train_random_forest(train, test)
+        #self.train_tensorflow(train, test, epochs_count=30)
