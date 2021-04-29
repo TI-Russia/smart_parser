@@ -1,6 +1,8 @@
 from common.logging_wrapper import setup_logging
 from declarations.car_brands import CAR_BRANDS
 import declarations.models as models
+from declarations.gender_recognize import TGender
+from declarations.rubrics import get_all_rubric_ids
 
 from django.core.management import BaseCommand
 from django.db import connection
@@ -16,6 +18,8 @@ import tensorflow as tf
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import roc_curve, auc
 import matplotlib.pyplot as plt
+from datetime import datetime
+
 import math
 
 # from sklearn.linear_model import LogisticRegression
@@ -30,17 +34,24 @@ import math
 # from sklearn.ensemble import HistGradientBoostingClassifier
 
 
-def get_integer_diff(i1, i2):
-    if i1 is None or i2 is None:
+def get_income_diff(prev_income, curr_income):
+    if prev_income is None or prev_income == 0:
         return 0
-    return round(i1/(i2 + 0.000000001), 1)
+    if curr_income is None or curr_income == 0:
+        return 1.0
+    ratio = float(prev_income) / float(curr_income)
+    if ratio > 10:
+        ratio = 10
+    if ratio < 0.1:
+        ratio = 0.1
+    return round(ratio / 10.0, 4)
 
 
-def get_integer(i, denominator=1):
+def normalize_integer(i, max_value):
     if i is None:
         return 0
     else:
-        return int(i / denominator)
+        return i / float(max_value)
 
 
 class TRealEstateFactors:
@@ -55,6 +66,7 @@ class TRealEstateFactors:
 
 
 class TVehiclePurchase:
+    MAX_RUBRIC_ID = max(get_all_rubric_ids())
     def __init__(self, positive=None, year=None, year_income=None, previous_year_income=None, car_brand=None,
                  person_id=None, spouse_year_income=None, spouse_previous_year_income=None, year_square_sum=None,
                  previous_year_square_sum=None, spouse_year_square_sum=None,
@@ -100,18 +112,54 @@ class TVehiclePurchase:
                 #"has_children"
                ]
 
+    def get_year_feature(self):
+        cur_year = datetime.today().year
+        min_year = 2010
+        if self.year < min_year:
+            return 0.0
+        elif self.year >= cur_year:
+            return 1.0
+        else:
+            return round((cur_year - self.year) / (cur_year - min_year), 2)
+
+    def get_income_diff_feature(self):
+        return get_income_diff(self.previous_year_income, self.year_income)
+
+    def get_spouse_income_feature(self):
+        return get_income_diff(self.spouse_previous_year_income, self.spouse_year_income)
+
+    def get_income_feature(self):
+        if self.year_income is None or self.year_income <= 0:
+            return 0
+        max_income = 5000000.0
+        v = min(max_income, self.year_income)
+        return round(v / max_income, 4)
+
+    def get_realestate_square_sum_feature(self, v):
+        if v is None or v <= 0:
+            return 0
+        max_v = 100000.0
+        return round(min(max_v, v) / max_v, 4)
+
+    def get_gender_feature(self):
+        if self.gender is None:
+            return 0
+        elif self.gender == TGender.feminine:
+            return 0.5
+        else:
+            return 1.0
+
     def build_features(self):
         return [
-                self.year,
-                get_integer_diff(self.previous_year_income, self.year_income),
-                get_integer_diff(self.spouse_previous_year_income, self.spouse_year_income),
-                get_integer(self.year_income, 100),
-                get_integer(self.declarant_real_estate.square_sum),
-                get_integer(self.gender),
-                get_integer(self.rubric_id),
-                get_integer(self.region_id),
-                get_integer(self.spouse_real_estate.square_sum),
-                #(1 if self.has_children else 0)
+                self.get_year_feature(),
+                self.get_income_diff_feature(),
+                self.get_spouse_income_feature(),
+                self.get_income_feature(),
+                self.get_realestate_square_sum_feature(self.declarant_real_estate.square_sum),
+                self.get_gender_feature(),
+                normalize_integer(self.rubric_id, self.MAX_RUBRIC_ID),
+                normalize_integer(self.region_id, 110),
+                self.get_realestate_square_sum_feature(self.spouse_real_estate.square_sum),
                 ]
 
 
@@ -334,6 +382,20 @@ class Command(BaseCommand):
                 predicted_positive_count, predicted_negative_count,
                 true_positive_count, true_negative_count))
 
+    def print_features_mean(self, cases):
+        feature_names = TVehiclePurchase.get_feature_names()
+        features_count = len(feature_names)
+        examples = list(list() for i in range(features_count))
+        for c in cases:
+            features = c.build_features()
+            assert len(features) == features_count
+            for i in range(features_count):
+                examples[i].append(features[i])
+        for i in range(features_count):
+            print("feature {}: mean={:.4f}, min={}, max={}".format(feature_names[i], np.mean(examples[i]),
+                                                           min(examples[i]), max(examples[i]))
+                  )
+
     def train_random_forest(self, train, test, trees_count=200):
         self.logger.info("train_random_forest")
         train_x, train_y = self.to_ml_input(train, "train")
@@ -375,12 +437,21 @@ class Command(BaseCommand):
         plt.show()
 
     def find_threshold_tf(self, train_y_predicted, y_true):
+        return 0.6
+
         max_f1 = 0
         best_threshold = 0
-        for threshold in np.arange(0.42, 0.60, 0.001):
+        tp, tn = self.get_positive_negative_counts(y_true)
+        #train_y_predicted = list(x[0] for x in train_y_predicted)
+        for threshold in np.arange(0.50, 0.70, 0.001):
             y_predicted = np.where(train_y_predicted < threshold, 0, 1)
-            f1 = fbeta_score(y_true, y_predicted, beta=0.25)
-            print("{:.6f} {:.6f} {:.6f}".format(threshold, f1, precision_score(y_true, y_predicted)))
+            pos, neg = self.get_positive_negative_counts(y_predicted)
+            f1 = fbeta_score(y_true, y_predicted, beta=1.0)
+            print("t={:.6f} f1={:.6f} prec={:.6f} recall={:.6f} neg={}, pos={}, tp={}".format(
+                threshold, f1,
+                precision_score(y_true, y_predicted),
+                recall_score(y_true, y_predicted),
+                neg, pos, tp))
             if f1 > max_f1:
                 max_f1 = f1
                 best_threshold = threshold
@@ -392,23 +463,18 @@ class Command(BaseCommand):
 
         train_x, train_y = self.to_ml_input(train, "train")
         test_x, test_y = self.to_ml_input(test, "test")
-        neg, pos = np.bincount(train_y)
-        initial_bias = np.log([pos / neg])
-        #initial_bias = 1.0 / 1.0
-        output_bias = tf.keras.initializers.Constant(initial_bias)
-
-        #scaler = StandardScaler()
-        #train_x = scaler.fit_transform(train_x)
-        #test_x = scaler.transform(test_x)
+        pos, neg = self.get_positive_negative_counts(train_y)
+        print("train distribution: pos={}, neg={} to obtain input bias".format(pos, neg))
+        #initial_bias = np.log([pos / neg])
+        #output_bias = tf.keras.initializers.Constant(initial_bias)
 
         model = tf.keras.Sequential([
              tf.keras.layers.Dense(64, activation='relu', input_shape=(train_x.shape[-1],)),
              tf.keras.layers.Dense(64),
              tf.keras.layers.Dropout(0.5),
-             tf.keras.layers.Dense(1, activation="sigmoid", bias_initializer=output_bias)
-             #tf.keras.layers.Dense(1, activation="sigmoid")
+             #tf.keras.layers.Dense(1, activation="sigmoid", bias_initializer=output_bias)
+             tf.keras.layers.Dense(1, activation="sigmoid")
         ])
-        # tf.keras.layers.Dense(2)
 
         model.compile(optimizer='adam',
                       loss=tf.keras.losses.BinaryCrossentropy(),
@@ -419,12 +485,12 @@ class Command(BaseCommand):
                   workers=3,
                   batch_size=batch_size,
                   validation_split=0.2)
-        train_y_predicted = model.predict(train_x, batch_size=batch_size)
+        train_y_predicted = model.predict(train_x, batch_size=batch_size).ravel()
         threshold = self.find_threshold_tf(train_y_predicted, train_y)
         print("threshold={}".format(threshold))
         #threshold = 0.445
         def predict_tf(x):
-            return np.where(model.predict(x, batch_size=batch_size) < threshold, 0, 1)
+            return np.where(model.predict(x, batch_size=batch_size).ravel() < threshold, 0, 1)
         self.print_ml_metrics("train", predict_tf(train_x),  train_y)
         self.print_ml_metrics("test", predict_tf(test_x), test_y)
         #self.show_tf_roc_curve(model, test_x, test_y)
@@ -458,6 +524,7 @@ class Command(BaseCommand):
         #cases = self.read_cases(file_name + ".6", row_count=1000)
         cases = self.read_cases(file_name + ".6")
         random.shuffle(cases)
+        self.print_features_mean(cases[0:1000])
         train, test = train_test_split(cases, test_size=0.2)
-        self.train_random_forest(train, test)
-        #self.train_tensorflow(train, test, epochs_count=30)
+        #self.train_random_forest(train, test, trees_count=50)
+        self.train_tensorflow(train, test, epochs_count=30)
