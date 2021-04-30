@@ -15,23 +15,11 @@ from sklearn.metrics import precision_score, accuracy_score, recall_score, f1_sc
 from sklearn.model_selection import train_test_split
 import numpy as np
 import tensorflow as tf
-from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import roc_curve, auc
 import matplotlib.pyplot as plt
 from datetime import datetime
-
-import math
-
-# from sklearn.linear_model import LogisticRegression
-# from sklearn.tree import export_graphviz
-# from sklearn.neural_network import MLPClassifier
-# from sklearn import svm
-# from sklearn.pipeline import make_pipeline
-# from sklearn.preprocessing import StandardScaler
-# from sklearn.ensemble import AdaBoostClassifier
-#
-# from sklearn.experimental import enable_hist_gradient_boosting  # noqa
-# from sklearn.ensemble import HistGradientBoostingClassifier
+from catboost import CatBoostClassifier, Pool
+from catboost.utils import get_roc_curve
 
 
 def get_income_diff(prev_income, curr_income):
@@ -176,6 +164,11 @@ class Command(BaseCommand):
         super(Command, self).__init__(*args, **kwargs)
         self.options = None
         self.logger = None
+        self.roc_plt = self.create_roc_plot()
+        self.train_x = None
+        self.train_y = None
+        self.test_x = None
+        self.test_y = None
 
     def find_vehicle_purchase_year(self):
         query = """
@@ -396,17 +389,15 @@ class Command(BaseCommand):
                                                            min(examples[i]), max(examples[i]))
                   )
 
-    def train_random_forest(self, train, test, trees_count=200):
+    def train_random_forest(self, trees_count=200):
         self.logger.info("train_random_forest")
-        train_x, train_y = self.to_ml_input(train, "train")
-        test_x, test_y = self.to_ml_input(test, "test")
-        ml_model = RandomForestClassifier(
+        model = RandomForestClassifier(
             n_jobs=3, n_estimators=trees_count, min_samples_leaf=100,
             class_weight={0: 1.0, 1: 5.0}
         )
 
         self.logger.info("RandomForestClassifier.fit (trees_count={})...".format(trees_count))
-        ml_model.fit(train_x, train_y)
+        model.fit(self.train_x, self.train_y)
 
         #export_graphviz(ml_model.estimators_[0],
         #                out_file='tree.dot',
@@ -414,27 +405,26 @@ class Command(BaseCommand):
         #                #class_names=iris.target_names,
         #                rounded=True, proportion=False,
         #                precision=2, filled=True)
-        for name, value in zip(TVehiclePurchase.get_feature_names(), ml_model.feature_importances_):
+        for name, value in zip(TVehiclePurchase.get_feature_names(), model.feature_importances_):
             self.logger.info("importance[{}] = {}".format(name, round(value, 3)))
-        self.logger.info("ml params = {}".format(ml_model.get_params()))
-        self.print_ml_metrics("train", ml_model.predict(train_x),  train_y)
-        self.print_ml_metrics("test", ml_model.predict(test_x), test_y)
+        self.logger.info("ml params = {}".format(model.get_params()))
+        self.print_ml_metrics("train", model.predict(self.train_x),  self.train_y)
+        self.print_ml_metrics("test", model.predict(self.test_x), self.test_y)
+        test_y_pred_proba = model.predict_proba(self.test_x)[:,1]
+        fpr, tpr, thresholds = roc_curve(self.test_y, test_y_pred_proba)
+        self.show_roc_curve("randomforest_{}".format(trees_count), fpr, tpr)
 
-    def show_tf_roc_curve(self, model, test_x, test_y):
-        y_pred_keras = model.predict(test_x).ravel()
-        fpr_keras, tpr_keras, thresholds_keras = roc_curve(test_y, y_pred_keras)
-        gmeans = np.sqrt(tpr_keras * (1 - fpr_keras))
-        ix = np.argmax(gmeans)
-        print('Best Threshold={}, G-Mean={:.3f}'.format(thresholds_keras[ix], gmeans[ix]))
-        auc_keras = auc(fpr_keras, tpr_keras)
+    def create_roc_plot(self):
         plt.figure(1)
         plt.plot([0, 1], [0, 1], 'k--')
-        plt.plot(fpr_keras, tpr_keras, label='Keras (area = {:.3f})'.format(auc_keras))
         plt.xlabel('False positive rate')
         plt.ylabel('True positive rate')
         plt.title('ROC curve')
-        plt.legend(loc='best')
-        plt.show()
+
+        return plt
+
+    def show_roc_curve(self, model_name, fpr, tpr):
+        self.roc_plt.plot(fpr, tpr, label='{} (area = {:.3f})'.format(model_name, auc(fpr, tpr)))
 
     def find_threshold_tf(self, train_y_predicted, y_true):
         return 0.6
@@ -457,19 +447,15 @@ class Command(BaseCommand):
                 best_threshold = threshold
         return best_threshold
 
-    def train_tensorflow(self, train, test, epochs_count=10):
+    def train_tensorflow(self, epochs_count=10):
         batch_size = 512
         self.logger.info("train_tensorflow")
 
-        train_x, train_y = self.to_ml_input(train, "train")
-        test_x, test_y = self.to_ml_input(test, "test")
-        pos, neg = self.get_positive_negative_counts(train_y)
-        print("train distribution: pos={}, neg={} to obtain input bias".format(pos, neg))
         #initial_bias = np.log([pos / neg])
         #output_bias = tf.keras.initializers.Constant(initial_bias)
 
         model = tf.keras.Sequential([
-             tf.keras.layers.Dense(64, activation='relu', input_shape=(train_x.shape[-1],)),
+             tf.keras.layers.Dense(64, activation='relu', input_shape=(self.train_x.shape[-1],)),
              tf.keras.layers.Dense(64),
              tf.keras.layers.Dropout(0.5),
              #tf.keras.layers.Dense(1, activation="sigmoid", bias_initializer=output_bias)
@@ -480,20 +466,56 @@ class Command(BaseCommand):
                       loss=tf.keras.losses.BinaryCrossentropy(),
                       weighted_metrics=['accuracy'])
 
-        model.fit(train_x, train_y, epochs=epochs_count,
+        model.fit(self.train_x, self.train_y, epochs=epochs_count,
                   class_weight=self.TRAIN_CLASS_WEIGHTS,
                   workers=3,
                   batch_size=batch_size,
                   validation_split=0.2)
-        train_y_predicted = model.predict(train_x, batch_size=batch_size).ravel()
-        threshold = self.find_threshold_tf(train_y_predicted, train_y)
+        train_y_predicted = model.predict(self.train_x, batch_size=batch_size).ravel()
+        threshold = self.find_threshold_tf(train_y_predicted, self.train_y)
         print("threshold={}".format(threshold))
         #threshold = 0.445
         def predict_tf(x):
             return np.where(model.predict(x, batch_size=batch_size).ravel() < threshold, 0, 1)
-        self.print_ml_metrics("train", predict_tf(train_x),  train_y)
-        self.print_ml_metrics("test", predict_tf(test_x), test_y)
-        #self.show_tf_roc_curve(model, test_x, test_y)
+        self.print_ml_metrics("train", predict_tf(self.train_x),  self.train_y)
+        self.print_ml_metrics("test", predict_tf(self.test_x), self.test_y)
+
+        test_y_pred = model.predict(self.test_x).ravel()
+        fpr, tpr, thresholds = roc_curve(self.test_y, test_y_pred)
+        self.show_roc_curve("tensorflow_{}".format(epochs_count), fpr, tpr)
+
+    def train_catboost(self, iter_count=100):
+        self.logger.info("train_catboost iterations count={}".format(iter_count))
+
+        model = CatBoostClassifier(iterations=iter_count,
+                                   depth=4,
+                                   #learning_rate=0.1,
+                                   loss_function='Logloss',
+                                   class_weights={0: 1.0, 1: 5.0},
+                                   verbose=True)
+        model.fit(self.train_x, self.train_y)
+        print(model.classes_)
+        assert model.classes_[0] == 0
+        assert model.classes_[1] == 1
+        #threshold = 0.85
+        threshold = 0.5
+        def predict(x):
+            return np.where(model.predict_proba(x)[:,0] > threshold, 0, 1)
+        self.print_ml_metrics("train", predict(self.train_x), self.train_y)
+        self.print_ml_metrics("test",  predict(self.test_x), self.test_y)
+
+        catboost_pool = Pool(self.test_x, self.test_y)
+        fpr, tpr, thresholds = get_roc_curve(model, catboost_pool)
+        self.show_roc_curve("catboost_{}".format(iter_count), fpr, tpr)
+
+    def create_test_and_train(self, cases):
+        random.shuffle(cases)
+        self.print_features_mean(cases[0:1000])
+        train, test = train_test_split(cases, test_size=0.2)
+        self.train_x, self.train_y = self.to_ml_input(train, "train")
+        self.test_x, self.test_y = self.to_ml_input(test, "test")
+        pos, neg = self.get_positive_negative_counts(self.train_y)
+        print("train distribution: pos={}, neg={} to obtain input bias".format(pos, neg))
 
     def handle(self, *args, **options):
         self.options = options
@@ -521,10 +543,15 @@ class Command(BaseCommand):
         #self.init_children(cases)
         #self.write_cases(file_name + ".6", cases)
 
-        #cases = self.read_cases(file_name + ".6", row_count=1000)
+        #cases = self.read_cases(file_name + ".6", row_count=10000)
         cases = self.read_cases(file_name + ".6")
-        random.shuffle(cases)
-        self.print_features_mean(cases[0:1000])
-        train, test = train_test_split(cases, test_size=0.2)
-        #self.train_random_forest(train, test, trees_count=50)
-        self.train_tensorflow(train, test, epochs_count=30)
+        self.create_test_and_train(cases)
+
+        #model_size = 2
+        model_size = 1
+        #model_size = 5
+        self.train_random_forest(trees_count=50*model_size)
+        self.train_tensorflow(epochs_count=30*model_size)
+        self.train_catboost(iter_count=100*model_size)
+        self.roc_plt.legend(loc='best')
+        self.roc_plt.show(block=True)
