@@ -34,4 +34,6 @@ urlpatterns = [
     path('reports/car-brands/car-brands-by-years.html', views.anyUrlView),
     path('reports/web_site_snapshots/index.html', views.anyUrlView),
     path('reports/regions/index.html', views.anyUrlView),
+    path('reports/new-car/index.html', views.anyUrlView),
+    path('reports/offices/index.html', views.anyUrlView),
 ]

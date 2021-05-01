@@ -150,6 +150,8 @@ class Command(BaseCommand):
                      "reports/genders/index.html",
                      "reports/web_site_snapshots/index.html",
                      "reports/regions/index.html",
+                     "reports/new-car/index.html",
+                     "reports/offices/index.html",
                      ""]
         self.write_sitemap(url_paths, sitemap_path, priority=1.0)
         return 'sitemap-main.xml'

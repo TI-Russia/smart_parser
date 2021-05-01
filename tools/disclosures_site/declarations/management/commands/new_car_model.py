@@ -43,10 +43,14 @@ def normalize_integer(i, max_value):
 
 
 class TRealEstateFactors:
-    def __init__(self, square_sum=None, previous_year_square_sum=None, real_estate_count=None):
+    def __init__(self, square_sum=None, previous_year_square_sum=None, real_estate_count=None,
+                 has_appartment=None, has_house=None, has_land=None):
         self.square_sum = square_sum
         self.previous_year_square_sum = previous_year_square_sum
         self.real_estate_count = real_estate_count
+        self.has_appartment = has_appartment
+        self.has_house = has_house
+        self.has_land = has_land
 
     @classmethod
     def from_json(cls, data):
@@ -55,6 +59,7 @@ class TRealEstateFactors:
 
 class TVehiclePurchase:
     MAX_RUBRIC_ID = max(get_all_rubric_ids())
+
     def __init__(self, positive=None, year=None, year_income=None, previous_year_income=None, car_brand=None,
                  person_id=None, spouse_year_income=None, spouse_previous_year_income=None, year_square_sum=None,
                  previous_year_square_sum=None, spouse_year_square_sum=None,
@@ -92,12 +97,17 @@ class TVehiclePurchase:
                 "income_diff",
                 "spouse_income_diff",
                 "income",
-                "square_sum",
+                #"square_sum",
                 "gender",
                 "rubric",
                 "region",
                 "spouse_square_sum",
-                #"has_children"
+                "has_children",
+                "spouse_real_estate.real_estate_count",
+                #"spouse_prev_year_square_sum",
+                #"has_appartment",
+                #"has_house",
+                #"has_land",
                ]
 
     def get_year_feature(self):
@@ -143,12 +153,20 @@ class TVehiclePurchase:
                 self.get_income_diff_feature(),
                 self.get_spouse_income_feature(),
                 self.get_income_feature(),
-                self.get_realestate_square_sum_feature(self.declarant_real_estate.square_sum),
+                #self.get_realestate_square_sum_feature(self.declarant_real_estate.square_sum),
                 self.get_gender_feature(),
                 normalize_integer(self.rubric_id, self.MAX_RUBRIC_ID),
                 normalize_integer(self.region_id, 110),
                 self.get_realestate_square_sum_feature(self.spouse_real_estate.square_sum),
-                ]
+                #to be normlizied tor tensorflow
+                (1 if self.has_children else 0),
+                normalize_integer(self.spouse_real_estate.real_estate_count, 8),
+                #self.get_realestate_square_sum_feature(self.spouse_real_estate.previous_year_square_sum),
+                #(1 if self.declarant_real_estate.has_appartment else 0),
+                #(1 if self.declarant_real_estate.has_house else 0),
+                #(1 if self.declarant_real_estate.has_land else 0),
+
+        ]
 
 
 class Command(BaseCommand):
@@ -277,7 +295,7 @@ class Command(BaseCommand):
         for c in cases:
             f = TRealEstateFactors(
                     squares.get((c.person_id, c.year)),
-                    squares.get((c.person_id, c.year)),
+                    squares.get((c.person_id, c.year - 1)),
                     counts.get((c.person_id, c.year)))
             if relative_code == models.Relative.main_declarant_code:
                 c.declarant_real_estate = f
@@ -337,6 +355,26 @@ class Command(BaseCommand):
         for c in cases:
             c.has_children = c.person_id in person_id_with_children
 
+    def init_real_estate_types(self, cases):
+        types = {"квартира": "has_appartment", "земельный": "has_land", "дом": "has_house"}
+        for realty_type_str, realty_type_feature in types.items():
+            self.logger.info("init_real_estate_types: {}".format(realty_type_feature))
+            found = set()
+            with connection.cursor() as cursor:
+                query = """
+                            select  s.person_id, 
+                                    s.income_year
+                            from declarations_section s
+                            join declarations_realestate r on r.section_id = s.id
+                            where type like "%{}%"
+                        """.format(realty_type_str)
+                cursor.execute(query)
+                for person_id, income_year in cursor:
+                    found.add((person_id, income_year))
+            for c in cases:
+                if (c.person_id, c.year) in found:
+                    setattr(c.declarant_real_estate, realty_type_feature, True)
+
     def get_positive_negative_counts(self, labels):
         positive_count = 0
         negative_count = 0
@@ -355,6 +393,15 @@ class Command(BaseCommand):
             features.append(c.build_features())
             labels.append(1 if c.positive else 0)
         return np.array(features), np.array(labels)
+
+    def create_test_and_train(self, cases):
+        random.shuffle(cases)
+        self.print_features_mean(cases[0:1000])
+        train, test = train_test_split(cases, test_size=0.2)
+        self.train_x, self.train_y = self.to_ml_input(train, "train")
+        self.test_x, self.test_y = self.to_ml_input(test, "test")
+        pos, neg = self.get_positive_negative_counts(self.train_y)
+        print("train distribution: pos={}, neg={} to obtain input bias".format(pos, neg))
 
     def print_ml_metrics(self, pool_name, y_predicted, y_true):
         precision = precision_score(y_true, y_predicted)
@@ -420,11 +467,12 @@ class Command(BaseCommand):
         plt.xlabel('False positive rate')
         plt.ylabel('True positive rate')
         plt.title('ROC curve')
-
         return plt
 
     def show_roc_curve(self, model_name, fpr, tpr):
-        self.roc_plt.plot(fpr, tpr, label='{} (area = {:.3f})'.format(model_name, auc(fpr, tpr)))
+        auc_value = auc(fpr, tpr)
+        self.logger.info("auc({})={:.4f}".format(model_name, auc_value))
+        self.roc_plt.plot(fpr, tpr, label='{} (area = {:.3f})'.format(model_name, auc_value))
 
     def find_threshold_tf(self, train_y_predicted, y_true):
         return 0.6
@@ -489,14 +537,20 @@ class Command(BaseCommand):
 
         model = CatBoostClassifier(iterations=iter_count,
                                    depth=4,
-                                   #learning_rate=0.1,
                                    loss_function='Logloss',
                                    class_weights={0: 1.0, 1: 5.0},
                                    verbose=True)
         model.fit(self.train_x, self.train_y)
-        print(model.classes_)
         assert model.classes_[0] == 0
         assert model.classes_[1] == 1
+
+        catboost_test_pool = Pool(self.test_x, self.test_y)
+        fpr, tpr, thresholds = get_roc_curve(model, catboost_test_pool)
+        self.show_roc_curve("catboost_{}".format(iter_count), fpr, tpr)
+
+        for name, value in zip(TVehiclePurchase.get_feature_names(), model.get_feature_importance(catboost_test_pool)):
+            self.logger.info("importance[{}] = {}".format(name, round(value, 3)))
+
         #threshold = 0.85
         threshold = 0.5
         def predict(x):
@@ -504,18 +558,6 @@ class Command(BaseCommand):
         self.print_ml_metrics("train", predict(self.train_x), self.train_y)
         self.print_ml_metrics("test",  predict(self.test_x), self.test_y)
 
-        catboost_pool = Pool(self.test_x, self.test_y)
-        fpr, tpr, thresholds = get_roc_curve(model, catboost_pool)
-        self.show_roc_curve("catboost_{}".format(iter_count), fpr, tpr)
-
-    def create_test_and_train(self, cases):
-        random.shuffle(cases)
-        self.print_features_mean(cases[0:1000])
-        train, test = train_test_split(cases, test_size=0.2)
-        self.train_x, self.train_y = self.to_ml_input(train, "train")
-        self.test_x, self.test_y = self.to_ml_input(test, "test")
-        pos, neg = self.get_positive_negative_counts(self.train_y)
-        print("train distribution: pos={}, neg={} to obtain input bias".format(pos, neg))
 
     def handle(self, *args, **options):
         self.options = options
@@ -526,31 +568,34 @@ class Command(BaseCommand):
         #
         # self.init_incomes(cases)
         # self.write_cases(file_name + ".2", cases)
-        #cases = self.read_cases(file_name + ".2")
+        # cases = self.read_cases(file_name + ".2")
         #
-        #self.init_real_estate(cases, models.Relative.main_declarant_code)
-        #self.write_cases(file_name + ".3", cases)
-        #cases = self.read_cases(file_name + ".3")
-        #self.init_section_params(cases)
-        #self.write_cases(file_name + ".4", cases)
+        # self.init_real_estate(cases, models.Relative.main_declarant_code)
+        # self.write_cases(file_name + ".3", cases)
+        # cases = self.read_cases(file_name + ".3")
+        # self.init_section_params(cases)
+        # self.write_cases(file_name + ".4", cases)
+        #
+        # cases = self.read_cases(file_name + ".4")
+        # self.init_real_estate(cases, models.Relative.spouse_code)
+        # self.write_cases(file_name + ".5", cases)
+        #
+        # cases = self.read_cases(file_name + ".5")
+        # self.init_children(cases)
+        # self.write_cases(file_name + ".6", cases)
+        #
+        #cases = self.read_cases(file_name + ".6")
+        #self.init_real_estate_types(cases)
+        #self.write_cases(file_name + ".7", cases)
 
-
-        #cases = self.read_cases(file_name + ".4")
-        #self.init_real_estate(cases, models.Relative.spouse_code)
-        #self.write_cases(file_name + ".5", cases)
-
-        #cases = self.read_cases(file_name + ".5")
-        #self.init_children(cases)
-        #self.write_cases(file_name + ".6", cases)
-
-        #cases = self.read_cases(file_name + ".6", row_count=10000)
-        cases = self.read_cases(file_name + ".6")
+        #cases = self.read_cases(file_name + ".7", row_count=10000)
+        cases = self.read_cases(file_name + ".7")
         self.create_test_and_train(cases)
 
         #model_size = 2
-        model_size = 1
-        #model_size = 5
-        self.train_random_forest(trees_count=50*model_size)
+        #model_size = 1
+        model_size = 5
+        self.train_random_forest(trees_count=70*model_size)
         self.train_tensorflow(epochs_count=30*model_size)
         self.train_catboost(iter_count=100*model_size)
         self.roc_plt.legend(loc='best')
