@@ -106,11 +106,14 @@ echo $DEDUPE_HOSTS | tr "," "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dl
      fi
      python3 $TOOLS/disclosures_site/scripts/check_person_id_permanence.py disclosures_db disclosures_db_dev
 
+#12.1 запускаем обратно dlrobot_worker
+echo $DEDUPE_HOSTS | tr "," "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/scripts/git_update_cloud_worker.py --action start --host &
+
 #13  Коммит статистики
    cd $TOOLS/disclosures_site
    git pull
    python3 manage.py add_disclosures_statistics --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
-   git commit -m "new statistics" data/statistics.json
+   git commit -m "new statistics" data/statistics.json ../web_site_db/data/dlrobot_remote_calls.dat
    git push
 
 #14 построение пола (gender)

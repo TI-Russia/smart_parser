@@ -7,6 +7,7 @@ from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 
 import os
 import shutil
@@ -29,7 +30,7 @@ def make_folder_empty(folder):
 class TSeleniumDriver:
 
     def __init__(self, logger, headless=True, download_folder=None, loglevel=None,
-                 scroll_to_bottom_and_wait_more_results=True, start_retry_count=3):
+                 scroll_to_bottom_and_wait_more_results=True, start_retry_count=3, use_chrome=False):
         self.logger = logger
         self.the_driver = None
         self.driver_processed_urls_count = 0
@@ -37,10 +38,17 @@ class TSeleniumDriver:
         assert download_folder != "."
         self.headless = headless
         self.loglevel = loglevel
+        self.use_chrome = use_chrome
         self.start_retry_count = start_retry_count
         self.scroll_to_bottom_and_wait_more_results = scroll_to_bottom_and_wait_more_results
 
     def start_executable(self):
+        if self.use_chrome:
+            self.start_executable_chrome()
+        else:
+            self.start_executable_firefox()
+
+    def start_executable_firefox(self):
         options = FirefoxOptions()
         options.headless = self.headless
         options.log.level = self.loglevel
@@ -62,6 +70,19 @@ class TSeleniumDriver:
             try:
                 self.the_driver = webdriver.Firefox(options=options)
                 #self.the_driver.implicitly_wait(10)
+                break
+            except (WebDriverException, InvalidSwitchToTargetException) as exp:
+                if retry == self.start_retry_count - 1:
+                    raise
+                self.logger.error("Cannot start selenium, exception:{}, sleep and retry...".format(str(exp)))
+                time.sleep(10)
+
+    def start_executable_chrome(self):
+        options = ChromeOptions()
+        options.headless = self.headless
+        for retry in range(self.start_retry_count):
+            try:
+                self.the_driver = webdriver.Chrome(options=options)
                 break
             except (WebDriverException, InvalidSwitchToTargetException) as exp:
                 if retry == self.start_retry_count - 1:
@@ -140,9 +161,9 @@ class TSeleniumDriver:
         dl_wait = True
         seconds = 0
         while dl_wait and seconds < timeout:
-            firefox_temp_file = sorted(Path(self.download_folder).glob('*.part'))
+            browser_temp_file = sorted(Path(self.download_folder).glob('*.part'))
             chrome_temp_file = sorted(Path(self.download_folder).glob('*.crdownload'))
-            if (len(firefox_temp_file) == 0) and \
+            if (len(browser_temp_file) == 0) and \
                     (len(chrome_temp_file) == 0):
                 files = os.listdir(self.download_folder)
                 if len(files) > 0:
