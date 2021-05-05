@@ -70,7 +70,7 @@ def stop():
     for proc in psutil.process_iter():
         cmdline = " ".join(proc.cmdline())
         if proc.pid != os.getpid():
-            if 'dlrobot.py' in cmdline or 'firefox' in cmdline or 'dlrobot_worker.py' in cmdline:
+            if 'dlrobot.py' in cmdline or 'firefox' in cmdline or 'chrome' in cmdline or 'dlrobot_worker.py' in cmdline:
                 try:
                     proc.kill()
                 except Exception as exp:

@@ -25,7 +25,9 @@ def parse_args():
 
 def kill_crawling():
     os.system("pkill -f firefox")
+    os.system("pkill -f chrome")
     os.system("pkill -f geckodriver")
+    os.system("pkill -f chromedriver")
     os.system("pkill -f dlrobot.py")
 
 
