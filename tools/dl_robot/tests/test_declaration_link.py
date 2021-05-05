@@ -118,6 +118,11 @@ class TestDeclarationLink(TestCase):
             lines = list (l.strip() for l in inp)
             self.assertSequenceEqual(links, lines)
 
+    def canonize_links(self, links, file_name):
+        with open(os.path.join(os.path.dirname(__file__), file_name), "w") as outp:
+            for l in links:
+                outp.write(l + "\n")
+
     def test_akrvo(self):
         links = self.download_website("web_sites/arkvo/sved.html", False)
         self.compare_to_file(links, 'web_sites/arkvo/found_links')
@@ -137,3 +142,8 @@ class TestDeclarationLink(TestCase):
     def test_admkrsk(self):
         links = self.download_website("web_sites/admkrsk/sved.html", False)
         self.compare_to_file(links, 'web_sites/admkrsk/found_links')
+
+    def test_rosminzdrav(self):
+        links = self.download_website("web_sites/minzdrav/6_4_2.html", False)
+        #self.canonize_links(links, 'web_sites/rosminzdrav/found_links')
+        self.compare_to_file(links, 'web_sites/rosminzdrav/found_links')

@@ -93,6 +93,13 @@ def check_anticorr_link_text(logger, link_info: TLinkInfo):
     return False
 
 
+def check_anticorr_link_text_2(logger, link_info: TLinkInfo):
+    text = link_info.anchor_text.strip().lower()
+    if text.find("отчеты") != -1:
+        link_info.weight = 5
+        return True
+    return False
+
 def check_sub_page_or_iframe(logger,  link_info: TLinkInfo):
     if link_info.target_url is None:
         return False

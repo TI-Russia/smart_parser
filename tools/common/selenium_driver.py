@@ -38,7 +38,8 @@ class TSeleniumDriver:
         assert download_folder != "."
         self.headless = headless
         self.loglevel = loglevel
-        self.use_chrome = use_chrome
+        #self.use_chrome = use_chrome
+        self.use_chrome = True
         self.start_retry_count = start_retry_count
         self.scroll_to_bottom_and_wait_more_results = scroll_to_bottom_and_wait_more_results
 
@@ -80,9 +81,11 @@ class TSeleniumDriver:
     def start_executable_chrome(self):
         options = ChromeOptions()
         options.headless = self.headless
+        prefs = {'download.default_directory': self.download_folder}
+        options.add_experimental_option('prefs', prefs)
         for retry in range(self.start_retry_count):
             try:
-                self.the_driver = webdriver.Chrome(options=options)
+                self.the_driver = webdriver.Chrome(options=options, service_log_path="geckodriver.log")
                 break
             except (WebDriverException, InvalidSwitchToTargetException) as exp:
                 if retry == self.start_retry_count - 1:

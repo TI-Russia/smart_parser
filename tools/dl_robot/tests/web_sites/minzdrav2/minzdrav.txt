@@ -1,7 +1,7 @@
 {
     "sites": [
         {
-            "morda_url": "http://www.mkrf.ru",
+            "morda_url": "http://minzdrav.gov.ru",
             "name": ""
         }
     ]

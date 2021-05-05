@@ -3,6 +3,7 @@ import sys
 from collections import defaultdict
 import datetime
 
+
 class TTimeStatis:
     def __init__(self):
         self.start_time = None
@@ -38,8 +39,6 @@ if __name__ == "__main__":
     end_time = None
     for line in input_stream:
         line = line.strip()
-        if not line.startswith('2020-'):
-            continue
         items = line.split()
         #2020-05-02 23:31:26,669
         line_time = datetime.datetime.strptime(" ".join((items[0], items[1])), '%Y-%m-%d  %H:%M:%S,%f')

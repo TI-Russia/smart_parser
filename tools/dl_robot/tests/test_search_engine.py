@@ -24,7 +24,6 @@ class TestSimple(TestCase):
         self.driver_holder.stop_executable()
         shutil.rmtree(self.data_folder, ignore_errors=True)
 
-
     def check_search_engine(self, search_engine_id):
         sites = ["ru.wikipedia.org", "microsoft.com", "ru.stackoverflow.com", "news.ru"]
         queries = ["mother", "father", "virus", "windows"]

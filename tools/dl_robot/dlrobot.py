@@ -2,7 +2,7 @@
 from web_site_db.robot_project import TRobotProject
 from web_site_db.robot_step import TRobotStep
 from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
-from common.link_info import check_link_sitemap, check_anticorr_link_text
+from common.link_info import check_link_sitemap, check_anticorr_link_text, check_anticorr_link_text_2
 from common.primitives import convert_timeout_to_seconds
 from common.http_request import THttpRequester
 from dl_robot.declaration_link import looks_like_a_declaration_link
@@ -25,6 +25,7 @@ ROBOT_STEPS = [
     {
         'step_name': "anticorruption_div",
         'check_link_func': check_anticorr_link_text,
+        'check_link_func_2': check_anticorr_link_text_2,  # use it if check_link_func yields no results
         'include_sources': "copy_if_empty",
         'search_engine': {
             'request': "противодействие коррупции",

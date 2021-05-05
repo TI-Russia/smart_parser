@@ -11,10 +11,7 @@ import urllib
 import shutil
 
 
-# it looks like mkrf has changed the site structure, so there is no income declaratiosn
-# on https://www.mkrf.ru/activities/reports/index.php
-
-class TestDeclarationLinkSelenium(TestCase):
+class TestDeclarationLinkUrllib(TestCase):
 
     def download_website(self, project_path, start_url):
         project_path = os.path.join(os.path.dirname(__file__), project_path)
@@ -23,12 +20,12 @@ class TestDeclarationLinkSelenium(TestCase):
             {
                 'step_name': "declarations",
                 'check_link_func': looks_like_a_declaration_link,
-                'fallback_to_selenium': True,
-                'use_urllib': False
+                'fallback_to_selenium': False,
+                'use_urllib': True
             }
         ]
         with TRobotProject(self.logger, project_path, robot_steps, "result", enable_search_engine=False,
-                           enable_selenium=True) as project:
+                           enable_selenium=False) as project:
             project.read_project()
             office_info = project.web_site_snapshots[0]
             office_info.create_export_folder()
@@ -46,7 +43,7 @@ class TestDeclarationLinkSelenium(TestCase):
             return links
 
     def setUp(self):
-        self.data_folder = os.path.join(os.path.dirname(__file__), "data.declaration_link_selenium")
+        self.data_folder = os.path.join(os.path.dirname(__file__), "data.declaration_link_urllib")
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
         os.mkdir(self.data_folder)
@@ -71,8 +68,8 @@ class TestDeclarationLinkSelenium(TestCase):
             for l in links:
                 outp.write(l + "\n")
 
-    def test_mkrf(self):
-        found_links = self.download_website('web_sites/culture.gov.ru/culture.gov.ru.txt', 'https://culture.gov.ru/activities/reports/index.php')
-        #self.canonize_links(found_links, 'web_sites/culture.gov.ru/found_links')
-        self.compare_to_file(found_links, 'web_sites/culture.gov.ru/found_links')
+    def test_rosminzdrav(self):
+        found_links = self.download_website('web_sites/minzdrav2/minzdrav.txt', 'https://minzdrav.gov.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/4/2')
+        #self.canonize_links(found_links, 'web_sites/minzdrav2/found_links')
+        self.compare_to_file(found_links, 'web_sites/minzdrav2/found_links')
 

@@ -229,7 +229,7 @@ class TRobotProject:
     def need_search_engine_after(self, step_info: TRobotStep):
         if not self.enable_search_engine:
             return False
-        policy = step_info.step_passport.get('search_engine', dict()).get('policy','')
+        policy = step_info.step_passport.get('search_engine', dict()).get('policy', '')
         return policy == "run_after_if_no_results" and len(step_info.step_urls) == 0
 
     def export_files_to_folder(self):

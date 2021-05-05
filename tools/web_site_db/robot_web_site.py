@@ -238,7 +238,7 @@ class TWebSiteCrawlSnapshot:
     def find_a_web_page_with_a_similar_html(self, step_info: TRobotStep, url, html_text):
         if len(html_text) > 1000:
             html_text = re.sub('[0-9]+', 'd', html_text)
-            hash_code = "{}_{}".format(step_info.get_step_name(),
+            hash_code = "{}_{}_{}".format(step_info.get_step_name(), step_info.second_pass,
                                        hashlib.sha256(html_text.encode("utf8")).hexdigest())
             already = self.runtime_processed_files.get(hash_code)
             if already is not None:
@@ -289,7 +289,15 @@ class TWebSiteCrawlSnapshot:
             self.parent_project.use_search_engine(target)
             target.pages_to_process.update(target.step_urls)
 
+        save_input_urls = dict(target.pages_to_process.items())
+
         target.make_one_step()
+
+        if len(target.step_urls) == 0 and target.step_passport.get('check_link_func_2'):
+            target.second_pass = True
+            self.logger.debug("second pass with {}".format(target.get_check_func_name()))
+            target.pages_to_process = save_input_urls
+            target.make_one_step()
 
         if self.parent_project.need_search_engine_after(target):
             self.parent_project.use_search_engine(target)

@@ -122,7 +122,7 @@ def web_link_is_absolutely_prohibited(logger, source, href):
     href_domain = re.sub(':[0-9]+$', '', href_domain) # delete port
     source_domain = re.sub(':[0-9]+$', '', source_domain)  # delete port
 
-    if get_office_domain(href_domain) != get_office_domain(source_domain):
+    if get_office_domain(href_domain) != get_office_domain(source_domain) and source_domain != "127.0.0.1":
         if not are_web_mirrors(source, href):
             return True
     return False
@@ -166,6 +166,7 @@ class TRobotStep:
         self.processed_pages = None
         self.pages_to_process = dict()
         self.last_processed_url_weights = None
+        self.second_pass = False
 
         if init_json is not None:
             step_urls = init_json.get('step_urls')
@@ -212,7 +213,10 @@ class TRobotStep:
                 prepare_for_logging(link_info.target_url), # not redirected yet
                 prepare_for_logging(link_info.anchor_text)))
         try:
-            return self.step_passport['check_link_func'](self.logger, link_info)
+            if self.second_pass:
+                return self.step_passport['check_link_func_2'](self.logger, link_info)
+            else:
+                return self.step_passport['check_link_func'](self.logger, link_info)
         except UnicodeEncodeError as exp:
             self.logger.debug(exp)
             return False
@@ -254,7 +258,10 @@ class TRobotStep:
             self.website.export_env.export_selenium_doc_if_relevant(link_info)
 
     def get_check_func_name(self):
-        return self.step_passport['check_link_func'].__name__
+        if self.second_pass:
+            return self.step_passport['check_link_func_2'].__name__
+        else:
+            return self.step_passport['check_link_func'].__name__
 
     def add_page_links(self, url, use_selenium=True, use_urllib=True):
         html_parser = None
@@ -366,10 +373,11 @@ class TRobotStep:
                 self.add_link_wrapper(link_info)
 
     def click_all_selenium(self, main_url, driver_holder):
-        self.logger.debug("find_links_with_selenium url={}".format(main_url))
+        self.logger.debug("find_links_with_selenium url={} ".format(main_url))
         THttpRequester.consider_request_policy(main_url, "GET_selenium")
         elements = driver_holder.navigate_and_get_links(main_url)
         page_html = driver_holder.the_driver.page_source
+        self.logger.debug("html_size={}, elements_count={}".format(len(page_html), len(elements)))
         for element_index in range(len(elements)):
             if element_index >= MAX_LINKS_ON_ONE_WEB_PAGE:
                 break
@@ -377,6 +385,13 @@ class TRobotStep:
             link_text = element.text.strip('\n\r\t ') if element.text is not None else ""
             if len(link_text) == 0:
                 continue
+
+            #temp debug
+            #self.logger.debug("index={} text={} href={}".format(
+            #    element_index,
+            #    link_text,
+            #    element.get_attribute('href')))
+
             href = element.get_attribute('href')
             if href is not None:
                 href = make_link(main_url, href)  # may be we do not need it in selenium?
