@@ -43,6 +43,7 @@ class TestDeclarationLinkUrllib(TestCase):
             return links
 
     def setUp(self):
+        TRobotStep.check_local_address = True
         self.data_folder = os.path.join(os.path.dirname(__file__), "data.declaration_link_urllib")
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
@@ -57,6 +58,7 @@ class TestDeclarationLinkUrllib(TestCase):
         os.chdir(os.path.dirname(__file__))
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
+        TRobotStep.check_local_address = False
 
     def compare_to_file(self, links, file_name):
         with open(os.path.join(os.path.dirname(__file__), file_name)) as inp:
@@ -68,7 +70,7 @@ class TestDeclarationLinkUrllib(TestCase):
             for l in links:
                 outp.write(l + "\n")
 
-    def test_rosminzdrav(self):
+    def test_rosminzdrav_real(self):
         found_links = self.download_website('web_sites/minzdrav2/minzdrav.txt', 'https://minzdrav.gov.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/4/2')
         #self.canonize_links(found_links, 'web_sites/minzdrav2/found_links')
         self.compare_to_file(found_links, 'web_sites/minzdrav2/found_links')

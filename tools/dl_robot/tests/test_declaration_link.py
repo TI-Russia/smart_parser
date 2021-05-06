@@ -86,6 +86,7 @@ class TestDeclarationLink(TestCase):
             return links
 
     def setUp(self):
+        TRobotStep.check_local_address = True
         self.server_address = '127.0.0.1:{}'.format(self.web_site_port)
         self.web_server = TestHTTPServer(self.web_site_port)
         self.http_server_thread = threading.Thread(target=start_server, args=(self.web_server,))
@@ -112,6 +113,7 @@ class TestDeclarationLink(TestCase):
         self.http_server_thread.join(1)
         self.web_server.server_close()
         time.sleep(1)
+        TRobotStep.check_local_address = False
 
     def compare_to_file(self, links, file_name):
         with open(os.path.join(os.path.dirname(__file__), file_name)) as inp:

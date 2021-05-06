@@ -46,6 +46,7 @@ class TestDeclarationLinkSelenium(TestCase):
             return links
 
     def setUp(self):
+        TRobotStep.check_local_address = True
         self.data_folder = os.path.join(os.path.dirname(__file__), "data.declaration_link_selenium")
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
@@ -60,6 +61,7 @@ class TestDeclarationLinkSelenium(TestCase):
         os.chdir(os.path.dirname(__file__))
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
+        TRobotStep.check_local_address = False
 
     def compare_to_file(self, links, file_name):
         with open(os.path.join(os.path.dirname(__file__), file_name)) as inp:

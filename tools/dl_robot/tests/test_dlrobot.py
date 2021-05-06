@@ -113,6 +113,7 @@ class TestWebSiteWithPdf(TestCase):
 
     def setUp(self):
         self.env = TTestEnv(self.web_site_port, "web_sites/pdf")
+        self.env.start_server_and_robot()
 
     def tearDown(self):
         self.env.tearDown()
@@ -127,6 +128,7 @@ class TestRandomPdf(TestCase):
 
     def setUp(self):
         self.conv_server_address = "localhost:{}".format(self.conv_server_port)
+        save_declarator_conv_url = os.environ['DECLARATOR_CONV_URL']
         os.environ['DECLARATOR_CONV_URL'] = self.conv_server_address
         self.env = TTestEnv(self.web_site_port, "web_sites/random_pdf")
         txt_file = os.path.join(self.env.web_site_folder, "random.txt")
@@ -156,7 +158,7 @@ class TestRandomPdf(TestCase):
 
         self.env.start_server_and_robot()
 
-        os.environ['DECLARATOR_CONV_URL'] = ''
+        os.environ['DECLARATOR_CONV_URL'] = save_declarator_conv_url
 
     def tearDown(self):
         self.conv_server.stop_http_server()

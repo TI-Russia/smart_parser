@@ -98,36 +98,6 @@ def check_href_elementary(href):
     return True
 
 
-def web_link_is_absolutely_prohibited(logger, source, href):
-    if len(href) == 0:
-        return True
-
-    #http://adm.ugorsk.ru/about/vacancies/information_about_income/?SECTION_ID=5244&ELEMENT_ID=79278
-    #href = "/bitrix/redirect.php?event1=catalog_out&amp;event2=%2Fupload%2Fiblock%2Fb59%2Fb59f80e6eaf7348f74e713219c169a24.pdf&amp;event3=%D0%9F%D0%B5%D1%87%D0%B5%D0%BD%D0%B5%D0%B2%D0%B0+%D0%9D%D0%98.pdf&amp;goto=%2Fupload%2Fiblock%2Fb59%2Fb59f80e6eaf7348f74e713219c169a24.pdf" > Загрузить < / a > < / b > < br / >
-    #if href.find('redirect') != -1:
-    #    return True
-
-    if not check_href_elementary(href):
-        return True
-    if source.strip('/') == href.strip('/'):
-        return True
-    if href.find(' ') != -1 or href.find('\n') != -1 or href.find('\t') != -1:
-        return True
-    if href.find('print=') != -1:
-        return True
-    href_domain = get_site_domain_wo_www(href)
-    source_domain = get_site_domain_wo_www(source)
-    if is_super_popular_domain(href_domain):
-        return True
-    href_domain = re.sub(':[0-9]+$', '', href_domain) # delete port
-    source_domain = re.sub(':[0-9]+$', '', source_domain)  # delete port
-
-    if get_office_domain(href_domain) != get_office_domain(source_domain) and source_domain != "127.0.0.1":
-        if not are_web_mirrors(source, href):
-            return True
-    return False
-
-
 def make_link(main_url, href):
     url = urllib.parse.urljoin(main_url, href)
 
@@ -155,6 +125,7 @@ def get_base_url(main_url, soup):
 class TRobotStep:
     panic_mode_url_count = 600
     max_step_url_count = 800
+    check_local_address = False
 
     def __init__(self, website, step_passport, init_json=None):
         self.website = website
@@ -195,6 +166,36 @@ class TRobotStep:
             new_step_urls[urls[-1].input_url] = max_weight  # get the longest url and max weight
         self.step_urls = new_step_urls
 
+    def web_link_is_absolutely_prohibited(self, source, href):
+        if len(href) == 0:
+            return True
+
+        # http://adm.ugorsk.ru/about/vacancies/information_about_income/?SECTION_ID=5244&ELEMENT_ID=79278
+        # href = "/bitrix/redirect.php?event1=catalog_out&amp;event2=%2Fupload%2Fiblock%2Fb59%2Fb59f80e6eaf7348f74e713219c169a24.pdf&amp;event3=%D0%9F%D0%B5%D1%87%D0%B5%D0%BD%D0%B5%D0%B2%D0%B0+%D0%9D%D0%98.pdf&amp;goto=%2Fupload%2Fiblock%2Fb59%2Fb59f80e6eaf7348f74e713219c169a24.pdf" > Загрузить < / a > < / b > < br / >
+        # if href.find('redirect') != -1:
+        #    return True
+
+        if not check_href_elementary(href):
+            return True
+        if source.strip('/') == href.strip('/'):
+            return True
+        if href.find(' ') != -1 or href.find('\n') != -1 or href.find('\t') != -1:
+            return True
+        if href.find('print=') != -1:
+            return True
+        href_domain = get_site_domain_wo_www(href)
+        source_domain = get_site_domain_wo_www(source)
+        if is_super_popular_domain(href_domain):
+            return True
+        href_domain = re.sub(':[0-9]+$', '', href_domain)  # delete port
+        source_domain = re.sub(':[0-9]+$', '', source_domain)  # delete port
+
+        if get_office_domain(href_domain) != get_office_domain(source_domain) and (
+                not self.check_local_address or source_domain != "127.0.0.1"):
+            if not are_web_mirrors(source, href):
+                return True
+        return False
+
     def to_json(self):
         return {
             'step_name': self.get_step_name(),
@@ -205,7 +206,7 @@ class TRobotStep:
     def normalize_and_check_link(self, link_info: TLinkInfo):
         if link_info.target_url is not None:
             link_info.target_url = strip_viewer_prefix(link_info.target_url).strip(" \r\n\t")
-            if web_link_is_absolutely_prohibited(self.logger, link_info.source_url, link_info.target_url):
+            if self.web_link_is_absolutely_prohibited(link_info.source_url, link_info.target_url):
                 return False
         self.logger.debug(
             "check element {}, url={} text={}".format(

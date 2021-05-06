@@ -103,9 +103,11 @@ def save_downloaded_file(filename):
     sha256 = build_dislosures_sha256(filename)
     file_extension = os.path.splitext(filename)[1]
     saved_filename = os.path.join(download_folder, sha256 + file_extension)
-    TDownloadEnv.logger.debug("save file {} as {}".format(filename, saved_filename))
+    if TDownloadEnv.logger is not None:
+        TDownloadEnv.logger.debug("save file {} as {}".format(filename, saved_filename))
     if os.path.exists(saved_filename):
-        TDownloadEnv.logger.debug("replace existing {0}".format(saved_filename))
+        if TDownloadEnv.logger is not None:
+            TDownloadEnv.logger.debug("replace existing {0}".format(saved_filename))
         os.remove(saved_filename)
     os.rename(filename, saved_filename)
     TDownloadEnv.send_pdf_to_conversion(saved_filename, file_extension, sha256)

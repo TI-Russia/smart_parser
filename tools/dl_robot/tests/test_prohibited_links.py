@@ -1,5 +1,6 @@
 from unittest import TestCase
-from web_site_db.robot_step import web_link_is_absolutely_prohibited
+from web_site_db.robot_step import TRobotStep
+from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
 from common.download import TDownloadEnv
 from common.logging_wrapper import setup_logging
 import os
@@ -44,6 +45,10 @@ BAD_LINKS = [
 class TestProhibitedLinks(TestCase):
     def test_prohibited_links(self):
         logger = setup_logging('test_prohibited')
+        class TDummy:
+            def __init__(self):
+                self.logger = logger
+        robot_step = TRobotStep(TDummy(), None)
         with tempfile.TemporaryDirectory(dir=os.path.dirname(__file__), prefix="cached_prohibited.") as tmp_folder:
             TDownloadEnv.FILE_CACHE_FOLDER = str(tmp_folder)
             for (source, target, is_prohibited) in BAD_LINKS:
@@ -51,4 +56,5 @@ class TestProhibitedLinks(TestCase):
                     source = 'http://' + source
                 if not target.startswith('http'):
                     target = 'http://' + target
-                self.assertEqual(is_prohibited, web_link_is_absolutely_prohibited(logger, source, target))
+
+                self.assertEqual(is_prohibited, robot_step.web_link_is_absolutely_prohibited(source, target))
