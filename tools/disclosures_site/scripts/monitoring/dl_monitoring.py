@@ -193,11 +193,18 @@ class TDlrobotAllStats:
         with open(self.args.conversion_server_stats, encoding="utf8") as inp:
             timestamps = list()
             ocr_pending_all_file_sizes = list()
+            line_no = 1
             for l in inp:
-                (timestamp, stats) = l.split("\t")
-                dttime = datetime.datetime.fromtimestamp(int(timestamp))
-                timestamps.append(pd.Timestamp(dttime))
-                ocr_pending_all_file_sizes.append( json.loads(stats)['ocr_pending_all_file_size'])
+                try:
+                    (timestamp, stats) = l.split("\t")
+                    dttime = datetime.datetime.fromtimestamp(int(timestamp))
+                    timestamps.append(pd.Timestamp(dttime))
+                    ocr_pending_all_file_sizes.append( json.loads(stats)['ocr_pending_all_file_size'])
+                    line_no += 1
+                except Exception as exp:
+                    print("cannot parse line index {} file {}".format(line_no, self.args.conversion_server_stats))
+                    raise
+
 
         df = pd.DataFrame({'Time': timestamps, "ocr_pending_file_sizes": ocr_pending_all_file_sizes})
         fig = px.line(df, x='Time', y='ocr_pending_file_sizes',

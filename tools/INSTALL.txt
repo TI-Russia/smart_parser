@@ -35,7 +35,7 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
 2.1 sudo apt update
    sudo apt install -y  curl p7zip-full unrar libcurl4-openssl-dev libssl-dev libreoffice \
         python3-wheel calibre  catdoc xlsx2csv default-libmysqlclient-dev libgdiplus python3-pip python3.8-dev \
-        firefox git  sshfs libcurl4
+        firefox git  sshfs libcurl4  libxss1 libappindicator1 libindicator7
 
 2.2 git clone https://github.com/TI-Russia/smart_parser.git ~/smart_parser
 
@@ -70,7 +70,14 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
       sudo wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz
       sudo tar xfz geckodriver-v0.26.0-linux64.tar.gz
 
-2.10. Test dlrobot
+2.10
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    sudo apt install ./google-chrome*.deb -y
+    wget https://chromedriver.storage.googleapis.com/90.0.4430.24/chromedriver_linux64.zip
+    unzip chromedriver_linux64.zip
+    sudo cp chromedriver /usr/bin
+
+2.11 Test dlrobot
     cd ~/smart_parser/tools/dl_robot/tests
     python3 -m unittest
 
