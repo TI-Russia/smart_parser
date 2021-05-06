@@ -3,6 +3,8 @@ from DeclDocRecognizer.external_convertors import TExternalConverters
 from common.download import TDownloadEnv
 from common.logging_wrapper import close_logger
 from web_site_db.robot_project import TRobotProject
+from ConvStorage.conv_storage_server import TConvertProcessor
+from ConvStorage.conv_storage_server import TConvertStorage
 
 from unittest import TestCase
 import os
@@ -11,6 +13,7 @@ import shutil
 from datetime import datetime
 import http.server
 from functools import partial
+from common.primitives import is_http_port_free
 
 
 def start_server(server):
@@ -20,22 +23,20 @@ def start_server(server):
         pass
 
 
-def is_port_free(port):
-    import socket
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        return s.connect_ex(('127.0.0.1', port)) != 0
-
-
 class TTestEnv:
 
-    def __init__(self, port, website_folder, regional_main_pages=[], crawling_timeout=None):
-        self.web_site = None
-        self.web_site_folder = None
+    def __init__(self, port, website_folder, regional_main_pages=[]):
+        self.dlrobot = None
+        self.dlrobot_project = None
+        self.web_site_folder = os.path.join(os.path.dirname(__file__), website_folder)
         name = os.path.basename(website_folder)
         self.data_folder = os.path.join(os.path.dirname(__file__), "data.{}".format(name))
         self.dlrobot_result_folder = os.path.join(self.data_folder, "result")
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
+        handler = partial(http.server.SimpleHTTPRequestHandler,
+                          directory=self.web_site_folder)
+        self.web_site = http.server.HTTPServer(server_address=("127.0.0.1", port), RequestHandlerClass=handler)
         os.mkdir(self.data_folder)
         os.chdir(self.data_folder)
         self.project_path = os.path.join(self.data_folder, "project.txt")
@@ -47,13 +48,10 @@ class TTestEnv:
         with open(self.project_path, "w") as outp:
             outp.write(project)
 
-        assert is_port_free(port)
-        self.web_site_folder = os.path.join(os.path.dirname(__file__), website_folder)
-        handler = partial(http.server.SimpleHTTPRequestHandler,
-                          directory=self.web_site_folder)
-        self.web_site = http.server.HTTPServer(server_address=("127.0.0.1", port), RequestHandlerClass=handler)
-        threading.Thread(target=start_server, args=(self.web_site,)).start()
+        assert is_http_port_free(port)
 
+    def start_server_and_robot(self, crawling_timeout=None):
+        threading.Thread(target=start_server, args=(self.web_site,)).start()
         dlrobot_args = ['--clear-cache-folder',  '--project', self.project_path]
         if crawling_timeout is not None:
             dlrobot_args.extend(['--crawling-timeout', str(crawling_timeout)])
@@ -87,6 +85,7 @@ class TestSimple(TestCase):
 
     def setUp(self):
         self.env = TTestEnv(self.web_site_port, "web_sites/simple")
+        self.env.start_server_and_robot()
 
     def tearDown(self):
         self.env.tearDown()
@@ -100,6 +99,7 @@ class TestArchive(TestCase):
 
     def setUp(self):
         self.env = TTestEnv(self.web_site_port, "web_sites/archives")
+        self.env.start_server_and_robot()
 
     def tearDown(self):
         self.env.tearDown()
@@ -123,21 +123,44 @@ class TestWebSiteWithPdf(TestCase):
 
 class TestRandomPdf(TestCase):
     web_site_port = 8193
+    conv_server_port = 8196
 
     def setUp(self):
-        website_folder = "web_sites/random_pdf"
-        website_folder = os.path.join(os.path.dirname(__file__), website_folder)
-        txt_file = os.path.join(website_folder, "random.txt")
-        pdf_file = os.path.join(website_folder, "random.pdf")
+        self.conv_server_address = "localhost:{}".format(self.conv_server_port)
+        os.environ['DECLARATOR_CONV_URL'] = self.conv_server_address
+        self.env = TTestEnv(self.web_site_port, "web_sites/random_pdf")
+        txt_file = os.path.join(self.env.web_site_folder, "random.txt")
+        pdf_file = os.path.join(self.env.web_site_folder, "random.pdf")
         with open(txt_file, "w") as outp:
             outp.write(str(datetime.now()))
         converters = TExternalConverters()
         converters.convert_to_pdf(txt_file, pdf_file)
         assert os.path.exists(pdf_file)
+        conv_project = os.path.join(self.env.data_folder, "conv.json")
+        TConvertStorage.create_empty_db("db_input_files", "db_converted_files", conv_project)
 
-        self.env = TTestEnv(self.web_site_port, website_folder)
+
+        conv_server_args = [
+            '--server-address', self.conv_server_address,
+            '--use-abiword',
+            '--disable-winword',
+            '--disable-killing-winword',
+            '--db-json', conv_project
+        ]
+        self.conv_server = TConvertProcessor(TConvertProcessor.parse_args(conv_server_args))
+
+        def start_conv_server(server):
+            server.start_http_server()
+        self.conv_server_thread = threading.Thread(target=start_conv_server, args=(self.conv_server,))
+        self.conv_server_thread.start()
+
+        self.env.start_server_and_robot()
+
+        os.environ['DECLARATOR_CONV_URL'] = ''
 
     def tearDown(self):
+        self.conv_server.stop_http_server()
+        self.conv_server_thread.join(1)
         self.env.tearDown()
 
     def test_pdf(self):
@@ -150,6 +173,7 @@ class TestDownloadWithJs(TestCase):
 
     def setUp(self):
         self.env = TTestEnv(self.web_site_port, "web_sites/mkrf2")
+        self.env.start_server_and_robot()
 
     def tearDown(self):
         self.env.tearDown()
@@ -163,6 +187,7 @@ class TestWebsiteWithJs(TestCase):
 
     def setUp(self):
         self.env = TTestEnv(self.web_site_port, "web_sites/website_with_js")
+        self.env.start_server_and_robot()
 
     def tearDown(self):
         self.env.tearDown()
@@ -176,6 +201,7 @@ class TestRegional(TestCase):
 
     def setUp(self):
         self.env = TTestEnv(self.web_site_port, "web_sites/with_regional", regional_main_pages=["magadan.html"])
+        self.env.start_server_and_robot()
 
     def tearDown(self):
         self.env.tearDown()
@@ -188,7 +214,8 @@ class TestCrawlingTimeout(TestCase):
     web_site_port = 8204
 
     def setUp(self):
-        self.env = TTestEnv(self.web_site_port, "web_sites/simple", crawling_timeout=1)
+        self.env = TTestEnv(self.web_site_port, "web_sites/simple")
+        self.env.start_server_and_robot(crawling_timeout=1)
 
     def tearDown(self):
         self.env.tearDown()

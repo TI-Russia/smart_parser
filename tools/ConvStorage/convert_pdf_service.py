@@ -2,7 +2,7 @@ import time
 import logging
 import os
 
-from conv_storage_server import conversion_server_main, TConvertProcessor
+from conv_storage_server import TConvertProcessor
 
 WORKING_DIR = "c:\\tmp\\conv_db"
 SERVER_ADDRESS = "192.168.100.152:8091" #production

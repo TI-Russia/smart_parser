@@ -35,7 +35,7 @@ class TConvertStorage:
         self.snow_ball_os_error_count = 0
 
     @staticmethod
-    def create_empty_db(output_filename, input_folder, converted_folder):
+    def create_empty_db(input_folder, converted_folder, output_filename):
         db = {
             "input_folder": input_folder,
             "converted_folder": converted_folder

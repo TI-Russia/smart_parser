@@ -39,6 +39,7 @@ class TDocConversionClient(object):
         parser.add_argument("--skip-receiving", dest='receive_files', default=True, action="store_false",
                             required=False)
         parser.add_argument("--output-folder", dest='output_folder', default=None, required=False)
+        TDocConversionClient.DECLARATOR_CONV_URL = os.environ.get('DECLARATOR_CONV_URL') #reread for tests
         return parser.parse_args(arg_list)
 
     def __init__(self, args, logger=None):
@@ -302,7 +303,7 @@ def assert_declarator_conv_alive(logger=None):
     try:
         url = "http://" + TDocConversionClient.DECLARATOR_CONV_URL+"/ping"
         if logger is not None:
-            logger.debug ("try to fetch {}".format(url))
+            logger.debug ("try to ping pdf conversion server {}".format(url))
         with urllib.request.urlopen(url, timeout=300) as response:
             if response.read() == "yes":
                 return True

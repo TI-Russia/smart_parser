@@ -1,5 +1,5 @@
 from ConvStorage.convert_storage import TConvertStorage
-from common.primitives import build_dislosures_sha256_by_file_data
+from common.primitives import build_dislosures_sha256_by_file_data, run_with_timeout
 
 import argparse
 import json
@@ -26,6 +26,15 @@ def convert_to_seconds(s):
         return int(s[:-1]) * seconds_per_unit[s[-1]]
     else:
         return int(s)
+
+
+def convert_pdf_to_docx_with_abiword(input_path, out_path):
+    run_with_timeout(["abiword", '--to=docx', input_path])
+    filename_wo_extenstion, _ = os.path.splitext(input_path)
+    temp_outfile = filename_wo_extenstion + ".docx"
+    if not os.path.exists(temp_outfile):
+        return 1
+    shutil.move(temp_outfile, out_path)
 
 
 def move_file_with_retry(logger, file_name, folder):
@@ -101,6 +110,8 @@ class TConvertProcessor(http.server.HTTPServer):
         parser.add_argument("--db-json", dest='db_json', required=True)
         parser.add_argument("--clear-db", dest='clear_json', required=False, action="store_true")
         parser.add_argument("--disable-ocr", dest='enable_ocr', default=True, required=False, action="store_false")
+        parser.add_argument("--use-abiword", dest='use_abiword', default=False, required=False, action="store_true",
+                            help="use abiword to convert pdf to docx (test purposes)")
         parser.add_argument("--disable-winword", dest='enable_winword', default=True, required=False,
                             action="store_false")
         parser.add_argument("--input-folder", dest='input_folder', required=False, default="input_files")
@@ -260,10 +271,17 @@ class TConvertProcessor(http.server.HTTPServer):
                 self.convert_storage.delete_file_silently(stripped_file)
                 self.register_file_process_finish(input_task, False)
             else:
-                self.logger.info("move {} to {}".format(stripped_file, self.args.ocr_input_folder))
-                move_file_with_retry(self.logger, stripped_file, self.args.ocr_input_folder)
-                self.convert_storage.save_input_file(input_file)
-                self.ocr_tasks[input_task.sha256] = input_task
+                if self.args.use_abiword:
+                    docx_path = stripped_file + ".docx"
+                    self.logger.debug("abiword {} to {}".format(stripped_file, docx_path))
+                    convert_pdf_to_docx_with_abiword(stripped_file, docx_path)
+                    self.convert_storage.save_converted_file(docx_path, input_task.sha256, "abiword", input_task.force)
+                    self.convert_storage.save_input_file(input_file)
+                else:
+                    self.logger.info("move {} to {}".format(stripped_file, self.args.ocr_input_folder))
+                    move_file_with_retry(self.logger, stripped_file, self.args.ocr_input_folder)
+                    self.convert_storage.save_input_file(input_file)
+                    self.ocr_tasks[input_task.sha256] = input_task
 
     def create_cracked_folder(self):
         cracked_prefix = 'input_files_cracked'
@@ -290,8 +308,8 @@ class TConvertProcessor(http.server.HTTPServer):
             os.mkdir(self.args.ocr_output_folder)
         if not os.path.exists(self.args.ocr_input_folder):
             os.mkdir(self.args.ocr_input_folder)
-
-        assert os.path.exists(self.args.microsoft_pdf_2_docx)
+        if self.args.enable_winword:
+            assert os.path.exists(self.args.microsoft_pdf_2_docx)
         self.create_cracked_folder()
 
     def process_ocr_logs(self):

@@ -5,7 +5,7 @@ from dlrobot_server.common_server_worker import TTimeouts, PITSTOP_FILE
 from smart_parser_http.smart_parser_server import TSmartParserHTTPServer
 from source_doc_http.source_doc_server import TSourceDocHTTPServer
 from web_site_db.robot_web_site import TWebSiteReachStatus
-from common.primitives import build_dislosures_sha256
+from common.primitives import build_dislosures_sha256, is_http_port_free
 from common.archives import TDearchiver
 from unittest import TestCase
 
@@ -29,16 +29,10 @@ def start_worker(client):
     client.run_thread_pool()
 
 
-def is_port_free(port):
-    import socket
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        return s.connect_ex(('127.0.0.1', port)) != 0
-
-
 class TTestEnv:
 
     def __init__(self, central_port):
-        assert is_port_free(central_port)
+        assert is_http_port_free(central_port)
         self.central_port = central_port
         self.data_folder = os.path.join(os.path.dirname(__file__), "data.{}".format(central_port))
         self.central_address = "127.0.0.1:{}".format(self.central_port)
@@ -58,14 +52,14 @@ class TTestEnv:
         os.chdir(self.data_folder)
 
     def setup_website(self, port):
-        assert is_port_free(port)
+        assert is_http_port_free(port)
         handler = partial(http.server.SimpleHTTPRequestHandler,
                           directory=os.path.join(os.path.dirname(__file__), "html"))
         self.web_site = http.server.HTTPServer(server_address=("127.0.0.1", port), RequestHandlerClass=handler)
         threading.Thread(target=start_server, args=(self.web_site,)).start()
 
     def setup_smart_parser_server(self, port):
-        assert is_port_free(port)
+        assert is_http_port_free(port)
         input_folder = os.path.join(self.data_folder, "smart_parser_serve_input")
         server_args = ['--input-task-directory', input_folder]
         os.environ['SMART_PARSER_SERVER_ADDRESS'] = '127.0.0.1:{}'.format(port)
@@ -132,7 +126,7 @@ class TTestEnv:
         self.start_worker_thread()
 
     def setup_source_doc_server(self, port):
-        assert is_port_free(port)
+        assert is_http_port_free(port)
         sourec_doc_data_folder = os.path.join(self.data_folder, "source_doc_data")
         os.mkdir(sourec_doc_data_folder)
         server_args = [

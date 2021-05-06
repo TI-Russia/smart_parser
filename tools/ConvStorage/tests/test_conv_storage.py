@@ -1,4 +1,5 @@
 from ConvStorage.conv_storage_server import TConvertProcessor
+from ConvStorage.convert_storage import TConvertStorage
 from ConvStorage.conversion_client import TDocConversionClient
 from common.logging_wrapper import close_logger
 
@@ -7,7 +8,6 @@ import os
 import threading
 import shutil
 import logging
-import json
 import time
 import subprocess
 
@@ -95,13 +95,7 @@ class TTestEnv:
 
         clear_folder(self.pdf_ocr_folder)
         clear_folder(self.pdf_ocr_out_folder)
-
-        with open (self.project_file, "w") as outp:
-            p = {
-                'converted_folder': db_converted_files,
-                'input_folder': db_input_files
-            }
-            json.dump(p, outp, indent=4)
+        TConvertStorage.create_empty_db(db_input_files, db_converted_files, self.project_file)
 
         self.server_args = [
             "--server-address", self.server_address,

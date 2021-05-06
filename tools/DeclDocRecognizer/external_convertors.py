@@ -1,9 +1,9 @@
-import subprocess
+from ConvStorage.conversion_client import TDocConversionClient
+from common.primitives import run_with_timeout
+
 import os
 import shutil
 import sys
-from ConvStorage.conversion_client import TDocConversionClient
-
 
 def find_program_on_windows(program):
     for prefix in ["C:\\Program Files", "C:\\Program Files (x86)"]:
@@ -16,13 +16,6 @@ def run_cmd(cmd):
     #print (cmd)
     return os.system(cmd)
 
-
-def run_with_timeout(args, timeout=20*60):
-    p = subprocess.Popen(args, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
-    try:
-        p.wait(timeout)
-    except subprocess.TimeoutExpired:
-        p.kill()
 
 
 class TExternalConverters:

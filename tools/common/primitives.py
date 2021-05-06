@@ -1,9 +1,11 @@
 import urllib.parse
 import re
-import socket
 from .html_parser import THtmlParser
 import hashlib
 import os
+import socket
+import time
+import subprocess
 
 def normalize_whitespace(str):
     str = re.sub(r'\s+', ' ', str)
@@ -154,3 +156,24 @@ def build_dislosures_sha256(file_path):
     _, file_extension = os.path.splitext(file_path)
     with open(file_path, "rb") as f:
         return build_dislosures_sha256_by_file_data(f.read(), file_extension)
+
+
+def is_http_port_free(port):
+    for i in range(3):
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            x = s.connect_ex(('127.0.0.1', port))
+            if x == 0:
+                #port is open
+                s.close()
+                return True
+            print("wait 10 seconds till port {} is free".format(port))
+            time.sleep(10)
+    return False
+
+
+def run_with_timeout(args, timeout=20*60):
+    p = subprocess.Popen(args, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
+    try:
+        p.wait(timeout)
+    except subprocess.TimeoutExpired:
+        p.kill()
