@@ -32,3 +32,4 @@ telegram_send
 pytest
 setuptools_rust
 pymysql
+ultimate-sitemap-parser

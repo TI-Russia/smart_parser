@@ -60,7 +60,11 @@ class TStats:
                 line = line.strip()
                 items = line.split()
                 # 2020-05-02 23:31:26,669
-                line_time = datetime.datetime.strptime(" ".join((items[0], items[1])), '%Y-%m-%d  %H:%M:%S,%f')
+                try:
+                    line_time = datetime.datetime.strptime(" ".join((items[0], items[1])), '%Y-%m-%d  %H:%M:%S,%f')
+                except Exception as exp:
+                    print ("cannot parse line {}, exception {}, keep going...".format(line, exp))
+                    continue
                 if self.start_time is None:
                     self.start_time = line_time
                 self.end_time = line_time

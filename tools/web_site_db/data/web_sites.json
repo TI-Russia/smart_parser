@@ -26689,7 +26689,8 @@
         "status": "abandoned"
     },
     "old.gov.spb.ru": {
-        "calc_office_id": 191
+        "calc_office_id": 191,
+        "status": "abandoned"
     },
     "krs.gov39.ru": {
         "calc_office_id": 214,
