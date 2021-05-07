@@ -5,7 +5,7 @@ from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
 from common.link_info import check_link_sitemap, check_anticorr_link_text, check_anticorr_link_text_2
 from common.primitives import convert_timeout_to_seconds
 from common.http_request import THttpRequester
-from dl_robot.declaration_link import looks_like_a_declaration_link
+from dl_robot.declaration_link import looks_like_a_declaration_link, check_sveden_url_sitemap_xml
 from common.logging_wrapper import setup_logging
 
 import platform
@@ -31,9 +31,10 @@ ROBOT_STEPS = [
             'request': "противодействие коррупции",
             'policy': "run_after_if_no_results",
             'max_serp_results': 1
-        }
+        },
     },
     {
+        'max_links_from_one_page' : 1000,
         'step_name': "declarations",
         'check_link_func': looks_like_a_declaration_link,
         'include_sources': "copy_if_empty",
@@ -41,6 +42,9 @@ ROBOT_STEPS = [
         'search_engine': {
             'request': '"сведения о доходах"',
             'policy': "run_always_before"
+        },
+        'sitemap_xml': {
+            'check_url_func':  check_sveden_url_sitemap_xml
         },
         'transitive': True,
     }

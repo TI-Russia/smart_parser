@@ -13,6 +13,14 @@ from web_site_db.robot_step import TRobotStep, TUrlInfo
 from common.export_files import TExportEnvironment
 from common.serp_parser import SearchEngine, SerpException
 
+from usp.tree import sitemap_tree_for_homepage
+
+#disable logging for usp.tree
+import logging
+for name in logging.root.manager.loggerDict:
+    if name.startswith('usp.'):
+        logging.getLogger(name).setLevel(logging.CRITICAL)
+
 
 class TWebSiteReachStatus:
     normal = "normal"
@@ -238,7 +246,7 @@ class TWebSiteCrawlSnapshot:
     def find_a_web_page_with_a_similar_html(self, step_info: TRobotStep, url, html_text):
         if len(html_text) > 1000:
             html_text = re.sub('[0-9]+', 'd', html_text)
-            hash_code = "{}_{}_{}".format(step_info.get_step_name(), step_info.second_pass,
+            hash_code = "{}_{}_{}".format(step_info.get_step_name(), step_info.get_check_func_name(),
                                        hashlib.sha256(html_text.encode("utf8")).hexdigest())
             already = self.runtime_processed_files.get(hash_code)
             if already is not None:
@@ -260,6 +268,21 @@ class TWebSiteCrawlSnapshot:
             link_info = TLinkInfo(TClickEngine.manual, self.morda_url, url)
             link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
             target.add_link_wrapper(link_info)
+
+    def add_links_from_sitemap_xml(self, check_url_func, step_info: TRobotStep):
+        tree = sitemap_tree_for_homepage(self.morda_url)
+        cnt = 0
+        useful = 0
+        for page in tree.all_pages():
+            cnt += 1
+            weight = check_url_func(page.url)
+            if weight > TLinkInfo.MINIMAL_LINK_WEIGHT:
+                if page.url not in step_info.pages_to_process:
+                    useful += 1
+                    link_info = TLinkInfo(TClickEngine.sitemap_xml, self.morda_url, page.url, anchor_text="")
+                    link_info.weight = weight
+                    step_info.add_link_wrapper(link_info)
+        self.logger.info("processed {} links from sitemap.xml found {} useful links".format(cnt, useful))
 
     def find_links_for_one_website(self, step_index: int):
         if not TWebSiteReachStatus.can_communicate(self.reach_status):
@@ -289,15 +312,19 @@ class TWebSiteCrawlSnapshot:
             self.parent_project.use_search_engine(target)
             target.pages_to_process.update(target.step_urls)
 
+        if step_passport.get('sitemap_xml'):
+            self.add_links_from_sitemap_xml(step_passport.get('sitemap_xml', {}).get('check_url_func'), target)
+
         save_input_urls = dict(target.pages_to_process.items())
 
-        target.make_one_step()
+        target.apply_function_to_links(step_passport['check_link_func'])
 
-        if len(target.step_urls) == 0 and target.step_passport.get('check_link_func_2'):
-            target.second_pass = True
-            self.logger.debug("second pass with {}".format(target.get_check_func_name()))
-            target.pages_to_process = save_input_urls
-            target.make_one_step()
+        if len(target.step_urls) == 0:
+            func2 = step_passport.get('check_link_func_2')
+            if func2:
+                self.logger.debug("second pass with {}".format(func2.__name__))
+                target.pages_to_process = save_input_urls
+                target.apply_function_to_links(func2)
 
         if self.parent_project.need_search_engine_after(target):
             self.parent_project.use_search_engine(target)

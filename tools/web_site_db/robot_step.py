@@ -69,9 +69,6 @@ class TUrlInfo:
     def add_child_link(self, href, record):
         self.linked_nodes[href] = record
 
-# see https://sutr.ru/about_the_university/svedeniya-ob-ou/education/ with 20000 links
-MAX_LINKS_ON_ONE_WEB_PAGE = 1000
-
 
 def get_office_domain(web_domain):
     index = 2
@@ -128,16 +125,20 @@ class TRobotStep:
     check_local_address = False
 
     def __init__(self, website, step_passport, init_json=None):
+        assert step_passport is not None
         self.website = website
         self.logger = website.logger
         self.step_passport = step_passport
+        self.check_link_func = None
+        # see https://sutr.ru/about_the_university/svedeniya-ob-ou/education/ with 20000 links
+        # see https://www.gov.spb.ru/sitemap/ with 8000 links (and it is normal for huge files)
+        self.max_links_from_one_page = step_passport.get('max_links_from_one_page', 1000000) #1000000 is unlimited
         self.profiler = dict()
         self.step_urls = defaultdict(float)
         # runtime members
         self.processed_pages = None
         self.pages_to_process = dict()
         self.last_processed_url_weights = None
-        self.second_pass = False
 
         if init_json is not None:
             step_urls = init_json.get('step_urls')
@@ -214,10 +215,7 @@ class TRobotStep:
                 prepare_for_logging(link_info.target_url), # not redirected yet
                 prepare_for_logging(link_info.anchor_text)))
         try:
-            if self.second_pass:
-                return self.step_passport['check_link_func_2'](self.logger, link_info)
-            else:
-                return self.step_passport['check_link_func'](self.logger, link_info)
+            return self.check_link_func(self.logger, link_info)
         except UnicodeEncodeError as exp:
             self.logger.debug(exp)
             return False
@@ -259,10 +257,7 @@ class TRobotStep:
             self.website.export_env.export_selenium_doc_if_relevant(link_info)
 
     def get_check_func_name(self):
-        if self.second_pass:
-            return self.step_passport['check_link_func_2'].__name__
-        else:
-            return self.step_passport['check_link_func'].__name__
+        return self.check_link_func.__name__
 
     def add_page_links(self, url, use_selenium=True, use_urllib=True):
         html_parser = None
@@ -321,8 +316,8 @@ class TRobotStep:
         self.processed_pages.add(best_url)
         del self.pages_to_process[best_url]
         self.last_processed_url_weights.append(max_weight)
-        self.logger.debug("max weight={}, index={}/{}, url={} function={}".format(
-            max_weight, url_index, len(self.pages_to_process.keys()), best_url, self.get_check_func_name()))
+        self.logger.debug("choose url {} weight={} index={} left={} function={}".format(
+            best_url, max_weight, url_index, len(self.pages_to_process.keys()), self.get_check_func_name()))
         return best_url
 
     def find_links_in_html_by_text(self, main_url, html_parser: THtmlParser):
@@ -332,7 +327,7 @@ class TRobotStep:
         element_index = 0
         links_to_process = list(html_parser.soup.findAll('a'))
         self.logger.debug("find_links_in_html_by_text url={} links_count={}".format(main_url, len(links_to_process)))
-        for html_link in links_to_process[:MAX_LINKS_ON_ONE_WEB_PAGE]:
+        for html_link in links_to_process[:self.max_links_from_one_page]:
             href = html_link.attrs.get('href')
             if href is not None:
                 element_index += 1
@@ -344,7 +339,7 @@ class TRobotStep:
                 if self.normalize_and_check_link(link_info):
                     self.add_link_wrapper(link_info)
 
-        for frame in html_parser.soup.findAll('iframe')[:MAX_LINKS_ON_ONE_WEB_PAGE]:
+        for frame in html_parser.soup.findAll('iframe')[:self.max_links_from_one_page]:
             href = frame.attrs.get('src')
             if href is not None:
                 element_index += 1
@@ -380,7 +375,7 @@ class TRobotStep:
         page_html = driver_holder.the_driver.page_source
         self.logger.debug("html_size={}, elements_count={}".format(len(page_html), len(elements)))
         for element_index in range(len(elements)):
-            if element_index >= MAX_LINKS_ON_ONE_WEB_PAGE:
+            if element_index >= self.max_links_from_one_page:
                 break
             element = elements[element_index]
             link_text = element.text.strip('\n\r\t ') if element.text is not None else ""
@@ -422,7 +417,9 @@ class TRobotStep:
     def signal_alarm_handler(signum, frame):
         raise OnePageProcessingTimeoutException()
 
-    def make_one_step(self):
+    def apply_function_to_links(self, check_link_func):
+        self.check_link_func = check_link_func
+        assert self.check_link_func is not None
         assert len(self.pages_to_process) > 0
         self.last_processed_url_weights = list()
         use_selenium = self.step_passport.get('fallback_to_selenium', True)
@@ -435,6 +432,7 @@ class TRobotStep:
             url = self.pop_url_with_max_weight(url_index)
             if url is None:
                 break
+
             try:
                 signal.signal(signal.SIGALRM, TRobotStep.signal_alarm_handler)
                 signal.alarm(THttpRequester.WEB_PAGE_LINKS_PROCESSING_MAX_TIME)
@@ -452,3 +450,7 @@ class TRobotStep:
                 use_selenium = False
                 self.logger.error("too many links (>{}),  switch off fallback_to_selenium".format(
                     TRobotStep.panic_mode_url_count))
+
+        if url_index == TRobotStep.max_step_url_count:
+            self.logger.error("this is the last url (max={}) but we have time to crawl further".format(
+                TRobotStep.max_step_url_count))

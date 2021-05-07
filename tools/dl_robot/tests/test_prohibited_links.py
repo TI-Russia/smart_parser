@@ -1,6 +1,6 @@
 from unittest import TestCase
 from web_site_db.robot_step import TRobotStep
-from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
+from common.http_request import THttpRequester
 from common.download import TDownloadEnv
 from common.logging_wrapper import setup_logging
 import os
@@ -48,7 +48,9 @@ class TestProhibitedLinks(TestCase):
         class TDummy:
             def __init__(self):
                 self.logger = logger
-        robot_step = TRobotStep(TDummy(), None)
+
+        THttpRequester.initialize(logger)
+        robot_step = TRobotStep(TDummy(), dict())
         with tempfile.TemporaryDirectory(dir=os.path.dirname(__file__), prefix="cached_prohibited.") as tmp_folder:
             TDownloadEnv.FILE_CACHE_FOLDER = str(tmp_folder)
             for (source, target, is_prohibited) in BAD_LINKS:

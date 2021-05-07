@@ -172,3 +172,9 @@ def looks_like_a_declaration_link(logger, link_info: TLinkInfo):
         link_info.weight = weight
         return True
     return False
+
+
+def check_sveden_url_sitemap_xml(url):
+    if url.find('korrup') != -1 and url.find('incomes') != -1:
+        return TLinkInfo.BEST_LINK_WEIGHT
+    return TLinkInfo.MINIMAL_LINK_WEIGHT

@@ -19,7 +19,6 @@ class TestDeclarationLinkUrllib(TestCase):
         robot_steps = [
             {
                 'step_name': "declarations",
-                'check_link_func': looks_like_a_declaration_link,
                 'fallback_to_selenium': False,
                 'use_urllib': True
             }
@@ -34,7 +33,7 @@ class TestDeclarationLinkUrllib(TestCase):
             step_info = TRobotStep(office_info, robot_steps[0])
             step_info.pages_to_process[start_url] = 0
             step_info.processed_pages = set()
-            step_info.make_one_step()
+            step_info.apply_function_to_links(looks_like_a_declaration_link)
             links = list()
             for url in step_info.step_urls:
                 u = list(urllib.parse.urlparse(url))

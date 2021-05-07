@@ -7,10 +7,12 @@ class TClickEngine:
     selenium = 'selenium'
     google = 'google'
     manual = 'manual'
+    sitemap_xml = 'sitemap_xml'
 
     @staticmethod
     def is_search_engine(s):
         return s == "google"
+
 
 class TLinkInfo:
     MINIMAL_LINK_WEIGHT = 0.0
