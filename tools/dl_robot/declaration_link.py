@@ -83,89 +83,95 @@ def looks_like_a_document_link(logger, link_info: TLinkInfo):
 
 def looks_like_a_declaration_link(logger, link_info: TLinkInfo):
     # here is a place for ML
-    anchor_text = normalize_and_russify_anchor_text(link_info.anchor_text)
-    if re.search('^((сведения)|(справк[аи])) о доходах', anchor_text):
+    anchor_text_russified = normalize_and_russify_anchor_text(link_info.anchor_text)
+    if re.search('^((сведения)|(справк[аи])) о доходах', anchor_text_russified):
         link_info.weight = TLinkInfo.BEST_LINK_WEIGHT
         logger.debug("case 0, weight={}, features: 'сведения о доходах'".format(link_info.weight))
         return True
     page_html = normalize_and_russify_anchor_text(link_info.page_html)
-    if has_negative_words(anchor_text):
+    if has_negative_words(anchor_text_russified):
         return False
     income_regexp = '(доход((ах)|(е)))|(коррупц)'
-
-    good_doc_type_anchor = re.search('(сведения)|(справк[аи])', anchor_text) is not None
-    year_found_anchor = re.search('\\b20[0-9][0-9]\\b', anchor_text) is not None
+    sved_regexp = '(сведения)|(справк[аи])|(sveden)'
+    svedenija_anchor = re.search(sved_regexp, anchor_text_russified) is not None or \
+                       re.search(sved_regexp, link_info.anchor_text, re.IGNORECASE) is not None
+    year_anchor = re.search('\\b20[0-9][0-9]\\b', anchor_text_russified) is not None
     income_page = re.search(income_regexp, page_html) is not None
     source_page_title_has_income_word = re.search(income_regexp, link_info.source_page_title) is not None
-    income_anchor = re.search(income_regexp, anchor_text) is not None
-    role_anchor = is_public_servant_role(anchor_text)
-    document_link = None
+    income_anchor = re.search(income_regexp, anchor_text_russified) is not None
+    role_anchor = is_public_servant_role(anchor_text_russified)
+    document_url = None
     sub_page = check_sub_page_or_iframe(logger, link_info)
-    target_url_has_income_word = False
-    good_doc_type_path = False
+    income_url = False
+    svedenija_url = False
     if link_info.target_url is not None:
-        target = link_info.target_url.lower()
-        if re.search('(^sved)|(sveodoh)', target):
-            good_doc_type_path = True
+        lower_url = link_info.target_url.lower()
+        if re.search('(^sved)|(sveodoh)', lower_url):
+            svedenija_url = True
         income_pattern = '(do[ck]?[hx]od)|(income)'
-        if re.search(income_pattern, target):
-            target_url_has_income_word = True
+        if re.search(income_pattern, lower_url):
+            income_url = True
         if link_info.element_class is not None:
             if isinstance(link_info.element_class, list):
                 for css_class_name in link_info.element_class:
                     if re.search(income_pattern, css_class_name):
-                        target_url_has_income_word = True
+                        income_url = True
 
     positive_case = None
 
     if positive_case is None:
-        if income_page or target_url_has_income_word:
-            if good_doc_type_anchor or year_found_anchor or sub_page:
+        if income_page or income_url:
+            if svedenija_anchor or year_anchor or sub_page:
                 positive_case = "case 1"
             else:
-                if document_link is None:
-                    document_link = looks_like_a_document_link(logger, link_info)  #lazy calculaiton since it has a time-consuming head http-request
-                if document_link:
+                if document_url is None:
+                    document_url = looks_like_a_document_link(logger, link_info)  #lazy calculaiton since it has a time-consuming head http-request
+                if document_url:
                     positive_case = "case 1"
 
     # http://arshush.ru/index.php?option=com_content&task=blogcategory&id=62&Itemid=72
     # "Сведения за 2018 год" - no topic word
     if positive_case is None:
-        if good_doc_type_anchor or good_doc_type_path:
-            if year_found_anchor:
+        if svedenija_anchor or svedenija_url:
+            if year_anchor:
                 positive_case = "case 2"
             else:
-                if document_link is None:
-                    document_link = looks_like_a_document_link(logger, link_info)
-                if document_link:
+                if document_url is None:
+                    document_url = looks_like_a_document_link(logger, link_info)
+                if document_url:
                     positive_case = "case 2"
 
     if positive_case is None:
-        if (income_page or target_url_has_income_word) and role_anchor:
+        if (income_page or income_url) and role_anchor:
             positive_case = "case 3"
 
     if positive_case is None:
-        if source_page_title_has_income_word and target_url_has_income_word:
+        if source_page_title_has_income_word and income_url:
             positive_case = "case 4"
 
     if positive_case is not None:
         weight = TLinkInfo.MINIMAL_LINK_WEIGHT
         if income_anchor:
             weight += TLinkInfo.BEST_LINK_WEIGHT
-        if target_url_has_income_word:
+        if income_url:
             weight += TLinkInfo.BEST_LINK_WEIGHT
-        if good_doc_type_anchor:
+        if svedenija_anchor:
             weight += TLinkInfo.NORMAL_LINK_WEIGHT
-        if good_doc_type_path:
+        if svedenija_url:
             weight += TLinkInfo.NORMAL_LINK_WEIGHT
-        if year_found_anchor:
+        if year_anchor:
             weight += TLinkInfo.TRASH_LINK_WEIGHT  # better than sub_page
-
-        all_features = (("income_page", income_page), ("target_url_has_income_word", target_url_has_income_word), ('income_anchor', income_anchor),
-                        ('good_doc_type_anchor', good_doc_type_anchor), ('good_doc_type_path', good_doc_type_path),
-                        ("document_link", document_link),
+        if income_page:
+            weight += TLinkInfo.LINK_WEIGHT_FOR_INCREMENTING
+        all_features = (("income_page", income_page),
+                        ("income_url", income_url),
+                        ('income_anchor', income_anchor),
+                        ('svedenija_anchor', svedenija_anchor),
+                        ('svedenija_url', svedenija_url),
+                        ("document_url", document_url),
                         ("sub_page", sub_page),
-                        ("year_found_anchor", year_found_anchor), ('role_anchor', role_anchor))
+                        ("year_anchor", year_anchor),
+                        ('role_anchor', role_anchor))
 
         all_features_str = ";".join(k for k, v in all_features if v)
         logger.debug("{}, weight={}, features: {}".format(positive_case, weight, all_features_str))

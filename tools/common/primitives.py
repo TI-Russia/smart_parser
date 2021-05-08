@@ -158,15 +158,15 @@ def build_dislosures_sha256(file_path):
         return build_dislosures_sha256_by_file_data(f.read(), file_extension)
 
 
-def is_http_port_free(port):
+def is_local_http_port_free(port, host='127.0.0.1'):
     for i in range(3):
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            x = s.connect_ex(('127.0.0.1', port))
-            if x == 0:
-                #port is open
+            x = s.connect_ex((host, port))
+            if x != 0:
+                #cannot connect to the port, so it is open to start a new server
                 s.close()
                 return True
-            print("wait 10 seconds till port {} is free".format(port))
+            print("wait 10 seconds till {}:{} is free (socket.connect_ex returned {})".format(host, port, x))
             time.sleep(10)
     return False
 

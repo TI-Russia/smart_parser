@@ -16,6 +16,7 @@ class TClickEngine:
 
 class TLinkInfo:
     MINIMAL_LINK_WEIGHT = 0.0
+    LINK_WEIGHT_FOR_INCREMENTING = 1.0
     TRASH_LINK_WEIGHT = 5.0
     NORMAL_LINK_WEIGHT = 10.0  # these links should be processed in normal case, if weight is less, then we can stop crawling
     BEST_LINK_WEIGHT = 50.0

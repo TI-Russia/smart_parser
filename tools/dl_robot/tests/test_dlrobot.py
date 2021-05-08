@@ -13,7 +13,7 @@ import shutil
 from datetime import datetime
 import http.server
 from functools import partial
-from common.primitives import is_http_port_free
+from common.primitives import is_local_http_port_free
 
 
 def start_server(server):
@@ -48,7 +48,7 @@ class TTestEnv:
         with open(self.project_path, "w") as outp:
             outp.write(project)
 
-        assert is_http_port_free(port)
+        assert is_local_http_port_free(port)
 
     def start_server_and_robot(self, crawling_timeout=None):
         threading.Thread(target=start_server, args=(self.web_site,)).start()

@@ -1,9 +1,6 @@
-from web_site_db.robot_web_site import TWebSiteCrawlSnapshot, TRobotStep
+from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
 from common.selenium_driver import TSeleniumDriver
-from common.link_info import TLinkInfo, TClickEngine
-from common.http_request import THttpRequester
 
-from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
 import json
 import shutil
 import os
@@ -104,7 +101,7 @@ class TRobotProject:
             else:
                 self.robot_step_passports = list()
                 for step_name in json_dict['step_names']:
-                    self.robot_step_passports.append(step_name)
+                    self.robot_step_passports.append({'step_name': step_name})
 
             uniq_domains = set()
             for o in json_dict.get('sites', []):

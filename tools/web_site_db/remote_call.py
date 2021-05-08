@@ -76,6 +76,7 @@ class TRemoteDlrobotCall:
                 self.result_files_count = len(web_site_snapshot.export_env.exported_files)
                 self.reach_status = web_site_snapshot.reach_status
         except Exception as exp:
+            logger.error("Cannot read file {}: exception={}".format(self.project_file, str(exp)))
             pass
 
 
@@ -128,7 +129,10 @@ class TRemoteDlrobotCallList:
         return len(self.remote_calls_by_project_file[project_file])
 
     def get_min_interactions_count(self):
-        return min(len(x) for x in self.remote_calls_by_project_file)
+        if len(self.remote_calls_by_project_file) == 0:
+            return 0
+        else:
+            return min(len(x) for x in self.remote_calls_by_project_file.values())
 
     def get_last_failures_count(self, project_file):
         l = list(self.remote_calls_by_project_file[project_file])

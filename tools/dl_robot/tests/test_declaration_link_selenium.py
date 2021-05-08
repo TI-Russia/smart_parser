@@ -1,3 +1,5 @@
+import json
+
 from common.download import  TDownloadEnv
 from web_site_db.robot_step import TRobotStep, TUrlInfo
 from web_site_db.robot_project import TRobotProject
@@ -37,11 +39,11 @@ class TestDeclarationLinkSelenium(TestCase):
             step_info.pages_to_process[start_url] = 0
             step_info.processed_pages = set()
             step_info.apply_function_to_links(looks_like_a_declaration_link)
-            links = list()
-            for url in step_info.step_urls:
+            links = dict()
+            for url,weight in step_info.step_urls.items():
                 u = list(urllib.parse.urlparse(url))
                 u[1] = "dummy"
-                links.append( urllib.parse.urlunparse(u) )
+                links[urllib.parse.urlunparse(u)] = weight
             return links
 
     def setUp(self):
@@ -64,16 +66,20 @@ class TestDeclarationLinkSelenium(TestCase):
 
     def compare_to_file(self, links, file_name):
         with open(os.path.join(os.path.dirname(__file__), file_name)) as inp:
-            lines = list(l.strip() for l in inp)
-            self.assertSequenceEqual(lines, links)
+            canon_dict = json.load(inp)
+            self.assertDictEqual(canon_dict, links)
 
     def canonize_links(self, links, file_name):
         with open(os.path.join(os.path.dirname(__file__), file_name), "w") as outp:
-            for l in links:
-                outp.write(l + "\n")
+            json.dump(links, outp, indent=4)
 
     def test_mkrf(self):
         found_links = self.download_website('web_sites/culture.gov.ru/culture.gov.ru.txt', 'https://culture.gov.ru/activities/reports/index.php')
         #self.canonize_links(found_links, 'web_sites/culture.gov.ru/found_links')
         self.compare_to_file(found_links, 'web_sites/culture.gov.ru/found_links')
+
+    def test_kolomnagrad(self):
+        found_links = self.download_website('web_sites/kolomnagrad/project.txt', 'https://kolomnagrad.ru/docs/protivodejstvie-korrupcii/svedeniya-o-dohodah/12831-svedenija-o-dohodah-ob-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera-rukovoditelej-municipalnyh-uchrezhdenij-za-2019-god.html')
+        #self.canonize_links(found_links, 'web_sites/kolomnagrad/found_links')
+        self.compare_to_file(found_links, 'web_sites/kolomnagrad/found_links')
 

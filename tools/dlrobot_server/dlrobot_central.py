@@ -1,5 +1,3 @@
-import re
-
 from ConvStorage.conversion_client import TDocConversionClient
 from dlrobot_server.common_server_worker import DLROBOT_HTTP_CODE, TTimeouts, TYandexCloud, DLROBOT_HEADER_KEYS, PITSTOP_FILE
 from common.primitives import convert_timeout_to_seconds, check_internet
@@ -13,6 +11,7 @@ from web_site_db.robot_project import TRobotProject
 from common.logging_wrapper import setup_logging
 
 import argparse
+import re
 import sys
 import os
 from collections import defaultdict
@@ -156,7 +155,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
 
     def find_projects_to_process(self, min_interaction_count):
         web_sites_to_process = list()
-        self.logger.info("filter web sites with interaction count = {}".format(min_interaction_count))
+        self.logger.info("filter web sites with interactions count = {}".format(min_interaction_count))
         for web_site, web_site_info in self.web_sites_db.web_sites.items():
             if self.args.web_site_regexp is not None:
                 if re.match(self.args.web_site_regexp, web_site) is None:
