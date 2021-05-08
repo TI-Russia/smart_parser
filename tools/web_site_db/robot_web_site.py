@@ -75,7 +75,8 @@ class TWebSiteCrawlSnapshot:
                         url += self.morda_url
                         html_data = TDownloadedFile(url).data
                         self.morda_url = url
-                        self.logger.debug('set main url to {}'.format(url))
+                        self.logger.debug('read {} bytes from url {}, treat this url as the main url'.format(
+                            len(html_data), url))
                         self.protocol = protocol
                         self.only_with_www = only_with_www
                         return
@@ -110,7 +111,7 @@ class TWebSiteCrawlSnapshot:
             self.url_nodes[self.morda_url] = TUrlInfo(title=title)
             return True
         except Exception as exp:
-            self.logger.error ("cannot access the main page using selenium")
+            self.logger.error("cannot access the main page using selenium")
             self.reach_status = TWebSiteReachStatus.out_of_reach
 
         try:
@@ -149,9 +150,8 @@ class TWebSiteCrawlSnapshot:
             self.robot_steps = list()
             steps = init_json.get('steps', list())
             for i in range(len(steps)):
-                self.robot_steps.append(TRobotStep(self, **self.parent_project.robot_step_passports[i],
-                                                   init_json=step,
-                                                   is_last_step=(i == len(steps) - 1)))
+                step = self.parent_project.robot_step_passports[i]
+                self.robot_steps.append(TRobotStep(self, **step, is_last_step=(i == len(steps) - 1)))
         for url, info in init_json.get('url_nodes', dict()).items():
             self.url_nodes[url] = TUrlInfo(init_json=info)
         return self

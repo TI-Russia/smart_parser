@@ -137,13 +137,14 @@ class TRobotStep:
     max_step_url_count = 800
     check_local_address = False
 
-    def __init__(self, website, step_name=None, init_json=None, max_links_from_one_page=1000000,
+    def __init__(self, website, step_name=None, init_json=None, step_urls=dict(), max_links_from_one_page=1000000,
                  transitive=False, fallback_to_selenium=True, use_urllib=True, is_last_step=False,
                  check_link_func=None, include_sources=None, check_link_func_2=None, search_engine=dict(),
-                 do_not_copy_urls_from_steps=list(), sitemap_xml_processor=None):
+                 do_not_copy_urls_from_steps=list(), sitemap_xml_processor=None, profiler=dict()):
         self.website = website
         self.logger = website.logger
         self.step_name = step_name
+        self.step_urls = step_urls
         self.transitive = transitive
         self.check_link_func = check_link_func
         self.check_link_func_2 = check_link_func_2
@@ -155,24 +156,15 @@ class TRobotStep:
         self.use_urllib = use_urllib and self.website.enable_urllib
         self.is_last_step = is_last_step
         # see https://sutr.ru/about_the_university/svedeniya-ob-ou/education/ with 20000 links
-        # see https://www.gov.spb.ru/sitemap/ with 8000 links (and it is normal for huge files)
+        # see https://www.gov.spb.ru/sitemap/ with 8000 links (and it is normal for great web sites)
         self.max_links_from_one_page = max_links_from_one_page
-        self.step_urls = defaultdict(float)
+        self.profiler = profiler
 
         # runtime members
-        self.profiler = dict()
         self.processed_pages = None
         self.pages_to_process = dict()
         self.last_processed_url_weights = None
         self.runtime_processed_files = dict()
-        if init_json is not None:
-            step_urls = init_json.get('step_urls')
-            if isinstance(step_urls, list):
-                self.step_urls.update(dict((k, TLinkInfo.MINIMAL_LINK_WEIGHT) for k in step_urls))
-            else:
-                assert (isinstance(step_urls, dict))
-                self.step_urls.update(step_urls)
-            self.profiler = init_json.get('profiler', dict())
 
     def get_selenium_driver(self):
         return self.website.parent_project.selenium_driver
@@ -191,10 +183,10 @@ class TRobotStep:
         for u in self.step_urls:
             m = TUrlMirror(u)
             mirrors[m.normalized_url].append(m)
-        new_step_urls = defaultdict(float)
+        new_step_urls = dict()
         for urls in mirrors.values():
             urls = sorted(urls, key=(lambda x: len(x.input_url)))
-            max_weight = max(self.step_urls[u.input_url] for u in urls)
+            max_weight = max(self.step_urls.get(u.input_url, 0.0) for u in urls)
             new_step_urls[urls[-1].input_url] = max_weight  # get the longest url and max weight
         self.step_urls = new_step_urls
 
@@ -231,7 +223,7 @@ class TRobotStep:
     def to_json(self):
         return {
             'step_name': self.step_name,
-            'step_urls': dict((k, v) for (k, v)  in self.step_urls.items()),
+            'step_urls': self.step_urls,
             'profiler': self.profiler
         }
 
@@ -262,7 +254,7 @@ class TRobotStep:
         href = link_info.target_url
 
         self.website.url_nodes[link_info.source_url].add_child_link(href, link_info.to_json())
-        link_info.weight = max(link_info.weight, self.step_urls[href])
+        link_info.weight = max(link_info.weight, self.step_urls.get(href, 0.0))
         self.step_urls[href] = link_info.weight
 
         if href not in self.website.url_nodes:
@@ -510,17 +502,16 @@ class TRobotStep:
                     self.add_link_wrapper(link_info)
         self.logger.info("processed {} links from sitemap.xml found {} useful links".format(cnt, useful))
 
-    def use_search_engine(self):
+    def use_search_engine(self, morda_url):
         request = self.search_engine['request']
         max_results = self.search_engine.get('max_serp_results', 10)
         self.logger.info('search engine request: {}'.format(request))
-        morda_url = self.website.morda_url
         site = self.website.get_domain_name()
         serp_urls = list()
         search_engine = None
         for search_engine in range(0, SearchEngineEnum.SearchEngineCount):
             try:
-                serp_urls = SearchEngine.site_search(search_engine, site, request, self.self.get_selenium_driver())
+                serp_urls = SearchEngine.site_search(search_engine, site, request, self.get_selenium_driver())
                 break
             except (SerpException, THttpRequester.RobotHttpException, WebDriverException, InvalidSwitchToTargetException) as err:
                 self.logger.error('cannot request search engine, exception: {}'.format(err))
@@ -534,7 +525,7 @@ class TRobotStep:
         for url in serp_urls:
             link_info = TLinkInfo(TClickEngine.google, morda_url, url, anchor_text=request)
             link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
-            step_info.add_link_wrapper(link_info)
+            self.add_link_wrapper(link_info)
             links_count += 1
             if max_results == 1:
                 break  # one  link found
@@ -543,7 +534,7 @@ class TRobotStep:
     def make_one_step(self, start_pages, regional_main_pages):
         self.logger.info("=== step {0} =========".format(self.step_name))
         self.logger.info(self.website.get_domain_name())
-        self.step_urls = defaultdict(float)
+        self.step_urls = dict()
         start_time = time.time()
         if self.is_last_step:
             self.website.create_export_folder()
@@ -556,7 +547,7 @@ class TRobotStep:
             self.step_urls.update(self.pages_to_process)
 
         if self.need_search_engine_before():
-            self.use_search_engine()
+            self.use_search_engine(self.website.morda_url)
             self.pages_to_process.update(self.step_urls)
 
         if self.sitemap_xml_processor:
@@ -573,7 +564,7 @@ class TRobotStep:
                 self.apply_function_to_links(self.check_link_func_2)
 
         if self.need_search_engine_after():
-            self.use_search_engine(self)
+            self.use_search_engine(self.website.morda_url)
 
         if self.step_name == "sitemap":
             self.add_regional_main_pages(regional_main_pages)

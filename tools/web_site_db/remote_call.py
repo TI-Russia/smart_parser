@@ -127,6 +127,9 @@ class TRemoteDlrobotCallList:
     def get_interactions_count(self, project_file):
         return len(self.remote_calls_by_project_file[project_file])
 
+    def get_min_interactions_count(self):
+        return min(len(x) for x in self.remote_calls_by_project_file)
+
     def get_last_failures_count(self, project_file):
         l = list(self.remote_calls_by_project_file[project_file])
         l.sort(key=lambda x: -x.start_time)

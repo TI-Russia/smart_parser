@@ -72,31 +72,19 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
 
         return args
 
-    def initialize_tasks(self):
-        self.worker_2_running_tasks.clear()
-
-        self.web_sites_to_process = list()
-        self.web_sites_db = TDeclarationWebSiteList(self.logger, self.args.input_task_list).load_from_disk()
-
-        if not os.path.exists(self.args.result_folder):
-            os.makedirs(self.args.result_folder)
-        self.init_projects_to_process()
-
-        self.logger.debug("there are {} web sites to process".format(len(self.web_sites_to_process)))
-        self.worker_2_running_tasks.clear()
-
     def __init__(self, args):
         self.logger = setup_logging(log_file_name=args.log_file_name, append_mode=True)
         self.conversion_client = TDocConversionClient(TDocConversionClient.parse_args([]), self.logger)
         self.args = args
         self.dlrobot_remote_calls = TRemoteDlrobotCallList(logger=self.logger, file_name=args.remote_calls_file)
-        self.web_sites_to_process = list()
         self.worker_2_running_tasks = defaultdict(list)
         self.worker_2_continuous_failures_count = defaultdict(int)
-        self.initialize_tasks()
+        self.web_sites_db = TDeclarationWebSiteList(self.logger, self.args.input_task_list).load_from_disk()
+        if not os.path.exists(self.args.result_folder):
+            os.makedirs(self.args.result_folder)
+        self.web_sites_to_process = self.find_projects_to_process(self.dlrobot_remote_calls.get_min_interactions_count())
         self.cloud_id_to_worker_ip = dict()
-        self.last_remote_call = None # for testing
-        self.banned_workers = set()
+        self.last_remote_call = None  # for testing
         host, port = self.args.server_address.split(":")
         self.logger.debug("start server on {}:{}".format(host, port))
         super().__init__((host, int(port)), TDlrobotRequestHandler)
@@ -166,22 +154,20 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                 self.logger.debug("set web_site status to {}".format(remote_call.web_site, TWebSiteReachStatus.out_of_reach2))
                 self.web_sites_db.set_status_to_web_site(remote_call.web_site, TWebSiteReachStatus.out_of_reach2)
 
-    def init_projects_to_process(self):
-        self.web_sites_to_process = list()
+    def find_projects_to_process(self, min_interaction_count):
+        web_sites_to_process = list()
+        self.logger.info("filter web sites with interaction count = {}".format(min_interaction_count))
         for web_site, web_site_info in self.web_sites_db.web_sites.items():
             if self.args.web_site_regexp is not None:
                 if re.match(self.args.web_site_regexp, web_site) is None:
                     continue
             if TWebSiteReachStatus.can_communicate(web_site_info.reach_status):
-                self.web_sites_to_process.append(web_site)
+                project_file = TRemoteDlrobotCall.web_site_to_project_file(web_site)
+                if self.dlrobot_remote_calls.get_interactions_count(project_file) <= min_interaction_count:
+                    web_sites_to_process.append(web_site)
 
-        self.logger.info("there are {} sites in the input queue".format(len(self.web_sites_to_process)))
-
-        def interaction_count(website):
-            project_file = TRemoteDlrobotCall.web_site_to_project_file(website)
-            return self.dlrobot_remote_calls.get_interactions_count(project_file)
-
-        self.web_sites_to_process.sort(key=interaction_count)
+        self.logger.info("there are {} sites in the input queue".format(len(web_sites_to_process)))
+        return web_sites_to_process
 
     def get_running_jobs_count(self):
         return sum(len(w) for w in self.worker_2_running_tasks.values())
@@ -376,7 +362,6 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
     def get_stats(self):
         workers = dict((k, list(r.write_to_json() for r in v))
                             for (k, v) in self.worker_2_running_tasks.items())
-
         stats = {
             'running_count': self.get_running_jobs_count(),
             'input_tasks': len(self.web_sites_to_process),
@@ -416,6 +401,12 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             self.end_headers()
             stats = json.dumps(self.server.get_stats()) + "\n"
             self.wfile.write(stats.encode('utf8'))
+            return True
+        if self.path == "/unban-all":
+            self.worker_2_continuous_failures_count.clear()
+            self.server.logger.error(exp)
+            self.send_response(200)
+            self.end_headers()
             return True
         return False
 
