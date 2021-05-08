@@ -36,6 +36,7 @@ class TTestEnv:
             shutil.rmtree(self.data_folder, ignore_errors=True)
         handler = partial(http.server.SimpleHTTPRequestHandler,
                           directory=self.web_site_folder)
+        assert is_local_http_port_free(port)
         self.web_site = http.server.HTTPServer(server_address=("127.0.0.1", port), RequestHandlerClass=handler)
         os.mkdir(self.data_folder)
         os.chdir(self.data_folder)
@@ -48,7 +49,7 @@ class TTestEnv:
         with open(self.project_path, "w") as outp:
             outp.write(project)
 
-        assert is_local_http_port_free(port)
+
 
     def start_server_and_robot(self, crawling_timeout=None):
         threading.Thread(target=start_server, args=(self.web_site,)).start()
