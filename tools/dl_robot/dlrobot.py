@@ -43,7 +43,7 @@ ROBOT_STEPS = [
             'request': '"сведения о доходах"',
             'policy': "run_always_before"
         },
-        'sitemap_xml': {
+        'sitemap_xml_processor': {
             'check_url_func':  check_sveden_url_sitemap_xml
         },
         'transitive': True,

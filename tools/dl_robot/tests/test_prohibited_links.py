@@ -45,12 +45,20 @@ BAD_LINKS = [
 class TestProhibitedLinks(TestCase):
     def test_prohibited_links(self):
         logger = setup_logging('test_prohibited')
-        class TDummy:
+
+        class TDummyProject:
             def __init__(self):
                 self.logger = logger
+                self.enable_selenium = False
+
+        class TDummyWebSite:
+            def __init__(self):
+                self.logger = logger
+                self.enable_urllib = True
+                self.parent_project = TDummyProject()
 
         THttpRequester.initialize(logger)
-        robot_step = TRobotStep(TDummy(), dict())
+        robot_step = TRobotStep(TDummyWebSite())
         with tempfile.TemporaryDirectory(dir=os.path.dirname(__file__), prefix="cached_prohibited.") as tmp_folder:
             TDownloadEnv.FILE_CACHE_FOLDER = str(tmp_folder)
             for (source, target, is_prohibited) in BAD_LINKS:

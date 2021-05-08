@@ -1,7 +1,6 @@
 from web_site_db.robot_web_site import TWebSiteCrawlSnapshot, TRobotStep
 from common.selenium_driver import TSeleniumDriver
 from common.link_info import TLinkInfo, TClickEngine
-from common.serp_parser import SearchEngine, SearchEngineEnum, SerpException
 from common.http_request import THttpRequester
 
 from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
@@ -189,48 +188,6 @@ class TRobotProject:
                     "files_sorted": unique_files,
                 }
                 json.dump(report, outf, ensure_ascii=False, indent=4)
-
-    def use_search_engine(self, step_info):
-        request = step_info.step_passport['search_engine']['request']
-        max_results = step_info.step_passport['search_engine'].get('max_serp_results', 10)
-        self.logger.info('search engine request: {}'.format(request))
-        morda_url = step_info.website.morda_url
-        site = step_info.website.get_domain_name()
-        serp_urls = list()
-        search_engine = None
-        for search_engine in range(0, SearchEngineEnum.SearchEngineCount):
-            try:
-                serp_urls = SearchEngine.site_search(search_engine, site, request, self.selenium_driver)
-                break
-            except (SerpException, THttpRequester.RobotHttpException, WebDriverException, InvalidSwitchToTargetException) as err:
-                self.logger.error('cannot request search engine, exception: {}'.format(err))
-                self.logger.debug("sleep 10 seconds and retry other search engine")
-                time.sleep(10)
-                self.selenium_driver.restart()
-                time.sleep(5)
-                self.logger.error('retry...')
-
-        links_count = 0
-        for url in serp_urls:
-            link_info = TLinkInfo(TClickEngine.google, morda_url, url, anchor_text=request)
-            link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
-            step_info.add_link_wrapper(link_info)
-            links_count += 1
-            if max_results == 1:
-                break  # one  link found
-        self.logger.info('found {} links using search engine id={}'.format(links_count, search_engine))
-
-    def need_search_engine_before(self, step_info: TRobotStep):
-        if not self.enable_search_engine:
-            return False
-        policy = step_info.step_passport.get('search_engine', dict()).get('policy','')
-        return policy == "run_always_before"
-
-    def need_search_engine_after(self, step_info: TRobotStep):
-        if not self.enable_search_engine:
-            return False
-        policy = step_info.step_passport.get('search_engine', dict()).get('policy', '')
-        return policy == "run_after_if_no_results" and len(step_info.step_urls) == 0
 
     def export_files_to_folder(self):
         for web_site in self.web_site_snapshots:

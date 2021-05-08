@@ -1,25 +1,15 @@
 from common.download import TDownloadedFile
 from common.http_request import THttpRequester
-from collections import defaultdict
 from common.primitives import get_site_domain_wo_www, get_html_title
-import os
-import shutil
-import time
-import datetime
-import hashlib
-import re
 from common.link_info import TLinkInfo, TClickEngine
 from web_site_db.robot_step import TRobotStep, TUrlInfo
 from common.export_files import TExportEnvironment
 from common.serp_parser import SearchEngine, SerpException
 
-from usp.tree import sitemap_tree_for_homepage
-
-#disable logging for usp.tree
-import logging
-for name in logging.root.manager.loggerDict:
-    if name.startswith('usp.'):
-        logging.getLogger(name).setLevel(logging.CRITICAL)
+import os
+import shutil
+import time
+import datetime
 
 
 class TWebSiteReachStatus:
@@ -51,7 +41,6 @@ class TWebSiteCrawlSnapshot:
         self.start_crawling_time = time.time()
         self.parent_project = project
         self.logger = project.logger
-        self.runtime_processed_files = dict()
         self.export_env = TExportEnvironment(self)
         self.stopped_by_timeout = False
 
@@ -61,16 +50,15 @@ class TWebSiteCrawlSnapshot:
         self.morda_url = ""
         self.office_name = ""
         self.reach_status = TWebSiteReachStatus.normal
-        self.robot_steps = list()
         self.regional_main_pages = list()
         self.reach_status = None
         self.protocol = "http"
         self.only_with_www = False
 
-        if len(self.robot_steps) == 0:
-            for p in project.robot_step_passports:
-                self.robot_steps.append(TRobotStep(self, p))
-        assert len(self.robot_steps) == len(project.robot_step_passports)
+        self.robot_steps = list(
+            TRobotStep(self, **project.robot_step_passports[i],
+                       is_last_step=(i == len(project.robot_step_passports) - 1))
+                for i in range(len(project.robot_step_passports)))
 
     def recognize_protocol_and_www(self):
         if self.morda_url.startswith('http://'):
@@ -159,8 +147,11 @@ class TWebSiteCrawlSnapshot:
 
         if init_json.get('steps') is not None:
             self.robot_steps = list()
-            for step_no, step in enumerate(init_json.get('steps', list())):
-                self.robot_steps.append(TRobotStep(self, self.parent_project.robot_step_passports[step_no], init_json=step))
+            steps = init_json.get('steps', list())
+            for i in range(len(steps)):
+                self.robot_steps.append(TRobotStep(self, **self.parent_project.robot_step_passports[i],
+                                                   init_json=step,
+                                                   is_last_step=(i == len(steps) - 1)))
         for url, info in init_json.get('url_nodes', dict()).items():
             self.url_nodes[url] = TUrlInfo(init_json=info)
         return self
@@ -243,108 +234,15 @@ class TWebSiteCrawlSnapshot:
             shutil.rmtree(office_folder)
         os.makedirs(office_folder)
 
-    def find_a_web_page_with_a_similar_html(self, step_info: TRobotStep, url, html_text):
-        if len(html_text) > 1000:
-            html_text = re.sub('[0-9]+', 'd', html_text)
-            hash_code = "{}_{}_{}".format(step_info.get_step_name(), step_info.get_check_func_name(),
-                                       hashlib.sha256(html_text.encode("utf8")).hexdigest())
-            already = self.runtime_processed_files.get(hash_code)
-            if already is not None:
-                return already
-            self.runtime_processed_files[hash_code] = url
-        return None
-
-    def get_previous_step_urls(self, step_index):
-        if step_index == 0:
-            rec = {self.morda_url: 0}
-            return rec
-        else:
-            return self.robot_steps[step_index - 1].step_urls
-
-    def add_regional_main_pages(self, target: TRobotStep):
-        for url in self.regional_main_pages:
-            if not url.startswith('http'):
-                url = self.protocol + "://" + url
-            link_info = TLinkInfo(TClickEngine.manual, self.morda_url, url)
-            link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
-            target.add_link_wrapper(link_info)
-
-    def add_links_from_sitemap_xml(self, check_url_func, step_info: TRobotStep):
-        tree = sitemap_tree_for_homepage(self.morda_url)
-        cnt = 0
-        useful = 0
-        for page in tree.all_pages():
-            cnt += 1
-            weight = check_url_func(page.url)
-            if weight > TLinkInfo.MINIMAL_LINK_WEIGHT:
-                if page.url not in step_info.pages_to_process:
-                    useful += 1
-                    link_info = TLinkInfo(TClickEngine.sitemap_xml, self.morda_url, page.url, anchor_text="")
-                    link_info.weight = weight
-                    step_info.add_link_wrapper(link_info)
-        self.logger.info("processed {} links from sitemap.xml found {} useful links".format(cnt, useful))
-
     def find_links_for_one_website(self, step_index: int):
         if not TWebSiteReachStatus.can_communicate(self.reach_status):
             return
-        step_passport = self.parent_project.robot_step_passports[step_index]
-        step_name = step_passport['step_name']
-        self.logger.info("=== step {0} =========".format(step_name))
-        self.logger.info(self.get_domain_name())
-        include_source = step_passport['include_sources']
-        is_last_step = step_index == len(self.parent_project.robot_step_passports) - 1
-        target = self.robot_steps[step_index]
-        target.step_urls = defaultdict(float)
-        start_time = time.time()
-        if is_last_step:
-            self.create_export_folder()
-
-        start_pages = self.get_previous_step_urls(step_index)
-
-        target.pages_to_process = dict(start_pages)
-        target.processed_pages = set()
-
-        if include_source == "always":
-            assert not is_last_step  # todo: should we export it?
-            target.step_urls.update(target.pages_to_process)
-
-        if self.parent_project.need_search_engine_before(target):
-            self.parent_project.use_search_engine(target)
-            target.pages_to_process.update(target.step_urls)
-
-        if step_passport.get('sitemap_xml'):
-            self.add_links_from_sitemap_xml(step_passport.get('sitemap_xml', {}).get('check_url_func'), target)
-
-        save_input_urls = dict(target.pages_to_process.items())
-
-        target.apply_function_to_links(step_passport['check_link_func'])
-
-        if len(target.step_urls) == 0:
-            func2 = step_passport.get('check_link_func_2')
-            if func2:
-                self.logger.debug("second pass with {}".format(func2.__name__))
-                target.pages_to_process = save_input_urls
-                target.apply_function_to_links(func2)
-
-        if self.parent_project.need_search_engine_after(target):
-            self.parent_project.use_search_engine(target)
 
         if step_index == 0:
-            self.add_regional_main_pages(target)
+            previous_step_urls = {self.morda_url: 0}
+        else:
+            previous_step_urls = self.robot_steps[step_index - 1].step_urls
 
-        if include_source == "copy_if_empty" and len(target.step_urls) == 0:
-            do_not_copy_urls_from_steps = step_passport.get('do_not_copy_urls_from_steps', list())
-            for url, weight in start_pages.items():
-                step_name = self.url_nodes[url].step_name
-                if step_name not in do_not_copy_urls_from_steps:
-                    target.step_urls[url] = weight
+        self.robot_steps[step_index].make_one_step(previous_step_urls, self.regional_main_pages)
 
-        target.profiler = {
-            "elapsed_time":  time.time() - start_time,
-            "step_request_rate": THttpRequester.get_request_rate(start_time),
-            "site_request_rate": THttpRequester.get_request_rate()
-        }
-        self.logger.debug("{}".format(str(target.profiler)))
-        target.delete_url_mirrors_by_www_and_protocol_prefix()
-        self.logger.info('{0} source links -> {1} target links'.format(len(start_pages), len(target.step_urls)))
 
