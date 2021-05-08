@@ -2,7 +2,6 @@
     "https://dummy/docs/": 0.0,
     "https://dummy/docs/protivodejstvie-korrupcii/": 51.0,
     "https://dummy/docs/protivodejstvie-korrupcii/svedeniya-o-dohodah/": 50.0,
-    "https://dummy/index.php?do=download&id=6017": 16.0,
     "https://dummy/docs/protivodejstvie-korrupcii/svedeniya-o-dohodah/1459-svedeniya-o-dohodah-ob-imuschestve-i-obyazatelstvah-imuschestvennogo-haraktera-rukovoditeley-municipalnyh-uchrezhdeniy.html": 50.0,
     "https://dummy/docs/protivodejstvie-korrupcii/svedeniya-o-dohodah/1458-svedeniya-o-dohodah-rashodah-ob-imuschestve-i-obyazatelstvah-imuschestvennogo-haraktera-lic-zameschayuschih-dolzhnosti-municipalnoy-sluzhby.html": 50.0,
     "https://dummy/docs/protivodejstvie-korrupcii/svedeniya-o-dohodah/12345-svedenija-o-dohodah-ob-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera-rukovoditelej-municipalnyh-uchrezhdenij-podvedomstvennyh-upravleniju-obrazovanija-administracii-kolomenskogo-go.html": 50.0,
@@ -12,5 +11,6 @@
     "https://dummy/presscentr/anonsy/18958-turnir-po-boksu-v-ozerah-projdet-8-maja.html": 6.0,
     "https://dummy/presscentr/anonsy/18950-patrioticheskaja-akcija-avtoprobeg-2021-projdet-v-kolomne-i-ozerah.html": 6.0,
     "https://dummy/presscentr/video/18713-glava-gorodskogo-okruga-kolomna-denis-lebedev-pozdravil-s-dnem-rozhdenija-ninu-gavrilovnu-panovu.html": 0.0,
-    "https://dummy/glava_kolomna.html": 0.0
+    "https://dummy/glava_kolomna.html": 0.0,
+    "cached/downloads/f51d0ed1489a8f1f5e859f529a38e2fd7cc1256a05064bb240a533c4d336c73a.docx": 1
 }

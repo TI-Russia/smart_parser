@@ -421,6 +421,7 @@ class TRobotStep:
             link_text = element.text.strip('\n\r\t ') if element.text is not None else ""
             if len(link_text) == 0:
                 continue
+            mandatory_link = re.search('скачать', link_text, re.IGNORECASE) is not None
 
             #temp debug
             #self.logger.debug("index={} text={} href={}".format(
@@ -429,7 +430,7 @@ class TRobotStep:
             #    element.get_attribute('href')))
 
             href = element.get_attribute('href')
-            if href is not None:
+            if href is not None and not mandatory_link:
                 href = make_link(main_url, href)  # may be we do not need it in selenium?
                 link_info = TLinkInfo(TClickEngine.selenium,
                                       main_url, href,

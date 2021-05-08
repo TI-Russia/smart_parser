@@ -45,7 +45,7 @@ BAD_LINKS = [
 
 class TestProhibitedLinks(TestCase):
     def test_prohibited_links(self):
-        logger = setup_logging('test_prohibited')
+        logger = setup_logging('prohibited')
 
         class TDummyProject:
             def __init__(self):

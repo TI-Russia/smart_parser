@@ -30,7 +30,7 @@ def make_folder_empty(folder):
 class TSeleniumDriver:
 
     def __init__(self, logger, headless=True, download_folder=None, loglevel=None,
-                 scroll_to_bottom_and_wait_more_results=True, start_retry_count=3, use_chrome=False):
+                 scroll_to_bottom_and_wait_more_results=True, start_retry_count=3, use_chrome=True):
         self.logger = logger
         self.the_driver = None
         self.driver_processed_urls_count = 0
@@ -38,8 +38,7 @@ class TSeleniumDriver:
         assert download_folder != "."
         self.headless = headless
         self.loglevel = loglevel
-        #self.use_chrome = use_chrome
-        self.use_chrome = True
+        self.use_chrome = use_chrome
         self.start_retry_count = start_retry_count
         self.scroll_to_bottom_and_wait_more_results = scroll_to_bottom_and_wait_more_results
 
@@ -86,6 +85,7 @@ class TSeleniumDriver:
         for retry in range(self.start_retry_count):
             try:
                 self.the_driver = webdriver.Chrome(options=options, service_log_path="geckodriver.log")
+                self.the_driver.set_window_size(1440, 900)
                 break
             except (WebDriverException, InvalidSwitchToTargetException) as exp:
                 if retry == self.start_retry_count - 1:

@@ -43,6 +43,10 @@ class TestDeclarationLinkSelenium(TestCase):
                 u = list(urllib.parse.urlparse(url))
                 u[1] = "dummy"
                 links[urllib.parse.urlunparse(u)] = weight
+
+            for url_info in office_info.url_nodes.values():
+                for d in url_info.downloaded_files:
+                    links[d.downloaded_file] = 1
             return links
 
     def setUp(self):
@@ -64,6 +68,7 @@ class TestDeclarationLinkSelenium(TestCase):
         TRobotStep.check_local_address = False
 
     def compare_to_file(self, links, file_name):
+        self.maxDiff = None
         with open(os.path.join(os.path.dirname(__file__), file_name)) as inp:
             canon_dict = json.load(inp)
             self.assertDictEqual(canon_dict, links)
@@ -72,7 +77,7 @@ class TestDeclarationLinkSelenium(TestCase):
         with open(os.path.join(os.path.dirname(__file__), file_name), "w") as outp:
             json.dump(links, outp, indent=4)
 
-    def test_mkrf(self):
+    def test_culture(self):
         found_links = self.download_website('web_sites/culture.gov.ru/culture.gov.ru.txt', 'https://culture.gov.ru/activities/reports/index.php')
         #self.canonize_links(found_links, 'web_sites/culture.gov.ru/found_links')
         self.compare_to_file(found_links, 'web_sites/culture.gov.ru/found_links')
@@ -82,3 +87,7 @@ class TestDeclarationLinkSelenium(TestCase):
         #self.canonize_links(found_links, 'web_sites/kolomnagrad/found_links')
         self.compare_to_file(found_links, 'web_sites/kolomnagrad/found_links')
 
+    def test_kolomnagrad1(self):
+        found_links = self.download_website('web_sites/kolomnagrad1/project.txt', 'https://kolomnagrad.ru/index.php?do=download&id=3005')
+        #self.canonize_links(found_links, 'web_sites/kolomnagrad1/found_links')
+        self.compare_to_file(found_links, 'web_sites/kolomnagrad1/found_links')
