@@ -1,5 +1,5 @@
 {
-    "https://dummy/docs/": 1.0,
+    "https://dummy/docs/": 0.0,
     "https://dummy/docs/protivodejstvie-korrupcii/": 51.0,
     "https://dummy/docs/protivodejstvie-korrupcii/svedeniya-o-dohodah/": 50.0,
     "https://dummy/index.php?do=download&id=6017": 16.0,
@@ -11,6 +11,6 @@
     "https://dummy/presscentr/anonsy/18766-koncert-golosa-kolomny-projdet-v-dk-teplovozostroitel.html": 6.0,
     "https://dummy/presscentr/anonsy/18958-turnir-po-boksu-v-ozerah-projdet-8-maja.html": 6.0,
     "https://dummy/presscentr/anonsy/18950-patrioticheskaja-akcija-avtoprobeg-2021-projdet-v-kolomne-i-ozerah.html": 6.0,
-    "https://dummy/presscentr/video/18713-glava-gorodskogo-okruga-kolomna-denis-lebedev-pozdravil-s-dnem-rozhdenija-ninu-gavrilovnu-panovu.html": 1.0,
-    "https://dummy/glava_kolomna.html": 1.0
+    "https://dummy/presscentr/video/18713-glava-gorodskogo-okruga-kolomna-denis-lebedev-pozdravil-s-dnem-rozhdenija-ninu-gavrilovnu-panovu.html": 0.0,
+    "https://dummy/glava_kolomna.html": 0.0
 }

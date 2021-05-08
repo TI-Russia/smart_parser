@@ -137,18 +137,23 @@ class TRobotStep:
     max_step_url_count = 800
     check_local_address = False
 
-    def __init__(self, website, step_name=None, init_json=None, step_urls=dict(), max_links_from_one_page=1000000,
+    def __init__(self, website, step_name=None, step_urls=None, max_links_from_one_page=1000000,
                  transitive=False, fallback_to_selenium=True, use_urllib=True, is_last_step=False,
                  check_link_func=None, include_sources=None, check_link_func_2=None, search_engine=dict(),
                  do_not_copy_urls_from_steps=list(), sitemap_xml_processor=None, profiler=dict()):
         self.website = website
         self.logger = website.logger
         self.step_name = step_name
-        self.step_urls = step_urls
+        if step_urls is None:
+            self.step_urls = dict()
+                # I cannot set step_urls to dict() as a default value, since default dict() is calculated only once in the program,
+                # run python3 -m unittest  --verbose -f -k admkrsk -k akrvo to see the problem
+        else:
+            self.step_urls = step_urls
         self.transitive = transitive
         self.check_link_func = check_link_func
         self.check_link_func_2 = check_link_func_2
-        self.search_engine = search_engine
+        self.search_engine = dict(search_engine.items())
         self.do_not_copy_urls_from_steps = do_not_copy_urls_from_steps
         self.include_sources = include_sources
         self.sitemap_xml_processor = sitemap_xml_processor
@@ -158,7 +163,7 @@ class TRobotStep:
         # see https://sutr.ru/about_the_university/svedeniya-ob-ou/education/ with 20000 links
         # see https://www.gov.spb.ru/sitemap/ with 8000 links (and it is normal for great web sites)
         self.max_links_from_one_page = max_links_from_one_page
-        self.profiler = profiler
+        self.profiler = dict(profiler.items())
 
         # runtime members
         self.processed_pages = None

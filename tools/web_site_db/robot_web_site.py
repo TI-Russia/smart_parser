@@ -55,10 +55,12 @@ class TWebSiteCrawlSnapshot:
         self.protocol = "http"
         self.only_with_www = False
 
-        self.robot_steps = list(
-            TRobotStep(self, **project.robot_step_passports[i],
-                       is_last_step=(i == len(project.robot_step_passports) - 1))
-                for i in range(len(project.robot_step_passports)))
+        self.robot_steps = list()
+        for i in range(len(project.robot_step_passports)):
+            is_last_step = (i == len(project.robot_step_passports) - 1)
+            passport = project.robot_step_passports[i]
+            step = TRobotStep(self, **passport, is_last_step=is_last_step)
+            self.robot_steps.append(step)
 
     def recognize_protocol_and_www(self):
         if self.morda_url.startswith('http://'):

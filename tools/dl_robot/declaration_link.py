@@ -161,7 +161,7 @@ def looks_like_a_declaration_link(logger, link_info: TLinkInfo):
             weight += TLinkInfo.NORMAL_LINK_WEIGHT
         if year_anchor:
             weight += TLinkInfo.TRASH_LINK_WEIGHT  # better than sub_page
-        if income_page:
+        if income_page and weight > 0:
             weight += TLinkInfo.LINK_WEIGHT_FOR_INCREMENTING
         all_features = (("income_page", income_page),
                         ("income_url", income_url),

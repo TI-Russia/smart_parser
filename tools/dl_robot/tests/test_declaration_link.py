@@ -81,7 +81,7 @@ class TestDeclarationLink(TestCase):
             for url in step_info.step_urls:
                 u = list(urllib.parse.urlparse(url))
                 u[1] = "dummy"
-                links.append( urllib.parse.urlunparse(u) )
+                links.append(urllib.parse.urlunparse(u))
             return links
 
     def setUp(self):

@@ -1,10 +1,11 @@
-from unittest import TestCase
 from web_site_db.robot_step import TRobotStep
 from common.http_request import THttpRequester
 from common.download import TDownloadEnv
 from common.logging_wrapper import setup_logging
+
 import os
 import tempfile
+from unittest import TestCase
 
 
 BAD_LINKS = [

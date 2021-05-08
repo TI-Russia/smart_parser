@@ -9,13 +9,13 @@ import time
 
 
 class TRobotProject:
-
+    visited_pages_extension = ".visited_pages"
     def __init__(self, logger, filename, robot_step_passports, export_folder, enable_selenium=True, enable_search_engine=True):
         self.logger = logger
         self.start_time = time.time()
         self.total_timeout = 0
         self.selenium_driver = TSeleniumDriver(logger)
-        self.visited_pages_file = filename + ".visited_pages"
+        self.visited_pages_file = filename + TRobotProject.visited_pages_extension
         self.click_paths_file = filename + ".click_paths"
         self.result_summary_file = filename + ".result_summary"
         if not os.path.exists(self.visited_pages_file):
@@ -84,6 +84,8 @@ class TRobotProject:
                 [],
                 True, #disable_selinium in tests
                 False))
+        if os.path.exists(file_path + TRobotProject.visited_pages_extension):
+            os.unlink(file_path + TRobotProject.visited_pages_extension)
 
     def add_web_site(self, morda_url):
         web_site = TWebSiteCrawlSnapshot(self)

@@ -8,7 +8,6 @@ from unittest import TestCase
 import time
 import os
 import threading
-import logging
 import shutil
 
 HTTP_HEAD_REQUESTS_COUNT = 0

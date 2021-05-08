@@ -1,7 +1,8 @@
-from unittest import TestCase
 from common.http_request import THttpRequester
 from common.download import TDownloadedFile
 from common.logging_wrapper import setup_logging
+from unittest import TestCase
+
 
 class TestRecursion(TestCase):
     def test_yandex(self):

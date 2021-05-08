@@ -1,5 +1,3 @@
-import json
-
 from common.download import  TDownloadEnv
 from web_site_db.robot_step import TRobotStep, TUrlInfo
 from web_site_db.robot_project import TRobotProject
@@ -11,6 +9,7 @@ from unittest import TestCase
 import os
 import urllib
 import shutil
+import json
 
 
 # it looks like mkrf has changed the site structure, so there is no income declaratiosn

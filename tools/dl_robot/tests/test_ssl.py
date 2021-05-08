@@ -1,6 +1,7 @@
 from common.http_request import THttpRequester
 from common.download import TDownloadEnv
 from common.logging_wrapper import setup_logging
+
 from unittest import TestCase
 import shutil
 import os

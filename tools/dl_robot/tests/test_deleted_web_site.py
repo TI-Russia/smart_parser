@@ -3,7 +3,6 @@ from web_site_db.robot_web_site import TWebSiteReachStatus
 from web_site_db.robot_project import TRobotProject
 from common.download import TDownloadEnv
 
-
 import os
 import shutil
 from unittest import TestCase
