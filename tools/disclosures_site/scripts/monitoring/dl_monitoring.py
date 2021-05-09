@@ -121,6 +121,8 @@ class TDlrobotAllStats:
                             help="for example /tmp/glances.dat")
         parser.add_argument("--output-folder", dest='output_folder', required=False, default=".",
                             help="for example ~/smart_parser.disclosures_prod/tools/disclosures_site/disclosures/static")
+        parser.add_argument("--central-stats-history", dest='central_stats_history', required=False,
+                            help="for example /tmp/dlrobot_central_stats_history.txt")
         return parser.parse_args(arg_list)
 
     def __init__(self,  args):
@@ -157,6 +159,23 @@ class TDlrobotAllStats:
         df = pd.DataFrame({'Time': timestamps, "source_doc_count": source_doc_count})
         fig = px.line(df, x='Time', y='source_doc_count', title='Source Document Count')
         build_html(self.args, fig, "source_doc_count.html")
+
+    def process_dlrobot_central_history_stats(self):
+        times = list()
+        left_projects_count = list()
+        with open(self.args.central_stats_history, "r") as inp:
+            for line_str in inp:
+                h = json.loads(line_str)
+                if len(left_projects_count) > 0 and h['input_tasks'] > left_projects_count[-1]:
+                    times.clear()
+                    left_projects_count.clear()
+                dttime = datetime.datetime.fromtimestamp(h['last_service_action_time_stamp'])
+                times.append(pd.Timestamp(dttime))
+                left_projects_count.append(h['input_tasks'])
+
+        df = pd.DataFrame({'Time': times, "Input Tasks": left_projects_count})
+        fig = px.line(df, x='Time', y='Input Tasks', title='Left projects count')
+        build_html(self.args, fig, "left_projects_count.html")
 
     def process_dlrobot_stats(self):
         stats = TDlrobotStats(self.args)
@@ -205,7 +224,6 @@ class TDlrobotAllStats:
                     print("cannot parse line index {} file {}".format(line_no, self.args.conversion_server_stats))
                     raise
 
-
         df = pd.DataFrame({'Time': timestamps, "ocr_pending_file_sizes": ocr_pending_all_file_sizes})
         fig = px.line(df, x='Time', y='ocr_pending_file_sizes',
                             title='Ocr Conversion Server')
@@ -232,6 +250,9 @@ class TDlrobotAllStats:
         build_html(self.args, fig, "dlrobot_central_mem.html")
 
     def build_stats(self):
+
+        if self.args.central_stats_history is not None:
+            self.process_dlrobot_central_history_stats()
         if self.args.central_stats_file is not None:
             self.process_dlrobot_stats()
         if self.args.conversion_server_stats is not None:
