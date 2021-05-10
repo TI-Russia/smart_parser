@@ -139,22 +139,17 @@ class TRobotStep:
 
     def __init__(self, website, step_name=None, step_urls=None, max_links_from_one_page=1000000,
                  transitive=False, fallback_to_selenium=True, use_urllib=True, is_last_step=False,
-                 check_link_func=None, include_sources=None, check_link_func_2=None, search_engine=dict(),
-                 do_not_copy_urls_from_steps=list(), sitemap_xml_processor=None, profiler=dict()):
+                 check_link_func=None, include_sources=None, check_link_func_2=None, search_engine=None,
+                 do_not_copy_urls_from_steps=None, sitemap_xml_processor=None, profiler=None):
         self.website = website
         self.logger = website.logger
         self.step_name = step_name
-        if step_urls is None:
-            self.step_urls = dict()
-                # I cannot set step_urls to dict() as a default value, since default dict() is calculated only once in the program,
-                # run python3 -m unittest  --verbose -f -k admkrsk -k akrvo to see the problem
-        else:
-            self.step_urls = step_urls
+        self.step_urls = dict() if step_urls is None else step_urls
         self.transitive = transitive
         self.check_link_func = check_link_func
         self.check_link_func_2 = check_link_func_2
-        self.search_engine = dict(search_engine.items())
-        self.do_not_copy_urls_from_steps = do_not_copy_urls_from_steps
+        self.search_engine = dict() if search_engine is None else search_engine
+        self.do_not_copy_urls_from_steps = list() if do_not_copy_urls_from_steps is None else do_not_copy_urls_from_steps
         self.include_sources = include_sources
         self.sitemap_xml_processor = sitemap_xml_processor
         self.fallback_to_selenium = fallback_to_selenium and self.website.parent_project.enable_selenium
@@ -163,7 +158,7 @@ class TRobotStep:
         # see https://sutr.ru/about_the_university/svedeniya-ob-ou/education/ with 20000 links
         # see https://www.gov.spb.ru/sitemap/ with 8000 links (and it is normal for great web sites)
         self.max_links_from_one_page = max_links_from_one_page
-        self.profiler = dict(profiler.items())
+        self.profiler = dict() if profiler is None else profiler
 
         # runtime members
         self.processed_pages = None
@@ -208,7 +203,8 @@ class TRobotStep:
             return True
         if source.strip('/') == href.strip('/'):
             return True
-        if href.find(' ') != -1 or href.find('\n') != -1 or href.find('\t') != -1:
+        #spaces are not prohibited, but should be converted
+        if href.find('\n') != -1 or href.find('\t') != -1:
             return True
         if href.find('print=') != -1:
             return True

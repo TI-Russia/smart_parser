@@ -115,9 +115,10 @@ class TestDeclarationLink(TestCase):
         TRobotStep.check_local_address = False
 
     def compare_to_file(self, links, file_name):
+        self.maxDiff = None
         with open(os.path.join(os.path.dirname(__file__), file_name)) as inp:
-            lines = list (l.strip() for l in inp)
-            self.assertSequenceEqual(links, lines)
+            canon_links = list(l.strip() for l in inp)
+            self.assertSequenceEqual(canon_links, links)
 
     def canonize_links(self, links, file_name):
         with open(os.path.join(os.path.dirname(__file__), file_name), "w") as outp:
@@ -148,3 +149,8 @@ class TestDeclarationLink(TestCase):
         links = self.download_website("web_sites/minzdrav/6_4_2.html", False)
         #self.canonize_links(links, 'web_sites/minzdrav/found_links')
         self.compare_to_file(links, 'web_sites/minzdrav/found_links')
+
+    def test_zsro(self):
+        links = self.download_website("web_sites/zsro/sved.html", False)
+        #self.canonize_links(links, 'web_sites/zsro/found_links')
+        self.compare_to_file(links, 'web_sites/zsro/found_links')

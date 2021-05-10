@@ -81,6 +81,23 @@ def looks_like_a_document_link(logger, link_info: TLinkInfo):
     return False
 
 
+INCOME_URL_REGEXP = '(do[ck]?[hx]od)|(income)'
+
+
+def url_features(url):
+    income_url = False
+    svedenija_url = False
+    corrupt_url = False
+    if url is not None:
+        if re.search('(^sved)|(sveodoh)|(de[ck]lara)', url, re.IGNORECASE):
+            svedenija_url = True
+        if re.search(INCOME_URL_REGEXP, url, re.IGNORECASE):
+            income_url = True
+        if re.search('[ck]orrup', url, re.IGNORECASE):
+            corrupt_url = True
+    return income_url, svedenija_url, corrupt_url
+
+
 def looks_like_a_declaration_link(logger, link_info: TLinkInfo):
     # here is a place for ML
     anchor_text_russified = normalize_and_russify_anchor_text(link_info.anchor_text)
@@ -102,20 +119,12 @@ def looks_like_a_declaration_link(logger, link_info: TLinkInfo):
     role_anchor = is_public_servant_role(anchor_text_russified)
     document_url = None
     sub_page = check_sub_page_or_iframe(logger, link_info)
-    income_url = False
-    svedenija_url = False
-    if link_info.target_url is not None:
-        lower_url = link_info.target_url.lower()
-        if re.search('(^sved)|(sveodoh)', lower_url):
-            svedenija_url = True
-        income_pattern = '(do[ck]?[hx]od)|(income)'
-        if re.search(income_pattern, lower_url):
-            income_url = True
-        if link_info.element_class is not None:
-            if isinstance(link_info.element_class, list):
-                for css_class_name in link_info.element_class:
-                    if re.search(income_pattern, css_class_name):
-                        income_url = True
+    income_url, svedenija_url, corrupt_url = url_features(link_info.target_url)
+    if link_info.element_class is not None:
+        if isinstance(link_info.element_class, list):
+            for css_class_name in link_info.element_class:
+                if re.search(INCOME_URL_REGEXP, css_class_name, re.IGNORECASE):
+                    income_url = True
 
     positive_case = None
 
@@ -163,6 +172,8 @@ def looks_like_a_declaration_link(logger, link_info: TLinkInfo):
             weight += TLinkInfo.TRASH_LINK_WEIGHT  # better than sub_page
         if income_page and weight > 0:
             weight += TLinkInfo.LINK_WEIGHT_FOR_INCREMENTING
+        if corrupt_url and weight > 0:
+            weight += TLinkInfo.LINK_WEIGHT_FOR_INCREMENTING
         all_features = (("income_page", income_page),
                         ("income_url", income_url),
                         ('income_anchor', income_anchor),
@@ -171,6 +182,7 @@ def looks_like_a_declaration_link(logger, link_info: TLinkInfo):
                         ("document_url", document_url),
                         ("sub_page", sub_page),
                         ("year_anchor", year_anchor),
+                        ("corrupt_url", corrupt_url),
                         ('role_anchor', role_anchor))
 
         all_features_str = ";".join(k for k, v in all_features if v)
@@ -181,6 +193,9 @@ def looks_like_a_declaration_link(logger, link_info: TLinkInfo):
 
 
 def check_sveden_url_sitemap_xml(url):
-    if url.find('korrup') != -1 and url.find('incomes') != -1:
+    features = url_features(url)
+
+    if sum(features) > 1:
         return TLinkInfo.BEST_LINK_WEIGHT
+
     return TLinkInfo.MINIMAL_LINK_WEIGHT
