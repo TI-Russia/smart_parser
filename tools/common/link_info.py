@@ -1,6 +1,5 @@
 from DeclDocRecognizer.dlrecognizer import DL_RECOGNIZER_ENUM
-from common.primitives import normalize_and_russify_anchor_text, strip_html_url
-
+from common.primitives import normalize_and_russify_anchor_text, strip_html_url, build_dislosures_sha256_by_html
 
 class TClickEngine:
     urllib = 'urllib'
@@ -26,6 +25,7 @@ class TLinkInfo:
         self.engine = engine
         self.element_index = element_index
         self.page_html = "" if source_html is None else source_html
+        self.source_sha256 = None if source_html is None else build_dislosures_sha256_by_html(source_html)
         self.source_url = source_url
         self.target_url = target_url
         self.anchor_text = ""

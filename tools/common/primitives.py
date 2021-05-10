@@ -1,11 +1,14 @@
+from .html_parser import THtmlParser
+from .content_types import DEFAULT_HTML_EXTENSION
+
 import urllib.parse
 import re
-from .html_parser import THtmlParser
 import hashlib
 import os
 import socket
 import time
 import subprocess
+
 
 def normalize_whitespace(str):
     str = re.sub(r'\s+', ' ', str)
@@ -145,11 +148,17 @@ def prepare_russian_names_for_search_index(str):
     return str
 
 
+def build_dislosures_sha256_by_html(html_data):
+    text = THtmlParser(html_data).get_plain_text()
+    text_utf8 = text.encode("utf-8", errors="ignore")
+    return hashlib.sha256(text_utf8).hexdigest()
+
+
 def build_dislosures_sha256_by_file_data(file_data, file_extension):
-    if file_extension == '.html':
-        text = THtmlParser(file_data).get_text()
-        file_data = text.encode("utf-8", errors="ignore")
-    return hashlib.sha256(file_data).hexdigest()
+    if file_extension == DEFAULT_HTML_EXTENSION:
+        return build_dislosures_sha256_by_html(file_data)
+    else:
+        return hashlib.sha256(file_data).hexdigest()
 
 
 def build_dislosures_sha256(file_path):

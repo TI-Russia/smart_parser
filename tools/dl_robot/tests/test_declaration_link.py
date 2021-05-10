@@ -154,3 +154,8 @@ class TestDeclarationLink(TestCase):
         links = self.download_website("web_sites/zsro/sved.html", False)
         #self.canonize_links(links, 'web_sites/zsro/found_links')
         self.compare_to_file(links, 'web_sites/zsro/found_links')
+
+    def test_khabkrai(self):
+        links = self.download_website("web_sites/khabkrai/sved.html", False)
+        #self.canonize_links(links, 'web_sites/khabkrai/found_links')
+        self.compare_to_file(links, 'web_sites/khabkrai/found_links')

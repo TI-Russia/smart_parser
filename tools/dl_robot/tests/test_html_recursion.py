@@ -192,7 +192,7 @@ class TestRecursion(TestCase):
     def test_recusion(self):
         # without sys.setrecursionlimit(10000) file a.html cannot be processed by BeautifulSoup
         html_parser = THtmlParser(LONG_HTML)
-        html_len = len(html_parser.html_text)
+        html_len = len(html_parser.html_with_markup)
         self.assertGreater(html_len, 20000)
 
 

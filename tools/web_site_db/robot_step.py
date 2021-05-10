@@ -1,5 +1,5 @@
 from common.download import TDownloadedFile, DEFAULT_HTML_EXTENSION, are_web_mirrors
-from common.primitives import prepare_for_logging, strip_viewer_prefix, get_site_domain_wo_www
+from common.primitives import prepare_for_logging, strip_viewer_prefix, get_site_domain_wo_www, build_dislosures_sha256_by_html
 from common.html_parser import THtmlParser
 from common.link_info import TLinkInfo, TClickEngine
 from common.primitives import get_html_title
@@ -164,7 +164,7 @@ class TRobotStep:
         self.processed_pages = None
         self.pages_to_process = dict()
         self.last_processed_url_weights = None
-        self.runtime_processed_files = dict()
+        self.urllib_html_cache = dict()
 
     def get_selenium_driver(self):
         return self.website.parent_project.selenium_driver
@@ -198,6 +198,13 @@ class TRobotStep:
         # href = "/bitrix/redirect.php?event1=catalog_out&amp;event2=%2Fupload%2Fiblock%2Fb59%2Fb59f80e6eaf7348f74e713219c169a24.pdf&amp;event3=%D0%9F%D0%B5%D1%87%D0%B5%D0%BD%D0%B5%D0%B2%D0%B0+%D0%9D%D0%98.pdf&amp;goto=%2Fupload%2Fiblock%2Fb59%2Fb59f80e6eaf7348f74e713219c169a24.pdf" > Загрузить < / a > < / b > < br / >
         # if href.find('redirect') != -1:
         #    return True
+
+        # не знаю пока, что делать с сайтом khabkrai.ru, где от каждой страницы идет 20 страниц с
+        # со специальными настройками для лучшей видимости, может быть, им просто понизить вес?
+        # пока пробуем отключать....
+        # может быть, искать еще стоит слово "версия" в  anchor TestDeclarationLink.test_khabkrai
+        if href.find("version=special") != -1:
+            return True
 
         if not check_href_elementary(href):
             return True
@@ -283,15 +290,15 @@ class TRobotStep:
         if self.is_last_step:
             self.website.export_env.export_selenium_doc_if_relevant(link_info)
 
-    def find_a_web_page_with_a_similar_html(self, url, html_text, check_link_func):
+    def find_a_web_page_in_urllib_cache(self, url, html_text, check_link_func):
         if len(html_text) > 1000:
             html_text = re.sub('[0-9]+', 'd', html_text)
             hash_code = "{}_{}_{}".format(
                 self.step_name, check_link_func.__name__, hashlib.sha256(html_text.encode("utf8")).hexdigest())
-            already = self.runtime_processed_files.get(hash_code)
+            already = self.urllib_html_cache.get(hash_code)
             if already is not None:
                 return already
-            self.runtime_processed_files[hash_code] = url
+            self.urllib_html_cache[hash_code] = url
         return None
 
     def add_page_links(self, url, check_link_func):
@@ -308,8 +315,8 @@ class TRobotStep:
                 return
             try:
                 html_parser = THtmlParser(downloaded_file.data)
-                already_processed_by_urllib = self.find_a_web_page_with_a_similar_html(
-                    url, html_parser.html_text, check_link_func)
+                already_processed_by_urllib = self.find_a_web_page_in_urllib_cache(
+                    url, html_parser.html_with_markup, check_link_func)
             except Exception as e:
                 self.logger.error('cannot parse html url={}, exception = {}'.format(url, e))
                 return
@@ -368,7 +375,7 @@ class TRobotStep:
             if href is not None:
                 element_index += 1
                 link_info = TLinkInfo(TClickEngine.urllib, main_url, make_link(base, href),
-                                      source_html=html_parser.html_text, anchor_text=html_link.text,
+                                      source_html=html_parser.html_with_markup, anchor_text=html_link.text,
                                       tag_name=html_link.name,
                                       element_index=element_index, element_class=html_link.attrs.get('class'),
                                       source_page_title=html_parser.page_title)
@@ -380,7 +387,7 @@ class TRobotStep:
             if href is not None:
                 element_index += 1
                 link_info = TLinkInfo(TClickEngine.urllib, main_url, make_link(base, href),
-                                      source_html=html_parser.html_text, anchor_text=frame.text, tag_name=frame.name,
+                                      source_html=html_parser.html_with_markup, anchor_text=frame.text, tag_name=frame.name,
                                       element_index=element_index, source_page_title=html_parser.page_title)
                 if self.normalize_and_check_link(link_info, check_link_func):
                     self.add_link_wrapper(link_info)
