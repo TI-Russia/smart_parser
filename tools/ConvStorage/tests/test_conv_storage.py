@@ -1,13 +1,12 @@
 from ConvStorage.conv_storage_server import TConvertProcessor
 from ConvStorage.convert_storage import TConvertStorage
 from ConvStorage.conversion_client import TDocConversionClient
-from common.logging_wrapper import close_logger
+from common.logging_wrapper import close_logger, setup_logging
 
 from unittest import TestCase
 import os
 import threading
 import shutil
-import logging
 import time
 import subprocess
 
@@ -35,19 +34,6 @@ def recreate_folder(folder):
 def clear_folder(folder):
     for f in os.listdir(folder):
         os.unlink(os.path.join(folder, f))
-
-
-def setup_logging(logfilename):
-    logger = logging.getLogger("db_conv_logger")
-    logger.setLevel(logging.DEBUG)
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-    return logger
 
 
 class TTestEnv:
@@ -133,7 +119,7 @@ class TTestEnv:
         if rebuild:
             client_args.append('--rebuild')
         if self.server is None:
-            logger = setup_logging("client.log")
+            logger = setup_logging(log_file_name="client.log", logger_name="db_conv_logger")
         else:
             logger = self.server.logger
 

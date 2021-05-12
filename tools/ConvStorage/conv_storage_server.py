@@ -52,8 +52,6 @@ def setup_logging(logfilename):
     logger = logging.getLogger("db_conv_logger")
     logger.setLevel(logging.DEBUG)
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
     fh = RotatingFileHandler(logfilename, encoding="utf8", maxBytes=1024*1024*1024, backupCount=2)
     fh.setLevel(logging.DEBUG)
     fh.setFormatter(formatter)
