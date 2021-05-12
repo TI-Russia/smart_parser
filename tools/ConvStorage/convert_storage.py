@@ -103,7 +103,7 @@ class TConvertStorage:
                                                        aux_params,
                                                        force=force,
                                                        sha256=sha256)
-        except OSerror:
+        except OSError:
             self.snow_ball_os_error_count += 1
             raise
         if delete_file:
