@@ -39,6 +39,8 @@ class TDocConversionClient(object):
         parser.add_argument("--skip-receiving", dest='receive_files', default=True, action="store_false",
                             required=False)
         parser.add_argument("--output-folder", dest='output_folder', default=None, required=False)
+        parser.add_argument("--only-winword", dest='only_winword', default=False, required=False, action="store_true")
+        parser.add_argument("--only-ocr", dest='only_ocr', default=False, required=False, action="store_true")
         TDocConversionClient.DECLARATOR_CONV_URL = os.environ.get('DECLARATOR_CONV_URL') #reread for tests
         return parser.parse_args(arg_list)
 
@@ -103,11 +105,15 @@ class TDocConversionClient(object):
         else:
             path = '/convert_if_absent/file'
         path += file_extension
+        if self.args.only_winword:
+            path += "?only_winword_conversion=1"
+        if self.args.only_ocr:
+            path += "?only_ocr=1"
         try:
             conn.request("PUT", path, file_contents)
             response = conn.getresponse()
             if response.code != 201:
-                self.logger.error("could not put a task to conversion queue")
+                self.logger.error("could not put a task to conversion queue: http code={}".format(response.code))
                 return False
             else:
                 self._sent_tasks.append(sha256)

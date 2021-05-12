@@ -103,7 +103,8 @@ class TTestEnv:
             '--db-json', self.project_file,
             '--disable-killing-winword',
             '--ocr-input-folder', self.pdf_ocr_folder,
-            '--ocr-output-folder', self.pdf_ocr_out_folder
+            '--ocr-output-folder', self.pdf_ocr_out_folder,
+            '--disable-telegram'
         ] + addit_server_args
 
         if start_process:
