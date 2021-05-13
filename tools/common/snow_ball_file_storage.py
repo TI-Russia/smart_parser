@@ -301,9 +301,8 @@ class TSnowBallChecker:
                 s))
         self.file_offset += canon_str_len
 
-    def read_till_separator(self, separator=b';'):
+    def read_till_separator(self, separator=b';', max_count=15):
         s = b""
-        max_count = 15
         while True:
             ch = self.file_ptr.read(1)
             self.file_offset += 1
