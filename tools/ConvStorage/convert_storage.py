@@ -88,7 +88,8 @@ class TConvertStorage:
     def save_converted_file_broken_stub(self, sha256, force=False):
         try:
             self.converted_file_storage.save_file(self.broken_stub, ".docx", None, force=force, sha256=sha256)
-        except OSerror:
+        except OSError as exp:
+            self.logger.error(exp)
             self.snow_ball_os_error_count += 1
             raise
 
@@ -103,7 +104,8 @@ class TConvertStorage:
                                                        aux_params,
                                                        force=force,
                                                        sha256=sha256)
-        except OSError:
+        except OSError as exp:
+            self.logger.error(exp)
             self.snow_ball_os_error_count += 1
             raise
         if delete_file:
