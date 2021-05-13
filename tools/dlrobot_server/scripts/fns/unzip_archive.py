@@ -46,30 +46,19 @@ class TUnzipper:
         return default
 
     def send_files_to_central(self, files):
-        project_folder = self.args.web_domain
-        shutil.rmtree(project_folder, ignore_errors=True)
-        os.mkdir(project_folder)
-        save_dir = os.path.abspath(os.curdir)
-        os.chdir(project_folder)
+        web_domains = list()
+        for file_name in files:
+            web_domain = self.args.web_domain
+            if file_name.endswith('.html'):
+                web_domain = self.get_url_from_meta_tag(file_name, self.args.web_domain)
+            web_domains.append(web_domain)
 
-        robot_project_path = os.path.join(self.args.web_domain + ".txt")
-        TRobotProject.create_project(self.args.web_domain, robot_project_path)
-        with TRobotProject(self.logger, robot_project_path, [], None, enable_selenium=False,
-                           enable_search_engine=False) as project:
-            project.add_web_site(self.args.web_domain)
-            project.web_site_snapshots[0].reach_status = TWebSiteReachStatus.normal
-            export_env = project.web_site_snapshots[0].export_env
-            for file_name in files:
-                web_domain = self.args.web_domain
-                if file_name.endswith('.html'):
-                    web_domain = self.get_url_from_meta_tag(file_name, web_domain)
-                export_path = os.path.join("result", web_domain, os.path.basename(file_name))
-                os.makedirs(os.path.dirname(export_path), exist_ok=True)
-                shutil.move(file_name, export_path)
-                export_file = TExportFile(url=self.args.web_domain, export_path=export_path)
-                export_env.exported_files.append(export_file)
-            project.write_project()
-        os.chdir(save_dir)
+        robot_project_path = TRobotProject.create_project_from_exported_files(
+            self.logger,
+            self.args.web_domain,
+            files,
+            web_domains
+        )
 
         headers = {
             DLROBOT_HEADER_KEYS.EXIT_CODE: 0,
@@ -79,7 +68,7 @@ class TUnzipper:
         }
         self.logger.debug("send results back for {}".format(robot_project_path))
         dlrobot_results_file_name = os.path.basename(robot_project_path) + ".tar.gz"
-
+        project_folder = self.args.web_domain
         with tarfile.open(dlrobot_results_file_name, "w:gz") as tar:
             for f in os.listdir(project_folder):
                 tar.add(os.path.join(project_folder, f), arcname=f)
