@@ -1,26 +1,13 @@
+from common.logging_wrapper import setup_logging
+from conv_storage_server import TConvertProcessor
+
 import time
-import logging
 import os
 
-from conv_storage_server import TConvertProcessor
 
 WORKING_DIR = "c:\\tmp\\conv_db"
 SERVER_ADDRESS = "192.168.100.152:8091" #production
 #SERVER_ADDRESS="127.0.0.1:8091" #dev
-
-
-def setup_logging():
-    logger = logging.getLogger("conv_pdf_service")
-    logger.setLevel(logging.DEBUG)
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    logfilename = os.path.join(WORKING_DIR, "service.log")
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    fh = logging.FileHandler(logfilename, "a+", encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-    return logger
 
 
 class ConvertPdfService:
@@ -28,7 +15,7 @@ class ConvertPdfService:
     def __init__(self):
         self.server = None
         self.stop_requested = False
-        self.logger = setup_logging()
+        self.logger = setup_logging(logger_name="conv_pdf_service")
 
     def stop_service(self):
         try:

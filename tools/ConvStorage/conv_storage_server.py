@@ -16,7 +16,7 @@ import sys
 import queue
 from pathlib import Path
 from logging.handlers import RotatingFileHandler
-
+import telegram_send
 
 def convert_to_seconds(s):
     seconds_per_unit = {"s": 1, "m": 60, "h": 3600}
@@ -52,8 +52,6 @@ def setup_logging(logfilename):
     logger = logging.getLogger("db_conv_logger")
     logger.setLevel(logging.DEBUG)
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
     fh = RotatingFileHandler(logfilename, encoding="utf8", maxBytes=1024*1024*1024, backupCount=2)
     fh.setLevel(logging.DEBUG)
     fh.setFormatter(formatter)
@@ -85,13 +83,15 @@ def taskkill_windows(process_name):
 
 
 class TInputTask:
-    def __init__(self, file_path, sha256, file_size, force):
+    def __init__(self, file_path, sha256, file_size, force, only_winword_conversion=False, only_ocr=False):
         self.file_path = file_path
         self.basename = os.path.basename(file_path)
         self.sha256 = sha256
         self.file_size = file_size
         self.creation_time = time.time()
         self.force = force
+        self.only_winword_conversion = only_winword_conversion
+        self.only_ocr = only_ocr
 
 
 class TConvertProcessor(http.server.HTTPServer):
@@ -135,6 +135,8 @@ class TConvertProcessor(http.server.HTTPServer):
                             help="restart ocr if it produces no results", default="3h")
         parser.add_argument("--central-heart-rate", dest='central_heart_rate', type=int, required=False, default='10')
         parser.add_argument("--bin-file-size", dest='user_bin_file_size', type=int, required=False)
+        parser.add_argument("--disable-telegram", dest="enable_telegram",
+                            default=True,  required=False, action="store_false")
 
         args = parser.parse_args(arglist)
         TConvertProcessor.ocr_timeout_with_waiting_in_queue = convert_to_seconds(args.ocr_timeout)
@@ -165,6 +167,7 @@ class TConvertProcessor(http.server.HTTPServer):
         self.got_ocred_file_last_time_stamp = time.time()
         self.http_server_is_working = False
         self.convert_storage = TConvertStorage(self.logger, args.db_json, args.user_bin_file_size)
+        self.continuous_winword_failures_count = 0
         if args.clear_json:
             self.convert_storage.clear_database()
         self.create_folders()
@@ -178,6 +181,12 @@ class TConvertProcessor(http.server.HTTPServer):
             msg = "cannot find pdfcrack\nsee https://sourceforge.net/projects/pdfcrack/files/"
             self.logger.error(msg)
             raise Exception(msg)
+        self.send_to_telegram("conversion server started on {}".format(self.args.server_address))
+
+    def send_to_telegram(self, message):
+        if self.args.enable_telegram:
+            self.logger.debug("send to telegram: {}".format(message))
+            telegram_send.send(messages=[message])
 
     def start_http_server(self):
         self.logger.debug("myServer.serve_forever(): {}".format(self.args.server_address))
@@ -199,14 +208,16 @@ class TConvertProcessor(http.server.HTTPServer):
                 i.flush()
                 i.close()
 
-    def save_new_file(self, sha256, file_bytes, file_extension, force):
+    def save_new_file(self, sha256, file_bytes, file_extension, force, only_winword_conversion=False,
+                      only_ocr=False):
         filename = os.path.join(self.args.input_folder, sha256 + file_extension)
         if os.path.exists(filename):  # already registered as an input task
             return False
         with open(filename, 'wb') as output_file:
             output_file.write(file_bytes)
         self.logger.debug("save new file {} ".format(filename))
-        task = TInputTask(filename, sha256, len(file_bytes), force)
+        task = TInputTask(filename, sha256, len(file_bytes), force, only_winword_conversion=only_winword_conversion,
+                          only_ocr=only_ocr)
         self.input_files_size += task.file_size
         self.input_task_queue.put(task)
         return True
@@ -228,6 +239,7 @@ class TConvertProcessor(http.server.HTTPServer):
     def convert_with_microsoft_word(self, filename):
         if not self.args.enable_winword:
             return
+        self.logger.info("convert {} with microsoft word".format(filename))
         if self.args.use_winword_exlusively:
             taskkill_windows('winword.exe')
         taskkill_windows('pdfreflow.exe')
@@ -245,8 +257,12 @@ class TConvertProcessor(http.server.HTTPServer):
         taskkill_windows('pdfreflow.exe')
         docx_file = filename + ".docx"
         if os.path.exists(docx_file):
+            self.continuous_winword_failures_count = 0
             return docx_file
         else:
+            self.continuous_winword_failures_count += 1
+            if self.continuous_winword_failures_count > 20:
+                self.send_to_telegram("pdf conversion server:continuous_winword_failures_count = {}".format(self.continuous_winword_failures_count))
             return None
 
     def process_one_input_file(self, input_task: TInputTask):
@@ -256,16 +272,14 @@ class TConvertProcessor(http.server.HTTPServer):
         self.logger.debug("process input file {}, pwd={}".format(input_file, os.getcwd()))
         if not strip_drm(self.logger, input_file, stripped_file):
             shutil.copyfile(input_file, stripped_file)
-        self.logger.info("convert {} with microsoft word".format(input_file))
-        docxfile = self.convert_with_microsoft_word(stripped_file)
+        docxfile = None if input_task.only_ocr else self.convert_with_microsoft_word(stripped_file)
         if docxfile is not None:
             self.convert_storage.delete_file_silently(stripped_file)
-
             self.convert_storage.save_converted_file(docxfile, input_task.sha256, "word", input_task.force)
             self.convert_storage.save_input_file(input_file)
             self.register_file_process_finish(input_task, True)
         else:
-            if not self.args.enable_ocr:
+            if not self.args.enable_ocr or input_task.only_winword_conversion:
                 self.logger.info("cannot process {}, delete it".format(input_file))
                 self.convert_storage.delete_file_silently(input_file)
                 self.convert_storage.delete_file_silently(stripped_file)
@@ -440,7 +454,7 @@ class TConvertProcessor(http.server.HTTPServer):
                 self.register_ocr_process_finish(self.ocr_tasks.get(sha256), False)
 
     def restart_ocr(self):
-        self.logger.debug("restart ocr");
+        self.logger.debug("restart ocr: taskkill fineexec.exe");
         taskkill_windows('fineexec.exe')
 
     def process_all_tasks(self):
@@ -547,7 +561,14 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
             send_error("no file specified")
             return
         action = os.path.dirname(self.path)
+        query_components = dict()
+        if not self.parse_cgi(query_components):
+            send_error('bad request')
+            return
+
         _, file_extension = os.path.splitext(os.path.basename(self.path))
+        if file_extension.find('?') != -1:
+            file_extension = file_extension[:file_extension.find('?')]
         action = action.strip('//')
         if action == "convert_if_absent":
             rebuild = False
@@ -557,8 +578,9 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
             send_error("bad action (file path), can be 'convert_mandatory' or 'convert_if_absent', got \"{}\"".format(action))
             return
         if file_extension not in ALLOWED_FILE_EXTENSTIONS:
-            send_error("bad file extension, can be {}".format(ALLOWED_FILE_EXTENSTIONS))
+            send_error("bad file extension: {}, can be {}".format(file_extension, ALLOWED_FILE_EXTENSTIONS))
             return
+
         file_length = int(self.headers['Content-Length'])
         max_file_size = 2**25
         if file_length > max_file_size:
@@ -571,7 +593,9 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
             self.send_response(201, 'Already exists')
             self.end_headers()
             return
-        if not self.server.save_new_file(sha256, file_bytes,  file_extension, rebuild):
+        if not self.server.save_new_file(sha256, file_bytes,  file_extension, rebuild,
+                                     only_winword_conversion=query_components.get("only_winword_conversion", False),
+                                    only_ocr=query_components.get("only_ocr", False)):
             self.send_response(201, 'Already registered as a conversion task, wait ')
             self.end_headers()
             return

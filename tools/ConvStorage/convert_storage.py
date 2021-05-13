@@ -1,5 +1,5 @@
-#from common.file_storage import TFileStorage
-from common.snow_ball_file_storage import TSnowBallFileStorage
+from common.snow_ball_file_storage import TSnowBallFileStorage, TSnowBallChecker, TStoredFileParams
+
 import os
 import json
 from datetime import datetime
@@ -88,7 +88,8 @@ class TConvertStorage:
     def save_converted_file_broken_stub(self, sha256, force=False):
         try:
             self.converted_file_storage.save_file(self.broken_stub, ".docx", None, force=force, sha256=sha256)
-        except OSerror:
+        except OSError as exp:
+            self.logger.error(exp)
             self.snow_ball_os_error_count += 1
             raise
 
@@ -103,7 +104,8 @@ class TConvertStorage:
                                                        aux_params,
                                                        force=force,
                                                        sha256=sha256)
-        except OSerror:
+        except OSError as exp:
+            self.logger.error(exp)
             self.snow_ball_os_error_count += 1
             raise
         if delete_file:
@@ -124,3 +126,17 @@ class TConvertStorage:
         self.access_file.close()
         self.converted_file_storage.close_file_storage()
         self.input_file_storage.close_file_storage()
+
+    def check_storage(self, file_no=None, fix_file_offset=False, check_converted_storage=True,
+                      check_input_file_storage=True):
+        errors_count = 0
+        if check_converted_storage:
+            errors_count + self.converted_file_storage.check_storage(
+                file_no=file_no, fix_file_offset=fix_file_offset,
+                broken_stub=TConvertStorage.broken_stub, file_prefix=b"PK", canon_file_extension=b'.docx')
+
+        if check_input_file_storage:
+            errors_count += self.input_file_storage.check_storage(
+                file_no=file_no, fix_file_offset=fix_file_offset, broken_stub=TConvertStorage.broken_stub,
+                file_prefix=b"%PDF", canon_file_extension=b'.pdf')
+        return errors_count
