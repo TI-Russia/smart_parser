@@ -239,6 +239,7 @@ class TConvertProcessor(http.server.HTTPServer):
     def convert_with_microsoft_word(self, filename):
         if not self.args.enable_winword:
             return
+        self.logger.info("convert {} with microsoft word".format(filename))
         if self.args.use_winword_exlusively:
             taskkill_windows('winword.exe')
         taskkill_windows('pdfreflow.exe')
@@ -271,7 +272,6 @@ class TConvertProcessor(http.server.HTTPServer):
         self.logger.debug("process input file {}, pwd={}".format(input_file, os.getcwd()))
         if not strip_drm(self.logger, input_file, stripped_file):
             shutil.copyfile(input_file, stripped_file)
-        self.logger.info("convert {} with microsoft word".format(input_file))
         docxfile = None if input_task.only_ocr else self.convert_with_microsoft_word(stripped_file)
         if docxfile is not None:
             self.convert_storage.delete_file_silently(stripped_file)
@@ -454,7 +454,7 @@ class TConvertProcessor(http.server.HTTPServer):
                 self.register_ocr_process_finish(self.ocr_tasks.get(sha256), False)
 
     def restart_ocr(self):
-        self.logger.debug("restart ocr");
+        self.logger.debug("restart ocr: taskkill fineexec.exe");
         taskkill_windows('fineexec.exe')
 
     def process_all_tasks(self):

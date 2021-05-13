@@ -1,5 +1,5 @@
-#from common.file_storage import TFileStorage
-from common.snow_ball_file_storage import TSnowBallFileStorage
+from common.snow_ball_file_storage import TSnowBallFileStorage, TSnowBallChecker, TStoredFileParams
+
 import os
 import json
 from datetime import datetime
@@ -124,3 +124,27 @@ class TConvertStorage:
         self.access_file.close()
         self.converted_file_storage.close_file_storage()
         self.input_file_storage.close_file_storage()
+
+    def check_storage(self, file_no=None, fix_file_offset=False):
+        files = list()
+        if file_no is not None:
+            files.append(self.converted_file_storage.get_bin_file_path(file_no))
+        else:
+            for i in range(len(self.converted_file_storage.bin_files)):
+                files.append(self.converted_file_storage.get_bin_file_path(i))
+        sha256_list = list()
+        doc_params = list()
+        for key, value in self.converted_file_storage.get_all_doc_params():
+            sha256_list.append(key)
+            doc_params.append(TStoredFileParams().read_from_string(value))
+        self.logger.info("read {} doc params from {}".format(
+            len(doc_params), self.converted_file_storage.header_file_path))
+        errors_count = 0
+        for file_path in files:
+            checker = TSnowBallChecker(self.logger, file_path, doc_params,
+                                       broken_stub=TConvertStorage.broken_stub,
+                                       file_prefix=b"PK", fix_offset=fix_file_offset)
+            errors_count += checker.check_file()
+        if fix_file_offset:
+            self.converted_file_storage.rewrite_header(sha256_list, doc_params)
+        return errors_count

@@ -40,6 +40,8 @@ class TStoredFileParams:
 class TSnowBallFileStorage:
     bin_file_prefix = "fs"
     bin_file_extension = ".bin"
+    pdf_cnf_doc_starter = b'<pdf_cnf_doc>'
+    pdf_cnf_doc_ender   = b'</pdf_cnf_doc>'
     default_max_bin_file_size = 10 * (2 ** 30)
 
     def clear_stats(self):
@@ -89,15 +91,17 @@ class TSnowBallFileStorage:
         for f in self.bin_files:
             f.close()
 
-    def load_from_disk(self):
-        assert os.path.exists(self.data_folder)
-        self.saved_file_params = dict()
-        self.logger.debug("open snow ball header  {}".format(self.header_file_path))
-        self.saved_file_params_file = open(self.header_file_path, "a+")
+    def get_all_doc_params(self):
+        self.logger.debug("read snow ball header {} from the beginning".format(self.header_file_path))
         self.saved_file_params_file.seek(0)
         for line in self.saved_file_params_file:
             key, value = line.strip().split("\t")
-            self.saved_file_params[key] = value
+            yield key, value
+
+    def load_from_disk(self):
+        assert os.path.exists(self.data_folder)
+        self.saved_file_params_file = open(self.header_file_path, "a+")
+        self.saved_file_params = dict(self.get_all_doc_params())
 
         if os.path.exists(self.get_stats_file_path()):
             with open(self.get_stats_file_path()) as inp:
@@ -129,6 +133,15 @@ class TSnowBallFileStorage:
         assert (file_in_folder == self.stats['bin_files_count'])
 
         self.save_stats()
+
+    def rewrite_header(self, sha256_list, doc_params):
+        self.saved_file_params_file.close()
+        self.saved_file_params_file = open(self.header_file_path, "w")
+        self.logger.info("write {} doc_params to {}".format(len(doc_params), self.header_file_path))
+        for sha256, header in zip(sha256_list, doc_params):
+            self.write_key_to_header(sha256, header.to_string())
+        self.saved_file_params_file.close()
+        self.saved_file_params_file = open(self.header_file_path, "a+")
 
     def clear_db(self):
         self.close_file_storage()
@@ -168,7 +181,12 @@ class TSnowBallFileStorage:
 
     def write_repeat_header_to_bin_file(self, file_bytes, file_extension, output_bin_file):
         # these headers are needed if the main dbm is lost
-        header_repeat = '<pdf_cnf_doc>{};{}</pdf_cnf_doc>'.format(len(file_bytes), file_extension).encode('latin')
+        header_repeat = b'{}{};{}{}'.format(
+            TSnowBallFileStorage.pdf_cnf_doc_starter,
+            len(file_bytes),
+            file_extension,
+            TSnowBallFileStorage.pdf_cnf_doc_ender
+        )
         output_bin_file.write(header_repeat)
         return len(header_repeat)
 
@@ -221,9 +239,114 @@ class TSnowBallFileStorage:
             raise
 
         self.logger.debug("put {}{} (size={}) to bin file {}".format(
-            sha256, file_extension, len(file_bytes), len(self.bin_files) - 1 ))
+            sha256, file_extension, len(file_bytes), len(self.bin_files) - 1))
         self.update_stats(len(file_bytes))
 
     def get_stats(self):
         return self.stats
 
+
+class TSnowBallChecker:
+
+    def __init__(self, logger, file_name, doc_params, broken_stub=None, file_prefix=None, fix_offset=False):
+        self.logger = logger
+        self.file_name = file_name
+        self.doc_params = doc_params
+        self.broken_stub = broken_stub
+        self.canon_file_prefix = file_prefix
+        self.file_offset = 0
+        self.file_size = os.stat(file_name).st_size
+        self.file_ptr = open(file_name, "rb")
+        basename = os.path.splitext(os.path.basename(file_name))[0]
+        assert basename.startswith("fs_")
+        self.bin_file_index = int(basename[3:])
+        self.fix_offset = fix_offset
+
+    def read_const(self, canon_str):
+        canon_str_len = len(canon_str)
+        s = self.file_ptr.read(canon_str_len)
+        if s != canon_str:
+            raise Exception("bad content at file {} offset {}, must be \"{}\", got \"{}\"".format(
+                self.file_name,
+                self.file_offset,
+                canon_str,
+                s))
+        self.file_offset += canon_str_len
+
+    def read_till_separator(self, separator=b';'):
+        s = b""
+        max_count = 15
+        while True:
+            ch = self.file_ptr.read(1)
+            self.file_offset += 1
+            if ch == separator:
+                break
+            s += ch
+            if len(s) > max_count:
+                raise Exception("cannot find separator \"{}\" at offset {}".format(separator, self.file_offset))
+        return s
+
+    def read_bytes(self, bytes_count):
+        assert self.file_ptr.tell() == self.file_offset
+        s = self.file_ptr.read(bytes_count)
+        assert len(s) == bytes_count
+        self.file_offset += bytes_count
+        return s
+
+    def close(self):
+        self.file_ptr.close()
+
+    def check_file(self):
+        for file_index in range(len(self.doc_params)):
+            if self.doc_params[file_index].bin_file_index == self.bin_file_index:
+                break
+        errors_count = 0
+        try:
+            self.logger.info("check {} file_size={}".format(self.file_name, self.file_size))
+            doc_index = 0
+            while self.file_offset < self.file_size:
+
+                self.read_const(TSnowBallFileStorage.pdf_cnf_doc_starter)
+                docx_size = int(self.read_till_separator())
+                doc_index += 1
+                self.read_const(b'.docx')
+                self.read_const(TSnowBallFileStorage.pdf_cnf_doc_ender)
+                params = self.doc_params[file_index]
+                if params.bin_file_index != self.bin_file_index:
+                    errors_count += 1
+                    self.logger.error(
+                        "params.bin_file_index != r.bin_file_index ({} !={}), doc_index={}, params={}".format(
+                            params.bin_file_index, self.bin_file_index, doc_index, params.to_string()
+                        ))
+                if params.file_offset_in_bin_file != self.file_offset:
+                    errors_count += 1
+                    self.logger.error(
+                        "params.file_offset_in_bin_file != r.file_offset ({} !={}), doc_index={}, params={}".format(
+                            params.file_offset_in_bin_file, self.file_offset, doc_index, params.to_string()
+                        ))
+                    if self.fix_offset:
+                        self.logger.error("set file offset to {}".format(self.file_offset))
+                        params.file_offset_in_bin_file = self.file_offset
+
+                if params.file_size != docx_size:
+                    errors_count += 1
+                    self.logger.error(
+                        "params.file_size != docx_size ({} !={}), doc_index={}, params={}".format(
+                            params.file_size, docx_size, doc_index, params.to_string()
+                        ))
+                file_index += 1
+                file_bytes = self.read_bytes(docx_size)
+                comp_prefix = self.canon_file_prefix is None or file_bytes.startswith(self.canon_file_prefix)
+                comp_stub = self.broken_stub is None or file_bytes == self.broken_stub
+                if not comp_prefix and not comp_stub:
+                    errors_count += 1
+                    self.logger.error(
+                        "file must start with prefix {}, it starts with {}, doc_index={}, params={} ".format(
+                            self.canon_file_prefix,
+                            file_bytes[0:len(self.canon_file_prefix)],
+                            doc_index,
+                            params.to_string()
+                        ))
+            return errors_count
+        finally:
+            self.close()

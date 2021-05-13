@@ -2,6 +2,8 @@ from ConvStorage.conv_storage_server import TConvertProcessor
 from ConvStorage.convert_storage import TConvertStorage
 from ConvStorage.conversion_client import TDocConversionClient
 from common.logging_wrapper import close_logger, setup_logging
+from common.primitives import build_dislosures_sha256
+from common.snow_ball_file_storage import TSnowBallChecker
 
 from unittest import TestCase
 import os
@@ -186,10 +188,10 @@ class TestConvWinword(TestCase):
         self.env.restart_server()
         output_file = self.env.process_with_client([input_file])[0]
         self.assertTrue(os.path.exists(output_file))
-        self.assertEqual(os.stat(output_file).st_size, file_size)
+        self.assertEqual(file_size, os.stat(output_file).st_size)
 
         stats = self.env.server.get_stats()
-        self.assertEqual(stats["all_put_files_count"], 0)
+        self.assertEqual(0, stats["all_put_files_count"])
 
 
 class TestOcr(TestCase):
@@ -288,10 +290,12 @@ class TestWinwordConvertToJpg(TestCase):
             if l.startswith("4"):
                 input_files.append(os.path.join('../files', l))
         input_files.append('../files/18822_cut.pdf')
+        canon_input_files_count = 7
+        assert len(input_files) == canon_input_files_count
         output_files = self.env.process_with_client(input_files, timeout=240)
-        self.assertEqual(len(output_files), len(input_files))
+        self.assertEqual(canon_input_files_count, len(output_files))
         stats = self.env.server.get_stats()
-        self.assertEqual(stats['finished_ocr_tasks'], len(input_files))
+        self.assertEqual(canon_input_files_count, stats['finished_ocr_tasks'])
         file_sizes = list(os.stat(x).st_size for x in output_files)
         self.env.restart_server()
         output_files = self.env.process_with_client(input_files, timeout=240)
@@ -324,6 +328,7 @@ class TestRestartOcr(TestCase):
         self.env.tearDown()
 
     def test_restart_ocr(self):
+        #may be we should also restart "hot folder" application
         output_files = self.env.process_with_client(['../files/freeze.pdf'], timeout=200)
         self.assertFalse(os.path.exists(output_files[0]))
 
@@ -331,7 +336,7 @@ class TestRestartOcr(TestCase):
         self.assertTrue(os.path.exists(output_files[0]), msg="cannot convert a normal file after ocr restart")
         with open('db_conv.log') as inp:
             s = inp.read()
-            self.assertNotEqual(s.find('restart ocr'), -1)
+            self.assertNotEqual(-1, s.find('restart ocr'))
 
 
 class TestStalledFiles(TestCase):
@@ -377,3 +382,48 @@ class TestKillServer(TestCase):
         stats = self.env.server.get_stats()
         self.assertEqual(stats["all_put_files_count"], 0)  # the first client call must be cached
 
+
+# read  from TSnowBallFileStorage.bin_files[-1] file that is open with mode a+
+class TestReadFromAplusFile(TestCase):
+    def setUp(self):
+        self.env = TTestEnv("read_from_aplus_file")
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def write_and_read(self, file_name):
+        # write to  storage a new file
+        output_file = self.env.process_with_client([file_name])[0]
+        self.assertTrue(os.path.exists(output_file))
+        file_size = os.stat(output_file).st_size
+        hash_code = build_dislosures_sha256(output_file)
+
+        # read  file
+        os.unlink(output_file)
+        output_file_copy = self.env.process_with_client([file_name])[0]
+        self.assertTrue(os.path.exists(output_file_copy))
+        self.assertEqual(os.stat(output_file_copy).st_size, file_size)
+        self.assertEqual(hash_code, build_dislosures_sha256(output_file_copy))
+        return file_size, hash_code
+
+    def test_write_3_files(self):
+        input_file1 = "../files/4043_0.pdf"
+        file_size1, hash1 = self.write_and_read(input_file1)
+
+        self.assertEqual(0, self.env.server.convert_storage.check_storage())
+
+        input_file2 = "../files/4043_1.pdf"
+        self.write_and_read(input_file2)
+
+        file_size_copy1, hash_copy1 = self.write_and_read(input_file1)
+        self.assertEqual(file_size_copy1, file_size1)
+        self.assertEqual(hash1, hash_copy1)
+        # after this line TSnowBallFileStorage.bin_files[-1].tell() must be not at the file end
+
+        input_file3 = "../files/4043_2.pdf"
+        self.write_and_read(input_file3)
+
+        stats = self.env.server.get_stats()
+        self.assertEqual(stats["all_put_files_count"], 3)
+
+        self.assertEqual(0, self.env.server.convert_storage.check_storage())
