@@ -294,11 +294,10 @@ class TSnowBallChecker:
         canon_str_len = len(canon_str)
         s = self.file_ptr.read(canon_str_len)
         if s != canon_str:
-            raise Exception("bad content at file {} offset {}, must be \"{}\", got \"{}\"".format(
-                self.file_name,
-                self.file_offset,
-                canon_str,
-                s))
+            message = "bad constant at file {} offset {}, must be \"{}\", got \"{}\"".format(
+                self.file_name, self.file_offset, canon_str, s)
+            self.logger.error(message)
+            raise Exception(message)
         self.file_offset += canon_str_len
 
     def read_till_separator(self, separator=b';', max_count=15):
@@ -310,7 +309,9 @@ class TSnowBallChecker:
                 break
             s += ch
             if len(s) > max_count:
-                raise Exception("cannot find separator \"{}\" at offset {}".format(separator, self.file_offset))
+                message = "cannot find separator \"{}\" at offset {}".format(separator, self.file_offset)
+                self.logger.error(message)
+                raise Exception(message)
         return s
 
     def read_bytes(self, bytes_count):
@@ -332,7 +333,8 @@ class TSnowBallChecker:
             self.logger.info("check {} file_size={}".format(self.file_name, self.file_size))
             doc_index = 0
             while self.file_offset < self.file_size:
-
+                params = self.doc_params[file_index]
+                self.logger.debug("doc_index={}, params={}".format(doc_index, params.to_string()))
                 self.read_const(TSnowBallFileStorage.pdf_cnf_doc_starter)
                 docx_size = int(self.read_till_separator())
                 doc_index += 1
@@ -343,13 +345,13 @@ class TSnowBallChecker:
                     errors_count += 1
                     self.logger.error(
                         "params.bin_file_index != r.bin_file_index ({} !={}), doc_index={}, params={}".format(
-                            params.bin_file_index, self.bin_file_index, doc_index, params.to_string()
+                            params.bin_file_index, self.bin_file_index, doc_index - 1, params.to_string()
                         ))
                 if params.file_offset_in_bin_file != self.file_offset:
                     errors_count += 1
                     self.logger.error(
                         "params.file_offset_in_bin_file != r.file_offset ({} !={}), doc_index={}, params={}".format(
-                            params.file_offset_in_bin_file, self.file_offset, doc_index, params.to_string()
+                            params.file_offset_in_bin_file, self.file_offset, doc_index  - 1, params.to_string()
                         ))
                     if self.fix_offset:
                         self.logger.error("set file offset to {}".format(self.file_offset))
@@ -359,7 +361,7 @@ class TSnowBallChecker:
                     errors_count += 1
                     self.logger.error(
                         "params.file_size != docx_size ({} !={}), doc_index={}, params={}".format(
-                            params.file_size, docx_size, doc_index, params.to_string()
+                            params.file_size, docx_size, doc_index - 1, params.to_string()
                         ))
                 file_index += 1
                 file_bytes = self.read_bytes(docx_size)
@@ -371,7 +373,7 @@ class TSnowBallChecker:
                         "file must start with prefix {}, it starts with {}, doc_index={}, params={} ".format(
                             self.canon_file_prefix,
                             file_bytes[0:len(self.canon_file_prefix)],
-                            doc_index,
+                            doc_index - 1,
                             params.to_string()
                         ))
             return errors_count

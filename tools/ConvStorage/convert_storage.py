@@ -127,11 +127,16 @@ class TConvertStorage:
         self.converted_file_storage.close_file_storage()
         self.input_file_storage.close_file_storage()
 
-    def check_storage(self, file_no=None, fix_file_offset=False):
-        errors_count = self.converted_file_storage.check_storage(
-            file_no=file_no, fix_file_offset=fix_file_offset,
-            broken_stub=TConvertStorage.broken_stub, file_prefix=b"PK", canon_file_extension=b'.docx')
-        errors_count += self.input_file_storage.check_storage(
-            file_no=file_no, fix_file_offset=fix_file_offset, broken_stub=TConvertStorage.broken_stub,
-            file_prefix=b"%PDF", canon_file_extension=b'.pdf')
+    def check_storage(self, file_no=None, fix_file_offset=False, check_converted_storage=True,
+                      check_input_file_storage=True):
+        errors_count = 0
+        if check_converted_storage:
+            errors_count + self.converted_file_storage.check_storage(
+                file_no=file_no, fix_file_offset=fix_file_offset,
+                broken_stub=TConvertStorage.broken_stub, file_prefix=b"PK", canon_file_extension=b'.docx')
+
+        if check_input_file_storage:
+            errors_count += self.input_file_storage.check_storage(
+                file_no=file_no, fix_file_offset=fix_file_offset, broken_stub=TConvertStorage.broken_stub,
+                file_prefix=b"%PDF", canon_file_extension=b'.pdf')
         return errors_count
