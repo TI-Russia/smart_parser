@@ -5,7 +5,8 @@ from selenium.webdriver.support.ui import Select
 import time
 
 
-def tomsk_gov_ru(web_site: TWebSiteCrawlSnapshot, max_download_count=3):
+def tomsk_gov_ru(web_site: TWebSiteCrawlSnapshot, max_download_count=20):
+    web_site.create_export_folder()
     robot_step = web_site.robot_steps[-1]
     driver = robot_step.get_selenium_driver()
     driver.navigate("https://tomsk.gov.ru/antiCorruption/front/public")
@@ -28,8 +29,11 @@ def tomsk_gov_ru(web_site: TWebSiteCrawlSnapshot, max_download_count=3):
             time.sleep(1)
             downloaded_file = driver.wait_download_finished()
             if downloaded_file is not None:
+                href = c1.get_attribute("href")
+                if href is None:
+                    href = robot_step.website.morda_url
                 link_info = TLinkInfo(TClickEngine.selenium,
-                          robot_step.website.morda_url,
+                          href,
                           None,
                           source_html="", anchor_text="", tag_name="a",
                           element_index=element_index,
