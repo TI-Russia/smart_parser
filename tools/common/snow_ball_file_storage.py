@@ -183,13 +183,10 @@ class TSnowBallFileStorage:
         self.output_bin_file_size = 0
 
     def write_repeat_header_to_bin_file(self, file_bytes, file_extension, output_bin_file):
-        # these headers are needed if the main dbm is lost
-        header_repeat = b'{}{};{}{}'.format(
-            TSnowBallFileStorage.pdf_cnf_doc_starter,
-            len(file_bytes),
-            file_extension,
+        # these headers are needed if the main header is lost
+        header_repeat = TSnowBallFileStorage.pdf_cnf_doc_starter + \
+            "{};{}".format(len(file_bytes), file_extension).encode('latin') + \
             TSnowBallFileStorage.pdf_cnf_doc_ender
-        )
         output_bin_file.write(header_repeat)
         return len(header_repeat)
 
