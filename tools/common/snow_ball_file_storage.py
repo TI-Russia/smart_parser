@@ -135,6 +135,8 @@ class TSnowBallFileStorage:
         self.save_stats()
 
     def rewrite_header(self, sha256_list, doc_params):
+        assert len(sha256_list) == len(self.saved_file_params)
+        assert len(sha256_list) == len(doc_params)
         self.saved_file_params_file.close()
         self.saved_file_params_file = open(self.header_file_path, "w")
         self.logger.info("write {} doc_params to {}".format(len(doc_params), self.header_file_path))
@@ -142,6 +144,7 @@ class TSnowBallFileStorage:
             self.write_key_to_header(sha256, header.to_string())
         self.saved_file_params_file.close()
         self.saved_file_params_file = open(self.header_file_path, "a+")
+        self.saved_file_params = dict(self.get_all_doc_params())
 
     def clear_db(self):
         self.close_file_storage()
