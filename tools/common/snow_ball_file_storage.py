@@ -135,7 +135,7 @@ class TSnowBallFileStorage:
         self.save_stats()
 
     def rewrite_header(self, sha256_list, doc_params):
-        assert len(sha256_list) == len(self.saved_file_params)
+        assert len(set(sha256_list)) == len(self.saved_file_params)
         assert len(sha256_list) == len(doc_params)
         self.saved_file_params_file.close()
         self.saved_file_params_file = open(self.header_file_path, "w")
@@ -245,10 +245,36 @@ class TSnowBallFileStorage:
     def get_stats(self):
         return self.stats
 
+    def check_storage(self, file_no=None, fix_file_offset=False, broken_stub=None, file_prefix=None,
+                      canon_file_extension=None):
+        files = list()
+        if file_no is not None:
+            files.append(self.get_bin_file_path(file_no))
+        else:
+            for i in range(len(self.bin_files)):
+                files.append(self.get_bin_file_path(i))
+        sha256_list = list()
+        doc_params = list()
+        for key, value in self.get_all_doc_params():
+            sha256_list.append(key)
+            doc_params.append(TStoredFileParams().read_from_string(value))
+        self.logger.info("read {} doc params from {}".format(
+            len(doc_params), self.header_file_path))
+        errors_count = 0
+        for file_path in files:
+            checker = TSnowBallChecker(self.logger, file_path, doc_params,
+                                       broken_stub=broken_stub, file_prefix=file_prefix,
+                                       fix_offset=fix_file_offset, canon_file_extension=canon_file_extension)
+            errors_count += checker.check_file()
+        if fix_file_offset:
+            self.rewrite_header(sha256_list, doc_params)
+        return errors_count
+
 
 class TSnowBallChecker:
 
-    def __init__(self, logger, file_name, doc_params, broken_stub=None, file_prefix=None, fix_offset=False):
+    def __init__(self, logger, file_name, doc_params, broken_stub=None, file_prefix=None, fix_offset=False,
+                 canon_file_extension=None):
         self.logger = logger
         self.file_name = file_name
         self.doc_params = doc_params
@@ -261,6 +287,8 @@ class TSnowBallChecker:
         assert basename.startswith("fs_")
         self.bin_file_index = int(basename[3:])
         self.fix_offset = fix_offset
+        self.canon_file_extension = canon_file_extension
+        assert self.canon_file_extension is not None
 
     def read_const(self, canon_str):
         canon_str_len = len(canon_str)
@@ -309,7 +337,7 @@ class TSnowBallChecker:
                 self.read_const(TSnowBallFileStorage.pdf_cnf_doc_starter)
                 docx_size = int(self.read_till_separator())
                 doc_index += 1
-                self.read_const(b'.docx')
+                self.read_const(self.canon_file_extension)
                 self.read_const(TSnowBallFileStorage.pdf_cnf_doc_ender)
                 params = self.doc_params[file_index]
                 if params.bin_file_index != self.bin_file_index:
