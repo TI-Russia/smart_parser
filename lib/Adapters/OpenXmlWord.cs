@@ -13,7 +13,7 @@ using Parser.Lib;
 using System.Xml.Linq;
 using Smart.Parser.Lib.Adapters.AdapterSchemes;
 using Smart.Parser.Lib.Adapters.DocxSchemes;
-using Smart.Parser.Lib; 
+using Smart.Parser.Lib;
 
 namespace Smart.Parser.Adapters
 {
@@ -122,7 +122,7 @@ namespace Smart.Parser.Adapters
                 }
             }
 
-            const string wordmlNamespace =  "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
+            const string wordmlNamespace = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
             XNamespace w = wordmlNamespace;
             StylesPart stylesPart = WordDocument.MainDocumentPart.StyleDefinitionsPart;
             if (stylesPart != null)
@@ -137,7 +137,7 @@ namespace Smart.Parser.Adapters
                     foreach (var style in styleDoc.Descendants(w + "style"))
                     {
                         var s = new Style(style.ToString());
-                        if (s.Default == "1"  && s.StyleRunProperties != null)
+                        if (s.Default == "1" && s.StyleRunProperties != null)
                         {
                             if (s.StyleRunProperties.FontSize != null)
                                 DefaultFontSize = Int32.Parse(s.StyleRunProperties.FontSize.Val);
@@ -289,7 +289,8 @@ namespace Smart.Parser.Adapters
                           (textOrBreak.Name == w + "lastRenderedPageBreak") */
                     {
                         s += "\n";
-                    } else if (textOrBreak.LocalName == "numPr")
+                    }
+                    else if (textOrBreak.LocalName == "numPr")
                     {
                         s += "- ";
                     }
@@ -319,7 +320,7 @@ namespace Smart.Parser.Adapters
 
     }
 
-    
+
     public class OpenXmlWordAdapter : IAdapter
     {
         private List<List<OpenXmlWordCell>> TableRows;
@@ -329,23 +330,23 @@ namespace Smart.Parser.Adapters
         XmlNamespaceManager NamespaceManager;
         private int TablesCount;
         private DocxConverter _DocxConverter;
-        
+
         protected static List<IAdapterScheme> _allSchemes = new List<IAdapterScheme>()
         {
             new SovetFederaciiDocxScheme(),
             // new DocxSchemePDF(),
         };
-        
+
         private static Uri FixUri(string brokenUri)
         {
             return new Uri("http://broken-link/");
         }
-        
-        private void ProcessDoc (string fileName, string extension, int maxRowsToProcess)
+
+        private void ProcessDoc(string fileName, string extension, int maxRowsToProcess)
         {
             using (var doc = new WordDocHolder(WordprocessingDocument.Open(fileName, false)))
             {
-                CurrentScheme = _allSchemes.Find(x=> x.CanProcess(doc.WordDocument));
+                CurrentScheme = _allSchemes.Find(x => x.CanProcess(doc.WordDocument));
                 if (CurrentScheme != default)
                 {
                     // CollectRows from distinct Tables
@@ -357,7 +358,7 @@ namespace Smart.Parser.Adapters
                 {
                     Title = doc.FindTitleAboveTheTable();
                     CollectRows(doc, maxRowsToProcess, extension);
-                    UnmergedColumnsCount =  GetUnmergedColumnsCountByFirstRow();
+                    UnmergedColumnsCount = GetUnmergedColumnsCountByFirstRow();
                     InitializeVerticallyMerge();
                 }
             };
@@ -425,7 +426,7 @@ namespace Smart.Parser.Adapters
                     File.Delete(newFileName);
                 }
             }
-            
+
             if (removeTempFile)
             {
                 File.Delete(fileName);
@@ -437,7 +438,7 @@ namespace Smart.Parser.Adapters
             // if (OnePersonAdapter.CanProcess(fileName))
             //     // throw new SmartParserException("Impossible to parse one-person file");
             //     return new OnePersonAdapter(fileName);
-            
+
             return new OpenXmlWordAdapter(fileName, maxRowsToProcess);
         }
 
@@ -548,7 +549,7 @@ namespace Smart.Parser.Adapters
         }
 
         int GetRowGridBefore(TableRow row)
-        {   
+        {
             if (row.TableRowProperties != null)
                 foreach (var c in row.TableRowProperties.Descendants<GridBefore>())
                 {
@@ -601,7 +602,7 @@ namespace Smart.Parser.Adapters
             return widthInfo;
         }
 
-        void ProcessWordTable(WordDocHolder docHolder,  Table table, int maxRowsToProcess)
+        void ProcessWordTable(WordDocHolder docHolder, Table table, int maxRowsToProcess)
         {
             var rows = table.Descendants<TableRow>().ToList();
             TableWidthInfo widthInfo = InitializeTableWidthInfo(docHolder, table);
@@ -628,9 +629,9 @@ namespace Smart.Parser.Adapters
                     continue;
                 }
                 maxCellsCount = Math.Max(newRow.Count, maxCellsCount);
-                if (r == 0 && TableRows.Count > 0 && 
+                if (r == 0 && TableRows.Count > 0 &&
                     BigramsHolder.CheckMergeRow(
-                        TableRows.Last().ConvertAll(x => x.Text), 
+                        TableRows.Last().ConvertAll(x => x.Text),
                         newRow.ConvertAll(x => x.Text)))
                 {
                     MergeRow(TableRows.Last(), newRow);
@@ -662,21 +663,22 @@ namespace Smart.Parser.Adapters
             {
                 Logger.Debug(String.Format("ignore table {0} with subtables", tableIndex));
             }
-            else if (table.InnerText.Length > 0 && !table.InnerText.Any(x => Char.IsUpper(x)))  {
+            else if (table.InnerText.Length > 0 && !table.InnerText.Any(x => Char.IsUpper(x)))
+            {
                 Logger.Debug(String.Format("ignore table {0} that has no uppercase char", tableIndex));
             }
             else if (table.InnerText.Length < 30)
             {
                 Logger.Debug(String.Format("ignore table {0}, it is too short", tableIndex));
             }
-            else 
+            else
             {
                 ProcessWordTable(docHolder, table, maxRowsToProcess);
             }
 
             if (TableRows.Count > debugSaveRowCount)
             {
-                string tableText = table.InnerText.Length > 30  ? table.InnerText.Substring(0, 30) : table.InnerText;
+                string tableText = table.InnerText.Length > 30 ? table.InnerText.Substring(0, 30) : table.InnerText;
                 Logger.Debug(String.Format("add {0} rows (TableRows.Count={1} ) from table {2} Table.innertText[0:30]='{3}'",
                     TableRows.Count - debugSaveRowCount,
                     TableRows.Count,
@@ -710,7 +712,7 @@ namespace Smart.Parser.Adapters
             }
             if (extension != ".htm" && extension != ".html") // это просто костыль. Нужно как-то встроить это в архитектуру.
                 tables = ExtractSubtables(tables);
-            
+
             TablesCount = tables.Count();
             foreach (var t in tables)
             {
