@@ -21,7 +21,7 @@ class TLinkInfo:
     BEST_LINK_WEIGHT = 50.0
 
     def __init__(self, engine, source_url,  target_url, source_html="", element_index=0, anchor_text="",
-                 tag_name=None, source_page_title=None, element_class=None):
+                 tag_name=None, source_page_title=None, element_class=None, downloaded_file=None):
         self.engine = engine
         self.element_index = element_index
         self.page_html = "" if source_html is None else source_html
@@ -32,7 +32,7 @@ class TLinkInfo:
         self.set_anchor_text(anchor_text)
         self.tag_name = tag_name
         self.text_proxim = False
-        self.downloaded_file = None
+        self.downloaded_file = downloaded_file
         self.target_title = None
         self.weight = TLinkInfo.MINIMAL_LINK_WEIGHT
         self.dl_recognizer_result = DL_RECOGNIZER_ENUM.UNKNOWN

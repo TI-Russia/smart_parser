@@ -1,5 +1,7 @@
 from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
 from common.selenium_driver import TSeleniumDriver
+from web_site_db.robot_web_site import TWebSiteReachStatus
+from common.export_files import TExportFile
 
 import json
 import shutil
@@ -10,6 +12,7 @@ import time
 
 class TRobotProject:
     visited_pages_extension = ".visited_pages"
+
     def __init__(self, logger, filename, robot_step_passports, export_folder, enable_selenium=True, enable_search_engine=True):
         self.logger = logger
         self.start_time = time.time()
@@ -86,6 +89,43 @@ class TRobotProject:
                 False))
         if os.path.exists(file_path + TRobotProject.visited_pages_extension):
             os.unlink(file_path + TRobotProject.visited_pages_extension)
+
+    @staticmethod
+    def create_project_from_exported_files(logger, web_domain, file_paths, file_web_domains=None):
+        assert file_web_domains is None or len(file_web_domains) == len(file_paths)
+        project_folder = web_domain
+        if os.path.exists(project_folder):
+            logger.debug("rm {}".format(project_folder))
+            shutil.rmtree(project_folder, ignore_errors=True)
+        os.mkdir(project_folder)
+
+        logger.debug("mkdir {}".format(project_folder))
+        save_dir = os.path.abspath(os.curdir)
+
+        logger.debug("chdir {}".format(project_folder))
+        os.chdir(project_folder)
+
+        robot_project_path = os.path.join(web_domain + ".txt")
+        TRobotProject.create_project(web_domain, robot_project_path)
+        with TRobotProject(logger, robot_project_path, [], None, enable_selenium=False,
+                           enable_search_engine=False) as project:
+            project.add_web_site(web_domain)
+            project.web_site_snapshots[0].reach_status = TWebSiteReachStatus.normal
+            export_env = project.web_site_snapshots[0].export_env
+            if file_web_domains is None:
+                file_web_domains = [web_domain] * len(file_paths)
+            for file_name, curr_web_domain in zip(file_paths, file_web_domains):
+                export_path = os.path.join("result", curr_web_domain, os.path.basename(file_name))
+                os.makedirs(os.path.dirname(export_path), exist_ok=True)
+                shutil.move(file_name, export_path)
+                export_file = TExportFile(url=web_domain, export_path=export_path)
+                export_env.exported_files.append(export_file)
+            logger.info("write {} files to result folder".format(len(file_paths)))
+            project.write_project()
+
+        logger.info("chdir {}".format(save_dir))
+        os.chdir(save_dir)
+        return robot_project_path
 
     def add_web_site(self, morda_url):
         web_site = TWebSiteCrawlSnapshot(self)

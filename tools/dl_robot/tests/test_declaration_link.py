@@ -134,8 +134,11 @@ class TestDeclarationLink(TestCase):
         self.compare_to_file(links, 'web_sites/page_text/found_links')
 
     def test_other_website(self):
+        save = TRobotStep.check_local_address
+        TRobotStep.check_local_address = False
         links = self.download_website("web_sites/other_website/sved.html", False)
         self.compare_to_file(links, 'web_sites/other_website/found_links')
+        TRobotStep.check_local_address = save
 
     def test_simple_doc(self):
         links = self.download_website("web_sites/simple_doc/sved.html", False)
