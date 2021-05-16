@@ -438,7 +438,8 @@ class TestHighLoadPing(TestCase):
     def setUp(self):
         self.before_files = list()
         self.background_files = list()
-        converters = TExternalConverters()
+        converters = TExternalConverters(enable_smart_parser=False, enable_calibre=False, enable_cat_doc=False,
+                                         enable_xls2csv=False, enable_office_2_txt=False)
         self.env = TTestEnv("many_pings1")
         for i in range(10):
             random_pdf_file = os.path.join( self.env.data_folder, "random_{}.pdf".format(i))

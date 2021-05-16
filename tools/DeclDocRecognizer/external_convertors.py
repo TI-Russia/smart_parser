@@ -19,62 +19,66 @@ def run_cmd(cmd):
     return os.system(cmd)
 
 
-
 class TExternalConverters:
-    def __init__(self):
+    def __init__(self, enable_smart_parser=True, enable_calibre=True, enable_cat_doc=True, enable_xls2csv=True,
+                 enable_office_2_txt=True):
         self.script_folder = os.path.dirname(os.path.realpath(__file__))
         self.office_2_txt = os.path.join(self.script_folder, '../Office2Txt/bin/Release/netcoreapp3.1/Office2Txt')
         self.smart_parser = os.path.join(self.script_folder, '../../src/bin/Release/netcoreapp3.1/smart_parser')
         if os.name == "nt":  # windows
             self.soffice = find_program_on_windows("LibreOffice\\program\\soffice.exe")
-            self.calibre = find_program_on_windows("Calibre2\\ebook-convert.exe")
+            if enable_calibre:
+                self.calibre = find_program_on_windows("Calibre2\\ebook-convert.exe")
             self.office_2_txt += ".exe"
             self.smart_parser += ".exe"
         else:
             self.soffice = shutil.which('soffice')
-            self.calibre = shutil.which('ebook-convert')
+            if enable_calibre:
+                self.calibre = shutil.which('ebook-convert')
 
-        if not os.path.exists(self.smart_parser):
-            raise FileNotFoundError("cannot find {}, compile it".format(self.smart_parser))
+        if enable_smart_parser:
+            if not os.path.exists(self.smart_parser):
+                raise FileNotFoundError("cannot find {}, compile it".format(self.smart_parser))
 
-        if os.environ.get('ASPOSE_LIC') is None:
-            message = "add ASPOSE_LIC environment variable"
-            raise Exception(message)
+            if os.environ.get('ASPOSE_LIC') is None:
+                message = "add ASPOSE_LIC environment variable"
+                raise Exception(message)
 
-        if TDocConversionClient.DECLARATOR_CONV_URL is None:
-            message = "set DECLARATOR_CONV_URL environment variable"
-            raise Exception(message)
+            if TDocConversionClient.DECLARATOR_CONV_URL is None:
+                message = "set DECLARATOR_CONV_URL environment variable"
+                raise Exception(message)
 
-        if not os.path.exists(os.environ.get('ASPOSE_LIC')):
-            message = "cannot find lic file {}, specified by environment variable ASPOSE_LIC".format(os.environ.get('ASPOSE_LIC'))
-            raise Exception(message)
+            if not os.path.exists(os.environ.get('ASPOSE_LIC')):
+                message = "cannot find lic file {}, specified by environment variable ASPOSE_LIC".format(os.environ.get('ASPOSE_LIC'))
+                raise Exception(message)
 
         if self.soffice is None or not os.path.exists(self.soffice):
             raise FileNotFoundError("cannot find soffice (libreoffice), install it")
-        if self.calibre is None or not os.path.exists(self.calibre):
-            raise FileNotFoundError("cannot find calibre, install calibre it")
-        if not os.path.exists(self.office_2_txt):
-            raise FileNotFoundError("cannot find {}, compile it".format(office_2_txt))
-        self.catdoc = shutil.which('catdoc')
-        if self.catdoc is None or not os.path.exists(self.catdoc):
-            raise FileNotFoundError("cannot find catdoc, install it")
-        self.xls2csv = shutil.which('xls2csv')
-        if self.xls2csv is None or not os.path.exists(self.xls2csv):
-            raise FileNotFoundError("cannot find xls2csv, install it")
 
-        if os.name == "nt":
-            self.xlsx2csv = os.path.join( os.path.dirname(sys.executable), 'Scripts', 'xlsx2csv')
-        else:
-            self.xlsx2csv = shutil.which('xlsx2csv')
-        if self.xlsx2csv is None or not os.path.exists(self.xlsx2csv):
-            raise FileNotFoundError("cannot find xlsx2csv, install it")
+        if enable_calibre:
+            if self.calibre is None or not os.path.exists(self.calibre):
+                raise FileNotFoundError("cannot find calibre, install calibre it")
 
-    smart_parser_default = os.path.join(
-        os.path.dirname(os.path.realpath(__file__)),
-        "../../src/bin/Release/netcoreapp3.1/smart_parser"
-    )
-    if os.name == "nt":
-        smart_parser_default += ".exe"
+        if enable_office_2_txt:
+            if not os.path.exists(self.office_2_txt):
+                raise FileNotFoundError("cannot find {}, compile it".format(office_2_txt))
+
+        if enable_cat_doc:
+            self.catdoc = shutil.which('catdoc')
+            if self.catdoc is None or not os.path.exists(self.catdoc):
+                raise FileNotFoundError("cannot find catdoc, install it")
+
+        if enable_xls2csv:
+            self.xls2csv = shutil.which('xls2csv')
+            if self.xls2csv is None or not os.path.exists(self.xls2csv):
+                raise FileNotFoundError("cannot find xls2csv, install it")
+
+            if os.name == "nt":
+                self.xlsx2csv = os.path.join( os.path.dirname(sys.executable), 'Scripts', 'xlsx2csv')
+            else:
+                self.xlsx2csv = shutil.which('xlsx2csv')
+            if self.xlsx2csv is None or not os.path.exists(self.xlsx2csv):
+                raise FileNotFoundError("cannot find xlsx2csv, install it")
 
     def run_calibre(self, inp, out):
         return run_with_timeout([self.calibre, inp, out])
