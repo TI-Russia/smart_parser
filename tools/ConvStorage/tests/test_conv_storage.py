@@ -3,15 +3,17 @@ from ConvStorage.convert_storage import TConvertStorage
 from ConvStorage.conversion_client import TDocConversionClient
 from common.logging_wrapper import close_logger, setup_logging
 from common.primitives import build_dislosures_sha256
-from common.snow_ball_file_storage import TSnowBallChecker
-
+from DeclDocRecognizer.external_convertors import TExternalConverters
+from common.primitives import run_with_timeout
+import concurrent.futures
 from unittest import TestCase
 import os
 import threading
 import shutil
 import time
 import subprocess
-
+import random
+from functools import partial
 
 def start_server(server):
     server.start_http_server()
@@ -106,7 +108,7 @@ class TTestEnv:
         self.server_thread.join(0)
         self.start_server_thread()
 
-    def process_with_client(self, input_files, timeout=None, rebuild=False):
+    def process_with_client(self, input_files, timeout=None, rebuild=False, skip_receiving=False):
         output_files = list(os.path.basename(i) + ".docx" for i in input_files)
         for o in output_files:
             if os.path.exists(o):
@@ -120,6 +122,8 @@ class TTestEnv:
             client_args.extend(['--conversion-timeout', str(timeout)])
         if rebuild:
             client_args.append('--rebuild')
+        if skip_receiving:
+            client_args.append('--skip-receiving')
         if self.server is None:
             logger = setup_logging(log_file_name="client.log", logger_name="db_conv_logger")
         else:
@@ -427,3 +431,63 @@ class TestReadFromAplusFile(TestCase):
         self.assertEqual(stats["all_put_files_count"], 3)
 
         self.assertEqual(0, self.env.server.convert_storage.check_storage())
+
+
+class TestHighLoadPing(TestCase):
+
+    def setUp(self):
+        self.before_files = list()
+        self.background_files = list()
+        converters = TExternalConverters()
+        self.env = TTestEnv("many_pings1")
+        for i in range(10):
+            random_pdf_file = os.path.join( self.env.data_folder, "random_{}.pdf".format(i))
+            converters.build_random_pdf(random_pdf_file, cnt=500)
+            self.before_files.append(random_pdf_file)
+
+        for i in range(5):
+            random_pdf_file = os.path.join( self.env.data_folder, "random_background_{}.pdf".format(i))
+            converters.build_random_pdf(random_pdf_file, cnt=500)
+            self.background_files.append(random_pdf_file)
+
+    def is_converting(self):
+        return self.env.client.get_stats()['is_converting']
+
+    def cpu_load(self):
+        print("start cpu load at {}".format(time.time()))
+        p = subprocess.Popen(["c:/cygwin64/bin/sha1sum", '/dev/zero'], stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
+        return p
+
+    def send_a_file(self, file_path):
+        self.env.process_with_client([file_path], timeout=2, skip_receiving=False)
+        return True
+
+    def test_many_pings(self):
+        self.env.process_with_client(self.before_files, timeout=5, skip_receiving=False)
+
+        #load two cpu cores with some tasks to be like production server
+        pid_cpu_load1 = self.cpu_load()
+        pid_cpu_load2 = self.cpu_load()
+
+        time.sleep(5)
+        start = time.time()
+        with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
+            func_calls = list()
+            for i in self.background_files:
+                func_calls.append(partial(self.send_a_file, i))
+            for i in range(40):
+                if random.random() < 0.5:
+                    f = self.env.client.assert_declarator_conv_alive
+                else:
+                    f = self.is_converting
+                func_calls.append(f)
+            random.shuffle(func_calls)
+            requests = {executor.submit(f) for f in func_calls}
+            for future in concurrent.futures.as_completed(requests):
+                self.assertTrue(future.result())
+        print("rps is {}".format(len(func_calls) / (time.time() - start)))
+        pid_cpu_load1.kill()
+        pid_cpu_load2.kill()
+
+    def tearDown(self):
+        self.env.tearDown()

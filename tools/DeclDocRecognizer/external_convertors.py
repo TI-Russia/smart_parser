@@ -4,6 +4,8 @@ from common.primitives import run_with_timeout
 import os
 import shutil
 import sys
+from datetime import datetime
+
 
 def find_program_on_windows(program):
     for prefix in ["C:\\Program Files", "C:\\Program Files (x86)"]:
@@ -148,6 +150,15 @@ class TExternalConverters:
                 version = version.strip()
             os.unlink(tmp_file)
         return version
+
+    def build_random_pdf(self, out_pdf_path, cnt=1):
+        txt_file = out_pdf_path + ".txt"
+        with open(txt_file, "w") as outp:
+            for i in range(cnt):
+                outp.write(str(datetime.now()) + "\n")
+        self.convert_to_pdf(txt_file, out_pdf_path)
+        if  not os.path.exists(out_pdf_path):
+            raise Exception("cannot generate random pdf {} out of {}".format(out_pdf_path, txt_file))
 
     def run_smart_parser_official(self, file_path, logger=None, default_value=None):
         try:

@@ -52,7 +52,7 @@ class TDocConversionClient(object):
         if TDocConversionClient.DECLARATOR_CONV_URL is None:
             print("specify environment variable DECLARATOR_CONV_URL to obtain docx by pdf-files")
             assert TDocConversionClient.DECLARATOR_CONV_URL is not None
-        assert_declarator_conv_alive(self.logger)
+        self.assert_declarator_conv_alive()
         self.wait_new_tasks = True
         self._input_tasks = queue.Queue()
         self._sent_tasks = list()
@@ -301,18 +301,20 @@ class TDocConversionClient(object):
                 return 1
         return 0
 
-
-def assert_declarator_conv_alive(logger=None):
-    if TDocConversionClient.DECLARATOR_CONV_URL is None:
-        raise Exception("environment variable DECLARATOR_CONV_URL is not set")
-
-    try:
-        url = "http://" + TDocConversionClient.DECLARATOR_CONV_URL+"/ping"
-        if logger is not None:
-            logger.debug ("try to ping pdf conversion server {}".format(url))
-        with urllib.request.urlopen(url, timeout=300) as response:
-            if response.read() == "yes":
-                return True
-    except Exception as exp:
-        print("cannot connect to {} (declarator conversion server)".format(TDocConversionClient.DECLARATOR_CONV_URL))
-        raise
+    def assert_declarator_conv_alive(self):
+        try:
+            url = "http://" + TDocConversionClient.DECLARATOR_CONV_URL+"/ping"
+            if self.logger is not None:
+                self.logger.debug ("try to ping pdf conversion server {}".format(url))
+            with urllib.request.urlopen(url, timeout=300) as response:
+                answer = response.read()
+                if answer == b"yes":
+                    return True
+                return False
+        except Exception as exp:
+            m = "cannot connect to {} (declarator conversion server)".format(TDocConversionClient.DECLARATOR_CONV_URL)
+            if self.logger is None:
+                print (m)
+            else:
+                self.logger.error(m)
+            raise

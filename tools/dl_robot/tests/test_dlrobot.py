@@ -10,7 +10,6 @@ from unittest import TestCase
 import os
 import threading
 import shutil
-from datetime import datetime
 import http.server
 from functools import partial
 from common.primitives import is_local_http_port_free
@@ -131,14 +130,9 @@ class TestRandomPdf(TestCase):
         self.conv_server_address = "localhost:{}".format(self.conv_server_port)
         save_declarator_conv_url = os.environ['DECLARATOR_CONV_URL']
         os.environ['DECLARATOR_CONV_URL'] = self.conv_server_address
-        self.env = TTestEnv(self.web_site_port, "web_sites/random_pdf")
-        txt_file = os.path.join(self.env.web_site_folder, "random.txt")
-        pdf_file = os.path.join(self.env.web_site_folder, "random.pdf")
-        with open(txt_file, "w") as outp:
-            outp.write(str(datetime.now()))
-        converters = TExternalConverters()
-        converters.convert_to_pdf(txt_file, pdf_file)
-        assert os.path.exists(pdf_file)
+        random_pdf_file = "web_sites/random_pdf"
+        TExternalConverters().build_random_pdf(random_pdf_file)
+        self.env = TTestEnv(self.web_site_port, random_pdf_file)
         conv_project = os.path.join(self.env.data_folder, "conv.json")
         TConvertStorage.create_empty_db("db_input_files", "db_converted_files", conv_project)
 
