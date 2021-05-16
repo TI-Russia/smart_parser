@@ -184,5 +184,3 @@ class TExternalConverters:
             if logger is not None:
                 logger.error("Exception in run_smart_parser_thread:{}".format(exp))
             raise
-
-EXTERNAl_CONVERTORS = TExternalConverters()

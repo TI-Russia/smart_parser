@@ -1,7 +1,7 @@
 from DeclDocRecognizer.document_types import TCharCategory, SOME_OTHER_DOCUMENTS, VEHICLE_REGEXP_STR, russify, \
         get_russian_normal_text_ratio
 from ConvStorage.conversion_client import TDocConversionClient
-from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
+from DeclDocRecognizer.external_convertors import TExternalConverters
 from common.primitives import normalize_whitespace, string_contains_Russian_name, build_dislosures_sha256
 
 from collections import defaultdict
@@ -11,6 +11,9 @@ import re
 import os
 import shutil
 import sys
+
+
+EXTERNAl_CONVERTORS = TExternalConverters()
 
 
 class DL_RECOGNIZER_ENUM:

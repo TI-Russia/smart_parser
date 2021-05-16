@@ -1,5 +1,5 @@
 from  source_doc_http.source_doc_client import TSourceDocClient
-from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
+from DeclDocRecognizer.external_convertors import TExternalConverters
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from smart_parser_http.smart_parser_server import TSmartParserHTTPServer
 from common.logging_wrapper import setup_logging
@@ -7,8 +7,9 @@ from common.logging_wrapper import setup_logging
 import sys
 import  os
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
+    converters = TExternalConverters()
     INPUT_SHA256 = sys.argv[1]
     log_file_name = INPUT_SHA256 + ".log"
     logger = setup_logging(log_file_name=log_file_name)
@@ -22,9 +23,9 @@ if __name__ == "__main__":
     with open(file_path, "wb") as outp:
         outp.write(file_data)
 
-    sha256, json_data = EXTERNAl_CONVERTORS.run_smart_parser_official(file_path,
-                                                                      logger=logger,
-                                                                      default_value=TSmartParserHTTPServer.SMART_PARSE_FAIL_CONSTANT)
+    sha256, json_data = converters.run_smart_parser_official(file_path,
+                                                             logger=logger,
+                                                             default_value=TSmartParserHTTPServer.SMART_PARSE_FAIL_CONSTANT)
     args = TSmartParserCacheClient.parse_args([])
     sp_client = TSmartParserCacheClient(args, logger=logger)
     json_path = file_path + ".json"

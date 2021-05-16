@@ -1,4 +1,4 @@
-from DeclDocRecognizer.external_convertors import EXTERNAl_CONVERTORS
+from DeclDocRecognizer.external_convertors import TExternalConverters
 from urllib.parse import urlparse
 from common.content_types import ACCEPTED_DOCUMENT_EXTENSIONS
 from common.primitives import build_dislosures_sha256_by_file_data
@@ -45,6 +45,7 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
     def __init__(self, args):
         self.args = args
         self.logger = setup_logging(log_file_name=self.args.log_file_name, append_mode=True)
+        self.converters = TExternalConverters()
         self.json_cache_dbm = dbm.gnu.open(args.cache_file, "w" if os.path.exists(args.cache_file) else "c")
         self.last_version = self.read_smart_parser_versions()
         self.task_queue = self.initialize_input_queue()
@@ -98,7 +99,7 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
             last_version = versions['versions'][-1]['id']
             assert last_version is not None
             self.logger.error("last smart parser version is {}".format(last_version))
-            version_in_binary = EXTERNAl_CONVERTORS.get_smart_parser_version()
+            version_in_binary = self.converters.get_smart_parser_version()
             if version_in_binary != last_version:
                 self.logger.error("smart parser binary is outdated, compile it  ")
                 assert version_in_binary == last_version
@@ -172,7 +173,7 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
                 pass
 
     def run_smart_parser(self, file_path):
-        sha256, json_data = EXTERNAl_CONVERTORS.run_smart_parser_official(
+        sha256, json_data = self.converters.run_smart_parser_official(
             file_path, self.logger, TSmartParserHTTPServer.SMART_PARSE_FAIL_CONSTANT)
         self.task_queue.task_done()
         return sha256, json_data
