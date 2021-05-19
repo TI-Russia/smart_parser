@@ -37,7 +37,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "52,7",
-          "country_raw": "(Россия)"
+          "country_raw": "(Россия)",
+          "type_raw": "гараж 52,7 кв.м. (Россия)",
+          "own_type_raw": ""
         },
         {
           "text": "квартира (пользование) 64,3 кв.м. (Россия)",

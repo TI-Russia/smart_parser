@@ -130,34 +130,24 @@
       ],
       "real_estates": [
         {
-          "text": "Земельный участок",
+          "text": "Земельный  участок  1/2",
           "square": 600.0,
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "600",
           "country_raw": "Россия",
-          "type_raw": "Земельный участок",
-          "own_type_raw": "Пожизненное"
+          "type_raw": "Земельный  участок  1/2",
+          "own_type_raw": "Пожизненное   Долевая"
         },
         {
-          "text": "1/2 доля земельного участка  под ИЖС",
+          "text": "доля  земельного  участка  под  ИЖС   1/2доля  жилого  дома",
           "square": 1243.0,
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "1243",
-          "country_raw": "Россия",
-          "type_raw": "1/2 доля земельного участка  под ИЖС",
-          "own_type_raw": "Долевая собственность"
-        },
-        {
-          "text": "1/2доля жилого дома",
-          "square": null,
-          "relative": null,
-          "own_type_by_column": "В собственности",
-          "square_raw": "",
-          "country_raw": "Россия",
-          "type_raw": "1/2доля жилого дома",
-          "own_type_raw": "Долевая собственность"
+          "country_raw": "Россия     Россия",
+          "type_raw": "доля  земельного  участка  под  ИЖС   1/2доля  жилого  дома",
+          "own_type_raw": "собственность  Долевая  собственность"
         },
         {
           "text": "квартира",
@@ -341,8 +331,8 @@
           "square": null,
           "relative": "Супруг(а)",
           "own_type_by_column": "В пользовании",
-          "square_raw": "- - -\n\n\n- - -",
-          "country_raw": "- - -\n\n\n- - -",
+          "square_raw": "",
+          "country_raw": "",
           "type_raw": "Не имеет\n\n\nНе имеет"
         }
       ],

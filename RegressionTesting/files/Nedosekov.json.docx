@@ -1,0 +1,126 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Недосеков Андрей Николаевич",
+        "role": "Заместитель федерального Министра\n"
+      },
+      "year": 2009,
+      "incomes": [
+        {
+          "size": 2234570.00,
+          "size_raw": "2234,572",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "2",
+          "square": 1500.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1500",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "земельных участка (личная)",
+          "square": 1387.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1387",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "2 дачных дома",
+          "square": 173.3,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "173,3",
+          "country_raw": "Россия Россия Россия Россия Россия Россия Россия Россия"
+        },
+        {
+          "text": "(личная)",
+          "square": 50.2,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "50,2",
+          "country_raw": ""
+        },
+        {
+          "text": "Квартира (долевая ½)",
+          "square": 124.4,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "124,4",
+          "country_raw": ""
+        },
+        {
+          "text": "Квартира (долевая ½)",
+          "square": 221.8,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "221,8",
+          "country_raw": ""
+        },
+        {
+          "text": "Квартира (долевая 1\\2)",
+          "square": 44.4,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "44,4",
+          "country_raw": ""
+        },
+        {
+          "text": "Квартира (личная)",
+          "square": 108.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "108,5",
+          "country_raw": ""
+        },
+        {
+          "text": "Бокс  гаражный (личная)",
+          "square": 36.1,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "36,1",
+          "country_raw": ""
+        },
+        {
+          "text": "Бокс  гаражный",
+          "square": 18.3,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "18,3",
+          "country_raw": ""
+        },
+        {
+          "text": "(личная) Машино-место",
+          "square": 22.2,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "22,2",
+          "country_raw": ""
+        },
+        {
+          "text": "(личная) Хозяйственное  помещение (личная)",
+          "square": 122.8,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "122,8",
+          "country_raw": ""
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "2 а/м:\nТойота Камри,\nТойота-Ленд Крузер.\n\nАвтоприцеп,\nмотороллер",
+          "relative": null
+        }
+      ]
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения\nоб имущественном положении и доходах государственных гражданских служащих\nМинтранса России и членов их семей за период с 1 января 2009 года по 31 декабря 2009 года\n\n",
+    "year": 2009
+  }
+}

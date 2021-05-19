@@ -105,7 +105,7 @@ namespace Smart.Parser.Lib
                 if (nameCell is null) return false;
                 if (nameCell.IsEmpty) return false;
                 if (TStringMeasure.DefaultFont == null) return false; // no font info
-                List<string> lines = nameCell.GetLinesWithSoftBreaks();
+                List<string> lines = TStringMeasure.GetLinesWithSoftBreaks(nameCell.Text, nameCell.CellWidth);
                 if (lines.Count < 2) return false;
                 List<int> borders  = new List<int>() { 0 };
 
@@ -124,7 +124,7 @@ namespace Smart.Parser.Lib
                 }
                 for (int i = 0; i < row.Cells.Count; ++i)
                 {
-                    var divided = row.Cells[i].GetLinesWithSoftBreaks();
+                    var divided = TStringMeasure.GetLinesWithSoftBreaks(row.Cells[i].Text, row.Cells[i].CellWidth);
                     int start = 0;
                     for (int k = 0; k < borders.Count; ++k)
                     {

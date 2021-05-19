@@ -169,6 +169,13 @@ namespace RegressionTesting
 
         [TestMethod]
         [TestCategory("docx")]
+        public void NedosekovManyRealties()
+        {
+            TestSmartParser("Nedosekov.docx", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("docx")]
         public void TestPdfTwoTables()
         {
             // from pdf

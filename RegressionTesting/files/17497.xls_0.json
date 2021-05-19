@@ -2452,7 +2452,7 @@
           "square": null,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "--",
+          "square_raw": "",
           "country_raw": "Россия",
           "type_raw": "квартира"
         },
@@ -2461,7 +2461,7 @@
           "square": null,
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
-          "square_raw": "--",
+          "square_raw": "",
           "country_raw": "Россия",
           "type_raw": "квартира"
         }

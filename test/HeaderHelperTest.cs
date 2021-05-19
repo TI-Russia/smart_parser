@@ -55,13 +55,8 @@ namespace test
         {
             string square = "рф";
             string country = "57 кв м";
-            RealtyParser.SwapCountryAndSquare(ref square, ref country);
-            Assert.AreEqual("рф", country);
-            Assert.AreEqual("57 кв м", square);
-            
-            // no swap
-            RealtyParser.SwapCountryAndSquare(ref square, ref country);
-            Assert.AreEqual("57 кв м", square);
+            Assert.IsTrue(TRealtyCellSpan.CountryAndSquareAreSwapped(square, country));
+            Assert.IsFalse(TRealtyCellSpan.CountryAndSquareAreSwapped(country, square));
         }   
     }
 }

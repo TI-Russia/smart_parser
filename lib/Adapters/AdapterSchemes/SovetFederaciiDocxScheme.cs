@@ -86,14 +86,14 @@ namespace Smart.Parser.Lib.Adapters.AdapterSchemes
                 else if (rowText.Contains("ппвидимущества") &&
                          rowText.Contains("собственникимущества"))
                 {
-                    ParseRealEstateTable(table, currentDeclarant, RealtyParser.OwnedString);
+                    ParseRealEstateTable(table, currentDeclarant, TRealtyCellSpan.OwnedString);
                     lastTableProcessor = "RealEstateOwned";
                 }
 
                 else if (rowText.Contains("ппвидимущества") &&
                          rowText.Contains("находитсявпользовании"))
                 {
-                    ParseRealEstateTable(table, currentDeclarant, RealtyParser.StateString);
+                    ParseRealEstateTable(table, currentDeclarant, TRealtyCellSpan.StateString);
                     lastTableProcessor = "RealEstateState";
                 }
 
@@ -108,8 +108,8 @@ namespace Smart.Parser.Lib.Adapters.AdapterSchemes
                     switch (lastTableProcessor)
                     {
                         case "Vehicle": ParseVehicleTable(table, currentDeclarant); break;
-                        case "RealEstateState": ParseRealEstateTable(table, currentDeclarant, RealtyParser.StateString); break;
-                        case "RealEstateOwned": ParseRealEstateTable(table, currentDeclarant, RealtyParser.OwnedString); break;
+                        case "RealEstateState": ParseRealEstateTable(table, currentDeclarant, TRealtyCellSpan.StateString); break;
+                        case "RealEstateOwned": ParseRealEstateTable(table, currentDeclarant, TRealtyCellSpan.OwnedString); break;
                     }
                 }
 

@@ -15,34 +15,34 @@
       ],
       "real_estates": [
         {
-          "text": "1.Квартира",
+          "text": "Квартира",
           "square": 59.8,
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "59,8",
-          "country_raw": "Россия",
-          "type_raw": "1.Квартира",
-          "own_type_raw": "1.Индивидуал ьная "
+          "country_raw": "Россия ",
+          "type_raw": "Квартира",
+          "own_type_raw": "Индивидуал ьная \n"
         },
         {
-          "text": "2. Квартира",
+          "text": "Квартира",
           "square": 190.3,
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "190,3",
-          "country_raw": "Россия",
-          "type_raw": "2. Квартира",
-          "own_type_raw": "2.Безвозмездн ое пользование 3.Безвозмездн ое "
+          "country_raw": "Россия ",
+          "type_raw": "Квартира",
+          "own_type_raw": "Безвозмездн ое пользование "
         },
         {
-          "text": "3.Квартира",
+          "text": "Квартира",
           "square": 24.0,
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "24",
           "country_raw": "Россия",
-          "type_raw": "3.Квартира",
-          "own_type_raw": "пользование"
+          "type_raw": "Квартира",
+          "own_type_raw": "Безвозмездн ое \nпользование"
         },
         {
           "text": "Кампус",

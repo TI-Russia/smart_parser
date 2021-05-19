@@ -10,10 +10,260 @@ using SmartAntlr;
 
 namespace Smart.Parser.Lib
 {
-    public class RealtyParser : ParserBase
+    public class TRealtyCell
+    {
+        public Cell DataCell = null;
+        public string DataCellText = "";
+        public List<string> ParsedItems;
+
+        public TRealtyCell(Cell cell)
+        {
+            DataCell = cell;
+            if (cell != null)
+            {
+                DataCellText = cell.GetText(true);
+            }
+            ParsedItems = new List<string>();
+        }
+
+        public void ParseByEmptyLines(List<int> linesWithNumbers)
+        {
+            if (DataCell == null)
+            {
+                for (int i=0; i < linesWithNumbers.Count; ++i)
+                {
+                    ParsedItems.Add(null);
+                }
+                return;
+            }
+            if (DataCellText.Length == 0)
+            {
+                return;
+            }
+            ParsedItems = TextHelpers.SplitJoinedLinesByFuzzySeparator(DataCellText, linesWithNumbers, DataCell.CellWidth).ToList<string>();
+        }
+        public void ParseByAntlr(GeneralAntlrParserWrapper parser)
+        {
+            if (DataCell != null)
+            {
+                ParsedItems = parser.ParseToStringList(DataCellText);
+            }
+        }
+        public void CopyUnparsedValue()
+        {
+            if (DataCell != null)
+            {
+                ParsedItems.Add(DataCell.GetText(true));
+            }
+        }
+    }
+    
+    public class TRealtyCellSpan
     {
         public static readonly string OwnedString = "В собственности";
         public static readonly string StateString = "В пользовании";
+
+        public ParserBase Parent;
+        public TRealtyCell EstateTypeCell = null;
+        public TRealtyCell OwnTypeCell = null;
+        public TRealtyCell SquareCell = null;
+        public TRealtyCell CountryCell = null;
+        public TRealtyCellSpan( Cell estateTypeCell, Cell ownTypeCell, Cell squareCell, Cell countryCell)
+        {
+            if (squareCell != null && countryCell != null)
+            {
+                if (CountryAndSquareAreSwapped(squareCell.GetText(true), countryCell.GetText(true)))
+                {
+                    (squareCell, countryCell) = (countryCell, squareCell);
+                }
+            }
+
+            EstateTypeCell = new TRealtyCell(estateTypeCell);
+            OwnTypeCell = new TRealtyCell(ownTypeCell);
+            SquareCell = new TRealtyCell(squareCell);
+            CountryCell = new TRealtyCell(countryCell);
+            if (!ShouldStartParsing())
+            {
+                EstateTypeCell.CopyUnparsedValue();
+                OwnTypeCell.CopyUnparsedValue();
+                SquareCell.CopyUnparsedValue();
+                CountryCell.CopyUnparsedValue();
+            }
+            else
+            {
+                ParseCellTexts();
+            }
+        }
+        void ParseCellTexts()
+        {
+            List<int> linesWithNumbers = GetLinesStaringWithNumbers(SquareCell.DataCell.GetText(true));
+            if (linesWithNumbers.Count > 1)
+            {
+                EstateTypeCell.ParseByEmptyLines(linesWithNumbers);
+                OwnTypeCell.ParseByEmptyLines(linesWithNumbers);
+                SquareCell.ParseByEmptyLines(linesWithNumbers);
+                CountryCell.ParseByEmptyLines(linesWithNumbers);
+            }
+            else
+            {
+                SquareCell.ParseByAntlr(new AntlrSquareParser());
+                if (OwnTypeCell.DataCell != null)
+                {
+                    EstateTypeCell.ParseByAntlr(new AntlrRealtyTypeParser());
+                    OwnTypeCell.ParseByAntlr(new AntlrOwnTypeParser());
+                }
+                else
+                {
+                    foreach (var r in new AntlrRealtyTypeAndOwnTypeParser().Parse(EstateTypeCell.DataCell.GetText(true)))
+                    {
+                        var i = (RealtyTypeAndOwnTypeFromText)r;
+                        EstateTypeCell.ParsedItems.Add(i.RealtyType);
+                        OwnTypeCell.ParsedItems.Add(i.OwnType);
+                    }
+
+                }
+                CountryCell.ParseByAntlr(new AntlrCountryListParser());
+            }
+        }
+
+        static public bool CountryAndSquareAreSwapped(string squareStr, string countryStr)
+        {
+            return ((squareStr.ToLower().Trim() == "россия" ||
+                 squareStr.ToLower().Trim() == "рф") &&
+                Regex.Match(countryStr.Trim(), @"[0-9,.]").Success);
+        }
+
+        public static List<int> GetLinesStaringWithNumbers(string areaStr)
+        {
+             List<int> linesWithNumbers = new List<int>();
+            string[] lines = areaStr.Split('\n');
+            for (int i = 0; i < lines.Count(); ++i)
+            {
+                if (Regex.Matches(lines[i], "^\\s*[1-9]").Count > 0) // not a zero in the begining
+                {
+                    linesWithNumbers.Add(i);
+                }
+            }
+            return linesWithNumbers;
+
+        }
+        public bool ShouldStartParsing()
+        {
+            if (CountryCell.DataCellText.Length > 0)
+            {
+                if (new AntlrCountryListParser().ParseToStringList(CountryCell.DataCellText).Count > 1)
+                {
+                    // может быть одна страна на все объекты недвижимости
+                    return true;
+                }
+            }
+            return GetLinesStaringWithNumbers(SquareCell.DataCellText).Count > 1;
+        }
+        public void ParseOwnedPropertySingleRow(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr, Person person, string ownTypeByColumn = null)
+        {
+            estateTypeStr = estateTypeStr.Trim().Trim('-', ' ');
+            areaStr = areaStr.ReplaceEolnWithSpace();
+            if (DataHelper.IsEmptyValue(estateTypeStr))
+            {
+                return;
+            }
+
+            RealEstateProperty realEstateProperty = new RealEstateProperty();
+
+            realEstateProperty.square = DataHelper.ParseSquare(areaStr);
+            realEstateProperty.square_raw = ParserBase.NormalizeRawDecimalForTest(areaStr);
+            realEstateProperty.country_raw = DataHelper.ParseCountry(countryStr);
+            realEstateProperty.own_type_by_column = ownTypeByColumn;
+
+            // колонка с типом недвижимости отдельно
+            if (ownTypeStr != null)
+            {
+                realEstateProperty.type_raw = estateTypeStr;
+                realEstateProperty.own_type_raw = ownTypeStr;
+                realEstateProperty.Text = estateTypeStr;
+            }
+            else // колонка содержит тип недвижимости и тип собственности
+            {
+                realEstateProperty.Text = estateTypeStr;
+            }
+
+            realEstateProperty.Text = estateTypeStr;
+            person.RealEstateProperties.Add(realEstateProperty);
+        }
+
+        static string GetListValueOrDefault(List<string> body, int index, string defaultValue)
+        {
+            if (index >= body.Count)
+            {
+                return defaultValue;
+            }
+            else
+            {
+                return body[index];
+            }
+        }
+
+        public void ParseStatePropertySingleRow(string statePropTypeStr,string statePropOwnershipTypeStr,
+                    string statePropSquareStr, string statePropCountryStr,Person person)
+        {
+
+            statePropTypeStr = statePropTypeStr.Trim();
+            if (DataHelper.IsEmptyValue(statePropTypeStr))
+            {
+                return;
+            }
+            RealEstateProperty stateProperty = new RealEstateProperty();
+
+            statePropTypeStr = statePropTypeStr.Trim(' ', '-');
+            stateProperty.Text = statePropTypeStr;
+            stateProperty.type_raw = statePropTypeStr;
+            stateProperty.square = DataHelper.ParseSquare(statePropSquareStr); ;
+            stateProperty.square_raw = ParserBase.NormalizeRawDecimalForTest(statePropSquareStr);
+            stateProperty.country_raw = DataHelper.ParseCountry(statePropCountryStr);
+            if (statePropOwnershipTypeStr != "")
+                stateProperty.own_type_raw = statePropOwnershipTypeStr;
+            stateProperty.own_type_by_column = StateString;
+            person.RealEstateProperties.Add(stateProperty);
+        }
+
+        int GetMaxDataItemsCount()
+        {
+            return Math.Max(SquareCell.ParsedItems.Count, EstateTypeCell.ParsedItems.Count);
+        }
+
+        public void ParseOwnedPropertyManyValuesInOneCell(Person person, string ownTypeByColumn = null)
+        {
+            for (int i = 0; i < GetMaxDataItemsCount(); ++i)
+            {
+                ParseOwnedPropertySingleRow(
+                    GetListValueOrDefault(EstateTypeCell.ParsedItems, i, ""),
+                    GetListValueOrDefault(OwnTypeCell.ParsedItems, i, null),
+                    GetListValueOrDefault(SquareCell.ParsedItems, i, ""),
+                    GetListValueOrDefault(CountryCell.ParsedItems, i, ""),
+                    person,
+                    ownTypeByColumn
+                );
+            }
+        }
+
+        public void ParseStatePropertyManyValuesInOneCell(Person person)
+        {
+            for (int i = 0; i < GetMaxDataItemsCount(); ++i)
+            {
+                ParseStatePropertySingleRow(
+                    GetListValueOrDefault(EstateTypeCell.ParsedItems, i, ""),
+                    GetListValueOrDefault(OwnTypeCell.ParsedItems, i, ""),
+                    GetListValueOrDefault(SquareCell.ParsedItems, i, ""),
+                    GetListValueOrDefault(CountryCell.ParsedItems, i, ""),
+                    person
+                );
+            }
+        }
+
+    }
+
+    public class RealtyParser : ParserBase
+    {
 
         string GetRealtyTypeFromColumnTitle(DeclarationField fieldName)
         {
@@ -94,46 +344,13 @@ namespace Smart.Parser.Lib
             }
         }
 
-
-        public bool OneCellContainsManyValues(string squareStr, string countryStr)
+        public void ParseOwnedOrMixedProperty(Cell estateTypeCell, Cell ownTypeCell, Cell squareCell, Cell countryCell, 
+            DataRow currRow, Person person, string ownTypeByColumn = null)
         {
-            if (countryStr != "")
-            {
-                if (new AntlrCountryListParser().ParseToStringList(countryStr).Count > 1)
-                {
-                    // может быть одна страна на все объекты недвижимости
-                    return true;
-                }
-            }
-            return GetLinesStaringWithNumbers(squareStr).Count > 1;
-        }
-
-        public void ParseOwnedProperty(DataRow currRow, Person person)
-        {
-            if (!currRow.ColumnOrdering.ContainsField(DeclarationField.OwnedRealEstateSquare))
-            {
-                AddRealEstateWithNaturalText(currRow, DeclarationField.OwnedColumnWithNaturalText, OwnedString, person);
-                return;
-            }
-            string estateTypeStr = currRow.GetContents(DeclarationField.OwnedRealEstateType).Replace("не имеет", "");
-            string ownTypeStr = null;
-            if (currRow.ColumnOrdering.OwnershipTypeInSeparateField)
-            {
-                ownTypeStr = currRow.GetContents(DeclarationField.OwnedRealEstateOwnershipType).Replace("не имеет", "");
-            }
-            string squareStr = currRow.GetContents(DeclarationField.OwnedRealEstateSquare).Replace("не имеет", "");
-            string countryStr = currRow.GetContents(DeclarationField.OwnedRealEstateCountry, false).Replace("не имеет", "");
-
             try
             {
-                if (OneCellContainsManyValues(squareStr, countryStr))
-                {
-                    ParseOwnedPropertyManyValuesInOneCell(estateTypeStr, ownTypeStr, squareStr, countryStr, person, OwnedString);
-                }
-                else
-                {
-                    ParseOwnedPropertySingleRow(estateTypeStr, ownTypeStr, squareStr, countryStr, person, OwnedString);
-                }
+                var cellSpan = new TRealtyCellSpan(estateTypeCell, ownTypeCell, squareCell, countryCell);
+                cellSpan.ParseOwnedPropertyManyValuesInOneCell(person, ownTypeByColumn);
             }
             catch (Exception e)
             {
@@ -141,6 +358,25 @@ namespace Smart.Parser.Lib
             }
 
         }
+
+        public void ParseOwnedProperty(DataRow currRow, Person person)
+        {
+            if (!currRow.ColumnOrdering.ContainsField(DeclarationField.OwnedRealEstateSquare))
+            {
+                AddRealEstateWithNaturalText(currRow, DeclarationField.OwnedColumnWithNaturalText, TRealtyCellSpan.OwnedString, person);
+                return;
+            }
+            var estateTypeCell = currRow.GetDeclarationField(DeclarationField.OwnedRealEstateType);
+            Cell ownTypeCell = null;
+            if (currRow.ColumnOrdering.OwnershipTypeInSeparateField)
+            {
+                ownTypeCell = currRow.GetDeclarationField(DeclarationField.OwnedRealEstateOwnershipType);
+            }
+            var squareCell = currRow.GetDeclarationField(DeclarationField.OwnedRealEstateSquare);
+            var countryCell = currRow.GetDeclarationField(DeclarationField.OwnedRealEstateCountry, false);
+            ParseOwnedOrMixedProperty(estateTypeCell, ownTypeCell, squareCell, countryCell, currRow, person, TRealtyCellSpan.OwnedString);
+        }
+
         public void ParseRealtiesWithTypesInTitles(DataRow currRow, Person person)
         {
 
@@ -172,162 +408,40 @@ namespace Smart.Parser.Lib
                 return;
             }
 
-            string estateTypeStr = currRow.GetContents(DeclarationField.MixedRealEstateType).Replace("не имеет", "");
-            string squareStr = currRow.GetContents(DeclarationField.MixedRealEstateSquare).Replace("не имеет", "");
-            string countryStr = currRow.GetContents(DeclarationField.MixedRealEstateCountry).Replace("не имеет", "");
-            string owntypeStr = currRow.GetContents(DeclarationField.MixedRealEstateOwnershipType, false).Replace("не имеет", "");
-            if (owntypeStr == "")
-                owntypeStr = null;
-
-            try
-            {
-                if (OneCellContainsManyValues(squareStr, countryStr))
-                {
-                    ParseOwnedPropertyManyValuesInOneCell(estateTypeStr, owntypeStr, squareStr, countryStr, person);
-                }
-                else
-                {
-                    ParseOwnedPropertySingleRow(estateTypeStr, owntypeStr, squareStr, countryStr, person);
-                }
-            }
-            catch (Exception e)
-            {
-                Logger.Error("***ERROR row({0}) {1}", currRow.Cells[0].Row, e.Message);
-            }
-
+            Cell estateTypeCell = currRow.GetDeclarationField(DeclarationField.MixedRealEstateType);
+            Cell squareCell = currRow.GetDeclarationField(DeclarationField.MixedRealEstateSquare);
+            Cell countryCell = currRow.GetDeclarationField(DeclarationField.MixedRealEstateCountry);
+            Cell owntypeCell = currRow.GetDeclarationField(DeclarationField.MixedRealEstateOwnershipType, false);
+            ParseOwnedOrMixedProperty(estateTypeCell, owntypeCell, squareCell, countryCell, currRow, person);
         }
 
-        static public void SwapCountryAndSquare(ref string squareStr, ref string countryStr)
-        {
-            if ((squareStr.ToLower().Trim() == "россия" ||
-                 squareStr.ToLower().Trim() == "рф") &&
-                Regex.Match(countryStr.Trim(), @"[0-9,.]").Success)
-            {
-                var t = squareStr;
-                squareStr = countryStr;
-                countryStr = t;
-            }
-        }
 
         public void ParseStateProperty(DataRow currRow, Person person)
         {
             if (!currRow.ColumnOrdering.ContainsField(DeclarationField.StatePropertySquare))
             {
-                AddRealEstateWithNaturalText(currRow, DeclarationField.StateColumnWithNaturalText, StateString, person);
+                AddRealEstateWithNaturalText(currRow, DeclarationField.StateColumnWithNaturalText, TRealtyCellSpan.StateString, person);
                 return;
             }
-            string statePropTypeStr = currRow.GetContents(DeclarationField.StatePropertyType, false).Replace("не имеет", "");
-            if (DataHelper.IsEmptyValue(statePropTypeStr))
+            Cell statePropTypeCell = currRow.GetDeclarationField(DeclarationField.StatePropertyType, false);
+            if (statePropTypeCell == null || DataHelper.IsEmptyValue(statePropTypeCell.GetText(true)))
             {
                 return;
             }
-            string ownershipTypeStr = currRow.GetContents(DeclarationField.StatePropertyOwnershipType, false).Replace("не имеет", "");
-            string squareStr = currRow.GetContents(DeclarationField.StatePropertySquare).Replace("не имеет", "");
-            string countryStr = currRow.GetContents(DeclarationField.StatePropertyCountry, false).Replace("не имеет", "");
-            
-            SwapCountryAndSquare(ref squareStr, ref countryStr);
-            
+            Cell ownershipTypeCell = currRow.GetDeclarationField(DeclarationField.StatePropertyOwnershipType, false);
+            Cell squareCell = currRow.GetDeclarationField(DeclarationField.StatePropertySquare);
+            Cell countryCell = currRow.GetDeclarationField(DeclarationField.StatePropertyCountry, false);
+
+           
             try
             {
-                if (OneCellContainsManyValues(squareStr, countryStr))
-                {
-                    ParseStatePropertyManyValuesInOneCell(
-                        statePropTypeStr,
-                        ownershipTypeStr,
-                        squareStr,
-                        countryStr,
-                        person);
-                }
-                else
-                {
-                    ParseStatePropertySingleRow(statePropTypeStr,
-                        ownershipTypeStr,
-                        squareStr,
-                        countryStr,
-                        person);
-                }
+                var cellSpan = new TRealtyCellSpan(statePropTypeCell, ownershipTypeCell, squareCell, countryCell);
+                cellSpan.ParseStatePropertyManyValuesInOneCell(person);
             }
             catch (Exception e)
             {
                 Logger.Error("***ERROR row({0}) {1}", currRow.Cells[0].Row, e.Message);
             }
-
-        }
-
-        static public void ParseStatePropertySingleRow(string statePropTypeStr,
-            string statePropOwnershipTypeStr,
-            string statePropSquareStr,
-            string statePropCountryStr,
-            Person person)
-        {
-
-            SwapCountryAndSquare(ref statePropSquareStr, ref statePropCountryStr);
-
-            statePropTypeStr = statePropTypeStr.Trim();
-            if (DataHelper.IsEmptyValue(statePropTypeStr))
-            {
-                return;
-            }
-            RealEstateProperty stateProperty = new RealEstateProperty();
-
-            statePropTypeStr = statePropTypeStr.Trim(' ', '-');
-            stateProperty.Text = statePropTypeStr;
-            stateProperty.type_raw = statePropTypeStr;
-            stateProperty.square = DataHelper.ParseSquare(statePropSquareStr); ;
-            stateProperty.square_raw = NormalizeRawDecimalForTest(statePropSquareStr);
-            stateProperty.country_raw = DataHelper.ParseCountry(statePropCountryStr);
-            if (statePropOwnershipTypeStr != "")
-                stateProperty.own_type_raw = statePropOwnershipTypeStr;
-            stateProperty.own_type_by_column = StateString;
-            person.RealEstateProperties.Add(stateProperty);
-        }
-
-        static public void ParseOwnedPropertySingleRow(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr, Person person, string ownTypeByColumn = null)
-        {
-
-            SwapCountryAndSquare(ref areaStr, ref countryStr);
-
-            estateTypeStr = estateTypeStr.Trim().Trim('-', ' ');
-            areaStr = areaStr.ReplaceEolnWithSpace();
-            if (DataHelper.IsEmptyValue(estateTypeStr))
-            {
-                return;
-            }
-
-            RealEstateProperty realEstateProperty = new RealEstateProperty();
-
-            realEstateProperty.square = DataHelper.ParseSquare(areaStr);
-            realEstateProperty.square_raw = NormalizeRawDecimalForTest(areaStr);
-            realEstateProperty.country_raw = DataHelper.ParseCountry(countryStr);
-            realEstateProperty.own_type_by_column = ownTypeByColumn;
-
-            // колонка с типом недвижимости отдельно
-            if (ownTypeStr != null)
-            {
-                realEstateProperty.type_raw = estateTypeStr;
-                realEstateProperty.own_type_raw = ownTypeStr;
-                realEstateProperty.Text = estateTypeStr;
-            }
-            else // колонка содержит тип недвижимости и тип собственности
-            {
-                realEstateProperty.Text = estateTypeStr;
-            }
-
-            realEstateProperty.Text = estateTypeStr;
-            person.RealEstateProperties.Add(realEstateProperty);
-        }
-        static List<int> GetLinesStaringWithNumbers(string areaStr)
-        {
-            List<int> linesWithNumbers = new List<int>();
-            string[] lines = areaStr.Split('\n');
-            for (int i = 0; i < lines.Count(); ++i)
-            {
-                if (Regex.Matches(lines[i], "^\\s*[1-9]").Count > 0) // not a zero in the begining
-                {
-                    linesWithNumbers.Add(i);
-                }
-            }
-            return linesWithNumbers;
 
         }
 
@@ -335,148 +449,5 @@ namespace Smart.Parser.Lib
         {
             return Regex.Split(text, "\n\\s?[0-9][0-9]?[.)]");
         }
-
-        static string SliceArrayAndTrim(string[] lines, int start, int end)
-        {
-            return String.Join("\n", lines.Skip(start).Take(end - start)).ReplaceEolnWithSpace();
-        }
-
-        static List<string> DivideByBordersOrEmptyLines(string value, List<int> linesWithNumbers)
-        {
-            var result = new List<string>();
-            if (value == null)
-            {
-                return result;
-            }
-            var lines = TextHelpers.SplitJoinedLinesByFuzzySeparator(value, linesWithNumbers);
-            Debug.Assert(linesWithNumbers.Count > 1);
-            int startLine = linesWithNumbers[0];
-            int numberIndex = 1;
-            string item;
-            for (int i = startLine + 1; i < lines.Count(); ++i)
-            {
-                item = SliceArrayAndTrim(lines, startLine, i);
-                if (item.Count() > 0) // not empty item
-                {
-                    if ((numberIndex < linesWithNumbers.Count && i == linesWithNumbers[numberIndex]) || lines[i].Trim().Count() == 0)
-                    {
-                        result.Add(item);
-                        startLine = i;
-                        numberIndex++;
-                    }
-                }
-            }
-
-            item = SliceArrayAndTrim(lines, startLine, lines.Count());
-            if (item.Count() > 0) result.Add(item);
-
-            if (result.Count < linesWithNumbers.Count)
-            {
-                var notEmptyLines = new List<string>();
-                foreach (var l in lines)
-                {
-                    if (l.Trim(' ').Length > 0)
-                    {
-                        notEmptyLines.Add(l);
-                    }
-                }
-                if (notEmptyLines.Count == linesWithNumbers.Count)
-                {
-                    return notEmptyLines;
-                }
-            }
-
-            return result;
-        }
-
-        
-        static string GetListValueOrDefault(List<string> body, int index, string defaultValue)
-        {
-            if (index >= body.Count)
-            {
-                return defaultValue;
-            }
-            else
-            {
-                return body[index];
-            }
-        }
-
-        class RealtyColumns
-        {
-            public List<string> RealtyTypes;
-            public List<string> OwnTypes;
-            public List<string> Squares;
-            public List<string> Countries;
-            public RealtyColumns(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr)
-            {
-                List<int> linesWithNumbers = GetLinesStaringWithNumbers(areaStr);
-                if (linesWithNumbers.Count > 1)
-                {
-                    RealtyTypes = DivideByBordersOrEmptyLines(estateTypeStr, linesWithNumbers);
-                    Squares = DivideByBordersOrEmptyLines(areaStr, linesWithNumbers);
-                    OwnTypes = DivideByBordersOrEmptyLines(ownTypeStr, linesWithNumbers);
-                    Countries = DivideByBordersOrEmptyLines(countryStr, linesWithNumbers);
-                }
-                else
-                {
-                    Squares = new AntlrSquareParser().ParseToStringList(areaStr);
-                    if (ownTypeStr != null)
-                    {
-                        RealtyTypes = new AntlrRealtyTypeParser().ParseToStringList(estateTypeStr);
-                        OwnTypes = new AntlrOwnTypeParser().ParseToStringList(ownTypeStr);
-                    }
-                    else
-                    {
-                        RealtyTypes = new List<string>();
-                        OwnTypes = new List<string>();
-                        foreach (var r in new AntlrRealtyTypeAndOwnTypeParser().Parse(estateTypeStr))
-                        {
-                            var i = (RealtyTypeAndOwnTypeFromText)r;
-                            RealtyTypes.Add(i.RealtyType);
-                            OwnTypes.Add(i.OwnType);
-                        }
-
-                    }
-                    Countries = new AntlrCountryListParser().ParseToStringList(countryStr);
-                }
-            }
-        }
-        static public void ParseOwnedPropertyManyValuesInOneCell(string realtyTypeStr, string ownTypeStr, string squareStr, string countryStr, Person person, string ownTypeByColumn = null)
-        {
-            var cols = new RealtyColumns(realtyTypeStr, ownTypeStr, squareStr, countryStr);
-            for (int i = 0; i < Math.Max(cols.Squares.Count, cols.RealtyTypes.Count); ++i)
-            {
-                ParseOwnedPropertySingleRow(
-                    GetListValueOrDefault(cols.RealtyTypes, i, ""),
-                    GetListValueOrDefault(cols.OwnTypes, i, null),
-                    GetListValueOrDefault(cols.Squares, i, ""),
-                    GetListValueOrDefault(cols.Countries, i, ""),
-                    person,
-                    ownTypeByColumn
-                );
-            }
-        }
-        static public void ParseStatePropertyManyValuesInOneCell(string realtyTypeStr,
-            string ownTypeStr,
-            string squareStr,
-            string countryStr,
-            Person person)
-        {
-
-            var cols = new RealtyColumns(realtyTypeStr, ownTypeStr, squareStr, countryStr);
-            for (int i = 0; i < Math.Max(cols.Squares.Count, cols.RealtyTypes.Count); ++i)
-            {
-                ParseStatePropertySingleRow(
-                    GetListValueOrDefault(cols.RealtyTypes, i, ""),
-                    GetListValueOrDefault(cols.OwnTypes, i, ""),
-                    GetListValueOrDefault(cols.Squares, i, ""),
-                    GetListValueOrDefault(cols.Countries, i, ""),
-                    person
-                );
-            }
-        }
-
-
     }
 }

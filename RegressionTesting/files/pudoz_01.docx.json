@@ -117,12 +117,20 @@
       ],
       "real_estates": [
         {
-          "text": "Квартира (индивидуальная собственность) Гараж",
+          "text": "Квартира  (индивидуальная собственность)",
           "square": 49.3,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "49,3 кв,м,",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская  Федерация"
+        },
+        {
+          "text": "Гараж",
+          "square": 18.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "18",
+          "country_raw": ""
         }
       ],
       "vehicles": [
@@ -871,7 +879,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "32,8 кв,м,",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская"
         },
         {
           "text": "Квартира (индивидуальная)",
@@ -879,7 +887,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "39,4 кв,м,",
-          "country_raw": ""
+          "country_raw": "Федерация"
         }
       ],
       "vehicles": [

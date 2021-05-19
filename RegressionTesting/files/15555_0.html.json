@@ -28,7 +28,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "327,2",
-          "country_raw": "Россия"
+          "country_raw": " Россия"
         },
         {
           "text": "Квартира",
@@ -36,7 +36,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "74,9",
-          "country_raw": "Россия"
+          "country_raw": " Россия"
         },
         {
           "text": "Квартиры",
@@ -44,7 +44,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "102,3",
-          "country_raw": "Россия"
+          "country_raw": " Россия"
         },
         {
           "text": "Машина-место-бокс",
@@ -52,7 +52,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "15,9",
-          "country_raw": "Россия"
+          "country_raw": " Россия"
         },
         {
           "text": "квартира",

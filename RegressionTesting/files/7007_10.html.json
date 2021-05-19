@@ -12822,20 +12822,12 @@
           "country_raw": "Россия"
         },
         {
-          "text": "Квартиры",
+          "text": "Квартиры    Гаражи",
           "square": 17.9,
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "17,9",
-          "country_raw": "Россия"
-        },
-        {
-          "text": "Гаражи",
-          "square": null,
-          "relative": null,
-          "own_type_by_column": "В собственности",
-          "square_raw": "",
-          "country_raw": "Россия"
+          "country_raw": "Россия    Россия"
         },
         {
           "text": "Квартиры",
@@ -17119,20 +17111,12 @@
           "country_raw": "Россия"
         },
         {
-          "text": "Квартиры",
+          "text": "Квартиры    Гаражи",
           "square": 84.0,
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "84",
-          "country_raw": "Россия"
-        },
-        {
-          "text": "Гаражи",
-          "square": null,
-          "relative": null,
-          "own_type_by_column": "В собственности",
-          "square_raw": "",
-          "country_raw": "Россия"
+          "country_raw": "Россия    Россия"
         },
         {
           "text": "Квартиры",
@@ -18382,20 +18366,12 @@
           "country_raw": "Россия"
         },
         {
-          "text": "Земельные участки",
+          "text": "Земельные участки    Жилые дома",
           "square": 738.0,
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "738",
-          "country_raw": "Россия"
-        },
-        {
-          "text": "Жилые дома",
-          "square": 18.0,
-          "relative": null,
-          "own_type_by_column": "В собственности",
-          "square_raw": "18",
-          "country_raw": "Россия"
+          "country_raw": "Россия    Россия"
         },
         {
           "text": "Гаражи",
@@ -18407,18 +18383,18 @@
         },
         {
           "text": "Гаражи",
-          "square": 16.0,
+          "square": 18.0,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "16",
+          "square_raw": "18",
           "country_raw": "Россия"
         },
         {
           "text": "Иное недвижимое имущество",
-          "square": null,
+          "square": 16.0,
           "relative": null,
           "own_type_by_column": "В собственности",
-          "square_raw": "",
+          "square_raw": "16",
           "country_raw": "Россия"
         }
       ],

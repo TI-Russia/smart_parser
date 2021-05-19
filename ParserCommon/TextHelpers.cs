@@ -137,7 +137,9 @@ namespace TI.Declarator.ParserCommon
             string[] lines = Regex.Split(value, @"\n\s*\n").ToArray();
             return lines;
         }
-        public static string[] SplitJoinedLinesByFuzzySeparator(string value, List<int> linesWithNumbers)
+
+
+        public static string[] SplitJoinedLinesByFuzzySeparator(string value, List<int> linesWithNumbers, int cellWidth)
         {
             string[] lines;
 
@@ -148,7 +150,18 @@ namespace TI.Declarator.ParserCommon
                 return lines;
             }
 
-            // Eg: "- Квартира\n- Квартира"
+            // a weaker regexp but the same count
+            if (Regex.Matches(value, @"^\s*\d\.\s*.+\n\d\.\s*", RegexOptions.Singleline).Count > 0)
+            {
+                lines = (string[])Regex.Split(value, @"\d+\s*\.").Skip(1).ToArray();
+                if (lines.Length == linesWithNumbers.Count && linesWithNumbers.Count > 0)
+                {
+                    return lines;
+                }
+
+            }
+
+                // Eg: "- Квартира\n- Квартира"
             if (Regex.Matches(value, @"^\p{Pd}\s+.+\n\p{Pd}\s", RegexOptions.Singleline).Count > 0)
             {
                 lines = (string[])Regex.Split(value, @"\n\p{Pd}");
@@ -170,14 +183,64 @@ namespace TI.Declarator.ParserCommon
                 return lines;
             }
 
-            lines = value.Trim(' ', ';').Split(';');
-            if (lines.Length != linesWithNumbers.Count)
+            // Eg: Квартира\n\nКвартира\n\nКвартира
+            var value1 = Regex.Replace(value, @"[\s-[\n]]+\n", "\n");
+            var tokens = Regex.Split(value1, @"\n\n+", RegexOptions.Singleline);
+            if (tokens.Length == linesWithNumbers.Count && linesWithNumbers.Count > 0)
             {
-                lines = value.Split('\n');
+                return tokens;
             }
 
-            return lines;
+            lines = value.Trim(' ', ';').Split(';');
+            if (lines.Length == linesWithNumbers.Count)
+            {
+                return lines;
+            }
+            lines = value.Split('\n');
+            if (lines.Length == linesWithNumbers.Count)
+            {
+                return lines;
+            }
+
+            var notEmptyLines = new List<string>();
+            foreach (var l in lines)
+            {
+                if (l.Trim(' ').Length > 0)
+                {
+                    notEmptyLines.Add(l);
+                }
+            }
+            if (notEmptyLines.Count == linesWithNumbers.Count)
+            {
+                return notEmptyLines.ToArray();
+            }
+
+            lines = TStringMeasure.GetLinesWithSoftBreaks(value, cellWidth).ToArray();
+            var items = new List<String>();
+            for (int i = 0; i < linesWithNumbers.Count; i++)
+            {
+                int start = linesWithNumbers[i];
+                int end = lines.Length;
+                if (i + 1  < linesWithNumbers.Count)
+                {
+                    end = linesWithNumbers[i + 1];
+                }
+                    
+                var item = String.Join("\n", lines.Skip(start).Take(Math.Min(end, lines.Length) - start)).ReplaceEolnWithSpace();
+                items.Add(item);
+                if (end >= lines.Length)
+                {
+                    break;
+                }
+            }
+            return items.ToArray();
         }
+        public static string SliceArrayAndTrim(string[] lines, int start, int end)
+        {
+            return String.Join("\n", lines.Skip(start).Take(end - start)).ReplaceEolnWithSpace();
+        }
+
+
 
     }
 }
