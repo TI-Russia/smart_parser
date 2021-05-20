@@ -20,7 +20,9 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "54",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира (Безвозмездное пользование бессрочное)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -50,7 +52,9 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "1960",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Земельный участок (индивидуальная собственность)",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира (индивидуальная собственность)",
@@ -58,7 +62,9 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "75,3",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира (индивидуальная собственность)",
+          "own_type_raw": ""
         },
         {
           "text": "Земельный участок (индивидуальная собственность)",
@@ -66,7 +72,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "3917",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Земельный участок (индивидуальная собственность)",
+          "own_type_raw": ""
         },
         {
           "text": "Жилой дом (индивидуальная собственность)",
@@ -74,7 +82,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "64,7",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Жилой дом (индивидуальная собственность)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -110,7 +120,9 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "53",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира (безвозмездное пользование, бессрочное)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -162,7 +174,9 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "60",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира (аренда)",
+          "own_type_raw": ""
         },
         {
           "text": "Жилой дом (садовый дом) (безвозмездное пользование, бессрочное)",
@@ -170,7 +184,9 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "30",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Жилой дом (садовый дом) (безвозмездное пользование, бессрочное)",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира (аренда)",
@@ -178,7 +194,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "60",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира (аренда)",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира",
@@ -186,7 +204,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "",
-          "country_raw": ""
+          "country_raw": "",
+          "type_raw": "Квартира",
+          "own_type_raw": ""
         },
         {
           "text": "(безвозмездное пользование, бессрочное)",
@@ -194,7 +214,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "70",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "(безвозмездное пользование, бессрочное)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -224,7 +246,9 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "500",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Дачный земельный участок (Общая",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []

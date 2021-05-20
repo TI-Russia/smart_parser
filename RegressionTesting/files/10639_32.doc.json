@@ -26,7 +26,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "1158",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Земельный участок индивидуальная",
+          "own_type_raw": ""
         },
         {
           "text": "Жилой дом",
@@ -43,7 +45,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "84,3",
-          "country_raw": ""
+          "country_raw": "",
+          "type_raw": "Квартира индивидуальная (1/4)",
+          "own_type_raw": ""
         },
         {
           "text": "Жилой дом индивидуальная",
@@ -51,7 +55,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "50,5",
-          "country_raw": ""
+          "country_raw": "",
+          "type_raw": "Жилой дом индивидуальная",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира индивидуальная (1/4)",
@@ -59,7 +65,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "84,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартира индивидуальная (1/4)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -96,7 +104,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "1404",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Земельный участок индивидуальная",
+          "own_type_raw": ""
         },
         {
           "text": "Жилой дом индивидуальная",
@@ -104,7 +114,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "71,2",
-          "country_raw": ""
+          "country_raw": "",
+          "type_raw": "Жилой дом индивидуальная",
+          "own_type_raw": ""
         },
         {
           "text": "Жилой дом",

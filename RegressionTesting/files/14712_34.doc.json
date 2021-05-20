@@ -35,7 +35,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "12",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Общежитие малосемейного типа",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира",

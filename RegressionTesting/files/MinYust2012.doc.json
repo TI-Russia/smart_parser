@@ -26,7 +26,9 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "53,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (индивидуальная)",
+          "own_type_raw": ""
         },
         {
           "text": "квартира (индивидуальная)",
@@ -34,7 +36,9 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "65,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (индивидуальная)",
+          "own_type_raw": ""
         },
         {
           "text": "квартира (индивидуальная)",
@@ -42,7 +46,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "27,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (индивидуальная)",
+          "own_type_raw": ""
         },
         {
           "text": "квартира (индивидуальная)",
@@ -50,7 +56,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "41,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (индивидуальная)",
+          "own_type_raw": ""
         },
         {
           "text": "квартира (пользование)",
@@ -58,7 +66,9 @@
           "relative": "Ребенок",
           "own_type_by_column": null,
           "square_raw": "53,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (пользование)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -95,7 +105,9 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "50,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (совместная собственность)",
+          "own_type_raw": ""
         },
         {
           "text": "квартира (совместная собственность)",
@@ -103,7 +115,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "50,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (совместная собственность)",
+          "own_type_raw": ""
         },
         {
           "text": "земельный участок (индивидуальная)",
@@ -111,7 +125,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "20",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "земельный участок (индивидуальная)",
+          "own_type_raw": ""
         },
         {
           "text": "гараж (индивидуальная)",
@@ -119,7 +135,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "20",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "гараж (индивидуальная)",
+          "own_type_raw": ""
         },
         {
           "text": "земельный участок (пользование)",
@@ -127,7 +145,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "1175700",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "земельный участок (пользование)",
+          "own_type_raw": ""
         },
         {
           "text": "земельный участок (пользование)",
@@ -135,7 +155,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "24",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "земельный участок (пользование)",
+          "own_type_raw": ""
         },
         {
           "text": "земельный участок (пользование)",
@@ -143,7 +165,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "24",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "земельный участок (пользование)",
+          "own_type_raw": ""
         },
         {
           "text": "квартира (индивидуальная)",
@@ -151,7 +175,9 @@
           "relative": "Ребенок",
           "own_type_by_column": null,
           "square_raw": "50,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (индивидуальная)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [

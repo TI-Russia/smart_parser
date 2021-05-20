@@ -26,7 +26,9 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "67,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (инд. собственность)",
+          "own_type_raw": ""
         },
         {
           "text": "квартира (инд.собственность);",
@@ -34,7 +36,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "65,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (инд.собственность);",
+          "own_type_raw": ""
         },
         {
           "text": "дача (инд.собственность);",
@@ -42,7 +46,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "50,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "дача (инд.собственность);",
+          "own_type_raw": ""
         },
         {
           "text": "земельный участок (инд.собственность);",
@@ -50,7 +56,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "600",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "земельный участок (инд.собственность);",
+          "own_type_raw": ""
         },
         {
           "text": "гараж (инд. собственность)",
@@ -58,7 +66,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "16,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "гараж (инд. собственность)",
+          "own_type_raw": ""
         },
         {
           "text": "гараж (инд. собственность)",
@@ -66,7 +76,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "17,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "гараж (инд. собственность)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [

@@ -34,7 +34,7 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "63,5",
-          "country_raw": ""
+          "country_raw": "РФ"
         },
         {
           "text": "Квартира 1/3 доля",
@@ -42,7 +42,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "63,5",
-          "country_raw": "РФ"
+          "country_raw": "РФ",
+          "type_raw": "Квартира 1/3 доля",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира 1/3 доля",
@@ -50,7 +52,9 @@
           "relative": "Ребенок",
           "own_type_by_column": null,
           "square_raw": "63,5",
-          "country_raw": "РФ"
+          "country_raw": "РФ",
+          "type_raw": "Квартира 1/3 доля",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []

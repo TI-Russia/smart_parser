@@ -26,7 +26,9 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "720",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "земельный участок (собственность)",
+          "own_type_raw": ""
         },
         {
           "text": "квартира (собственность)",
@@ -34,7 +36,9 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "57,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (собственность)",
+          "own_type_raw": ""
         },
         {
           "text": "квартира (собственность)",
@@ -42,7 +46,9 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "48,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (собственность)",
+          "own_type_raw": ""
         },
         {
           "text": "земельный участок (пользование)",
@@ -50,7 +56,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "720",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "земельный участок (пользование)",
+          "own_type_raw": ""
         },
         {
           "text": "квартира (пользование)",
@@ -58,7 +66,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "57,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (пользование)",
+          "own_type_raw": ""
         },
         {
           "text": "квартира (пользование)",
@@ -66,7 +76,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "48,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (пользование)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -96,7 +108,9 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "97",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (совместная собственность)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -126,7 +140,9 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "46,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (собственность)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []

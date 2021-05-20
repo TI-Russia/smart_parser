@@ -20,7 +20,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "46,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": ""
         },
         {
           "text": "гараж",
@@ -28,7 +30,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "39,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": ""
         },
         {
           "text": "гараж",
@@ -36,7 +40,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "21,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": ""
         },
         {
           "text": "земельный участок 1/2 доля",
@@ -44,7 +50,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "1300",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "земельный участок 1/2 доля",
+          "own_type_raw": ""
         },
         {
           "text": "Жилой дом 1/2",
@@ -52,7 +60,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "21,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Жилой дом 1/2",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -97,7 +107,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "1488",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": ""
         },
         {
           "text": "жилой дом",
@@ -105,7 +117,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "37,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "жилой дом",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -113,7 +127,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "43,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -152,7 +168,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "39",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -160,7 +178,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "39,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -199,7 +219,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "43,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира 1/2",
+          "own_type_raw": ""
         },
         {
           "text": "квартира 1/2",
@@ -207,7 +229,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "33,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира 1/2",
+          "own_type_raw": ""
         },
         {
           "text": "гараж",
@@ -215,7 +239,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "19",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": ""
         },
         {
           "text": "квартира 1/2",
@@ -223,7 +249,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "33,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира 1/2",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [

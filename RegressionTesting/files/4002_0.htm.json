@@ -20,7 +20,9 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "48,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (собственность, доля 1/3)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []

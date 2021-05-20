@@ -82,7 +82,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "59,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "(собственность, индивидуальная)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [

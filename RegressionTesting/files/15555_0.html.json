@@ -20,7 +20,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "951",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Земельный участок (под индивудуальное жилищное строительство)",
+          "own_type_raw": ""
         },
         {
           "text": "Жилой дом",
@@ -28,7 +30,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "327,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Жилой дом",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира",
@@ -36,7 +40,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "74,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -44,7 +50,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "102,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Машина-место-бокс",
@@ -52,7 +60,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "15,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Машина-место-бокс",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",

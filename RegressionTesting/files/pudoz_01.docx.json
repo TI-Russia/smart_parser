@@ -130,7 +130,7 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "18",
-          "country_raw": ""
+          "country_raw": "Российская Федерация"
         }
       ],
       "vehicles": [
@@ -277,7 +277,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "35,3 кв,м,",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира (индивидуальная собственность)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [],
@@ -458,7 +460,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "74,8",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира (Долевая собственность)",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира (Долевая собственность)",
@@ -466,7 +470,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "74,8",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира (Долевая собственность)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -681,7 +687,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "1000 кв,м,",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Земельный участок (индивидуальная)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [],
@@ -708,7 +716,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "33,5 кв,м,",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира (индивидуальная)",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира (пользование)",
@@ -716,7 +726,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "33,5 кв,м,",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира (пользование)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [],
@@ -743,7 +755,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "53 кв,м,",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира (индивидуальная)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [],
@@ -770,7 +784,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "64,5 кв,м,",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира (Долевая собственность)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [],
@@ -803,7 +819,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "58,7 кв,м,",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира (пользование)",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира (индивидуальная)",
@@ -811,7 +829,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "58,7 кв,м,",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира (индивидуальная)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -844,7 +864,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "49,5 кв,м,",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира (индивидуальная)",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира (пользование)",
@@ -852,7 +874,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "49,5 кв,м,",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира (пользование)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [],
@@ -925,7 +949,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "37,3 кв,м,",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира (Долевая собственность)",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира (Долевая собственность)",
@@ -933,7 +959,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "37,3 кв,м,",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира (Долевая собственность)",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира (Долевая собственность)",
@@ -941,7 +969,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "37,3 кв,м,",
-          "country_raw": "Российская Федерация"
+          "country_raw": "Российская Федерация",
+          "type_raw": "Квартира (Долевая собственность)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [

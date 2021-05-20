@@ -32,7 +32,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "46,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -40,7 +42,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "46,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -48,7 +52,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "46,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -93,7 +99,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "47,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -251,7 +259,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "85",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -281,7 +291,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "58,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -337,7 +349,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "49,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -374,7 +388,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "18,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -382,7 +398,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "18,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -450,7 +468,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "59,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -486,7 +506,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "712",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -503,7 +525,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "291",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -537,7 +561,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "41",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -574,7 +600,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "55",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -628,7 +656,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "64,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -645,7 +675,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "54",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -795,7 +827,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "58,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -826,7 +860,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "58,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -886,7 +922,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "40,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -969,7 +1007,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "58",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -977,7 +1017,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "58",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -985,7 +1027,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "58",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -1042,7 +1086,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "34,1",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "гараж",
@@ -1059,7 +1105,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "48,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -1067,7 +1115,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "48,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -1075,7 +1125,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "48,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "земельный участок",
@@ -1222,7 +1274,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "94",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -1230,7 +1284,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "94",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -1303,7 +1359,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "50,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира",
@@ -1372,7 +1430,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "75,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -1490,7 +1550,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "77,08",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -1543,7 +1605,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "30,25",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -1613,7 +1677,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "60,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -1728,7 +1794,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "59,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира",
@@ -1754,7 +1822,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "59,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -1822,7 +1892,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "88",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -1937,7 +2009,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "35,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -2304,7 +2378,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "41",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Жилые дома",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -2370,7 +2446,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "43",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -2465,7 +2543,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "61",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -2482,7 +2562,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "61",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -2673,7 +2755,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "43,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -2704,7 +2788,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "25",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -2712,7 +2798,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "25",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -2853,7 +2941,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "37",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -2861,7 +2951,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "75,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -2869,7 +2961,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "75,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -2900,7 +2994,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "61,1",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -2965,7 +3061,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "43,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Жилые дома",
+          "own_type_raw": ""
         },
         {
           "text": "коттедж мужа Буркова А.Н.",
@@ -3082,7 +3180,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "60,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "садовый участок",
@@ -3151,7 +3251,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "31,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -3283,7 +3385,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "36,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -3291,7 +3395,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "47,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -3321,7 +3427,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "52",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "3-х квартира",
@@ -3360,7 +3468,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "72",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -3431,7 +3541,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "34,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Гаражи",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -3467,7 +3579,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "24",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Гаражи",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира жены",
@@ -3484,7 +3598,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "61,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -3597,7 +3713,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "43,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -3776,7 +3894,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "1500",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Земельные участки",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира",
@@ -3822,7 +3942,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "883,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Земельные участки",
+          "own_type_raw": ""
         },
         {
           "text": "2-х комнатная квартира",
@@ -3877,7 +3999,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "64,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Земельные участки",
@@ -3901,7 +4025,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "64,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -4322,7 +4448,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "97,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -4363,7 +4491,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "49,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -4561,7 +4691,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "68,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -4606,7 +4738,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "21,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира супруги",
@@ -4623,7 +4757,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "57,1",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -4654,7 +4790,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "64",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Жилые дома",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -4662,7 +4800,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "49,1",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -4788,7 +4928,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "31,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -4796,7 +4938,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "31,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -4857,7 +5001,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "58,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -4961,7 +5107,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "35",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -5004,7 +5152,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "60,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -5012,7 +5162,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "60,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -5020,7 +5172,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "60,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -5060,7 +5214,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "63",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -5097,7 +5253,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "65",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -5268,7 +5426,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "63,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -5356,7 +5516,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "29,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -5424,7 +5586,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "71,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -5757,7 +5921,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "75,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -5794,7 +5960,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "75,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "3-х комнатная квартира",
@@ -5811,7 +5979,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "75,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -5854,7 +6024,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "29,25",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -5862,7 +6034,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "29,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -5904,7 +6078,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "285",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Земельные участки",
+          "own_type_raw": ""
         },
         {
           "text": "квартира отца Денисова Г.А.",
@@ -6007,7 +6183,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "500",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Земельные участки",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -6044,7 +6222,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "100",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -6052,7 +6232,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "100",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -6060,7 +6242,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "100",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -6203,7 +6387,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "48",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -6376,7 +6562,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "11,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -6384,7 +6572,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "43,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -6392,7 +6582,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "43,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -6422,7 +6614,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "53,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -6547,7 +6741,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "41,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -6720,7 +6916,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "45",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -6769,7 +6967,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "45",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -6806,7 +7006,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "50",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -6814,7 +7016,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "50",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "гараж",
@@ -7034,7 +7238,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "63,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "дачный участок",
@@ -7085,7 +7291,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "63",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -7127,7 +7335,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "63,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "дачный участок",
@@ -7162,7 +7372,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "63",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -7214,7 +7426,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "67,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -7222,7 +7436,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "67,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -7269,7 +7485,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "19,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Гаражи",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -7286,7 +7504,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "55,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -7332,7 +7552,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "60,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -7435,7 +7657,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "50",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -7495,7 +7719,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "61,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -7547,7 +7773,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "62,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -7607,7 +7835,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "29,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -7644,7 +7874,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "79,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -7652,7 +7884,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "79,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -7850,7 +8084,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "51,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -7858,7 +8094,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "53,1",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -7894,7 +8132,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "44,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -7902,7 +8142,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "44,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -7976,7 +8218,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "867",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Земельные участки",
+          "own_type_raw": ""
         },
         {
           "text": "квартира жены Захаровой В.Г.",
@@ -8002,7 +8246,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "69,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -8074,7 +8320,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "53",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -8122,7 +8370,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "72,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "4-комнатная квартира Е.В. Зверевой (жена)",
@@ -8222,7 +8472,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "33,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -8289,7 +8541,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "32,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -8400,7 +8654,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "62,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -8436,7 +8692,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "126,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Земельные участки",
@@ -8488,7 +8746,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "68",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -8549,7 +8809,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "52,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -8580,7 +8842,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "795",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Земельные участки",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -8641,7 +8905,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "52,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -8649,7 +8915,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "64,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -8711,7 +8979,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "50,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира",
@@ -9011,7 +9281,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "58,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -9019,7 +9291,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "58,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -9082,7 +9356,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "50,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Жилые дома",
@@ -9090,7 +9366,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "41,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Жилые дома",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -9327,7 +9605,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "41",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Жилые дома",
+          "own_type_raw": ""
         },
         {
           "text": "Жилые дома",
@@ -9418,7 +9698,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "63",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -9889,7 +10171,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "50",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -9944,7 +10228,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "79,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -9992,7 +10278,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "47,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -10000,7 +10288,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "47,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -10008,7 +10298,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "47,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -10227,7 +10519,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "74,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -10269,7 +10563,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "53,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -10363,7 +10659,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "65,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -10440,7 +10738,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "60,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -10641,7 +10941,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "41",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -10684,7 +10986,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "88",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -10692,7 +10996,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "88",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -10747,7 +11053,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "1496",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Земельные участки",
+          "own_type_raw": ""
         },
         {
           "text": "квартира супруги",
@@ -10836,7 +11144,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "55,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "земельный участок",
@@ -10897,7 +11207,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "29,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -10959,7 +11271,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "24",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -11007,7 +11321,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "62",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Земельные участки",
@@ -11093,7 +11409,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "60,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -11101,7 +11419,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "60,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Земельные участки",
@@ -11184,7 +11504,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "52,1",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Земельные участки",
@@ -11331,7 +11653,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "30",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Гаражи",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -11392,7 +11716,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "39,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -11400,7 +11726,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "39,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -11437,7 +11765,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "42,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -11445,7 +11775,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "42,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -11453,7 +11785,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "42,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -11498,7 +11832,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "18,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Гаражи",
+          "own_type_raw": ""
         },
         {
           "text": "2-х комнатная квартира",
@@ -11799,7 +12135,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "61",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -11959,7 +12297,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "83,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Земельные участки",
@@ -11991,7 +12331,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "83,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Земельные участки",
@@ -12066,7 +12408,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "62000",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Земельные участки",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -12121,7 +12465,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "46",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -12129,7 +12475,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "46",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -12137,7 +12485,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "46",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -12167,7 +12517,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "40,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -12281,7 +12633,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "1256",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Земельные участки",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -12298,7 +12652,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "31,1",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -12361,7 +12717,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "34,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Жилые дома",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -12481,7 +12839,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "75,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -12489,7 +12849,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "75,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -12554,7 +12916,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "65,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -12624,7 +12988,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "57,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "садовый участок",
@@ -12641,7 +13007,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "57,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -12835,7 +13203,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "17,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -12880,7 +13250,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "49,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -12996,7 +13368,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "61,03",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -13056,7 +13430,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "79,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "садовый дом в садовом товариществе",
@@ -13149,7 +13525,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "66,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -13303,7 +13681,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "59,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -13377,7 +13757,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "38,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "2-комнатная квартира",
@@ -13523,7 +13905,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "27,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -13723,7 +14107,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "774",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Земельные участки",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира",
@@ -13740,7 +14126,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "774",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Земельные участки",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира",
@@ -13804,7 +14192,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "47,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -13812,7 +14202,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "47,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -13820,7 +14212,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "47,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -13846,7 +14240,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "47,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -14078,7 +14474,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "600",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Земельные участки",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -14162,7 +14560,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "69,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -14335,7 +14735,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "82,1",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -14343,7 +14745,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "82,1",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -14554,7 +14958,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "61,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Земельные участки",
@@ -14562,7 +14968,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "2528",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Земельные участки",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -14602,7 +15010,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "43",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -14642,7 +15052,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "30",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -14650,7 +15062,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "44,72",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -14759,7 +15173,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "62",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -14767,7 +15183,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "40",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -14891,7 +15309,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "30,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Земельные участки",
@@ -14899,7 +15319,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "15000",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Земельные участки",
+          "own_type_raw": ""
         },
         {
           "text": "квартира супруги",
@@ -14916,7 +15338,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира матери",
@@ -15005,7 +15429,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "34,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "трехкомнатная квартира",
@@ -15045,7 +15471,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "70,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -15111,7 +15539,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "100,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -15226,7 +15656,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "14,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -15320,7 +15752,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "50,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -15362,7 +15796,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "33",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -15478,7 +15914,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "94",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -15533,7 +15971,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "70,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -15541,7 +15981,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "70,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -15566,7 +16008,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "46",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -15802,7 +16246,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "24,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Земельные участки",
@@ -16075,7 +16521,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "63,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -16381,7 +16829,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "75,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира",
@@ -16980,7 +17430,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "47,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -17169,7 +17621,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "45,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира И.Н.Невьянцева (супруг)",
@@ -17209,7 +17663,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "60,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Земельные участки",
@@ -17308,7 +17764,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "50",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -17316,7 +17774,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "50",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -17382,7 +17842,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "39",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Земельные участки",
@@ -17522,7 +17984,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "49,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -17577,7 +18041,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "60",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -17697,7 +18163,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "16",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира матери (Ожеговой Н.Г.)",
@@ -17748,7 +18216,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "21",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -17756,7 +18226,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "21",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -17764,7 +18236,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "28,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -17973,7 +18447,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "62,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -18010,7 +18486,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "600",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Земельные участки",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -18036,7 +18514,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "62,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -18067,7 +18547,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "88,75",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "3-х комнатная квартира",
@@ -18131,7 +18613,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "68,64",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -18565,7 +19049,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "74,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -18681,7 +19167,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "64",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -18747,7 +19235,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "84",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Жилые дома",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -18882,7 +19372,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "60",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира матери",
@@ -19183,7 +19675,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "49,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -19213,7 +19707,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "36,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -19243,7 +19739,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "50",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "садовый участок",
@@ -19277,7 +19775,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "50",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "садовый участок",
@@ -19422,7 +19922,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "97,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Жилые дома",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира",
@@ -19650,7 +20152,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "35",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -19681,7 +20185,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "64,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -19689,7 +20195,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "64,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -19750,7 +20258,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "17,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Гаражи",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира трехкомнатная",
@@ -19931,7 +20441,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "75,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -19939,7 +20451,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "75,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -19947,7 +20461,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "75,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -19984,7 +20500,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "63,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -19992,7 +20510,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "63,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -20000,7 +20520,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "63,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -20151,7 +20673,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "43,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -20194,7 +20718,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "62,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -20202,7 +20728,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "62,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -20210,7 +20738,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "62,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира родителей",
@@ -20296,7 +20826,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "63,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -20388,7 +20920,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "69,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -20466,7 +21000,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "48,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира отца - М.Р. Рыбченко",
@@ -20509,7 +21045,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "44,14",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -20570,7 +21108,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "17",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -20578,7 +21118,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "17",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -20615,7 +21157,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "58,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -20623,7 +21167,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "58,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -20631,7 +21177,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "58,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -20694,7 +21242,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "44,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -20733,7 +21283,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "117,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -20838,7 +21390,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "987",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Земельные участки",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира",
@@ -20855,7 +21409,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "93,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -20863,7 +21419,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "93,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -20923,7 +21481,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "18",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -20958,7 +21518,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "29,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -21038,7 +21600,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "31,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -21134,7 +21698,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "49,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира жены",
@@ -21180,7 +21746,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "41",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -21188,7 +21756,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "41",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -21231,7 +21801,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "72,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Жилые дома",
+          "own_type_raw": ""
         },
         {
           "text": "приусадебный земельный участок",
@@ -21270,7 +21842,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "64,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -21413,7 +21987,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "53",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -21421,7 +21997,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "53",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -21608,7 +22186,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "47,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -21654,7 +22234,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "49,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Земельные участки",
@@ -21800,7 +22382,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "60,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -21970,7 +22554,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "51,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -21995,7 +22581,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "72,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -22020,7 +22608,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "72,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -22051,7 +22641,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "72,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -22234,7 +22826,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "19",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -22242,7 +22836,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "19",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -22250,7 +22846,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "19",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -22328,7 +22926,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "45,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -22336,7 +22936,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "57,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -22575,7 +23177,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "42,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -22592,7 +23196,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "54",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -22638,7 +23244,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "69,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -22646,7 +23254,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "69,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -22682,7 +23292,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "36",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -22699,7 +23311,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "36",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -22891,7 +23505,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "74",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -22899,7 +23515,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "74",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -22972,7 +23590,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "30,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -23239,7 +23859,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "49,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "гаражный бокс",
@@ -23256,7 +23878,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "49,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Гаражи",
@@ -23264,7 +23888,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "17,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Гаражи",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -23339,7 +23965,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "62",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -23452,7 +24080,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "65,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -23469,7 +24099,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "65,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -23511,7 +24143,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "65,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -23544,7 +24178,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "65,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -23581,7 +24217,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "43",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -23589,7 +24227,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "43",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -23626,7 +24266,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "53,1",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -23634,7 +24276,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "33,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -23642,7 +24286,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "53,1",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -23667,7 +24313,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "44",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -23803,7 +24451,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "24,1",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -23887,7 +24537,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "47,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -23962,7 +24614,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "50,1",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -24114,7 +24768,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "83,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -24150,7 +24806,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "48,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Земельные участки",
@@ -24217,7 +24875,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "54,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Земельные участки",
@@ -24379,7 +25039,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "68,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -24396,7 +25058,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "68,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -24502,7 +25166,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "33,1",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -24557,7 +25223,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "58,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -24746,7 +25414,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "22,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Гаражи",
+          "own_type_raw": ""
         },
         {
           "text": "квартира родителей",
@@ -24848,7 +25518,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "45,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -24884,7 +25556,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "78,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Жилые дома",
+          "own_type_raw": ""
         },
         {
           "text": "Жилые дома",
@@ -24892,7 +25566,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "78,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Жилые дома",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -25095,7 +25771,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "42,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -25214,7 +25892,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "159000",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Земельные участки",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -25291,7 +25971,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "16,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -25327,7 +26009,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "42,1",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира супруги -Хмелевой М.И.",
@@ -25451,7 +26135,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "61",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -25508,7 +26194,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "64",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -25516,7 +26204,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "64",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -25874,7 +26564,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "58,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -25882,7 +26574,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "58,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -25968,7 +26662,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "44,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -26176,7 +26872,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "49,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -26184,7 +26882,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "49,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -26241,7 +26941,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "94,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -26249,7 +26951,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "94,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -26347,7 +27051,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "5,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -26399,7 +27105,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "45,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -26439,7 +27147,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "56,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "индивидуальная",
@@ -26456,7 +27166,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -26648,7 +27360,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "92,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Жилые дома",
+          "own_type_raw": ""
         },
         {
           "text": "Земельный участок",
@@ -26992,7 +27706,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "18",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Гаражи",
+          "own_type_raw": ""
         },
         {
           "text": "квартира сына Шайхиева М.З.",
@@ -27009,7 +27725,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "61",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -27154,7 +27872,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "60,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Земельные участки",
@@ -27212,7 +27932,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "29,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -27220,7 +27942,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "42,68",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -27279,7 +28003,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "43",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -27673,7 +28399,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "60,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -27730,7 +28458,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "37,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -27755,7 +28485,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "60,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -27891,7 +28623,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "67,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -27964,7 +28698,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "62,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Земельные участки",
@@ -28039,7 +28775,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "63,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -28193,7 +28931,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "58",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартиры",
@@ -28201,7 +28941,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "58",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира",
@@ -28266,7 +29008,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "47,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -28340,7 +29084,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "30,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -28541,7 +29287,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "34,1",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартиры",
+          "own_type_raw": ""
         },
         {
           "text": "квартира мужа - Ярулина Ю.Х.",

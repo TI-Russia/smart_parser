@@ -26,7 +26,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "42,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартира",
+          "own_type_raw": ""
         },
         {
           "text": "Дом",
@@ -43,7 +45,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "85,1",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Дом",
+          "own_type_raw": ""
         },
         {
           "text": "Квартира",

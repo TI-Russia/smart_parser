@@ -35,7 +35,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "177,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Жилой дом",
+          "own_type_raw": ""
         },
         {
           "text": "Жилой дом",

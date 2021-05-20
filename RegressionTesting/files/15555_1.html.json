@@ -30,7 +30,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "115",
-          "country_raw": "",
+          "country_raw": "РФ",
           "type_raw": "Квартира",
           "own_type_raw": "Совместная собственность с супругой"
         },
@@ -59,7 +59,7 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "115",
-          "country_raw": "",
+          "country_raw": "РФ",
           "type_raw": "Квартира",
           "own_type_raw": "Совместная собственность с супругом"
         },

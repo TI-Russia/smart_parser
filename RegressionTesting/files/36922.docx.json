@@ -114,7 +114,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "50,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "(индивидуальная собственность) Квартира (пользование)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [

@@ -20,7 +20,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "46,27",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (личная)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [
@@ -318,7 +320,9 @@
           "relative": "Ребенок",
           "own_type_by_column": "В собственности",
           "square_raw": "193,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Квартира (долевая ¼)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [

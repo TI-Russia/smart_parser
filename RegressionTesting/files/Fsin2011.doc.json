@@ -26,7 +26,9 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "54",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (безвозмездное пользование, фактическое предоставление)",
+          "own_type_raw": ""
         },
         {
           "text": "квартира (собственность)",
@@ -34,7 +36,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "42",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (собственность)",
+          "own_type_raw": ""
         },
         {
           "text": "квартира (безвозмездное пользование, фактическое предоставление)",
@@ -42,7 +46,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "42",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (безвозмездное пользование, фактическое предоставление)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [

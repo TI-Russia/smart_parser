@@ -36,7 +36,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "59,9",
-          "country_raw": "россия"
+          "country_raw": "россия",
+          "type_raw": "квартира",
+          "own_type_raw": ""
         },
         {
           "text": "земельный участок",

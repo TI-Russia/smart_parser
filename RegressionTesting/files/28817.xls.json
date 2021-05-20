@@ -27,7 +27,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "39,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира индивидуальная",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -44,7 +46,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "53,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "Земельный участок под гараж",
+          "own_type_raw": ""
         },
         {
           "text": "гараж",
@@ -52,7 +56,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "53,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "гараж",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -60,7 +66,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "61",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": ""
         },
         {
           "text": "квартира",
@@ -77,7 +85,9 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "75,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": ""
         },
         {
           "text": "гараж",
@@ -129,7 +139,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "56,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира индивидуальная",
+          "own_type_raw": ""
         },
         {
           "text": "квартира индивидуальная",
