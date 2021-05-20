@@ -6,7 +6,7 @@ cd `dirname $0`
 export DECLARATOR_CONV_URL=192.168.100.152:8091
 export PYTHONPATH=C:/tmp/smart_parser/smart_parser/tools
 while True; do
-  nice --10 python C:/tmp/smart_parser/smart_parser/tools/ConvStorage/conv_storage_server.py --server-address $DECLARATOR_CONV_URL --db-json converted_file_storage.json \
+  nice --20 python C:/tmp/smart_parser/smart_parser/tools/ConvStorage/conv_storage_server.py --server-address $DECLARATOR_CONV_URL --db-json converted_file_storage.json \
 		--ocr-input-folder C:/tmp/conv_db/pdf.ocr --ocr-output-folder  C:/tmp/conv_db/pdf.ocr.out
 
   date

@@ -44,17 +44,24 @@ namespace TI.Declarator.ParserCommon
             {
                 DefaultFont = null;
             }
-            //DefaultFont = new System.Drawing.Font("Liberation Serif", fontSize / 2);
+            DefaultFont = new System.Drawing.Font("FreeSerif", fontSize / 2);
         }
 
         // This function (graphics.MeasureString in particular) can work differently on Unix and Windows, 
         // The difference is not caused by the default font on Linux  (Liberation Serif) and the default font on Windows(Times New Roman.
         // See the first column of sud_2016.doc from the test cases.  
         // https://stackoverflow.com/questions/8283631/graphics-drawstring-vs-textrenderer-drawtextwhich-can-deliver-better-quality
-        public static float MeasureStringWidth(string s)
+        public static float MeasureStringWidth(string s, float normalizer = 0.0F)
         {
             var stringSize = DefaultGraphics.MeasureString(s, DefaultFont);
-            return stringSize.Width * TestNormalizer;
+            if (normalizer != 0.0F)
+            {
+                return stringSize.Width * normalizer;
+            }
+            else
+            {
+                return stringSize.Width * TestNormalizer;
+            }
         }
 
         public static List<string> GetLinesWithSoftBreaks(string text, int cellWidth)

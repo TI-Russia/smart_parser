@@ -15,12 +15,21 @@ namespace test
         [TestMethod]
         public void TextMeasureTest()
         {
-            string s2 = "тест текст";
-            TStringMeasure.InitGraphics("Liberation Serif", 10);
-            float width = TStringMeasure.MeasureStringWidth(s2);
-            Assert.AreEqual(31, (int)width);
+            //TStringMeasure.InitGraphics("Liberation Serif", 10);
+            TStringMeasure.InitGraphics("FreeSerif", 10);
+            float width = TStringMeasure.MeasureStringWidth("__________", 1.0F);
+            Assert.AreEqual(40, (int)width);
+
+            width = TStringMeasure.MeasureStringWidth("0123456789", 1.0F);
+            Assert.AreEqual(40, (int)width);
+
+            width = TStringMeasure.MeasureStringWidth("шШщЩюЮжЖ", 1.0F);
+            Assert.AreEqual(48, (int)width);
+
+            width = TStringMeasure.MeasureStringWidth("тест текст");
+            Assert.AreEqual(34, (int)width);
         }
 
-           
+
     }
 }
