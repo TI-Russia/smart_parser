@@ -628,7 +628,8 @@ namespace Smart.Parser.Adapters
                                 int cellNo = FindMergedCellByColumnNo(TableRows, c.Row + i, c.Col);
                                 if (cellNo != -1)
                                 {
-                                    c.Text += "\n" + TableRows[c.Row + i][cellNo];
+                                    c.Text += "\n" + TableRows[c.Row + i][cellNo].Text;
+                                    TableRows[c.Row + i][cellNo].Text = "";
                                 }
 
                             }

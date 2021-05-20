@@ -282,6 +282,14 @@ namespace RegressionTesting
 
 
         [TestMethod]
+        [TestCategory("docx")]
+        public void TestDeletedHorizBorder()
+        {
+            TestSmartParser("DeletedHorizBorder.docx", "prod");
+        }
+
+
+        [TestMethod]
         [TestCategory("doc")]
         public void Test10639_32()
         {

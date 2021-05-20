@@ -15,6 +15,7 @@ namespace Smart.Parser.Lib
         public Cell DataCell = null;
         public string DataCellText = "";
         public List<string> ParsedItems;
+        public string DefaultValue;
 
         public TRealtyCell(Cell cell)
         {
@@ -24,6 +25,28 @@ namespace Smart.Parser.Lib
                 DataCellText = cell.GetText(true);
             }
             ParsedItems = new List<string>();
+            DefaultValue = "";
+        }
+
+        public string GetParsedItem(int index)
+        {
+            if (index >= ParsedItems.Count)
+            {
+                return DefaultValue;
+            }
+            else
+            {
+                return ParsedItems[index];
+            }
+        }
+        public void SetDefaultValueIfUnique()
+        {
+            var uniqValues = new HashSet<string>(ParsedItems);
+            if (uniqValues.Count == 1)
+            {
+                DefaultValue = uniqValues.First<string>();
+            }
+
         }
 
         public void ParseByEmptyLines(List<int> linesWithNumbers)
@@ -93,6 +116,8 @@ namespace Smart.Parser.Lib
             {
                 ParseCellTexts();
             }
+            CountryCell.SetDefaultValueIfUnique();
+
         }
         void ParseCellTexts()
         {
@@ -190,19 +215,6 @@ namespace Smart.Parser.Lib
             realEstateProperty.Text = estateTypeStr.NormSpaces();
             person.RealEstateProperties.Add(realEstateProperty);
         }
-
-        static string GetListValueOrDefault(List<string> body, int index, string defaultValue)
-        {
-            if (index >= body.Count)
-            {
-                return defaultValue;
-            }
-            else
-            {
-                return body[index];
-            }
-        }
-
         public void ParseStatePropertySingleRow(string statePropTypeStr,string statePropOwnershipTypeStr,
                     string statePropSquareStr, string statePropCountryStr,Person person)
         {
@@ -236,10 +248,10 @@ namespace Smart.Parser.Lib
             for (int i = 0; i < GetMaxDataItemsCount(); ++i)
             {
                 ParseOwnedPropertySingleRow(
-                    GetListValueOrDefault(EstateTypeCell.ParsedItems, i, ""),
-                    GetListValueOrDefault(OwnTypeCell.ParsedItems, i, null),
-                    GetListValueOrDefault(SquareCell.ParsedItems, i, ""),
-                    GetListValueOrDefault(CountryCell.ParsedItems, i, ""),
+                    EstateTypeCell.GetParsedItem(i),
+                    OwnTypeCell.GetParsedItem(i),
+                    SquareCell.GetParsedItem(i),
+                    CountryCell.GetParsedItem(i),
                     person,
                     ownTypeByColumn
                 );
@@ -251,10 +263,10 @@ namespace Smart.Parser.Lib
             for (int i = 0; i < GetMaxDataItemsCount(); ++i)
             {
                 ParseStatePropertySingleRow(
-                    GetListValueOrDefault(EstateTypeCell.ParsedItems, i, ""),
-                    GetListValueOrDefault(OwnTypeCell.ParsedItems, i, ""),
-                    GetListValueOrDefault(SquareCell.ParsedItems, i, ""),
-                    GetListValueOrDefault(CountryCell.ParsedItems, i, ""),
+                    EstateTypeCell.GetParsedItem(i),
+                    OwnTypeCell.GetParsedItem(i),
+                    SquareCell.GetParsedItem(i),
+                    CountryCell.GetParsedItem(i),
                     person
                 );
             }
