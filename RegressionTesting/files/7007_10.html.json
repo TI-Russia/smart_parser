@@ -12827,7 +12827,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "17,9",
-          "country_raw": "Россия    Россия"
+          "country_raw": "Россия Россия"
         },
         {
           "text": "Квартиры",
@@ -17116,7 +17116,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "84",
-          "country_raw": "Россия    Россия"
+          "country_raw": "Россия Россия"
         },
         {
           "text": "Квартиры",
@@ -18371,7 +18371,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "738",
-          "country_raw": "Россия    Россия"
+          "country_raw": "Россия Россия"
         },
         {
           "text": "Гаражи",

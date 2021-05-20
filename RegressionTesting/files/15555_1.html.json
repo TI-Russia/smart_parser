@@ -203,7 +203,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "20,7",
-          "country_raw": " РФ",
+          "country_raw": "РФ",
           "type_raw": "Гараж-бокс",
           "own_type_raw": " Индивидуаль-ный"
         },
@@ -271,7 +271,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "30,8",
-          "country_raw": " РФ",
+          "country_raw": "РФ",
           "type_raw": "Квартира",
           "own_type_raw": " Индивидуаль-ная"
         },
@@ -281,7 +281,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "79",
-          "country_raw": " Черногория",
+          "country_raw": "Черногория",
           "type_raw": "Квартира",
           "own_type_raw": " Индивидуаль-ная"
         },
@@ -291,7 +291,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "20",
-          "country_raw": " РФ",
+          "country_raw": "РФ",
           "type_raw": "Машино-место",
           "own_type_raw": " Индивидуаль-ное"
         },
@@ -311,7 +311,7 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "18,1",
-          "country_raw": " РФ",
+          "country_raw": "РФ",
           "type_raw": "Машино-место",
           "own_type_raw": " Индивидуаль-ное"
         },
@@ -377,7 +377,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "250",
-          "country_raw": " РФ",
+          "country_raw": "РФ",
           "type_raw": "Приуса-дебный земельный участок",
           "own_type_raw": " ½ общей долевой собственности"
         },
@@ -387,7 +387,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "68,3",
-          "country_raw": " РФ",
+          "country_raw": "РФ",
           "type_raw": "Незавер-шенное строительство",
           "own_type_raw": " ½ общей долевой собственности"
         },
@@ -397,7 +397,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "43,6",
-          "country_raw": " РФ",
+          "country_raw": "РФ",
           "type_raw": "Квартира",
           "own_type_raw": " Индивидуаль-ная"
         }
@@ -441,7 +441,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "195",
-          "country_raw": " РФ",
+          "country_raw": "РФ",
           "type_raw": "Дом",
           "own_type_raw": " Индивидуаль-ный"
         },
@@ -451,7 +451,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "2080",
-          "country_raw": " РФ",
+          "country_raw": "РФ",
           "type_raw": "Земельный участок",
           "own_type_raw": " Индивидуаль-ный"
         },
@@ -546,7 +546,7 @@
           "square_raw": "800",
           "country_raw": "РФ",
           "type_raw": "Земельный участок - садовый",
-          "own_type_raw": "Индивидуаль-ный            Индивидуаль-"
+          "own_type_raw": "Индивидуаль-ный            Индивидуаль-"
         },
         {
           "text": "Квартира",
@@ -554,9 +554,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "43,3",
-          "country_raw": " РФ",
+          "country_raw": "РФ",
           "type_raw": "Квартира",
-          "own_type_raw": "ная        Индивидуаль-"
+          "own_type_raw": "ная        Индивидуаль-"
         },
         {
           "text": "Дом",
@@ -564,9 +564,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "66",
-          "country_raw": " РФ",
+          "country_raw": "РФ",
           "type_raw": "Дом",
-          "own_type_raw": "ный        Индивидуаль-"
+          "own_type_raw": "ный        Индивидуаль-"
         },
         {
           "text": "Гараж",
@@ -574,9 +574,9 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "17",
-          "country_raw": " РФ",
+          "country_raw": "РФ",
           "type_raw": "Гараж",
-          "own_type_raw": "ный        Индивидуаль-"
+          "own_type_raw": "ный        Индивидуаль-"
         },
         {
           "text": "Баня",
@@ -584,7 +584,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "42",
-          "country_raw": " РФ",
+          "country_raw": "РФ",
           "type_raw": "Баня",
           "own_type_raw": "ная"
         },
@@ -652,7 +652,7 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "13,1",
-          "country_raw": " РФ",
+          "country_raw": "РФ",
           "type_raw": "Машино-место",
           "own_type_raw": "Индивидуаль-    ное"
         }

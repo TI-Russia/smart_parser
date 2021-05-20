@@ -50,7 +50,7 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "1960",
-          "country_raw": "Российская \nФедерация"
+          "country_raw": "Российская Федерация"
         },
         {
           "text": "Квартира \n(индивидуальная собственность)",
@@ -58,7 +58,7 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "75,3",
-          "country_raw": "Российская \nФедерация"
+          "country_raw": "Российская Федерация"
         },
         {
           "text": "Земельный участок \n(индивидуальная собственность)",
@@ -66,7 +66,7 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "3917",
-          "country_raw": "Российская \nФедерация"
+          "country_raw": "Российская Федерация"
         },
         {
           "text": "Жилой дом \n(индивидуальная собственность)",

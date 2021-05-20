@@ -141,7 +141,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "825",
-          "country_raw": "Россия\nРоссия"
+          "country_raw": "Россия Россия"
         },
         {
           "text": "Земельный участок\n(личная);",
@@ -616,7 +616,7 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "124,4",
-          "country_raw": "Россия  Россия"
+          "country_raw": "Россия Россия"
         },
         {
           "text": "Подземная  парковка (долевая 1/87)",

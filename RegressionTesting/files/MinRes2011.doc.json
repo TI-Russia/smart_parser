@@ -7043,7 +7043,7 @@
       ],
       "vehicles": [
         {
-          "text": "2 а/м:\nToyota Corolla,\nNissan Note",
+          "text": "2 а/м:\nToyota Corolla,\nNissan Note",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -8450,7 +8450,7 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "1113",
-          "country_raw": "Россия  Россия"
+          "country_raw": "Россия Россия"
         },
         {
           "text": "земельный участок (индивидуальная)",

@@ -111,11 +111,11 @@
       ],
       "vehicles": [
         {
-          "text": "легковые автомобили BMW-X5   ВАЗ 21113 (общая собственность)",
+          "text": "легковые автомобили BMW-X5 ВАЗ 21113 (общая собственность)",
           "relative": null
         },
         {
-          "text": "легковые автомобили BMW-X5   ВАЗ 21113 (общая собственность)",
+          "text": "легковые автомобили BMW-X5 ВАЗ 21113 (общая собственность)",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -272,11 +272,11 @@
       ],
       "vehicles": [
         {
-          "text": "легковой автомобиль Willys Willys 1943 г.  (собственность)",
+          "text": "легковой автомобиль Willys Willys 1943 г. (собственность)",
           "relative": null
         },
         {
-          "text": "автомобили легковые BMW Х6 Mercedes-Benz ML 350  (собственность)",
+          "text": "автомобили легковые BMW Х6 Mercedes-Benz ML 350 (собственность)",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -573,11 +573,11 @@
       ],
       "vehicles": [
         {
-          "text": "автомобили легковые BMW-650 I Cabrio Chevrolet Express S1500 Ford Mondeo ВАЗ 2101  (собственность) Автоприцеп МЗСА 821711 (собственность) катер Cobalt (собственность) снегоход SKI-DOO Mach Z (собственность)",
+          "text": "автомобили легковые BMW-650 I Cabrio Chevrolet Express S1500 Ford Mondeo ВАЗ 2101 (собственность) Автоприцеп МЗСА 821711 (собственность) катер Cobalt (собственность) снегоход SKI-DOO Mach Z (собственность)",
           "relative": null
         },
         {
-          "text": "автомобили легковые BMW Z-4 Porsche Cayenne Дизель Mazda CX-7 (собственность) мотовездеход Bombardier Quest (собственность) снегоход SKANDIC WT LC SKANDIC WT LC  (собственность)",
+          "text": "автомобили легковые BMW Z-4 Porsche Cayenne Дизель Mazda CX-7 (собственность) мотовездеход Bombardier Quest (собственность) снегоход SKANDIC WT LC SKANDIC WT LC (собственность)",
           "relative": "Супруг(а)",
           "relative_index": 1
         }
@@ -900,7 +900,7 @@
       ],
       "vehicles": [
         {
-          "text": "автомобиль легковой Lexus IS 250  (собственность)",
+          "text": "автомобиль легковой Lexus IS 250 (собственность)",
           "relative": null
         },
         {
