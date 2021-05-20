@@ -19,5 +19,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Common\CMDLineParser.cs" Link="CMDLineParser.cs"/>
+  </ItemGroup>
 
 </Project>

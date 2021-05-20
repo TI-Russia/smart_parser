@@ -100,6 +100,7 @@ namespace CMDLine
             _help.AddAlias("-h");
             _help.AddAlias("-?");
             _help.AddAlias("/help");
+	   _help.AddAlias("--help");
             return (_help);
         }
         /// <summary>
