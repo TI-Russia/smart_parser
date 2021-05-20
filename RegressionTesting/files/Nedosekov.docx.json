@@ -85,30 +85,6 @@
           "own_type_by_column": "В собственности",
           "square_raw": "36,1",
           "country_raw": "Россия"
-        },
-        {
-          "text": "Бокс гаражный",
-          "square": 18.3,
-          "relative": null,
-          "own_type_by_column": "В собственности",
-          "square_raw": "18,3",
-          "country_raw": "Россия"
-        },
-        {
-          "text": "(личная) Машино-место",
-          "square": 22.2,
-          "relative": null,
-          "own_type_by_column": "В собственности",
-          "square_raw": "22,2",
-          "country_raw": "Россия"
-        },
-        {
-          "text": "(личная) Хозяйственное помещение (личная)",
-          "square": 122.8,
-          "relative": null,
-          "own_type_by_column": "В собственности",
-          "square_raw": "122,8",
-          "country_raw": "Россия"
         }
       ],
       "vehicles": [
