@@ -53,7 +53,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "квартира \n \n \n\n(пользование)",
+          "text": "квартира (пользование)",
           "square": 57.9,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
@@ -61,7 +61,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "квартира \n \n \n\n(пользование)",
+          "text": "квартира (пользование)",
           "square": 48.7,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
@@ -91,7 +91,7 @@
       ],
       "real_estates": [
         {
-          "text": "квартира \n \n \n\n(совместная\n \n \n\nсобственность)",
+          "text": "квартира (совместная собственность)",
           "square": 97.0,
           "relative": null,
           "own_type_by_column": null,

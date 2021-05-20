@@ -50,13 +50,13 @@
           "own_type_raw": "индивидуальная"
         },
         {
-          "text": "земельный\nучасток",
+          "text": "земельный участок",
           "square": 1000.0,
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "1000",
           "country_raw": "Россия",
-          "type_raw": "земельный\nучасток",
+          "type_raw": "земельный участок",
           "own_type_raw": "индивидуальный"
         },
         {

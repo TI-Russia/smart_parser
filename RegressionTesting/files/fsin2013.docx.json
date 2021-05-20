@@ -22,7 +22,7 @@
       ],
       "real_estates": [
         {
-          "text": "земельный участок \n(собственность, общая долевая)",
+          "text": "земельный участок (собственность, общая долевая)",
           "square": 490.0,
           "relative": null,
           "own_type_by_column": null,
@@ -30,7 +30,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "квартира \n(пользование)",
+          "text": "квартира (пользование)",
           "square": 48.0,
           "relative": null,
           "own_type_by_column": null,
@@ -38,7 +38,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "гаражный бокс \n(собственность)",
+          "text": "гаражный бокс (собственность)",
           "square": 22.4,
           "relative": null,
           "own_type_by_column": null,
@@ -46,7 +46,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "квартира \n(собственность)",
+          "text": "квартира (собственность)",
           "square": 63.3,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
@@ -54,7 +54,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "квартира \n(пользование)",
+          "text": "квартира (пользование)",
           "square": 48.0,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
@@ -99,7 +99,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "квартира \n(собственность)",
+          "text": "квартира (собственность)",
           "square": 61.1,
           "relative": null,
           "own_type_by_column": null,
@@ -107,7 +107,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "квартира \n(пользование)",
+          "text": "квартира (пользование)",
           "square": 53.4,
           "relative": null,
           "own_type_by_column": null,
@@ -115,7 +115,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "жилой дом \n(собственность)",
+          "text": "жилой дом (собственность)",
           "square": 44.4,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
@@ -152,7 +152,7 @@
       ],
       "real_estates": [
         {
-          "text": "квартира \n(собственность, 1/4 доли)",
+          "text": "квартира (собственность, 1/4 доли)",
           "square": 61.2,
           "relative": null,
           "own_type_by_column": null,
@@ -160,7 +160,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "квартира \n(собственность, 1/4 доли)",
+          "text": "квартира (собственность, 1/4 доли)",
           "square": 61.2,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
@@ -168,7 +168,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "квартира \n(собственность, 1/4 доли)",
+          "text": "квартира (собственность, 1/4 доли)",
           "square": 61.2,
           "relative": "Ребенок",
           "own_type_by_column": null,
@@ -176,7 +176,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "квартира \n(собственность, 1/4 доли)",
+          "text": "квартира (собственность, 1/4 доли)",
           "square": 61.2,
           "relative": "Ребенок",
           "own_type_by_column": null,

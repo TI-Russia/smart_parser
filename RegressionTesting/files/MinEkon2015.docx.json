@@ -187,7 +187,7 @@
           "relative": null,
           "own_type_by_column": "В пользовании",
           "square_raw": "85,60",
-          "country_raw": "Республика\nБелоруссия",
+          "country_raw": "Республика Белоруссия",
           "type_raw": "квартира"
         },
         {
@@ -236,7 +236,7 @@
           "relative": "Ребенок",
           "own_type_by_column": "В пользовании",
           "square_raw": "85,60",
-          "country_raw": "Республика\nБелоруссия",
+          "country_raw": "Республика Белоруссия",
           "type_raw": "квартира"
         }
       ],
