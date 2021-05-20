@@ -81,6 +81,10 @@ namespace TI.Declarator.ParserCommon
 
         public static string NormSpaces(this string str)
         {
+            if (str == null)
+            {
+                return null;
+            }
             return str.ReplaceEolnWithSpace().CoalesceWhitespace().Trim();
         }
 
