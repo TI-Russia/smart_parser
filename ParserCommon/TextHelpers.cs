@@ -74,9 +74,15 @@ namespace TI.Declarator.ParserCommon
             return str.Replace('\n', ' ').Trim();
         }
 
-        public static string CoalesceWhitespace(this string str) => Regex.Replace(str, "[ ]+", " ");
+        public static string CoalesceWhitespace(this string str)
+        {
+            return Regex.Replace(str, @"[\s-[\n]]+", " ");
+        }
 
-        public static string NormSpaces(this string str) => str.ReplaceEolnWithSpace().CoalesceWhitespace();
+        public static string NormSpaces(this string str)
+        {
+            return str.ReplaceEolnWithSpace().CoalesceWhitespace().Trim();
+        }
 
         public static string ReplaceFirst(this string str, string substr, string replStr)
         {

@@ -788,7 +788,7 @@ namespace RegressionTesting
 
         [TestMethod]
         [TestCategory("xls")]
-            public void FixVehicleColumns()
+        public void FixVehicleColumns()
         {
             TestSmartParser("17497.xls", "prod");
         }

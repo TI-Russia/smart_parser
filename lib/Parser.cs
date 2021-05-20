@@ -231,8 +231,8 @@ namespace Smart.Parser.Lib
             public void InitDeclarantProperties(DataRow row)
             {
                 CurrentDeclarant.NameRaw = row.PersonName.RemoveStupidTranslit().Replace("не имеет", "");
-                CurrentDeclarant.Occupation = row.Occupation.Replace("не имеет", "");
-                CurrentDeclarant.Department = row.Department;
+                CurrentDeclarant.Occupation = row.Occupation.Replace("не имеет", "").NormSpaces();
+                CurrentDeclarant.Department = row.Department.NormSpaces();
                 CurrentDeclarant.Ordering = row.ColumnOrdering;
             }
 

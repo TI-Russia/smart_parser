@@ -172,22 +172,22 @@ namespace Smart.Parser.Lib
 
             realEstateProperty.square = DataHelper.ParseSquare(areaStr);
             realEstateProperty.square_raw = ParserBase.NormalizeRawDecimalForTest(areaStr);
-            realEstateProperty.country_raw = DataHelper.ParseCountry(countryStr);
+            realEstateProperty.country_raw = DataHelper.ParseCountry(countryStr).NormSpaces();
             realEstateProperty.own_type_by_column = ownTypeByColumn;
 
             // колонка с типом недвижимости отдельно
             if (ownTypeStr != null)
             {
-                realEstateProperty.type_raw = estateTypeStr;
-                realEstateProperty.own_type_raw = ownTypeStr;
-                realEstateProperty.Text = estateTypeStr;
+                realEstateProperty.type_raw = estateTypeStr.NormSpaces();
+                realEstateProperty.own_type_raw = ownTypeStr.NormSpaces(); 
+                realEstateProperty.Text = estateTypeStr.NormSpaces();
             }
             else // колонка содержит тип недвижимости и тип собственности
             {
-                realEstateProperty.Text = estateTypeStr;
+                realEstateProperty.Text = estateTypeStr.NormSpaces(); 
             }
 
-            realEstateProperty.Text = estateTypeStr;
+            realEstateProperty.Text = estateTypeStr.NormSpaces();
             person.RealEstateProperties.Add(realEstateProperty);
         }
 
@@ -215,13 +215,13 @@ namespace Smart.Parser.Lib
             RealEstateProperty stateProperty = new RealEstateProperty();
 
             statePropTypeStr = statePropTypeStr.Trim(' ', '-');
-            stateProperty.Text = statePropTypeStr;
-            stateProperty.type_raw = statePropTypeStr;
+            stateProperty.Text = statePropTypeStr.NormSpaces();
+            stateProperty.type_raw = statePropTypeStr.NormSpaces();
             stateProperty.square = DataHelper.ParseSquare(statePropSquareStr); ;
             stateProperty.square_raw = ParserBase.NormalizeRawDecimalForTest(statePropSquareStr);
-            stateProperty.country_raw = DataHelper.ParseCountry(statePropCountryStr);
-            if (statePropOwnershipTypeStr != "")
-                stateProperty.own_type_raw = statePropOwnershipTypeStr;
+            stateProperty.country_raw = DataHelper.ParseCountry(statePropCountryStr).NormSpaces();
+            if (statePropOwnershipTypeStr != "" && statePropOwnershipTypeStr != null)
+                stateProperty.own_type_raw = statePropOwnershipTypeStr.NormSpaces();
             stateProperty.own_type_by_column = StateString;
             person.RealEstateProperties.Add(stateProperty);
         }
