@@ -34,7 +34,7 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "83,1",
-          "country_raw": "Россия"
+          "country_raw": " Россия"
         },
         {
           "text": "квартира (собственность)",
@@ -50,7 +50,7 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "83,1",
-          "country_raw": "Россия"
+          "country_raw": " Россия"
         }
       ],
       "vehicles": [

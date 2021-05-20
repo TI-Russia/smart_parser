@@ -28,7 +28,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "1387",
-          "country_raw": "Россия"
+          "country_raw": ""
         },
         {
           "text": "2 дачных дома",
@@ -36,7 +36,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "173,3",
-          "country_raw": "Россия Россия Россия Россия Россия Россия Россия Россия"
+          "country_raw": "Россия"
         },
         {
           "text": "(личная)",
@@ -52,7 +52,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "124,4",
-          "country_raw": ""
+          "country_raw": "Россия"
         },
         {
           "text": "Квартира (долевая ½)",
@@ -60,7 +60,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "221,8",
-          "country_raw": ""
+          "country_raw": "Россия"
         },
         {
           "text": "Квартира (долевая 1\\2)",
@@ -68,7 +68,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "44,4",
-          "country_raw": ""
+          "country_raw": "Россия"
         },
         {
           "text": "Квартира (личная)",
@@ -76,7 +76,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "108,5",
-          "country_raw": ""
+          "country_raw": "Россия"
         },
         {
           "text": "Бокс  гаражный (личная)",
@@ -84,7 +84,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "36,1",
-          "country_raw": ""
+          "country_raw": "Россия"
         },
         {
           "text": "Бокс  гаражный",
@@ -92,7 +92,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "18,3",
-          "country_raw": ""
+          "country_raw": "Россия"
         },
         {
           "text": "(личная) Машино-место",
@@ -100,7 +100,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "22,2",
-          "country_raw": ""
+          "country_raw": "Россия"
         },
         {
           "text": "(личная) Хозяйственное  помещение (личная)",
@@ -108,7 +108,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "122,8",
-          "country_raw": ""
+          "country_raw": "Россия"
         }
       ],
       "vehicles": [

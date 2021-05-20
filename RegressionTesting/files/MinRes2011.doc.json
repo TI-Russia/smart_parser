@@ -3125,7 +3125,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "41,6",
-          "country_raw": "-"
+          "country_raw": ""
         },
         {
           "text": "квартира\n(безвозмездное пользование)",
@@ -3773,11 +3773,35 @@
           "country_raw": "Россия"
         },
         {
-          "text": "квартира (долевая 1/3)  3 нежилых помещения (индивидуальная)",
+          "text": "квартира  (долевая 1/3)",
           "square": 173.4,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "173,4",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "3 нежилых",
+          "square": 62.5,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "62,5",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "помещения",
+          "square": 61.1,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "61,1",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "(индивидуальная)",
+          "square": 60.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": "В собственности",
+          "square_raw": "60,7",
           "country_raw": "Россия"
         },
         {
@@ -4745,7 +4769,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "73,5",
-          "country_raw": "Россия Россия"
+          "country_raw": "Россия"
         },
         {
           "text": "квартира\n(долевая, 1/3)",
@@ -4753,7 +4777,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "53,1",
-          "country_raw": ""
+          "country_raw": "Россия"
         },
         {
           "text": "гараж\n(индивидуальная)",

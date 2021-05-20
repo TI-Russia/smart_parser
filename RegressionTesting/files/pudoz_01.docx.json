@@ -536,7 +536,7 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "53,9 кв,м,",
-          "country_raw": "Российская Федерация"
+          "country_raw": ""
         },
         {
           "text": "Квартира \n(Долевая собственность)",
@@ -544,7 +544,7 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "78,1 кв,м,",
-          "country_raw": ""
+          "country_raw": "Российская Федерация"
         }
       ],
       "vehicles": [

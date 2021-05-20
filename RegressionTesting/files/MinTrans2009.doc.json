@@ -141,7 +141,7 @@
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "825",
-          "country_raw": "Россия Россия"
+          "country_raw": "Россия\nРоссия"
         },
         {
           "text": "Земельный участок\n(личная);",
@@ -483,7 +483,7 @@
       ],
       "real_estates": [
         {
-          "text": "2 земельных участка",
+          "text": "2",
           "square": 1500.0,
           "relative": null,
           "own_type_by_column": "В собственности",
@@ -491,15 +491,15 @@
           "country_raw": "Россия"
         },
         {
-          "text": "(личная) 2 дачных дома",
+          "text": "земельных участка (личная)",
           "square": 1387.0,
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "1387",
-          "country_raw": "Россия"
+          "country_raw": ""
         },
         {
-          "text": "(личная)",
+          "text": "2 дачных дома",
           "square": 173.3,
           "relative": null,
           "own_type_by_column": "В собственности",
@@ -507,15 +507,15 @@
           "country_raw": "Россия"
         },
         {
-          "text": "Квартира",
+          "text": "(личная)",
           "square": 50.2,
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "50,2",
-          "country_raw": "Россия"
+          "country_raw": ""
         },
         {
-          "text": "(долевая ½) Квартира",
+          "text": "Квартира (долевая ½)",
           "square": 124.4,
           "relative": null,
           "own_type_by_column": "В собственности",
@@ -523,7 +523,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "(долевая ½) Квартира",
+          "text": "Квартира (долевая ½)",
           "square": 221.8,
           "relative": null,
           "own_type_by_column": "В собственности",
@@ -531,7 +531,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "(долевая 1\\2) Квартира",
+          "text": "Квартира (долевая 1\\2)",
           "square": 44.4,
           "relative": null,
           "own_type_by_column": "В собственности",
@@ -539,7 +539,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "(личная) Бокс гаражный (личная)",
+          "text": "Квартира (личная)",
           "square": 108.5,
           "relative": null,
           "own_type_by_column": "В собственности",
@@ -547,7 +547,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "Бокс гаражный  (личная)",
+          "text": "Бокс  гаражный (личная)",
           "square": 36.1,
           "relative": null,
           "own_type_by_column": "В собственности",
@@ -555,7 +555,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "Машино-место (личная)",
+          "text": "Бокс  гаражный",
           "square": 18.3,
           "relative": null,
           "own_type_by_column": "В собственности",
@@ -563,12 +563,20 @@
           "country_raw": "Россия"
         },
         {
-          "text": "Хозяйственное помещение (личная)",
+          "text": "(личная) Машино-место",
           "square": 22.2,
           "relative": null,
           "own_type_by_column": "В собственности",
           "square_raw": "22,2",
-          "country_raw": ""
+          "country_raw": "Россия"
+        },
+        {
+          "text": "(личная) Хозяйственное  помещение (личная)",
+          "square": 122.8,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "122,8",
+          "country_raw": "Россия"
         },
         {
           "text": "Квартира (долевая ½)",
@@ -608,10 +616,10 @@
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
           "square_raw": "124,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия  Россия"
         },
         {
-          "text": "Подземная парковка (долевая 1/87) Нежилое помещение",
+          "text": "Подземная  парковка (долевая 1/87)",
           "square": 2741.0,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
@@ -619,7 +627,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "(личная)",
+          "text": "Нежилое  помещение (личная)",
           "square": 120.0,
           "relative": "Супруг(а)",
           "own_type_by_column": "В собственности",
