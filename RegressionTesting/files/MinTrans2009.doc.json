@@ -503,7 +503,7 @@
           "country_raw": ""
         },
         {
-          "text": "2",
+          "text": "2 дачных дома",
           "square": 173.3,
           "relative": null,
           "own_type_by_column": "В собственности",
@@ -511,7 +511,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "дачных дома",
+          "text": "(личная)",
           "square": 50.2,
           "relative": null,
           "own_type_by_column": "В собственности",
@@ -519,7 +519,7 @@
           "country_raw": ""
         },
         {
-          "text": "(личная) Квартира",
+          "text": "Квартира (долевая ½)",
           "square": 124.4,
           "relative": null,
           "own_type_by_column": "В собственности",
@@ -527,7 +527,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "(долевая ½) Квартира",
+          "text": "Квартира (долевая ½)",
           "square": 221.8,
           "relative": null,
           "own_type_by_column": "В собственности",
@@ -535,7 +535,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "(долевая ½) Квартира",
+          "text": "Квартира (долевая 1\\2)",
           "square": 44.4,
           "relative": null,
           "own_type_by_column": "В собственности",
@@ -543,7 +543,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "(долевая 1\\2) Квартира",
+          "text": "Квартира (личная)",
           "square": 108.5,
           "relative": null,
           "own_type_by_column": "В собственности",
@@ -551,7 +551,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "(личная) Бокс",
+          "text": "Бокс гаражный (личная)",
           "square": 36.1,
           "relative": null,
           "own_type_by_column": "В собственности",
@@ -559,7 +559,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "гаражный (личная) Бокс",
+          "text": "Бокс гаражный",
           "square": 18.3,
           "relative": null,
           "own_type_by_column": "В собственности",
@@ -567,7 +567,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "гаражный (личная)",
+          "text": "(личная) Машино-место",
           "square": 22.2,
           "relative": null,
           "own_type_by_column": "В собственности",
@@ -575,7 +575,7 @@
           "country_raw": "Россия"
         },
         {
-          "text": "Машино-место (личная) Хозяйственное помещение (личная)",
+          "text": "(личная) Хозяйственное помещение (личная)",
           "square": 122.8,
           "relative": null,
           "own_type_by_column": "В собственности",
