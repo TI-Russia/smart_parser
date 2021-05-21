@@ -12,16 +12,7 @@ namespace TI.Declarator.ParserCommon
         static public System.Drawing.Font DefaultFont = null;
         static float TestNormalizer;
 
-        static bool IsLinux()
-        {
-            int p = (int)Environment.OSVersion.Platform;
-            return (p == 4) || (p == 6) || (p == 128);
-        }
-        static public bool IsInitialized()
-        {
-            return DefaultFont != null;
-        }
-        static public void InitGraphics(string fontName, int fontSize)
+        static TStringMeasure()
         {
             if (IsLinux())
             {
@@ -37,15 +28,26 @@ namespace TI.Declarator.ParserCommon
             DefaultGraphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
             DefaultGraphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed;
             DefaultGraphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
+        }
+        static bool IsLinux()
+        {
+            int p = (int)Environment.OSVersion.Platform;
+            return (p == 4) || (p == 6) || (p == 128);
+        }
+        static public bool IsInitialized()
+        {
+            return DefaultFont != null;
+        }
+        static public void InitDefaultFont(string fontName, int fontSize)
+        {
             if (fontSize > 0)
             {
                 DefaultFont = new System.Drawing.Font(fontName, fontSize / 2);
             }
             else
             {
-                DefaultFont = null;
+                DefaultFont = new System.Drawing.Font("Times New Roman", 5);
             }
-            DefaultFont = new System.Drawing.Font("FreeSerif", fontSize / 2);
         }
 
         // This function (graphics.MeasureString in particular) can work differently on Unix and Windows, 
@@ -66,7 +68,7 @@ namespace TI.Declarator.ParserCommon
             }
         }
 
-        public static List<string> GetLinesWithSoftBreaks(string text, int cellWidth)
+        public static List<string> GetLinesBySoftBreaks(string text, int cellWidth)
         {
             var res = new List<string>();
             if (text == null || text.Length == 0) return res;

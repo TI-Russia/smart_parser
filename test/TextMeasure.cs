@@ -3,7 +3,6 @@ using Smart.Parser.Adapters;
 using TI.Declarator.ParserCommon;
 using System.IO;
 using Smart.Parser.Lib;
-using static Algorithms.LevenshteinDistance;
 using System;
 
 namespace test
@@ -16,7 +15,7 @@ namespace test
         public void TextMeasureTest()
         {
             //TStringMeasure.InitGraphics("Liberation Serif", 10);
-            TStringMeasure.InitGraphics("FreeSerif", 10);
+            TStringMeasure.InitDefaultFont("FreeSerif", 10);
             float width = TStringMeasure.MeasureStringWidth("__________", 1.0F);
             Assert.AreEqual(40, (int)width);
 
@@ -24,7 +23,7 @@ namespace test
             Assert.AreEqual(40, (int)width);
 
             width = TStringMeasure.MeasureStringWidth(",.,,..,.,.", 1.0F);
-            Assert.AreEqual(20, (int)width);
+            Assert.AreEqual(21, (int)width);
 
             width = TStringMeasure.MeasureStringWidth("0123456789", 1.0F);
             Assert.AreEqual(40, (int)width);
@@ -36,7 +35,7 @@ namespace test
             Assert.AreEqual(36, (int)width);
             
             width = TStringMeasure.MeasureStringWidth("гараж (долевое участие в строительстве),");
-            Assert.AreEqual(152, (int)width);
+            Assert.AreEqual(145, (int)width);
         }
 
 
