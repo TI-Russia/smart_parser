@@ -25,7 +25,8 @@ namespace TI.Declarator.ParserCommon
         {
             if (IsLinux())
             {
-                TestNormalizer = 1.07F;
+                //TestNormalizer = 1.07F;
+                TestNormalizer = 1.19F;
             }
             else
             {
@@ -53,6 +54,7 @@ namespace TI.Declarator.ParserCommon
         // https://stackoverflow.com/questions/8283631/graphics-drawstring-vs-textrenderer-drawtextwhich-can-deliver-better-quality
         public static float MeasureStringWidth(string s, float normalizer = 0.0F)
         {
+            s = s.Replace(' ', '_');
             var stringSize = DefaultGraphics.MeasureString(s, DefaultFont);
             if (normalizer != 0.0F)
             {
