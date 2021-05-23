@@ -3,10 +3,9 @@
 #0 ~/smart_parser/tools/INSTALL.txt are prerequisites
 
 set -e
-COMMON_SCRIPT=$(dirname $0)/update_common.sh
+SOURCE_ROOT=~/smart_parser/tools/disclosures_site
+COMMON_SCRIPT=$SOURCE_ROOT/scripts/update_common.sh
 source $COMMON_SCRIPT
-
-
 
 
 #1 создание нового каталога и файла настройки .profile
@@ -48,7 +47,7 @@ source $COMMON_SCRIPT
 
 
 #7  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод (7-8 часов)
-   python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.prod --output-dbm-file permalinks.dbm
+   python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.prod --directory $DLROBOT_FOLDER
 
 
 #8.  инициализация базы disclosures
@@ -57,63 +56,64 @@ source $COMMON_SCRIPT
     python3 $TOOLS/disclosures_site/manage.py migrate --settings disclosures.settings.dev
     python3 $TOOLS/disclosures_site/manage.py test declarations/tests --settings disclosures.settings.dev
 
-#9
-    cd $DLROBOT_FOLDER # important
-    python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev --permanent-links-db $DLROBOT_FOLDER/permalinks.dbm
+#9 (надо включить в import_json?)
+    cd $DLROBOT_FOLDER # im portant
+    python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev --directory $DLROBOT_FOLDER
 
 
-#10  Импорт json в dislosures_db
-   python3 $TOOLS/disclosures_site/manage.py clear_database --settings disclosures.settings.dev
-
-   #32 hours
+#10  Импорт json в dislosures_db (32 hours)
    python3 $TOOLS/disclosures_site/manage.py import_json \
                --settings disclosures.settings.dev \
                --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER \
                --dlrobot-human dlrobot_human.json   \
-               --process-count 2  \
-               --permanent-links-db permalinks.dbm
+               --process-count 3  \
+               --permalinks-folder $DLROBOT_FOLDER
 
    python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric source_document_count  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
    python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric sections_person_name_income_year_declarant_income_size  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
    python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric sections_person_name_income_year_spouse_income_size  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
 
-#10.1  остановка dlrobot на $DEDUPE_HOSTS_SPACES в параллель (максмимум 3 часа), может немного одновременно проработать со сливалкой
-echo $DEDUPE_HOSTS_SPACES | tr " " "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/scripts/git_update_cloud_worker.py --action stop --host &
+#10.1  остановка dlrobot на $DEDUPE_HOSTS в параллель (максмимум 3 часа), может немного одновременно проработать со сливалкой
+echo $DEDUPE_HOSTS | tr "," "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/scripts/git_update_cloud_worker.py --action stop --host &
 
 #11 создание surname_rank (40 мин)
-python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclosures.settings.dev
+  python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclosures.settings.dev
 
-#12.  запуск сливалки, 4 gb memory each family portion, 30 GB temp files, no more than one process per workstation
-   #optional, if you have to run dedupe more than one time
-   #python3 $TOOLS/disclosures_site/manage.py clear_dedupe_artefacts --settings disclosures.settings.dev
+  #12.  запуск сливалки, 4 gb memory each family portion, 30 GB temp files, no more than one process per workstation
+     #optional, if you have to run dedupe more than one time
+     #python3 $TOOLS/disclosures_site/manage.py clear_dedupe_artefacts --settings disclosures.settings.dev
 
-   #1 hour
-   python3 $TOOLS/disclosures_site/manage.py copy_person_id --settings disclosures.settings.dev --permanent-links-db permalinks.dbm
+     #1 hour
+     python3 $TOOLS/disclosures_site/manage.py copy_person_id --settings disclosures.settings.dev --permalinks-folder $DLROBOT_FOLDER
 
-   python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs  --print-family-prefixes   --permanent-links-db $DLROBOT_FOLDER/permalinks.dbm --settings disclosures.settings.dev > surname_spans.txt
-   echo $DEDUPE_HOSTS_SPACES | tr " " "\n"  | xargs  --verbose -P 4 -I {} -n 1 scp $DLROBOT_FOLDER/permalinks.dbm {}:/tmp
+     python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs  --print-family-prefixes   --permalinks-folder $DLROBOT_FOLDER --settings disclosures.settings.dev > surname_spans.txt
+     echo $DEDUPE_HOSTS | tr "," "\n"  | xargs  --verbose -P 4 -I {} -n 1 scp $DLROBOT_FOLDER/permalinks_declarations_person.dbm {}:/tmp
 
-   #22 hours
-   parallel --halt soon,fail=1 -a surname_spans.txt --jobs 2 --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $DEDUPE_HOSTS --basefile $DEDUPE_MODEL  --verbose --workdir /tmp \
-        python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --permanent-links-db /tmp/permalinks.dbm --ml-model-file $DEDUPE_MODEL  \
-                --threshold 0.61  --surname-bounds {} --write-to-db --settings disclosures.settings.dev --logfile dedupe.{}.log
+     #22 hours
+     parallel --halt soon,fail=1 -a surname_spans.txt --jobs 2 --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $DEDUPE_HOSTS --basefile $DEDUPE_MODEL  --verbose --workdir /tmp \
+          python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --permalinks-folder /tmp --ml-model-file $DEDUPE_MODEL  \
+                  --threshold 0.61  --surname-bounds {} --write-to-db --settings disclosures.settings.dev --logfile dedupe.{}.log
 
-   if [ $? != "0" ]; then
-     echo "dedupe failed on some cluster"
-     exit 1
-   fi
-   python3 $TOOLS/disclosures_site/manage.py test_real_clustering_on_pool --test-pool $TOOLS/disclosures_site/deduplicate/pools/disclosures_test_m.tsv   --settings disclosures.settings.dev
-   python3 $TOOLS/disclosures_site/manage.py external_link_surname_checker --links-input-file $TOOLS/disclosures_site/data/external_links.json  --settings disclosures.settings.dev
-   if [ $? != "0" ]; then
-     echo "Error! Some linked people are missing in the new db, web-links would be broken if we publish this db"
-     exit 1
-   fi
+     if [ $? != "0" ]; then
+       echo "dedupe failed on some cluster"
+       exit 1
+     fi
+     python3 $TOOLS/disclosures_site/manage.py test_real_clustering_on_pool --test-pool $TOOLS/disclosures_site/deduplicate/pools/disclosures_test_m.tsv   --settings disclosures.settings.dev
+     python3 $TOOLS/disclosures_site/manage.py external_link_surname_checker --links-input-file $TOOLS/disclosures_site/data/external_links.json  --settings disclosures.settings.dev
+     if [ $? != "0" ]; then
+       echo "Error! Some linked people are missing in the new db, web-links would be broken if we publish this db"
+       exit 1
+     fi
+     python3 $TOOLS/disclosures_site/scripts/check_person_id_permanence.py disclosures_db disclosures_db_dev
+
+#12.1 запускаем обратно dlrobot_worker
+echo $DEDUPE_HOSTS | tr "," "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/scripts/git_update_cloud_worker.py --action start --host &
 
 #13  Коммит статистики
    cd $TOOLS/disclosures_site
    git pull
    python3 manage.py add_disclosures_statistics --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
-   git commit -m "new statistics" data/statistics.json
+   git commit -m "new statistics" data/statistics.json ../web_site_db/data/dlrobot_remote_calls.dat
    git push
 
 #14 построение пола (gender)
@@ -126,33 +126,35 @@ python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclos
 #16 создание дампа базы (для debug)
     cd $DLROBOT_FOLDER
     mysqldump -u disclosures -pdisclosures disclosures_db_dev  |  gzip -c > $DLROBOT_FOLDER/disclosures.sql.gz
-    scp disclosures.sql.gz $FRONTEND:/home/sokirko/smart_parser/tools/disclosures_site
 
-#17 switch dev to  prod in backend
+
+#17 switch dev to  prod in backend (migalka)
     mysqladmin drop  disclosures_db -u disclosures -pdisclosures -f
+    cd $TOOLS/disclosures_site
     bash scripts/rename_db.sh disclosures_db_dev disclosures_db
     python3 manage.py build_elastic_index --settings disclosures.settings.prod
 
-#18 создание sitemap (rare-sections) и копирование на frontend
-    python3 $TOOLS/disclosures_site/manage.py generate_static_sections --settings disclosures.settings.prod --output-folder sections
-    tar cfz static_sections.tar.gz sections
-    scp static_sections.tar.gz $FRONTEND:/tmp
+#18 sitemaps
+    cd $TOOLS/disclosures_site
+    python3 manage.py generate_sitemaps --settings disclosures.settings.prod --output-file disclosures/static/sitemap.xml \
+      --access-log-folder $ACCESS_LOG_ARCHIVE --tar-path sitemap.tar
+    scp sitemap.tar $FRONTEND:/tmp/sitemap.tar
 
 #19 make binary archives and copy to frontend
     sudo systemctl stop mysql
     cd /var/lib/mysql
-    sudo find * sys performance_schema mysql disclosures_db -maxdepth 1 -type f  | sudo xargs tar cfvz $DLROBOT_FOLDER/mysql.tar.gz
-    cd -
+    sudo find * -maxdepth 0 -type f | cat -  <( sudo find sys performance_schema mysql disclosures_db) | sudo xargs tar cfvz $DLROBOT_FOLDER/mysql.tar.gz
+    cd $DLROBOT_FOLDER
     scp $DLROBOT_FOLDER/mysql.tar.gz $FRONTEND:/tmp
 
     sudo systemctl stop elasticsearch
-    sudo tar --create --file elastic.tar.gz --gzip  --directory /var/lib/elasticsearch   .
+    sudo tar --create --file $DLROBOT_FOLDER/elastic.tar.gz --gzip  --directory /var/lib/elasticsearch   .
     scp $DLROBOT_FOLDER/elastic.tar.gz $FRONTEND:/tmp
 
 #20 обновление prod
     ssh $FRONTEND git -C ~/smart_parser pull
-    ssh $FRONTEND bash -x /home/sokirko/smart_parser/tools/disclosures_site/scripts/switch_prod.sh /tmp/mysql.tar.gz /tmp/elastic.tar.gz /tmp/static_sections.tar.gz
-
+    ssh $FRONTEND bash -x /home/sokirko/smart_parser/tools/disclosures_site/scripts/switch_prod.sh /tmp/mysql.tar.gz /tmp/elastic.tar.gz /tmp/sitemap.tar
+    ssh $PROD_SOURCE_DOC_SERVER sudo systemctl restart source_declaration_doc
 
 #21  посылаем данные dlrobot в каталог, который синхронизирутеся с облаком, очищаем dlrobot_central (без возврата)
     cd $DLROBOT_FOLDER

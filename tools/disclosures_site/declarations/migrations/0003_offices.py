@@ -5,7 +5,8 @@ import declarations.models as models
 import os
 
 
-#echo  "select *  from declarations_office" |  mysqlsh --sql --result-format=json/array --uri=declarator@localhost -pdeclarator -D declarator  | gzip -c > data/offices.txt.gz
+#echo  "select *  from declarations_office" |  mysqlsh --sql --result-format=json/array --uri=declarator@localhost -pdeclarator -D declarator data/offices.txt
+#echo  "select * from declarator.declarations_office  where id not in (select id from disclosures_db.declarations_office)" |  mysqlsh --sql --result-format=json/array --uri=declarator@localhost -pdeclarator -D declarator > offices.txt
 def add_offices(apps, schema_editor):
     clear_offices(apps, schema_editor)
     filepath = os.path.join(os.path.dirname(__file__), "../../data/offices.txt")

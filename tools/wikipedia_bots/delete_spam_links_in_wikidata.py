@@ -66,6 +66,7 @@ def deprecate_link(logger, url, wikidata_item):
                 else:
                     logger.info("deprecate {} from {}".format(wikidata_url, wikidata_item))
                     claim.addQualifier(qualifier, summary='the site was abandoned or used for spam.')
+                    claim.changeRank('deprecated')
                     #  cannot remove it
                     # item_page.removeClaims(claim)
                     return True
@@ -111,7 +112,7 @@ if __name__ == '__main__':
     #with open (wikidata_file, "w") as outp:
     #    json.dump(data, outp)
     urls = read_geo_with_sites(wikidata_file)
-    markup_file = "../disclosures_site/data/web_sites_markup.txt"
+    markup_file = "../web_site_db/data/web_sites_markup.txt"
     site_list_path = "web_sites_to_deprecate.txt"
     #sites = build_site_list(urls, markup_file)
     #with open (site_list_path, "w") as outp:

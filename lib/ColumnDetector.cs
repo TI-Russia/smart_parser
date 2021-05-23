@@ -64,7 +64,7 @@ namespace Smart.Parser.Lib
             return true;
         }
 
-        public static bool WeakHeaderCheck(List<Cell> cells)
+        public static bool WeakHeaderCheck(IAdapter adapter, List<Cell> cells)
         {
             int colCount = 0;
             if (cells.Count < 3) return false;
@@ -72,6 +72,13 @@ namespace Smart.Parser.Lib
             {
                 if (colCount == 0 && HeaderHelpers.IsNumber(c.Text)) return true;
                 if (HeaderHelpers.IsName(c.Text)) return true;
+                if (HeaderHelpers.HasOwnedString(c.Text) || HeaderHelpers.HasStateString(c.Text))
+                {
+                    if (FindSubcellsUnder(adapter, c).Count >= 3)
+                    {
+                        return true;
+                    }
+                }
                 colCount += 1;
                 if (colCount > 3) break;
             }
@@ -116,7 +123,7 @@ namespace Smart.Parser.Lib
                         columnOrdering.Section = section_text;
                     }
                 }
-                else if (WeakHeaderCheck(currRow))
+                else if (WeakHeaderCheck(adapter, currRow))
                     break;
 
                 row += 1;
@@ -220,35 +227,92 @@ namespace Smart.Parser.Lib
 
             }
         }
-    
-        static void FixMissingSubheadersForMixedRealEstate(IAdapter adapter, ColumnOrdering columnOrdering)
+
+        static bool CheckSquareColumn(IAdapter adapter, int rowStart, int rowCount, List<Cell> subCells, int subColumnNo)
         {
-            //see DepEnergo2010.doc  in tests
-            if (!columnOrdering.ContainsField(DeclarationField.MixedColumnWithNaturalText))
+            for (int row = rowStart; row < adapter.GetRowsCount(); row++)
+            {
+                if (row > rowStart + rowCount) break;
+                // we check only the  second column, todo check the  first one and  the third
+                string areaStr = adapter.GetCell(row, subCells[subColumnNo].Col).GetText(true);
+                if (!DataHelper.IsEmptyValue(areaStr))
+                {
+                    if (!DataHelper.ParseSquare(areaStr).HasValue)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        static void FixMissingSubheadersForMergedColumns(IAdapter adapter, ColumnOrdering columnOrdering,
+            DeclarationField mergedField, DeclarationField[] subColumns)
+        {
+            if (!columnOrdering.ContainsField(mergedField))
             {
                 return;
             }
             TColumnInfo dummy;
-            var headerCell = adapter.GetDeclarationFieldWeak(columnOrdering, columnOrdering.HeaderBegin.Value, DeclarationField.MixedColumnWithNaturalText,out dummy);
+            var headerCell = adapter.GetDeclarationFieldWeak(columnOrdering, columnOrdering.HeaderBegin.Value, mergedField, out dummy);
             var subCells = FindSubcellsUnder(adapter, headerCell);
-            if (subCells.Count != 3)
+            // we check only the  second column, todo check the  first one and  the third
+            if (subCells.Count != subColumns.Count() || !CheckSquareColumn(adapter, columnOrdering.FirstDataRow, 5, subCells, 1))
             {
                 return;
             }
-            for (int row = columnOrdering.FirstDataRow; row < adapter.GetRowsCount(); row++)
+            for (int i = 0; i < subColumns.Count(); ++i)
             {
-                if (row > columnOrdering.FirstDataRow + 5) break;
-                // we check only the  second column, todo check the  first one and  the third
-                string areaStr = adapter.GetCell(row, subCells[1].Col).GetText(true);
-                if (!DataHelper.ParseSquare(areaStr).HasValue)
-                {
-                    return;
-                }
+                AddColumn(columnOrdering, subColumns[i], subCells[i]);
             }
-            AddColumn(columnOrdering, DeclarationField.MixedRealEstateType, subCells[0]);
-            AddColumn(columnOrdering, DeclarationField.MixedRealEstateSquare, subCells[1]);
-            AddColumn(columnOrdering, DeclarationField.MixedRealEstateCountry, subCells[2]);
-            columnOrdering.Delete(DeclarationField.MixedColumnWithNaturalText);
+            columnOrdering.Delete(mergedField);
+        }
+
+        static void FixMissingSubheadersForMixedRealEstate(IAdapter adapter, ColumnOrdering columnOrdering)
+        {
+            //see DepEnergo2010.doc  in tests
+            FixMissingSubheadersForMergedColumns(
+                adapter,
+                columnOrdering, 
+                DeclarationField.MixedColumnWithNaturalText,
+                new DeclarationField[] {   
+                    DeclarationField.MixedRealEstateType, 
+                    DeclarationField.MixedRealEstateSquare, 
+                    DeclarationField.MixedRealEstateCountry}
+            );
+        }
+
+        static void FixMissingSubheadersForOwnedColumn(IAdapter adapter, ColumnOrdering columnOrdering)
+        {
+            //see niz_kam.docx   in tests
+            FixMissingSubheadersForMergedColumns(
+                adapter,
+                columnOrdering,
+                DeclarationField.OwnedColumnWithNaturalText,
+                new DeclarationField[] {   
+                    DeclarationField.OwnedRealEstateType,
+                    DeclarationField.OwnedRealEstateSquare,
+                    DeclarationField.OwnedRealEstateCountry,
+                    DeclarationField.Vehicle
+                    }
+            );
+        }
+
+        static void FixMissingSubheadersForStateColumn(IAdapter adapter, ColumnOrdering columnOrdering)
+        {
+            //see niz_kam.docx   in tests
+            FixMissingSubheadersForMergedColumns(
+                adapter,
+                columnOrdering,
+                DeclarationField.StateColumnWithNaturalText,
+                new DeclarationField[] {
+                    DeclarationField.StatePropertyType,
+                    DeclarationField.StatePropertySquare,
+                    DeclarationField.StatePropertyCountry,
+                    }
+            );
+
         }
 
         static void FixBadColumnName01_Template(ColumnOrdering c, DeclarationField naturalText, DeclarationField country, DeclarationField square, DeclarationField type)
@@ -298,7 +362,6 @@ namespace Smart.Parser.Lib
                 c.Delete(DeclarationField.NameAndOccupationOrRelativeType);
             }
         }
-
 
 
         static public ColumnOrdering ExamineTableBeginning(IAdapter adapter)
@@ -389,7 +452,7 @@ namespace Smart.Parser.Lib
         }
 
         
-        static public void MapStringsToConstants(IAdapter adapter, List<Cell> cells, ColumnOrdering columnOrdering)
+        static public void MapColumnTitlesToInnerConstants(IAdapter adapter, List<Cell> cells, ColumnOrdering columnOrdering)
         {
             foreach (var cell in cells)
             {
@@ -408,11 +471,7 @@ namespace Smart.Parser.Lib
                     Logger.Debug("Predict: " + field.ToString());
                 }
                 else {
-                    if (cell.TextAbove != null)
-                    {
-                        text = cell.TextAbove + " " + text;
-                    }
-                    field = HeaderHelpers.TryGetField(text.Replace('\n', ' '));
+                    field = HeaderHelpers.TryGetField(cell.TextAbove, text);
                     if ((field == DeclarationField.None) && clean_text.Length <= 4)
                     {
                         field = ColumnPredictor.PredictEmptyColumnTitle(adapter, cell);
@@ -447,7 +506,7 @@ namespace Smart.Parser.Lib
         { 
             int headerEndRow;
             var cells = GetColumnCells(adapter, headerStartRow, out headerEndRow);
-            MapStringsToConstants(adapter, cells, columnOrdering);
+            MapColumnTitlesToInnerConstants(adapter, cells, columnOrdering);
 
             columnOrdering.HeaderBegin = headerStartRow;
             columnOrdering.HeaderEnd = headerEndRow;
@@ -470,11 +529,12 @@ namespace Smart.Parser.Lib
             {
                 throw new SmartParserException("cannot find headers");
             }
-            // todo check whether we need them
             FixMissingSubheadersForMixedRealEstate(adapter, columnOrdering);
             FixMissingSubheadersForVehicle(adapter, columnOrdering);
             FixBadColumnName01(columnOrdering);
             FixBadColumnName02(columnOrdering);
+            FixMissingSubheadersForOwnedColumn(adapter, columnOrdering);
+            FixMissingSubheadersForStateColumn(adapter, columnOrdering);
             columnOrdering.FinishOrderingBuilding(cells[0].AdditTableIndention);
         }
     }

@@ -1,35 +1,38 @@
 from DeclDocRecognizer.dlrecognizer import DL_RECOGNIZER_ENUM
-from common.primitives import normalize_and_russify_anchor_text, strip_html_url
-
+from common.primitives import normalize_and_russify_anchor_text, strip_html_url, build_dislosures_sha256_by_html
 
 class TClickEngine:
     urllib = 'urllib'
     selenium = 'selenium'
     google = 'google'
     manual = 'manual'
+    sitemap_xml = 'sitemap_xml'
 
     @staticmethod
     def is_search_engine(s):
         return s == "google"
 
+
 class TLinkInfo:
     MINIMAL_LINK_WEIGHT = 0.0
+    LINK_WEIGHT_FOR_INCREMENTING = 1.0
     TRASH_LINK_WEIGHT = 5.0
     NORMAL_LINK_WEIGHT = 10.0  # these links should be processed in normal case, if weight is less, then we can stop crawling
     BEST_LINK_WEIGHT = 50.0
 
     def __init__(self, engine, source_url,  target_url, source_html="", element_index=0, anchor_text="",
-                 tag_name=None, source_page_title=None, element_class=None):
+                 tag_name=None, source_page_title=None, element_class=None, downloaded_file=None):
         self.engine = engine
         self.element_index = element_index
         self.page_html = "" if source_html is None else source_html
+        self.source_sha256 = None if source_html is None else build_dislosures_sha256_by_html(source_html)
         self.source_url = source_url
         self.target_url = target_url
         self.anchor_text = ""
         self.set_anchor_text(anchor_text)
         self.tag_name = tag_name
         self.text_proxim = False
-        self.downloaded_file = None
+        self.downloaded_file = downloaded_file
         self.target_title = None
         self.weight = TLinkInfo.MINIMAL_LINK_WEIGHT
         self.dl_recognizer_result = DL_RECOGNIZER_ENUM.UNKNOWN
@@ -83,12 +86,22 @@ def check_link_sitemap(logger, link_info: TLinkInfo):
 def check_anticorr_link_text(logger, link_info: TLinkInfo):
     text = link_info.anchor_text.strip().lower()
     if text.find('антикоррупционная комиссия') != -1:
+        link_info.weight = 5
         return True
 
     if text.startswith(u'противодействие') or text.startswith(u'борьба') or text.startswith(u'нет'):
-        return text.find("коррупц") != -1
+        if text.find("коррупц") != -1:
+            link_info.weight = 5
+            return True
     return False
 
+
+def check_anticorr_link_text_2(logger, link_info: TLinkInfo):
+    text = link_info.anchor_text.strip().lower()
+    if text.find("отчеты") != -1:
+        link_info.weight = 5
+        return True
+    return False
 
 def check_sub_page_or_iframe(logger,  link_info: TLinkInfo):
     if link_info.target_url is None:

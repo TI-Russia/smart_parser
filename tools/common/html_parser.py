@@ -9,9 +9,9 @@ class THtmlParser:
     def __init__(self, file_data):
         self.file_data = file_data
         self.soup = BeautifulSoup(self.file_data, "html.parser")
-        self.html_text = str(self.soup)
+        self.html_with_markup = str(self.soup)
         self.page_title = self.soup.title.string if self.soup.title is not None else ""
 
-    def get_text(self):
+    def get_plain_text(self):
         return self.soup.get_text()
 

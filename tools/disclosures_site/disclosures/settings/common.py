@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sitemaps',
 ]
 
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

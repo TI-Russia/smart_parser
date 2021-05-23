@@ -69,21 +69,23 @@ python3 $TOOLS/disclosures_site/scripts/join_human_and_dlrobot.py \
 python3 $TOOLS/disclosures_site/manage.py create_database --settings disclosures.settings.dev --username db_creator --password root --skip-checks
 python3 $TOOLS/disclosures_site/manage.py makemigrations --settings disclosures.settings.dev
 python3 $TOOLS/disclosures_site/manage.py migrate --settings disclosures.settings.dev
-python3 $TOOLS/disclosures_site/manage.py create_permalink_storage  --settings disclosures.settings.dev --output-dbm-file permalinks.dbm
-python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev --permanent-links-db permalinks.dbm
+python3 $TOOLS/disclosures_site/manage.py create_permalink_storage  --settings disclosures.settings.dev
+python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev
 python3 $TOOLS/disclosures_site/manage.py clear_database --settings disclosures.settings.dev
 python3 $TOOLS/disclosures_site/manage.py import_json \
                --settings disclosures.settings.dev \
                --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER \
                --dlrobot-human dlrobot_human.json   \
                --process-count 1  \
-               --permanent-links-db permalinks.dbm
+               --permalinks-folder .
 
 python3 $TOOLS/disclosures_site/manage.py copy_person_id \
         --settings disclosures.settings.dev \
-        --permanent-links-db permalinks.dbm
+        --permalinks-folder .
 
 export DEDUPE_MODEL=$TOOLS/disclosures_site/deduplicate/model/random_forest.pickle
-python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --ml-model-file $DEDUPE_MODEL  --threshold 0.61 --write-to-db --settings disclosures.settings.dev --permanent-links-db permalinks.dbm
+python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --ml-model-file $DEDUPE_MODEL  --threshold 0.61 --write-to-db --settings disclosures.settings.dev --permalinks-folder .
 
-python3 $TOOLS/disclosures_site/manage.py search_index --rebuild  --settings disclosures.settings.dev -f
+python3 $TOOLS/disclosures_site/manage.py build_genders --settings disclosures.settings.dev
+python3 $TOOLS/disclosures_site/manage.py build_ratings --settings disclosures.settings.dev
+python3 $TOOLS/disclosures_site/manage.py build_elastic_index --settings disclosures.settings.dev

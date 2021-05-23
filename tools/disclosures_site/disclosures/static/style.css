@@ -14,7 +14,7 @@
     font-style: normal;
 }
 
-br.responsive {
+br.mobile {
   display: inline; // Show BR tag for narrow screens
 }
 
@@ -24,7 +24,17 @@ br.responsive {
         font-family: "Roboto", serif;
     }
     html {
-        font-size: 36px
+        font-size: 36px;
+        /*height:100%;*/
+    }
+    body{
+        height:100%;
+    }
+    .desktop {
+         display: none;
+    }
+    .mobile {
+         display: inline;
     }
 }
 
@@ -35,20 +45,25 @@ br.responsive {
         link-color: black;
         font-family: "Roboto Light", serif;
     }
-    br.responsive {
-         display: none; // Hide BR tag for wider screens
+    .mobile {
+         display: none;
+    }
+    input.mobild {
+
+    }
+    .desktop {
+         display: inline;
     }
 }
 
-div.header1 {
+div.disclosures_top_header {
     display: inline;
     font-size: 200%;
     font-weight: bold;
     text-align: left;
 }
 
-div.header2 {
-    display: inline;
+div.header {
     margin: 10px;
     font-size: 100%;
 }
@@ -81,6 +96,7 @@ select {
     padding-left: 4px;
     padding-right: 4px;
 }
+
 table.declaration_table  {
     border: solid;
     border-collapse: collapse;
@@ -100,3 +116,54 @@ div.clickable {
   cursor: pointer;
 }
 
+div.menu {
+  width: 35px;
+  height: 5px;
+  background-color: black;
+  margin: 6px 0;
+}
+
+/* ================ mobile menu ==================== */
+.topnav {
+  overflow: hidden;
+  position: relative;
+}
+
+#mobileMenu {
+    display: none;
+    height: 80vh;
+}
+
+.menu_table {
+    display: table;
+    height: 100%;
+    width: 100%;
+}
+
+row {
+    display: table-row;
+}
+
+.topnav a {
+    display: table-cell;
+    text-align: left;
+    text-decoration: none;
+    font-size: 70px;
+    border:1px solid black;
+    padding-left: 50px;
+    vertical-align: middle;
+}
+
+.mobile_menu_dark_cell {
+    background-color: #E3E3E3;
+}
+
+/* section search*/
+td.search_param {
+    padding-bottom: 10px;
+}
+
+div.search_input {
+    padding-top: 5x;
+    padding-bottom: 5px;
+}

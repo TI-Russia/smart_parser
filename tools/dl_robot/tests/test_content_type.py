@@ -1,14 +1,13 @@
 from common.download import get_file_extension_only_by_headers, TDownloadedFile, \
              DEFAULT_HTML_EXTENSION, TDownloadEnv
-from common.http_request import make_http_request_urllib
-from common.simple_logger import close_logger
+from common.http_request import THttpRequester
+from common.logging_wrapper import close_logger, setup_logging
 
 import http.server
 from unittest import TestCase
 import time
 import os
 import threading
-import logging
 import shutil
 
 HTTP_HEAD_REQUESTS_COUNT = 0
@@ -46,22 +45,6 @@ def start_server(server):
     server.serve_forever()
 
 
-def setup_logging(logfilename="dlrobot.log"):
-    logger = logging.getLogger("dlrobot_logger")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-    return logger
-
-
 class TestContentType(TestCase):
     web_site_port = 8194
 
@@ -76,7 +59,8 @@ class TestContentType(TestCase):
         os.mkdir(self.data_folder)
         os.chdir(self.data_folder)
         TDownloadEnv.clear_cache_folder()
-        self.logger = setup_logging()
+        self.logger = setup_logging(log_file_name="dlrobot.log")
+        THttpRequester.initialize(self.logger)
 
     def tearDown(self):
         self.web_server.shutdown()
@@ -91,15 +75,15 @@ class TestContentType(TestCase):
 
     def test_content_type(self):
         url = self.build_url("somepath")
-        wrong_extension = get_file_extension_only_by_headers(self.logger, url)
+        wrong_extension = get_file_extension_only_by_headers(url)
         self.assertEqual(wrong_extension, ".doc")  # see minvr.ru for this error
-        downloaded_file = TDownloadedFile(self.logger, url)
+        downloaded_file = TDownloadedFile(url)
         right_extension = downloaded_file.file_extension  # read file contents to determine it's type
         self.assertEqual(right_extension, DEFAULT_HTML_EXTENSION)
         self.assertEqual(HTTP_GET_REQUESTS_COUNT, 1)
         self.assertEqual(HTTP_HEAD_REQUESTS_COUNT, 1)
 
     def test_redirects(self):
-        dummy1, dummy2, data = make_http_request_urllib(self.logger, self.build_url("redirect1"), "GET")
+        dummy1, dummy2, data = THttpRequester.make_http_request_urllib(self.build_url("redirect1"), "GET")
         self.assertEqual(data.decode('utf8').startswith("<html>"), True)
 

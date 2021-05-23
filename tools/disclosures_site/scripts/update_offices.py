@@ -1,4 +1,4 @@
-from disclosures_site.declarations.web_sites import TDeclarationWebSites, TDeclarationWebSite
+from web_site_db.web_sites import TDeclarationWebSiteList
 from common.primitives import get_site_domain_wo_www
 from common.russian_regions import TRussianRegions
 
@@ -44,7 +44,7 @@ class TOfficeJoiner:
         self.website_to_most_freq_office = None
         self.offices_file_path = os.path.join(os.path.dirname(__file__), "../data/offices.txt")
         self.offices = None
-        self.web_sites = TDeclarationWebSites(self.logger)
+        self.web_sites = TDeclarationWebSiteList(self.logger)
         self.web_sites.load_from_disk()
 
     def read_offices (self):
@@ -92,7 +92,7 @@ class TOfficeJoiner:
                         select  id, name_ru, type_id, parent_id, region_id, url 
                         from declarations_office
         """)
-        max_id = max(o['id'] for o in self.offices if o['id'] < TDeclarationWebSites.disclosures_office_start_id)
+        max_id = max(o['id'] for o in self.offices if o['id'] < TDeclarationWebSiteList.disclosures_office_start_id)
         new_offices_count = 0
         for id, name_ru, type_id, parent_id, region_id, url in in_cursor:
             if id > max_id:
@@ -108,7 +108,7 @@ class TOfficeJoiner:
                 self.offices.append(r)
         db_connection.close()
 
-        self.logger.debug("found {} new  offices in  declarator".format(new_offices_count))
+        self.logger.debug("found {} new  web_site_snapshots in  declarator".format(new_offices_count))
 
     def read_fgup(self):
         file_path = os.path.join(os.path.dirname(__file__), "../data/fgup.txt")
@@ -145,8 +145,8 @@ class TOfficeJoiner:
     def extend_offices_and_sites(self, new_office_dict):
         name_to_office = dict((o['name'], o['id']) for o in self.offices)
         max_id = max (o['id'] for o in self.offices)
-        if max_id < TDeclarationWebSites.disclosures_office_start_id:
-            max_id = TDeclarationWebSites.disclosures_office_start_id
+        if max_id < TDeclarationWebSiteList.disclosures_office_start_id:
+            max_id = TDeclarationWebSiteList.disclosures_office_start_id
 
         for web_site, office_info in new_office_dict.items():
             office_id = name_to_office.get(office_info['name'])

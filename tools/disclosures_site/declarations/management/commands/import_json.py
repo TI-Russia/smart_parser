@@ -1,6 +1,6 @@
 import declarations.models as models
 from declarations.serializers import TSmartParserSectionJson
-from declarations.management.commands.permalinks import TPermaLinksDB
+from declarations.permalinks import TPermaLinksSection, TPermaLinksSourceDocument
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from declarations.input_json import TDlrobotHumanFile
 from common.logging_wrapper import setup_logging
@@ -19,6 +19,7 @@ from statistics import median
 
 class TImporter:
     logger = None
+    max_vehicle_count = 60
 
     def build_office_to_file_mapping(self):
         db_offices = set(o.id for o in models.Office.objects.all())
@@ -44,19 +45,21 @@ class TImporter:
         if models.Section.objects.count() > 0:
             raise Exception("implement all section passports reading from db if you want to import to non-empty db! ")
         self.office_to_source_documents = self.build_office_to_file_mapping()
-        self.permalinks_db = TPermaLinksDB(args['permanent_links_db'])
-        self.permalinks_db.open_db_read_only()
-        self.first_new_section_id_for_print = self.permalinks_db.get_max_plus_one_primary_key_from_the_old_db(models.Section)
+        self.permalinks_db_section = None
+        self.permalinks_db_source_document = None
         self.smart_parser_cache_client = None
 
     def delete_before_fork(self):
-        self.permalinks_db.close_db()
         from django import db
         db.connections.close_all()
 
     def init_non_pickable(self):
         self.smart_parser_cache_client = TSmartParserCacheClient(TSmartParserCacheClient.parse_args([]), TImporter.logger)
-        self.permalinks_db.open_db_read_only()
+
+        self.permalinks_db_section = TPermaLinksSection(self.args['permalinks_folder'])
+        self.permalinks_db_section.open_db_read_only()
+        self.permalinks_db_source_document = TPermaLinksSourceDocument(self.args['permalinks_folder'])
+        self.permalinks_db_source_document.open_db_read_only()
 
     def init_after_fork(self):
         from django.db import connection
@@ -79,7 +82,7 @@ class TImporter:
                                                        sha256=sha256,
                                                        intersection_status=src_doc.get_intersection_status(),
                                                        )
-        source_document_in_db.id, new_file = self.permalinks_db.get_source_doc_id_by_sha256(sha256)
+        source_document_in_db.id, new_file = self.permalinks_db_source_document.get_source_doc_id_by_sha256(sha256)
         assert not models.Source_Document.objects.filter(id=source_document_in_db.id).exists()
         self.logger.debug("register doc sha256={} id={}, new_file={}".format(sha256, source_document_in_db.id, new_file))
         source_document_in_db.file_extension = src_doc.file_extension
@@ -116,6 +119,7 @@ class TImporter:
         section_index = 0
         TImporter.logger.debug("try to import {} declarants".format(len(input_json['persons'])))
         incomes = list()
+
         for raw_section in input_json['persons']:
             section_index += 1
             income_year = raw_section.get('year', common_income_year)
@@ -125,11 +129,17 @@ class TImporter:
                 try:
                     prepared_section = TSmartParserSectionJson(income_year, source_document_in_db)
                     prepared_section.read_raw_json(raw_section)
-                    passport = prepared_section.get_passport_factory().get_passport_collection()[0]
-                    if self.register_section_passport(passport):
+
+                    if len(prepared_section.vehicles) > TImporter.max_vehicle_count:
+                        TImporter.logger.debug("ignore section {} because it has too many vehicles ( > {})".format(
+                            prepared_section.section.person_name, TImporter.max_vehicle_count))
+                        continue
+                    passport1 = prepared_section.get_passport_components1().get_main_section_passport()
+                    if self.register_section_passport(passport1):
                         prepared_section.section.tmp_income_set = prepared_section.incomes
-                        section_id = self.permalinks_db.get_section_id(prepared_section.section)
-                        if section_id >= self.first_new_section_id_for_print:
+                        passport2 = prepared_section.get_passport_components2().get_main_section_passport()
+                        section_id, is_new = self.permalinks_db_section.get_section_id(passport1, passport2)
+                        if is_new:
                             TImporter.logger.debug("found a new section {}, set section.id to {}".format(
                                 prepared_section.section.get_permalink_passport(), section_id))
 
@@ -165,8 +175,16 @@ class TImporter:
 
     def import_office(self, office_id):
         all_imported_human_jsons = set()
-
+        max_doc_id = 2**32
+        ordered_documents = list()
         for sha256 in self.office_to_source_documents[office_id]:
+            doc_id = self.permalinks_db_source_document.get_old_source_doc_id_by_sha256(sha256)
+            if doc_id is None:
+                doc_id = max_doc_id
+            ordered_documents.append((doc_id, sha256))
+        ordered_documents.sort()
+
+        for _, sha256 in ordered_documents:
             src_doc = self.dlrobot_human.document_collection[sha256]
             assert src_doc.calculated_office_id == office_id
             smart_parser_json = self.get_smart_parser_json(all_imported_human_jsons, sha256, src_doc)
@@ -217,15 +235,21 @@ class ImportJsonCommand(BaseCommand):
             required=True
         )
         parser.add_argument(
-            '--take-first-n-offices',
+            '--take-first-n-web_site_snapshots',
             dest='take_first_n_offices',
             required=False,
             type=int,
         )
         parser.add_argument(
-            '--permanent-links-db',
-            dest='permanent_links_db',
+            '--permalinks-folder',
+            dest='permalinks_folder',
             required=True
+        )
+        parser.add_argument(
+            '--office-id',
+            dest='office_id',
+            type=int,
+            required=False
         )
 
     def handle(self, *args, **options):
@@ -233,7 +257,10 @@ class ImportJsonCommand(BaseCommand):
         importer = TImporter(options)
 
         self.stdout.write("start importing")
-        if options.get('process_count', 0) > 1:
+        if options.get('office_id') is not None:
+            importer.init_non_pickable()
+            importer.import_office(options.get('office_id'))
+        elif options.get('process_count', 0) > 1:
             importer.delete_before_fork()
             pool = Pool(processes=options.get('process_count'))
             pool.map(partial(process_one_file_in_subprocess, importer), importer.office_to_source_documents.keys())

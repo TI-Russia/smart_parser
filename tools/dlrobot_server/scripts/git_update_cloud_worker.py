@@ -3,6 +3,8 @@ import os
 import shutil
 import psutil
 import time
+import sys
+sys.path.append(os.path.join( os.path.dirname(__file__), '..'))
 from common_server_worker import PITSTOP_FILE, TYandexCloud
 import subprocess
 
@@ -23,12 +25,18 @@ def parse_args():
 
 def kill_crawling():
     os.system("pkill -f firefox")
+    os.system("pkill -f chrome")
     os.system("pkill -f geckodriver")
+    os.system("pkill -f chromedriver")
     os.system("pkill -f dlrobot.py")
 
 
 def stop_dlrobot_worker_gently():
-    pitstop_file = os.path.join("/tmp/dlrobot_worker/", PITSTOP_FILE)
+    worker_folder = "/tmp/dlrobot_worker"
+    if not os.path.exists(worker_folder):
+        print("no dlrobot_worker folder found: {}".format(worker_folder))
+        return
+    pitstop_file = os.path.join(worker_folder, PITSTOP_FILE)
     with open(pitstop_file, "w") as outp:
         pass
     assert os.path.exists(pitstop_file)
@@ -78,6 +86,7 @@ def get_hosts(args):
         yield (TYandexCloud.get_worker_ip(m), m['name'])
     yield ("avito", "avito")
     yield ("lena", "lena")
+    yield ("samsung", "samsung")
 
 
 def update_one_worker_on_the_worker(args):

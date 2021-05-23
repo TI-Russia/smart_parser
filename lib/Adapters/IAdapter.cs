@@ -47,6 +47,10 @@ namespace Smart.Parser.Adapters
             return new DataRow(this, columnOrdering, row);
         }
 
+        public static bool IsNumbersRow(List<Cell> cells) { 
+            return String.Join(" ", cells.Select(c => c.Text.RemoveCharacters('\n', ' ')))
+            .StartsWith("1 2 3 4");
+        }
 
         // напрямую используется, пока ColumnOrdering еще не построен
         // во всех остальных случаях надо использовать Row.GetDeclarationField

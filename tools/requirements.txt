@@ -31,5 +31,5 @@ matplotlib
 telegram_send
 pytest
 setuptools_rust
-#cryptography
 pymysql
+ultimate-sitemap-parser

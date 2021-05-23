@@ -1,4 +1,5 @@
-function menuCreate() {
+
+function menuCreateDesktop() {
       menu = [{
                 "text":"главная",
                 "href":"/",
@@ -52,4 +53,37 @@ function menuCreate() {
       }
 }
 
-menuCreate();
+function showMobileMenu() {
+  var menu = document.getElementById("mobileMenu");
+  var content = document.getElementById("site-wrapper");
+
+  if (menu.style.display === "block") {
+    menu.style.display = "none";
+    content.style.display = "block";
+  } else {
+    menu.style.display = "block";
+    content.style.display = "none";
+  }
+};
+
+function disableInput(className) {
+    var nodes1 = document.getElementsByClassName(className);
+    for(var i = 0; i < nodes1.length; i++) {
+        var nodes2 = nodes1[i].getElementsByTagName('*');
+        for(var k = 0; k < nodes2.length; k++) {
+            nodes2[k].disabled = true;
+            nodes2[k].style.display = "none";
+        }
+    }
+}
+
+if (window.matchMedia('(max-device-width: 480px)').matches) {
+    if (window.location.pathname == "/") {
+        showMobileMenu();
+    }
+    disableInput("desktop");
+}
+else {
+    menuCreateDesktop();
+    disableInput("mobile");
+}

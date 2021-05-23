@@ -1,31 +1,15 @@
 from common.download import  TDownloadEnv
-from common.robot_step import TRobotStep, TUrlInfo
-from common.robot_project import TRobotProject
+from web_site_db.robot_step import TRobotStep, TUrlInfo
+from web_site_db.robot_project import TRobotProject
 from dl_robot.declaration_link import looks_like_a_declaration_link
-from common.http_request import TRequestPolicy
-from common.simple_logger import close_logger
+from common.http_request import THttpRequester
+from common.logging_wrapper import close_logger, setup_logging
 
 from unittest import TestCase
 import os
 import urllib
-import logging
 import shutil
-
-
-def setup_logging(logfilename):
-    logger = logging.getLogger("dlrobot_logger")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-    return logger
+import json
 
 
 # it looks like mkrf has changed the site structure, so there is no income declaratiosn
@@ -39,7 +23,6 @@ class TestDeclarationLinkSelenium(TestCase):
         robot_steps = [
             {
                 'step_name': "declarations",
-                'check_link_func': looks_like_a_declaration_link,
                 'fallback_to_selenium': True,
                 'use_urllib': False
             }
@@ -47,48 +30,66 @@ class TestDeclarationLinkSelenium(TestCase):
         with TRobotProject(self.logger, project_path, robot_steps, "result", enable_search_engine=False,
                            enable_selenium=True) as project:
             project.read_project()
-            office_info = project.offices[0]
+            office_info = project.web_site_snapshots[0]
             office_info.create_export_folder()
             office_info.url_nodes[start_url] = TUrlInfo(title="", step_name=None)
 
-            step_info = TRobotStep(office_info, robot_steps[0])
+            step_info = TRobotStep(office_info, **robot_steps[0])
             step_info.pages_to_process[start_url] = 0
             step_info.processed_pages = set()
-            step_info.make_one_step()
-            links = list()
-            for url in step_info.step_urls:
+            step_info.apply_function_to_links(looks_like_a_declaration_link)
+            links = dict()
+            for url,weight in step_info.step_urls.items():
                 u = list(urllib.parse.urlparse(url))
                 u[1] = "dummy"
-                links.append( urllib.parse.urlunparse(u) )
+                links[urllib.parse.urlunparse(u)] = weight
+
+            for url_info in office_info.url_nodes.values():
+                for d in url_info.downloaded_files:
+                    links[d.downloaded_file] = 1
             return links
 
     def setUp(self):
+        TRobotStep.check_local_address = True
         self.data_folder = os.path.join(os.path.dirname(__file__), "data.declaration_link_selenium")
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
         os.mkdir(self.data_folder)
         os.chdir(self.data_folder)
-        TRequestPolicy.ENABLE = False
-        self.logger = setup_logging("dlrobot.log")
+        THttpRequester.ENABLE = False
+        self.logger = setup_logging(log_file_name="dlrobot.log")
+        THttpRequester.initialize(self.logger)
 
     def tearDown(self):
         close_logger(self.logger)
         os.chdir(os.path.dirname(__file__))
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
+        TRobotStep.check_local_address = False
 
     def compare_to_file(self, links, file_name):
+        self.maxDiff = None
         with open(os.path.join(os.path.dirname(__file__), file_name)) as inp:
-            lines = list(l.strip() for l in inp)
-            self.assertSequenceEqual(links, lines)
+            canon_dict = json.load(inp)
+            self.assertDictEqual(canon_dict, links)
 
     def canonize_links(self, links, file_name):
-        with open(os.path.join(os.path.dirname(__file__), file_name)) as outp:
-            for l in links:
-                outp.write(l + "\n")
+        with open(os.path.join(os.path.dirname(__file__), file_name), "w") as outp:
+            json.dump(links, outp, indent=4)
 
-    def test_mkrf(self):
-        links = self.download_website('web_sites/mkrf/mkrf.txt', 'https://www.mkrf.ru/activities/reports/index.php')
-        # self.canonize_links(links, 'web_sites/mkrf/found_links')
-        self.compare_to_file(links, 'web_sites/mkrf/found_links')
+    def test_culture(self):
+        found_links = self.download_website('web_sites/culture.gov.ru/culture.gov.ru.txt', 'https://culture.gov.ru/activities/reports/index.php')
+        #self.canonize_links(found_links, 'web_sites/culture.gov.ru/found_links')
+        self.compare_to_file(found_links, 'web_sites/culture.gov.ru/found_links')
 
+    def test_kolomnagrad(self):
+        found_links = self.download_website('web_sites/kolomnagrad/project.txt', 'https://kolomnagrad.ru/docs/protivodejstvie-korrupcii/svedeniya-o-dohodah/12831-svedenija-o-dohodah-ob-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera-rukovoditelej-municipalnyh-uchrezhdenij-za-2019-god.html')
+        found_links = dict((k, v) for k, v in found_links.items() if k.find('svedeniya-o-dohodah') != -1)
+        #self.canonize_links(found_links, 'web_sites/kolomnagrad/found_links')
+        self.compare_to_file(found_links, 'web_sites/kolomnagrad/found_links')
+
+    def test_kolomnagrad1(self):
+        found_links = self.download_website('web_sites/kolomnagrad1/project.txt', 'https://kolomnagrad.ru/index.php?do=download&id=3005')
+        found_links = dict((k,v) for k, v in found_links.items() if k.find('svedeniya-o-dohodah') != -1)
+        #self.canonize_links(found_links, 'web_sites/kolomnagrad1/found_links')
+        self.compare_to_file(found_links, 'web_sites/kolomnagrad1/found_links')

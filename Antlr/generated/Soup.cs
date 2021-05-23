@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-// Generated from /home/sokirko/smart_parser/Antlr/src/Soup.g4 by ANTLR 4.8
+// Generated from C:\tmp\smart_parser\smart_parser\Antlr\src\Soup.g4 by ANTLR 4.8
 
 // Unreachable code detected
 #pragma warning disable 0162

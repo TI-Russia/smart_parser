@@ -53,11 +53,39 @@
 
 <header>
     <div>
-        <div class="header1">Дискложес&nbsp;</div>
-        <div class="header2">Автоматизированный сбор деклараций о доходах</div>
+        <div class="disclosures_top_header">Дискложес&nbsp;
+            <span class="mobile" style="float:right; font-size: 150%;">
+                <a href="javascript:void(0);" style="color: black; text-decoration: none;" onclick="showMobileMenu()">
+            &#9776; &nbsp;
+                </a>
+            </span>
+        </div>
+        <div class="header2 mobile"><br/>декларации о доходах</div>
+        <div class="header2 desktop">Автоматизированный сбор деклараций о доходах</div>
     </div>
-    <div id="menu_div"></div>
-    <hr/>
+    <div class="desktop" id="menu_div"></div>
+
+    <hr />
+      <div id="mobileMenu" class="topnav">
+          <div class="menu_table">
+              <row>
+                <a  href="/section/">Декларации</a>
+                <a class="mobile_menu_dark_cell" href="/about.html">О проекте</a>
+              </row>
+              <row>
+                <a class="mobile_menu_dark_cell" href="/office/">Ведомства</a>
+                <a  href="/statistics/">Статистика</a>
+              </row>
+              <row>
+                <a href="/file/">Документы</a>
+                <a class="mobile_menu_dark_cell" href="/news.html">Новости</a>
+              </row>
+              <row>
+                <a class="mobile_menu_dark_cell" href="/person/">Декларанты</a>
+              </row>
+            </div>
+      </div>
+
 </header>
 
 {# The Document Body #}
@@ -71,4 +99,3 @@
 
 </body>
 </html>
-

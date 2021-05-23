@@ -1,8 +1,12 @@
 MYSQL_TAR=$1
 ELASTICSEARCH_TAR=$2
-STATIC_SECTIONS=$3
+SITEMAP_ARCHIVE=$3
 HOST=${4:-"disclosures.ru"}
-DISCLOSURES_FOlDER=/home/sokirko/smart_parser/tools/disclosures_site
+
+export TOOLS=/home/sokirko/smart_parser/tools
+export DISCLOSURES_FOlDER=$TOOLS/disclosures_site
+export PYTHONPATH=$DISCLOSURES_FOlDER:$TOOLS:$PYTHONPATH
+
 cd $DISCLOSURES_FOlDER
 
 function switch_service() {
@@ -64,15 +68,15 @@ if [ "$putin" != "Путин Владимир Владимирович" ]; then
 fi
 
 #3.  sitemaps
-tar --file $STATIC_SECTIONS --gzip --directory disclosures/static --extract ;
-python3 manage.py generate_sitemaps --settings disclosures.settings.prod --output-file disclosures/static/sitemap.xml
+tar xf $SITEMAP_ARCHIVE
+
 
 #4  restart
 sudo systemctl restart gunicorn
 
 #5 testing by curl
 req_count=`python3 scripts/dolbilo.py --input-access-log data/access.test.log.gz  --host $HOST | jq ".normal_response_count"`
-canon_req_count="349"
+canon_req_count="141"
 if [ "$req_count" != $canon_req_count ]; then
   echo "site testing returns only $req_count requests with 200 http code, while it must be $canon_req_count requests"
   exit 1

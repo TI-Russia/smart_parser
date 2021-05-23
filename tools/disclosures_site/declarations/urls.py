@@ -5,6 +5,10 @@ from django.views.generic import TemplateView
 urlpatterns = [
     path('', views.HomePageView.as_view(), name='home_page'),
     path('about.html', views.AboutPageView.as_view(), name='about_page'),
+    path('permalinks.html', views.PermalinksPageView.as_view(), name='permalinks'),
+    path('smart_parser_spec.html', views.SmartParserSpecView.as_view(), name='spv'),
+    path('news.html', views.NewsPageView.as_view(), name='news_page'),
+
     path('sitemap.txt', views.sitemapView, name='sitemap'),
     path('sitemap.xml', views.sitemapXmlView, name='sitemapxml'),
     re_path('sitemap(?P<sitemapid>[0-9a-z-]+)?.xml', views.sitemapAuxXmlView, name='sitemapauxxml'),
@@ -28,6 +32,8 @@ urlpatterns = [
     path('reports/names/index.html', views.anyUrlView),
     path('reports/car-brands/index.html', views.anyUrlView),
     path('reports/car-brands/car-brands-by-years.html', views.anyUrlView),
-    path('reports/offices/index.html', views.anyUrlView),
+    path('reports/web_site_snapshots/index.html', views.anyUrlView),
     path('reports/regions/index.html', views.anyUrlView),
+    path('reports/new-car/index.html', views.anyUrlView),
+    path('reports/offices/index.html', views.anyUrlView),
 ]

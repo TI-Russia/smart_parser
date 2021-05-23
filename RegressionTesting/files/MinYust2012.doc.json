@@ -3,7 +3,7 @@
     {
       "person": {
         "name_raw": "Тупикин А.Н.",
-        "role": "Начальник Управления Минюста России по Кабардино-Балкарской Республике\n"
+        "role": "Начальник Управления Минюста России по Кабардино-Балкарской Республике"
       },
       "year": 2012,
       "incomes": [
@@ -21,44 +21,54 @@
       ],
       "real_estates": [
         {
-          "text": "квартира\n(индивидуальная)",
+          "text": "квартира (индивидуальная)",
           "square": 53.7,
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "53,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (индивидуальная)",
+          "own_type_raw": ""
         },
         {
-          "text": "квартира\n(индивидуальная)",
+          "text": "квартира (индивидуальная)",
           "square": 65.9,
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "65,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (индивидуальная)",
+          "own_type_raw": ""
         },
         {
-          "text": "квартира\n(индивидуальная)",
+          "text": "квартира (индивидуальная)",
           "square": 27.8,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "27,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (индивидуальная)",
+          "own_type_raw": ""
         },
         {
-          "text": "квартира\n(индивидуальная)",
+          "text": "квартира (индивидуальная)",
           "square": 41.6,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "41,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (индивидуальная)",
+          "own_type_raw": ""
         },
         {
-          "text": "квартира\n(пользование)",
+          "text": "квартира (пользование)",
           "square": 53.7,
           "relative": "Ребенок",
           "own_type_by_column": null,
           "square_raw": "53,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (пользование)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": []
@@ -66,7 +76,7 @@
     {
       "person": {
         "name_raw": "Абазова Е.Х",
-        "role": "Заместитель начальника Управления Минюста России по Кабардино-Балкарской Республике\n"
+        "role": "Заместитель начальника Управления Минюста России по Кабардино-Балкарской Республике"
       },
       "year": 2012,
       "incomes": [
@@ -90,68 +100,84 @@
       ],
       "real_estates": [
         {
-          "text": "квартира\n(совместная собственность)",
+          "text": "квартира (совместная собственность)",
           "square": 50.7,
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "50,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (совместная собственность)",
+          "own_type_raw": ""
         },
         {
-          "text": "квартира\n(совместная собственность)",
+          "text": "квартира (совместная собственность)",
           "square": 50.7,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "50,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (совместная собственность)",
+          "own_type_raw": ""
         },
         {
-          "text": "земельный участок\n(индивидуальная)",
+          "text": "земельный участок (индивидуальная)",
           "square": 20.0,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "20",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "земельный участок (индивидуальная)",
+          "own_type_raw": ""
         },
         {
-          "text": "гараж\n(индивидуальная)",
+          "text": "гараж (индивидуальная)",
           "square": 20.0,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "20",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "гараж (индивидуальная)",
+          "own_type_raw": ""
         },
         {
-          "text": "земельный участок\n(пользование)",
+          "text": "земельный участок (пользование)",
           "square": 1175700.0,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "1175700",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "земельный участок (пользование)",
+          "own_type_raw": ""
         },
         {
-          "text": "земельный участок\n(пользование)",
+          "text": "земельный участок (пользование)",
           "square": 24.0,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "24",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "земельный участок (пользование)",
+          "own_type_raw": ""
         },
         {
-          "text": "земельный участок\n(пользование)",
+          "text": "земельный участок (пользование)",
           "square": 24.0,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "24",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "земельный участок (пользование)",
+          "own_type_raw": ""
         },
         {
-          "text": "квартира\n(индивидуальная)",
+          "text": "квартира (индивидуальная)",
           "square": 50.7,
           "relative": "Ребенок",
           "own_type_by_column": null,
           "square_raw": "50,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (индивидуальная)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [

@@ -1,28 +1,11 @@
-import sys
-import logging
 from ConvStorage.conversion_client import TDocConversionClient
+from common.logging_wrapper import setup_logging
 
-
-def setup_logging():
-    logger = logging.getLogger("convert_pdf")
-    logger.setLevel(logging.DEBUG)
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-
-    fh = logging.FileHandler("convert_pdf.log", encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-    return logger
+import sys
 
 
 if __name__ == '__main__':
-    logger = setup_logging()
+    logger = setup_logging(log_file_name="convert_pdf.log")
     client = TDocConversionClient(TDocConversionClient.parse_args(sys.argv[1:]),  logger)
     client.start_conversion_thread()
     exit_code = client.process_files()

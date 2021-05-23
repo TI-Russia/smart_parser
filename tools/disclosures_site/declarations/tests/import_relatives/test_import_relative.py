@@ -1,6 +1,7 @@
 from declarations.management.commands.import_json import ImportJsonCommand
 from declarations.tests.smart_parser_for_testing import SmartParserServerForTesting
-from declarations.management.commands.permalinks import TPermaLinksDB
+from declarations.permalinks import TPermalinksManager
+from common.logging_wrapper import setup_logging
 
 from django.test import TestCase
 import os
@@ -14,8 +15,8 @@ class ComplexImportTestCase(TestCase):
         models.Section.objects.all().delete()
         models.Source_Document.objects.all().delete()
 
-        permalinks_path = os.path.join(os.path.dirname(__file__), "permalinks.dbm")
-        TPermaLinksDB(permalinks_path).create_and_save_empty_db()
+        permalinks_folder = os.path.dirname(__file__)
+        TPermalinksManager(setup_logging(), {'directory': permalinks_folder}).create_empty_dbs()
 
         domains_folder = os.path.join(os.path.dirname(__file__), "domains")
         sp_workdir = os.path.join(os.path.dirname(__file__), "smart_parser_server")
@@ -25,7 +26,7 @@ class ComplexImportTestCase(TestCase):
 
         with SmartParserServerForTesting(sp_workdir, domains_folder):
             importer.handle(None, dlrobot_human="dlrobot_human.json", smart_parser_human_json="human_jsons",
-                            permanent_links_db=permalinks_path)
+                            permalinks_folder=permalinks_folder)
 
         self.assertEqual(models.Section.objects.count(), 1)
         self.assertEqual(models.RealEstate.objects.count(), 6)

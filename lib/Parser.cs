@@ -10,7 +10,7 @@ namespace Smart.Parser.Lib
 {
     
     public class Parser : RealtyParser
-    {
+    { 
         DateTime FirstPassStartTime;
         DateTime SecondPassStartTime;
         bool FailOnRelativeOrphan;
@@ -104,7 +104,7 @@ namespace Smart.Parser.Lib
                 if (!(nameCell is OpenXmlWordCell) && !(nameCell is HtmlAdapterCell)) return false;
                 if (nameCell is null) return false;
                 if (nameCell.IsEmpty) return false;
-                if (nameCell.FontSize == 0) return false; // no font info
+                if (row.adapter.IsExcel()) return false; // no font info
                 List<string> lines = nameCell.GetLinesWithSoftBreaks();
                 if (lines.Count < 2) return false;
                 List<int> borders  = new List<int>() { 0 };
@@ -231,8 +231,8 @@ namespace Smart.Parser.Lib
             public void InitDeclarantProperties(DataRow row)
             {
                 CurrentDeclarant.NameRaw = row.PersonName.RemoveStupidTranslit().Replace("не имеет", "");
-                CurrentDeclarant.Occupation = row.Occupation.Replace("не имеет", "");
-                CurrentDeclarant.Department = row.Department;
+                CurrentDeclarant.Occupation = row.Occupation.Replace("не имеет", "").NormSpaces();
+                CurrentDeclarant.Department = row.Department.NormSpaces();
                 CurrentDeclarant.Ordering = row.ColumnOrdering;
             }
 
@@ -286,14 +286,10 @@ namespace Smart.Parser.Lib
 
         }
 
-        bool IsNumbersRow(DataRow row) => string
-            .Join(" ", row.Cells.Select(c => c.Text.RemoveCharacters('\n', ' ')))
-            .StartsWith("1 2 3 4");
-
         bool IsHeaderRow(DataRow row, out ColumnOrdering columnOrdering)
         {
             columnOrdering = null;
-            if (!ColumnDetector.WeakHeaderCheck(row.Cells)) 
+            if (!ColumnDetector.WeakHeaderCheck(Adapter, row.Cells)) 
                 return false;
             try
             {
@@ -333,7 +329,7 @@ namespace Smart.Parser.Lib
                 {
                     continue;
                 }
-                if (IsNumbersRow(currRow))
+                if (IAdapter.IsNumbersRow(currRow.Cells))
                 {
                     continue;
                 }
@@ -396,7 +392,17 @@ namespace Smart.Parser.Lib
                     }
                 }
                 if (!skipEmptyPerson)
+                {
                     borderFinder.AddInputRowToCurrentPerson(columnOrdering, currRow);
+                    if (declaration.Properties.Year == null && columnOrdering.ContainsField(DeclarationField.IncomeYear))
+                    {
+                        var incomeYear = currRow.GetDeclarationField(DeclarationField.IncomeYear);
+                        if (incomeYear != null) {
+                            declaration.Properties.Year = int.Parse(incomeYear.Text);
+                        }
+                    }
+                }
+
             }
             if (updateTrigrams) ColumnPredictor.WriteData();
 
@@ -412,6 +418,7 @@ namespace Smart.Parser.Lib
             // the incomes are so high, that we should not multiply incomes by 1000 although the 
             // column title specify this multiplier
             List<Decimal> incomes = new List<Decimal>();
+           
             foreach (PublicServant servant in declaration.PublicServants)
             {
                 foreach (DataRow row in servant.DateRows)
@@ -419,10 +426,12 @@ namespace Smart.Parser.Lib
                     if (row.ColumnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncomeThousands))
                     {
                         PublicServant dummy = new PublicServant();
-                        ParseIncome(row, dummy, true);
-                        if (dummy.DeclaredYearlyIncome != null)
+                        if (ParseIncome(row, dummy, true))
                         {
-                            incomes.Add(dummy.DeclaredYearlyIncome.Value);
+                            if (dummy.DeclaredYearlyIncome != null)
+                            {
+                                incomes.Add(dummy.DeclaredYearlyIncome.Value);
+                            }
                         }
                     }
                 }
@@ -487,7 +496,8 @@ namespace Smart.Parser.Lib
                 }
                 else
                 {
-                    throw e;
+                    Logger.Info("Cannot find or parse income cell, keep going... ");
+                    return true;
                 }
             }
         }
@@ -499,9 +509,15 @@ namespace Smart.Parser.Lib
             int count = 0;
             int total_count = declaration.PublicServants.Count();
             Decimal totalIncome = 0;
+            int max_relatives_count = 15;
 
             foreach (PublicServant servant in declaration.PublicServants)
             {
+                if (servant.Relatives.Count() > max_relatives_count)
+                {
+                    throw new SmartParserException(String.Format("too many relatives (>{0})", max_relatives_count));
+                }
+            
                 count++;
                 if (count % 1000 == 0)
                 {
@@ -595,16 +611,28 @@ namespace Smart.Parser.Lib
             }
             else if (r.ColumnOrdering.ColumnOrder.ContainsKey(DeclarationField.VehicleType))
             {
+                
                 var t = r.GetContents(DeclarationField.VehicleType).Replace("не имеет", "");
                 var m = r.GetContents(DeclarationField.VehicleModel, false).Replace("не имеет", "");
-                var text = t + " " + m;
-                if (t == m)
+                var splitVehicleModels = TextHelpers.SplitByEmptyLines(m);
+                if (splitVehicleModels.Length > 1)
                 {
-                    text = t;
-                    m = "";
+                    for (int i = 0; i < splitVehicleModels.Length; ++i )
+                    {
+                        person.Vehicles.Add(new Vehicle(splitVehicleModels[i], "", splitVehicleModels[i]));
+                    }
                 }
-                if (!DataHelper.IsEmptyValue(m) || !DataHelper.IsEmptyValue(t))
-                    person.Vehicles.Add(new Vehicle(text.Trim(), t, m));
+                else
+                {
+                    var text = t + " " + m;
+                    if (t == m)
+                    {
+                        text = t;
+                        m = "";
+                    }
+                    if (!DataHelper.IsEmptyValue(m) || !DataHelper.IsEmptyValue(t))
+                        person.Vehicles.Add(new Vehicle(text.Trim(), t, m));
+                }
             }
 
         }

@@ -61,7 +61,7 @@ class TDBSqueeze:
                   join declarations_section s on s.source_document_id = d.id 
                   group by o.id
               """
-        self.logger.info("build offices")
+        self.logger.info("build web_site_snapshots")
         for o in models.Office.objects.raw(sql):
             self.office_info[o.id] = {"section_count": o.section_count}
         self.logger.info("office count = {}".format(len(self.office_info)))

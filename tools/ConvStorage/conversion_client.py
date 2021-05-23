@@ -39,23 +39,26 @@ class TDocConversionClient(object):
         parser.add_argument("--skip-receiving", dest='receive_files', default=True, action="store_false",
                             required=False)
         parser.add_argument("--output-folder", dest='output_folder', default=None, required=False)
+        parser.add_argument("--only-winword", dest='only_winword', default=False, required=False, action="store_true")
+        parser.add_argument("--only-ocr", dest='only_ocr', default=False, required=False, action="store_true")
+        TDocConversionClient.DECLARATOR_CONV_URL = os.environ.get('DECLARATOR_CONV_URL') #reread for tests
         return parser.parse_args(arg_list)
 
     def __init__(self, args, logger=None):
         self.args = args
         if args.conversion_server is not None:
             TDocConversionClient.DECLARATOR_CONV_URL = args.conversion_server
-        assert_declarator_conv_alive()
+        self.logger = logger if logger is not None else logging.getLogger("dlrobot_logger")
+        if TDocConversionClient.DECLARATOR_CONV_URL is None:
+            print("specify environment variable DECLARATOR_CONV_URL to obtain docx by pdf-files")
+            assert TDocConversionClient.DECLARATOR_CONV_URL is not None
+        self.assert_declarator_conv_alive()
         self.wait_new_tasks = True
         self._input_tasks = queue.Queue()
         self._sent_tasks = list()
         self.conversion_thread = None
-        if TDocConversionClient.DECLARATOR_CONV_URL is None:
-            print("specify environment variable DECLARATOR_CONV_URL to obtain docx by pdf-files")
-            assert TDocConversionClient.DECLARATOR_CONV_URL is not None
         self.db_conv_url = TDocConversionClient.DECLARATOR_CONV_URL
         self.input_task_timeout = 5
-        self.logger = logger if logger is not None else logging.getLogger("dlrobot_logger")
         self.all_pdf_size_sent_to_conversion = 0
         self.default_http_timeout = 60*10
         self.inner_stats_timestamp = None
@@ -102,11 +105,15 @@ class TDocConversionClient(object):
         else:
             path = '/convert_if_absent/file'
         path += file_extension
+        if self.args.only_winword:
+            path += "?only_winword_conversion=1"
+        if self.args.only_ocr:
+            path += "?only_ocr=1"
         try:
             conn.request("PUT", path, file_contents)
             response = conn.getresponse()
             if response.code != 201:
-                self.logger.error("could not put a task to conversion queue")
+                self.logger.error("could not put a task to conversion queue: http code={}".format(response.code))
                 return False
             else:
                 self._sent_tasks.append(sha256)
@@ -186,7 +193,7 @@ class TDocConversionClient(object):
                 str(exp), self.default_http_timeout))
             return None
 
-    def retrieve_document(self, sha256, output_file_name):
+    def retrieve_document(self, sha256, output_file_name, verbose=False):
         # retrieve_document returns True, if file was processed by the server.
         # If the server  found an error in pdf it returned TConvertStorage.broken_stub.
         # If the server return TConvertStorage.broken_stub we do not create a file, but return True.
@@ -201,6 +208,10 @@ class TDocConversionClient(object):
                         out.write(file_content)
                 return True
             else:
+                if verbose:
+                    self.logger.debug("cannot get docx by sha256={} http code={}".format(
+                        sha256,response.code
+                    ))
                 return False
         except http.client.HTTPException as exp:
             self.logger.error("got exception {} in retrieve_document ".format(str(exp)))
@@ -210,17 +221,21 @@ class TDocConversionClient(object):
                 str(exp), self.default_http_timeout))
             return False
 
+    @staticmethod
+    def is_acceptable_file_extension(file_extension):
+        return file_extension == DEFAULT_PDF_EXTENSION or TDearchiver.is_archive_extension(file_extension)
+
     def start_conversion_task_if_needed(self, filename, file_extension, rebuild=False):
-        if file_extension == DEFAULT_PDF_EXTENSION or TDearchiver.is_archive_extension(file_extension):
-            max_file_size = 2 ** 25
-            if Path(filename).stat().st_size  > max_file_size:
-                self.logger.debug("file {} is too large for conversion (size must less than {} bytes) ".format(
-                    filename, max_file_size))
-                return False
-            assert self.conversion_thread is not None
-            self._input_tasks.put(TInputTask(filename, file_extension, rebuild))
-            return True
-        return False
+        if not self.is_acceptable_file_extension(file_extension):
+            return False
+        max_file_size = 2 ** 25
+        if Path(filename).stat().st_size  > max_file_size:
+            self.logger.debug("file {} is too large for conversion (size must less than {} bytes) ".format(
+                filename, max_file_size))
+            return False
+        assert self.conversion_thread is not None
+        self._input_tasks.put(TInputTask(filename, file_extension, rebuild))
+        return True
 
     def stop_conversion_thread(self, timeout=None):
         if timeout is None:
@@ -286,15 +301,20 @@ class TDocConversionClient(object):
                 return 1
         return 0
 
-
-def assert_declarator_conv_alive():
-    if TDocConversionClient.DECLARATOR_CONV_URL is None:
-        raise Exception("environment variable DECLARATOR_CONV_URL is not set")
-
-    try:
-        with urllib.request.urlopen("http://" + TDocConversionClient.DECLARATOR_CONV_URL+"/ping", timeout=300) as response:
-            if response.read() == "yes":
-                return True
-    except Exception as exp:
-        print("cannot connect to {} (declarator conversion server)".format(TDocConversionClient.DECLARATOR_CONV_URL))
-        raise
+    def assert_declarator_conv_alive(self):
+        try:
+            url = "http://" + TDocConversionClient.DECLARATOR_CONV_URL+"/ping"
+            if self.logger is not None:
+                self.logger.debug ("try to ping pdf conversion server {}".format(url))
+            with urllib.request.urlopen(url, timeout=300) as response:
+                answer = response.read()
+                if answer == b"yes":
+                    return True
+                return False
+        except Exception as exp:
+            m = "cannot connect to {} (declarator conversion server)".format(TDocConversionClient.DECLARATOR_CONV_URL)
+            if self.logger is None:
+                print (m)
+            else:
+                self.logger.error(m)
+            raise

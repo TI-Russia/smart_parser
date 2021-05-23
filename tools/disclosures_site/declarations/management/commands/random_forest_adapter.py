@@ -55,6 +55,7 @@ def average(num):
 
 TDeduplicationRecordId = namedtuple('TDeduplicationRecordId', ['id', 'source_table'])
 
+
 class TDeduplicationObject:
     INCOMPATIBLE_FIO_WEIGHT = 10000
     PERSON = "p"

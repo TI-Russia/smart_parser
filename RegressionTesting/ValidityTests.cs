@@ -169,6 +169,13 @@ namespace RegressionTesting
 
         [TestMethod]
         [TestCategory("docx")]
+        public void NedosekovManyRealties()
+        {
+            TestSmartParser("Nedosekov.docx", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("docx")]
         public void TestPdfTwoTables()
         {
             // from pdf
@@ -197,6 +204,13 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("xls")]
+        public void Privol ()
+        {
+            TestSmartParser("privol.xls", "prod");
+        }
+
+        [TestMethod]
         [TestCategory("xlsx")]
         public void TestExcelMinfin2016()
         {
@@ -218,6 +232,13 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("docx")]
+        public void NizKam()
+        {
+            TestSmartParser("niz_kam.docx", "prod");
+        }
+
+        [TestMethod]
         [TestCategory("doc")]
         public void MinRes2011()
         {
@@ -225,10 +246,75 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("xls")]
+        public void Test28817()
+        {
+            TestSmartParser("28817.xls", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("doc")]
+        public void Test26937_42()
+        {
+            TestSmartParser("26937_42.doc", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("xls")]   
+        public void Test13252_58()
+        {
+            TestSmartParser("13252_58.xls", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("doc")]
+        public void Test13133_5()
+        {
+            TestSmartParser("13133_5.doc", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("docx")]
+        public void Test12104_33()
+        {
+            TestSmartParser("12104_33.docx", "prod");
+        }
+
+
+        [TestMethod]
+        [TestCategory("docx")]
+        public void TestDeletedHorizBorder()
+        {
+            TestSmartParser("DeletedHorizBorder.docx", "prod");
+        }
+
+
+        [TestMethod]
+        [TestCategory("doc")]
+        public void Test10639_32()
+        {
+            TestSmartParser("10639_32.doc", "prod");
+        }
+
+        [TestMethod]
         [TestCategory("doc")]
         public void MinYust2012()
         {
             TestSmartParser("MinYust2012.doc", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("docx")]
+        public void Test36922()
+        {
+            TestSmartParser("36922.docx", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("docx")]
+        public void Test52991()
+        {
+            TestSmartParser("52991.docx", "prod");
         }
 
         [TestMethod]
@@ -409,6 +495,56 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("doc")]
+        public void Test13415_200()
+        {
+            TestSmartParser("13415_200.doc", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("html")]
+        public void Test14421_139()
+        {
+            TestSmartParser("14421_139.htm", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("doc")]
+        public void Test11212_66()
+        {
+            TestSmartParser("11212_66.doc", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("doc")]
+        public void Test14712_34()
+        {
+            TestSmartParser("14712_34.doc", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("doc")]
+        public void Test14475_0()
+        {
+            TestSmartParser("14475_0.doc", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("html")]
+        public void Test15584_0()
+        {
+            TestSmartParser("15584_0.html", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("doc")]
+        public void Test13931_28()
+        {
+            TestSmartParser("13931_28.doc", "prod");
+        }
+
+
+        [TestMethod]
         [TestCategory("docx")]
         public void DividePersonAndRelativesByEoln()
         {
@@ -565,6 +701,18 @@ namespace RegressionTesting
         {
             TestSmartParser("MinEkon2015.docx", "prod");
         }
+        [TestMethod]
+        [TestCategory("html")]
+        public void Test74()
+        {
+            TestSmartParser("74.html", "prod");
+        }
+        [TestMethod]
+        [TestCategory("docx")]
+        public void Test61662()
+        {
+            TestSmartParser("61662.docx", "prod");
+        }
 
         [TestMethod]
         [TestCategory("htm")]
@@ -648,7 +796,7 @@ namespace RegressionTesting
 
         [TestMethod]
         [TestCategory("xls")]
-            public void FixVehicleColumns()
+        public void FixVehicleColumns()
         {
             TestSmartParser("17497.xls", "prod");
         }

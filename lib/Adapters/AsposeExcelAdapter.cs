@@ -107,29 +107,6 @@ namespace Smart.Parser.Adapters
                     i += cell.GetMergedRange().ColumnCount - 1;
                 }
             }
-            /*
-            IEnumerator enumerator = worksheet.Cells.Rows[rowIndex].GetEnumerator();
-            int range_end = -1;
-            while (enumerator.MoveNext())
-            {
-                Aspose.Cells.Cell cell = (Aspose.Cells.Cell)enumerator.Current;
-                if (cell.Column < range_end)
-                {
-                    index++;
-                    continue;
-                }
-
-                result.Add(new AsposeExcelCell(cell));
-
-                if (cell.IsMerged)
-                {
-                    int first = cell.GetMergedRange().FirstColumn;
-                    int count = cell.GetMergedRange().ColumnCount;
-                    range_end = first + count;
-                }
-                index++;
-            }
-            */
             return result;
         }
 

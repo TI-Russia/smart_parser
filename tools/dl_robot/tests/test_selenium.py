@@ -1,28 +1,11 @@
 from common.selenium_driver import TSeleniumDriver
-from common.find_link import TLinkInfo, TClickEngine
+from common.link_info import TLinkInfo, TClickEngine
 from common.download import TDownloadEnv
-from common.simple_logger import close_logger
+from common.logging_wrapper import close_logger, setup_logging
 
 import os
-import logging
-import argparse
 import shutil
 from unittest import TestCase
-
-
-def setup_logging(logfilename):
-    logger = logging.getLogger("dlrobot_logger")
-    logger.setLevel(logging.DEBUG)
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-    return logger
 
 
 class TestSelenium(TestCase):
@@ -57,7 +40,7 @@ class TestSelenium(TestCase):
         os.mkdir(self.data_folder)
         os.chdir(self.data_folder)
 
-        self.logger = setup_logging("check_selenium.log")
+        self.logger = setup_logging(log_file_name="check_selenium.log")
         self.download_folder = os.path.join(self.data_folder, "download")
         os.mkdir(self.download_folder)
         try:

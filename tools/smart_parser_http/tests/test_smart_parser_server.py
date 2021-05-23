@@ -1,3 +1,4 @@
+import json
 from unittest import TestCase
 from smart_parser_http.smart_parser_server import TSmartParserHTTPServer
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
@@ -118,6 +119,7 @@ class TestSyncByTimeout(TestCase):
         stats = self.env.client.get_stats()
         self.assertEqual(stats['unsynced_records_count'], 0)
 
+
 class TestRebuild(TestCase):
     def setUp(self):
         self.env = TTestEnv(8392)
@@ -139,3 +141,23 @@ class TestRebuild(TestCase):
         self.assertTrue(self.env.client.send_file(file_path1, rebuild=True))
         time.sleep(6)
         self.assertEqual(self.env.client.get_stats()['session_write_count'], 2)
+
+
+class TestSendJson(TestCase):
+    def setUp(self):
+        self.env = TTestEnv(8393)
+        self.env.setUp(1)
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def test_send_json(self):
+        sha256 = "a9aa9e3edb4676abdf88092d00715f6ad8a0606628c349afcd977bbd1922885f"
+        file_path1 = sha256 + ".docx.json"
+        with open(file_path1, "w") as outp:
+            json.dump({"aaa": 1}, outp)
+        self.assertTrue(self.env.client.send_file(file_path1, external_json=True))
+        time.sleep(1)
+        self.assertEqual(self.env.client.get_stats()['session_write_count'], 1)
+        js = self.env.client.retrieve_json_by_sha256(sha256)
+        self.assertIsNotNone(js)

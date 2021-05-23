@@ -10,6 +10,9 @@ class TIntersectionStatus:
     only_dlrobot = "only_dlrobot"
     only_human = "only_human"
 
+    @staticmethod
+    def all_intersection_statuses():
+        return [TIntersectionStatus.only_dlrobot, TIntersectionStatus.only_human, TIntersectionStatus.both_found]
 
 class TDeclaratorReference:
     def __init__(self, from_json=dict()):

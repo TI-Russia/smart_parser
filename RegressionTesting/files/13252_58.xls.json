@@ -1,0 +1,326 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Горбанева Елена Анатольевна",
+        "role": ""
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 721857.0,
+          "size_raw": "721857",
+          "relative": null
+        },
+        {
+          "size": 110513.0,
+          "size_raw": "110513",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "size": 5400.0,
+          "size_raw": "5400",
+          "relative": "Ребенок",
+          "relative_index": 2
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "земельный участок под индивидуальное жилищное строительство (индивидуальная)",
+          "square": 751.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "751",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок под индивидуальное жилищное строительство (индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "жилой дом (индивидуальная)",
+          "square": 47.8,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "47,8",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом (индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "гараж (индивидуальная)",
+          "square": 25.7,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "25,7",
+          "country_raw": "Россия",
+          "type_raw": "гараж (индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "погреб (иное недвижимое имущество, индивидуальная)",
+          "square": 14.5,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "14,5",
+          "country_raw": "Россия",
+          "type_raw": "погреб (иное недвижимое имущество, индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "сарай (иное недвижимое имущество, индивидуальная)",
+          "square": 12.9,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "12,9",
+          "country_raw": "Россия",
+          "type_raw": "сарай (иное недвижимое имущество, индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "уборная (иное недвижимое имущество, индивидуальная)",
+          "square": 1.2,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "1,2",
+          "country_raw": "Россия",
+          "type_raw": "уборная (иное недвижимое имущество, индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "земельный участок (безвозмездное пользование)",
+          "square": 956.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "956",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "жилой деревянный дом(безвозмездное пользование)",
+          "square": 28.4,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "28,4",
+          "country_raw": "Россия",
+          "type_raw": "жилой деревянный дом(безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "кухня (безвозмездное пользование)",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "",
+          "country_raw": "Россия",
+          "type_raw": "кухня (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "три сарая (безвозмездное пользование)",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "",
+          "country_raw": "Россия",
+          "type_raw": "три сарая (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "земельный участок для размещения объектов розничной торговли (индивидуальная)",
+          "square": 330.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "330",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок для размещения объектов розничной торговли (индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "земельный участок под индивидуальное жилищное строительство(индивидуальная)",
+          "square": 956.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "956",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок под индивидуальное жилищное строительство(индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "жилой дом (индивидуальная)",
+          "square": 42.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "42,6",
+          "country_raw": "Россия",
+          "type_raw": "жилой дом (индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "жилой деревянный дом(безвозмездное пользование)",
+          "square": 28.4,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "28,4",
+          "country_raw": "Россия",
+          "type_raw": "жилой деревянный дом(безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "жилая пристройка(иное недвижимое имущество,индивидуальная)",
+          "square": null,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "",
+          "country_raw": "Россия",
+          "type_raw": "жилая пристройка(иное недвижимое имущество,индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "подвал(иное недвижимое имущество,индивидуальная)",
+          "square": null,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "",
+          "country_raw": "Россия",
+          "type_raw": "подвал(иное недвижимое имущество,индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "сарай(иное недвижимое имущество,индивидуальная)",
+          "square": 9.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "9,7",
+          "country_raw": "Россия",
+          "type_raw": "сарай(иное недвижимое имущество,индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "сарай(иное недвижимое имущество,индивидуальная)",
+          "square": 8.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "8",
+          "country_raw": "Россия",
+          "type_raw": "сарай(иное недвижимое имущество,индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "навес(иное недвижимое имущество,индивидуальная)",
+          "square": 5.4,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "5,4",
+          "country_raw": "Россия",
+          "type_raw": "навес(иное недвижимое имущество,индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "сарай(иное недвижимое имущество, индивидуальная)",
+          "square": 5.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "5,7",
+          "country_raw": "Россия",
+          "type_raw": "сарай(иное недвижимое имущество, индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "уборная(иное недвижимое имущество, индивидуальная)",
+          "square": 1.2,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "1,2",
+          "country_raw": "Россия",
+          "type_raw": "уборная(иное недвижимое имущество, индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "летняя кухня(иное недвижимое имущество, индивидуальная)",
+          "square": 18.3,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "18,3",
+          "country_raw": "Россия",
+          "type_raw": "летняя кухня(иное недвижимое имущество, индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "навес (иное недвижимое имущество, индивидуальная)",
+          "square": 11.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "11,9",
+          "country_raw": "Россия",
+          "type_raw": "навес (иное недвижимое имущество, индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "сарай(иное недвижимое имущество, индивидуальная)",
+          "square": 3.2,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "3,2",
+          "country_raw": "Россия",
+          "type_raw": "сарай(иное недвижимое имущество, индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "кухня(иное недвижимое имущество, индивидуальная)",
+          "square": null,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "",
+          "country_raw": "Россия",
+          "type_raw": "кухня(иное недвижимое имущество, индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "три сарая(иное недвижимое имущество, индивидуальная)",
+          "square": null,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "",
+          "country_raw": "Россия",
+          "type_raw": "три сарая(иное недвижимое имущество, индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "земельный участок (безвозмездное пользование)",
+          "square": 956.0,
+          "relative": "Ребенок",
+          "own_type_by_column": null,
+          "square_raw": "956",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "жилой деревянный дом(безвозмездное пользование)",
+          "square": 28.4,
+          "relative": "Ребенок",
+          "own_type_by_column": null,
+          "square_raw": "28,4",
+          "country_raw": "Россия",
+          "type_raw": "жилой деревянный дом(безвозмездное пользование)",
+          "own_type_raw": ""
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобиль легковой ГАЗ 3302, автомобиль грузовой КАМАЗ 5320",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "person_index": 1,
+      "document_position": "R4C3"
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения о доходах, имуществе и обязательствах имущественного характера муниципальных служащих финансового управления  Администрации города и членов их семей",
+    "year": 2013,
+    "sheet_number": 0
+  }
+}

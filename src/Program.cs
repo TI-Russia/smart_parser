@@ -14,7 +14,7 @@ using System.Security.Cryptography;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Newtonsoft.Json;
 using System.Reflection;
-using Newtonsoft.Json;
+//using Newtonsoft.Json;
 
 namespace Smart.Parser
     {
@@ -391,7 +391,7 @@ namespace Smart.Parser
                 case ".rtf":
                 case ".toloka_json":
                 case ".docx":
-                    return GetCommonAdapter(inputFile);
+                    return OpenXmlWordAdapter.CreateAdapter(inputFile, MaxRowsToProcess);
                 case ".xls":
                 case ".xlsx":
                     if (AdapterFamily == "aspose" || AdapterFamily == "prod")
@@ -423,23 +423,6 @@ namespace Smart.Parser
 
             Logger.Error("Cannot find adapter for " + inputFile);
             return null;
-        }
-
-        private static IAdapter GetCommonAdapter(string inputFile)
-        {
-            if (AdapterFamily != "aspose")
-            {
-                if (AdapterFamily == "prod")
-                {
-                    return OpenXmlWordAdapter.CreateAdapter(inputFile, MaxRowsToProcess);
-                }
-            }
-            else if (!AsposeLicense.Licensed)
-            {
-                throw new Exception("doc and docx file format is not supported");
-            }
-
-            return AsposeDocAdapter.CreateAdapter(inputFile);
         }
 
         static void DumpColumn(IAdapter adapter, ColumnOrdering columnOrdering, DeclarationField columnToDump)

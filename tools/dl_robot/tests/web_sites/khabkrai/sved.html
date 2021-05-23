@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>Информация о среднемесячной заработной плате руководителей, их заместителей и главных бухгалтеров государственных учреждений, подведомственных Правительству края - Сведения о доходах - Антикоррупционный портал Хабаровского края</title>
+<meta name="keywords" content="государственных, бухгалтеров, учреждений, подведомственных, краяh4, правительству, главных, заместителей, среднемесячной, centerинформация, заработной, плате, руководителей, styletextalign" />
+<meta name="description" content="" />
+<meta name="sputnik-verification" content="cit0liun31JBO71P"/>
+<script type="text/javascript" src="/min/f=js/jquery-1.11.1.min.js,js/jquery.colorbox-min.js,js/jquery.formstyler.min.js,js/jquery.jcarousellite.min.js,js/jquery-ui/jquery-ui.min.js,js/jquery.form.min.js,js/jquery.datetimepicker.js,js/datepicker.js,js/date-dialog-vidget.js,js/vidgets.js,js/hoverIntent.js,js/superfish.js,audiojs/audio.min.js,css/bootstrap/js/bootstrap.js,classes/blocks/blocksAPI.js,js/visual_assist.js,js/newJS/commonScripts.js,js/newJS/modules/jquery.maskedinput.min.js,js/newJS/modules/oiv_gkh/orphans-queue-on-housing.js,js/newJS/modules/oiv_grazhdane/adminPageModules/complain-map.js,js/newJS/modules/oiv_grazhdane/complain-map.js,js/newJS/modules/special-version.js"></script><link type="text/css" rel="stylesheet" href="/min/f=/css/style_lite.css,/blocks/ajaxUniversalPaginator/block.css,/blocks/ajax_pagenator/block.css,/blocks/ajax_pagenator2/block.css,/blocks/also_read/block.css,/blocks/banner_header/block.css,/blocks/banners_slider/block.css,/blocks/banners_slider_oiv/block.css,/blocks/connections/block.css,/blocks/doclist/block.css,/blocks/document_type_filter/block.css,/blocks/example/block.css,/blocks/list_date_filter/block.css,/blocks/oiv_filter/block.css,/blocks/omsu_golos_stats/block.css,/blocks/omsu_map/block.css,/blocks/photo_albums/block.css,/blocks/region_contact_info/block.css,/blocks/region_detailed_info/block.css,/blocks/region_filter/block.css,/blocks/region_head_info/block.css,/blocks/region_info/block.css,/blocks/single_calendar/block.css,/blocks/single_news/block.css,/blocks/status_filter/block.css,/blocks/sub_type_filter/block.css,/blocks/submenu/block.css,/blocks/vacancy_type_filter/block.css,/blocks/videos/block.css,/blocks/voting/block.css,/blocks/xform/block.css,css/bootstrap/css/bootstrap_sm.css,css/superfish.css,css/superfish-vertical.css,js/jquery-ui/jquery-ui.min.css,css/colorbox.css,css/jquery.datetimepicker.css,css/datepicker.css,css/mobile.css,css/wpf.css,css/jquery.formstyler.css,css/formstylerhks.css,/css/main.css,/css/oiv.css,css/style.css,/css/newCSS/commonStyles.css,/css/newCSS/adminPanelStyles.css,/css/newCSS/importModules.css" /><script type="text/javascript" src="//yastatic.net/share/share.js" charset="utf-8"></script>
+<script type="text/javascript" src="//yastatic.net/es5-shims/0.0.2/es5-shims.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="//yastatic.net/share2/share.js" charset="utf-8"></script>
+<script type="text/javascript" src="https://api-maps.yandex.ru/2.1.23/?lang=ru_RU"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+      integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+      crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin=""></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+<script>
+
+	//shabname standart_shablons/text_without_title
+	var myObjMap;
+    ymaps.ready(init);
+    function init () {
+        myObjMap = new ymaps.Map('objYaMap_map', {
+            center: [48.4689,135.1129], // Хабаровск
+            zoom: 11,
+            controls: ['smallMapDefaultSet']
+        }, {
+            searchControlProvider: 'yandex#search'
+        });
+    }
+    
+	function hideObjinMap()
+	{
+        $('#objYaMap').hide(300);
+
+        myObjMap.GeoObjects.romoveAll();
+	}
+
+	function showObjinMap(addr, coords)
+	{
+	    $('#objYaMap').show(300);
+
+	    var geocoder;
+
+	    if(coords != '')
+	    {
+	        var coordsarr = coords.split(',');
+            coords=[coordsarr[0], coordsarr[1]];
+	        geocoder = ymaps.geocode(coords);
+	    }
+	    else
+	    {
+            geocoder = ymaps.geocode(addr);
+	    }
+
+        geocoder.then(
+            function (res) {
+                if(coords != '')
+                {
+
+                }
+                else
+                {
+                    coords = res.geoObjects.get(0).geometry.getCoordinates();
+                }
+
+                var myPlacemark = new ymaps.Placemark(coords, {}, {
+                    preset: 'islands#redIcon'
+                });
+
+                myObjMap.geoObjects.add(myPlacemark);
+                myObjMap.setCenter(coords);
+
+            },
+            function (err) {
+            }
+        );
+
+	}
+
+$(document).ready(function () {
+
+    $('a.showyandexmap').click(function(e){
+        e.preventDefault();
+        showObjinMap($(this).html(), $(this).prop("coords"));
+        //alert($(this).prop("coords"));
+    });
+
+    audiojs.events.ready(function() {
+        var as = audiojs.createAll();
+    });
+
+    jQuery('ul.sf-menu').superfish();
+
+    $('input.styler, select.styler').styler();
+
+    //колорбокс будет тут:
+    $(".imggroup").colorbox({rel:'popout', maxWidth:'95%', maxHeight:'95%'});
+
+    
+    jQuery('img.svg, img.svgsome').each(function() {
+        var $img = jQuery(this);
+        var imgID = $img.attr('id');
+        var imgClass = $img.attr('class');
+        var imgURL = $img.attr('src');
+
+        jQuery.get(imgURL, function(data) {
+            // Get the SVG tag, ignore the rest
+            var $svg = jQuery(data).find('svg');
+
+            // Add replaced image's ID to the new SVG
+            if(typeof imgID !== 'undefined') {
+                $svg = $svg.attr('id', imgID);
+            }
+            // Add replaced image's classes to the new SVG
+            if(typeof imgClass !== 'undefined') {
+                $svg = $svg.attr('class', imgClass+' replaced-svg');
+            }
+
+            // Remove any invalid XML tags as per http://validator.w3.org
+            $svg = $svg.removeAttr('xmlns:a');
+            // Replace image with new SVG
+            $img.replaceWith($svg);
+        }, 'xml');
+    });
+});
+</script>
+
+    </head>
+        <body class="special xassist nohidemedia nohidesidebar fontsize-normal color-normal fontfamily-arial kerning-normal x-oiv x-oiv-anticorruption">
+        <div id="modal-overlay" style="display: none;">
+    <div class="centerer" style="display: table-cell; text-align: center; vertical-align: middle;">
+        <div id="under-construction" class="modal">
+            <button type="button" class="custom-closer popup-closer">закрыть</button>
+            <h1>Внимание!</h1>
+
+            <div class="uc-image"></div>
+            <div class="grey">
+                <h2>Портал работает в тестовом режиме!</h2>
+                <p class="message">Если у вас появились предложения по улучшению<br>
+                    портала или вы нашли ошибку, <a href="#" onclick="clallbackform();">свяжитесь с нами</a>.</p>
+                <p class="hint">
+                    Форма обратной связи расположена в верхней навигационной панели.
+                </p>
+            </div></div>
+
+        <div id="callbackform" class="modal">
+            <button type="button" class="custom-closer popup-closer">закрыть</button>
+            <div class="icon"></div>
+
+            <h2>Обратная связь</h2>
+            <p class="desc">Предложения и замечания по работе портала направляйте<br>по адресу: <a href="mailto:info@adm.khv.ru">info@adm.khv.ru</a>.</p>
+
+            <form id="callback" method="post" action="#" enctype="multipart/form-data">
+                <div class="textfields">
+                    <div class="field-wrapper required"><input type="text" class="textfield" name="err_fio" placeholder="Представьтесь"></div>
+                    <div class="field-wrapper right required"><input type="text" class="textfield" name="err_email" placeholder="Ваш e-mail"></div>
+                </div>
+                <div class="field-wrapper required"><textarea class="styler" name="err_content" placeholder="Описание ошибки"></textarea></div>
+                <div class="screenshooter">
+                    <p class="add-first-screen">Вы можете <a href="#" class="screenshot-first">прикрепить скриншот</a> с ошибкой</p>
+                    <div class="screenfields">
+                        <div class="screen-field" data-screen-number="0" style="display: none;">
+                            <input type="file" name="screen[0]" class="file autoclone">
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="sumbiterror" value="1">
+                <div class="required-explain">
+                    <div class="field-wrapper required"></div> <span>Обязательно для заполнения</span>
+                </div>
+                <input type="text" name="err_iamrobot" class="hidden" value="">
+                <input type="text" name="err_iamfox_mulder" class="hidden" value="yep">
+                <input type="submit" value="Отправить" class="submit">
+            </form>
+        </div>
+        <div id="callbackresult" class="modal">
+            <button type="button" class="custom-closer popup-closer">закрыть</button>
+            <div class="icon"></div>
+
+            <h2>Обратная связь</h2>
+            <p class="desc"></p>
+            <p>&nbsp;</p>
+            <p class="desc">Предложения и замечания по работе портала направляйте<br>по адресу: <a href="mailto:info@adm.khv.ru">info@adm.khv.ru</a>.</p>
+        </div>
+        <div id="error_popup" class="modal">
+            <button type="button" class="custom-closer popup-closer">закрыть</button>
+            <div class="icon"></div>
+
+            <h2>Ошибка!</h2>
+            <p class="desc">Неизвестная ошибка. Пожалуйста свяжитесь с нами и опишите последовательность действий которые привели к данному сообщению.</p>
+        </div>
+
+        <div id="date_dialog" class="modal">
+            <button type="button" class="custom-closer popup-closer">закрыть</button>
+            <button type="button" class="apply-filter">выбрать</button>
+            <div class="helper">Вы можете выбрать как один день, так и период (отметив его начальную и конечную дату)</div>
+                        <div class="range-caption ">
+                Вы выбрали материалы с <span class="dates datestart">--.--.----</span> по <span class="dates dateend">--.--.----</span><br><a href="#" class="clear-range">Очистить</a>
+            </div>
+        </div>
+
+            </div>
+</div>    <a href="#" class="on-top" title="Наверх"><span>Наверх</span></a>
+    <form action="/search/" id="search">
+    <div id="search-form" style="display: none;">
+        <a href="#" class="search-closer">закрыть</a>
+        <div class="radios">
+            <p>
+                <input type="radio" name="searchtype" id="st1" checked="checked" value="site">
+                <label for="st1" class="active">Поиск по сайту</label>
+            </p>
+            <p>
+                <input type="radio" name="searchtype" id="st2" value="documents">
+                <label for="st2">Поиск по документам</label>
+            </p>
+        </div>
+        <div class="searchfield">
+            <div class="field">
+                <input type="text" name="searchtext" class="searchtext-field" placeholder="введите запрос">
+                <div class="dropdown">
+                    <select class="list" name="search_category" id="search-category-select">
+                        <option value="" selected>Все разделы сайта</option>
+                        
+                                    <option value="2">События</option>
+
+                                    
+                                    <option value="8">Об Управлении</option>
+
+                                    
+                                    <option value="25">Документы</option>
+
+                                    
+                                    <option value="69">Сведения о доходах</option>
+
+                                    
+                                    <option value="110">Комиссии</option>
+
+                                    
+                                    <option value="109">Антикоррупционная экспертиза</option>
+
+                                    
+                                    <option value="19">Контакты</option>
+
+                                                        </select>
+                </div>
+                <input type="submit" class="search-submit" value="Найти">
+            </div>
+            <div class="search-example">Пример: <a href="#">пострадавшим от паводка</a></div>
+        </div>
+    </div>
+</form>
+    <div class="main-wrapper">
+        <div class="kraiflag" ></div>
+        <div class="mainmenu">
+    <div class="menu">
+        <div class="icons">
+            <div class="iconsline"></div>
+            <a href="#" class="topmenu1-icon bugtrack" onclick="showModal('#callbackform')"></a>
+            <a href="#" class="topmenu1-icon search"></a>
+            <a href="?version=normal" class="topmenu1-icon glasses-mode active" data-tooltip="обычная версия"></a>        </div>
+        <p class="header_text"><a href="https://khabkrai.ru" target="_blank">Сайт Хабаровского края</a><p>
+            <a class="toggle-hint" href="#assist_hint" id="assist_hint_toggle"
+        title="подсказка по функциям СВ">?</a>
+
+    <div class="special-sub-menu-btn">
+        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 174.248 174.248" style="enable-background:new 0 0 174.248 174.248;" xml:space="preserve"
+        >
+            <path d="M173.145,73.91c-0.413-2.722-2.29-4.993-4.881-5.912l-13.727-4.881c-0.812-2.3-1.733-4.536-2.754-6.699l6.247-13.146
+                c1.179-2.479,0.899-5.411-0.729-7.628c-5.265-7.161-11.556-13.452-18.698-18.693c-2.219-1.629-5.141-1.906-7.625-0.724
+                l-13.138,6.242c-2.163-1.021-4.402-1.94-6.704-2.752l-4.883-13.729c-0.919-2.586-3.184-4.458-5.9-4.876
+                c-9.65-1.483-16.792-1.483-26.457,0c-2.713,0.418-4.981,2.29-5.9,4.876l-4.883,13.729c-2.302,0.812-4.541,1.731-6.702,2.752
+                l-13.143-6.242c-2.479-1.181-5.406-0.904-7.623,0.724c-7.142,5.241-13.433,11.532-18.698,18.693
+                c-1.629,2.217-1.908,5.148-0.729,7.628l6.247,13.146c-1.021,2.159-1.94,4.4-2.754,6.699L5.982,68.003
+                c-2.589,0.919-4.463,3.189-4.879,5.907c-0.749,4.92-1.099,9.115-1.099,13.219c0,4.098,0.35,8.299,1.099,13.219
+                c0.413,2.722,2.29,4.993,4.881,5.912l13.727,4.881c0.814,2.304,1.736,4.541,2.754,6.704l-6.247,13.141
+                c-1.179,2.479-0.899,5.411,0.727,7.623c5.258,7.156,11.549,13.447,18.7,18.698c2.217,1.629,5.144,1.911,7.625,0.724l13.138-6.242
+                c2.163,1.021,4.402,1.94,6.704,2.752l4.883,13.729c0.919,2.586,3.184,4.458,5.9,4.876c4.828,0.744,9.154,1.104,13.228,1.104
+                c4.074,0,8.401-0.36,13.228-1.104c2.715-0.418,4.981-2.29,5.9-4.876l4.883-13.729c2.302-0.812,4.541-1.731,6.704-2.752
+                l13.138,6.242c2.484,1.186,5.411,0.904,7.628-0.724c7.159-5.26,13.45-11.551,18.698-18.698c1.626-2.212,1.906-5.144,0.727-7.623
+                l-6.247-13.141c1.021-2.163,1.942-4.405,2.754-6.704l13.727-4.881c2.591-0.919,4.468-3.189,4.881-5.912
+                c0.749-4.92,1.099-9.12,1.099-13.219S173.894,78.829,173.145,73.91z M158.949,93.72l-12.878,4.58
+                c-2.251,0.797-3.982,2.625-4.66,4.92c-1.15,3.889-2.664,7.569-4.504,10.943c-1.142,2.1-1.213,4.619-0.187,6.777l5.841,12.285
+                c-2.822,3.389-5.943,6.515-9.337,9.334l-12.283-5.834c-2.161-1.036-4.672-0.953-6.775,0.185c-3.379,1.838-7.061,3.35-10.953,4.502
+                c-2.29,0.676-4.118,2.406-4.917,4.657l-4.582,12.883c-4.677,0.476-8.503,0.476-13.18,0l-4.582-12.883
+                c-0.8-2.246-2.628-3.982-4.917-4.657c-3.894-1.152-7.579-2.664-10.953-4.502c-2.103-1.147-4.619-1.22-6.775-0.185l-12.283,5.839
+                c-3.391-2.825-6.512-5.946-9.337-9.339l5.841-12.285c1.026-2.159,0.955-4.677-0.187-6.777c-1.835-3.364-3.35-7.049-4.504-10.948
+                c-0.678-2.29-2.411-4.118-4.66-4.915l-12.878-4.58c-0.243-2.343-0.36-4.502-0.36-6.592s0.117-4.244,0.36-6.587l12.881-4.584
+                c2.248-0.797,3.979-2.625,4.657-4.915c1.152-3.889,2.667-7.574,4.504-10.953c1.142-2.095,1.213-4.619,0.187-6.772l-5.841-12.285
+                c2.827-3.393,5.948-6.519,9.337-9.339l12.288,5.839c2.151,1.036,4.677,0.953,6.775-0.185c3.372-1.838,7.054-3.35,10.948-4.502
+                c2.29-0.676,4.118-2.411,4.917-4.657l4.582-12.883c4.633-0.481,8.466-0.481,13.18,0l4.582,12.883
+                c0.8,2.246,2.628,3.982,4.917,4.657c3.894,1.152,7.579,2.664,10.953,4.502c2.103,1.147,4.614,1.22,6.775,0.185l12.283-5.839
+                c3.389,2.82,6.51,5.946,9.337,9.339l-5.841,12.285c-1.026,2.154-0.955,4.677,0.187,6.772c1.843,3.389,3.357,7.069,4.504,10.948
+                c0.678,2.295,2.409,4.123,4.66,4.92l12.878,4.58c0.243,2.343,0.36,4.502,0.36,6.592S159.192,91.377,158.949,93.72z" fill="#000000"/>
+            <path d="M87.124,50.802c-19.062,0-34.571,15.508-34.571,34.571s15.508,34.571,34.571,34.571s34.571-15.508,34.571-34.571
+                S106.186,50.802,87.124,50.802z M87.124,105.009c-10.827,0-19.636-8.809-19.636-19.636s8.809-19.636,19.636-19.636
+                s19.636,8.809,19.636,19.636S97.951,105.009,87.124,105.009z" fill="#000000"/>
+        </svg>
+    </div>
+        </div>
+</div>
+<div class="special-ver-sub-menu-wrap">
+    <div class="special-ver-sub-menu">
+        <div class="special-ver-sub-menu__settings-group">
+            <div class="assist-toggle-group">
+                <div class="toggle-media assist-toggle" id="assist_toggle_media">
+                    <span class="label label--color-unset label--font-unset">картинки:</span>
+                    <a class="toggle-on"
+                       href="/Svedeniya-o-dohodah/141?version=special&amp;special_toggle_media=" id="toggle_media_on">вкл.</a>
+                    <a class="toggle-off"
+                       href="/Svedeniya-o-dohodah/141?version=special&amp;special_toggle_media=1" id="toggle_media_off">откл.</a>
+                </div>
+                <div class="toggle-sidebar assist-toggle" id="assist_toggle_sidebar">
+                    <span class="label label--color-unset label--font-unset">виджеты:</span>
+                    <a class="toggle-on" href="/Svedeniya-o-dohodah/141?version=special&amp;special_toggle_sidebar="
+                       id="toggle_sidebar_on">вкл.</a>
+                    <a class="toggle-off" href="/Svedeniya-o-dohodah/141?version=special&amp;special_toggle_sidebar=1"
+                       id="toggle_sidebar_off">откл.</a>
+                </div>
+            </div>
+            <div class="fontsize assist-fontsize" id="assist_fontsize">
+                <span class="title label label--color-unset label--font-unset">размер:</span>
+                <span class="size-select">
+                <span class="links">
+                                            <a href="/Svedeniya-o-dohodah/141?version=special&amp;special_fontsize=small#font_small"
+                           id="font_small" class="small"
+                           onclick="SpecialSetFontsize('small'); return false">A</a>
+                                                <a href="/Svedeniya-o-dohodah/141?version=special&amp;special_fontsize=normal#font_normal"
+                           id="font_normal" class="normal"
+                           onclick="SpecialSetFontsize('normal'); return false">A</a>
+                                                <a href="/Svedeniya-o-dohodah/141?version=special&amp;special_fontsize=big#font_big"
+                           id="font_big" class="big"
+                           onclick="SpecialSetFontsize('big'); return false">A</a>
+                                        </span>
+            </span>
+            </div>
+            <div class="assist-color" id="assist_color">
+                <span class="label label--color-unset label--font-unset">цвет:</span>
+                <span class="select color-select">
+                <span class="links">
+                                            <a href="/Svedeniya-o-dohodah/141?version=special&amp;special_color=normal#normal"
+                           class="normal" title="высокий контраст"
+                           onclick="SpecialSetColor('normal'); return false;"> </a>
+                                                <a href="/Svedeniya-o-dohodah/141?version=special&amp;special_color=inverted#inverted"
+                           class="inverted" title="инвертированные цвета"
+                           onclick="SpecialSetColor('inverted'); return false;"> </a>
+                                                <a href="/Svedeniya-o-dohodah/141?version=special&amp;special_color=calm#calm"
+                           class="calm" title="спокойные тона"
+                           onclick="SpecialSetColor('calm'); return false;"> </a>
+                                        </span>
+            </span>
+            </div>
+        </div>
+        <div class="assist-fontfamily" id="assist_fontfamily">
+            <span class="label label--color-unset label--font-unset">шрифт:</span>
+            <span class="select fontfamily-select">
+                <span class="links">
+                                            <a href="/Svedeniya-o-dohodah/141?version=special&amp;special_fontfamily=timesnewroman#timesnewroman"
+                           class="timesnewroman" title="Times New Roman"
+                           onclick="SpecialSetFontFamily('timesnewroman'); return false;">Times New Roman</a>
+                                                <a href="/Svedeniya-o-dohodah/141?version=special&amp;special_fontfamily=arial#arial"
+                           class="arial" title="Arial"
+                           onclick="SpecialSetFontFamily('arial'); return false;">Arial</a>
+                                        </span>
+            </span>
+        </div>
+        <div class="assist-kerning" id="assist_kerning">
+            <span class="label label--color-unset label--font-unset">кернинг:</span>
+            <span class="select kerning-select">
+                <span class="links">
+                                            <a href="/Svedeniya-o-dohodah/141?version=special&amp;special_kerning=normal#normal"
+                           class="normal" title="стандартный"
+                           onclick="SpecialSetKerning('normal'); return false;">стандартный</a>
+                                                <a href="/Svedeniya-o-dohodah/141?version=special&amp;special_kerning=middle#middle"
+                           class="middle" title="средний"
+                           onclick="SpecialSetKerning('middle'); return false;">средний</a>
+                                                <a href="/Svedeniya-o-dohodah/141?version=special&amp;special_kerning=big#big"
+                           class="big" title="большой"
+                           onclick="SpecialSetKerning('big'); return false;">большой</a>
+                                        </span>
+            </span>
+        </div>
+    </div>
+</div>
+
+
+<div class="header">
+    <div class="logo">
+        <a href='/'>
+            <img src="/img/logo3.png" alt="Герб Хабаровского края">
+        </a>
+    </div>
+        <div class="logo_text" style="font-size: 22px; top: 30px;">Антикоррупционный портал Хабаровского края</div>
+    <div class="assist-hint" id="assist_hint">
+    <div class="inner">
+        <h2>Помощь по работе с сайтом в режиме для слабовидящих</h2>
+        <p>В режиме для слабовидящих доступен ряд функций:</p>
+        <ul>
+            <li>Эта подсказка выводится/убирается переключателем <em>?</em> или нажатием клавиш
+                <kwd>SHIFT + ?</kwd></li>
+            <li>Используйте переключатель <em>картинки</em>
+                чтобы убрать картинки и видеофайлы в статьях и прочитать вместо них текстовое описание.
+            </li>
+            <li>Чтобы отключить правую колонку с виджетами (видео, голосование, и т.п.),
+                используйте переключатель <em>виджеты</em></li>
+            <li>Для увеличения размера шрифта текста используйте переключатель <em>шрифт</em></li>
+            <li>Вы можете сменить цветовую схему сайта с помощью переключателя <em>цвет</em></li>
+        </ul>
+        <h3>Клавиатура:</h3>
+        <ul>
+            <li>Для перемещения между навигационными меню,
+                блоками ссылок в области контента и
+                постраничной навигацией, используете клавишу <kwd>TAB</kwd>.<br/>
+                При первом нажатии будет активировано меню верхнего уровня.</li>
+            <li>Активное навигационное меню или группа ссылок подсвечивается контуром.</li>
+            <li>Для перемещения по ссылкам меню навигации, используйте клавиши
+                <kwd>&larr; стрелка влево</kwd> и
+                <kwd>стрелка вправо &rarr;</kwd>.<br/>
+                У активной ссылки будет подсвеченный фон.
+            </li>
+            <li>Для перехода по активной ссылке, нажмите <kwd>Enter</kwd></li>
+            <li>Если активно вертикальное меню или группа ссылок, то для перемещения по ссылкам используйте
+                клавиши <kwd>стрелка вверх &uarr;</kwd> и
+                стрелка вниз <kwd>&darr;</kwd>.<br/>
+                Для прокутки страницы вверх/вниз используйте клавиши <kwd>PageUp</kwd> и
+                <kwd>PageDown</kwd>
+            </li>
+            <li>Чтобы убрать активацию с меню/блока ссылок, используйте клавишу <kwd>Esc</kwd>.<br/>
+                Нажатие <kwd>Tab</kwd> после этого вернет активацию.</li>
+        </ul>
+        <a class="close" href="#close" id="assist_hint_hide">Закрыть &times;</a>
+    </div>
+</div>
+<div id="act_date">
+    <p class="line">Сегодня <a href="/events/Novosti/?list_date_filter_datestart=10.05.2021" class="todays-news" title="Просмотреть новости за сегодня">10&nbsp;мая&nbsp;2021</a></p>
+        <p class="line">Обновлено 4 дня назад</p>
+    </div>
+
+<div class="secmenu">
+    <div class="secmenu_wrapper">
+        <span class="optionwr x-anc">                    <a class="option" href="/events">События</a>
+                                                <div class="smenu nullblock"><div class="submenu_container" style="left: 0px; width: 220px;"><a class="option" href="/events/Novosti/">Новости</a><a class="option" href="/events/Anonsy/">Анонсы</a></div></div>                            </span><span class="optionwr x-anc">                    <a class="option" href="/Ob-Upravlenii">Об Управлении</a>
+                                                <div class="smenu nullblock"><div class="submenu_container" style="left: 0px; width: 220px;"><a class="option" href="/Ob-Upravlenii/Funkcii-i-zadachi/">Функции и задачи</a><a class="option" href="/Ob-Upravlenii/Polozhenie-ob-upravlenii/">Положение об управлении</a></div></div>                            </span><span class="optionwr x-anc">                    <a class="option" href="/Dokumenty">Документы</a>
+                                                <div class="smenu nullblock"><div class="submenu_container" style="left: 0px; width: 220px;"><a class="option" href="/Dokumenty/Zakonodatelstvo/">Законодательство</a><a class="option" href="/Dokumenty/Metodicheskie-materialy-/">Методические материалы </a><a class="option" href="/Dokumenty/Formy-dokumentov/">Формы документов</a></div></div>                            </span><span class="optionwr x-anc">                    <a class="option active" href="/Svedeniya-o-dohodah">Сведения о доходах</a>
+                    </span><span class="optionwr x-anc">                    <a class="option" href="/Komissii">Комиссии</a>
+                                                <div class="smenu nullblock"><div class="submenu_container" style="left: 0px; width: 220px;"><a class="option" href="/Komissii/Komissiya-po-koordinicii-raby-po-protivodejstviyu-korrupcii/">Комиссия по координиции работы по противодействию коррупции</a><a class="option" href="/Komissii/Komissiya-po-soblyudeniyu-licami-zameschayuschimi-municipalnye-dolzhnosti-trebovanij-ustanovlennyh-zakonodatelstvom-Rossijskoj-Federacii-o-protivodejstvii-korrupcii/">Комиссия по соблюдению лицами, замещающими муниципальные должности, требований, установленных законодательством Российской Федерации о противодействии коррупции</a><a class="option" href="/Komissii/Komissiya-po-soblyudeniyu-trebovanij-k-sluzhebnomu-povedeniyu-i-uregulirovaniyu-konflikta-interesov/">Комиссии по соблюдению требований к служебному поведению  и урегулированию конфликта интересов</a></div></div>                            </span><span class="optionwr x-anc">                    <a class="option" href="/Antikorrupcionnaya-ekspertiza">Антикоррупционная экспертиза</a>
+                    </span><span class="optionwr x-anc">                    <a class="option" href="/Kontakty">Контакты</a>
+                                                <div class="smenu nullblock"><div class="submenu_container" style="left: 0px; width: 220px;"><a class="option" href="/Kontakty/Internet-priemnaya/">Интернет-приемная</a></div></div>                            </span>    </div>
+</div>
+</div>
+        <div class="content main standart_shablons__text_without_title">
+<div class="material_page text_material news_material material-type-69">
+    <div class="material_page_wrapper" style="position: relative; z-index: 2">
+	    <div class="breadcrumbs">
+    	    <span class="crumbs-wrap" id="breadcrumbs_container"><a href="/">Главная</a> / <a href="/Svedeniya-o-dohodah">Сведения о доходах</a></span>    	</div>
+    </div>
+
+        <div class="contentblock content-block__text-without-title-page">
+
+            <h4 style="text-align: center;">Информация о среднемесячной заработной плате руководителей, <br />их заместителей и главных бухгалтеров государственных учреждений, <br /> подведомственных Правительству края</h4>
+            <div class="clearer"></div>
+
+            <!-- doclist: -->
+
+            <div id="block-doclist--1" class="block block-doclist">        <p>&nbsp;</p>
+        <h3>Cкачиваемые файлы</h3>
+        <div class="filelist">
+            <div class="omsu_documents_wrapper">            <div class="doc doc-1 document-row">
+                <a href="/?menu=getfile&amp;id=294" class="download">
+                    <span class="icon"></span>
+                    <span class="document-name document-textfield">Информация о среднемесячной заработной плате руководителей, их заместителей и главных бухгалтеров учреждений, подведомственных Правительству края за 2020 год</span>
+                </a>
+                <span class="size-extension">(<a href="/?menu=getfile&amp;id=294"><span class="type">PDF</span> <span class="size">598KB</span> <time datetime="2021-04-29T14:00:00+10:00" class="doc-date">29.04.2021, 14:00</time></a> / <a href="/?menu=getfile&amp;id=294&amp;view=1" class="view-link"
+                                     target="_blank">открыть в браузере</a>
+                                )</span>
+
+            </div>
+                        <div class="doc doc-2 document-row">
+                <a href="/?menu=getfile&amp;id=247" class="download">
+                    <span class="icon"></span>
+                    <span class="document-name document-textfield">Информацию о среднемесячной заработной плате руководителей, их заместителей и главных бухгалтеров учреждений, подведомственных Правительству края за 2019 год</span>
+                </a>
+                <span class="size-extension">(<a href="/?menu=getfile&amp;id=247"><span class="type">PDF</span> <span class="size">475KB</span> <time datetime="2020-04-30T09:35:00+10:00" class="doc-date">30.04.2020, 09:35</time></a> / <a href="/?menu=getfile&amp;id=247&amp;view=1" class="view-link"
+                                     target="_blank">открыть в браузере</a>
+                                )</span>
+
+            </div>
+                        <div class="doc doc-3 document-row">
+                <a href="/?menu=getfile&amp;id=166" class="download">
+                    <span class="icon"></span>
+                    <span class="document-name document-textfield">Информацию о среднемесячной заработной плате руководителей, их заместителей и главных бухгалтеров учреждений, подведомственных Правительству края за 2018 год</span>
+                </a>
+                <span class="size-extension">(<a href="/?menu=getfile&amp;id=166"><span class="type">PDF</span> <span class="size">491KB</span> <time datetime="2019-03-04T15:05:00+10:00" class="doc-date">04.03.2019, 15:05</time></a> / <a href="/?menu=getfile&amp;id=166&amp;view=1" class="view-link"
+                                     target="_blank">открыть в браузере</a>
+                                )</span>
+
+            </div>
+                        <div class="doc doc-4 document-row">
+                <a href="/?menu=getfile&amp;id=148" class="download">
+                    <span class="icon"></span>
+                    <span class="document-name document-textfield">ИНФОРМАЦИЯ о среднемесячной заработной плате руководителей, их заместителей и главных бухгалтеров КГБУ «Комсомольская-на-Амуре набережная р. Амура» за 2017 г. </span>
+                </a>
+                <span class="size-extension">(<a href="/?menu=getfile&amp;id=148"><span class="type">PDF</span> <span class="size">35KB</span> <time datetime="2018-12-04T10:36:00+10:00" class="doc-date">04.12.2018, 10:36</time></a> / <a href="/?menu=getfile&amp;id=148&amp;view=1" class="view-link"
+                                     target="_blank">открыть в браузере</a>
+                                )</span>
+
+            </div>
+                        <div class="doc doc-5 document-row">
+                <a href="/?menu=getfile&amp;id=147" class="download">
+                    <span class="icon"></span>
+                    <span class="document-name document-textfield">ИНФОРМАЦИЯ о среднемесячной заработной плате руководителей, их заместителей и главных бухгалтеров КГКУ «Аппарат Общественной палаты Хабаровского края» за 2017 г. </span>
+                </a>
+                <span class="size-extension">(<a href="/?menu=getfile&amp;id=147"><span class="type">PDF</span> <span class="size">23KB</span> <time datetime="2018-12-04T10:35:00+10:00" class="doc-date">04.12.2018, 10:35</time></a> / <a href="/?menu=getfile&amp;id=147&amp;view=1" class="view-link"
+                                     target="_blank">открыть в браузере</a>
+                                )</span>
+
+            </div>
+                        <div class="doc doc-6 document-row">
+                <a href="/?menu=getfile&amp;id=146" class="download">
+                    <span class="icon"></span>
+                    <span class="document-name document-textfield">ИНФОРМАЦИЯ о среднемесячной заработной плате руководителей, их заместителей и главных бухгалтеров КГКУ «Автобаза Правительства Хабаровского края» за 2017 г. </span>
+                </a>
+                <span class="size-extension">(<a href="/?menu=getfile&amp;id=146"><span class="type">PDF</span> <span class="size">22KB</span> <time datetime="2018-12-04T10:34:00+10:00" class="doc-date">04.12.2018, 10:34</time></a> / <a href="/?menu=getfile&amp;id=146&amp;view=1" class="view-link"
+                                     target="_blank">открыть в браузере</a>
+                                )</span>
+
+            </div>
+                        <div class="doc doc-7 document-row">
+                <a href="/?menu=getfile&amp;id=145" class="download">
+                    <span class="icon"></span>
+                    <span class="document-name document-textfield">ИНФОРМАЦИЯ о среднемесячной заработной плате руководителей, их заместителей и главных бухгалтеров Краевого государственного казенного учреждения «Управление административными зданиями Правительства Хабаровского края» за 2017 г.</span>
+                </a>
+                <span class="size-extension">(<a href="/?menu=getfile&amp;id=145"><span class="type">PDF</span> <span class="size">30KB</span> <time datetime="2018-12-04T10:25:00+10:00" class="doc-date">04.12.2018, 10:25</time></a> / <a href="/?menu=getfile&amp;id=145&amp;view=1" class="view-link"
+                                     target="_blank">открыть в браузере</a>
+                                )</span>
+
+            </div>
+            </div>
+        </div>
+        <a class="bottom-link link-btn" href="/?menu=getfile&files=294,247,166,148,147,146,145&mode=group&key=e0f17977d1bb2d1623c6a2df0621248d">Скачать все одним архивом</a></div><!-- /block-doclist- -1 -->
+        </div>
+</div>
+<!-- tpl.orig:standart_shablons/text_without_title--><!-- tpl.final:standart_shablons/text_without_title --><div id="objYaMap" style="z-index: 1000; position: fixed; top: 200px; margin-left: 230px; width: 500px; height: 300px; display: none; background: #fff; border-radius: 4px; border: 1px solid #000; overflow: hidden;">
+	<div id="objYaMap_map" style="width: 500px; height: 300px;"></div>
+	<div id="objYaMap_close" style="position: absolute; top: 3px; right: 3px; cursor: pointer;" onclick="hideObjinMap();"><img src="/images/restyled/cross.png"></div>
+</div>
+</div>
+</div><div class="footer">
+    <div class="footertop">
+    <div class="nullblock"></div>
+    <div class="footertop_link">
+        <a href="#" class="footertop_scroll_prev"></a>
+        <a href="#" class="footertop_scroll_next"></a>
+        <div class="footertop_scroll">
+            <ul class="jcarousel-lite-ul"><li><a href="https://khabkrai.ru" target="_blank">
+            <div class="normalblock footer_link_content">
+                <div class="nullblock">
+                <div class="footertop_link_img"><img src="https://khabkrai.ru/photos/28926" alt="Официальный сайт Правительства Хабаровского края"  width="40" height="40"></div>
+                <div class="footertop_link_name">
+                    <p>Официальный сайт Правительства Хабаровского края</p>
+                    <p class="footertop_link_anons"></p>
+                </div>
+            </div>
+            </div></a>
+        </li><li><a href="https://стопкоронавирус.рф/files/Mineconom_version4.pdf" target="_blank">
+            <div class="normalblock footer_link_content">
+                <div class="nullblock">
+                <div class="footertop_link_img"><img src="https://khabkrai.ru/photos/80039" alt="Стопкоронавирус"  width="40" height="40"></div>
+                <div class="footertop_link_name">
+                    <p>Стопкоронавирус</p>
+                    <p class="footertop_link_anons">План преодоления экономических последствий новой коронавирусной инфекции</p>
+                </div>
+            </div>
+            </div></a>
+        </li><li><a href="http://open27.ru/" target="_blank">
+            <div class="normalblock footer_link_content">
+                <div class="nullblock">
+                <div class="footertop_link_img"><img src="https://khabkrai.ru/photos/36959" alt="Открытый регион. Голос 27"  width="40" height="40"></div>
+                <div class="footertop_link_name">
+                    <p>Открытый регион. Голос 27</p>
+                    <p class="footertop_link_anons">Примите участие в улучшении качества жизни в крае</p>
+                </div>
+            </div>
+            </div></a>
+        </li><li><a href="https://uslugi27.ru" target="_blank">
+            <div class="normalblock footer_link_content">
+                <div class="nullblock">
+                <div class="footertop_link_img"><img src="https://khabkrai.ru/photos/36276" alt="Электронные услуги Хабаровского Края"  width="40" height="40"></div>
+                <div class="footertop_link_name">
+                    <p>Электронные услуги Хабаровского Края</p>
+                    <p class="footertop_link_anons">Подача заявления на зачисление ребенка в ДОУ, запись на прием к врачу</p>
+                </div>
+            </div>
+            </div></a>
+        </li><li><a href="http://gosuslugi.ru" target="_blank">
+            <div class="normalblock footer_link_content">
+                <div class="nullblock">
+                <div class="footertop_link_img"><img src="https://khabkrai.ru/photos/36684" alt="Единый портал государственных и муниципальных услуг (функций)"  width="40" height="40"></div>
+                <div class="footertop_link_name">
+                    <p>Единый портал государственных и муниципальных услуг (функций)</p>
+                    <p class="footertop_link_anons">Портал государственных услуг Российской Федерации</p>
+                </div>
+            </div>
+            </div></a>
+        </li></ul>
+        </div>
+    </div>
+    <div style="margin: 0 auto; position: relative; display: block; width: 1000px;">
+        <div class="footer_carusel_name">Полезные ресурсы:</div>
+        <!-- <div class="footer_carusel_pages"><div class="normalblock main_groups_page active" id="footer_links_page_1" onclick="ChangeFooterLinksPage(1);"></div><div class="normalblock main_groups_page " id="footer_links_page_2" onclick="ChangeFooterLinksPage(2);"></div></div> -->
+    </div>
+    <div class="footer_carusel"></div>
+</div>    <div class="footermiddle">
+        <div class="footermiddle_content">
+            <div class="nullblock">
+                <div class="footerrub">
+<h4>Рубрикатор</h4>
+<div class="footeroption"><a href="/Kontakty">Контакты</a></div></div>                <div class="footerinfo"></div>                <div class="footernav">
+    <h4>Навигация и возможности</h4>
+    <div class="footeroption"><a href="/Karta-sajta">Карта сайта</a></div>
+    <div class="footeroption">
+            <a href="?version=normal">Обычная версия сайта</a></div>    <div class="footeroption"><a href="/?menu=rss">RSS лента новостей</a></div>
+    </div>                <div class="footerabout"></div>            </div>
+        </div>
+    </div>
+    <div class="footerbottom">
+        <div class="copyright">&copy; 2014-2021 Информация о среднемесячной заработной плате руководителей, их заместителей и главных бухгалтеров государственных учреждений, подведомственных Правительству края - Сведения о доходах - Антикоррупционный портал Хабаровского края</div>
+        <div class="socials">
+            <div class="ya-share2" data-services="vkontakte,facebook,odnoklassniki,moimir,twitter" data-counter=""></div>
+        </div>
+        <div class="metrix">
+	        <span id="sputnik-informer"></span>
+                </div>
+    </div>
+</div>
+<script>
+jQuery(function ($) {
+    $("[data-tooltip]").mousemove(function (eventObject) {
+        $data_tooltip = $(this).attr("data-tooltip");
+        $("#tooltip").text($data_tooltip)
+        .css({
+                "top" : eventObject.pageY + 5,
+                "left" : eventObject.pageX + 5
+            })
+            .show();
+    }).mouseout(function () {
+        $("#tooltip").hide()
+        .text("")
+        .css({
+                "top" : 0,
+                "left" : 0
+            });
+    });
+});
+</script>
+<div id="tooltip"></div><script>
+    (function(d,t,p) {
+        var j = d.createElement(t); j.async = true; j.type = "text/javascript";
+        j.src = ("https:" == p ? "https:" : "http:") + "//stat.sputnik.ru/cnt.js";
+        var s = d.getElementsByTagName(t)[0]; s.parentNode.insertBefore(j, s);
+    })(document, "script", document.location.protocol);
+</script>
+</body>
+</html>

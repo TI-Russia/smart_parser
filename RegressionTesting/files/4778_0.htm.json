@@ -3,7 +3,7 @@
     {
       "person": {
         "name_raw": "Пахомова О.Н.",
-        "role": "\n            Начальник отдела\n            "
+        "role": "Начальник отдела"
       },
       "year": 2010,
       "incomes": [
@@ -21,52 +21,64 @@
       ],
       "real_estates": [
         {
-          "text": "квартира\n (инд. собственность)",
+          "text": "квартира (инд. собственность)",
           "square": 67.3,
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "67,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (инд. собственность)",
+          "own_type_raw": ""
         },
         {
-          "text": "квартира\n (инд.собственность);",
+          "text": "квартира (инд.собственность);",
           "square": 65.7,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "65,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "квартира (инд.собственность);",
+          "own_type_raw": ""
         },
         {
-          "text": "дача\n (инд.собственность);",
+          "text": "дача (инд.собственность);",
           "square": 50.7,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "50,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "дача (инд.собственность);",
+          "own_type_raw": ""
         },
         {
-          "text": "земельный участок\n (инд.собственность);",
+          "text": "земельный участок (инд.собственность);",
           "square": 600.0,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "600",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "земельный участок (инд.собственность);",
+          "own_type_raw": ""
         },
         {
-          "text": "гараж\n (инд. собственность)",
+          "text": "гараж (инд. собственность)",
           "square": 16.2,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "16,2",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "гараж (инд. собственность)",
+          "own_type_raw": ""
         },
         {
-          "text": "гараж\n (инд. собственность)",
+          "text": "гараж (инд. собственность)",
           "square": 17.3,
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "17,3",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "type_raw": "гараж (инд. собственность)",
+          "own_type_raw": ""
         }
       ],
       "vehicles": [

@@ -3,55 +3,105 @@
 {% block title %}Найденные декларации {% endblock title %}
 
 {% block content %}
-<style>
-    div.search_input {
-        padding-top: 5x;
-        padding-bottom: 5px;
-    }
-</style>
-<form action="{% url 'section_search' %}" method="get">
-    <div class="search_input">
-        <abbr title="Начинайте с фамилии, например, Иванов Иван Иванович или Иванов И.И.">
-            {{form.person_name.label_tag}}
-        </abbr>
-           {{form.person_name}}
-        &#32;&#32;&#32;<br class="responsive" />
 
-        <span>{{form.rubric_id.label_tag}}{{form.rubric_id}}</span>
-        &nbsp;&nbsp;&nbsp;
-        <input type="submit" value="Поиск">
+<form action="{% url 'section_search' %}" method="get" style="width:100%">
+
+    <table class="mobile" style="width:100%;display: block; padding-bottom: 10px;">
+        <tr>
+            <td class="search_param">
+                {{form.person_name.label_tag}}
+                {{form.person_name}}
+            </td>
+            <td rowspan="2" align="right" class="search_param">
+                <!--<input type="submit" value="Поиск" style="height:100%;width=100%;"> -->
+                &nbsp;&nbsp;&nbsp;
+                <button type="submit" style="height:200%; width=100%; font-size:150%;">Поиск</button>
+            </td>
+        </tr>
+        <tr>
+            <td class="search_param">
+                {{form.rubric_id.label_tag}}
+                {{form.rubric_id}}
+            </td>
+        </tr>
+        <tr>
+            <td class="search_param" colspan="2">
+                {{form.income_year.label_tag}}
+                {{form.income_year}}
+                &nbsp;&nbsp;&nbsp;
+                {{form.gender.label_tag}}
+                {{form.gender}}
+                &nbsp;&nbsp;&nbsp;
+                {{form.car_brands.label_tag}}
+                {{form.car_brands}}
+            </td>
+        </tr>
+        <tr>
+            <td class="search_param" colspan="2">
+                {{form.region_id.label_tag}}
+                {{form.region_id}}
+            </td>
+        </tr>
+        <tr>
+            <td class="search_param" colspan="2">
+                {{form.position_and_department.label_tag}}
+                {{form.position_and_department}}
+                &nbsp;&nbsp;&nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td class="search_param" colspan="2">
+                {{form.office_request.label_tag}}
+                {{form.office_request}}
+            </td>
+        </tr>
+    </table>
+    <div class="desktop">
+        <div class="search_input">
+            <abbr title="Начинайте с фамилии, например, Иванов Иван Иванович или Иванов И.И.">
+                {{form.person_name.label_tag}}
+            </abbr>
+               {{form.person_name}}
+            &#32;&#32;&#32;
+
+            <span>{{form.rubric_id.label_tag}}{{form.rubric_id}}</span>
+            &nbsp;&nbsp;&nbsp;
+            <input type="submit" value="Поиск"/>
+        </div>
+        <div class="search_input">
+            {{form.income_year.label_tag}}
+            {{form.income_year}}
+            &#32;&#32;&#32;
+
+            {{form.region_id.label_tag}}
+            {{form.region_id}}
+
+            &#32;&#32;&#32;
+            {{form.car_brands.label_tag}}
+            {{form.car_brands}}
+
+            &#32;&#32;&#32;
+            <abbr title="Осторожно! Eсть ФИО, для которых пол мы не можем определить.">
+                {{form.gender.label_tag}}
+                {{form.gender}}
+            </abbr>
+
+        </div>
+        <div class="search_input">
+            {{form.position_and_department.label_tag}}
+            {{form.position_and_department}}
+            &#32;&#32;&#32;
+            <abbr title="Часть названия или числовой идентификатор">
+                {{form.office_request.label_tag}}
+                {{form.office_request}}
+            </abbr>
+            &#32;&#32;&#32;
+            {{form.match_phrase.label_tag}}
+            {{form.match_phrase}}
+        </div>
+
     </div>
-    <div class="search_input">
-        {{form.income_year.label_tag}}
-        {{form.income_year}}
-        &#32;&#32;&#32;<br class="responsive" />
 
-        {{form.region_id.label_tag}}
-        {{form.region_id}}
-
-        &#32;&#32;&#32;<br class="responsive" />
-        {{form.car_brands.label_tag}}
-        {{form.car_brands}}
-
-        &#32;&#32;&#32;<br class="responsive" />
-        <abbr title="Осторожно! Eсть ФИО, для которых пол мы не можем определить.">
-            {{form.gender.label_tag}}
-            {{form.gender}}
-        </abbr>
-    </div>
-    <div class="search_input">
-        {{form.position_and_department.label_tag}}
-        {{form.position_and_department}}
-        &#32;&#32;&#32;<br class="responsive" />
-        <abbr title="Часть названия или числовой идентификатор">
-            {{form.office_request.label_tag}}
-            {{form.office_request}}
-        </abbr>
-        &#32;&#32;&#32;<br class="responsive" />
-        {{form.match_phrase.label_tag}}
-        {{form.match_phrase}}
-
-    </div>
 </form>
 
 

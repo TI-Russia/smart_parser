@@ -1,6 +1,6 @@
 from declarations.input_json import TSourceDocument, TDlrobotHumanFile, TWebReference
-from disclosures_site.declarations.web_sites import TDeclarationWebSites
-from common.robot_project import TRobotProject
+from web_site_db.web_sites import TDeclarationWebSiteList
+from web_site_db.robot_project import TRobotProject
 
 
 import os
@@ -52,7 +52,7 @@ class TJoiner:
         self.args = args
         self.logger = setup_logging("join_human_and_dlrobot.log")
         self.output_dlrobot_human = TDlrobotHumanFile(args.output_json, read_db=False)
-        self.web_sites = TDeclarationWebSites(self.logger)
+        self.web_sites = TDeclarationWebSiteList(self.logger)
         self.web_sites.load_from_disk()
         self.old_files_with_office_count = 0
 
@@ -72,7 +72,7 @@ class TJoiner:
         try:
             with TRobotProject(self.logger, robot_project_path, [], None, enable_selenium=False, enable_search_engine=False) as project:
                 project.read_project(check_step_names=False)
-                office_info = project.offices[0]
+                office_info = project.web_site_snapshots[0]
                 for export_record in office_info.export_env.exported_files:
                     file_info[export_record.sha256] = export_record
                 return file_info

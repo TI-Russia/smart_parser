@@ -1,34 +1,38 @@
-from unittest import TestCase
-from common.http_request import request_url_headers_with_global_cache, make_http_request, RobotHttpException
+from common.http_request import THttpRequester
 from common.download import TDownloadedFile
-import logging
+from common.logging_wrapper import setup_logging
+from unittest import TestCase
 
 
 class TestRecursion(TestCase):
     def test_yandex(self):
-        redirected_url, headers = request_url_headers_with_global_cache(logging, "http://www.yandex.ru")
+        THttpRequester.initialize(setup_logging())
+        redirected_url, headers = THttpRequester.request_url_headers_with_global_cache("http://www.yandex.ru")
         self.assertIsNotNone(headers)
         self.assertEqual(redirected_url, 'https://yandex.ru/')
 
     def test_gibdd(self):
         try:
-            s = make_http_request(logging, "http://gibdd.ru", "GET")
-        except RobotHttpException as exp:
+            THttpRequester.initialize(setup_logging())
+            s = THttpRequester.make_http_request("http://gibdd.ru", "GET")
+        except THttpRequester.RobotHttpException as exp:
             self.assertEqual(exp.http_code, 520)
             # todo: why urlib cannot resolve redirects for http://gibdd.ru  -> гибдд.рф?
 
     def test_unicode(self):
 
         try:
-            s = make_http_request(logging, "http://5%20июня%20запретят%20розничную%20продажу%20алкоголя", "GET")
-        except RobotHttpException as exp:
+            THttpRequester.initialize(setup_logging())
+            s = THttpRequester.make_http_request("http://5%20июня%20запретят%20розничную%20продажу%20алкоголя", "GET")
+        except THttpRequester.RobotHttpException as exp:
             # no UnicodeException for this url
             pass
 
     def test_gibdd(self):
         try:
-            s = make_http_request(logging, "http://gibdd.ru", "GET")
-        except RobotHttpException as exp:
+            THttpRequester.initialize(setup_logging())
+            s = THttpRequester.make_http_request("http://gibdd.ru", "GET")
+        except THttpRequester.RobotHttpException as exp:
             self.assertEqual(exp.http_code, 520)
             # todo: why urlib cannot resolve redirects for http://gibdd.ru  -> гибдд.рф?
 
@@ -49,6 +53,7 @@ class TestRecursion(TestCase):
 				</div>
 			</div>
         """
+        THttpRequester.initialize(setup_logging())
         self.assertIsNone(TDownloadedFile.get_simple_js_redirect("http://www.aot.ru", html))
 
     def test_js_redirect2(self):
@@ -71,5 +76,6 @@ class TestRecursion(TestCase):
         </script>
         </html>
         """
+        THttpRequester.initialize(setup_logging())
         redirect = TDownloadedFile.get_simple_js_redirect("http://www.aot.ru", html)
         self.assertEqual(redirect, "http://www.aot.ru/newPage.html")

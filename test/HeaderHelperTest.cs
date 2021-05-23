@@ -4,20 +4,14 @@ using TI.Declarator.ParserCommon;
 using System.IO;
 using Smart.Parser.Lib;
 using static Algorithms.LevenshteinDistance;
+using System;
 
 namespace test
 {
     [TestClass]
     public class HeaderHelperTest
     {
-        [TestMethod]
-        public void HeaderHelperTest1()
-        {
-            string docFile = Path.Combine(TestUtil.GetTestDataPath(), "E - min_sport_2012_Rukovoditeli_gospredpriyatij,_podvedomstvennyih_ministerstvu.doc");
-            //IAdapter adapter = AsposeExcelAdapter.CreateAsposeExcelAdapter(xlsxFile);
-            IAdapter adapter = AsposeDocAdapter.CreateAdapter(docFile);
-
-        }
+        
         [TestMethod]
         public void StringComparisonTest()
         {
@@ -34,14 +28,25 @@ namespace test
             Assert.IsTrue(s1.IsNumber());
         }
 
+        public static DeclarationField GetField(string str)
+        {
+            var f = HeaderHelpers.TryGetField("", str);
+            if (f == DeclarationField.None)
+            {
+                throw new Exception($"Could not determine column type for header {str}.");
+            }
+            return f;
+        }
+
+
         [TestMethod]
         public void HeaderDetectionTest()
         {
             string big_header = "Объекты недвижимости, находящиеся в собственности Вид\nсобствен\nности";
-            DeclarationField field = HeaderHelpers.GetField(big_header);
+            DeclarationField field = GetField(big_header);
 
             big_header = "Объекты недвижимости имущества находящиеся в пользовании Вид обьекта";
-            field = HeaderHelpers.GetField(big_header);
+            field = GetField(big_header);
         }
         
      
@@ -50,13 +55,9 @@ namespace test
         {
             string square = "рф";
             string country = "57 кв м";
-            RealtyParser.SwapCountryAndSquare(ref square, ref country);
-            Assert.AreEqual("рф", country);
-            Assert.AreEqual("57 кв м", square);
-            
-            // no swap
-            RealtyParser.SwapCountryAndSquare(ref square, ref country);
-            Assert.AreEqual("57 кв м", square);
+            Assert.IsTrue(TRealtyCellSpan.CountryAndSquareAreSwapped(square, country));
+            Assert.IsFalse(TRealtyCellSpan.CountryAndSquareAreSwapped(country, square));
         }   
     }
 }
+

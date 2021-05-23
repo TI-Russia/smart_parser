@@ -230,6 +230,10 @@ namespace Parser.Lib
                 {
                     rowIndex += 1;
                 }
+                else if (IAdapter.IsNumbersRow(cells))
+                {
+                    rowIndex += 1;
+                }
                 else
                 {
                     var c = adapter.GetCell(rowIndex, headerCell.Col);
@@ -245,7 +249,20 @@ namespace Parser.Lib
                 }
                 if (rowIndex >= adapter.GetRowsCount()) break;
             }
-            var field = PredictByStrings(texts);
+            var field = DeclarationField.None;
+            if (texts.Count == 1 && headerCell.Col == 0 && TextHelpers.CanBePatronymic(texts[0]))
+            {
+                // not enough data, if texts.Count == 1
+                field = DeclarationField.NameOrRelativeType;
+            }
+            else {
+                field = PredictByStrings(texts);
+                if (field == DeclarationField.NameOrRelativeType && String.Join(" ", texts).Contains(","))
+                {
+                    field = DeclarationField.NameAndOccupationOrRelativeType;
+                }
+            }
+            
             if (headerCell.TextAbove != null && ((field & DeclarationField.AllOwnTypes) > 0))
             {
                 string h = headerCell.TextAbove;
@@ -262,6 +279,13 @@ namespace Parser.Lib
                 else if (HeaderHelpers.IsOwnedColumn(h))
                 {
                     field |= DeclarationField.Owned;
+                }
+            }
+            if (field == DeclarationField.NameOrRelativeType)
+            {
+                if (TextHelpers.MayContainsRole(String.Join(" ", texts)))
+                {
+                    field = DeclarationField.NameAndOccupationOrRelativeType;
                 }
             }
             Logger.Debug(string.Format("predict by {0}  -> {1}",

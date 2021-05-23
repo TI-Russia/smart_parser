@@ -3,122 +3,13 @@ using static Parser.Lib.SmartParserException;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Smart.Parser.Lib;
 using TI.Declarator.ParserCommon;
 using System.Text.RegularExpressions;
-using System.Drawing;
-using System.Drawing.Text;
-
+    
 
 namespace Smart.Parser.Adapters
 {
-    public class Cell 
-    {
-        public virtual bool IsMerged { set; get; } = false;
-        public virtual int FirstMergedRow { set; get; } = -1;
-        public virtual int MergedRowsCount { set; get; } = -1;
-        public virtual int MergedColsCount { set; get; } = 1;
-        public virtual bool IsEmpty { set; get; } = true;
-        public virtual string Text { set; get; } = "";
-
-        public string TextAbove = null;
-
-        public Cell ShallowCopy()
-        {
-            return (Cell)this.MemberwiseClone();
-        }
-
-        public virtual string GetText(bool trim = true)
-        {
-            var text = Text;
-            if (trim)
-            {
-                text = text.CoalesceWhitespace().Trim();
-            }
-
-            return text;
-        }
-
-        public override string ToString()
-        {
-            return Text;
-        }
-
-        // This function (graphics.MeasureString in particular) can work differently on Unix and Windows, may be because the default 
-        // font on Linux is Liberation Serif and the default font on Windows is Times New Roman.
-        // See the first column of sud_2016.doc from the test cases.  
-
-        public List<string> GetLinesWithSoftBreaks()
-        {
-            var res = new List<string>();
-            if (IsEmpty) return res;
-            string[] hardLines = Text.Split('\n');
-            var graphics = System.Drawing.Graphics.FromImage(new Bitmap(1, 1));
-            graphics.TextRenderingHint = TextRenderingHint.SingleBitPerPixelGridFit;
-            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
-            graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighSpeed;
-            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.Low;
-            
-            var stringSize = new SizeF();
-            var font = new System.Drawing.Font(FontName, FontSize / 2);
-            foreach (var hardLine in hardLines)
-            {
-                stringSize = graphics.MeasureString(hardLine, font);
-                // Logger.Info("stringSize = {0} (FontName = {2}, fontsize = {1})", stringSize, FontSize / 2, FontName);
-
-                int defaultMargin = 11; //to do calc it really
-                int softLinesCount = (int)(stringSize.Width / (CellWidth - defaultMargin)) + 1;
-                if (softLinesCount == 1)
-                {
-                    res.Add(hardLine);
-                }
-                else
-                {
-                    int start = 0;
-                    for (int k = 0; k < softLinesCount; ++k)
-                    {
-                        int len;
-                        if (k + 1 == softLinesCount)
-                        {
-                            len = hardLine.Length - start;
-                        }
-                        else
-                        {
-                            len = (int)(hardLine.Length / softLinesCount);
-                            int wordBreak = (start + len >= hardLine.Length) ? hardLine.Length : hardLine.LastIndexOf(' ', start + len);
-                            if (wordBreak > start)
-                            {
-                                len = wordBreak - start;
-                            }
-                            else
-                            {
-                                wordBreak = hardLine.IndexOf(' ', start + 1);
-                                len = (wordBreak == -1) ? hardLine.Length - start : wordBreak - start;
-                            }
-                        }
-                        res.Add(hardLine.Substring(start, len));
-                        start += len;
-                        if (start >= hardLine.Length) break;
-                    }
-                }
-            }
-            // Logger.Info("result = {0}", string.Join("|\n", res));
-            return res;
-        }
-
-
-        public int Row { get; set; } = -1;
-        public int Col { get; set; } = -1; // not merged column index
-
-        public int CellWidth = 0; // in pixels
-        public int AdditTableIndention = 0; // only for Word: http://officeopenxml.com/WPtableIndent.php
-        public string FontName;
-        public int FontSize;
-
-    };
-
     public class DataRow : DataRowInterface
     {
 
@@ -264,33 +155,41 @@ namespace Smart.Parser.Adapters
             }
         }
 
-        public Cell GetDeclarationField(DeclarationField field)
+        public Cell GetDeclarationField(DeclarationField field, bool except = true)
         {
-            Cell cell;
-            if (MappedHeader != null && MappedHeader.TryGetValue(field, out cell))
-            {
-                return cell;
-            }
-            TColumnInfo colSpan;
-            var exactCell = adapter.GetDeclarationFieldWeak(ColumnOrdering, row, field, out colSpan);
-            if (exactCell.Text.Trim() != "" || exactCell.Col == -1)
-            {
+            try {
+                Cell cell;
+                if (MappedHeader != null && MappedHeader.TryGetValue(field, out cell))
+                {
+                    return cell;
+                }
+                TColumnInfo colSpan;
+                var exactCell = adapter.GetDeclarationFieldWeak(ColumnOrdering, row, field, out colSpan);
+                if (exactCell.Text.Trim() != "")
+                {
+                    return exactCell;
+                }
+                for (int i = colSpan.BeginColumn + exactCell.MergedColsCount; i < colSpan.EndColumn;)
+                {
+                    var mergedCell = adapter.GetCell(row, i);
+                    if (mergedCell == null)
+                    {
+                        break;
+                    }
+                    if (mergedCell.Text.Trim() != "")
+                    {
+                        return mergedCell;
+                    }
+                    i += mergedCell.MergedColsCount;
+                }
                 return exactCell;
             }
-            for (int i = exactCell.Col + exactCell.MergedColsCount; i < colSpan.EndColumn;)
+            catch (SmartParserFieldNotFoundException e)
             {
-                var mergedCell = adapter.GetCell(row, i);
-                if (mergedCell == null)
-                {
-                    break;
-                }
-                if (mergedCell.Text.Trim() != "")
-                {
-                    return mergedCell;
-                }
-                i += mergedCell.MergedColsCount;
+                if (!except)
+                    return null;
+                throw e;
             }
-            return exactCell;
 
         }
 
@@ -356,14 +255,12 @@ namespace Smart.Parser.Adapters
                     string.Format("Wrong relative type {0} at row {1}", RelativeType, GetRowIndex()));
             }
         }
-
-        void DivideNameAndOccupation()
+        bool DivideNameAndOccupation(Cell nameCell)
         {
-            var nameCell = GetDeclarationField(DeclarationField.NameAndOccupationOrRelativeType);
             NameDocPosition = adapter.GetDocumentPosition(GetRowIndex(), nameCell.Col);
 
             string v = nameCell.GetText(true);
-            if (DataHelper.IsEmptyValue(v)) return;
+            if (DataHelper.IsEmptyValue(v)) return true;
             if (DataHelper.IsRelativeInfo(v))
             {
                 SetRelative(v);
@@ -390,7 +287,15 @@ namespace Smart.Parser.Adapters
                     PersonName = String.Join(" ", words.Skip(words.Length - 3)).Trim();
                     Occupation = String.Join(" ", words.Take(words.Length - 3)).Trim();
                 }
-                else if (words.Length >= 2 && TextHelpers.CanBeInitials(words[1]) && TextHelpers.MayContainsRole(String.Join(" ", words.Skip(2)).Trim()))
+                else if (Regex.Match(v, @"\w\.\w\.,").Success)
+                {
+                    // ex: "Головачева Н.В., заместитель"
+                    var match = Regex.Match(v, @"\w\.\w\.,");
+                    PersonName = v.Substring(0, match.Index + match.Length - 1).Trim();
+                    Occupation = v.Substring(match.Index + match.Length).Trim();
+                }
+                else if (words.Length >= 2 && TextHelpers.CanBeInitials(words[1]) && 
+                            TextHelpers.MayContainsRole(String.Join(" ", words.Skip(2)).Trim()))
                 {
                     // ex: "Головачева Н.В., заместитель"
                     PersonName = String.Join(" ", words.Take(2)).Trim();
@@ -403,12 +308,36 @@ namespace Smart.Parser.Adapters
                 }
                 else
                 {
-                    throw new SmartParserException(
-                        string.Format("Cannot parse name+occupation value {0} at row {1}", v, GetRowIndex()));
+                    // maybe PDF has split cells (table on different pages)
+                    // example file: "5966/14 Upravlenie delami.pdf" converted to docx
+                    Logger.Error(string.Format("Cannot parse name+occupation value {0} at row {1}", v, GetRowIndex()));
+                    return false;
                 }
             }
+            return true;
         }
 
+        private static bool CheckPersonName(String s)
+        {
+            if (s.Contains('.')) {
+                return true;
+            }
+
+            bool hasSpaces = s.Trim().Any(Char.IsWhiteSpace);
+            if (!hasSpaces)
+            {
+                return false;
+            }
+            string[] words = Regex.Split(s, @"[\,\s\n]+");
+            if (TextHelpers.CanBePatronymic(words[words.Length - 1])) {
+                return true;
+            }
+            if (words.Count() != 3 && ColumnPredictor.PredictByString(s) != DeclarationField.NameOrRelativeType)
+            {
+                return false;
+            }
+            return true;
+        }
         public bool InitPersonData(string prevPersonName)
         {
             if (this.ColumnOrdering.ContainsField(DeclarationField.RelativeTypeStrict))
@@ -421,15 +350,8 @@ namespace Smart.Parser.Adapters
             {
                 if (!ColumnOrdering.SearchForFioColumnOnly)
                 {
-                    try
+                    if (!DivideNameAndOccupation(GetDeclarationField(DeclarationField.NameAndOccupationOrRelativeType)))
                     {
-                        DivideNameAndOccupation();    
-                    }
-                    catch (SmartParserException) {
-                        // maybe PDF has split cells (table on different pages)
-                        // example file: "5966/14 Upravlenie delami.pdf" converted to docx
-                        var nameCell = GetDeclarationField(DeclarationField.NameAndOccupationOrRelativeType);
-                        Logger.Error("ignore bad person name " + nameCell);
                         return false;
                     }
                 }
@@ -462,14 +384,37 @@ namespace Smart.Parser.Adapters
                     {
                         SetRelative(Occupation);
                     }
+                    else if (nameOrRelativeType.Trim(',').Contains(",") || 
+                                (  nameOrRelativeType.Contains(" -") 
+                                && Regex.Split(nameOrRelativeType, @"[\,\s\n]+").Count() > 3))
+                    {
+                        if (!DivideNameAndOccupation(nameCell))
+                        {
+                            return false;
+                        }
+                    }
                     else
                     { 
                         PersonName = nameOrRelativeType;
-                        if (!PersonName.Contains('.') && !PersonName.Trim().Any(Char.IsWhiteSpace)) {
+                        if (!CheckPersonName(PersonName))
+                        {
                             Logger.Error("ignore bad person name " + PersonName);
                             return false;
                         }
                     }
+                }
+            }
+            if (ColumnOrdering.ContainsField(DeclarationField.OccupationOrRelativeType))
+            {
+                var str = GetDeclarationField(DeclarationField.OccupationOrRelativeType).GetText();
+                var relType = DataHelper.ParseRelationType(str, false);
+                if (relType == RelationType.Error)
+                {
+                    Occupation = str;
+                }
+                else
+                {
+                    RelativeType = str;
                 }
             }
             return true;
@@ -478,7 +423,7 @@ namespace Smart.Parser.Adapters
 
 
         public List<Cell> Cells;
-        IAdapter adapter;
+        public IAdapter adapter;
         public ColumnOrdering ColumnOrdering;
         int row;
         private Dictionary<DeclarationField, Cell> MappedHeader = null;

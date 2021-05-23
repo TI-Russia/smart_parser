@@ -1,6 +1,7 @@
 from dlrobot_server.common_server_worker import DLROBOT_HTTP_CODE, TTimeouts, PITSTOP_FILE, DLROBOT_HEADER_KEYS
+from common.logging_wrapper import setup_logging
+
 import argparse
-import logging
 import os
 import sys
 import time
@@ -19,24 +20,11 @@ import platform
 SCRIPT_DIR_NAME = os.path.realpath(os.path.dirname(__file__))
 DLROBOT_PATH = os.path.realpath(os.path.join(SCRIPT_DIR_NAME, "../dl_robot/dlrobot.py")).replace('\\', '/')
 assert os.path.exists(DLROBOT_PATH)
+TIMEOUT_FILE_PATH = "timeout.txt"
 
 
-def setup_logging(logfilename):
-    logger = logging.getLogger("dlrobot_worker")
-    logger.setLevel(logging.DEBUG)
-
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    fh = logging.FileHandler(logfilename, "a+", encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-    return logger
-
+class DlrobotWorkerException(Exception):
+    pass
 
 def test_dlrobot_script(logger):
     proc = subprocess.Popen(
@@ -52,7 +40,7 @@ def test_dlrobot_script(logger):
 
 def check_system_resources(logger):
     total, used, free = shutil.disk_usage(os.curdir)
-    if  free < 2 * 2**30:
+    if free < 2 * 2**30:
         logger.error("no enough disk space")
         return False  #at least 2 GB free disk space must be available
     free_mem = psutil.virtual_memory().free
@@ -67,16 +55,22 @@ def delete_very_old_folders(logger):
     now = time.time()
     with os.scandir("") as it:
         for entry in it:
-            if entry.is_dir() and entry.stat().st_mtime < now - TTimeouts.TIMEOUT_IN_WORKER_CLEAN_JUNK:
-                logger.error("delete folder {} because it is too old, see TTimeouts.TIMEOUT_IN_WORKER_CLEAN_JUNK".format(entry.name))
-                shutil.rmtree(str(entry.name), ignore_errors=True)
+            if entry.is_dir():
+                timeout_file = os.path.join(entry.name, TIMEOUT_FILE_PATH)
+                time_to_delete = None
+                if os.path.exists(timeout_file):
+                    with open(timeout_file) as inp:
+                        time_to_delete = int(inp.read())
+                if time_to_delete is not None and time_to_delete > now:
+                    logger.error("delete folder {} because it is too old".format(entry.name))
+                    shutil.rmtree(str(entry.name), ignore_errors=True)
 
 
 def stop():
     for proc in psutil.process_iter():
         cmdline = " ".join(proc.cmdline())
         if proc.pid != os.getpid():
-            if 'dlrobot.py' in cmdline or 'firefox' in cmdline or 'dlrobot_worker.py' in cmdline:
+            if 'dlrobot.py' in cmdline or 'firefox' in cmdline or 'chrome' in cmdline or 'dlrobot_worker.py' in cmdline:
                 try:
                     proc.kill()
                 except Exception as exp:
@@ -94,7 +88,7 @@ class TDlrobotWorker:
         self.working = True
         self.thread_pool = ThreadPoolExecutor(max_workers=self.args.worker_count)
         self.setup_working_folder()
-        self.logger = setup_logging(self.args.log_file_name)
+        self.logger = setup_logging(log_file_name=self.args.log_file_name, append_mode=True)
         self.setup_environment()
 
     def setup_working_folder(self):
@@ -119,16 +113,11 @@ class TDlrobotWorker:
         parser.add_argument("--save-dlrobot-results", dest='delete_dlrobot_results', default=True, action="store_false")
         parser.add_argument("--timeout-before-next-task", dest='timeout_before_next_task', type=int, required=False,
                             default=60)
-        parser.add_argument("--crawling-timeout", dest='crawling_timeout',
-                            type=int,
-                            default=TTimeouts.MAIN_CRAWLING_TIMEOUT,
-                            help="crawling timeout (there is also conversion step after crawling, that takes time)")
         parser.add_argument("--only-send-back-this-project", dest='only_send_back_this_project', required=False)
         parser.add_argument("--http-put-timeout", dest='http_put_timeout', required=False, type=int, default=60 * 10)
         parser.add_argument("--fake-dlrobot", dest='fake_dlrobot', required=False, default=False, action="store_true")
         parser.add_argument("--worker-count", dest='worker_count', default=2, type=int)
         parser.add_argument(dest='action', help="can be start, stop, restart, run_once")
-
 
         args = parser.parse_args(arg_list)
         return args
@@ -146,11 +135,16 @@ class TDlrobotWorker:
                 self.logger.error("cannot get a new project from dlrobot central, httpcode={}".format(
                     response.status
                 ))
-            return
+            raise DlrobotWorkerException()
         project_file = response.getheader(DLROBOT_HEADER_KEYS.PROJECT_FILE)
         if project_file is None:
             self.logger.error("cannot find header {}".format(DLROBOT_HEADER_KEYS.PROJECT_FILE))
-            return
+            raise DlrobotWorkerException()
+        crawling_timeout_str = response.getheader(DLROBOT_HEADER_KEYS.CRAWLING_TIMEOUT)
+        if crawling_timeout_str is None:
+            self.logger.error("cannot find header {}".format(DLROBOT_HEADER_KEYS.CRAWLING_TIMEOUT))
+            raise DlrobotWorkerException()
+        crawling_timeout = int(crawling_timeout_str)
         file_data = response.read()
         self.logger.debug("get task {} size={}".format(project_file, len(file_data)))
         basename_project_file = os.path.basename(project_file)
@@ -165,7 +159,10 @@ class TDlrobotWorker:
         project_file = os.path.join(folder, basename_project_file)
         with open(project_file, "wb") as outp:
             outp.write(file_data)
-        return project_file
+        with open(os.path.join(folder, TIMEOUT_FILE_PATH), "w") as outp:
+            outp.write("{}".format(int(time.time()) + TTimeouts.get_timeout_to_delete_files_in_worker(crawling_timeout)))
+
+        return project_file, crawling_timeout
 
     def clean_folder_before_archiving(self, project_folder, result_folder, exit_code):
         with os.scandir(project_folder) as it:
@@ -179,13 +176,17 @@ class TDlrobotWorker:
             geckodriver_log = os.path.join(project_folder, "geckodriver.log")
             if os.path.exists(geckodriver_log):
                 os.unlink(geckodriver_log)
+
+            timeout_file = os.path.join(project_folder, TIMEOUT_FILE_PATH)
+            if os.path.exists(timeout_file):
+                os.unlink(timeout_file)
         else:
             folder = os.path.join(project_folder, result_folder)
             if os.path.exists(folder):
                 self.logger.debug("delete folder {} since dlrobot failed".format(folder))
                 shutil.rmtree(folder, ignore_errors=True)
 
-    def run_dlrobot(self, project_file):
+    def run_dlrobot(self, project_file, crawling_timeout):
         project_folder = os.path.dirname(os.path.realpath(project_file)).replace('\\', '/')
         if self.args.fake_dlrobot:
             with open(project_file + ".dummy_random", "wb") as outp:
@@ -197,16 +198,17 @@ class TDlrobotWorker:
         my_env['TMPDIR'] = project_folder
         exit_code = 1
         result_folder = "result"
+        total_timeout = TTimeouts.get_kill_timeout_in_worker(crawling_timeout)
         try:
             dlrobot_call = [
                 '/usr/bin/python3',
                 DLROBOT_PATH,
                 '--cache-folder-tmp',
                 '--project', os.path.basename(project_file),
-                '--crawling-timeout', str(self.args.crawling_timeout),
+                '--crawling-timeout', str(crawling_timeout),
                 '--last-conversion-timeout', str(TTimeouts.WAIT_CONVERSION_TIMEOUT),
                 '--result-folder', "result",
-                '--total-timeout', str(TTimeouts.OVERALL_HARD_TIMEOUT_IN_WORKER)
+                '--total-timeout', str(total_timeout)
             ]
             self.logger.debug(" ".join(dlrobot_call))
             with open(os.path.join(project_folder, "dlrobot.out"), "w") as dout:
@@ -218,12 +220,12 @@ class TDlrobotWorker:
                         env=my_env,
                         cwd=project_folder,
                         text=True)
-            proc.wait(TTimeouts.OVERALL_HARD_TIMEOUT_IN_WORKER)  # 4 hours
+            proc.wait(total_timeout + 2*60)  # 4 hours + 2 minutes
             exit_code = proc.returncode
 
         except subprocess.TimeoutExpired as exp:
             self.logger.error("wait raises timeout exception:{},  timeout={}".format(
-                str(exp), TTimeouts.OVERALL_HARD_TIMEOUT_IN_WORKER))
+                str(exp), total_timeout))
         except Exception as exp:
             self.logger.error(exp)
 
@@ -345,30 +347,31 @@ class TDlrobotWorker:
             if not threading.main_thread().is_alive():
                 break
 
-            timeout = self.args.timeout_before_next_task
+            iteration_timeout = self.args.timeout_before_next_task
 
             if not check_system_resources(self.logger):
                 delete_very_old_folders(self.logger)
                 if not check_system_resources(self.logger):
                     self.logger.debug("check_system_resources failed, sleep 10 minutes")
-                    timeout = 60 * 10  # there is a hope that the second process frees the disk
+                    iteration_timeout = 60 * 10  # there is a hope that the second process frees the disk
             else:
                 try:
-                    project_file = self.get_new_task_job()
-                    if project_file is not None:
-                        exit_code = self.run_dlrobot(project_file)
-                        timeout = 0
-                        if self.working:
-                            self.send_results_back(project_file, exit_code)
+                    project_file, crawling_timeout = self.get_new_task_job()
+                    exit_code = self.run_dlrobot(project_file, crawling_timeout)
+                    iteration_timeout = 0
+                    if self.working:
+                        self.send_results_back(project_file, exit_code)
                 except ConnectionError as err:
                     self.logger.error("exception {}: {}".format(type(err).__name__,  str(err)))
                 except TimeoutError as err:
                     self.logger.error("timeout error:{}".format(str(err)))
+                except DlrobotWorkerException as err:
+                    pass  #already logged
 
             if self.args.action == "run_once":
                 break
-            if timeout > 0:
-                time.sleep(timeout)
+            if iteration_timeout > 0:
+                time.sleep(iteration_timeout)
 
     def run_thread_pool(self):
         self.logger.debug("start {} workers".format(self.args.worker_count))

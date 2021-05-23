@@ -1,11 +1,13 @@
 from common.download import save_downloaded_file
 from common.link_info import TLinkInfo
 from common.content_types import ALL_CONTENT_TYPES
+from common.http_request import THttpRequester
 
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.chrome.options import Options as ChromeOptions
 
 import os
 import shutil
@@ -28,7 +30,7 @@ def make_folder_empty(folder):
 class TSeleniumDriver:
 
     def __init__(self, logger, headless=True, download_folder=None, loglevel=None,
-                 scroll_to_bottom_and_wait_more_results=True):
+                 scroll_to_bottom_and_wait_more_results=True, start_retry_count=3, use_chrome=True):
         self.logger = logger
         self.the_driver = None
         self.driver_processed_urls_count = 0
@@ -36,9 +38,17 @@ class TSeleniumDriver:
         assert download_folder != "."
         self.headless = headless
         self.loglevel = loglevel
+        self.use_chrome = use_chrome
+        self.start_retry_count = start_retry_count
         self.scroll_to_bottom_and_wait_more_results = scroll_to_bottom_and_wait_more_results
 
     def start_executable(self):
+        if self.use_chrome:
+            self.start_executable_chrome()
+        else:
+            self.start_executable_firefox()
+
+    def start_executable_firefox(self):
         options = FirefoxOptions()
         options.headless = self.headless
         options.log.level = self.loglevel
@@ -56,13 +66,29 @@ class TSeleniumDriver:
             options.set_preference("pdfjs.disabled", True)
             options.set_preference("plugin.scan.Acrobat", "99.0")
             options.set_preference("plugin.scan.plid.all", False)
-        for retry in range(3):
+        for retry in range(self.start_retry_count):
             try:
                 self.the_driver = webdriver.Firefox(options=options)
                 #self.the_driver.implicitly_wait(10)
                 break
             except (WebDriverException, InvalidSwitchToTargetException) as exp:
-                if retry == 2:
+                if retry == self.start_retry_count - 1:
+                    raise
+                self.logger.error("Cannot start selenium, exception:{}, sleep and retry...".format(str(exp)))
+                time.sleep(10)
+
+    def start_executable_chrome(self):
+        options = ChromeOptions()
+        options.headless = self.headless
+        prefs = {'download.default_directory': self.download_folder}
+        options.add_experimental_option('prefs', prefs)
+        for retry in range(self.start_retry_count):
+            try:
+                self.the_driver = webdriver.Chrome(options=options, service_log_path="geckodriver.log")
+                self.the_driver.set_window_size(1440, 900)
+                break
+            except (WebDriverException, InvalidSwitchToTargetException) as exp:
+                if retry == self.start_retry_count - 1:
                     raise
                 self.logger.error("Cannot start selenium, exception:{}, sleep and retry...".format(str(exp)))
                 time.sleep(10)
@@ -87,7 +113,11 @@ class TSeleniumDriver:
         self.the_driver.switch_to.window(self.the_driver.window_handles[0])
 
         # navigation
-        self.the_driver.get(url)
+        try:
+            self.the_driver.get(url)
+        except IndexError as exp:
+            raise THttpRequester.RobotHttpException("general IndexError inside urllib.request.urlopen",
+                                                    url, 520, "GET")
 
     def get_buttons_and_links(self):
         return list(self.the_driver.find_elements_by_xpath('//button | //a'))
@@ -134,13 +164,13 @@ class TSeleniumDriver:
         dl_wait = True
         seconds = 0
         while dl_wait and seconds < timeout:
-            firefox_temp_file = sorted(Path(self.download_folder).glob('*.part'))
+            browser_temp_file = sorted(Path(self.download_folder).glob('*.part'))
             chrome_temp_file = sorted(Path(self.download_folder).glob('*.crdownload'))
-            if (len(firefox_temp_file) == 0) and \
+            if (len(browser_temp_file) == 0) and \
                     (len(chrome_temp_file) == 0):
                 files = os.listdir(self.download_folder)
                 if len(files) > 0:
-                    return save_downloaded_file(self.logger, os.path.join(self.download_folder, files[0]))
+                    return save_downloaded_file(os.path.join(self.download_folder, files[0]))
                 return None
             time.sleep(1)
             seconds += 1

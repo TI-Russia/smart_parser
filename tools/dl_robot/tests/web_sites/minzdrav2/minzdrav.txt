@@ -1,0 +1,8 @@
+{
+    "sites": [
+        {
+            "morda_url": "http://minzdrav.gov.ru",
+            "name": ""
+        }
+    ]
+}

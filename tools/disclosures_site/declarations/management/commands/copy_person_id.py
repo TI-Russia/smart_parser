@@ -1,6 +1,6 @@
 import declarations.models as models
 from django.core.management import BaseCommand
-from declarations.management.commands.permalinks import TPermaLinksDB
+from declarations.permalinks import TPermaLinksPerson
 from declarations.russian_fio import TRussianFio
 from common.logging_wrapper import setup_logging
 
@@ -24,7 +24,8 @@ def get_all_section_from_declarator_with_person_id(declarator_host):
         db_connection = pymysql.connect(db="declarator", user="declarator", password="declarator",
                                         host=declarator_host)
     in_cursor = db_connection.cursor()
-
+    # disable declarator persons after 2021-01-18 because Andre Jvirblis decided add person records without
+    # dedupplication (see telegram)
     in_cursor.execute("""
                     select  s.person_id,
                             d.id, 
@@ -37,7 +38,8 @@ def get_all_section_from_declarator_with_person_id(declarator_host):
                     left join declarations_income i on i.section_id = s.id
                     where s.person_id is not null
                           and i.relative_id is null
-                          and s.dedupe_score = 0;
+                          and s.dedupe_score = 0
+                          and (p.created_when is null or DATE(p.created_when) < '2021-01-18');
 
     """)
     props_to_person_id = dict()
@@ -71,6 +73,7 @@ class Command(BaseCommand):
         self.permalinks_db = None
         self.logger = None
         self.declarator_person_id_to_disclosures_person = dict()
+        self.disclosures_person_id_to_disclosures_person = dict()
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -80,8 +83,8 @@ class Command(BaseCommand):
             help='read person info  from json for testing'
         )
         parser.add_argument(
-            '--permanent-links-db',
-            dest='permanent_links_db',
+            '--permalinks-folder',
+            dest='permalinks_folder',
             required=True
         )
         parser.add_argument(
@@ -96,7 +99,7 @@ class Command(BaseCommand):
         )
 
     def open_permalinks_db(self):
-        self.permalinks_db = TPermaLinksDB(self.options['permanent_links_db'])
+        self.permalinks_db = TPermaLinksPerson(self.options['permalinks_folder'])
         self.permalinks_db.open_db_read_only()
 
     def build_passport_to_person_id_mapping_from_declarator(self):
@@ -106,22 +109,32 @@ class Command(BaseCommand):
         else:
             return get_all_section_from_declarator_with_person_id(self.options['declarator_host'])
 
+    # we think that person ids in declarator db are stable
     def copy_human_merge(self, section, declarator_person_id):
         person = self.declarator_person_id_to_disclosures_person.get(declarator_person_id)
         if person is None:
-            # we think that person ids in declarator db are stable
-            person = models.Person(
-                id=self.permalinks_db.get_person_id_by_declarator_id(declarator_person_id),
-                declarator_person_id=declarator_person_id,
-                person_name=section.person_name)
-            person.save()
-            self.declarator_person_id_to_disclosures_person[declarator_person_id] = person
+            person_id = self.permalinks_db.get_person_id_by_declarator_id(declarator_person_id, section.id)
+            if person_id in self.disclosures_person_id_to_disclosures_person:
+                person = self.disclosures_person_id_to_disclosures_person.get(person_id)
+                if  declarator_person_id != person.declarator_person_id:
+                    self.logger.error("Person id={} has conflict declarator_person_id ({} != {}), use the first person id {}".format(
+                        person_id, declarator_person_id, person.declarator_person_id, person.declarator_person_id))
+
+            else:
+                person = models.Person(
+                    id=person_id,
+                    declarator_person_id=declarator_person_id,
+                    person_name=section.person_name)
+                person.save()
+                self.declarator_person_id_to_disclosures_person[declarator_person_id] = person
+                self.disclosures_person_id_to_disclosures_person[declarator_person_id] = person
         elif person.person_name is None or len(person.person_name) < len(section.person_name):
             person.person_name = section.person_name
             person.save()
 
+        assert person.declarator_person_id is not None
         self.logger.debug("connect section {} to person {}, declarator_person_id={}".format(
-            section.id, person.id, declarator_person_id))
+            section.id, person.id, person.declarator_person_id))
 
         section.person = person
         section.dedupe_score = None
@@ -158,7 +171,7 @@ class Command(BaseCommand):
             self.logger.debug("section {} fio={} is ambiguous".format(section.id, section.person_name))
         return False
 
-    def copy_declarator_person_ids_fast(self, section_passports):
+    def copy_declarator_person_ids(self, section_passports):
         query = """
             select s.id, r.declarator_document_id, s.person_name, i.size
             from declarations_section s
@@ -202,7 +215,7 @@ class Command(BaseCommand):
         self.open_permalinks_db()
         section_passports = self.build_passport_to_person_id_mapping_from_declarator()
         self.logger.info("merge by {} passports from declarator".format(len(section_passports)))
-        self.copy_declarator_person_ids_fast(section_passports)
+        self.copy_declarator_person_ids(section_passports)
         self.permalinks_db.close_db()
         self.logger.info("all done")
 

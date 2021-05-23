@@ -14,13 +14,13 @@
      {{person.person_name}} {{person.ratings |safe}}
 </h1>
 
-<h2>
-    1. Последняя известная декларация ({{person.last_section.income_year}} год)
-</h2>
-
 <h3>
-     {{ person.last_position_and_office_str }}
+    1. Последняя известная декларация ({{person.last_section.income_year}} год)
 </h3>
+
+<p><i>
+     {{ person.last_position_and_office_str }}
+</i></p>
 
 {% with section=person.last_section %}
     {% include "section/section_table.html" %}
@@ -28,9 +28,9 @@
 
 <br/>
 
-<h2>
+<h3>
      2. Исторические сведения о доходах чиновника за {{person.years_str}}
-</h2>
+</h3>
 
 
 <table class="solid_table">
@@ -63,9 +63,9 @@
 
 {% with comp=person.income_growth_yearly %}
     {% if comp %}
-    <h2>
+    <h3>
          3. Сравнение роста номинальных доходов чиновника со средним ростом зарплат по всей стране
-    </h2>
+    </h3>
       <table class="solid_table">
           <tr>
               <th>Мин. год</th>

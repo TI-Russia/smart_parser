@@ -1,10 +1,9 @@
 from dl_robot.dlrobot import TDlrobot
-from common.robot_web_site import TWebSiteReachStatus
+from web_site_db.robot_web_site import TWebSiteReachStatus
+from web_site_db.robot_project import TRobotProject
 from common.download import TDownloadEnv
 
-
 import os
-import json
 import shutil
 from unittest import TestCase
 
@@ -24,11 +23,9 @@ class TestDeletedWebSite(TestCase):
 
     def test_unknown_site(self):
         self.project_path = os.path.join(self.data_folder, "project.txt")
-        with open(self.project_path, "w") as outp:
-            project = {"sites": [{"morda_url": "http://unknown_site.org"}]}
-            json.dump(project, outp)
+        TRobotProject.create_project("http://unknown_site.org", self.project_path)
         dlrobot = TDlrobot(TDlrobot.parse_args(['--clear-cache-folder',  '--project', self.project_path]))
         project = dlrobot.open_project()
-        self.assertEqual( project.offices[0].reach_status, TWebSiteReachStatus.abandoned)
+        self.assertEqual(project.web_site_snapshots[0].reach_status, TWebSiteReachStatus.abandoned)
         TDownloadEnv.CONVERSION_CLIENT.stop_conversion_thread()
         TDownloadEnv.CONVERSION_CLIENT = None

@@ -1,9 +1,14 @@
+from .html_parser import THtmlParser
+from .content_types import DEFAULT_HTML_EXTENSION
+
 import urllib.parse
 import re
-import socket
-from .html_parser import THtmlParser
 import hashlib
 import os
+import socket
+import time
+import subprocess
+
 
 def normalize_whitespace(str):
     str = re.sub(r'\s+', ' ', str)
@@ -143,14 +148,41 @@ def prepare_russian_names_for_search_index(str):
     return str
 
 
+def build_dislosures_sha256_by_html(html_data):
+    text = THtmlParser(html_data).get_plain_text()
+    text_utf8 = text.encode("utf-8", errors="ignore")
+    return hashlib.sha256(text_utf8).hexdigest()
+
+
 def build_dislosures_sha256_by_file_data(file_data, file_extension):
-    if file_extension == '.html':
-        text = THtmlParser(file_data).get_text()
-        file_data = text.encode("utf-8", errors="ignore")
-    return hashlib.sha256(file_data).hexdigest()
+    if file_extension == DEFAULT_HTML_EXTENSION:
+        return build_dislosures_sha256_by_html(file_data)
+    else:
+        return hashlib.sha256(file_data).hexdigest()
 
 
 def build_dislosures_sha256(file_path):
     _, file_extension = os.path.splitext(file_path)
     with open(file_path, "rb") as f:
         return build_dislosures_sha256_by_file_data(f.read(), file_extension)
+
+
+def is_local_http_port_free(port, host='127.0.0.1'):
+    for i in range(3):
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            x = s.connect_ex((host, port))
+            if x != 0:
+                #cannot connect to the port, so it is open to start a new server
+                s.close()
+                return True
+            print("wait 10 seconds till {}:{} is free (socket.connect_ex returned {})".format(host, port, x))
+            time.sleep(10)
+    return False
+
+
+def run_with_timeout(args, timeout=20*60):
+    p = subprocess.Popen(args, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
+    try:
+        p.wait(timeout)
+    except subprocess.TimeoutExpired:
+        p.kill()

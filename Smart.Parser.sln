@@ -28,7 +28,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EP.Sdk.Core", "EP.SdkCore\E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildAntlr", "Antlr\BuildAntlr.csproj", "{93B1A504-38C4-4CC4-AC5A-84F3E0B4E536}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AntlrTester", "tools\AntlrTester\AntlrTester.csproj", "{F7BB5B96-5A83-4C9B-95D8-4377A9B67EAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntlrTester", "tools\AntlrTester\AntlrTester.csproj", "{F7BB5B96-5A83-4C9B-95D8-4377A9B67EAA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildCharWidthTable", "tools\BuildCharWidthTable\BuildCharWidthTable.csproj", "{855CF5A8-3DA0-465F-ADAA-A64F6D0D7EE2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -80,6 +82,10 @@ Global
 		{F7BB5B96-5A83-4C9B-95D8-4377A9B67EAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7BB5B96-5A83-4C9B-95D8-4377A9B67EAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7BB5B96-5A83-4C9B-95D8-4377A9B67EAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{855CF5A8-3DA0-465F-ADAA-A64F6D0D7EE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{855CF5A8-3DA0-465F-ADAA-A64F6D0D7EE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{855CF5A8-3DA0-465F-ADAA-A64F6D0D7EE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{855CF5A8-3DA0-465F-ADAA-A64F6D0D7EE2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,6 +93,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{FE82CDC1-CF67-4E79-971E-B769F17E0A3A} = {AE6A86FF-4DF6-4491-B4ED-7D229B3EFAD8}
 		{F7BB5B96-5A83-4C9B-95D8-4377A9B67EAA} = {AE6A86FF-4DF6-4491-B4ED-7D229B3EFAD8}
+		{855CF5A8-3DA0-465F-ADAA-A64F6D0D7EE2} = {AE6A86FF-4DF6-4491-B4ED-7D229B3EFAD8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BD2A9583-38EC-41A7-9E73-34858556C2B6}

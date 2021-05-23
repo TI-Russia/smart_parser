@@ -35,7 +35,7 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
 2.1 sudo apt update
    sudo apt install -y  curl p7zip-full unrar libcurl4-openssl-dev libssl-dev libreoffice \
         python3-wheel calibre  catdoc xlsx2csv default-libmysqlclient-dev libgdiplus python3-pip python3.8-dev \
-        firefox git  sshfs libcurl4
+        firefox git  sshfs libcurl4  libxss1 libappindicator1 libindicator7
 
 2.2 git clone https://github.com/TI-Russia/smart_parser.git ~/smart_parser
 
@@ -70,9 +70,16 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
       sudo wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz
       sudo tar xfz geckodriver-v0.26.0-linux64.tar.gz
 
-2.10. Test dlrobot
-    cd ~/smart_parser/dl_robot/tests
-    bash tests.sh
+2.10
+    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    sudo apt install ./google-chrome*.deb -y
+    wget https://chromedriver.storage.googleapis.com/90.0.4430.24/chromedriver_linux64.zip
+    unzip chromedriver_linux64.zip
+    sudo cp chromedriver /usr/bin
+
+2.11 Test dlrobot
+    cd ~/smart_parser/tools/dl_robot/tests
+    python3 -m unittest
 
     cd ~/smart_parser/tools/dlrobot_server
     python3 -m unittest
@@ -113,7 +120,7 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
    cd $DLROBOT_CENTRAL_FOLDER
    rm nohup.out nohup python3 ~/smart_parser/tools/dlrobot_server/dlrobot_central.py  \
                 --server-address $DLROBOT_CENTRAL_SERVER_ADDRESS \
-                --input-task-list ~/smart_parser/tools/disclosures_site/data/web_sites.json \
+                --input-task-list ~/smart_parser/tools/web_site_db/data/web_sites.json \
                 --result-folder processed_projects --read-previous-results --check-yandex-cloud
 
 3.7  init crontab in central for monitoring (crontab -e), add lines from $TOOLS/disclosures_server/crontab.txt
@@ -135,7 +142,7 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
 =====================================================================================
 
 4.1 Create dlrobot worker service:
-    sudo cp ~/smart_parser/tools/robots/dlrobot_server/dlrobot_worker.service /etc/systemd/system
+    sudo cp ~/smart_parser/tools/dlrobot_server/dlrobot_worker.service /etc/systemd/system
     sudo chmod 644 /etc/systemd/system/dlrobot_worker.service
     sudo systemctl enable dlrobot_worker
     sudo systemctl daemon-reload

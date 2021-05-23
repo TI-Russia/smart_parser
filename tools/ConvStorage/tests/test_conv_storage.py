@@ -1,16 +1,19 @@
 from ConvStorage.conv_storage_server import TConvertProcessor
+from ConvStorage.convert_storage import TConvertStorage
 from ConvStorage.conversion_client import TDocConversionClient
-from common.simple_logger import close_logger
-
+from common.logging_wrapper import close_logger, setup_logging
+from common.primitives import build_dislosures_sha256
+from DeclDocRecognizer.external_convertors import TExternalConverters
+from common.primitives import run_with_timeout
+import concurrent.futures
 from unittest import TestCase
 import os
 import threading
 import shutil
-import logging
-import json
 import time
 import subprocess
-
+import random
+from functools import partial
 
 def start_server(server):
     server.start_http_server()
@@ -35,19 +38,6 @@ def recreate_folder(folder):
 def clear_folder(folder):
     for f in os.listdir(folder):
         os.unlink(os.path.join(folder, f))
-
-
-def setup_logging(logfilename):
-    logger = logging.getLogger("db_conv_logger")
-    logger.setLevel(logging.DEBUG)
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-    return logger
 
 
 class TTestEnv:
@@ -95,13 +85,7 @@ class TTestEnv:
 
         clear_folder(self.pdf_ocr_folder)
         clear_folder(self.pdf_ocr_out_folder)
-
-        with open (self.project_file, "w") as outp:
-            p = {
-                'converted_folder': db_converted_files,
-                'input_folder': db_input_files
-            }
-            json.dump(p, outp, indent=4)
+        TConvertStorage.create_empty_db(db_input_files, db_converted_files, self.project_file)
 
         self.server_args = [
             "--server-address", self.server_address,
@@ -109,7 +93,8 @@ class TTestEnv:
             '--db-json', self.project_file,
             '--disable-killing-winword',
             '--ocr-input-folder', self.pdf_ocr_folder,
-            '--ocr-output-folder', self.pdf_ocr_out_folder
+            '--ocr-output-folder', self.pdf_ocr_out_folder,
+            '--disable-telegram'
         ] + addit_server_args
 
         if start_process:
@@ -123,7 +108,7 @@ class TTestEnv:
         self.server_thread.join(0)
         self.start_server_thread()
 
-    def process_with_client(self, input_files, timeout=None, rebuild=False):
+    def process_with_client(self, input_files, timeout=None, rebuild=False, skip_receiving=False):
         output_files = list(os.path.basename(i) + ".docx" for i in input_files)
         for o in output_files:
             if os.path.exists(o):
@@ -137,8 +122,10 @@ class TTestEnv:
             client_args.extend(['--conversion-timeout', str(timeout)])
         if rebuild:
             client_args.append('--rebuild')
+        if skip_receiving:
+            client_args.append('--skip-receiving')
         if self.server is None:
-            logger = setup_logging("client.log")
+            logger = setup_logging(log_file_name="client.log", logger_name="db_conv_logger")
         else:
             logger = self.server.logger
 
@@ -205,10 +192,10 @@ class TestConvWinword(TestCase):
         self.env.restart_server()
         output_file = self.env.process_with_client([input_file])[0]
         self.assertTrue(os.path.exists(output_file))
-        self.assertEqual(os.stat(output_file).st_size, file_size)
+        self.assertEqual(file_size, os.stat(output_file).st_size)
 
         stats = self.env.server.get_stats()
-        self.assertEqual(stats["all_put_files_count"], 0)
+        self.assertEqual(0, stats["all_put_files_count"])
 
 
 class TestOcr(TestCase):
@@ -307,10 +294,12 @@ class TestWinwordConvertToJpg(TestCase):
             if l.startswith("4"):
                 input_files.append(os.path.join('../files', l))
         input_files.append('../files/18822_cut.pdf')
+        canon_input_files_count = 7
+        assert len(input_files) == canon_input_files_count
         output_files = self.env.process_with_client(input_files, timeout=240)
-        self.assertEqual(len(output_files), len(input_files))
+        self.assertEqual(canon_input_files_count, len(output_files))
         stats = self.env.server.get_stats()
-        self.assertEqual(stats['finished_ocr_tasks'], len(input_files))
+        self.assertEqual(canon_input_files_count, stats['finished_ocr_tasks'])
         file_sizes = list(os.stat(x).st_size for x in output_files)
         self.env.restart_server()
         output_files = self.env.process_with_client(input_files, timeout=240)
@@ -343,6 +332,7 @@ class TestRestartOcr(TestCase):
         self.env.tearDown()
 
     def test_restart_ocr(self):
+        #may be we should also restart "hot folder" application
         output_files = self.env.process_with_client(['../files/freeze.pdf'], timeout=200)
         self.assertFalse(os.path.exists(output_files[0]))
 
@@ -350,7 +340,7 @@ class TestRestartOcr(TestCase):
         self.assertTrue(os.path.exists(output_files[0]), msg="cannot convert a normal file after ocr restart")
         with open('db_conv.log') as inp:
             s = inp.read()
-            self.assertNotEqual(s.find('restart ocr'), -1)
+            self.assertNotEqual(-1, s.find('restart ocr'))
 
 
 class TestStalledFiles(TestCase):
@@ -396,3 +386,109 @@ class TestKillServer(TestCase):
         stats = self.env.server.get_stats()
         self.assertEqual(stats["all_put_files_count"], 0)  # the first client call must be cached
 
+
+# read  from TSnowBallFileStorage.bin_files[-1] file that is open with mode a+
+class TestReadFromAplusFile(TestCase):
+    def setUp(self):
+        self.env = TTestEnv("read_from_aplus_file")
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def write_and_read(self, file_name):
+        # write to  storage a new file
+        output_file = self.env.process_with_client([file_name])[0]
+        self.assertTrue(os.path.exists(output_file))
+        file_size = os.stat(output_file).st_size
+        hash_code = build_dislosures_sha256(output_file)
+
+        # read  file
+        os.unlink(output_file)
+        output_file_copy = self.env.process_with_client([file_name])[0]
+        self.assertTrue(os.path.exists(output_file_copy))
+        self.assertEqual(os.stat(output_file_copy).st_size, file_size)
+        self.assertEqual(hash_code, build_dislosures_sha256(output_file_copy))
+        return file_size, hash_code
+
+    def test_write_3_files(self):
+        input_file1 = "../files/4043_0.pdf"
+        file_size1, hash1 = self.write_and_read(input_file1)
+
+        self.assertEqual(0, self.env.server.convert_storage.check_storage())
+
+        input_file2 = "../files/4043_1.pdf"
+        self.write_and_read(input_file2)
+
+        file_size_copy1, hash_copy1 = self.write_and_read(input_file1)
+        self.assertEqual(file_size_copy1, file_size1)
+        self.assertEqual(hash1, hash_copy1)
+        # after this line TSnowBallFileStorage.bin_files[-1].tell() must be not at the file end
+
+        input_file3 = "../files/4043_2.pdf"
+        self.write_and_read(input_file3)
+
+        stats = self.env.server.get_stats()
+        self.assertEqual(stats["all_put_files_count"], 3)
+
+        self.assertEqual(0, self.env.server.convert_storage.check_storage())
+
+
+class TestHighLoadPing(TestCase):
+
+    def setUp(self):
+        self.before_files = list()
+        self.background_files = list()
+        converters = TExternalConverters(enable_smart_parser=False, enable_calibre=False, enable_cat_doc=False,
+                                         enable_xls2csv=False, enable_office_2_txt=False)
+        self.env = TTestEnv("many_pings1")
+        for i in range(10):
+            random_pdf_file = os.path.join( self.env.data_folder, "random_{}.pdf".format(i))
+            converters.build_random_pdf(random_pdf_file, cnt=500)
+            self.before_files.append(random_pdf_file)
+
+        for i in range(5):
+            random_pdf_file = os.path.join( self.env.data_folder, "random_background_{}.pdf".format(i))
+            converters.build_random_pdf(random_pdf_file, cnt=500)
+            self.background_files.append(random_pdf_file)
+
+    def is_converting(self):
+        return self.env.client.get_stats()['is_converting']
+
+    def cpu_load(self):
+        print("start cpu load at {}".format(time.time()))
+        p = subprocess.Popen(["c:/cygwin64/bin/sha1sum", '/dev/zero'], stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
+        return p
+
+    def send_a_file(self, file_path):
+        self.env.process_with_client([file_path], timeout=2, skip_receiving=False)
+        return True
+
+    def test_many_pings(self):
+        self.env.process_with_client(self.before_files, timeout=5, skip_receiving=False)
+
+        #load two cpu cores with some tasks to be like production server
+        pid_cpu_load1 = self.cpu_load()
+        pid_cpu_load2 = self.cpu_load()
+
+        time.sleep(5)
+        start = time.time()
+        with concurrent.futures.ThreadPoolExecutor(max_workers=5) as executor:
+            func_calls = list()
+            for i in self.background_files:
+                func_calls.append(partial(self.send_a_file, i))
+            for i in range(40):
+                if random.random() < 0.5:
+                    f = self.env.client.assert_declarator_conv_alive
+                else:
+                    f = self.is_converting
+                func_calls.append(f)
+            random.shuffle(func_calls)
+            requests = {executor.submit(f) for f in func_calls}
+            for future in concurrent.futures.as_completed(requests):
+                self.assertTrue(future.result())
+        print("rps is {}".format(len(func_calls) / (time.time() - start)))
+        pid_cpu_load1.kill()
+        pid_cpu_load2.kill()
+
+    def tearDown(self):
+        self.env.tearDown()

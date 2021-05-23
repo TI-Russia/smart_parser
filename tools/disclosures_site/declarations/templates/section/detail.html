@@ -16,10 +16,9 @@
     {% endif %}
 </h1>
 
-<h2>
-     {{section.position_and_office_str}} <br/> <br/>
-     Cведения о доходах за {{ section.income_year }} год <br/>
-</h2>
+<h2> {{section.office_name}} </h2>
+<p> <i> {{section.position_and_department}}</i></p>
+<h2> Cведения о доходах за {{ section.income_year }} год <br/> </h2>
 
 {% include "section/section_table.html" %}
 

@@ -1,39 +1,20 @@
 ﻿from common.download import TDownloadEnv
-from common.robot_project import TRobotProject
-from common.robot_step import TRobotStep
-from common.robot_web_site import TRobotWebSite
-from common.link_info import check_link_sitemap, check_anticorr_link_text
+from web_site_db.robot_project import TRobotProject
+from web_site_db.robot_step import TRobotStep
+from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
+from common.link_info import check_link_sitemap, check_anticorr_link_text, check_anticorr_link_text_2
 from common.primitives import convert_timeout_to_seconds
-from dl_robot.declaration_link import looks_like_a_declaration_link
+from common.http_request import THttpRequester
+from dl_robot.declaration_link import looks_like_a_declaration_link, check_sveden_url_sitemap_xml
+from common.logging_wrapper import setup_logging
+from dl_robot.tomsk import tomsk_gov_ru
 
 import platform
 import tempfile
 import os
 import sys
 import argparse
-import logging
 import traceback
-
-
-def setup_logging(logfilename):
-    logger = logging.getLogger("dlrobot_logger")
-    logger.setLevel(logging.DEBUG)
-
-    # create formatter and add it to the handlers
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    if os.path.exists(logfilename):
-        os.remove(logfilename)
-    # create file handler which logs even debug messages
-    fh = logging.FileHandler(logfilename, encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-    return logger
 
 
 ROBOT_STEPS = [
@@ -45,14 +26,16 @@ ROBOT_STEPS = [
     {
         'step_name': "anticorruption_div",
         'check_link_func': check_anticorr_link_text,
+        'check_link_func_2': check_anticorr_link_text_2,  # use it if check_link_func yields no results
         'include_sources': "copy_if_empty",
         'search_engine': {
             'request': "противодействие коррупции",
             'policy': "run_after_if_no_results",
             'max_serp_results': 1
-        }
+        },
     },
     {
+        'max_links_from_one_page' : 1000,
         'step_name': "declarations",
         'check_link_func': looks_like_a_declaration_link,
         'include_sources': "copy_if_empty",
@@ -60,6 +43,9 @@ ROBOT_STEPS = [
         'search_engine': {
             'request': '"сведения о доходах"',
             'policy': "run_always_before"
+        },
+        'sitemap_xml_processor': {
+            'check_url_func':  check_sveden_url_sitemap_xml
         },
         'transitive': True,
     }
@@ -71,7 +57,7 @@ class TDlrobot:
     def parse_args(arg_list):
         global ROBOT_STEPS
         parser = argparse.ArgumentParser()
-        parser.add_argument("--project", dest='project', default="offices.txt", required=True)
+        parser.add_argument("--project", dest='project', default="web_site_snapshots.txt", required=True)
         parser.add_argument("--step", dest='step', default=None)
         parser.add_argument("--start-from", dest='start_from', default=None)
         parser.add_argument("--stop-after", dest='stop_after', default=None)
@@ -103,15 +89,19 @@ class TDlrobot:
             args.stop_after = args.step
         if args.logfile is None:
             args.logfile = args.project + ".log"
-        TRobotWebSite.CRAWLING_TIMEOUT = convert_timeout_to_seconds(args.crawling_timeout)
+        TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT = convert_timeout_to_seconds(args.crawling_timeout)
+        if TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT > TWebSiteCrawlSnapshot.DEFAULT_CRAWLING_TIMEOUT:
+            TWebSiteCrawlSnapshot.SINGLE_DECLARATION_TIMEOUT = 60 * 60
         TDownloadEnv.LAST_CONVERSION_TIMEOUT = convert_timeout_to_seconds(args.last_conversion_timeout)
         TDownloadEnv.PDF_QUOTA_CONVERSION = args.pdf_quota_conversion
-        TDownloadEnv.init_conversion()
         return args
 
     def __init__(self, args):
         self.args = args
-        self.logger = setup_logging(args.logfile)
+        self.logger = setup_logging(log_file_name=args.logfile)
+        self.logger.debug("TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT={}".format(TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT))
+        TDownloadEnv.init_conversion(self.logger)
+        THttpRequester.initialize(self.logger)
         if args.clear_cache_folder:
             TDownloadEnv.clear_cache_folder()
 
@@ -124,13 +114,16 @@ class TDlrobot:
         raise Exception("cannot find step {}".format(name))
 
     def make_steps(self, project):
-        if self.args.start_from != "last_step":
-            start = self.step_index_by_name(self.args.start_from) if self.args.start_from is not None else 0
-            end = self.step_index_by_name(self.args.stop_after) + 1 if self.args.stop_after is not None else len(ROBOT_STEPS)
-            for step_no in range(start, end):
-                for office_info in project.offices:
-                    office_info.find_links_for_one_website(step_no)
-                project.write_project()
+        if project.web_site_snapshots[0].get_domain_name() == "tomsk.gov.ru":
+            tomsk_gov_ru(project.web_site_snapshots[0])
+        else:
+            if self.args.start_from != "last_step":
+                start = self.step_index_by_name(self.args.start_from) if self.args.start_from is not None else 0
+                end = self.step_index_by_name(self.args.stop_after) + 1 if self.args.stop_after is not None else len(ROBOT_STEPS)
+                for step_no in range(start, end):
+                    for web_site in project.web_site_snapshots:
+                        web_site.find_links_for_one_website(step_no)
+                    project.write_project()
 
         if self.args.stop_after is not None:
             if self.args.stop_after != "last_step":
@@ -148,6 +141,7 @@ class TDlrobot:
         self.logger.debug("use {} as a cache folder".format(os.path.realpath(TDownloadEnv.FILE_CACHE_FOLDER)))
         with TRobotProject(self.logger, self.args.project, ROBOT_STEPS, self.args.result_folder) as project:
             project.total_timeout = convert_timeout_to_seconds(self.args.total_timeout)
+            self.logger.debug("total_timeout = {}".format(self.args.total_timeout))
             project.read_project()
             project.fetch_main_pages()
             if self.args.only_click_paths:

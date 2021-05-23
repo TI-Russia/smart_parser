@@ -120,6 +120,11 @@ namespace Smart.Parser.Lib
         private static decimal ParseRoubles(string val, bool inThousands)
         {
             val = val.Trim();
+            if (val.EndsWith("-00") && val.Length > 4 && char.IsDigit(val[0]))
+            {
+                //1241300-00
+                val = val.Substring(0, val.Length - 3);
+            }
             var res = val.ParseDecimalValue();
             if (res > 10000000000)
             {

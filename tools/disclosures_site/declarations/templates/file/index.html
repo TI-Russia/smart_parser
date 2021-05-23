@@ -23,7 +23,17 @@
 
         {{form.sha256.label_tag}}
         {{form.sha256}}
+    </div>
 
+    <div class="search_input">
+        {{form.min_income_year.label_tag}}
+        {{form.min_income_year}}
+
+        {{form.max_income_year.label_tag}}
+        {{form.max_income_year}}
+
+        {{form.intersection_status.label_tag}}
+        {{form.intersection_status}}
     </div>
 </form>
 
@@ -37,7 +47,7 @@
         <tr>
             <th><a href="?{{sort_by_id}}">ID</a></th>
             <th><a href="?{{sort_by_web_domains}}">Web Domain</a></th>
-            <th><a href="?{{sort_by_intersection_status}}">Sources</a></th>
+            <th><a href="?{{sort_by_intersection_status}}">Status</a></th>
             <th><a href="?{{sort_by_min_income_year}}">Min Year</a></th>
             <th><a href="?{{sort_by_max_income_year}}">Max Year</a></th>
             <th><a href="?{{sort_by_section_count}}">Section Count</a></th>

@@ -3,7 +3,7 @@ import sys
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost']
+ALLOWED_HOSTS = ['localhost', '192.168.100.26']
 
 #   os.environ['DISCLOSURES_DB_HOST'] = 'localhost'
 

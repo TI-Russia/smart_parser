@@ -1,9 +1,12 @@
-from unittest import TestCase
-from common.find_link import web_link_is_absolutely_prohibited
+from web_site_db.robot_step import TRobotStep
+from common.http_request import THttpRequester
 from common.download import TDownloadEnv
+from common.logging_wrapper import setup_logging
+
 import os
 import tempfile
-import logging
+from unittest import TestCase
+
 
 BAD_LINKS = [
 ("www.mvd.ru", "www.yandex.ru", True),
@@ -42,7 +45,21 @@ BAD_LINKS = [
 
 class TestProhibitedLinks(TestCase):
     def test_prohibited_links(self):
-        logger = logging.getLogger('test_prohibited')
+        logger = setup_logging('prohibited')
+
+        class TDummyProject:
+            def __init__(self):
+                self.logger = logger
+                self.enable_selenium = False
+
+        class TDummyWebSite:
+            def __init__(self):
+                self.logger = logger
+                self.enable_urllib = True
+                self.parent_project = TDummyProject()
+
+        THttpRequester.initialize(logger)
+        robot_step = TRobotStep(TDummyWebSite())
         with tempfile.TemporaryDirectory(dir=os.path.dirname(__file__), prefix="cached_prohibited.") as tmp_folder:
             TDownloadEnv.FILE_CACHE_FOLDER = str(tmp_folder)
             for (source, target, is_prohibited) in BAD_LINKS:
@@ -50,4 +67,5 @@ class TestProhibitedLinks(TestCase):
                     source = 'http://' + source
                 if not target.startswith('http'):
                     target = 'http://' + target
-                self.assertEqual(is_prohibited, web_link_is_absolutely_prohibited(logger, source, target))
+
+                self.assertEqual(is_prohibited, robot_step.web_link_is_absolutely_prohibited(source, target))

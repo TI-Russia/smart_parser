@@ -1,12 +1,14 @@
 from dlrobot_server.dlrobot_central import TDlrobotHTTPServer
 from dlrobot_server.dlrobot_worker import TDlrobotWorker
 from dlrobot_server.scripts.fns.unzip_archive import TUnzipper
+from dlrobot_server.common_server_worker import TTimeouts, PITSTOP_FILE
 from smart_parser_http.smart_parser_server import TSmartParserHTTPServer
 from source_doc_http.source_doc_server import TSourceDocHTTPServer
-from common.robot_web_site import TWebSiteReachStatus
-from common.primitives import build_dislosures_sha256
+from web_site_db.robot_web_site import TWebSiteReachStatus
+from common.primitives import build_dislosures_sha256, is_local_http_port_free
 from common.archives import TDearchiver
 from unittest import TestCase
+
 import os
 import threading
 import shutil
@@ -27,16 +29,10 @@ def start_worker(client):
     client.run_thread_pool()
 
 
-def is_port_free(port):
-    import socket
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        return s.connect_ex(('127.0.0.1', port)) != 0
-
-
 class TTestEnv:
 
     def __init__(self, central_port):
-        assert is_port_free(central_port)
+        assert is_local_http_port_free(central_port)
         self.central_port = central_port
         self.data_folder = os.path.join(os.path.dirname(__file__), "data.{}".format(central_port))
         self.central_address = "127.0.0.1:{}".format(self.central_port)
@@ -56,14 +52,14 @@ class TTestEnv:
         os.chdir(self.data_folder)
 
     def setup_website(self, port):
-        assert is_port_free(port)
+        assert is_local_http_port_free(port)
         handler = partial(http.server.SimpleHTTPRequestHandler,
                           directory=os.path.join(os.path.dirname(__file__), "html"))
         self.web_site = http.server.HTTPServer(server_address=("127.0.0.1", port), RequestHandlerClass=handler)
         threading.Thread(target=start_server, args=(self.web_site,)).start()
 
     def setup_smart_parser_server(self, port):
-        assert is_port_free(port)
+        assert is_local_http_port_free(port)
         input_folder = os.path.join(self.data_folder, "smart_parser_serve_input")
         server_args = ['--input-task-directory', input_folder]
         os.environ['SMART_PARSER_SERVER_ADDRESS'] = '127.0.0.1:{}'.format(port)
@@ -81,36 +77,30 @@ class TTestEnv:
                 js = dict()
                 for w in web_sites:
                     js[w] = {
-                        "events": [],
                         "calc_office_id": None
                     }
             else:
                 js = {}
             json.dump(js, outp, indent=4, ensure_ascii=False)
 
-    def build_history_file(self, web_site, file_name):
-        with open(file_name, "w") as outp:
-            rec = {"worker_ip": "95.165.96.61",
-                   "project_file": web_site + ".txt",
-                   "exit_code": 0,
-                   "start_time": 1601799469,
-                   "end_time": None,
-                   "result_folder": None,
-                   "result_files_count": 0, "worker_host_name": None}
-            json.dump(rec, outp)
-
     def setup_central(self, enable_smart_parser, web_site, dlrobot_project_timeout=5*60, tries_count=2,
                       enable_source_doc_server=False, history_file=None):
         self.build_web_sites_file(web_site)
         self.result_folder = os.path.join(self.data_folder, "processed_projects")
-
+        if history_file is None:
+            remote_calls_file_name = os.path.join(self.data_folder, "dlrobot_remote_calls.dat")
+            with open(remote_calls_file_name, "w"):
+                pass
+        else:
+            remote_calls_file_name = history_file
         server_args = [
             '--input-task-list', self.input_web_sites_file,
+            '--remote-calls-file', remote_calls_file_name,
             '--result-folder', self.result_folder,
             '--server-address', self.central_address,
             '--tries-count', str(tries_count),
             '--central-heart-rate', '1s',
-            '--dlrobot-project-timeout', str(dlrobot_project_timeout),
+            '--dlrobot-crawling-timeout', str(dlrobot_project_timeout),
             '--log-file-name', os.path.join(self.data_folder, "dlrobot_central.log"),
             '--disable-search-engines',
             '--disable-telegram',
@@ -120,8 +110,6 @@ class TTestEnv:
             server_args.append('--disable-smart-parser-server')
         if not enable_source_doc_server:
             server_args.append('--disable-source-doc-server')
-        if history_file is not None:
-            server_args.extend(['--history-crawl-files-mask', history_file])
         self.central = TDlrobotHTTPServer(TDlrobotHTTPServer.parse_args(server_args))
         self.central_thread = threading.Thread(target=start_server, args=(self.central,))
         self.central_thread.start()
@@ -138,7 +126,7 @@ class TTestEnv:
         self.start_worker_thread()
 
     def setup_source_doc_server(self, port):
-        assert is_port_free(port)
+        assert is_local_http_port_free(port)
         sourec_doc_data_folder = os.path.join(self.data_folder, "source_doc_data")
         os.mkdir(sourec_doc_data_folder)
         server_args = [
@@ -168,8 +156,8 @@ class TTestEnv:
             self.smart_parser_server.stop_server()
         if self.source_doc_server is not None:
             self.source_doc_server.stop_server()
-        #if os.path.exists(self.data_folder):
-        #    shutil.rmtree(self.data_folder, ignore_errors=True)
+        if os.path.exists(self.data_folder):
+            shutil.rmtree(self.data_folder, ignore_errors=True)
 
     def count_projects_results(self):
         result_summary_count = 0
@@ -179,9 +167,8 @@ class TTestEnv:
                     result_summary_count += 1
         return result_summary_count
 
-    def get_last_reach_status (self):
-        assert len(self.central.dlrobot_remote_calls) == 1
-        remote_calls = list(self.central.dlrobot_remote_calls.values())[0]
+    def get_last_reach_status(self):
+        remote_calls = list(self.central.dlrobot_remote_calls.get_all_calls())
         assert len(remote_calls) > 0
         return remote_calls[-1].reach_status
 
@@ -200,10 +187,10 @@ class TestAotRu(TestCase):
     def test_aot_ru(self):
         time.sleep(2)
         stats = self.env.central.get_stats()
-        self.assertEqual(stats['running_count'], 1)
+        self.assertEqual(1, stats['running_count'])
         self.env.worker_thread.join(200)
         self.assertEqual(1, self.env.count_projects_results())
-        self.assertEqual(self.env.get_last_reach_status(), TWebSiteReachStatus.normal)
+        self.assertEqual(TWebSiteReachStatus.normal, self.env.get_last_reach_status())
         # one more time
         self.env.start_worker_thread()
         self.env.worker_thread.join(200)
@@ -223,17 +210,18 @@ class TestBadDomain(TestCase):
     def test_bad_domain_and_two_retries(self):
         self.env.worker_thread.join(200)
         self.assertEqual(1, self.env.count_projects_results())
-        self.assertEqual(self.env.central.get_stats()['processed_tasks'], 1)
+        self.assertEqual(1, self.env.central.get_stats()['processed_tasks'])
         self.assertEqual(self.env.get_last_reach_status(), TWebSiteReachStatus.abandoned)
 
         self.env.start_worker_thread()
         self.env.worker_thread.join(200)
-        self.assertEqual(self.env.central.get_stats()['processed_tasks'], 2)
+        self.assertEqual(2, self.env.central.get_stats()['processed_tasks'])
 
         self.env.start_worker_thread()
         self.env.worker_thread.join(200)
-        # there are only two retries in one epoch, so the previous epoch is ended and all processed_tasks are forgotten
-        self.assertEqual(self.env.central.get_stats()['processed_tasks'], 1)
+        self.assertEqual(2, self.env.central.get_stats()['processed_tasks'])
+        self.assertEqual(TWebSiteReachStatus.out_of_reach2,
+        self.env.central.web_sites_db.get_web_site("bad_domain").reach_status)
 
 
 class WorkerPitStop(TestCase):
@@ -247,7 +235,7 @@ class WorkerPitStop(TestCase):
         self.env.tearDown()
 
     def test_worker_pitstop(self):
-        with open (os.path.join(self.env.worker_folder, ".dlrobot_pit_stop"), "w"):
+        with open(os.path.join(self.env.worker_folder, PITSTOP_FILE), "w"):
             pass
         time.sleep(3)
         self.assertFalse(self.env.worker_thread.is_alive())
@@ -265,9 +253,10 @@ class CentralPitStop(TestCase):
 
     def test_central_pitstop(self):
         self.assertTrue(self.env.central_thread.is_alive())
-        with open (os.path.join(self.env.data_folder, ".dlrobot_pit_stop"), "w"):
+        with open (os.path.join(self.env.data_folder, PITSTOP_FILE), "w"):
             pass
-        time.sleep(3)
+        time.sleep(self.env.central.args.central_heart_rate + 1)
+        self.assertTrue( self.env.central.stop_process )
         self.assertFalse(self.env.central_thread.is_alive())
 
 
@@ -283,37 +272,19 @@ class DlrobotTimeout(TestCase):
         self.env.tearDown()
 
     def test_timeout(self):
+        old_timeouts = TTimeouts.save_timeouts()
+        TTimeouts.set_timeouts(0)
         self.assertTrue(self.env.worker_thread.is_alive())
         time.sleep(2)
         self.env.worker.stop_worker()
         time.sleep(2)
+        TTimeouts.restore_timeouts(old_timeouts)
         stats = self.env.central.get_stats()
 
         # still have the project in the input tasks since timeouted project have one more retry
         # remember that yandex cloud workstations are restarted each day, all projects from them are timeouted
         self.assertEqual(stats['input_tasks'], 1)
         self.assertEqual(stats['processed_tasks'], 1)
-
-
-# class DlrobotWebStats(TestCase):
-#     central_port = 8295
-#     website_port = 8296
-#
-#     def setUp(self):
-#         self.env = TTestEnv(self.central_port)
-#         self.env.setup_website(self.website_port)
-#         self.env.setup_central(False, "127.0.0.1:{}".format(self.website_port))
-#         self.env.setup_worker("run_once")
-#
-#     def tearDown(self):
-#         self.env.tearDown()
-#
-#     def test_web_stats(self):
-#         self.env.worker_thread.join(200)
-#         self.assertEqual(self.env.count_projects_results(), 1)
-#         stat_file = os.path.join(self.env.result_folder, "dlrobot_remote_calls.dat")
-#         stats = TDlrobotAllStats(TDlrobotAllStats.parse_args(['--central-stats-file', stat_file]))
-#         stats.build_stats() # check no exceptions
 
 
 class DlrobotWithSmartParser(TestCase):
@@ -369,17 +340,33 @@ class DlrobotWithSmartParserAndSourceDocServer(TestCase):
 class TestHistoryFiles(TestCase):
     central_port = 8305
 
+    def build_history_file(self, web_sites, file_name):
+        with open(file_name, "w") as outp:
+            for web_site in web_sites:
+                rec = {"worker_ip": "95.165.96.61",
+                       "project_file": web_site + ".txt",
+                       "web_site": web_site,
+                       "exit_code": 0,
+                       "start_time": 1601799469,
+                       "end_time": None,
+                       "result_folder": None,
+                       "reach_status": TWebSiteReachStatus.normal,
+                       "result_files_count": 0, "worker_host_name": None}
+                json.dump(rec, outp)
+                outp.write("\n")
+
     def setUp(self):
         self.env = TTestEnv(self.central_port)
         history_file = os.path.join(self.env.data_folder, "history.txt")
-        self.env.build_history_file("olddomain.ru", history_file)
-        self.env.setup_central(False, ["olddomain.ru", "newdomain.ru"], history_file=history_file)
+        self.build_history_file(["olddomain.ru", "olddomain.ru", "olddomain2.ru"], history_file)
+        self.env.setup_central(False, ["olddomain.ru", "newdomain.ru", "olddomain2.ru"], history_file=history_file)
 
     def tearDown(self):
         self.env.tearDown()
 
     def test_task_order(self):
-        self.assertEqual( self.env.central.input_web_sites[0], "newdomain.ru")
+        self.assertListEqual(["newdomain.ru", "olddomain2.ru"],
+                                self.env.central.web_sites_to_process)
 
 
 class TestUnzipArchive(TestCase):
@@ -425,3 +412,4 @@ class TestUnzipArchive(TestCase):
             break
         js = json.loads(self.env.smart_parser_server.get_smart_parser_json(sha256))
         self.assertEqual('51.service.nalog.ru', js['document_sheet_props'][0]['url'])
+

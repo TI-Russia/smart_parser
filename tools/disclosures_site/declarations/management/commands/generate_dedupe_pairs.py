@@ -1,4 +1,4 @@
-from declarations.management.commands.permalinks import TPermaLinksDB
+from declarations.permalinks import TPermaLinksPerson
 import declarations.models as models
 from .random_forest_adapter import TDeduplicationObject, TFioClustering, TMLModel
 from common.logging_wrapper import setup_logging
@@ -7,6 +7,8 @@ from django.core.management import BaseCommand
 import sys
 import json
 from collections import defaultdict
+import itertools
+from django.db import connection
 
 
 class Command(BaseCommand):
@@ -60,8 +62,8 @@ class Command(BaseCommand):
             help='write back to DB',
         )
         parser.add_argument(
-            '--permanent-links-db',
-            dest='permanent_links_db',
+            '--permalinks-folder',
+            dest='permalinks_folder',
             required=True
         )
         parser.add_argument(
@@ -69,6 +71,12 @@ class Command(BaseCommand):
             dest='fake_dedupe',
             required=False,
             help='create one person for all sections without dedupe (test purpose)'
+        )
+        parser.add_argument(
+            '--separate-sections',
+            dest='separate_sections',
+            required=False,
+            help='put all sections in a separate cluster (test purpose)'
         )
         parser.add_argument(
             '--logfile',
@@ -94,7 +102,7 @@ class Command(BaseCommand):
         self.rebuild = options.get('rebuild', False)
         if self.rebuild and not options['write_to_db']:
             self.logger.info("please add --write-to-db  option if you use --rebuild")
-        self.permalinks_db = TPermaLinksDB(options['permanent_links_db'])
+        self.permalinks_db = TPermaLinksPerson(options['permalinks_folder'])
         self.permalinks_db.open_db_read_only()
         if options.get('threshold', 0) != 0:
             self.threshold = options.get('threshold')
@@ -112,22 +120,13 @@ class Command(BaseCommand):
         return records
 
     def read_sections(self, lower_bound, upper_bound):
-        sections = self.filter_table(models.Section, lower_bound, upper_bound)
-        if not self.rebuild:
-            sections = sections.filter(person=None)
+        sections = self.filter_table(models.Section, lower_bound, upper_bound)\
+
+        # there are sections with person_id != null, person_id was set by  copy_person_id.py,
+        # we need these records to build valid clusters
         cnt = 0
         take_sections_with_empty_income = self.options.get('take_sections_with_empty_income', False)
         for s in sections.all():
-            if s.person is not None:
-                if s.person.declarator_person_id is not None:
-                    # this merging was copied from declarator, do not touch it
-                    continue
-                else:
-                    if self.rebuild:
-                        # this merging was created by the previous dedupe run
-                        s.dedupe_score = None
-                        s.person_id = None
-                        s.save() # do it to disable constraint delete
             o = TDeduplicationObject().initialize_from_section(s)
             if not o.fio.is_resolved:
                 self.logger.debug("ignore section id={} person_name={}, cannot find family name".format(s.id, s.person_name))
@@ -145,30 +144,53 @@ class Command(BaseCommand):
     def read_people(self, lower_bound, upper_bound):
         persons = self.filter_table(models.Person, lower_bound, upper_bound)
         cnt = 0
-        deleted_cnt = 0
         for p in persons.all():
-            if self.rebuild and p.declarator_person_id is None:
-                # the record was created by the previous deduplication run
-                p.delete()
-                deleted_cnt += 1
+            o = TDeduplicationObject().initialize_from_person(p)
+            if len(o.years) > 0:
+                self.cluster_by_minimal_fio[o.fio.build_fio_with_initials()].append(o)
             else:
-                o = TDeduplicationObject().initialize_from_person(p)
-                if len(o.years) > 0:
-                    self.cluster_by_minimal_fio[o.fio.build_fio_with_initials()].append(o)
-                cnt += 1
-                if cnt % 1000 == 0:
-                    self.logger.info("Read {} records from person table".format(cnt))
+                self.logger.debug("skip person id={}, because this record has no related sections with"
+                                  " defined income years".format(p.id))
+            cnt += 1
+            if cnt % 1000 == 0:
+                self.logger.info("Read {} records from person table".format(cnt))
         self.logger.info("Read {} records from person table".format(cnt))
-        if deleted_cnt > 0:
-            self.logger.info("Deleted {} records from person table".format(deleted_cnt))
 
     def get_all_leaf_objects(self):
         for l in self.cluster_by_minimal_fio.values():
             for o in l:
                 yield o
 
+    def filter_sql_by_person_name(self, sql, lower_bound, upper_bound):
+        if lower_bound == '':
+            assert upper_bound == ''
+            return sql
+        if lower_bound != '':
+            assert upper_bound != ''
+        return sql + " and person_name >= '{}' and person_name < '{}' ".format(lower_bound, upper_bound)
+
+    def delete_person_ids_from_previous_deduplication(self, lower_bound, upper_bound):
+        sql = self.filter_sql_by_person_name("update declarations_section set " \
+              "person_id=null, dedupe_score=null " \
+              "where dedupe_score is not null ", lower_bound, upper_bound)
+
+        if lower_bound != '':
+            assert upper_bound != ''
+            sql += ""
+        self.logger.debug(sql)
+        with connection.cursor() as cursor:
+            cursor.execute(sql)
+
+        sql = self.filter_sql_by_person_name("delete from declarations_person " \
+                        "where declarator_person_id is null", lower_bound, upper_bound)
+        self.logger.debug(sql)
+        with connection.cursor() as cursor:
+            cursor.execute(sql)
+
     def fill_dedupe_data(self, lower_bound, upper_bound):
         self.cluster_by_minimal_fio = defaultdict(list)
+        if self.rebuild:
+            self.delete_person_ids_from_previous_deduplication(lower_bound, upper_bound)
 
         self.read_sections(lower_bound, upper_bound)
         self.read_people(lower_bound, upper_bound)
@@ -192,8 +214,10 @@ class Command(BaseCommand):
                     min(obj.years)))
 
     def link_section_to_person(self, section, person, distance):
-        if section.person_id == person.id:
-            #dedupe score is not set to these records, they are from declarator
+        if section.person_id is not None and section.dedupe_score is None:
+            #these person_id's came from declarator, do not touch them
+            self.logger.debug("skip setting person_id={} to section (id={}, person_id={}), because it is from declarator".format(
+                    person.id, section.id, section.person_id))
             return
         self.logger.debug("link section {} to person {}".format(section.id, person.id))
         section.person_id = person.id
@@ -203,32 +227,59 @@ class Command(BaseCommand):
             person.person_name = section.person_name
             person.save()
 
-    def link_sections_to_a_new_person(self, sections, section_distances):
+    def link_sections_to_a_new_person(self, sections, section_distances, person_id):
         assert len(section_distances) == len(sections)
-        person_variants = defaultdict(int)
-        for section in sections:
-            person_id = self.permalinks_db.get_person_id_by_section(section)
-            if person_id is not None:
-                person_variants[person_id] += 1
-
-        if len(person_variants) > 0:
-            max_person_id_count, max_person_id = sorted( list( (v, k) for (k, v) in person_variants.items()))[-1]
-            section_count_in_old_cluster = self.permalinks_db.get_section_count_by_person_id(max_person_id)
-            if section_count_in_old_cluster is not None and max_person_id_count * 2 > section_count_in_old_cluster:
-                self.logger.debug("use old person.id, max_person_id={}, section_count_in_old_cluster={}, max_person_id_count={}".format(
-                    max_person_id, max_person_id_count, section_count_in_old_cluster
-                ))
-                person_id = max_person_id
-
         if person_id is None:
-            person_id = self.permalinks_db.get_new_id(models.Person)
-        person = models.Person(id=person_id)
-        person.save()
+            person_id = self.permalinks_db._get_new_id()
+            self.logger.debug("create new person.id: {}".format(person_id))
+        else:
+            self.logger.debug("use old person.id: {}".format(person_id))
+
+        try:
+            person = models.Person.objects.get(id=person_id)
+            #reuse person record from declarator
+            if person.declarator_person_id is None:
+                self.logger.error("Warning! Reuse existing person_id = {} for different sections (cluster), it could happen"
+                                  "if this person_id was used for different person created by copy_person_id.py "
+                                  "but should not happen if declarator_person_id is None. ".format(person_id))
+        except models.Person.DoesNotExist as exp:
+            #create new person record
+            person = models.Person(id=person_id)
+            person.save()
 
         for (section, distance) in zip(sections,section_distances):
             self.link_section_to_person(section, person, distance)
 
+    def build_cluster_to_old_person_id(self, clusters):
+        old_to_new_sections = defaultdict(list)
+
+        for cluster_id, items in clusters.items():
+            for obj, distance in items:
+                if obj.record_id.source_table == TDeduplicationObject.SECTION:
+                    section_id = obj.record_id.id
+                    person_id = self.permalinks_db.get_person_id_by_section_id(section_id)
+                    if person_id is not None:
+                        old_to_new_sections[person_id].append((cluster_id, section_id))
+                else:
+                    # a person is already in this cluster, use it
+                    if cluster_id in old_to_new_sections:
+                        del old_to_new_sections[person_id]
+                    break
+
+        old_to_new_clusters = dict()
+        for person_id, sections in old_to_new_sections.items():
+            sections.sort()  # take always the cluster with that the minimal section_id
+            max_cluster_size = 0
+            for cluster_id, items in itertools.groupby(sections, lambda x: x[0]):
+                items_len = len(list(items))
+                if items_len > max_cluster_size:
+                    max_cluster_size = items_len
+                    old_to_new_clusters[cluster_id] = person_id
+        return old_to_new_clusters
+
     def write_results_to_db(self, clusters):
+        clusters_to_old_person_ids = self.build_cluster_to_old_person_id(clusters)
+
         for cluster_id, items in clusters.items():
             person_ids = list()
             sections = list()
@@ -241,7 +292,8 @@ class Command(BaseCommand):
                     sections.append(section)
                     section_distances.append(distance)
             if len(person_ids) == 0:
-                self.link_sections_to_a_new_person(sections, section_distances)
+                self.link_sections_to_a_new_person(sections, section_distances,
+                                                   clusters_to_old_person_ids.get(cluster_id))
             elif len(person_ids) == 1:
                 person = models.Person.objects.get(id=person_ids[0])
                 for section, distance in zip(sections, section_distances):
@@ -252,9 +304,6 @@ class Command(BaseCommand):
                 self.logger.debug("a cluster with two people found, I do not know what to do".format(left_sections))
                 self.logger.debug("  cluster sections: ".format(left_sections))
                 self.logger.debug("  cluster persons: ".format(persons))
-
-
-
 
     def get_family_name_bounds(self):
         if self.options.get('surname_bounds') is not None:
@@ -277,10 +326,19 @@ class Command(BaseCommand):
 
     def cluster_sections_by_minimal_fio(self):
         if self.options.get("fake_dedupe", False):
-            # all records in one cluster
-            c = defaultdict(list)
-            c[0] = [(i, 0.5) for i in self.get_all_leaf_objects()]
-            yield c
+            if self.options.get("separate_sections", False):
+                # each record to a separate cluster
+                c = defaultdict(list)
+                k = 0
+                for i in self.get_all_leaf_objects():
+                    c[k] = [(i, 0.1)]
+                    k += 1
+                yield c
+            else:
+                # all records in one cluster
+                c = defaultdict(list)
+                c[0] = [(i, 0.5) for i in self.get_all_leaf_objects()]
+                yield c
         else:
             all_objects_count = sum(len(v) for v in self.cluster_by_minimal_fio.values())
             self.logger.info('Clustering {} objects with threshold={}, len(self.cluster_by_minimal_fio) = {}'.format(

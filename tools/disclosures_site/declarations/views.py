@@ -8,6 +8,7 @@ from declarations.apps import DeclarationsConfig
 from declarations.car_brands import CAR_BRANDS
 from common.primitives import prepare_russian_names_for_search_index
 from declarations.gender_recognize import TGender
+from declarations.input_json import TIntersectionStatus
 
 from django.views import generic
 from django.views.generic.edit import FormView
@@ -46,6 +47,17 @@ class OfficeView(generic.DetailView):
 
 class AboutPageView(generic.TemplateView):
     template_name = 'morda/about.html'
+
+class NewsPageView(generic.TemplateView):
+    template_name = 'morda/news_mobile.html'
+
+
+class PermalinksPageView(generic.TemplateView):
+    template_name = 'morda/permalinks.html'
+
+
+class SmartParserSpecView(generic.TemplateView):
+    template_name = 'morda/smart_parser_spec.html'
 
 
 def anyUrlView(request):
@@ -91,6 +103,10 @@ def fill_combo_box_with_section_years():
         res.append((str(year), str(year)))
     return res
 
+
+def fill_document_intersection_status():
+    return [("", "")] + [(s,s) for s in TIntersectionStatus.all_intersection_statuses()]
+
 CACHED_REGIONS = None
 
 
@@ -134,14 +150,14 @@ def fill_combo_box_with_first_crawl_epochs():
 
 class CommonSearchForm(forms.Form):
     name = forms.CharField(
-        widget=forms.TextInput(attrs={'size': 25}),
+        widget=forms.TextInput(attrs={'size': 20}),
         strip=True,
         required=False,
         empty_value="",
         label="Название"
     )
     person_name = forms.CharField(
-        widget=forms.TextInput(attrs={'size': 30}),
+        widget=forms.TextInput(attrs={'size': 25}),
         strip=True,
         required=False,
         empty_value="",
@@ -162,6 +178,18 @@ class CommonSearchForm(forms.Form):
         required=False,
         label="Год",
         choices=fill_combo_box_with_section_years)
+    min_income_year = forms.ChoiceField(
+        required=False,
+        label="Мин. год",
+        choices=fill_combo_box_with_section_years)
+    max_income_year = forms.ChoiceField(
+        required=False,
+        label="Макс. год",
+        choices=fill_combo_box_with_section_years)
+    intersection_status = forms.ChoiceField(
+        required=False,
+        label="Статус",
+        choices=fill_document_intersection_status)
     region_id = forms.ChoiceField(
         required=False,
         label="Регион",
@@ -176,7 +204,7 @@ class CommonSearchForm(forms.Form):
         empty_value="",
         label="Ведомство")
     position_and_department = forms.CharField(
-        widget=forms.TextInput(attrs={'size': 26}),
+        widget=forms.TextInput(attrs={'size': 21}),
         required=False,
         empty_value="",
         label="Должность или отдел")
@@ -258,6 +286,9 @@ class CommonSearchView(FormView, generic.ListView):
             'car_brands': self.request.GET.get('car_brands'),
             'match_phrase': self.request.GET.get('match_phrase'),
             'gender': self.request.GET.get('gender'),
+            'min_income_year': self.request.GET.get('min_income_year'),
+            'max_income_year': self.request.GET.get('max_income_year'),
+            'intersection_status': self.request.GET.get('intersection_status'),
         }
 
         if self.request.GET.get('match_phrase'):
@@ -314,6 +345,7 @@ class CommonSearchView(FormView, generic.ListView):
             add_should_item("section_count", "term", int, should_items)
             add_should_item("parent_id", "term", int, should_items)
             add_should_item("gender", "term", int, should_items)
+            add_should_item("intersection_status", "term", str, should_items)
             self.build_office_full_text_elastic_search_query(should_items)
 
             if len(should_items) == 0:

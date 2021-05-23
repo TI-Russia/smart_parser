@@ -3,7 +3,7 @@ from common.archives import TDearchiver
 from common.download import ACCEPTED_DECLARATION_FILE_EXTENSIONS, TDownloadEnv, TDownloadedFile
 from common.content_types import DEFAULT_HTML_EXTENSION, DEFAULT_PDF_EXTENSION
 from DeclDocRecognizer.dlrecognizer import run_dl_recognizer, DL_RECOGNIZER_ENUM
-from common.find_link import TLinkInfo
+from common.link_info import TLinkInfo
 
 import re
 import copy
@@ -73,8 +73,9 @@ def check_html_can_be_declaration_preliminary(downloaded_file):
         return False
     html = html.lower()
     words = html.find('квартир') != -1 and html.find('доход') != -1 and html.find('должность') != -1
-    numbers = re.search('[0-9]{6}', html) is not None # доход
-    return words and numbers
+    numbers1 = re.search('[0-9]{6}', html) is not None # доход
+    numbers2 = re.search('[0-9]{3}\s[0-9]{3}', html) is not None  # доход
+    return words and (numbers1 or numbers2)
 
 
 class TExportEnvironment:

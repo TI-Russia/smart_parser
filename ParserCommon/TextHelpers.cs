@@ -69,11 +69,24 @@ namespace TI.Declarator.ParserCommon
             return builder.ToString();
         }
 
-        public static string ReplaceEolnWithSpace(this string str) => str.Replace('\n', ' ').Trim();
+        public static string ReplaceEolnWithSpace(this string str)
+        {
+            return str.Replace('\n', ' ').Trim();
+        }
 
-        public static string CoalesceWhitespace(this string str) => Regex.Replace(str, "[ ]+", " ");
+        public static string CoalesceWhitespace(this string str)
+        {
+            return Regex.Replace(str, @"[\s-[\n]]+", " ");
+        }
 
-        public static string NormSpaces(this string str) => str.ReplaceEolnWithSpace().CoalesceWhitespace();
+        public static string NormSpaces(this string str)
+        {
+            if (str == null)
+            {
+                return null;
+            }
+            return str.ReplaceEolnWithSpace().CoalesceWhitespace().Trim();
+        }
 
         public static string ReplaceFirst(this string str, string substr, string replStr)
         {
@@ -85,18 +98,26 @@ namespace TI.Declarator.ParserCommon
 
         private static readonly string[] PatronymicSuffixStrings = { "вич", "вна", "вной", "внва", "вны", "тич", "мич", "ьич", "ьича", "ьича", "вича", "тича", "мича", "чны", "чна", "ьичем", "тичем", "мичем", "вичем", "чной", "вной" };
 
-        public static bool CanBePatronymic(string s)
+        public static bool  CanBePatronymic(string s)
         {
             s = s.Replace("-", string.Empty);
             if (s.IsNullOrWhiteSpace())
             {
                 return false;
             }
-
+            if (char.IsUpper(s[0]) && s.EndsWith(".") && s.Length == 4 && s[1] == '.')
+            {
+                //"А.Б."
+                return true;
+            }
             return char.IsUpper(s[0]) && (s.EndsWithAny(PatronymicSuffixStrings) || (s.Length <= 4 && s.EndsWith("."))) /* в., в.п., вяч. */;
         }
 
-        private static readonly string[] RoleStrings = { "заместител", "начальник", "аудитор", "депутат", "секретарь", "уполномоченный", "председатель", "бухгалтер", "руководител" };
+        private static readonly string[] RoleStrings = { 
+            "заместител", "начальник", "аудитор", "депутат", 
+            "секретарь", "уполномоченный", "председатель", "бухгалтер", "руководител", "глава", "главы", "заведующий",
+            "заведующая", "служащий", "служащая"
+            };
 
         public static bool MayContainsRole(string s)
         {
@@ -120,5 +141,20 @@ namespace TI.Declarator.ParserCommon
         public static bool ContainsAny(this string source, params string[] patterns) => patterns.Any(pattern => source.Contains(pattern, StringComparison.OrdinalIgnoreCase));
 
         public static bool ContainsAll(this string source, params string[] patterns) => patterns.All(pattern => source.Contains(pattern, StringComparison.OrdinalIgnoreCase));
+
+        public static string[] SplitByEmptyLines(string value)
+        {
+            string[] lines = Regex.Split(value, @"\n\s*\n").ToArray();
+            return lines;
+        }
+
+
+        public static string SliceArrayAndTrim(string[] lines, int start, int end)
+        {
+            return String.Join("\n", lines.Skip(start).Take(end - start)).ReplaceEolnWithSpace();
+        }
+
+
+
     }
 }

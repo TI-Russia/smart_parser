@@ -1,0 +1,1582 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Клюкин               Сергей               Иванович",
+        "role": "Председатель Федерального арбитражного суда Волго-Вятского округа",
+        "department": " \n             Руководство\n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 2948000.00,
+          "size_raw": "2948",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (собственность)",
+          "square": 96.3,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "96,3",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", земельный участок (пользование)",
+          "square": 32.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "32",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", гараж (собственность)",
+          "square": 28.3,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "28,3",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (пользование)",
+          "square": 60.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "60,9",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", жилой дом (собственность)",
+          "square": 33.3,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "33,3",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", жилой дом (долевая собственность)",
+          "square": 35.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "35",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", приусадебный земельный участок (собственность)",
+          "square": 2500.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "2500",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", огородный земельный участок (собственность)",
+          "square": 1200.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "1200",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", приусадебный земельный участок (долевая собственность)",
+          "square": 733.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "733",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "автомобиль \n УАЗ-31519",
+          "relative": null
+        }
+      ],
+      "person_index": 1
+    },
+    {
+      "person": {
+        "name_raw": "Николаев Владимир              Юрьевич",
+        "role": "Заместитель председателя ФАС ВВО",
+        "department": " \n             Руководство\n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 2550000.00,
+          "size_raw": "2550",
+          "relative": null
+        },
+        {
+          "size": 110000.00,
+          "size_raw": "110",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (долевая собственность)",
+          "square": 69.3,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "69,3",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", земельный участок (долевая собственность)",
+          "square": 3000.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "3000",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", гараж (долевая собственность)",
+          "square": 24.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "24",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (долевая собственность)",
+          "square": 69.3,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "69,3",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", земельный участок (долевая собственность)",
+          "square": 3000.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "3000",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", гараж (долевая собственность)",
+          "square": 24.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "24",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "автомобиль\n SuzukiGrandVitara",
+          "relative": null
+        }
+      ],
+      "person_index": 2
+    },
+    {
+      "person": {
+        "name_raw": "Баландин               Борис Александрович",
+        "role": "Заместитель председателя ФАС ВВО",
+        "department": " \n             Руководство\n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 3159940.00,
+          "size_raw": "3159,941",
+          "relative": null
+        },
+        {
+          "size": 102900.00,
+          "size_raw": "102,905",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира (пользование)",
+          "square": 93.8,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "93,8",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", жилой дом (долевая собственность)",
+          "square": 188.3,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "188,3",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", приусадебный земельный участок (долевая собственность)",
+          "square": 960.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "960",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", парковочное место (долевая собственность)",
+          "square": 1870.4,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "1870,4",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", вспомогательное помещение (долевая собственность)",
+          "square": 15.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "15",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", вспомогательное помещение (долевая собственность)",
+          "square": 10.6,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "10,6",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "Квартира (собственность)",
+          "square": 93.8,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "93,8",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", квартира (собственность)",
+          "square": 83.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "83,7",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "автомобиль MITSUBISHI L200 ,\n лодка резиновая 2-х местная с мотором",
+          "relative": null
+        }
+      ],
+      "person_index": 3
+    },
+    {
+      "person": {
+        "name_raw": "Тютин               Денис Владимирович",
+        "role": "Заместитель председателя ФАС ВВО",
+        "department": " \n             Руководство\n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 2404590.00,
+          "size_raw": "2404,592",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира (пользование)",
+          "square": 42.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "42",
+          "country_raw": "Россия",
+          "type_raw": "Квартира (пользование)",
+          "own_type_raw": ""
+        }
+      ],
+      "vehicles": [],
+      "person_index": 4
+    },
+    {
+      "person": {
+        "name_raw": "Покровский Александр Борисович",
+        "role": "Руководитель аппарата суда - администратор",
+        "department": " \n             Руководство\n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 536333000.0,
+          "size_raw": "536333",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (пользование)",
+          "square": 46.7,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "46,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира (пользование)",
+          "own_type_raw": ""
+        }
+      ],
+      "vehicles": [],
+      "person_index": 5
+    },
+    {
+      "person": {
+        "name_raw": "Каширская               Нина Александровна",
+        "role": "Председатель судебного состава",
+        "department": " \n             Первый судебный состав\n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 2647130.00,
+          "size_raw": "2647,126",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (долевая собственность)",
+          "square": 55.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "55",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", жилой дом (собственность)",
+          "square": 337.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "337",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ",земельный участок (собственность)",
+          "square": 1104.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "1104",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 6
+    },
+    {
+      "person": {
+        "name_raw": "Елисеева Евгения Вячеславовна",
+        "role": "Судья",
+        "department": " \n             Первый судебный состав\n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 3326500.00,
+          "size_raw": "3326,5",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (собственность)",
+          "square": 59.9,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "59,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира (собственность)",
+          "own_type_raw": ""
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "автомобиль Peugeot4008",
+          "relative": null
+        }
+      ],
+      "person_index": 7
+    },
+    {
+      "person": {
+        "name_raw": "Жеглова               Ольга Николаевна",
+        "role": "Судья",
+        "department": " \n             Первый судебный состав\n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 1917720.00,
+          "size_raw": "1917,72",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (собственность)",
+          "square": 74.4,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "74,4",
+          "country_raw": "Россия",
+          "type_raw": "квартира (собственность)",
+          "own_type_raw": ""
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобиль BMW -Х3",
+          "relative": null
+        }
+      ],
+      "person_index": 8
+    },
+    {
+      "person": {
+        "name_raw": "Ногтева              Вера              Александровна",
+        "role": "Судья",
+        "department": " \n             Первый судебный состав\n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 2434000.00,
+          "size_raw": "2434",
+          "relative": null
+        },
+        {
+          "size": 686700.0,
+          "size_raw": "686,7",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (собственность)",
+          "square": 68.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "68",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", квартира (собственность)",
+          "square": 42.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "42",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ". жилой дом (собственность)",
+          "square": 61.5,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "61,5",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 9
+    },
+    {
+      "person": {
+        "name_raw": "Синякина               Татьяна              Владиславовна",
+        "role": "Судья",
+        "department": " \n             Первый судебный состав\n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 2354450.00,
+          "size_raw": "2354,448",
+          "relative": null
+        },
+        {
+          "size": 117600.0,
+          "size_raw": "117,6",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (собственность)",
+          "square": 66.2,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "66,2",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", квартира (собственность)",
+          "square": 52.2,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "52,2",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", квартира (пользование)",
+          "square": 50.7,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "50,7",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", жилой дом (собственность)",
+          "square": 28.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "28",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", приусадебный участок (собственность)",
+          "square": 950.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "950",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (пользование)",
+          "square": 50.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "50,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира (пользование)",
+          "own_type_raw": ""
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "автомобиль\n ВАЗ 21093",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "person_index": 10
+    },
+    {
+      "person": {
+        "name_raw": "Чих              Алексей               Николаевич",
+        "role": "Судья",
+        "department": " \n             Первый судебный состав\n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 1561320.00,
+          "size_raw": "1561,316",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (собственность)",
+          "square": 63.5,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "63,5",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", квартира (долевая собственность)",
+          "square": 74.8,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "74,8",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "автомобиль \n Kia SPORTAGE",
+          "relative": null
+        }
+      ],
+      "person_index": 11
+    },
+    {
+      "person": {
+        "name_raw": "Павлов               Валерий Юрьевич",
+        "role": "Судья",
+        "department": " \n             Второй судебный состав\n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 2197040.00,
+          "size_raw": "2197,036",
+          "relative": null
+        },
+        {
+          "size": 1323120.00,
+          "size_raw": "1323,119",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (собственность)",
+          "square": 120.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "120",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", квартира (собственность)",
+          "square": 44.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "44",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", земельный участок (собственность)",
+          "square": 647.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "647",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", садовый домик (собственность)",
+          "square": 16.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "16",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (долевая собственность)",
+          "square": 42.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "42",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", квартира (пользование)",
+          "square": 120.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "120",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 12
+    },
+    {
+      "person": {
+        "name_raw": "Бабаев              Сергей              Владимирович",
+        "role": "Судья",
+        "department": " \n             Второй судебный состав\n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 1704540.00,
+          "size_raw": "1704,539",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (долевая собственность)",
+          "square": 147.7,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "147,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира (долевая собственность)",
+          "own_type_raw": ""
+        }
+      ],
+      "vehicles": [],
+      "person_index": 13
+    },
+    {
+      "person": {
+        "name_raw": "Голубева              Ольга Николаевна",
+        "role": "Судья",
+        "department": " \n             Второй судебный состав\n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 2009740.00,
+          "size_raw": "2009,74",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира (собственность)",
+          "square": 78.4,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "78,4",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", квартира (долевая собственность)",
+          "square": 74.5,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "74,5",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", земельный участок (собственность)",
+          "square": 1940.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "1940",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "автомобиль\n MITSUBISHI OutLender",
+          "relative": null
+        }
+      ],
+      "person_index": 14
+    },
+    {
+      "person": {
+        "name_raw": "Кислицын               Евгений               Геннадьевич",
+        "role": "Судья",
+        "department": " \n             Второй судебный состав\n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 1837030.00,
+          "size_raw": "1837,032",
+          "relative": null
+        },
+        {
+          "size": 874100.00,
+          "size_raw": "874,099",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (пользование)",
+          "square": 86.4,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "86,4",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", земельный участок под индивидуальное жилищное строительство (собственность)",
+          "square": 2000.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "2000",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (собственность)",
+          "square": 86.4,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "86,4",
+          "country_raw": "Россия",
+          "type_raw": "квартира (собственность)",
+          "own_type_raw": ""
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "автомобиль MITSUBISHI L200 ,\n автоприцеп МЗСА 81771 D , \n мотолодка \n «Обь-М» с ПЛМ Ямаха 30",
+          "relative": null
+        },
+        {
+          "text": "автомобиль\n FordFusion",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "person_index": 15
+    },
+    {
+      "person": {
+        "name_raw": "Чернышов Дмитрий Васильевич",
+        "role": "Судья",
+        "department": " \n             Второй судебный состав\n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 1743800.0,
+          "size_raw": "1743,8",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (пользование)",
+          "square": 56.5,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "56,5",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", земельный участок (собственность)",
+          "square": 1500.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "1500",
+          "country_raw": "Республика Мордовия"
+        },
+        {
+          "text": "квартира (долевая собственность)",
+          "square": 78.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "78",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", парковка (собственность)",
+          "square": 28.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "28",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", гараж (собственность)",
+          "square": 25.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "25",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 16
+    },
+    {
+      "person": {
+        "name_raw": "Бердников               Олег Евгеньевич",
+        "role": "Председатель судебного состава",
+        "department": " \n             Третий судебный состав\n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 2795300.0,
+          "size_raw": "2795,3",
+          "relative": null
+        },
+        {
+          "size": 176000.0,
+          "size_raw": "176",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (долевая собственность), гараж (собственность).",
+          "square": 65.7,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "65,7",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "гараж (долевое участие в строительстве), долевое участие в",
+          "square": 27.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "27",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "строительстве многоквартирного дома",
+          "square": 22.3,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "22,3",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (долевая собственность)",
+          "square": 65.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "65,7",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", садовый домик (собственность)",
+          "square": 75.1,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "75,1",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", земельный участок (собственность)",
+          "square": 675.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "675",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "автомобиль\n JEEP LIBERTY (SPORT), автомобиль\n LANDROVERFREELANDER\n (до 06.08.2013), автомобиль Volvo XC 60 \n (с 09.08.2013)",
+          "relative": null
+        }
+      ],
+      "person_index": 17
+    },
+    {
+      "person": {
+        "name_raw": "Чижов               Игорь               Владимирович",
+        "role": "Судья",
+        "department": " \n             Третий судебный состав\n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 2180900.0,
+          "size_raw": "2180,9",
+          "relative": null
+        },
+        {
+          "size": 680500.0,
+          "size_raw": "680,5",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (собственность)",
+          "square": 113.1,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "113,1",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", квартира (пользование)",
+          "square": 64.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "64",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (собственность)",
+          "square": 64.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "64",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", жилой дом (собственность)",
+          "square": 116.7,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "116,7",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", садовый участок (собственность)",
+          "square": 1083.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "1083",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "автомобиль\n TOYOTA 1631\n (до 03.2013), \n автомобиль\n TOYOTA RAV 4\n (с 03.2013)",
+          "relative": null
+        }
+      ],
+      "person_index": 18
+    },
+    {
+      "person": {
+        "name_raw": "Шемякина               Ольга Алексеевна",
+        "role": "Судья",
+        "department": " \n             Третий судебный состав\n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 1305000.0,
+          "size_raw": "1305",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (совместная собственность)",
+          "square": 62.2,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "62,2",
+          "country_raw": "Россия",
+          "type_raw": "квартира (совместная собственность)",
+          "own_type_raw": ""
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "автомобиль\n Kia Rio",
+          "relative": null
+        }
+      ],
+      "person_index": 19
+    },
+    {
+      "person": {
+        "name_raw": "Шутикова Татьяна Викторовна",
+        "role": "Судья",
+        "department": " \n             Третий судебный состав\n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 2260600.0,
+          "size_raw": "2260,6",
+          "relative": null
+        },
+        {
+          "size": 195000.0,
+          "size_raw": "195",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (общая собственность)",
+          "square": 50.9,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "50,9",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", садовый домик (собственность)",
+          "square": 19.7,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "19,7",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", садовый участок (собственность)",
+          "square": 386.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "386",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (пользование)",
+          "square": 50.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "50,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира (пользование)",
+          "own_type_raw": ""
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "автомобиль MITSUBISHI OutLender",
+          "relative": null
+        }
+      ],
+      "person_index": 20
+    },
+    {
+      "person": {
+        "name_raw": "Радченкова Найля Шамильевна",
+        "role": "Председатель судебного состава",
+        "department": " \n             Четвертый судебный состав\n             \n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 1901700.0,
+          "size_raw": "1901,7",
+          "relative": null
+        },
+        {
+          "size": 349100.0,
+          "size_raw": "349 , 1",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (собственность)",
+          "square": 40.2,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "40,2",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", квартира (долевая собственность)",
+          "square": 73.2,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "73,2",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (долевая собственность)",
+          "square": 73.2,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "73,2",
+          "country_raw": "Россия",
+          "type_raw": "квартира (долевая собственность)",
+          "own_type_raw": ""
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "автомобиль \n L AND R OVER D ISCOVERY 4",
+          "relative": null
+        }
+      ],
+      "person_index": 21
+    },
+    {
+      "person": {
+        "name_raw": "Александрова              Ольга              Вячеславовна",
+        "role": "Судья",
+        "department": " \n             Четвертый судебный состав\n             \n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 2119480.00,
+          "size_raw": "2119,48",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (собственность)",
+          "square": 76.46,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "76,46",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", квартира (собственность)",
+          "square": 72.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "72",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", квартира (найм)",
+          "square": 38.5,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "38,5",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 22
+    },
+    {
+      "person": {
+        "name_raw": "Башева               Нелли               Юрьевна",
+        "role": "Судья",
+        "department": " \n             Четвертый судебный состав\n             \n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 1763990.00,
+          "size_raw": "1763,99",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (собственность)",
+          "square": 41.1,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "41,1",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", квартира (собственность)",
+          "square": 40.5,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "40,5",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "автомобиль MAZDA3",
+          "relative": null
+        }
+      ],
+      "person_index": 23
+    },
+    {
+      "person": {
+        "name_raw": "Забурдаева Ирина               Львовна",
+        "role": "Судья",
+        "department": " \n             Четвертый судебный состав\n             \n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 2289540.00,
+          "size_raw": "2289,54",
+          "relative": null
+        },
+        {
+          "size": 116440.00,
+          "size_raw": "116,44",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (долевая собственность)",
+          "square": 45.9,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "45,9",
+          "country_raw": "Россия",
+          "type_raw": "квартира (долевая собственность)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "квартира (собственность)",
+          "square": 63.4,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "63,4",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", квартира (долевая собственность)",
+          "square": 45.9,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "45,9",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", гараж (собственность)",
+          "square": 23.50,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "23,5",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "автомобиль VOLKSWAGEN-TIGUAN",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "person_index": 24
+    },
+    {
+      "person": {
+        "name_raw": "Чиграков               Алексей               Иванович",
+        "role": "Судья",
+        "department": " \n             Четвертый судебный состав\n             \n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 2690000.0,
+          "size_raw": "2690",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (собственность)",
+          "square": 99.8,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "99,8",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", квартира (собственность)",
+          "square": 51.9,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "51,9",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", квартира (собственность)",
+          "square": 44.4,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "44,4",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", жилой дом (собственность)",
+          "square": 16.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "16",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", земельный участок (собственность)",
+          "square": 2400.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "2400",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", земельный участок (собственность)",
+          "square": 2000.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "2000",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", нежилое помещение (собственность)",
+          "square": 48.4,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "48,4",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 25
+    },
+    {
+      "person": {
+        "name_raw": "Брехова              Вероника Евгеньевна",
+        "role": "Начальник информационно-аналитического отдела",
+        "department": " \n             Начальники отделов\n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 421260.00,
+          "size_raw": "421,26",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (пользование)",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "",
+          "country_raw": "Россия",
+          "type_raw": "квартира (пользование)",
+          "own_type_raw": ""
+        }
+      ],
+      "vehicles": [],
+      "person_index": 26
+    },
+    {
+      "person": {
+        "name_raw": "Лаврова               Нина Михайловна",
+        "role": "Заместитель руководителя аппарата суда – главный бухгалтер",
+        "department": " \n             Начальники отделов\n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 455510.00,
+          "size_raw": "455,513",
+          "relative": null
+        },
+        {
+          "size": 689320.00,
+          "size_raw": "689,325",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (пользование)",
+          "square": 67.6,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "67,6",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", земельный участок(долевая собственность)",
+          "square": 728.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "728",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "квартира (собственность)",
+          "square": 67.6,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "67,6",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", квартира (собственность)",
+          "square": 43.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "43",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", гараж (собственность)",
+          "square": 32.0,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "32",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", гараж (собственность)",
+          "square": 25.8,
+          "relative": "Супруг(а)",
+          "own_type_by_column": null,
+          "square_raw": "25,8",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "автомобиль HYUNDAI",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "person_index": 27
+    },
+    {
+      "person": {
+        "name_raw": "Паняева              Анна Владимировна",
+        "role": "Начальник отдела информатизации",
+        "department": " \n             Начальники отделов\n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 483310.00,
+          "size_raw": "483,309",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (пользование)",
+          "square": 64.68,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "64,68",
+          "country_raw": "Россия",
+          "type_raw": "квартира (пользование)",
+          "own_type_raw": ""
+        }
+      ],
+      "vehicles": [],
+      "person_index": 28
+    },
+    {
+      "person": {
+        "name_raw": "Уткина               Ольга               Ивановна",
+        "role": "Начальник отдела делопроизводства и кадров",
+        "department": " \n             Начальники отделов\n             "
+      },
+      "year": 2013,
+      "incomes": [
+        {
+          "size": 478460.00,
+          "size_raw": "478,463",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "жилой дом (собственность)",
+          "square": 176.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "176",
+          "country_raw": "Россия"
+        },
+        {
+          "text": ", земельный участок (собственность)",
+          "square": 899.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "899",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 29
+    }
+  ],
+  "document": {
+    "sheet_title": "Арбитражный суд Волго-Вятского округа Арбитражный суд Волго-Вятского округа подвел итоги 2014 года Итоговое совещание-семинар председателей судов РФ Анонс очередного номера научно-практического журнала \"Экономические Споры: проблемы теории и практики\" О назначении судей ПОЗДРАВЛЯЕМ С НОВЫМ ГОДОМ! за период с 1 января по 31 декабря 2013 года ",
+    "year": 2013
+  }
+}

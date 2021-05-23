@@ -134,13 +134,61 @@
             "source_document_only_dlrobot_count": 391112,
             "source_document_only_human_count": 146610,
             "source_document_both_found_count": 114300,
-            "sections_person_name_income_year_declarant_income_size": 4999796,
-            "sections_person_name_income_year_spouse_income_size": 2994309,
-            "sections_count": 5568355,
-            "sections_count_only_dlrobot": 2269066,
-            "sections_count_both_found": 1583302,
-            "sections_dedupe_score_greater_0": 5079235,
-            "person_count": 1746700
+            "sections_count": 5592817,
+            "sections_count_only_dlrobot": 2221038,
+            "sections_count_both_found": 1599334,
+            "sections_person_name_income_year_declarant_income_size": 4999728,
+            "sections_person_name_income_year_spouse_income_size": 2994279,
+            "sections_dedupe_score_greater_0": 5084752,
+            "person_count": 1749127
+        }
+    },
+    {
+        "crawl_epoch": 1616908996,
+        "metrics": {
+            "source_document_count": 654421,
+            "source_document_only_dlrobot_count": 389091,
+            "source_document_only_human_count": 149009,
+            "source_document_both_found_count": 116321,
+            "sections_count": 5623209,
+            "sections_count_only_dlrobot": 2191673,
+            "sections_count_both_found": 1628750,
+            "sections_person_name_income_year_declarant_income_size": 5026151,
+            "sections_person_name_income_year_spouse_income_size": 3010664,
+            "sections_dedupe_score_greater_0": 5173257,
+            "person_count": 1754803
+        }
+    },
+    {
+        "crawl_epoch": 1618234856,
+        "metrics": {
+            "source_document_count": 654421,
+            "source_document_only_dlrobot_count": 389091,
+            "source_document_only_human_count": 149009,
+            "source_document_both_found_count": 116321,
+            "sections_count": 5782811,
+            "sections_count_only_dlrobot": 2242918,
+            "sections_count_both_found": 1613428,
+            "sections_person_name_income_year_declarant_income_size": 5168869,
+            "sections_person_name_income_year_spouse_income_size": 3080329,
+            "sections_dedupe_score_greater_0": 5274509,
+            "person_count": 1775340
+        }
+    },
+    {
+        "crawl_epoch": 1619894399,
+        "metrics": {
+            "source_document_count": 669653,
+            "source_document_only_dlrobot_count": 404323,
+            "source_document_only_human_count": 148099,
+            "source_document_both_found_count": 117231,
+            "sections_count": 5821414,
+            "sections_count_only_dlrobot": 2281515,
+            "sections_count_both_found": 1641014,
+            "sections_person_name_income_year_declarant_income_size": 5190597,
+            "sections_person_name_income_year_spouse_income_size": 3094177,
+            "sections_dedupe_score_greater_0": 5309977,
+            "person_count": 1779545
         }
     }
 ]
