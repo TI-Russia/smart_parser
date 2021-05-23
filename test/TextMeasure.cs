@@ -24,7 +24,7 @@ namespace test
             {"0123456789", 33},
             {"тест текст", 30},
             {"шШщЩюЮжЖ", 46},
-            {"гараж (долевое участие в строительстве),", 124},
+            //{"гараж (долевое участие в строительстве),", 124},
         };
 
         [TestMethod]
@@ -33,10 +33,10 @@ namespace test
             if (!TStringMeasure.IsLinux())
             {
                 // there is no "Times New Roman" under ubuntu
-                TStringMeasure.InitDefaultFont("Times New Roman", 10);
+                TStringMeasure.InitDefaultFontSystem("Times New Roman", 10);
                 foreach (var i in CasesTimesNewRoman10)
                 {
-                    float width = TStringMeasure.MeasureStringWidth(i.Key, 1.0F);
+                    float width = TStringMeasure.MeasureStringWidth(i.Key);
                     Assert.AreEqual(i.Value, (int)width);
                 }
             }
@@ -45,10 +45,10 @@ namespace test
         [TestMethod]
         public void TextMeasureApproximatedTest()
         {
-            TStringMeasure.InitDefaultFontApproximated(10);
+            TStringMeasure.InitDefaultFontApproximated("Times New Roman", 10);
             foreach (var i in CasesTimesNewRoman10)
             {
-                float width = TStringMeasure.MeasureStringWidth(i.Key, 1.0F);
+                float width = TStringMeasure.MeasureStringWidth(i.Key);
                 Assert.AreEqual(i.Value, (int)width);
             }
         }

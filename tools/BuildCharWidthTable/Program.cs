@@ -13,23 +13,23 @@ namespace BuildCharWidthTable
         static int CyrillicStart = 0x0410;
         static int CyrillicEnd = 0x0460;
 
-        public static float GetMedian(float[] sourceNumbers)
+        public static int GetMedian(int[] sourceNumbers)
         {
             //Framework 2.0 version of this method. there is an easier way in F4        
             if (sourceNumbers == null || sourceNumbers.Length == 0)
                 throw new System.Exception("Median of empty array not defined.");
 
             //make sure the list is sorted, but use a new array
-            float[] sortedPNumbers = (float[])sourceNumbers.Clone();
+            int[] sortedPNumbers = (int[])sourceNumbers.Clone();
             Array.Sort(sortedPNumbers);
 
             //get the median
             int size = sortedPNumbers.Length;
             int mid = size / 2;
-            float median = (size % 2 != 0) ? (float)sortedPNumbers[mid] : ((float)sortedPNumbers[mid] + (float)sortedPNumbers[mid - 1]) / 2;
+            int median = (size % 2 != 0) ? (int)sortedPNumbers[mid] : ((int)sortedPNumbers[mid] + (int)sortedPNumbers[mid - 1]) / 2;
             return median;
         }
-        static void WriteCharPeriod(int start, int end, List<float> widths, StreamWriter outputFile)
+        static void WriteCharPeriod(int start, int end, List<int> widths, StreamWriter outputFile)
         {
             outputFile.WriteLine("             //chars from {0} to {1}", start, end);
             outputFile.Write("             ");
@@ -37,36 +37,41 @@ namespace BuildCharWidthTable
             {
                 string ch = "";
                 ch += (char)i;
-                float width = TStringMeasure.MeasureStringWidth(ch, 1.0F);
-                float afm_width = width * 1000.0f / TStringMeasure.FontSize; 
+                float width = TStringMeasure.MeasureStringWidth(ch);
+                int afm_width = (int)(width * 1000.0f / TStringMeasure.FontSize); 
                 widths.Add(afm_width);
                 if (i != start)
                 {
                     outputFile.Write(",");
                 }
-                outputFile.Write("{{ {0}, {1:0.00}F }}", i, afm_width);
+                outputFile.Write("{{ {0}, {1} }}", i, afm_width);
             }
 
         }
-        static public void BuildCharToWidth(string outfilePath, string mapName)
+        static public void BuildCharToWidth(string fontName, StreamWriter outputFile)
         {
-            using (StreamWriter outputFile = new StreamWriter(outfilePath))
-            {
-                outputFile.WriteLine("        static Dictionary<int, float> {0} = new Dictionary<int, float> {{", mapName);
-                List<float> widths = new List<float>();
-                WriteCharPeriod(LatinStart, LatinEnd, widths, outputFile);
-                outputFile.WriteLine(",");
-                WriteCharPeriod(CyrillicStart, CyrillicEnd, widths, outputFile);
-                outputFile.Write("\n        };\n");
-                outputFile.WriteLine("        static float {0}_median = {1:0.00}F;", mapName, GetMedian(widths.ToArray()));
-
-            }
+            TStringMeasure.InitDefaultFontSystem(fontName, 10);
+            string varName = fontName.Replace(' ', '_');
+            outputFile.WriteLine("        static Dictionary<int, int> {0} = new Dictionary<int, int> {{", varName);
+            List<int> widths = new List<int>();
+            WriteCharPeriod(LatinStart, LatinEnd, widths, outputFile);
+            outputFile.WriteLine(",");
+            WriteCharPeriod(CyrillicStart, CyrillicEnd, widths, outputFile);
+            outputFile.WriteLine(",\n             {{0, {0}}}", GetMedian(widths.ToArray()));
+            outputFile.Write("        };\n");
         }
 
         static void Main(string[] args)
         {
-            TStringMeasure.InitDefaultFont("Times New Roman", 10);
-            BuildCharToWidth("time_new_roman_afm_char_width.txt", "TimesNewRomanAfmCharWidth");
+            string[] fonts = { "Times New Roman", "Calibri", "Arial" };
+            using (StreamWriter outputFile = new StreamWriter("CharMapWidths.cs"))
+            {
+                for (int i = 0; i < fonts.Length; ++i)
+                {
+                    BuildCharToWidth(fonts[i], outputFile);
+                }
+                
+            }
         }
     }
 }
