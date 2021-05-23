@@ -193,14 +193,12 @@ def post_results(sourcefile, job, args, time_delta=None):
     if archive_file:
         data['document']['archive_file'] = archive_file
 
-    if args.fns:
-        # department
-        path, _ = os.path.split(sourcefile)
-        page_data = json.load(open(os.path.join(path, "page.json")))
-        data['persons'] = list(map(lambda x: dict(
-            department=page_data['departament'],
-            **x), data['persons']))
-        data['document_id'] = page_data['document_id']
+    # if args.fns:
+    #     # add department to JSON
+    #     path, _ = os.path.split(sourcefile)
+    #     page_data = json.load(open(os.path.join(path, "page.json")))
+    #     for obj in data['persons']:
+    #         obj['person']['department'] = page_data['departament']
 
     # if time_delta == PARSER_TIMEOUT:
     #     data['document']['parser_log'] += "\nTimeout %i exceeded for smart_parser.exe" % PARSER_TIMEOUT
@@ -211,7 +209,7 @@ def post_results(sourcefile, job, args, time_delta=None):
         body = json.dumps(data, ensure_ascii=False, indent=4).encode(
             'utf-8', errors='ignore')
 
-        with open(filename + ".json", "wb") as fp:
+        with open(sourcefile + ".json", "wb") as fp:
             fp.write(body)
 
     parsed = len(data['persons']) > 0

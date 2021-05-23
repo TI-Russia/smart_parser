@@ -246,7 +246,7 @@ namespace Smart.Parser
 
 
 
-        private static string SupportedFileTypesPattern = "*.pdf, *.xls, *.xlsx, *.doc, *.docx";
+        private static string SupportedFileTypesPattern = "*.pdf, *.xls, *.xlsx, *.doc, *.docx, *.html";
 
         public static int ParseDirectory(string dirName)
         {
@@ -319,19 +319,19 @@ namespace Smart.Parser
                     Logger.Info("Result: Exception");
                 }
 
-                if (!caught && Logger.Errors.Count() > 0)
+                if (!caught && Logger.Errors.Any())
                 {
                     Logger.Info("Result: error");
                     parse_results["error"].Add(file);
                 }
 
-                if (!caught && Logger.Errors.Count() == 0)
+                if (!caught && !Logger.Errors.Any())
                 {
                     Logger.Info("Result: OK");
                     parse_results["ok"].Add(file);
                 }
 
-                if (Logger.Errors.Count() > 0)
+                if (Logger.Errors.Any())
                 {
                     Logger.Info(" Parsing errors ({0})", Logger.Errors.Count());
 
