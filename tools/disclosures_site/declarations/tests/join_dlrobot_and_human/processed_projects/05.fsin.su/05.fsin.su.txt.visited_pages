@@ -11,7 +11,8 @@
                     "export_path": "result/05.fsin.su/1984.xlsx",
                     "archive_index": -1,
                     "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
-                    "smart_parser_json_sha256": null
+                    "smart_parser_json_sha256": null,
+                    "declaration_year": 2014
                 },
                 {
                     "url": "http://05.fsin.su/old_dlrobot.xlsx",

@@ -2,7 +2,7 @@
     "document_folder": "human_files",
     "documents": {
         "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865": {
-            "document_path": "human.xlsx",
+            "file_ext": ".xlsx",
             "intersection_status": "only_human",
             "office_id": null,
             "d_refs": [
@@ -17,7 +17,7 @@
             ]
         },
         "7de1555df0c2700329e815b93b32c571c3ea54dc967b89e81ab73b9972b72d1d": {
-            "document_path": "uniq_from_human.xlsx",
+            "file_ext": ".xlsx",
             "intersection_status": "only_human",
             "office_id": null,
             "d_refs": [

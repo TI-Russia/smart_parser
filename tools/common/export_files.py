@@ -14,7 +14,7 @@ import shutil
 
 
 class TExportFile:
-    def __init__(self, link_info : TLinkInfo = None, url=None, cached_file=None, export_path=None,
+    def __init__(self, link_info: TLinkInfo = None, url=None, cached_file=None, export_path=None,
                  archive_index: int = -1, name_in_archive:str=None, init_json=None):
         self.last_link_info = link_info
         self.url = url
@@ -29,9 +29,13 @@ class TExportFile:
             self.sha256 = build_dislosures_sha256(export_path)
         self.file_extension = os.path.splitext(self.export_path)[1]
         self.smart_parser_json_sha256 = None
+        if link_info is not None:
+            self.declaration_year = link_info.declaration_year
+        else:
+            self.declaration_year = None
 
     def to_json(self):
-        return {
+        rec = {
             "url": self.url,
             "cached_file": self.cached_file,
             "export_path": self.export_path.replace('\\', '/'),  # to compare windows and unix,
@@ -39,6 +43,9 @@ class TExportFile:
             "sha256": self.sha256,
             "smart_parser_json_sha256": self.smart_parser_json_sha256
         }
+        if self.declaration_year is not None:
+            rec['declaration_year'] = self.declaration_year
+        return rec
 
     def from_json(self, rec):
         self.url = rec["url"]
@@ -47,6 +54,7 @@ class TExportFile:
         self.sha256 = rec["sha256"]
         self.archive_index = rec.get("archive_index", -1)
         self.smart_parser_json_sha256 = rec.get("smart_parser_json_sha256")
+        self.declaration_year = rec.get("declaration_year")
 
 
 class TExportFileSet:

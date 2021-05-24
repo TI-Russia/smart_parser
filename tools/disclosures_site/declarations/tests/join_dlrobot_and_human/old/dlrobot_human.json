@@ -2,7 +2,7 @@
     "document_folder": "domains",
     "documents": {
         "1121cfccd5913f0a63fec40a6ffd44ea64f9dc135c66634ba001d10bcf4302a2": {
-            "document_path": "05.fsin.su/old_dlrobot.xlsx",
+            "file_ext": ".xlsx",
             "intersection_status": "only_dlrobot",
             "office_id": null,
             "w_refs": [
@@ -13,7 +13,7 @@
             ]
         },
         "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": {
-            "document_path": "05.fsin.su/human_file_deleted_on_site.xlsx",
+            "file_ext": ".xlsx",
             "intersection_status": "only_human",
             "office_id": null,
             "d_refs": [
@@ -28,7 +28,7 @@
             ]
         },
         "f0b5c2c2211c8d67ed15e75e656c7862d086e9245420892a7de62cd9ec582a06": {
-            "document_path": "05.fsin.su/new.xlsx",
+            "file_ext": ".xlsx",
             "intersection_status": "only_dlrobot",
             "office_id": null,
             "w_refs": [
@@ -38,5 +38,5 @@
                 }
             ]
         }
-    }
+        }
 }
