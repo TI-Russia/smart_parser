@@ -4,7 +4,7 @@ from selenium.webdriver.support.ui import Select
 import time
 
 
-def tomsk_gov_ru(web_site: TWebSiteCrawlSnapshot, max_download_count=3):
+def tomsk_gov_ru(web_site: TWebSiteCrawlSnapshot, max_download_count=None):
     web_site.create_export_folder()
     robot_step = web_site.robot_steps[-1]
     driver = robot_step.get_selenium_driver()
