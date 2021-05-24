@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +11,7 @@ using TI.Declarator.ParserCommon;
 using TI.Declarator.JsonSerialization;
 using CMDLine;
 using System.Security.Cryptography;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Newtonsoft.Json;
 using System.Reflection;
 //using Newtonsoft.Json;
@@ -245,7 +246,7 @@ namespace Smart.Parser
 
 
 
-        private static string SupportedFileTypesPattern = "*.pdf, *.xls, *.xlsx, *.doc, *.docx";
+        private static string SupportedFileTypesPattern = "*.pdf, *.xls, *.xlsx, *.doc, *.docx, *.html";
 
         public static int ParseDirectory(string dirName)
         {
@@ -318,19 +319,19 @@ namespace Smart.Parser
                     Logger.Info("Result: Exception");
                 }
 
-                if (!caught && Logger.Errors.Count() > 0)
+                if (!caught && Logger.Errors.Any())
                 {
                     Logger.Info("Result: error");
                     parse_results["error"].Add(file);
                 }
 
-                if (!caught && Logger.Errors.Count() == 0)
+                if (!caught && !Logger.Errors.Any())
                 {
                     Logger.Info("Result: OK");
                     parse_results["ok"].Add(file);
                 }
 
-                if (Logger.Errors.Count() > 0)
+                if (Logger.Errors.Any())
                 {
                     Logger.Info(" Parsing errors ({0})", Logger.Errors.Count());
 
@@ -532,8 +533,7 @@ namespace Smart.Parser
                 {
                     // TODO сначала поискать первый section_row и проверить, именно там может быть ФИО
                     // https://declarator.org/admin/declarations/jsonfile/186842/change/
-                    Logger.Error("Insufficient fields: No any of Declarant Name fields found.");
-                    return null;
+                    throw new SmartParserException("Insufficient fields: No any of Declarant Name fields found.");
                 }
 
                 if (!(columnOrdering.ContainsField(DeclarationField.DeclarantIncome) ||
@@ -543,8 +543,7 @@ namespace Smart.Parser
                 {
                     if (!ColumnOrdering.SearchForFioColumnOnly)
                     {
-                        Logger.Error("Insufficient fields: No any of Declarant Income fields found.");
-                        return null;
+                        throw new SmartParserException("Insufficient fields: No any of Declarant Income fields found.");
                     }
                 }
 
