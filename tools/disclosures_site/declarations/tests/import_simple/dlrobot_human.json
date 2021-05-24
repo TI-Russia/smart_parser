@@ -2,7 +2,7 @@
     "document_folder": "domains",
     "documents": {
         "f974dc82aa52acea2f9c49467e7395924605de474e76bafa85572351194b153a": {
-            "document_path": "test1.ru/one_line_2017.docx",
+            "file_ext": ".docx",
             "intersection_status": "only_dlrobot",
             "office_id": 5963,
             "w_refs": [

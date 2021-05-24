@@ -14,6 +14,7 @@ class TIntersectionStatus:
     def all_intersection_statuses():
         return [TIntersectionStatus.only_dlrobot, TIntersectionStatus.only_human, TIntersectionStatus.both_found]
 
+
 class TDeclaratorReference:
     def __init__(self, from_json=dict()):
         self.web_domain = from_json.get('web_domain')
@@ -46,36 +47,32 @@ class TDeclaratorReference:
 
 
 class TWebReference:
-    def __init__(self, from_json=dict(), url=None, crawl_epoch=None, web_domain=None):
+    def __init__(self, from_json=dict(), url=None, crawl_epoch=None, web_domain=None, declaration_year=None):
         self.url = from_json.get('url', url)
         self.web_domain = from_json.get('web_domain', web_domain)
         if self.web_domain is None:
             self.web_domain = get_site_domain_wo_www(self.url)
+        self.declaration_year = from_json.get('declaration_year', declaration_year)
         self.crawl_epoch = from_json.get('crawl_epoch', crawl_epoch)
 
-
     def write_to_json(self):
-        return {
+        rec = {
             'url': self.url,
             'crawl_epoch': self.crawl_epoch,
             'web_domain': self.web_domain,
         }
+        if self.declaration_year is not None:
+            rec['declaration_year'] = self.declaration_year
+        return rec
 
     def __eq__(self, other):
         return self.url == other.url and self.crawl_epoch == other.crawl_epoch
 
 
 class TSourceDocument:
-    both_found = "both_found"
-    only_dlrobot = "only_dlrobot"
-    only_human = "only_human"
 
     def __init__(self, from_json=dict()):
-        self.document_path_obsolete = from_json.get('document_path')
-        if self.document_path_obsolete is not None:
-            _, self.file_extension = os.path.splitext(self.document_path_obsolete)   #old version
-        else:
-            self.file_extension = from_json.get('file_ext')
+        self.file_extension = from_json.get('file_ext')
         self.calculated_office_id = from_json.get('office_id')
         self.web_references = list()
         self.decl_references = list()
@@ -84,13 +81,13 @@ class TSourceDocument:
         for ref in from_json.get('w_refs', []):
             self.web_references.append(TWebReference(from_json=ref))
 
-    def get_intersection_status(self):
+    def build_intersection_status(self):
         if len(self.web_references) > 0 and len(self.decl_references) > 0:
-            return TSourceDocument.both_found
+            return TIntersectionStatus.both_found
         elif len(self.web_references) > 0:
-            return TSourceDocument.only_dlrobot
+            return TIntersectionStatus.only_dlrobot
         elif len(self.decl_references) > 0:
-            return TSourceDocument.only_human
+            return TIntersectionStatus.only_human
         else:
             assert False
 
@@ -105,6 +102,12 @@ class TSourceDocument:
         for r in self.decl_references:
             if r.income_year is not None:
                 return r.income_year
+        return None
+
+    def get_external_income_year_from_dlrobot(self):
+        for r in self.web_references:
+            if r.declaration_year is not None:
+                return r.declaration_year
         return None
 
     def add_web_reference(self, web_ref):
@@ -170,7 +173,7 @@ class TDlrobotHumanFile:
         for src_doc in self.document_collection.values():
             websites.add(src_doc.get_web_site())
             files_count += 1
-            intersection_status = src_doc.get_intersection_status()
+            intersection_status = src_doc.build_intersection_status()
             if intersection_status == TIntersectionStatus.both_found:
                 both_found += 1
             if intersection_status == TIntersectionStatus.only_dlrobot:

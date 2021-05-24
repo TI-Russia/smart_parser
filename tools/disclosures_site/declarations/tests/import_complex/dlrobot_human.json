@@ -2,7 +2,7 @@
     "document_folder": "domains",
     "documents": {
         "5b51c23cde33e9508125f097827133bee8a0906fd6baa4b8e86f2f4f4ab9eef2": {
-            "document_path": "test1.ru/one_line_2018.docx",
+            "file_ext": ".docx",
             "intersection_status": "only_dlrobot",
             "office_id": 1,
             "w_refs": [
@@ -13,7 +13,7 @@
             ]
         },
         "9f41a1c24d857c38af1b82a18dc496c092e7a562b1169c3f70432d735c5eee36": {
-            "document_path": "test1.ru/one_line_2017_copy.docx",
+            "file_ext": ".docx",
             "intersection_status": "only_dlrobot",
             "office_id": 1,
             "w_refs": [
@@ -34,7 +34,7 @@
             ]
         },
         "b0285ddd2c105768ef18639a3ac99dea84591f3378d478cb4153718753d71a93": {
-            "document_path": "test1.ru/one_line_2019.docx",
+            "file_ext": ".docx",
             "intersection_status": "both_found",
             "office_id": 1,
             "d_refs": [
@@ -49,7 +49,7 @@
             ]
         },
         "f974dc82aa52acea2f9c49467e7395924605de474e76bafa85572351194b153a": {
-            "document_path": "test1.ru/one_line_2017.docx",
+            "file_ext": ".docx",
             "intersection_status": "only_dlrobot",
             "office_id": 1,
             "d_refs": [
