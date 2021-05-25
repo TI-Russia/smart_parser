@@ -89,8 +89,12 @@ class TJoiner:
         self.logger.info("copy dlrobot files from {} ...".format(self.args.input_dlrobot_folder))
         with os.scandir(self.args.input_dlrobot_folder) as it:
             for entry in it:
-                if entry.is_dir() and entry.stat().st_ctime < self.args.max_ctime:
-                    self.add_files_of_one_project(entry.name)
+                if entry.is_dir():
+                    if entry.stat().st_ctime < self.args.max_ctime:
+                        self.add_files_of_one_project(entry.name)
+                    else:
+                        self.logger.debug("skip too young folder {}".format(entry.name))
+
         self.logger.info("Database Document Count: {}".format(self.output_dlrobot_human.get_documents_count()))
 
     def add_old_dlrobot_files(self):
