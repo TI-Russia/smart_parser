@@ -16,8 +16,6 @@
     <ItemGroup>
         <Antlr4 Include="src\BaseLexer.g4">
           <AntOutDir>generated</AntOutDir>
-          <JavaExe>C:\Program Files\Java\jdk-14\bin\java.exe</JavaExe>
-
         </Antlr4>
         <Antlr4 Include="src\CommonLexer.g4">
           <AntOutDir>generated</AntOutDir>
@@ -29,7 +27,6 @@
           <AntOutDir>generated</AntOutDir>
         </Antlr4>
         <Antlr4 Include="src\Common.g4">
-          <AntlrRuntime>C:\Javalib\antlr-4.8-complete.jar </AntlrRuntime>
           <AntOutDir>generated</AntOutDir>
         </Antlr4>
         <Antlr4 Include="src\RealtyTypeAndOwnType.g4">

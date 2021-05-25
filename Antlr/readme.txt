@@ -7,6 +7,7 @@
 
 1. install nuget package Antlr4BuildTasks
 2. install nuget package Antlr4.Runtime.Standard
+3. Файлы из Antlr должны генерироваться в каталог generated командой (rebuild  solution). Команда "Build solution" не строит их.
 
 
 3. Если java (jdk) уже установлена,  нужно  скачать jar antlr-4.8-complete.jar со страницы 
