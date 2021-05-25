@@ -58,7 +58,7 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
     source ~/.profile
 
 2.7 compile and test smart_parser (c#, ~/smart_parser/src)
-   dotnet build -c Release ~/smart_parser/src
+   dotnet build -c Release --no-incremental ~/smart_parser/src
    dotnet test -c Release ~/smart_parser
 
 2.8 compile  and test ~/smart_parser/tools/Office2Txt
