@@ -388,6 +388,22 @@ def get_distinct_relative_types(records):
     return set(Relative(x.relative) for x in records.all())
 
 
+#https://ru.wikipedia.org/wiki/%D0%94%D0%B5%D1%81%D1%8F%D1%82%D0%B8%D1%87%D0%BD%D1%8B%D0%B9_%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%D0%B8%D1%82%D0%B5%D0%BB%D1%8C
+def format_income_in_html(income):
+    if income is None:
+        return income
+    s = "{:_.0f}".format(income).replace('_', '&nbsp;')
+    if len(s) == 0:
+        return s
+    elif s[-1] == "1":
+        s += " рубль"
+    elif s[-1] == "2" or s[-1] == "3" or s[-1] == "4":
+        s += " рубля"
+    else:
+        s += " рублeй"
+    return s
+
+
 class Section(models.Model):
     id = models.IntegerField(primary_key=True)
     source_document = models.ForeignKey('declarations.source_document', null=True, verbose_name="source document", on_delete=models.CASCADE)
@@ -440,8 +456,8 @@ class Section(models.Model):
         return None
 
     @property
-    def declarant_income_size(self):
-        return self.get_declarant_income_size()
+    def declarant_income_size_in_html(self):
+        return format_income_in_html(self.get_declarant_income_size())
 
     @property
     def spouse_income_size(self):
@@ -561,7 +577,7 @@ class Section(models.Model):
 
         incomes = defaultdict(str)
         for i in self.income_set.all():
-            incomes[i.relative] = '<h3>' + str(i.size) + '</h3>'
+            incomes[i.relative] = '<h3>' + format_income_in_html(i.size) + '</h3>'
         has_vehicles = len(vehicles.keys()) > 0
         table = list(self.get_html_table_header(has_vehicles))
         for relative in section_parts:

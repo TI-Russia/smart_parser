@@ -46,7 +46,7 @@ source $COMMON_SCRIPT
     endif
 
 
-#7  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод (7-8 часов)
+#7  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод (1 час)
    python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.prod --directory $DLROBOT_FOLDER
 
 
@@ -54,7 +54,7 @@ source $COMMON_SCRIPT
     python3 $TOOLS/disclosures_site/manage.py create_database --settings disclosures.settings.dev --skip-checks --username db_creator --password root
     python3 $TOOLS/disclosures_site/manage.py makemigrations --settings disclosures.settings.dev
     python3 $TOOLS/disclosures_site/manage.py migrate --settings disclosures.settings.dev
-    python3 $TOOLS/disclosures_site/manage.py test declarations/tests --settings disclosures.settings.dev
+    python3 $TOOLS/disclosures_site/manage.py test $TOOLS/disclosures_site/declarations/tests --settings disclosures.settings.dev
 
 #9 (надо включить в import_json?)
     cd $DLROBOT_FOLDER # im portant
@@ -62,16 +62,16 @@ source $COMMON_SCRIPT
 
 
 #10  Импорт json в dislosures_db (32 hours)
-   python3 $TOOLS/disclosures_site/manage.py import_json \
-               --settings disclosures.settings.dev \
-               --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER \
-               --dlrobot-human dlrobot_human.json   \
-               --process-count 3  \
-               --permalinks-folder $DLROBOT_FOLDER
+     python3 $TOOLS/disclosures_site/manage.py import_json \
+                 --settings disclosures.settings.dev \
+                 --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER \
+                 --dlrobot-human dlrobot_human.json   \
+                 --process-count 3  \
+                 --permalinks-folder $DLROBOT_FOLDER
 
-   python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric source_document_count  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
-   python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric sections_person_name_income_year_declarant_income_size  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
-   python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric sections_person_name_income_year_spouse_income_size  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
+     python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric source_document_count  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
+     python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric sections_person_name_income_year_declarant_income_size  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
+     python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric sections_person_name_income_year_spouse_income_size  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
 
 #10.1  остановка dlrobot на $DEDUPE_HOSTS в параллель (максмимум 3 часа), может немного одновременно проработать со сливалкой
 echo $DEDUPE_HOSTS | tr "," "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/scripts/git_update_cloud_worker.py --action stop --host &
