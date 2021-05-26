@@ -2,6 +2,8 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+
+
     <title>{% block title %}Home {% endblock title %}</title>
 
     <link rel="stylesheet" type="text/css" href="/static/style.css" %}">
@@ -21,6 +23,8 @@
     {% block serp_description %} {% endblock serp_description %}
     {% block meta_robots %} {% endblock meta_robots %}
 
+     <!-- /Yandex.Metrika counter -->
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-6WBY07BML5"></script>
     <script>
@@ -39,12 +43,12 @@
 
        ym(74114962, "init", {
             clickmap:true,
-            trackLinks:true,
-            accurateTrackBounce:true
+            trackLinks:false,
+            accurateTrackBounce:false
        });
     </script>
     <noscript><div><img src="https://mc.yandex.ru/watch/74114962" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
+
 
 </head>
 
