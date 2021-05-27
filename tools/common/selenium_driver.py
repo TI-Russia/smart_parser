@@ -32,7 +32,7 @@ class TSeleniumDriver:
     def __init__(self, logger, headless=True, download_folder=None, loglevel=None,
                  scroll_to_bottom_and_wait_more_results=True, start_retry_count=3, use_chrome=True):
         self.logger = logger
-        self.the_driver = None
+        self.the_driver: webdriver.WebDriver = None
         self.driver_processed_urls_count = 0
         self.download_folder = download_folder
         assert download_folder != "."
