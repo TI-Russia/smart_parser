@@ -16,7 +16,8 @@ server {
     ssl_certificate_key /etc/letsencrypt/live/disclosures.ru/privkey.pem; # managed by Certbot
     include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
     ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
-
+    ssl_stapling on;
+    ssl_stapling_verify on;
 
 }
 
