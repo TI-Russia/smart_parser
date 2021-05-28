@@ -65,7 +65,7 @@ class Office(models.Model):
     def get_source_documents(self, max_count=10):
         cnt = 0
         for src_doc in self.source_document_set.all():
-            yield src_doc.id
+            yield src_doc
             cnt += 1
             if cnt >= max_count:
                 break
