@@ -190,5 +190,21 @@
             "sections_dedupe_score_greater_0": 5309977,
             "person_count": 1779545
         }
+    },
+    {
+        "crawl_epoch": 1621944286,
+        "metrics": {
+            "source_document_count": 689758,
+            "source_document_only_dlrobot_count": 424428,
+            "source_document_only_human_count": 147637,
+            "source_document_both_found_count": 117693,
+            "sections_count": 6214246,
+            "sections_count_only_dlrobot": 2319690,
+            "sections_count_both_found": 1773384,
+            "sections_person_name_income_year_declarant_income_size": 5537152,
+            "sections_person_name_income_year_spouse_income_size": 3296652,
+            "sections_dedupe_score_greater_0": 5733398,
+            "person_count": 1860122
+        }
     }
 ]
