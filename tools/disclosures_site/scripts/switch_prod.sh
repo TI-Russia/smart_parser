@@ -18,6 +18,7 @@ function switch_service() {
   sudo mv $prod $backup
   sudo mv $new $prod
   sudo systemctl start $service
+  sudo systemctl status $service
 }
 
 #1. mysql
@@ -35,6 +36,12 @@ sudo tar --file $MYSQL_TAR --gzip --directory $NEW_MYSQL --extract
 #1.2 switching
 sudo rm -rf $BACKUP_MYSQL
 switch_service mysql $PROD_MYSQL $NEW_MYSQL $BACKUP_MYSQL
+
+if [ $? != 0 ]; then
+    echo "switch mysql failed, roolback"
+    switch_service mysql $PROD_MYSQL $BACKUP_MYSQL $NEW_MYSQL
+    exit 1
+fi
 
 #1.3 test
 python3 manage.py external_link_surname_checker --links-input-file data/external_links.json  --settings disclosures.settings.prod

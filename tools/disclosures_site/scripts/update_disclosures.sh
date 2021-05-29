@@ -132,6 +132,7 @@ echo $DEDUPE_HOSTS | tr "," "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dl
     mysqladmin drop  disclosures_db -u disclosures -pdisclosures -f
     cd $TOOLS/disclosures_site
     bash scripts/rename_db.sh disclosures_db_dev disclosures_db
+    sudo systemctl start elasticsearch
     python3 manage.py build_elastic_index --settings disclosures.settings.prod
 
 #18 sitemaps
@@ -142,6 +143,7 @@ echo $DEDUPE_HOSTS | tr "," "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dl
 
 #19 make binary archives and copy to frontend
     sudo systemctl stop mysql
+    sudo chmod a+rwx /var/lib/mysql
     cd /var/lib/mysql
     sudo find * -maxdepth 0 -type f | cat -  <( sudo find sys performance_schema mysql disclosures_db) | sudo xargs tar cfvz $DLROBOT_FOLDER/mysql.tar.gz
     cd $DLROBOT_FOLDER
