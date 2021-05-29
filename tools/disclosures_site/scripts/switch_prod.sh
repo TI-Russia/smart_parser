@@ -38,7 +38,8 @@ sudo rm -rf $BACKUP_MYSQL
 switch_service mysql $PROD_MYSQL $NEW_MYSQL $BACKUP_MYSQL
 
 if [ $? != 0 ]; then
-    echo "switch mysql failed, roolback"
+    sudo tail /var/log/mysql/error.log
+    echo "mysql switch failed, roolback"
     switch_service mysql $PROD_MYSQL $BACKUP_MYSQL $NEW_MYSQL
     exit 1
 fi
