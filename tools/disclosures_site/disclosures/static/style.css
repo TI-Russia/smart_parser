@@ -4,6 +4,7 @@
          url('/static/fonts/Robotolight.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
 }
 
 @font-face {
@@ -12,6 +13,7 @@
          url('/static/fonts/Roboto.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
 }
 
 br.mobile {

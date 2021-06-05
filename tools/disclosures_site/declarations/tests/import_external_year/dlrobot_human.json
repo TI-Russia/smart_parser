@@ -1,0 +1,17 @@
+{
+    "document_folder": "domains",
+    "documents": {
+        "aef2d8127a6749405efbba647fcd697b28a29f308c737313a31fe6ebfa39f022": {
+            "file_ext": ".docx",
+            "intersection_status": "only_dlrobot",
+            "office_id": 5963,
+            "w_refs": [
+                {
+                    "crawl_epoch": 1,
+                    "declaration_year": 2014,
+                    "url": null
+                }
+            ]
+        }
+    }
+}

@@ -10,50 +10,6 @@ using System.Text.RegularExpressions;
 
 namespace Smart.Parser.Adapters
 {
-    public class Cell 
-    {
-        public virtual bool IsMerged { set; get; } = false;
-        public virtual int FirstMergedRow { set; get; } = -1;
-        public virtual int MergedRowsCount { set; get; } = -1;
-        public virtual int MergedColsCount { set; get; } = 1;
-        public virtual bool IsEmpty { set; get; } = true;
-        public virtual string Text { set; get; } = "";
-
-        public string TextAbove = null;
-
-        public Cell ShallowCopy()
-        {
-            return (Cell)this.MemberwiseClone();
-        }
-
-        public virtual string GetText(bool trim = true)
-        {
-            var text = Text;
-            if (trim)
-            {
-                text = text.CoalesceWhitespace().Trim();
-                if (DataHelper.IsEmptyValue(text))
-                {
-                    return "";
-                }
-            }
-
-            return text;
-        }
-
-        public override string ToString()
-        {
-            return Text;
-        }
-
-        public int Row { get; set; } = -1;
-        public int Col { get; set; } = -1; // not merged column index
-
-        public int CellWidth = 0; // in pixels
-        public int AdditTableIndention = 0; // only for Word: http://officeopenxml.com/WPtableIndent.php
-
-    };
-
     public class DataRow : DataRowInterface
     {
 
@@ -467,7 +423,7 @@ namespace Smart.Parser.Adapters
 
 
         public List<Cell> Cells;
-        IAdapter adapter;
+        public IAdapter adapter;
         public ColumnOrdering ColumnOrdering;
         int row;
         private Dictionary<DeclarationField, Cell> MappedHeader = null;

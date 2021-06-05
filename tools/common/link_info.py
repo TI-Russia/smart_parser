@@ -21,7 +21,8 @@ class TLinkInfo:
     BEST_LINK_WEIGHT = 50.0
 
     def __init__(self, engine, source_url,  target_url, source_html="", element_index=0, anchor_text="",
-                 tag_name=None, source_page_title=None, element_class=None, downloaded_file=None):
+                 tag_name=None, source_page_title=None, element_class=None, downloaded_file=None,
+                 declaration_year=None):
         self.engine = engine
         self.element_index = element_index
         self.page_html = "" if source_html is None else source_html
@@ -40,6 +41,7 @@ class TLinkInfo:
         self.source_page_title = source_page_title
         if self.source_page_title is None:
             self.source_page_title = ""
+        self.declaration_year = declaration_year
 
     def set_anchor_text(self, anchor_text):
         self.anchor_text = '' if anchor_text is None else anchor_text.strip(" \r\n\t")
@@ -62,6 +64,8 @@ class TLinkInfo:
             rec['link_weight'] = self.weight
         if self.dl_recognizer_result != DL_RECOGNIZER_ENUM.UNKNOWN:
             rec['dl_recognizer_result'] = self.dl_recognizer_result
+        if self.declaration_year is not None:
+            rec['declaration_year'] = self.declaration_year
         return rec
 
     def from_json(self, rec):
@@ -75,6 +79,7 @@ class TLinkInfo:
         self.downloaded_file = rec.get('downloaded_file')
         self.weight = rec.get('link_weight', TLinkInfo.MINIMAL_LINK_WEIGHT)
         self.dl_recognizer_result = rec.get('dl_recognizer_result', DL_RECOGNIZER_ENUM.UNKNOWN)
+        self.declaration_year = rec.get('declaration_year')
         return self
 
 

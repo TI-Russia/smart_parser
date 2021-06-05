@@ -24,7 +24,7 @@ def start_server(server):
 
 class TTestEnv:
 
-    def __init__(self, port, website_folder, regional_main_pages=[]):
+    def     __init__(self, port, website_folder, regional_main_pages=[]):
         self.dlrobot = None
         self.dlrobot_project = None
         self.web_site_folder = os.path.join(os.path.dirname(__file__), website_folder)
@@ -130,9 +130,10 @@ class TestRandomPdf(TestCase):
         self.conv_server_address = "localhost:{}".format(self.conv_server_port)
         save_declarator_conv_url = os.environ['DECLARATOR_CONV_URL']
         os.environ['DECLARATOR_CONV_URL'] = self.conv_server_address
-        random_pdf_file = "web_sites/random_pdf"
+        random_pdf_folder = os.path.join( os.path.dirname(__file__), "web_sites/random_pdf")
+        random_pdf_file = os.path.join(random_pdf_folder, "random.pdf")
         TExternalConverters().build_random_pdf(random_pdf_file)
-        self.env = TTestEnv(self.web_site_port, random_pdf_file)
+        self.env = TTestEnv(self.web_site_port, random_pdf_folder)
         conv_project = os.path.join(self.env.data_folder, "conv.json")
         TConvertStorage.create_empty_db("db_input_files", "db_converted_files", conv_project)
 

@@ -2,7 +2,7 @@
     "document_folder": "domains_1",
     "documents": {
         "2f9b901404c68a906dac9ccd85be5555fef45b46c0bc402ed4b5211c8d7fbd5d": {
-            "document_path": "test1.ru/fsin.docx",
+            "file_ext": ".docx",
             "intersection_status": "only_dlrobot",
             "office_id": 1,
             "w_refs": [

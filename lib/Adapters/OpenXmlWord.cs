@@ -276,9 +276,7 @@ namespace Smart.Parser.Adapters
 
         private void InitTextProperties(WordDocHolder docHolder, OpenXmlElement inputCell)
         {
-            string s = "";
-            string fontName = "";
-            int fontSize = 0;
+            Text = "";
             foreach (var p in inputCell.Elements<Paragraph>())
             {
                 foreach (var textOrBreak in p.Descendants())
@@ -292,57 +290,55 @@ namespace Smart.Parser.Adapters
                             if (rProps.FontSize != null)
                             {
                                 int runFontSize = Int32.Parse(rProps.FontSize.Val);
-                                if (runFontSize <= 28) fontSize = runFontSize; //  if font is too large, it is is an ocr error, ignore it
+                                if (runFontSize <= 28) FontSize = runFontSize; //  if font is too large, it is is an ocr error, ignore it
                             }
                             if (rProps.RunFonts != null)
                             {
-                                fontName = rProps.RunFonts.ComplexScript;
+                                FontName = rProps.RunFonts.ComplexScript;
                             }
                         }
                     }
                     else if (textOrBreak.LocalName == "t")
                     {
-                        s += textOrBreak.InnerText;
+                        Text += textOrBreak.InnerText;
                     }
                     else if (textOrBreak.LocalName == "cr")
                     {
-                        s += "\n";
+                        Text += "\n";
                     }
                     else if (textOrBreak.LocalName == "br")
                     /* do  not use lastRenderedPageBreak, see MinRes2011 for wrong lastRenderedPageBreak in Семенов 
                     ||
                           (textOrBreak.Name == w + "lastRenderedPageBreak") */
                     {
-                        s += "\n";
+                        Text += "\n";
                     }
                     else if (textOrBreak.LocalName == "numPr")
                     {
-                        s += "- ";
+                        Text += "- ";
                     }
                 }
-                s += "\n";
+                Text += "\n";
                 ParagraphProperties pPr = p.ParagraphProperties;
                 if (pPr != null)
                 {
                     for (int l = 0; l < AfterLinesCount(pPr.SpacingBetweenLines); ++l)
                     {
-                        s += "\n";
+                        Text += "\n";
                     }
                 }
             }
-            Text = s;
-            IsEmpty = s.IsNullOrWhiteSpace();
-            if (string.IsNullOrEmpty(fontName))
+            IsEmpty = Text.IsNullOrWhiteSpace();
+            if (string.IsNullOrEmpty(FontName))
             {
-                fontName = docHolder.DefaultFontName;
+                FontName = docHolder.DefaultFontName;
             }
-            if (fontSize == 0)
+            if (FontSize == 0)
             {
-                fontSize = docHolder.DefaultFontSize;
+                FontSize = docHolder.DefaultFontSize;
             }
-            TStringMeasure.InitGraphics(fontName, fontSize);
+            
         }
-
     }
 
 

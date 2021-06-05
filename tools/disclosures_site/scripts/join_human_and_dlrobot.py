@@ -1,30 +1,13 @@
 from declarations.input_json import TSourceDocument, TDlrobotHumanFile, TWebReference
 from web_site_db.web_sites import TDeclarationWebSiteList
 from web_site_db.robot_project import TRobotProject
-
+from common.logging_wrapper import setup_logging
+from common.export_files import TExportFile
 
 import os
 import sys
 import re
 import argparse
-import logging
-
-
-def setup_logging(logfilename):
-    logger = logging.getLogger("join_logger")
-    logger.setLevel(logging.DEBUG)
-
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    fh = logging.FileHandler(logfilename, "a+", encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-    return logger
 
 
 class TJoiner:
@@ -50,13 +33,13 @@ class TJoiner:
 
     def __init__(self, args):
         self.args = args
-        self.logger = setup_logging("join_human_and_dlrobot.log")
+        self.logger = setup_logging(log_file_name="join_human_and_dlrobot.log", append_mode=True)
         self.output_dlrobot_human = TDlrobotHumanFile(args.output_json, read_db=False)
         self.web_sites = TDeclarationWebSiteList(self.logger)
         self.web_sites.load_from_disk()
         self.old_files_with_office_count = 0
 
-    def add_dlrobot_file(self, sha256, file_extension, web_refs=[], decl_refs=[]):
+    def add_dlrobot_file(self, sha256, file_extension, web_refs=[], decl_refs=[], declaration_year=None):
         src_doc = self.output_dlrobot_human.document_collection.get(sha256)
         if src_doc is None:
             src_doc = TSourceDocument()
@@ -91,12 +74,14 @@ class TJoiner:
         if exported_files is None:
             self.logger.error("cannot get exported files from {}".format(robot_project))
             return
+        file_info: TExportFile
         for sha256, file_info in exported_files.items():
             web_domain = dlrobot_project_without_timestamp
             web_ref = TWebReference(
                 url=file_info.url,
                 crawl_epoch=self.args.max_ctime,
-                web_domain=web_domain
+                web_domain=web_domain,
+                declaration_year=file_info.declaration_year
             )
             self.add_dlrobot_file(sha256, file_info.file_extension, [web_ref])
 
@@ -104,8 +89,12 @@ class TJoiner:
         self.logger.info("copy dlrobot files from {} ...".format(self.args.input_dlrobot_folder))
         with os.scandir(self.args.input_dlrobot_folder) as it:
             for entry in it:
-                if entry.is_dir() and entry.stat().st_ctime < self.args.max_ctime:
-                    self.add_files_of_one_project(entry.name)
+                if entry.is_dir():
+                    if entry.stat().st_ctime < self.args.max_ctime:
+                        self.add_files_of_one_project(entry.name)
+                    else:
+                        self.logger.debug("skip too young folder {}".format(entry.name))
+
         self.logger.info("Database Document Count: {}".format(self.output_dlrobot_human.get_documents_count()))
 
     def add_old_dlrobot_files(self):

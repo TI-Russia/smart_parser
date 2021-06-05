@@ -147,7 +147,8 @@ class JoinDLrobotAndHuman(TestCase):
                 ]
         joiner = TJoiner(TJoiner.parse_args(args))
         joiner.main()
-        self.assertDictEqual(CANON_STATS,  joiner.output_dlrobot_human.get_stats())
+        stats = joiner.output_dlrobot_human.get_stats()
+        self.assertDictEqual(CANON_STATS,  stats)
         with open(self.dlrobot_human_path) as inp:
             result_json = json.load(inp)
             self.maxDiff = None

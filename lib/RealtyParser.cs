@@ -13,21 +13,27 @@ namespace Smart.Parser.Lib
     public class TRealtyCell
     {
         public Cell DataCell = null;
-        public string DataCellText = "";
         public List<string> ParsedItems;
         public string DefaultValue;
 
         public TRealtyCell(Cell cell)
         {
             DataCell = cell;
-            if (cell != null)
-            {
-                DataCellText = cell.GetText(true);
-            }
             ParsedItems = new List<string>();
             DefaultValue = "";
         }
 
+        public string GetDataCellText()
+        {
+            if (DataCell != null)
+            {
+                return DataCell.GetText(true);
+            }
+            else
+            {
+                return "";
+            }
+        }
         public string GetParsedItem(int index)
         {
             if (index >= ParsedItems.Count)
@@ -59,17 +65,13 @@ namespace Smart.Parser.Lib
                 }
                 return;
             }
-            if (DataCellText.Length == 0)
-            {
-                return;
-            }
-            ParsedItems = TextHelpers.SplitJoinedLinesByFuzzySeparator(DataCellText, linesWithNumbers, DataCell.CellWidth).ToList<string>();
+            ParsedItems = DataCell.SplitJoinedLinesByFuzzySeparator(linesWithNumbers).ToList<string>();
         }
         public void ParseByAntlr(GeneralAntlrParserWrapper parser)
         {
             if (DataCell != null)
             {
-                ParsedItems = parser.ParseToStringList(DataCellText);
+                ParsedItems = parser.ParseToStringList(GetDataCellText());
             }
         }
         public void CopyUnparsedValue()
@@ -174,15 +176,15 @@ namespace Smart.Parser.Lib
         }
         public bool ShouldStartParsing()
         {
-            if (CountryCell.DataCellText.Length > 0)
+            if (CountryCell.GetDataCellText().Length > 0)
             {
-                if (new AntlrCountryListParser().ParseToStringList(CountryCell.DataCellText).Count > 1)
+                if (new AntlrCountryListParser().ParseToStringList(CountryCell.GetDataCellText()).Count > 1)
                 {
                     // может быть одна страна на все объекты недвижимости
                     return true;
                 }
             }
-            return GetLinesStaringWithNumbers(SquareCell.DataCellText).Count > 1;
+            return GetLinesStaringWithNumbers(SquareCell.GetDataCellText()).Count > 1;
         }
         public void ParseOwnedPropertySingleRow(string estateTypeStr, string ownTypeStr, string areaStr, string countryStr, Person person, string ownTypeByColumn = null)
         {

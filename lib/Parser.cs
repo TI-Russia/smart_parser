@@ -104,8 +104,8 @@ namespace Smart.Parser.Lib
                 if (!(nameCell is OpenXmlWordCell) && !(nameCell is HtmlAdapterCell)) return false;
                 if (nameCell is null) return false;
                 if (nameCell.IsEmpty) return false;
-                if (TStringMeasure.DefaultFont == null) return false; // no font info
-                List<string> lines = TStringMeasure.GetLinesWithSoftBreaks(nameCell.Text, nameCell.CellWidth);
+                if (row.adapter.IsExcel()) return false; // no font info
+                List<string> lines = nameCell.GetLinesWithSoftBreaks();
                 if (lines.Count < 2) return false;
                 List<int> borders  = new List<int>() { 0 };
 
@@ -124,7 +124,7 @@ namespace Smart.Parser.Lib
                 }
                 for (int i = 0; i < row.Cells.Count; ++i)
                 {
-                    var divided = TStringMeasure.GetLinesWithSoftBreaks(row.Cells[i].Text, row.Cells[i].CellWidth);
+                    var divided = row.Cells[i].GetLinesWithSoftBreaks();
                     int start = 0;
                     for (int k = 0; k < borders.Count; ++k)
                     {

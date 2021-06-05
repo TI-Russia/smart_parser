@@ -2,7 +2,7 @@ import declarations.models as models
 from declarations.serializers import TSmartParserSectionJson
 from declarations.permalinks import TPermaLinksSection, TPermaLinksSourceDocument
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
-from declarations.input_json import TDlrobotHumanFile
+from declarations.input_json import TDlrobotHumanFile, TSourceDocument
 from common.logging_wrapper import setup_logging
 
 from multiprocessing import Pool
@@ -80,7 +80,7 @@ class TImporter:
         office = models.Office(id=src_doc.calculated_office_id)
         source_document_in_db = models.Source_Document(office=office,
                                                        sha256=sha256,
-                                                       intersection_status=src_doc.get_intersection_status(),
+                                                       intersection_status=src_doc.build_intersection_status(),
                                                        )
         source_document_in_db.id, new_file = self.permalinks_db_source_document.get_source_doc_id_by_sha256(sha256)
         assert not models.Source_Document.objects.filter(id=source_document_in_db.id).exists()
@@ -109,11 +109,14 @@ class TImporter:
         self.all_section_passports.add(passport)
         return True
 
-    def import_one_smart_parser_json(self, declarator_income_year, source_document_in_db, input_json):
+    def import_one_smart_parser_json(self, source_document_in_db, input_json, src_doc: TSourceDocument):
         # take income_year from smart_parser. If absent, take it from declarator, otherwise the file is useless
-        common_income_year = input_json.get('document', dict()).get('year', declarator_income_year)
-        if common_income_year is not None:
-            common_income_year = int(common_income_year)
+        document_income_year = input_json.get('document', dict()).get('year', src_doc.get_declarator_income_year())
+        if document_income_year is None:
+            document_income_year = src_doc.get_external_income_year_from_dlrobot()
+
+        if document_income_year is not None:
+            document_income_year = int(document_income_year)
 
         imported_section_years = list()
         section_index = 0
@@ -122,12 +125,19 @@ class TImporter:
 
         for raw_section in input_json['persons']:
             section_index += 1
-            income_year = raw_section.get('year', common_income_year)
-            if income_year is None:
+
+            # do not use here default value for get, since smart_parser explicitly write "year": null
+            #section_income_year = raw_section.get('year', document_income_year)
+
+            section_income_year = raw_section.get('year')
+            if section_income_year is None:
+                section_income_year = document_income_year
+
+            if section_income_year is None:
                 raise TSmartParserSectionJson.SerializerException("year is not defined: section No {}".format(section_index))
             with transaction.atomic():
                 try:
-                    prepared_section = TSmartParserSectionJson(income_year, source_document_in_db)
+                    prepared_section = TSmartParserSectionJson(section_income_year, source_document_in_db)
                     prepared_section.read_raw_json(raw_section)
 
                     if len(prepared_section.vehicles) > TImporter.max_vehicle_count:
@@ -147,7 +157,7 @@ class TImporter:
                         if main_income is not None and main_income > 0:
                             incomes.append(main_income)
                         prepared_section.save_to_database(section_id)
-                        imported_section_years.append(income_year)
+                        imported_section_years.append(section_income_year)
 
                 except (DatabaseError, TSmartParserSectionJson.SerializerException) as exp:
                     TImporter.logger.error("Error! cannot import section N {}: {} ".format(section_index, exp))
@@ -193,7 +203,8 @@ class TImporter:
                 self.logger.debug("file {} has no valid smart parser json, skip it".format(sha256))
             else:
                 try:
-                    sections_count = self.import_one_smart_parser_json(src_doc.get_declarator_income_year(), doc_file_in_db, smart_parser_json)
+                    sections_count = self.import_one_smart_parser_json(
+                        doc_file_in_db, smart_parser_json,  src_doc)
                     TImporter.logger.debug("import {} sections from {}".format(sections_count, sha256))
                 except TSmartParserSectionJson.SerializerException as exp:
                     TImporter.logger.error("Error! cannot import smart parser json for file {}: {} ".format(sha256, exp))

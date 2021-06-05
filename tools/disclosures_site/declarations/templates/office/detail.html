@@ -35,13 +35,29 @@
     {% if office.source_document_count > 0 %}
         <tr>
             <td valign="baseline"><b>Документы</b>:</td>
-            <td>{% for src_doc_id in office.get_source_documents %}
-              <a href="/file/{{ src_doc_id }}"> {{ src_doc_id }} </a><br/>
-            {% endfor %}
 
-            {% if office.source_document_count > 10 %}
-                <a href="/file?office_id={{office.id}}">...</a>
-            {% endif %}
+            <td>
+                <table border="1" style="border-collapse: collapse;" cellpadding="10" >
+                    <tr>
+                        <th>ID</th>
+                        <th>Год</th>
+                        <th>Число секций</th>
+                    </tr>
+                    {% for src_doc in office.get_source_documents %}
+                        <tr>
+                            <td><a href="/file/{{ src_doc.id }}">{{ src_doc.id }}</a></td>
+                            <td align="center" >{{src_doc.min_income_year}}</td>
+                            <td align="center">{{src_doc.section_count}}</td>
+                        </tr>
+                    {% endfor %}
+                    {% if office.source_document_count > 10 %}
+                        <tr>
+                            <td colspan="3" border="0">
+                                <a href="/file?office_id={{office.id}}">остальные документы</a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </table>
             </td>
         </tr>
     {% endif %}
