@@ -148,12 +148,27 @@ echo $DEDUPE_HOSTS | tr "," "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dl
     sudo find * -maxdepth 0 -type f | cat -  <( sudo find sys performance_schema mysql disclosures_db) | sudo xargs tar cfvz $DLROBOT_FOLDER/mysql.tar.gz
     cd $DLROBOT_FOLDER
     scp $DLROBOT_FOLDER/mysql.tar.gz $FRONTEND:/tmp
+    sudo systemctl start mysql
 
     sudo systemctl stop elasticsearch
     sudo tar --create --file $DLROBOT_FOLDER/elastic.tar.gz --gzip  --directory /var/lib/elasticsearch   .
     scp $DLROBOT_FOLDER/elastic.tar.gz $FRONTEND:/tmp
+    sudo systemctl start elasticsearch
 
 #20 обновление prod
+    elastic_search_version_prod=`ssh $FRONTEND sudo /usr/share/elasticsearch/bin/elasticsearch --version`
+    elastic_search_version_central=`sudo /usr/share/elasticsearch/bin/elasticsearch --version`
+    if [ "$elastic_search_version_prod" != "$elastic_search_version_central" ]; then
+      echo "Error! Elasticsearch version in the central server and in the prod server are different. Binary indices can be incompatible!"
+      exit 1
+    fi
+    mysql_version_prod=`ssh $FRONTEND sudo mysqld --version`
+    mysql_version_central=`sudo mysqld --version`
+    if [ "$mysql_version_prod" != "$mysql_version_central" ]; then
+      echo "Error! Mysql version in the central server and in the prod server are different. Binary indices can be incompatible!"
+      exit 1
+    fi
+
     ssh $FRONTEND git -C ~/smart_parser pull
     ssh $FRONTEND bash -x /home/sokirko/smart_parser/tools/disclosures_site/scripts/switch_prod.sh /tmp/mysql.tar.gz /tmp/elastic.tar.gz /tmp/sitemap.tar
     ssh $PROD_SOURCE_DOC_SERVER sudo systemctl restart source_declaration_doc

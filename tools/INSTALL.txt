@@ -168,6 +168,8 @@ Following https://habr.com/ru/post/501414/
     #wget -c https://dev.mysql.com/get/mysql-apt-config_0.8.23-1_all.deb
     sudo apt update
     sudo apt install mysql-server
+    sudo apt-mark hold mysql-server
+    sudo tar --file $ELASTICSEARCH_TAR --gzip --directory $NEW_ES --extract
     # root password is "root"
     #sudo mysql_secure_installation
 
@@ -197,14 +199,9 @@ Following https://habr.com/ru/post/501414/
     sudo apt-get update
     sudo apt-get install elasticsearch
 
-    #sudo nano /etc/elasticsearch/jvm.options
-    # add -Xmx512m это не работает, elastic не хочет уходить в swap
+   # be sure that prod and central have the same version (we copy binary indices), freeze this version
+    sudo apt-mark hold elasticsearch
 
-    sudo nano /etc/systemd/system/multi-user.target.wants/elasticsearch.service
-    #set
-    #TimeoutStartSec=750
-
-    sudo systemctl daemon-reload
     sudo systemctl enable elasticsearch.service
     sudo systemctl start elasticsearch.service
 

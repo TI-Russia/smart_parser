@@ -205,7 +205,7 @@ namespace Smart.Parser.Adapters
                     VerticallyMerged = MergedCellValues.Restart;
                 }
             }
-            if (tblBorders != null && (uint)tblBorders.InsideHorizontalBorder.Size > 0)
+            if (tblBorders != null && tblBorders.InsideHorizontalBorder != null && (uint)tblBorders.InsideHorizontalBorder.Size > 0)
             {
                 TableHasInsideHorizontalBorders = true;
             }

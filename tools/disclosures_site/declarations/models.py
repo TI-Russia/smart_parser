@@ -159,14 +159,14 @@ class Relative:
     child_code = "C"
     unknown_code = "?"
     code_to_info = dict()
-    russian_to_code = dict()
+    lower_russian_to_code = dict()
 
     @staticmethod
     def get_relative_code(russian_name):
         if russian_name is None:
             return Relative.main_declarant_code
         r = russian_name.strip(" \n\r\t").lower()
-        return Relative.russian_to_code.get(r, Relative.unknown_code)
+        return Relative.lower_russian_to_code.get(r, Relative.unknown_code)
 
     @staticmethod
     def static_initalize():
@@ -176,7 +176,7 @@ class Relative:
             Relative.child_code: {"ru": "ребенок", "en": "child", "visual_order": 2},
             Relative.unknown_code: {"ru": "иное", "en": "other", "visual_order": 3},
         }
-        Relative.russian_to_code = dict(((value['ru'], key) for key, value in Relative.code_to_info.items()))
+        Relative.lower_russian_to_code = dict(((value['ru'].lower(), key) for key, value in Relative.code_to_info.items()))
 
     def __init__(self, code):
         self.code = code
@@ -204,25 +204,26 @@ Relative.static_initalize()
 
 class OwnType:
     property_code = "P"
+    using_code = "U"
     code_to_info = dict()
-    russian_to_code = dict()
+    lower_russian_to_code = dict()
 
     @staticmethod
     def get_own_type_code(russian_name):
         if russian_name is None:
             return OwnType.property_code
         r = russian_name.strip(" \n\r\t").lower()
-        return OwnType.russian_to_code.get(r, OwnType.property_code)
+        return OwnType.lower_russian_to_code.get(r, OwnType.property_code)
 
 
     @staticmethod
     def static_initalize():
         OwnType.code_to_info = {
             OwnType.property_code: {"ru": "В собственности", "en": "private"},
-            "U": {"ru": "В пользовании", "en": "in use"},
+            OwnType.using_code: {"ru": "В пользовании", "en": "in use"},
             "?": {"ru": "иное", "en": "other"},
         }
-        OwnType.russian_to_code = dict((value['ru'], key) for key, value in OwnType.code_to_info.items())
+        OwnType.lower_russian_to_code = dict((value['ru'].lower(), key) for key, value in OwnType.code_to_info.items())
 
 
 OwnType.static_initalize()
