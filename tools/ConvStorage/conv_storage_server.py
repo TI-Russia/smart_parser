@@ -17,6 +17,8 @@ import queue
 from pathlib import Path
 from logging.handlers import RotatingFileHandler
 import telegram_send
+from http import HTTPStatus
+
 
 def convert_to_seconds(s):
     seconds_per_unit = {"s": 1, "m": 60, "h": 3600}
@@ -505,7 +507,10 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
         self.server.logger.debug(msg_format % args)
 
     def log_request(self, code='-', size='-'):
-        self.log_message('"%s" %s %s from %s', self.requestline, str(code), str(size), str(self.client_address[0]))
+        aux_params = str(self.client_address[0])
+        if self.last_error_message != "":
+            aux_params += " error: " + self.last_error_message
+        self.log_message("%s %s %s from %s",  self.requestline, str(code), str(size), aux_params)
 
     def process_special_commands(self):
         if self.path == "/ping":
@@ -521,49 +526,53 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
             return True
         return False
 
-    def do_GET(self):
-        def send_error(message):
-            http.server.SimpleHTTPRequestHandler.send_error(self, 404, message)
+    def send_error_404(self, message):
+        self.last_error_message = message
+        self.send_error(HTTPStatus.NOT_FOUND, message)
+        #self.server.logger.error(message)
 
+    def _do_GET(self):
         if self.process_special_commands():
             return
 
         query_components = dict()
         if not self.parse_cgi(query_components):
-            send_error('bad request')
+            self.send_error_404('bad request')
             return
 
         sha256 = query_components.get('sha256', None)
         if not sha256:
-            send_error('No SHA256 provided')
+            self.send_error_404('No SHA256 provided')
             return
 
         file_contents, _ = self.server.convert_storage.get_converted_file(sha256)
         if file_contents is None:
-            send_error('File not found')
+            self.send_error_404('File not found')
             return
 
-        try:
-            self.send_response(200)
-            self.send_header('Content-type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')
-            self.end_headers()
-            self.server.convert_storage.register_access_request(sha256)
-            self.server.successful_get_requests += 1;
-            if query_components.get("download_converted_file", True):
-                self.wfile.write(file_contents)
-        except Exception as exp:
-            send_error(str(exp))
+        self.send_response(200)
+        self.send_header('Content-type', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document')
+        self.end_headers()
+        self.server.convert_storage.register_access_request(sha256)
+        self.server.successful_get_requests += 1;
+        if query_components.get("download_converted_file", True):
+            self.wfile.write(file_contents)
 
-    def do_PUT(self):
-        def send_error(message):
-            http.server.SimpleHTTPRequestHandler.send_error(self, 404, message)
+    def do_GET(self):
+        try:
+            self.last_error_message = ""
+            return self._do_GET()
+        except (OSError, UnicodeError) as exp:
+            self.send_error_404(str(exp))
+
+    def _do_PUT(self):
         if self.path is None:
-            send_error("no file specified")
+            self.send_error_404("no file specified")
             return
         action = os.path.dirname(self.path)
         query_components = dict()
         if not self.parse_cgi(query_components):
-            send_error('bad request')
+            self.send_error_404('bad request')
             return
 
         _, file_extension = os.path.splitext(os.path.basename(self.path))
@@ -575,16 +584,16 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
         elif action == "convert_mandatory":
             rebuild = True
         else:
-            send_error("bad action (file path), can be 'convert_mandatory' or 'convert_if_absent', got \"{}\"".format(action))
+            self.send_error_404("bad action (file path), can be 'convert_mandatory' or 'convert_if_absent', got \"{}\"".format(action))
             return
         if file_extension not in ALLOWED_FILE_EXTENSTIONS:
-            send_error("bad file extension: {}, can be {}".format(file_extension, ALLOWED_FILE_EXTENSTIONS))
+            self.send_error_404("bad file extension: {}, can be {}".format(file_extension, ALLOWED_FILE_EXTENSTIONS))
             return
 
         file_length = int(self.headers['Content-Length'])
         max_file_size = 2**25
         if file_length > max_file_size:
-            send_error("file is too large (size must less than {} bytes ".format(max_file_size))
+            self.send_error_404("file is too large (size must less than {} bytes ".format(max_file_size))
             return
         self.server.logger.debug("receive file {} length {}".format(self.path, file_length))
         file_bytes = self.rfile.read(file_length)
@@ -604,8 +613,13 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
 
         self.send_response(201, 'Created')
         self.end_headers()
-        #reply_body = 'Saved file {} (file length={})\n'.format(self.path, file_length)
-        #self.wfile.write(reply_body.encode('utf-8'))
+
+    def do_PUT(self):
+        try:
+            self.last_error_message = ""
+            return self._do_PUT()
+        except (OSError, UnicodeError) as exp:
+            self.send_error_404(str(exp))
 
 
 def conversion_server_main(args):
