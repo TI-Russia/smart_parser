@@ -34,7 +34,8 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "78",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "own_type_raw": "В пользовании"
         },
         {
           "text": "квартира (безвозмездное пользование)",
@@ -42,7 +43,8 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "57",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "own_type_raw": "В пользовании"
         },
         {
           "text": "квартира (безвозмездное пользование)",
@@ -50,7 +52,8 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "78",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "own_type_raw": "В пользовании"
         }
       ],
       "vehicles": [

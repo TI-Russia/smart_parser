@@ -211,7 +211,10 @@ namespace Smart.Parser.Lib
             }
             else // колонка содержит тип недвижимости и тип собственности
             {
-                realEstateProperty.Text = estateTypeStr.NormSpaces(); 
+                realEstateProperty.Text = estateTypeStr.NormSpaces();
+                if (realEstateProperty.Text.ToLower().Contains("пользовани")) {
+                    realEstateProperty.own_type_raw = TRealtyCellSpan.StateString;
+                }
             }
 
             realEstateProperty.Text = estateTypeStr.NormSpaces();

@@ -21,7 +21,15 @@ def read_incomes(section_json):
 
 def read_real_estates(section_json):
     for i in section_json.get('real_estates', []):
-        own_type_str = i.get("own_type", i.get("own_type_by_column"))
+        own_type_str = None
+        for key in [ "own_type",                # this line is to be deleted (it is not in JSON specification, I do know where it is used)
+                     "own_type_by_column",  # from column heading  
+                     "own_type_raw",   #some string from an additional column or from the text
+                     "owntype_raw"   #owntype_raw is a synonym of own_type_raw, that is used by declarator export json, better rename it in future
+                   ]:
+            own_type_str = i.get(key)
+            if own_type_str is not None:
+                break
         country_str = i.get("country", i.get("country_raw"))
         yield models.RealEstate(
             type=i.get("type", i.get("text", i.get('type_raw'))),

@@ -29,7 +29,8 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "32",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "own_type_raw": "В пользовании"
         },
         {
           "text": ", гараж (собственность)",
@@ -45,7 +46,8 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "60,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "own_type_raw": "В пользовании"
         },
         {
           "text": ", жилой дом (собственность)",
@@ -201,7 +203,8 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "93,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "own_type_raw": "В пользовании"
         },
         {
           "text": ", жилой дом (долевая собственность)",
@@ -529,7 +532,8 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "50,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "own_type_raw": "В пользовании"
         },
         {
           "text": ", жилой дом (собственность)",
@@ -674,7 +678,8 @@
           "relative": "Супруг(а)",
           "own_type_by_column": null,
           "square_raw": "120",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "own_type_raw": "В пользовании"
         }
       ],
       "vehicles": [],
@@ -784,7 +789,8 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "86,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "own_type_raw": "В пользовании"
         },
         {
           "text": ", земельный участок под индивидуальное жилищное строительство (собственность)",
@@ -839,7 +845,8 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "56,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "own_type_raw": "В пользовании"
         },
         {
           "text": ", земельный участок (собственность)",
@@ -990,7 +997,8 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "64",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "own_type_raw": "В пользовании"
         },
         {
           "text": "квартира (собственность)",
@@ -1458,7 +1466,8 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "67,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "own_type_raw": "В пользовании"
         },
         {
           "text": ", земельный участок(долевая собственность)",

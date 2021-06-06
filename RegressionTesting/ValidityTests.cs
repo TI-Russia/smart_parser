@@ -552,6 +552,13 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("doc")]
+        public void Zehova2013()
+        {
+            TestSmartParser("zehova2013.doc", "prod");
+        }
+
+        [TestMethod]
         [TestCategory("docx")]
         public void HeaderInsideTable()
         {
