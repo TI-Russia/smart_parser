@@ -222,5 +222,21 @@
             "sections_dedupe_score_greater_0": 5753927,
             "person_count": 1862809
         }
+    },
+    {
+        "crawl_epoch": 1622975611,
+        "metrics": {
+            "source_document_count": 701144,
+            "source_document_only_dlrobot_count": 435814,
+            "source_document_only_human_count": 147624,
+            "source_document_both_found_count": 117706,
+            "sections_count": 6235951,
+            "sections_count_only_dlrobot": 2338726,
+            "sections_count_both_found": 1776180,
+            "sections_person_name_income_year_declarant_income_size": 5554500,
+            "sections_person_name_income_year_spouse_income_size": 3305909,
+            "sections_dedupe_score_greater_0": 5754011,
+            "person_count": 1862811
+        }
     }
 ]
