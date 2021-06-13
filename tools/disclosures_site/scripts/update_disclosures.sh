@@ -117,7 +117,8 @@ echo $DEDUPE_HOSTS | tr "," "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dl
    git push
 
 #14 построение пола (gender)
-  python3 $TOOLS/disclosures_site/manage.py build_genders --settings disclosures.settings.dev
+   cd $DLROBOT_FOLDER
+    python3 $TOOLS/disclosures_site/manage.py build_genders --settings disclosures.settings.dev
 
 
 #15 создание рейтингов
