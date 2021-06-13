@@ -2,7 +2,6 @@ import declarations.models as models
 from collections import defaultdict
 import json
 import os
-import sys
 from declarations.input_json import TIntersectionStatus
 from django.db import connection
 
@@ -40,25 +39,50 @@ class TDisclosuresStatistics:
         self.metrics = defaultdict(int)
         self.crawl_epoch = crawl_epoch
 
-    def build(self):
+    def build(self, logger):
+        logger.info("calc source_document_count")
         self.metrics['source_document_count'] = models.Source_Document.objects.all().count()
+
+        logger.info("calc source_document_only_dlrobot_count")
         self.metrics['source_document_only_dlrobot_count'] = models.Source_Document.objects.filter(intersection_status=TIntersectionStatus.only_dlrobot).count()
+
+        logger.info("calc source_document_only_human_count")
         self.metrics['source_document_only_human_count'] = models.Source_Document.objects.filter(intersection_status=TIntersectionStatus.only_human).count()
+
+        logger.info("calc source_document_both_found_count")
         self.metrics['source_document_both_found_count'] = models.Source_Document.objects.filter(intersection_status=TIntersectionStatus.both_found).count()
 
+        logger.info("calc sections_count")
         self.metrics['sections_count'] = models.Section.objects.all().count()
+
+        logger.info("calc sections_count_only_dlrobot")
         self.metrics['sections_count_only_dlrobot'] = models.Section.objects.filter(
             source_document__intersection_status=TIntersectionStatus.only_dlrobot).count()
+
+        logger.info("calc sections_count_both_found")
         self.metrics['sections_count_both_found'] = models.Section.objects.filter(
             source_document__intersection_status=TIntersectionStatus.both_found).count()
 
+        logger.info("calc sections_person_name_income_year_declarant_income_size")
         self.metrics['sections_person_name_income_year_declarant_income_size'] = \
             sections_person_name_income_year_declarant_income_size(models.Relative.main_declarant_code)
+
+        logger.info("calc sections_person_name_income_year_spouse_income_size")
         self.metrics['sections_person_name_income_year_spouse_income_size'] = \
             sections_person_name_income_year_declarant_income_size(models.Relative.spouse_code)
+
+        logger.info("calc sections_dedupe_score_greater_0")
         self.metrics['sections_dedupe_score_greater_0'] = models.Section.objects.filter(
             dedupe_score__gt=0).count()
+
+        logger.info("calc person_count")
         self.metrics['person_count'] = models.Person.objects.all().count()
+
+        logger.info("calc realty_property_count")
+        self.metrics['realty_property_count'] = models.RealEstate.objects.filter(owntype=models.OwnType.property_code).count()
+
+        logger.info("calc realty_in_use_count")
+        self.metrics['realty_in_use_count'] = models.RealEstate.objects.filter(owntype=models.OwnType.using_code).count()
 
     def save_to_json(self):
         return {
@@ -73,9 +97,10 @@ class TDisclosuresStatistics:
 
 
 class TDisclosuresStatisticsHistory:
-    def __init__(self):
+    def __init__(self, logger=None):
         self.file_path = os.path.join(os.path.dirname(__file__), '../data/statistics.json')
         self.history = self.read_from_disk()
+        self.logger = logger
 
     def read_from_disk(self):
         result = list()
@@ -90,13 +115,14 @@ class TDisclosuresStatisticsHistory:
     def check_sum_metric_increase(self, curr_unknown, values_to_sum):
         last_good = self.get_last()
         metric_str = "+".join(values_to_sum)
-        sys.stderr.write("check {} increases...\n".format(metric_str))
+        self.logger.info("check {} increases...".format(metric_str))
         old = sum(last_good.metrics[x] for x in values_to_sum)
         new = sum(curr_unknown.metrics[x] for x in values_to_sum)
         if old > new:
-            raise Exception("Fail! metric value {} is less than in the last db ({} < {}) ".format(
-                metric_str, new, old))
-        sys.stderr.write("success: {} <= {}\n".format(old, new))
+            msg = "Fail! metric value {} is less than in the last db ({} < {}) ".format(metric_str, new, old)
+            self.logger.error(msg)
+            raise Exception(msg)
+        self.logger.info("success: {} <= {}".format(old, new))
 
     def check_statistics(self,  curr):
         self.check_sum_metric_increase(curr, ["source_document_count"])
@@ -106,14 +132,15 @@ class TDisclosuresStatisticsHistory:
         self.check_sum_metric_increase(curr, ['source_document_only_dlrobot_count', 'source_document_both_found_count'])
         self.check_sum_metric_increase(curr, ['source_document_only_human_count', 'source_document_both_found_count'])
         self.check_sum_metric_increase(curr, ["sections_dedupe_score_greater_0"])
+        self.check_sum_metric_increase(curr, ["realty_property_count"])
+        self.check_sum_metric_increase(curr, ["realty_in_use_count"])
         # metrics sections_count, sections_count_only_dlrobot, sections_count_both_found can decrease
         # because we make progress in finding section copies. Metric sections_dedupe_score_greater_0 can fall also
         # but we have not seen it.
 
-    @staticmethod
-    def build_current_statistics(crawl_epoch):
+    def build_current_statistics(self, crawl_epoch):
         stats = TDisclosuresStatistics(crawl_epoch)
-        stats.build()
+        stats.build(self.logger)
         return stats
 
     def add_statistics(self, stats):
