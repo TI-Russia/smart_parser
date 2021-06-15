@@ -405,6 +405,12 @@ def format_income_in_html(income):
     return s
 
 
+def format_realty_square_in_html(square_sum):
+    if square_sum is None or square_sum == 0:
+        return ""
+    return "{} кв.м.".format(square_sum)
+
+
 class Section(models.Model):
     id = models.IntegerField(primary_key=True)
     source_document = models.ForeignKey('declarations.source_document', null=True, verbose_name="source document", on_delete=models.CASCADE)
@@ -461,8 +467,11 @@ class Section(models.Model):
         return format_income_in_html(self.get_declarant_income_size())
 
     @property
-    def spouse_income_size(self):
-        return self.get_spouse_income_size()
+    def spouse_income_size_html(self):
+        i = self.get_spouse_income_size()
+        if i is None or i == 0:
+            return ""
+        return format_income_in_html(i)
 
     def get_permalink_passport(self):
         main_income = self.get_declarant_income_size()
@@ -482,7 +491,7 @@ class Section(models.Model):
         type_str = r.type
         if r.country != "RU":
             type_str += " ({})".format(r.country_str)
-        square_str = "none" if r.square is None else str(r.square)
+        square_str = "none" if r.square is None else format_realty_square_in_html(r.square)
         return [type_str, square_str, r.own_type_str]
 
     @property
@@ -495,12 +504,12 @@ class Section(models.Model):
                     sum += r.square
                     cnt += 1
         if cnt > 0 and sum > 0:
-            return "{} кв.м.".format(sum)
+            return format_realty_square_in_html(sum)
         else:
             return ""
 
     @property
-    def spouse_realty_square_sum(self):
+    def spouse_realty_square_sum_html(self):
         sum = 0
         has_realty = 0
         for r in self.realestate_set.all():
@@ -509,9 +518,9 @@ class Section(models.Model):
                     sum += r.square
                     has_realty = True
         if has_realty:
-            return sum
+            return format_realty_square_in_html(sum)
         else:
-            return None
+            return ""
 
     @property
     def vehicle_count(self):

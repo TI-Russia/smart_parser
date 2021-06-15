@@ -4,36 +4,32 @@
 
 {% block content %}
 
-<style>
-    div.search_input {
-        padding-top: 5x;
-        padding-bottom: 5px;
-    }
-</style>
-
 <form action="{% url 'file_search' %}" method="get">
-    <div class="search_input">
+    <div class="search_input1">
         {{form.web_domains.label_tag}}
-        {{form.web_domains}}
+        {{form.web_domains}} &nbsp;&nbsp;&nbsp;
         <input type="submit" value="Поиск">
     </div>
-    <div class="search_input">
+
+    <div class="search_input1">
         {{form.first_crawl_epoch.label_tag}}
         {{form.first_crawl_epoch}}
-
-        {{form.sha256.label_tag}}
-        {{form.sha256}}
+        &nbsp;&nbsp;&nbsp;
+        {{form.intersection_status.label_tag}}
+        {{form.intersection_status}}
     </div>
 
-    <div class="search_input">
+    <div class="search_input1">
         {{form.min_income_year.label_tag}}
         {{form.min_income_year}}
 
         {{form.max_income_year.label_tag}}
         {{form.max_income_year}}
+    </div>
 
-        {{form.intersection_status.label_tag}}
-        {{form.intersection_status}}
+    <div class="search_input1">
+        {{form.sha256.label_tag}}
+        {{form.sha256}}
     </div>
 </form>
 

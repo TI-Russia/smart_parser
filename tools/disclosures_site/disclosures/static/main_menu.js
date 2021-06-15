@@ -21,7 +21,7 @@ function menuCreateDesktop() {
                 "href":"/section/",
               },
               {
-                "text":"документы",
+                "text":"исходные документы",
                 "href":"/file/",
               },
               {

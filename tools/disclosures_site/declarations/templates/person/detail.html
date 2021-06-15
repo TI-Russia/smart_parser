@@ -35,10 +35,6 @@
      2. Исторические сведения о доходах чиновника за {{person.years_str}}
 </h3>
 
-
-
-
-
 <table class="declaration_list_table" cellpadding="10">
     <tr>
        <th>Год</th>
@@ -46,7 +42,7 @@
        <th>Транспорт</th>
        <th>Доход</th>
         {% if person.has_spouse %}
-          <th>Недвижимость супруги/а (кв.м)</th>
+          <th>Недвижимость супруги/а</th>
           <th>Доход супруги/а</th>
         {% endif %}
     </tr>
@@ -58,8 +54,8 @@
             <td align="right"> {{s.vehicle_count}} </td>
             <td align="right"> &nbsp;{{s.declarant_income_size_in_html|safe}}&nbsp; </td>
             {% if person.has_spouse %}
-              <td>{{s.spouse_realty_square_sum|default_if_none:""}}</td>
-              <td>{{s.spouse_income_size|default_if_none:""}}</td>
+              <td>{{s.spouse_realty_square_sum_html}}</td>
+              <td>{{s.spouse_income_size_html|safe}}</td>
             {% endif %}
         </tr>
     {% endfor %}
@@ -89,6 +85,10 @@
 
     {% endif %}
 {% endwith %}
+
+<br/><br/>
+
+<a href=/office/{{section.source_document.office.id}}>Информация об этом ведомстве (остальные декларации)</a><br/>
 
 <br/><br/>
 
