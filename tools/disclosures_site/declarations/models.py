@@ -486,7 +486,7 @@ class Section(models.Model):
         return [type_str, square_str, r.own_type_str]
 
     @property
-    def declarant_realty_square_sum(self):
+    def declarant_realty_square_sum_html(self):
         sum = 0
         cnt = 0
         for r in self.realestate_set.all():
@@ -494,10 +494,10 @@ class Section(models.Model):
                 if r.square is not None:
                     sum += r.square
                     cnt += 1
-        if cnt > 0:
-            return sum
+        if cnt > 0 and sum > 0:
+            return "{} кв.м.".format(sum)
         else:
-            return None
+            return ""
 
     @property
     def spouse_realty_square_sum(self):

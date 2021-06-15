@@ -6,4 +6,5 @@ TOOLS=/home/sokirko/smart_parser/tools/
 */10       *     *        *      *    /bin/bash $TOOLS/disclosures_site/scripts/monitoring/dl_monitoring.sh
 */20       */5   *        *      *    yandex-disk sync
 57   23 * * *   /bin/bash $TOOLS/disclosures_site/scripts/copy_nginx_logs.sh
+*/20 */4  * * * rsync -av --partial --inplace --append-verify --progress /home/sokirko/declarator_hdd/Yandex.Disk/declarator/source_doc   sokirko@iphil:/data/sokirko/Yandex.disk/declarato
 

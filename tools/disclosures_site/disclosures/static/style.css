@@ -95,23 +95,23 @@ select {
 /*================*/
 
 .declaration_table td, .declaration_table th {
-    border: solid;
+    border: thin solid;
     padding-left: 4px;
     padding-right: 4px;
 }
 table.declaration_table  {
-    border: solid;
+    border: thin solid;
     border-collapse: collapse;
 }
 
 /*================*/
 table.declaration_list_table  {
-    border: solid;
+    border: thin solid;
     border-collapse: collapse;
 }
 
 .declaration_list_table td, .declaration_list_table th {
-    border: solid;
+    border: thin solid;
     padding-left: 8px
     padding-right: 8px;
     padding-top: 10x;
@@ -119,12 +119,12 @@ table.declaration_list_table  {
 
 /*================*/
 .solid_table td, .solid_table th {
-    border: solid;
+    border: thin solid;
     padding-left: 4px;
     padding-right: 4px;
 }
 table.solid_table  {
-    border: solid;
+    border: thin solid;
     border-collapse: collapse;
 }
 /*==========*/
