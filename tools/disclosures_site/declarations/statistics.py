@@ -17,7 +17,9 @@ ALL_METRIC_NAMES = {
     'person_count': 'People count',
     'sections_count': 'All sections count',
     'sections_count_only_dlrobot': 'Sections (only_dlrobot)',
-    'sections_count_both_found': 'Sections (both found)'
+    'sections_count_both_found': 'Sections (both found)',
+    'realty_property_count': 'Real properties count',
+    'realty_in_use_count': 'Real properties count (in use)'
 }
 
 
