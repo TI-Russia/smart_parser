@@ -251,6 +251,20 @@ namespace RegressionTesting
         {
             TestSmartParser("28817.xls", "prod");
         }
+        
+        [TestMethod]
+        [TestCategory("xls")]
+        public void Test50484_2()
+        {
+            TestSmartParser("50484_2.xls", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("doc")]
+        public void Test52668()
+        {
+            TestSmartParser("52668.doc", "prod");
+        }
 
         [TestMethod]
         [TestCategory("doc")]

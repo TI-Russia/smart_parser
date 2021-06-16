@@ -1,0 +1,58 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Сидоренко Р.В.",
+        "role": "заместитель начальника финансового управления"
+      },
+      "year": 2016,
+      "incomes": [
+        {
+          "size": 880853.0,
+          "size_raw": "880853",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 44.6,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "44,6",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "общая долевая 1/3"
+        },
+        {
+          "text": "квартира",
+          "square": 74.2,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "74,2",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивидуальная"
+        },
+        {
+          "text": "земельный участок",
+          "square": 500.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "500",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок",
+          "own_type_raw": "индивидуальная"
+        }
+      ],
+      "vehicles": [],
+      "person_index": 1,
+      "document_position": "R7C6"
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера за период с 1 января 2016г. по 31 декабря 2016 г.",
+    "year": 2016,
+    "sheet_number": 0
+  }
+}

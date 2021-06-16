@@ -164,7 +164,8 @@ namespace Smart.Parser.Adapters
             var body = WordDocument.MainDocumentPart.Document.Body;
             foreach (var p in WordDocument.MainDocumentPart.Document.Descendants<Paragraph>())
             {
-                if (p.Parent != body)
+
+                if (p.Parent != body && p.InnerText != "")
                 {
                     break;
                 }
