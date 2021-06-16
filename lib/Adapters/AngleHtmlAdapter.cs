@@ -6,6 +6,7 @@ using TI.Declarator.ParserCommon;
 using AngleSharp;
 using AngleSharp.Dom;
 using Parser.Lib;
+using System.Text.RegularExpressions;
 
 namespace Smart.Parser.Adapters
 {
@@ -28,17 +29,22 @@ namespace Smart.Parser.Adapters
             var addedLines = new HashSet<string>();
             foreach (var p in HtmlDocument.All.ToList() )
             {
-                if (p.TextContent.IsNullOrWhiteSpace()) continue;
-                if (p.TextContent.Length > 300) continue;
-                if (addedLines.Contains(p.TextContent)) continue;
-                addedLines.Add(p.TextContent);
-                if (p.LocalName == "h1" || p.LocalName == "h2")
+                var plain = p.TextContent;
+                if (plain.IsNullOrWhiteSpace()) continue;
+                if (plain.Length > 300) continue;
+                if (addedLines.Contains(plain)) continue;
+                addedLines.Add(plain);
+                if (p.LocalName == "title" && Regex.Match(plain.ToLower(), "сведения.*20[0-9][0-9]").Success)
                 {
-                    title += p.TextContent + " ";
+                    title += plain + " ";
+                }
+                if (p.LocalName == "h1" || p.LocalName == "h2" || p.LocalName == "h3")
+                {
+                    title += plain + " ";
                 }
                 else if ((p.LocalName == "p" || p.LocalName == "div" || p.LocalName == "span") && p.TextContent.IndexOf("декабря") != -1)
                 {
-                    title += p.TextContent + " ";
+                    title += plain + " ";
                 }
                 else
                 {
@@ -50,7 +56,7 @@ namespace Smart.Parser.Adapters
                     {
                         if (p.LocalName == "p")
                         {
-                            title += p.TextContent + " ";
+                            title += plain + " ";
                         }
                     }
                 }

@@ -727,7 +727,13 @@ namespace RegressionTesting
         {
             TestSmartParser("Sudia2011.htm", "prod");
         }
-
+        
+        [TestMethod]
+        [TestCategory("htm")]
+        public void HtmlTitle()
+        {
+            TestSmartParser("html_title.html", "prod");
+        }
 
         [TestMethod]
         [TestCategory("htm")]
