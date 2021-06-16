@@ -1,29 +1,21 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-
-
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
     <title>{% block title %}Home {% endblock title %}</title>
 
     <link rel="stylesheet" type="text/css" href="/static/style.css" %}">
 
-    {% block head_favicon %}
-    <link rel="icon" type="image/png" href="/static/images/favicon.png">
-    {% endblock head_favicon %}
-
     {% block head_meta %}
     {% block head_meta_charset %}
-    <meta http-equiv="Content-Type"
-          content="text/html; charset=utf-8"/>
     {% endblock head_meta_charset %}
     <meta name="yandex-verification" content="5c8f653019005048" />
     <meta name="google-site-verification" content="z3C44ad-5G9K768OYL0xzTf6xtJeshD-WMGmdqMe9oU" />
     {% endblock head_meta %}
     {% block serp_description %} {% endblock serp_description %}
     {% block meta_robots %} {% endblock meta_robots %}
-    <!---<meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
     <!-- Global site tag (gtag.js) - Google Analytics -->

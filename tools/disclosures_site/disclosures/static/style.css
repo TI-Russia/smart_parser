@@ -26,7 +26,7 @@ br.mobile {
         font-family: "Roboto", serif;
     }
     html {
-        font-size: 36px;
+        /*font-size: 36px;*/
         /*height:100%;*/
     }
     body{
@@ -163,11 +163,10 @@ row {
 
 .topnav a {
     display: table-cell;
-    text-align: left;
+    text-align: center;
     text-decoration: none;
-    font-size: 70px;
+    font-size: x-large;
     border:1px solid black;
-    padding-left: 50px;
     vertical-align: middle;
 }
 
@@ -188,3 +187,36 @@ div.search_input {
 div.search_input1 {
     padding-bottom: 10px;
 }
+
+#id_car_brands {
+    width: 100px;
+}
+
+#id_gender{
+    width: 60px;
+}
+
+#id_rubric_id {
+    width: 150px;
+}
+
+#id_region_id {
+  width: 150px;
+}
+
+#id_position_and_department {
+    width: 130px;
+}
+
+#id_person_name {
+  width: 160px;
+}
+
+#id_web_domains {
+  width: 120px;
+}
+
+#id_office_request {
+    width: 180px;
+}
+
