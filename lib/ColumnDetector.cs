@@ -47,6 +47,14 @@ namespace Smart.Parser.Lib
                 {
                     year = int.Parse(commonYearMatches[0].Value);
                 }
+                else
+                {
+                    commonYearMatches = Regex.Matches(text, @"\b(20\d\d)г.");
+                    if (commonYearMatches.Count > 0)
+                    {
+                        year = int.Parse(commonYearMatches[0].Groups[1].Value);
+                    }
+                }
             }
             
             var specificYearMatches = Regex.Matches(text, @"за(20\d\d)\b");
@@ -174,6 +182,13 @@ namespace Smart.Parser.Lib
             }
             return subCells;
         }
+        static bool IsIncomeColumn(DeclarationField d)
+        {
+            return d == DeclarationField.DeclaredYearlyIncome ||
+                d == DeclarationField.DeclaredYearlyIncomeThousands ||
+                d == DeclarationField.DeclaredYearlyOtherIncome;
+        }
+
         static void AddColumn(ColumnOrdering ordering, DeclarationField field, Cell  cell)
         {
             TColumnInfo s = new TColumnInfo();
@@ -182,10 +197,14 @@ namespace Smart.Parser.Lib
             s.ColumnPixelWidth = cell.CellWidth;
             //s.ColumnPixelStart is unknown and initialized in FinishOrderingBuilding
             s.Field = field;
-            if (field == DeclarationField.DeclaredYearlyIncome)
+            if (IsIncomeColumn(field))
             {
-                string dummy = ""; 
-                ColumnDetector.GetValuesFromTitle(cell.GetText(), ref dummy, ref ordering.YearFromIncome, ref dummy);
+                string dummy = "";
+                int? year = null;
+                if (ColumnDetector.GetValuesFromTitle(cell.GetText(), ref dummy, ref year, ref dummy) && year.HasValue)
+                {
+                    ordering.YearFromIncome = year.Value;
+                }
             }
 
             ordering.Add(s);

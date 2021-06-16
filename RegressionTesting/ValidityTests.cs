@@ -878,6 +878,20 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("doc")]
+        public void Test_4462_10()
+        {
+            TestSmartParser("4462_10.doc", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("doc")]
+        public void Test_4479_27()
+        {
+            TestSmartParser("4479_27.doc", "prod");
+        }
+
+        [TestMethod]
         [TestCategory("docx")]
         public void SovetFederazii()
         {

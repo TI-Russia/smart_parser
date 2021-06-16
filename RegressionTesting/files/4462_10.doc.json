@@ -1,0 +1,209 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Переверзева Инна Николаевна",
+        "role": "Судья"
+      },
+      "year": 2012,
+      "incomes": [
+        {
+          "size": 2035800.0,
+          "size_raw": "2035,8",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Земельные участки: 1. ИЖС",
+          "square": 668.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "668",
+          "country_raw": "Россия",
+          "type_raw": "Земельные участки: 1. ИЖС",
+          "own_type_raw": ""
+        },
+        {
+          "text": "Жилые дома: 1. дом",
+          "square": 151.8,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "151,8",
+          "country_raw": "Россия",
+          "type_raw": "Жилые дома: 1. дом",
+          "own_type_raw": ""
+        },
+        {
+          "text": "Квартиры: 1. квартира",
+          "square": 113.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "113,0",
+          "country_raw": "Россия",
+          "type_raw": "Квартиры: 1. квартира",
+          "own_type_raw": ""
+        },
+        {
+          "text": "Дачи:",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "Дачи:",
+          "own_type_raw": ""
+        },
+        {
+          "text": "Гаражи:",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "Гаражи:",
+          "own_type_raw": ""
+        },
+        {
+          "text": "Иное недвижимое имущество:",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "Иное недвижимое имущество:",
+          "own_type_raw": ""
+        },
+        {
+          "text": "Земельные участки:",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "Земельные участки:",
+          "own_type_raw": ""
+        },
+        {
+          "text": "Жилые дома:",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "Жилые дома:",
+          "own_type_raw": ""
+        },
+        {
+          "text": "Квартиры:",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "Квартиры:",
+          "own_type_raw": ""
+        },
+        {
+          "text": "Дачи:",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "Дачи:",
+          "own_type_raw": ""
+        },
+        {
+          "text": "Гаражи:",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "Гаражи:",
+          "own_type_raw": ""
+        },
+        {
+          "text": "Иное недвижимое имущество:",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "Иное недвижимое имущество:",
+          "own_type_raw": ""
+        },
+        {
+          "text": "Земельные участки:",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "Земельные участки:",
+          "own_type_raw": ""
+        },
+        {
+          "text": "Жилые дома:",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "Жилые дома:",
+          "own_type_raw": ""
+        },
+        {
+          "text": "Квартиры:",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "Квартиры:",
+          "own_type_raw": ""
+        },
+        {
+          "text": "Дачи:",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "Дачи:",
+          "own_type_raw": ""
+        },
+        {
+          "text": "Гаражи:",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "Гаражи:",
+          "own_type_raw": ""
+        },
+        {
+          "text": "Иное недвижимое имущество:",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "Иное недвижимое имущество:",
+          "own_type_raw": ""
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Ваз 2121\nАуди А6",
+          "relative": null
+        }
+      ]
+    }
+  ],
+  "document": {
+    "year": 2012
+  }
+}

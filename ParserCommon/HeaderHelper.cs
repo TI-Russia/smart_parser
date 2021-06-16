@@ -48,7 +48,7 @@ namespace TI.Declarator.ParserCommon
                 _ when str.IsMixedGarageSquare() => MixedGarageSquare,
 
                 _ when IsOwnedRealEstateType(parentColumnTitle, subColumnTitle) => OwnedRealEstateType,
-                _ when str.IsOwnedRealEstateOwnershipType() => OwnedRealEstateOwnershipType,
+                _ when IsOwnedRealEstateOwnershipType(parentColumnTitle, subColumnTitle) => OwnedRealEstateOwnershipType,
                 _ when IsOwnedRealEstateSquare(parentColumnTitle, subColumnTitle) => OwnedRealEstateSquare,
                 _ when str.IsOwnedRealEstateCountry() => OwnedRealEstateCountry,
 
@@ -204,6 +204,11 @@ namespace TI.Declarator.ParserCommon
         public static bool IsMixedColumn(this string s) => HasOwnedString(s) && HasStateString(s);
 
         private static bool IsOwnedRealEstateType(string parentColumnTitle, string subTitle) {
+            if (subTitle.Length > 0 && (subTitle.HasSquareString() || subTitle.HasCountryString()))
+            {
+                // 4479_27.doc 
+                return false;
+            }
             var s = parentColumnTitle + " " + subTitle;
             if (s.IsOwnedColumn() && HasRealEstateTypeStr(s))
             {
@@ -217,7 +222,13 @@ namespace TI.Declarator.ParserCommon
             return false;
         }
 
-        private static bool IsOwnedRealEstateOwnershipType(this string s) {
+        private static bool IsOwnedRealEstateOwnershipType(string parentColumnTitle, string subTitle) {
+            if (subTitle.Length > 0 && (subTitle.HasSquareString() || subTitle.HasCountryString()))
+            {
+                // 4479_27.doc 
+                return false;
+            }
+            var s = parentColumnTitle + " " + subTitle;
             return IsOwnedColumn(s) && HasOwnershipTypeString(s);
         }
 
