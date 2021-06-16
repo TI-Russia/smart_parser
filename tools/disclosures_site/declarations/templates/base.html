@@ -5,7 +5,7 @@
 
     <title>{% block title %}Home {% endblock title %}</title>
 
-    <link rel="stylesheet" type="text/css" href="/static/style.css" %}">
+    <link rel="stylesheet" type="text/css" href="/static/style.css" />
 
     {% block head_meta %}
     {% block head_meta_charset %}
@@ -49,7 +49,7 @@
 
 <body vlink="#999999" alink="#000000">
 
-<header>
+<div class="header">
     <div>
         <div class="disclosures_top_header">Дискложес&nbsp;
             <span class="mobile" style="float:right; font-size: 150%;">
@@ -66,25 +66,25 @@
     <hr />
       <div id="mobileMenu" class="topnav">
           <div class="menu_table">
-              <row>
+              <div class="row">
                 <a  href="/section/">Декларации</a>
                 <a class="mobile_menu_dark_cell" href="/about.html">О проекте</a>
-              </row>
-              <row>
+              </div>
+              <div class="row">
                 <a class="mobile_menu_dark_cell" href="/office/">Ведомства</a>
                 <a  href="/statistics/">Статистика</a>
-              </row>
-              <row>
+              </div>
+              <div class="row">
                 <a href="/file/">Исходники</a>
                 <a class="mobile_menu_dark_cell" href="/news.html">Новости</a>
-              </row>
-              <row>
+              </div>
+              <div class="row">
                 <a class="mobile_menu_dark_cell" href="/person/">Декларанты</a>
-              </row>
+              </div>
             </div>
       </div>
 
-</header>
+</div>
 
 {# The Document Body #}
 <div id="site-wrapper">
