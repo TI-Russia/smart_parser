@@ -113,7 +113,7 @@ namespace TI.Declarator.JsonSerialization
         public static JObject SerializeDocumentProperties(DeclarationProperties props)
         {
             var jProps = new JObject();
-            AddNotNullProp(jProps, "sheet_title", props.SheetTitle);
+            AddNotNullProp(jProps, "sheet_title", props.SheetTitle.Trim(' ', '\n', '\r'));
             jProps.Add(new JProperty("year", props.Year));
             if (SmartParserJsonFormat == SmartParserJsonFormatEnum.Official)
             {
