@@ -133,16 +133,21 @@ def calc_metrics_by_json(fileName):
     person_count = len(data.get('persons', []))
     valid_realty_squares_count = 0
     persons_with_year = 0
+    persons_with_income = 0
     for p in data.get('persons', []):
         for r in p.get('real_estates', []):
             if r.get('square') != None :
                 valid_realty_squares_count += 1
         if p.get('year') is not None:
             persons_with_year += 1 	
+        for i in p.get('incomes', list()):
+            if i.get('relative') is None:
+                persons_with_income += 1     
     return {
         'person_count':  person_count,
         'valid_realty_squares_count': valid_realty_squares_count,
-        'persons_with_year': persons_with_year
+        'persons_with_year': persons_with_year,
+        'persons_with_income': persons_with_income
     }
 
 
@@ -157,6 +162,7 @@ def report(args):
     all_person_count = 0
     valid_realty_squares_count = 0
     persons_with_year = 0
+    persons_with_income = 0
     for x in processed_files:
         all_size += x.SourceFileSize
         if x.JsonFile is not None:
@@ -167,6 +173,7 @@ def report(args):
                 all_person_count += metrics['person_count']
                 valid_realty_squares_count += metrics['valid_realty_squares_count']
                 persons_with_year += metrics['persons_with_year']
+                persons_with_income += metrics['persons_with_income']
 
     processed_files = sorted(processed_files, key=lambda x: x.SourceFileSize, reverse=True)
     errors = open("errors.txt", "w")
@@ -183,7 +190,8 @@ def report(args):
         "all_person_count": all_person_count,
         "valid_realty_squares_count" : valid_realty_squares_count,
         "square_recall":    round(valid_realty_squares_count / (all_person_count + 0.000000001), 2),
-	'year_recall': round(persons_with_year / (all_person_count + 0.000000001), 2),
+        'year_recall': round(persons_with_year / (all_person_count + 0.000000001), 2),
+        'persons_with_income': round(persons_with_income / (all_person_count + 0.000000001), 2),
     }
 
 
