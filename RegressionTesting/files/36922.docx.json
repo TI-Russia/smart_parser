@@ -112,6 +112,7 @@
           "text": "(индивидуальная собственность) Квартира (пользование)",
           "square": 50.7,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "50,7",
           "country_raw": "Россия",

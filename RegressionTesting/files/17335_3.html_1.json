@@ -29,6 +29,7 @@
           "text": "Квартира (пользование) 141,6 кв.м.",
           "square": 141.6,
           "relative": "Ребенок",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "141,6",
           "country_raw": "",

@@ -27,6 +27,7 @@
           "text": "Квартира",
           "square": 52.7,
           "relative": "Ребенок",
+          "relative_index": 1,
           "own_type_by_column": "В пользовании",
           "square_raw": "52,7",
           "country_raw": "Россия",

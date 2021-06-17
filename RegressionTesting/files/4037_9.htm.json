@@ -81,6 +81,7 @@
           "text": "(собственность, индивидуальная)",
           "square": 59.3,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "59,3",
           "country_raw": "Россия",

@@ -290,7 +290,8 @@ namespace TI.Declarator.JsonSerialization
             {
                 foreach (var prop in rel.RealEstateProperties)
                 {
-                    jRealEstate.Add(GetRealEstate(prop, GetRelationshipName(rel.RelationType)));
+                    var r = GetRealEstate(prop, GetRelationshipName(rel.RelationType), rel.PersonIndex);
+                    jRealEstate.Add(r);
                 }
             }
 

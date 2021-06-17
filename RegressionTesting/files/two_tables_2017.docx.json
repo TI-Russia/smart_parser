@@ -121,6 +121,7 @@
           "text": "Квартира",
           "square": 36.00,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "36,00",
           "country_raw": "Российская Федерация",

@@ -34,6 +34,7 @@
           "text": "80,2",
           "square": null,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "Россия",
           "country_raw": "",

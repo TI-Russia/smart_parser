@@ -72,6 +72,7 @@
           "text": "земельный участок (общая собственность);",
           "square": 3168.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "3168",
           "country_raw": "Россия"
@@ -80,6 +81,7 @@
           "text": "квартира (общая собственность);",
           "square": 150.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "150",
           "country_raw": "Россия"
@@ -88,6 +90,7 @@
           "text": "квартира (общая собственность)",
           "square": 71.5,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "71,5",
           "country_raw": "Россия"
@@ -96,6 +99,7 @@
           "text": "дом (общая собственность);",
           "square": 152.3,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "152,3",
           "country_raw": "Россия"
@@ -104,6 +108,7 @@
           "text": "дом (общая собственность);",
           "square": 283.8,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "283,8",
           "country_raw": "Россия"
@@ -112,6 +117,7 @@
           "text": "гараж (общая собственность)",
           "square": 38.7,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "38,7",
           "country_raw": "Россия"
