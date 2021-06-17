@@ -54,10 +54,14 @@ namespace Smart.Parser.Lib
                 SheetNumber = Adapter.GetWorksheetIndex(),
                 DocumentUrl = Adapter.GetDocumentUrlFromMetaTag()
             };
-            if (properties.Year == null)
+            if (columnOrdering.YearFromIncome != null)
             {
                 properties.Year = columnOrdering.YearFromIncome;
             }
+            /*if (properties.Year == null)
+            {
+                properties.Year = columnOrdering.YearFromIncome;
+            }*/
             Declaration declaration = new Declaration()
             {
                 Properties = properties

@@ -158,19 +158,62 @@ namespace Smart.Parser.Adapters
                 }
             }
         }
+
+        public bool NotEmptyParagraphIsInADeclarationTable(Paragraph p)
+        {
+            if (p.InnerText == "")
+            {
+                return false;
+            }
+            var body = WordDocument.MainDocumentPart.Document.Body;
+            if  (p.Parent == body)
+            {
+                return false;
+            }
+            var cell  = p.Parent;
+            if (cell == null || cell.GetType().Name != "TableCell")
+            {
+                return false;
+            }
+            var row = cell.Parent;
+            if (row == null || row.Descendants<TableCell>().Count() < 5)
+            {
+                return false;
+            }
+            var table = row.Parent;
+            if (table != null && table.GetType().Name == "Table" && table.Descendants<TableRow>().Count() > 1)
+            {
+                return true;
+            }
+            return false;
+        }
         public string FindTitleAboveTheTable()
         {
             string title = "";
-            var body = WordDocument.MainDocumentPart.Document.Body;
+            foreach (OpenXmlPart h in WordDocument.MainDocumentPart.HeaderParts)
+            {
+                foreach (var p in h.RootElement.Descendants<Paragraph>())
+                {
+                    if (p.InnerText.Contains("PAGE"))
+                    {
+                        continue; // technical word info in header 
+                    }
+                    if (NotEmptyParagraphIsInADeclarationTable(p))
+                    {
+                        return title;
+                    }
+                    title += p.InnerText + "\n";
+                }
+            }
             foreach (var p in WordDocument.MainDocumentPart.Document.Descendants<Paragraph>())
             {
-
-                if (p.Parent != body && p.InnerText != "")
+                if (NotEmptyParagraphIsInADeclarationTable(p))
                 {
-                    break;
+                    return title;
                 }
                 title += p.InnerText + "\n";
             }
+
             return title;
         }
 
