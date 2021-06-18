@@ -673,6 +673,12 @@ namespace RegressionTesting
         {
             TestSmartParser("ZabSud2017.docx", "prod");
         }
+        [TestMethod]
+        [TestCategory("docx")]
+        public void Test_14845_84()
+        {
+            TestSmartParser("14845_84.docx", "prod");
+        }
 
         [TestMethod]
         [TestCategory("doc")]

@@ -132,6 +132,7 @@ namespace Smart.Parser.Lib
                 //5 рублей
                 val = roubleMatch.Groups[1].Value;
             }
+            val = val.Trim('*');
             var res = val.ParseDecimalValue();
             if (res > 10000000000)
             {
