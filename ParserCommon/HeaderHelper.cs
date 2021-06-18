@@ -283,15 +283,29 @@ namespace TI.Declarator.ParserCommon
             return s.ContainsAny("иные", "иного");
         }
 
-        private static bool HasChild(this string s) => s.ContainsAny("детей", "детям");
+        private static bool HasChild(this string s) => s.ContainsAny("детей", "детям", "дети");
 
         private static bool HasSpouse(this string s) => s.Contains("супруг");
 
-        private static bool IsMixedRealEstateDeclarant(this string s) => IsMixedColumn(s) && HasRealEstateStr(s) && HasMainDeclarant(s) && !HasSpouse(s);
+        private static bool HasMixedRealEstateOrRealEstateWithoutOwnership(string s)
+        {
+            return HasRealEstateStr(s) && 
+                (IsMixedColumn(s) || (!HasOwnedString(s) && !HasStateString(s)));
+        }
+        private static bool IsMixedRealEstateDeclarant(this string s)
+        {
+            return HasMixedRealEstateOrRealEstateWithoutOwnership(s) && HasMainDeclarant(s) && !HasSpouse(s);
+        }
 
-        private static bool IsMixedRealEstateChild(this string s) => IsMixedColumn(s) && HasRealEstateStr(s) && HasChild(s) && !HasSpouse(s);
+        private static bool IsMixedRealEstateChild(this string s)
+        {
+            return HasMixedRealEstateOrRealEstateWithoutOwnership(s) && HasChild(s) && !HasSpouse(s);
+        }
 
-        private static bool IsMixedRealEstateSpouse(this string s) => IsMixedColumn(s) && HasRealEstateStr(s) && HasSpouse(s) && !HasChild(s);
+        private static bool IsMixedRealEstateSpouse(this string s)
+        {
+            return HasMixedRealEstateOrRealEstateWithoutOwnership(s) && HasSpouse(s) && !HasChild(s);
+        }
 
         // в этой колонке нет подколонок, все записано на естественном языке
         private static bool IsMixedRealEstate(this string s) => IsMixedColumn(s) && HasRealEstateStr(s);

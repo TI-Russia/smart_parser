@@ -502,6 +502,13 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("doc")]
+        public void Test11480_12()
+        {
+            TestSmartParser("11480_12.doc", "prod");
+        }
+
+        [TestMethod]
         [TestCategory("docx")]
         public void AntlrForRealties()
         {
@@ -672,6 +679,13 @@ namespace RegressionTesting
         public void Mchs2010()
         {
             TestSmartParser("Mchs2010.doc", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("doc")]
+        public void Test_13100_13()
+        {
+            TestSmartParser("13100_13.doc", "prod");
         }
 
         [TestMethod]

@@ -40,8 +40,10 @@ namespace TI.Declarator.ParserCommon
         VehicleType = 8,
         VehicleModel = 9,
 
-        DeclaredYearlyIncome = 10 | StartsWithDigitMask,
-        DeclaredYearlyIncomeThousands = 11 | StartsWithDigitMask,
+        DeclaredYearlyIncomeMask = 10,
+        DeclaredYearlyIncome = DeclaredYearlyIncomeMask | StartsWithDigitMask,
+        DeclaredYearlyIncomeThousandsMask = 11,
+        DeclaredYearlyIncomeThousands = DeclaredYearlyIncomeThousandsMask | StartsWithDigitMask,
         DataSources = 12,
         VehicleYear = 13,
         IncomeYear = 14,

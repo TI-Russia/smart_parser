@@ -174,6 +174,8 @@ def report(args):
                 valid_realty_squares_count += metrics['valid_realty_squares_count']
                 persons_with_year += metrics['persons_with_year']
                 persons_with_income += metrics['persons_with_income']
+                #if metrics['persons_with_income'] == 0:
+                #    print (x.SourceFile)
 
     processed_files = sorted(processed_files, key=lambda x: x.SourceFileSize, reverse=True)
     errors = open("errors.txt", "w")
