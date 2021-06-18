@@ -253,7 +253,12 @@ namespace Smart.Parser.Lib
             {
                 if (row > rowStart + rowCount) break;
                 // we check only the  second column, todo check the  first one and  the third
-                string areaStr = adapter.GetCell(row, subCells[subColumnNo].Col).GetText(true);
+                var cell = adapter.GetCell(row, subCells[subColumnNo].Col);
+                if (cell == null)
+                {
+                    return false;   
+                }
+                string areaStr = cell.GetText(true);
                 if (!DataHelper.IsEmptyValue(areaStr))
                 {
                     if (!DataHelper.ParseSquare(areaStr).HasValue)

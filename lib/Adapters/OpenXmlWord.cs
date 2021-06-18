@@ -579,6 +579,10 @@ namespace Smart.Parser.Adapters
             {
                 return true;
             }
+            if (!cellAbove.IsEmpty)
+            {
+                return false;
+            }
             return cell.TableHasInsideHorizontalBorders;
         }
         int FindCellWithTopBorder(int startRow, int column)
@@ -617,6 +621,10 @@ namespace Smart.Parser.Adapters
                 throw new BadCellAddress(row, column); // change in column count, we hope that there is a border. Why?
             }
             var cellUnder = TableRows[row + 1][cellNo];
+            if (!cellUnder.IsEmpty)
+            {
+                return true;
+            }
 
             if (cellUnder.VerticallyMerged == MergedCellValues.Continue)
             {
@@ -626,6 +634,7 @@ namespace Smart.Parser.Adapters
             {
                 return true;
             }
+            
             if (cellUnder.HasTopBorder)
             {
                 return true;
