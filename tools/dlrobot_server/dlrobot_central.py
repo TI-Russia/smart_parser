@@ -72,6 +72,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         return args
 
     def __init__(self, args):
+        self.register_task_result_error_count = 0
         self.logger = setup_logging(log_file_name=args.log_file_name, append_mode=True)
         self.conversion_client = TDocConversionClient(TDocConversionClient.parse_args([]), self.logger)
         self.args = args
@@ -228,8 +229,10 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                     if extension in ACCEPTED_DOCUMENT_EXTENSIONS:
                         file_path = os.path.join(website_folder, doc)
                         if self.smart_parser_server_client is not None:
+                            self.logger.debug("send {} to smart_parser_server".format(doc))
                             self.smart_parser_server_client.send_file(file_path)
                         if self.source_doc_client is not None:
+                            self.logger.debug("send {} to source_doc_server".format(doc))
                             self.source_doc_client.send_file(file_path)
 
     def worker_is_banned(self, worker_ip, host_name):
@@ -367,7 +370,8 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
             'processed_tasks': self.get_processed_jobs_count(),
             'worker_2_running_tasks':  workers,
             'last_service_action_time_stamp': self.last_service_action_time_stamp,
-            'central_heart_rate': self.args.central_heart_rate
+            'central_heart_rate': self.args.central_heart_rate,
+            'register_task_result_error_count': self.register_task_result_error_count
         }
         if self.stop_process:
             stats['stop_process'] = True
@@ -510,6 +514,10 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             self.server.register_task_result(worker_host_name, worker_ip, project_file, int(exitcode),  archive_file_bytes)
         except Exception as exp:
             send_error('register_task_result failed: {}'.format(str(exp)))
+            self.server.register_task_result_error_count += 1
+            if self.server.register_task_result_error_count % 10 == 0:
+                self.server.send_to_telegram("dlrobot_central: register_task_result_error_count: {}".format(
+                    self.server.register_task_result_error_count))
             return
 
         self.send_response(http.HTTPStatus.CREATED)
