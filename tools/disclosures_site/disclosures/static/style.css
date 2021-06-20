@@ -227,3 +227,14 @@ hr {
     margin-inline-start: auto;
     margin-inline-end: auto;
 }
+
+.section_by_count td, .section_by_count th {
+    border: thin solid;
+    padding: 4px;
+}
+
+table.section_by_count {
+    border-collapse: collapse;
+    border: thin solid;
+    padding: 4px;
+}
