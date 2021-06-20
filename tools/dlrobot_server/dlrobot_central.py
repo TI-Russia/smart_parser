@@ -5,7 +5,7 @@ from common.content_types import ACCEPTED_DOCUMENT_EXTENSIONS
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from web_site_db.remote_call import TRemoteDlrobotCall, TRemoteDlrobotCallList
 from source_doc_http.source_doc_client import TSourceDocClient
-from web_site_db.robot_web_site import TWebSiteReachStatus
+from web_site_db.web_site_status import TWebSiteReachStatus
 from web_site_db.web_sites import TDeclarationWebSiteList
 from web_site_db.robot_project import TRobotProject
 from common.logging_wrapper import setup_logging
@@ -29,14 +29,13 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
 
     @staticmethod
     def parse_args(arg_list):
-        default_input_task_list_path = os.path.join(os.path.dirname(__file__), "../web_site_db/data/web_sites.json")
-        assert os.path.exists(default_input_task_list_path)
         parser = argparse.ArgumentParser()
         parser.add_argument("--server-address", dest='server_address', default=None,
                             help="by default read it from environment variable DLROBOT_CENTRAL_SERVER_ADDRESS")
 
         parser.add_argument("--log-file-name", dest='log_file_name', required=False, default="dlrobot_central.log")
-        parser.add_argument("--input-task-list", dest='input_task_list', required=False, default=default_input_task_list_path)
+        parser.add_argument("--input-task-list", dest='input_task_list', required=False,
+                            default=TDeclarationWebSiteList.default_input_task_list_path)
         parser.add_argument("--remote-calls-file", dest='remote_calls_file', default=None)
         parser.add_argument("--result-folder", dest='result_folder', required=True)
         parser.add_argument("--tries-count", dest='tries_count', required=False, default=2, type=int)

@@ -4,7 +4,7 @@ from dlrobot_server.scripts.fns.unzip_archive import TUnzipper
 from dlrobot_server.common_server_worker import TTimeouts, PITSTOP_FILE
 from smart_parser_http.smart_parser_server import TSmartParserHTTPServer
 from source_doc_http.source_doc_server import TSourceDocHTTPServer
-from web_site_db.robot_web_site import TWebSiteReachStatus
+from web_site_db.web_site_status import TWebSiteReachStatus
 from common.primitives import build_dislosures_sha256, is_local_http_port_free
 from common.archives import TDearchiver
 from unittest import TestCase

@@ -1,5 +1,5 @@
 from dl_robot.dlrobot import TDlrobot
-from web_site_db.robot_web_site import TWebSiteReachStatus
+from web_site_db.web_site_status import TWebSiteReachStatus
 from web_site_db.robot_project import TRobotProject
 from common.download import TDownloadEnv
 

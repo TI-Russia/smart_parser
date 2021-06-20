@@ -1,7 +1,7 @@
 import re
 
 from web_site_db.robot_project import TRobotProject
-from web_site_db.robot_web_site import TWebSiteReachStatus
+from web_site_db.web_site_status import TWebSiteReachStatus
 import os
 import time
 import json
