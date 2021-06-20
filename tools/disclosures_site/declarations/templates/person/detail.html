@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 
+
 {% block title %}
 {{ person.person_name }}, {{person.last_position_and_office_str}}, {{person.declaraion_count_str }} {{ person.years_str}}
 {% endblock title %}
@@ -22,38 +23,39 @@
      {{ person.last_position_and_office_str }}
 </i></p>
 
+
 {% with section=person.last_section %}
     {% include "section/section_table.html" %}
 {% endwith %}
 
 <br/>
 
+
 <h3>
      2. Исторические сведения о доходах чиновника за {{person.years_str}}
 </h3>
 
-
-<table class="solid_table" cellpadding="10">
+<table class="declaration_list_table" cellpadding="10">
     <tr>
        <th>Год</th>
-       <th>Недвижимость (кв.м)</th>
+       <th>Недвижимость</th>
        <th>Транспорт</th>
        <th>Доход</th>
         {% if person.has_spouse %}
-          <th>Недвижимость супруги/а (кв.м)</th>
+          <th>Недвижимость супруги/а</th>
           <th>Доход супруги/а</th>
         {% endif %}
     </tr>
 
     {% for s in person.sections_ordered_by_year %}
         <tr>
-            <td> <a href="/section/{{ s.id }}">{{s.income_year}} </a>  </td>
-            <td align="right"> {{s.declarant_realty_square_sum|default_if_none:""}} </td>
+            <td> <a href="/section/{{ s.id }}">{{s.income_year}}&nbsp;год</a>  </td>
+            <td align="right"> {{s.declarant_realty_square_sum_html}} </td>
             <td align="right"> {{s.vehicle_count}} </td>
             <td align="right"> &nbsp;{{s.declarant_income_size_in_html|safe}}&nbsp; </td>
             {% if person.has_spouse %}
-              <td>{{s.spouse_realty_square_sum|default_if_none:""}}</td>
-              <td>{{s.spouse_income_size|default_if_none:""}}</td>
+              <td>{{s.spouse_realty_square_sum_html}}</td>
+              <td>{{s.spouse_income_size_html|safe}}</td>
             {% endif %}
         </tr>
     {% endfor %}
@@ -86,10 +88,13 @@
 
 <br/><br/>
 
+<a href=/office/{{section.source_document.office.id}}>Информация об этом ведомстве (остальные декларации)</a><br/>
+
+<br/><br/>
+
 {% if person.declarator_person_id %}
     <a href="http://declarator.org/person/{{person.declarator_person_id}}"> Ссылка на Декларатор </a>
 {% endif %}
-
 
 {% endblock content %}
 

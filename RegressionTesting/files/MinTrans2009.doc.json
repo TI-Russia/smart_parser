@@ -18,6 +18,7 @@
           "text": "квартира (личная)",
           "square": 46.27,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "46,27",
           "country_raw": "Россия",
@@ -72,6 +73,7 @@
           "text": "Земельный участок (личная)",
           "square": 4169.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "4169",
           "country_raw": "Россия"
@@ -80,6 +82,7 @@
           "text": "жилой дом (личная)",
           "square": 43.4,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "43,4",
           "country_raw": "Россия"
@@ -88,6 +91,7 @@
           "text": "жилой дом (личная)",
           "square": 313.1,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "313,1",
           "country_raw": "Россия"
@@ -96,6 +100,7 @@
           "text": "нежилое помещение (личная)",
           "square": 230.7,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "230,7",
           "country_raw": "Россия"
@@ -189,6 +194,7 @@
           "text": "квартира (личная)",
           "square": 91.3,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "91,3",
           "country_raw": "Россия"
@@ -197,6 +203,7 @@
           "text": "квартира (личная)",
           "square": 110.5,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "110,5",
           "country_raw": "Россия"
@@ -205,6 +212,7 @@
           "text": "квартира (личная)",
           "square": 170.5,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "170,5",
           "country_raw": "Россия"
@@ -278,6 +286,7 @@
           "text": "Земельный участок (личная)",
           "square": 1500.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "1500",
           "country_raw": "Россия"
@@ -286,6 +295,7 @@
           "text": "Земельный участок (личная)",
           "square": 1500.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "1500",
           "country_raw": "Россия"
@@ -294,6 +304,7 @@
           "text": "квартира (долевая 1/4)",
           "square": 193.8,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "193,8",
           "country_raw": "Россия"
@@ -302,6 +313,7 @@
           "text": ", Дачный дом (личная)",
           "square": 76.8,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "76,8",
           "country_raw": "Россия"
@@ -310,6 +322,7 @@
           "text": "Дачный дом (личная)",
           "square": 76.7,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "76,7",
           "country_raw": "Россия"
@@ -318,6 +331,7 @@
           "text": "Квартира (долевая ¼)",
           "square": 193.8,
           "relative": "Ребенок",
+          "relative_index": 2,
           "own_type_by_column": "В собственности",
           "square_raw": "193,8",
           "country_raw": "Россия",
@@ -385,6 +399,7 @@
           "text": "Земельный участок (личная)",
           "square": 2294.54,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "2294,54",
           "country_raw": "Россия"
@@ -393,6 +408,7 @@
           "text": "Земельный участок (личная)",
           "square": 1038.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "1038",
           "country_raw": "Россия"
@@ -401,6 +417,7 @@
           "text": "Земельный участок (долевая ½)",
           "square": 2060.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "2060",
           "country_raw": "Россия"
@@ -409,6 +426,7 @@
           "text": "Жилой дом (личная)",
           "square": 411.2,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "411,2",
           "country_raw": "Россия"
@@ -417,6 +435,7 @@
           "text": "Жилой дом (личная)",
           "square": 56.3,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "56,3",
           "country_raw": "Россия"
@@ -425,6 +444,7 @@
           "text": "Жилой дом (долевая ½)",
           "square": 369.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "369",
           "country_raw": "Бельгия"
@@ -433,6 +453,7 @@
           "text": "Квартира (долевая 1\\2)",
           "square": 233.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "233",
           "country_raw": "Россия"
@@ -441,6 +462,7 @@
           "text": "Квартира (личная)",
           "square": 44.5,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "44,5",
           "country_raw": "Россия"
@@ -449,6 +471,7 @@
           "text": "Квартира (личная)",
           "square": 45.3,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "45,3",
           "country_raw": "Россия"
@@ -586,6 +609,7 @@
           "text": "Квартира (долевая ½)",
           "square": 125.5,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "125,5,",
           "country_raw": "Россия"
@@ -594,6 +618,7 @@
           "text": "Квартира (долевая ½)",
           "square": 44.4,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "44,4",
           "country_raw": "Россия"
@@ -602,6 +627,7 @@
           "text": "Квартира (долевая 1\\2)",
           "square": 221.8,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "221,8",
           "country_raw": "Россия"
@@ -610,6 +636,7 @@
           "text": "Квартира (личная)",
           "square": 150.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "150",
           "country_raw": "Россия"
@@ -618,6 +645,7 @@
           "text": "Квартира (долевая ½) Гараж (личная)",
           "square": 124.4,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "124,4",
           "country_raw": "Россия Россия"
@@ -626,6 +654,7 @@
           "text": "Подземная парковка (долевая 1/87)",
           "square": 2741.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "2741",
           "country_raw": "Россия"
@@ -634,6 +663,7 @@
           "text": "Нежилое помещение (личная)",
           "square": 120.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "120",
           "country_raw": "Россия"
@@ -653,7 +683,7 @@
     }
   ],
   "document": {
-    "sheet_title": "Сведения\nоб имущественном положении и доходах государственных гражданских служащих\nМинтранса России и членов их семей за период с 1 января 2009 года по 31 декабря 2009 года\n\n",
+    "sheet_title": "Сведения\nоб имущественном положении и доходах государственных гражданских служащих\nМинтранса России и членов их семей за период с 1 января 2009 года по 31 декабря 2009 года",
     "year": 2009
   }
 }

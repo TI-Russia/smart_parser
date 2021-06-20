@@ -35,6 +35,7 @@
           "text": "квартира",
           "square": 60.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": "В собственности",
           "square_raw": "60",
           "country_raw": "Россия",

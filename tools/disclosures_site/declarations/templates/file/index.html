@@ -4,37 +4,57 @@
 
 {% block content %}
 
-<style>
-    div.search_input {
-        padding-top: 5x;
-        padding-bottom: 5px;
-    }
-</style>
-
 <form action="{% url 'file_search' %}" method="get">
-    <div class="search_input">
+    <div class="search_input1">
         {{form.web_domains.label_tag}}
-        {{form.web_domains}}
+        {{form.web_domains}} &nbsp;&nbsp;&nbsp;
         <input type="submit" value="Поиск">
     </div>
-    <div class="search_input">
-        {{form.first_crawl_epoch.label_tag}}
-        {{form.first_crawl_epoch}}
 
-        {{form.sha256.label_tag}}
-        {{form.sha256}}
+    <div class="desktop">
+        <div class="search_input1" c>
+            {{form.first_crawl_epoch.label_tag}}
+            {{form.first_crawl_epoch}}
+            &nbsp;&nbsp;&nbsp;
+            {{form.intersection_status.label_tag}}
+            {{form.intersection_status}}
+        </div>
+        <div class="search_input1">
+            {{form.min_income_year.label_tag}}
+            {{form.min_income_year}}
+            &nbsp;&nbsp;&nbsp;
+            {{form.max_income_year.label_tag}}
+            {{form.max_income_year}}
+            &nbsp;&nbsp;&nbsp;
+            {{form.sha256.label_tag}}
+            {{form.sha256}}
+        </div>
     </div>
 
-    <div class="search_input">
-        {{form.min_income_year.label_tag}}
-        {{form.min_income_year}}
+    <div class="mobile">
+        <div class="search_input1" c>
+            {{form.first_crawl_epoch.label_tag}}
+            {{form.first_crawl_epoch}}
+        </div>
+        <div class="search_input1" c>
+            {{form.intersection_status.label_tag}}
+            {{form.intersection_status}}
+        </div>
 
-        {{form.max_income_year.label_tag}}
-        {{form.max_income_year}}
+        <div class="search_input1">
+            {{form.min_income_year.label_tag}}
+            {{form.min_income_year}}
+            &nbsp;&nbsp;&nbsp;
+            {{form.max_income_year.label_tag}}
+            {{form.max_income_year}}
+        </div>
 
-        {{form.intersection_status.label_tag}}
-        {{form.intersection_status}}
+        <div class="search_input1">
+            {{form.sha256.label_tag}}
+            {{form.sha256}}
+        </div>
     </div>
+
 </form>
 
 {% if hits_count is not None %}

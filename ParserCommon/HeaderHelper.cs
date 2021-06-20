@@ -48,7 +48,7 @@ namespace TI.Declarator.ParserCommon
                 _ when str.IsMixedGarageSquare() => MixedGarageSquare,
 
                 _ when IsOwnedRealEstateType(parentColumnTitle, subColumnTitle) => OwnedRealEstateType,
-                _ when str.IsOwnedRealEstateOwnershipType() => OwnedRealEstateOwnershipType,
+                _ when IsOwnedRealEstateOwnershipType(parentColumnTitle, subColumnTitle) => OwnedRealEstateOwnershipType,
                 _ when IsOwnedRealEstateSquare(parentColumnTitle, subColumnTitle) => OwnedRealEstateSquare,
                 _ when str.IsOwnedRealEstateCountry() => OwnedRealEstateCountry,
 
@@ -204,6 +204,11 @@ namespace TI.Declarator.ParserCommon
         public static bool IsMixedColumn(this string s) => HasOwnedString(s) && HasStateString(s);
 
         private static bool IsOwnedRealEstateType(string parentColumnTitle, string subTitle) {
+            if (subTitle.Length > 0 && (subTitle.HasSquareString() || subTitle.HasCountryString()))
+            {
+                // 4479_27.doc 
+                return false;
+            }
             var s = parentColumnTitle + " " + subTitle;
             if (s.IsOwnedColumn() && HasRealEstateTypeStr(s))
             {
@@ -217,7 +222,13 @@ namespace TI.Declarator.ParserCommon
             return false;
         }
 
-        private static bool IsOwnedRealEstateOwnershipType(this string s) {
+        private static bool IsOwnedRealEstateOwnershipType(string parentColumnTitle, string subTitle) {
+            if (subTitle.Length > 0 && (subTitle.HasSquareString() || subTitle.HasCountryString()))
+            {
+                // 4479_27.doc 
+                return false;
+            }
+            var s = parentColumnTitle + " " + subTitle;
             return IsOwnedColumn(s) && HasOwnershipTypeString(s);
         }
 
@@ -272,15 +283,29 @@ namespace TI.Declarator.ParserCommon
             return s.ContainsAny("иные", "иного");
         }
 
-        private static bool HasChild(this string s) => s.ContainsAny("детей", "детям");
+        private static bool HasChild(this string s) => s.ContainsAny("детей", "детям", "дети");
 
         private static bool HasSpouse(this string s) => s.Contains("супруг");
 
-        private static bool IsMixedRealEstateDeclarant(this string s) => IsMixedColumn(s) && HasRealEstateStr(s) && HasMainDeclarant(s) && !HasSpouse(s);
+        private static bool HasMixedRealEstateOrRealEstateWithoutOwnership(string s)
+        {
+            return HasRealEstateStr(s) && 
+                (IsMixedColumn(s) || (!HasOwnedString(s) && !HasStateString(s)));
+        }
+        private static bool IsMixedRealEstateDeclarant(this string s)
+        {
+            return HasMixedRealEstateOrRealEstateWithoutOwnership(s) && HasMainDeclarant(s) && !HasSpouse(s);
+        }
 
-        private static bool IsMixedRealEstateChild(this string s) => IsMixedColumn(s) && HasRealEstateStr(s) && HasChild(s) && !HasSpouse(s);
+        private static bool IsMixedRealEstateChild(this string s)
+        {
+            return HasMixedRealEstateOrRealEstateWithoutOwnership(s) && HasChild(s) && !HasSpouse(s);
+        }
 
-        private static bool IsMixedRealEstateSpouse(this string s) => IsMixedColumn(s) && HasRealEstateStr(s) && HasSpouse(s) && !HasChild(s);
+        private static bool IsMixedRealEstateSpouse(this string s)
+        {
+            return HasMixedRealEstateOrRealEstateWithoutOwnership(s) && HasSpouse(s) && !HasChild(s);
+        }
 
         // в этой колонке нет подколонок, все записано на естественном языке
         private static bool IsMixedRealEstate(this string s) => IsMixedColumn(s) && HasRealEstateStr(s);

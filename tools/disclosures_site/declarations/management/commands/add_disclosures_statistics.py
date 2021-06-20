@@ -1,6 +1,6 @@
-from django.core.management import BaseCommand
 from disclosures_site.declarations.statistics import TDisclosuresStatisticsHistory
-import sys
+from common.logging_wrapper import setup_logging
+from django.core.management import BaseCommand
 
 
 class Command(BaseCommand):
@@ -13,12 +13,13 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         crawl_epoch = options['crawl_epoch']
-        history = TDisclosuresStatisticsHistory()
-        stats = TDisclosuresStatisticsHistory.build_current_statistics(crawl_epoch)
+        logger = setup_logging(log_file_name="disclosures_statistics.log")
+        history = TDisclosuresStatisticsHistory(logger)
+        stats = history.build_current_statistics(crawl_epoch)
         if options.get('check_metric') is not None:
             history.check_sum_metric_increase(stats, [options.get('check_metric')])
         else:
             history.check_statistics(stats)
             history.add_statistics(stats)
-            sys.stderr.write("do not forget to commit {}\n".format(history.file_path))
+            logger.info("do not forget to commit {}\n".format(history.file_path))
             history.write_to_disk()

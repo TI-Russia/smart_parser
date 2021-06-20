@@ -11,8 +11,6 @@ import http.server
 
 
 class TSourceDocHTTPServer(http.server.HTTPServer):
-    header_repeat_max_len = 20
-
     @staticmethod
     def parse_args(arg_list):
         parser = argparse.ArgumentParser()
@@ -31,7 +29,7 @@ class TSourceDocHTTPServer(http.server.HTTPServer):
     def __init__(self, args, logger=None):
         self.args = args
         self.max_bin_file_size = self.args.max_bin_file_size
-        self.logger = logger if logger is not None else setup_logging(log_file_name=args.log_file_name)
+        self.logger = logger if logger is not None else setup_logging(log_file_name=args.log_file_name, append_mode=True)
         self.file_storage = TFileStorage(self.logger, self.args.data_folder, self.max_bin_file_size, read_only=self.args.read_only)
         host, port = self.args.server_address.split(":")
         self.logger.debug("start server on {}:{}".format(host, int(port)))

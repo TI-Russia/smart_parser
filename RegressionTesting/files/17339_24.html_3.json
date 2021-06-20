@@ -38,6 +38,7 @@
           "text": "Квартира (доля в праве 47/100) 35,7 (Россия)",
           "square": 35.7,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "35,7",
           "country_raw": "(Россия)",

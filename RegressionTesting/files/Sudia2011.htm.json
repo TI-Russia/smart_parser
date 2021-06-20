@@ -40,6 +40,7 @@
           "text": "квартира (собственность)",
           "square": 42.3,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "42,3",
           "country_raw": "Россия"
@@ -48,6 +49,7 @@
           "text": "квартира (общая собственность)",
           "square": 83.1,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "83,1",
           "country_raw": "Россия"
@@ -67,7 +69,7 @@
     }
   ],
   "document": {
-    "sheet_title": "Блажнов Денис Николаевич за период с 1 января по 31 декабря 2011 года ",
+    "sheet_title": "Блажнов Денис Николаевич за период с 1 января по 31 декабря 2011 года",
     "year": 2011
   }
 }

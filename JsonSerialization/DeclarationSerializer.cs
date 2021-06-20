@@ -113,7 +113,12 @@ namespace TI.Declarator.JsonSerialization
         public static JObject SerializeDocumentProperties(DeclarationProperties props)
         {
             var jProps = new JObject();
-            AddNotNullProp(jProps, "sheet_title", props.SheetTitle);
+            var title = props.SheetTitle;
+            if (title != null)
+            {
+                title = title.Trim(' ', '\n', '\r');
+            }
+            AddNotNullProp(jProps, "sheet_title", title);
             jProps.Add(new JProperty("year", props.Year));
             if (SmartParserJsonFormat == SmartParserJsonFormatEnum.Official)
             {
@@ -285,7 +290,8 @@ namespace TI.Declarator.JsonSerialization
             {
                 foreach (var prop in rel.RealEstateProperties)
                 {
-                    jRealEstate.Add(GetRealEstate(prop, GetRelationshipName(rel.RelationType)));
+                    var r = GetRealEstate(prop, GetRelationshipName(rel.RelationType), rel.PersonIndex);
+                    jRealEstate.Add(r);
                 }
             }
 

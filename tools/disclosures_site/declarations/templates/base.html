@@ -1,29 +1,21 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-
-
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
     <title>{% block title %}Home {% endblock title %}</title>
 
-    <link rel="stylesheet" type="text/css" href="/static/style.css" %}">
-
-    {% block head_favicon %}
-    <link rel="icon" type="image/png" href="/static/images/favicon.png">
-    {% endblock head_favicon %}
+    <link rel="stylesheet" type="text/css" href="/static/style.css" />
 
     {% block head_meta %}
     {% block head_meta_charset %}
-    <meta http-equiv="Content-Type"
-          content="text/html; charset=utf-8"/>
     {% endblock head_meta_charset %}
     <meta name="yandex-verification" content="5c8f653019005048" />
     <meta name="google-site-verification" content="z3C44ad-5G9K768OYL0xzTf6xtJeshD-WMGmdqMe9oU" />
     {% endblock head_meta %}
     {% block serp_description %} {% endblock serp_description %}
     {% block meta_robots %} {% endblock meta_robots %}
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -57,7 +49,7 @@
 
 <body vlink="#999999" alink="#000000">
 
-<header>
+<div class="header">
     <div>
         <div class="disclosures_top_header">Дискложес&nbsp;
             <span class="mobile" style="float:right; font-size: 150%;">
@@ -74,25 +66,25 @@
     <hr />
       <div id="mobileMenu" class="topnav">
           <div class="menu_table">
-              <row>
+              <div class="row">
                 <a  href="/section/">Декларации</a>
                 <a class="mobile_menu_dark_cell" href="/about.html">О проекте</a>
-              </row>
-              <row>
+              </div>
+              <div class="row">
                 <a class="mobile_menu_dark_cell" href="/office/">Ведомства</a>
                 <a  href="/statistics/">Статистика</a>
-              </row>
-              <row>
-                <a href="/file/">Документы</a>
+              </div>
+              <div class="row">
+                <a href="/file/">Исходники</a>
                 <a class="mobile_menu_dark_cell" href="/news.html">Новости</a>
-              </row>
-              <row>
+              </div>
+              <div class="row">
                 <a class="mobile_menu_dark_cell" href="/person/">Декларанты</a>
-              </row>
+              </div>
             </div>
       </div>
 
-</header>
+</div>
 
 {# The Document Body #}
 <div id="site-wrapper">

@@ -13,7 +13,6 @@
                 {{form.person_name}}
             </td>
             <td rowspan="2" align="right" class="search_param">
-                <!--<input type="submit" value="Поиск" style="height:100%;width=100%;"> -->
                 &nbsp;&nbsp;&nbsp;
                 <button type="submit" style="height:200%; width=100%; font-size:150%;">Поиск</button>
             </td>
@@ -28,10 +27,13 @@
             <td class="search_param" colspan="2">
                 {{form.income_year.label_tag}}
                 {{form.income_year}}
-                &nbsp;&nbsp;&nbsp;
+                &nbsp;
                 {{form.gender.label_tag}}
                 {{form.gender}}
-                &nbsp;&nbsp;&nbsp;
+            </td>
+        </tr>
+        <tr>
+            <td class="search_param" colspan="2">
                 {{form.car_brands.label_tag}}
                 {{form.car_brands}}
             </td>

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NPOI.SS.Formula.Functions;
+using System.Text.RegularExpressions;
+
 
 namespace Smart.Parser.Adapters
 {
@@ -104,6 +106,11 @@ namespace Smart.Parser.Adapters
             if (!hasEnoughLength && !halfCapitalLetters)
             {
                 return false;
+            }
+            if (Regex.Match(rowText, @"период с.*20\d\d\s*г.").Success)
+            {
+                text = rowText;
+                return true;
             }
             
             if (!OneColumnIsLarge)

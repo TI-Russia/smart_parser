@@ -11,6 +11,7 @@ import os
 class ExternalYearImportTestCase(TestCase):
 
     def test_import_external_year(self):
+        models.RealEstate.objects.all().delete()
         models.Section.objects.all().delete()
         models.Source_Document.objects.all().delete()
         self.assertGreater(models.Office.objects.count(), 0)
@@ -28,5 +29,12 @@ class ExternalYearImportTestCase(TestCase):
         self.assertEqual(models.Source_Document.objects.count(), 1)
 
         self.assertEqual(models.Section.objects.count(), 1)
+
         section = models.Section.objects.all()[0]
         self.assertEqual(section.income_year, 2014)
+
+        realties = list(models.RealEstate.objects.all())
+        self.assertEqual(4, len(realties))
+        self.assertEqual(1, sum(1 for r in realties if r.owntype == models.OwnType.property_code))
+        self.assertEqual(3, sum(1 for r in realties if r.owntype == models.OwnType.using_code))
+

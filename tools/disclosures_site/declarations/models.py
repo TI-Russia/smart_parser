@@ -159,14 +159,14 @@ class Relative:
     child_code = "C"
     unknown_code = "?"
     code_to_info = dict()
-    russian_to_code = dict()
+    lower_russian_to_code = dict()
 
     @staticmethod
     def get_relative_code(russian_name):
         if russian_name is None:
             return Relative.main_declarant_code
         r = russian_name.strip(" \n\r\t").lower()
-        return Relative.russian_to_code.get(r, Relative.unknown_code)
+        return Relative.lower_russian_to_code.get(r, Relative.unknown_code)
 
     @staticmethod
     def static_initalize():
@@ -176,7 +176,7 @@ class Relative:
             Relative.child_code: {"ru": "ребенок", "en": "child", "visual_order": 2},
             Relative.unknown_code: {"ru": "иное", "en": "other", "visual_order": 3},
         }
-        Relative.russian_to_code = dict(((value['ru'], key) for key, value in Relative.code_to_info.items()))
+        Relative.lower_russian_to_code = dict(((value['ru'].lower(), key) for key, value in Relative.code_to_info.items()))
 
     def __init__(self, code):
         self.code = code
@@ -204,25 +204,26 @@ Relative.static_initalize()
 
 class OwnType:
     property_code = "P"
+    using_code = "U"
     code_to_info = dict()
-    russian_to_code = dict()
+    lower_russian_to_code = dict()
 
     @staticmethod
     def get_own_type_code(russian_name):
         if russian_name is None:
             return OwnType.property_code
         r = russian_name.strip(" \n\r\t").lower()
-        return OwnType.russian_to_code.get(r, OwnType.property_code)
+        return OwnType.lower_russian_to_code.get(r, OwnType.property_code)
 
 
     @staticmethod
     def static_initalize():
         OwnType.code_to_info = {
             OwnType.property_code: {"ru": "В собственности", "en": "private"},
-            "U": {"ru": "В пользовании", "en": "in use"},
+            OwnType.using_code: {"ru": "В пользовании", "en": "in use"},
             "?": {"ru": "иное", "en": "other"},
         }
-        OwnType.russian_to_code = dict((value['ru'], key) for key, value in OwnType.code_to_info.items())
+        OwnType.lower_russian_to_code = dict((value['ru'].lower(), key) for key, value in OwnType.code_to_info.items())
 
 
 OwnType.static_initalize()
@@ -404,6 +405,12 @@ def format_income_in_html(income):
     return s
 
 
+def format_realty_square_in_html(square_sum):
+    if square_sum is None or square_sum == 0:
+        return ""
+    return "{} кв.м.".format(square_sum)
+
+
 class Section(models.Model):
     id = models.IntegerField(primary_key=True)
     source_document = models.ForeignKey('declarations.source_document', null=True, verbose_name="source document", on_delete=models.CASCADE)
@@ -460,8 +467,11 @@ class Section(models.Model):
         return format_income_in_html(self.get_declarant_income_size())
 
     @property
-    def spouse_income_size(self):
-        return self.get_spouse_income_size()
+    def spouse_income_size_html(self):
+        i = self.get_spouse_income_size()
+        if i is None or i == 0:
+            return ""
+        return format_income_in_html(i)
 
     def get_permalink_passport(self):
         main_income = self.get_declarant_income_size()
@@ -481,11 +491,11 @@ class Section(models.Model):
         type_str = r.type
         if r.country != "RU":
             type_str += " ({})".format(r.country_str)
-        square_str = "none" if r.square is None else str(r.square)
+        square_str = "none" if r.square is None else format_realty_square_in_html(r.square)
         return [type_str, square_str, r.own_type_str]
 
     @property
-    def declarant_realty_square_sum(self):
+    def declarant_realty_square_sum_html(self):
         sum = 0
         cnt = 0
         for r in self.realestate_set.all():
@@ -493,13 +503,13 @@ class Section(models.Model):
                 if r.square is not None:
                     sum += r.square
                     cnt += 1
-        if cnt > 0:
-            return sum
+        if cnt > 0 and sum > 0:
+            return format_realty_square_in_html(sum)
         else:
-            return None
+            return ""
 
     @property
-    def spouse_realty_square_sum(self):
+    def spouse_realty_square_sum_html(self):
         sum = 0
         has_realty = 0
         for r in self.realestate_set.all():
@@ -508,9 +518,9 @@ class Section(models.Model):
                     sum += r.square
                     has_realty = True
         if has_realty:
-            return sum
+            return format_realty_square_in_html(sum)
         else:
-            return None
+            return ""
 
     @property
     def vehicle_count(self):

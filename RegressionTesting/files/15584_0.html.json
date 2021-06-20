@@ -29,7 +29,8 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "32",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "own_type_raw": "В пользовании"
         },
         {
           "text": ", гараж (собственность)",
@@ -43,14 +44,17 @@
           "text": "квартира (пользование)",
           "square": 60.9,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "60,9",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "own_type_raw": "В пользовании"
         },
         {
           "text": ", жилой дом (собственность)",
           "square": 33.3,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "33,3",
           "country_raw": "Россия"
@@ -59,6 +63,7 @@
           "text": ", жилой дом (долевая собственность)",
           "square": 35.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "35",
           "country_raw": "Россия"
@@ -67,6 +72,7 @@
           "text": ", приусадебный земельный участок (собственность)",
           "square": 2500.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "2500",
           "country_raw": "Россия"
@@ -75,6 +81,7 @@
           "text": ", огородный земельный участок (собственность)",
           "square": 1200.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "1200",
           "country_raw": "Россия"
@@ -83,6 +90,7 @@
           "text": ", приусадебный земельный участок (долевая собственность)",
           "square": 733.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "733",
           "country_raw": "Россия"
@@ -145,6 +153,7 @@
           "text": "квартира (долевая собственность)",
           "square": 69.3,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "69,3",
           "country_raw": "Россия"
@@ -153,6 +162,7 @@
           "text": ", земельный участок (долевая собственность)",
           "square": 3000.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "3000",
           "country_raw": "Россия"
@@ -161,6 +171,7 @@
           "text": ", гараж (долевая собственность)",
           "square": 24.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "24",
           "country_raw": "Россия"
@@ -201,7 +212,8 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "93,8",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "own_type_raw": "В пользовании"
         },
         {
           "text": ", жилой дом (долевая собственность)",
@@ -247,6 +259,7 @@
           "text": "Квартира (собственность)",
           "square": 93.8,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "93,8",
           "country_raw": "Россия"
@@ -255,6 +268,7 @@
           "text": ", квартира (собственность)",
           "square": 83.7,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "83,7",
           "country_raw": "Россия"
@@ -529,7 +543,8 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "50,7",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "own_type_raw": "В пользовании"
         },
         {
           "text": ", жилой дом (собственность)",
@@ -551,6 +566,7 @@
           "text": "квартира (пользование)",
           "square": 50.7,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "50,7",
           "country_raw": "Россия",
@@ -664,6 +680,7 @@
           "text": "квартира (долевая собственность)",
           "square": 42.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "42",
           "country_raw": "Россия"
@@ -672,9 +689,11 @@
           "text": ", квартира (пользование)",
           "square": 120.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "120",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "own_type_raw": "В пользовании"
         }
       ],
       "vehicles": [],
@@ -784,7 +803,8 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "86,4",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "own_type_raw": "В пользовании"
         },
         {
           "text": ", земельный участок под индивидуальное жилищное строительство (собственность)",
@@ -798,6 +818,7 @@
           "text": "квартира (собственность)",
           "square": 86.4,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "86,4",
           "country_raw": "Россия",
@@ -839,7 +860,8 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "56,5",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "own_type_raw": "В пользовании"
         },
         {
           "text": ", земельный участок (собственность)",
@@ -853,6 +875,7 @@
           "text": "квартира (долевая собственность)",
           "square": 78.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "78",
           "country_raw": "Россия"
@@ -861,6 +884,7 @@
           "text": ", парковка (собственность)",
           "square": 28.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "28",
           "country_raw": "Россия"
@@ -869,6 +893,7 @@
           "text": ", гараж (собственность)",
           "square": 25.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "25",
           "country_raw": "Россия"
@@ -926,6 +951,7 @@
           "text": "квартира (долевая собственность)",
           "square": 65.7,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "65,7",
           "country_raw": "Россия"
@@ -934,6 +960,7 @@
           "text": ", садовый домик (собственность)",
           "square": 75.1,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "75,1",
           "country_raw": "Россия"
@@ -942,6 +969,7 @@
           "text": ", земельный участок (собственность)",
           "square": 675.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "675",
           "country_raw": "Россия"
@@ -990,12 +1018,14 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "64",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "own_type_raw": "В пользовании"
         },
         {
           "text": "квартира (собственность)",
           "square": 64.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "64",
           "country_raw": "Россия"
@@ -1004,6 +1034,7 @@
           "text": ", жилой дом (собственность)",
           "square": 116.7,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "116,7",
           "country_raw": "Россия"
@@ -1012,6 +1043,7 @@
           "text": ", садовый участок (собственность)",
           "square": 1083.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "1083",
           "country_raw": "Россия"
@@ -1108,6 +1140,7 @@
           "text": "квартира (пользование)",
           "square": 50.9,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "50,9",
           "country_raw": "Россия",
@@ -1164,6 +1197,7 @@
           "text": "квартира (долевая собственность)",
           "square": 73.2,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "73,2",
           "country_raw": "Россия",
@@ -1297,6 +1331,7 @@
           "text": "квартира (собственность)",
           "square": 63.4,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "63,4",
           "country_raw": "Россия"
@@ -1305,6 +1340,7 @@
           "text": ", квартира (долевая собственность)",
           "square": 45.9,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "45,9",
           "country_raw": "Россия"
@@ -1313,6 +1349,7 @@
           "text": ", гараж (собственность)",
           "square": 23.50,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "23,5",
           "country_raw": "Россия"
@@ -1458,7 +1495,8 @@
           "relative": null,
           "own_type_by_column": null,
           "square_raw": "67,6",
-          "country_raw": "Россия"
+          "country_raw": "Россия",
+          "own_type_raw": "В пользовании"
         },
         {
           "text": ", земельный участок(долевая собственность)",
@@ -1472,6 +1510,7 @@
           "text": "квартира (собственность)",
           "square": 67.6,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "67,6",
           "country_raw": "Россия"
@@ -1480,6 +1519,7 @@
           "text": ", квартира (собственность)",
           "square": 43.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "43",
           "country_raw": "Россия"
@@ -1488,6 +1528,7 @@
           "text": ", гараж (собственность)",
           "square": 32.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "32",
           "country_raw": "Россия"
@@ -1496,6 +1537,7 @@
           "text": ", гараж (собственность)",
           "square": 25.8,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "25,8",
           "country_raw": "Россия"
@@ -1576,7 +1618,7 @@
     }
   ],
   "document": {
-    "sheet_title": "Арбитражный суд Волго-Вятского округа Арбитражный суд Волго-Вятского округа подвел итоги 2014 года Итоговое совещание-семинар председателей судов РФ Анонс очередного номера научно-практического журнала \"Экономические Споры: проблемы теории и практики\" О назначении судей ПОЗДРАВЛЯЕМ С НОВЫМ ГОДОМ! за период с 1 января по 31 декабря 2013 года ",
+    "sheet_title": "Сведения о доходах, об имущества и обязательствах имущественного характера за 2013 год | Арбитражный суд Волго-Вятского округа Арбитражный суд Волго-Вятского округа Арбитражный суд Волго-Вятского округа подвел итоги 2014 года Итоговое совещание-семинар председателей судов РФ Анонс очередного номера научно-практического журнала \"Экономические Споры: проблемы теории и практики\" О назначении судей ПОЗДРАВЛЯЕМ С НОВЫМ ГОДОМ! за период с 1 января по 31 декабря 2013 года",
     "year": 2013
   }
 }

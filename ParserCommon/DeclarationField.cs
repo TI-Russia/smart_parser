@@ -7,25 +7,25 @@ namespace TI.Declarator.ParserCommon
     {
         // the second byte
         StartsWithDigitMask = 0b00000001_00000000,
-        CountryMask =         0b00000010_00000000,  // Россия, Украина
-        RealtyTypeMask =      0b00000100_00000000, // квартира,  дача
-        SquareMask =          0b00001000_00000000 | StartsWithDigitMask,
-        OwnershipTypeMask =   0b00010000_00000000, //индивидуальная
-        NaturalText =         0b00100000_00000000,
-        Owned =               0b01000000_00000000,
-        State =               0b10000000_00000000,
-        Mixed =               Owned | State,
-        AllOwnTypes =         Mixed | Owned | State,
-        
+        CountryMask = 0b00000010_00000000,  // Россия, Украина
+        RealtyTypeMask = 0b00000100_00000000, // квартира,  дача
+        SquareMask = 0b00001000_00000000 | StartsWithDigitMask,
+        OwnershipTypeMask = 0b00010000_00000000, //индивидуальная
+        NaturalText = 0b00100000_00000000,
+        Owned = 0b01000000_00000000,
+        State = 0b10000000_00000000,
+        Mixed = Owned | State,
+        AllOwnTypes = Mixed | Owned | State,
+
         // the third byte
-        MainDeclarant =   0b00000001_00000000_00000000,
+        MainDeclarant = 0b00000001_00000000_00000000,
         DeclarantSpouse = 0b00000010_00000000_00000000,
-        DeclarantChild =  0b00000100_00000000_00000000,
-        LandArea =        0b00001000_00000000_00000000,
-        LivingHouse =     0b00010000_00000000_00000000,
-        Appartment =      0b00100000_00000000_00000000,
-        SummerHouse    =  0b01000000_00000000_00000000,
-        Garage         =  0b10000000_00000000_00000000,
+        DeclarantChild = 0b00000100_00000000_00000000,
+        LandArea = 0b00001000_00000000_00000000,
+        LivingHouse = 0b00010000_00000000_00000000,
+        Appartment = 0b00100000_00000000_00000000,
+        SummerHouse = 0b01000000_00000000_00000000,
+        Garage = 0b10000000_00000000_00000000,
 
         //the first byte
         None = 0,
@@ -37,11 +37,13 @@ namespace TI.Declarator.ParserCommon
         Department = 6,
 
         Vehicle = 7,
-        VehicleType =  8,
-        VehicleModel =  9,
+        VehicleType = 8,
+        VehicleModel = 9,
 
-        DeclaredYearlyIncome = 10 | StartsWithDigitMask,
-        DeclaredYearlyIncomeThousands = 11 | StartsWithDigitMask,
+        DeclaredYearlyIncomeMask = 10,
+        DeclaredYearlyIncome = DeclaredYearlyIncomeMask | StartsWithDigitMask,
+        DeclaredYearlyIncomeThousandsMask = 11,
+        DeclaredYearlyIncomeThousands = DeclaredYearlyIncomeThousandsMask | StartsWithDigitMask,
         DataSources = 12,
         VehicleYear = 13,
         IncomeYear = 14,
@@ -72,14 +74,14 @@ namespace TI.Declarator.ParserCommon
         DeclarantIncome = MainDeclarant | DeclaredYearlyIncome,
         SpouseIncome = DeclarantSpouse | DeclaredYearlyIncome,
         ChildIncome = DeclarantChild | DeclaredYearlyIncome,
-        
+
         DeclarantIncomeInThousands = MainDeclarant | DeclaredYearlyIncomeThousands,
         SpouseIncomeInThousands = DeclarantSpouse | DeclaredYearlyIncomeThousands,
         ChildIncomeInThousands = DeclarantChild | DeclaredYearlyIncomeThousands,
         //=========
 
         OwnedRealEstateType = Owned | RealtyTypeMask,
-        OwnedRealEstateOwnershipType  = Owned | OwnershipTypeMask,
+        OwnedRealEstateOwnershipType = Owned | OwnershipTypeMask,
         OwnedRealEstateSquare = Owned | SquareMask,
         OwnedRealEstateCountry = Owned | CountryMask,
         OwnedColumnWithNaturalText = Owned | NaturalText,
@@ -90,7 +92,7 @@ namespace TI.Declarator.ParserCommon
         StatePropertyOwnershipType = State | OwnershipTypeMask,
         StateColumnWithNaturalText = State | NaturalText,
 
-        
+
         // Поля, которые мы собираем, но пока не сохраняем в JSON
         AcquiredProperty = 101,
         MoneySources = 102,
@@ -101,7 +103,7 @@ namespace TI.Declarator.ParserCommon
         Stocks = 107,
         MainWorkPositionIncome = 108,
         Spendings = 109
-        
+
     }
 
 }

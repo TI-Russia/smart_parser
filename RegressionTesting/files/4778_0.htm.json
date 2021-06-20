@@ -34,6 +34,7 @@
           "text": "квартира (инд.собственность);",
           "square": 65.7,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "65,7",
           "country_raw": "Россия",
@@ -44,6 +45,7 @@
           "text": "дача (инд.собственность);",
           "square": 50.7,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "50,7",
           "country_raw": "Россия",
@@ -54,6 +56,7 @@
           "text": "земельный участок (инд.собственность);",
           "square": 600.0,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "600",
           "country_raw": "Россия",
@@ -64,6 +67,7 @@
           "text": "гараж (инд. собственность)",
           "square": 16.2,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "16,2",
           "country_raw": "Россия",
@@ -74,6 +78,7 @@
           "text": "гараж (инд. собственность)",
           "square": 17.3,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "17,3",
           "country_raw": "Россия",
@@ -96,7 +101,7 @@
     }
   ],
   "document": {
-    "sheet_title": "О суде за период с 1 января по 31 декабря 2010 года ",
+    "sheet_title": "Сведения о доходах за 2010 О.Н.Пахомовой | Восемнадцатый арбитражный апелляционный суд О суде за период с 1 января по 31 декабря 2010 года",
     "year": 2010
   }
 }

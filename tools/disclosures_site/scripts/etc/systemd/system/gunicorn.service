@@ -15,6 +15,6 @@ Environment=SOURCE_DOC_SERVER_ADDRESS=195.70.213.239:443
 ExecStart=/home/sokirko/.local/bin/gunicorn \
           --access-logfile - \
               --env DJANGO_SETTINGS_MODULE=disclosures.settings.prod \
-          --workers 2 \
+          --workers 4 \
           --bind unix:/run/gunicorn.sock \
           disclosures.wsgi:application

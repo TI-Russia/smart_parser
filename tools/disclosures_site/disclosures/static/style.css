@@ -26,7 +26,7 @@ br.mobile {
         font-family: "Roboto", serif;
     }
     html {
-        font-size: 36px;
+        /*font-size: 36px;*/
         /*height:100%;*/
     }
     body{
@@ -92,27 +92,42 @@ input {
 select {
   font-size: 100%;
 }
+/*================*/
 
 .declaration_table td, .declaration_table th {
-    border: solid;
+    border: thin solid;
     padding-left: 4px;
     padding-right: 4px;
 }
-
 table.declaration_table  {
-    border: solid;
+    border: thin solid;
     border-collapse: collapse;
 }
 
+/*================*/
+table.declaration_list_table  {
+    border: thin solid;
+    border-collapse: collapse;
+}
+
+.declaration_list_table td, .declaration_list_table th {
+    border: thin solid;
+    padding-left: 8px
+    padding-right: 8px;
+    padding-top: 10x;
+}
+
+/*================*/
 .solid_table td, .solid_table th {
-    border: solid;
+    border: thin solid;
     padding-left: 4px;
     padding-right: 4px;
 }
 table.solid_table  {
-    border: solid;
+    border: thin solid;
     border-collapse: collapse;
 }
+/*==========*/
 
 div.clickable {
   cursor: pointer;
@@ -142,17 +157,16 @@ div.menu {
     width: 100%;
 }
 
-row {
+div.row {
     display: table-row;
 }
 
 .topnav a {
     display: table-cell;
-    text-align: left;
+    text-align: center;
     text-decoration: none;
-    font-size: 70px;
+    font-size: x-large;
     border:1px solid black;
-    padding-left: 50px;
     vertical-align: middle;
 }
 
@@ -168,4 +182,48 @@ td.search_param {
 div.search_input {
     padding-top: 5x;
     padding-bottom: 5px;
+}
+
+div.search_input1 {
+    padding-bottom: 10px;
+}
+
+#id_car_brands {
+    width: 100px;
+}
+
+#id_gender{
+    width: 60px;
+}
+
+#id_rubric_id {
+    width: 150px;
+}
+
+#id_region_id {
+  width: 150px;
+}
+
+#id_position_and_department {
+    width: 130px;
+}
+
+#id_person_name {
+  width: 160px;
+}
+
+#id_web_domains {
+  width: 120px;
+}
+
+#id_office_request {
+    width: 180px;
+}
+
+hr {
+    width: 100%;
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
 }

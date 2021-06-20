@@ -5,7 +5,7 @@
         "name_raw": "1.Афанасьев Д.В.",
         "role": "Заместитель начальника отдела Нижнекамский РОСП"
       },
-      "year": null,
+      "year": 2013,
       "incomes": [
         {
           "size": 276050.0,
@@ -40,6 +40,7 @@
           "text": "Квартира 1/3 доля",
           "square": 63.5,
           "relative": "Супруг(а)",
+          "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "63,5",
           "country_raw": "РФ",
@@ -50,6 +51,7 @@
           "text": "Квартира 1/3 доля",
           "square": 63.5,
           "relative": "Ребенок",
+          "relative_index": 2,
           "own_type_by_column": null,
           "square_raw": "63,5",
           "country_raw": "РФ",
@@ -61,6 +63,6 @@
     }
   ],
   "document": {
-    "year": null
+    "year": 2013
   }
 }

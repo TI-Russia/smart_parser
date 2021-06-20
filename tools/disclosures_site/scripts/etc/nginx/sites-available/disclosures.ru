@@ -1,9 +1,16 @@
 server {
     server_name disclosures.ru;
 
-    location = /favicon.ico { access_log off; log_not_found off; }
+    location ^~ /favicon {
+    	try_files $uri /static/images/$uri;
+	    access_log off;
+	    log_not_found off;
+	    expires    24h
+    }
+
     location /static/ {
         alias /home/sokirko/smart_parser/tools/disclosures_site/disclosures/static/;
+        expires    24h
     }
 
     location / {

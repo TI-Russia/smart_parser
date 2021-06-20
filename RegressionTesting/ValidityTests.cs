@@ -251,6 +251,20 @@ namespace RegressionTesting
         {
             TestSmartParser("28817.xls", "prod");
         }
+        
+        [TestMethod]
+        [TestCategory("xls")]
+        public void Test50484_2()
+        {
+            TestSmartParser("50484_2.xls", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("doc")]
+        public void Test52668()
+        {
+            TestSmartParser("52668.doc", "prod");
+        }
 
         [TestMethod]
         [TestCategory("doc")]
@@ -488,6 +502,13 @@ namespace RegressionTesting
         }
 
         [TestMethod]
+        [TestCategory("doc")]
+        public void Test11480_12()
+        {
+            TestSmartParser("11480_12.doc", "prod");
+        }
+
+        [TestMethod]
         [TestCategory("docx")]
         public void AntlrForRealties()
         {
@@ -549,6 +570,13 @@ namespace RegressionTesting
         public void DividePersonAndRelativesByEoln()
         {
             TestSmartParser("8562.pdf.docx", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("doc")]
+        public void Zehova2013()
+        {
+            TestSmartParser("zehova2013.doc", "prod");
         }
 
         [TestMethod]
@@ -645,12 +673,25 @@ namespace RegressionTesting
         {
             TestSmartParser("ZabSud2017.docx", "prod");
         }
+        [TestMethod]
+        [TestCategory("docx")]
+        public void Test_14845_84()
+        {
+            TestSmartParser("14845_84.docx", "prod");
+        }
 
         [TestMethod]
         [TestCategory("doc")]
         public void Mchs2010()
         {
             TestSmartParser("Mchs2010.doc", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("doc")]
+        public void Test_13100_13()
+        {
+            TestSmartParser("13100_13.doc", "prod");
         }
 
         [TestMethod]
@@ -720,7 +761,13 @@ namespace RegressionTesting
         {
             TestSmartParser("Sudia2011.htm", "prod");
         }
-
+        
+        [TestMethod]
+        [TestCategory("htm")]
+        public void HtmlTitle()
+        {
+            TestSmartParser("html_title.html", "prod");
+        }
 
         [TestMethod]
         [TestCategory("htm")]
@@ -862,6 +909,20 @@ namespace RegressionTesting
         public void ThreeLinesInHeader()
         {
             TestSmartParser("pudoz_01.docx", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("doc")]
+        public void Test_4462_10()
+        {
+            TestSmartParser("4462_10.doc", "prod");
+        }
+
+        [TestMethod]
+        [TestCategory("doc")]
+        public void Test_4479_27()
+        {
+            TestSmartParser("4479_27.doc", "prod");
         }
 
         [TestMethod]
