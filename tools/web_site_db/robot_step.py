@@ -9,7 +9,6 @@ from common.serp_parser import SearchEngine, SearchEngineEnum, SerpException
 
 from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
 from collections import defaultdict
-import urllib
 import signal
 import time
 import hashlib
@@ -100,30 +99,6 @@ def check_href_elementary(href):
     return True
 
 
-def make_link(main_url, href):
-    url = urllib.parse.urljoin(main_url, href)
-
-    # we cannot disable html anchors because it is used as ajax requests:
-    # https://developers.google.com/search/docs/ajax-crawling/docs/specification?csw=1
-    # see an example of ajax urls in
-    # 1. http://minpromtorg.gov.ru/open_ministry/anti/activities/info/
-    #    -> https://minpromtorg.gov.ru/docs/#!svedeniya_o_dohodah_rashodah_ob_imushhestve_i_obyazatelstvah_imushhestvennogo_haraktera_federalnyh_gosudarstvennyh_grazhdanskih_sluzhashhih_minpromtorga_rossii_rukovodstvo_a_takzhe_ih_suprugi_supruga_i_nesovershennoletnih_detey_za_period_s_1_yanvarya_2019_g_po_31_dekabrya_2019_g
-    # 2. https://minzdrav.gov.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/4/2
-    #    -> https://minzdrav.gov.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/4/2#downloadable
-    #i = url.find('#')
-    #if i != -1:
-    #    url = url[0:i]
-    return url
-
-
-def get_base_url(main_url, soup):
-    for l in soup.findAll('base'):
-        href = l.attrs.get('href')
-        if href is not None:
-            return href
-    return main_url
-
-
 class OnePageProcessingTimeoutException(Exception):
     pass
 
@@ -161,9 +136,9 @@ class TRobotStep:
         self.profiler = dict() if profiler is None else profiler
 
         # runtime members
-        self.processed_pages = None
+        self.processed_pages = set()
         self.pages_to_process = dict()
-        self.last_processed_url_weights = None
+        self.last_processed_url_weights = list()
         self.urllib_html_cache = dict()
 
     def get_selenium_driver(self):
@@ -290,6 +265,15 @@ class TRobotStep:
         if self.is_last_step:
             self.website.export_env.export_selenium_doc_if_relevant(link_info)
 
+    def add_downloaded_file_manually(self, downloaded_file: TDownloadedFile, href=None, declaration_year=None):
+        if href is None:
+            href = self.website.morda_url
+        link_info = TLinkInfo(TClickEngine.selenium, self.website.morda_url, href,
+                              source_html="", anchor_text="", tag_name="a",
+                              element_index=1, downloaded_file=downloaded_file,
+                              declaration_year=declaration_year)
+        self.add_downloaded_file_wrapper(link_info)
+
     def find_a_web_page_in_urllib_cache(self, url, html_text, check_link_func):
         if len(html_text) > 1000:
             html_text = re.sub('[0-9]+', 'd', html_text)
@@ -314,7 +298,7 @@ class TRobotStep:
             if downloaded_file.file_extension != DEFAULT_HTML_EXTENSION:
                 return
             try:
-                html_parser = THtmlParser(downloaded_file.data)
+                html_parser = THtmlParser(downloaded_file.data, url=url)
                 already_processed_by_urllib = self.find_a_web_page_in_urllib_cache(
                     url, html_parser.html_with_markup, check_link_func)
             except Exception as e:
@@ -364,9 +348,6 @@ class TRobotStep:
         return best_url
 
     def find_links_in_html_by_text(self, main_url, html_parser: THtmlParser, check_link_func):
-        base = get_base_url(main_url, html_parser.soup)
-        if base.startswith('/'):
-            base = make_link(main_url, base)
         element_index = 0
         links_to_process = list(html_parser.soup.findAll('a'))
         self.logger.debug("find_links_in_html_by_text url={} links_count={}".format(main_url, len(links_to_process)))
@@ -374,7 +355,7 @@ class TRobotStep:
             href = html_link.attrs.get('href')
             if href is not None:
                 element_index += 1
-                link_info = TLinkInfo(TClickEngine.urllib, main_url, make_link(base, href),
+                link_info = TLinkInfo(TClickEngine.urllib, main_url, html_parser.make_link_soup(href),
                                       source_html=html_parser.html_with_markup, anchor_text=html_link.text,
                                       tag_name=html_link.name,
                                       element_index=element_index, element_class=html_link.attrs.get('class'),
@@ -386,7 +367,7 @@ class TRobotStep:
             href = frame.attrs.get('src')
             if href is not None:
                 element_index += 1
-                link_info = TLinkInfo(TClickEngine.urllib, main_url, make_link(base, href),
+                link_info = TLinkInfo(TClickEngine.urllib, main_url, html_parser.make_link_soup(href),
                                       source_html=html_parser.html_with_markup, anchor_text=frame.text, tag_name=frame.name,
                                       element_index=element_index, source_page_title=html_parser.page_title)
                 if self.normalize_and_check_link(link_info, check_link_func):
@@ -434,7 +415,7 @@ class TRobotStep:
 
             href = element.get_attribute('href')
             if href is not None and not mandatory_link:
-                href = make_link(main_url, href)  # may be we do not need it in selenium?
+                href = THtmlParser.make_link(main_url, href)  # may be we do not need it in selenium?
                 link_info = TLinkInfo(TClickEngine.selenium,
                                       main_url, href,
                                       source_html=page_html, anchor_text=link_text,

@@ -1,10 +1,11 @@
+from web_site_db.web_sites import TDeclarationWebSiteList
 from common.logging_wrapper import setup_logging
-from django.core.management import BaseCommand
 import declarations.models as models
+
+from django.core.management import BaseCommand
 from django.db import connection
 from collections import defaultdict
 import datetime
-from web_site_db.web_sites import TDeclarationWebSiteList
 
 
 def get_child_offices(office, max_count=5):
