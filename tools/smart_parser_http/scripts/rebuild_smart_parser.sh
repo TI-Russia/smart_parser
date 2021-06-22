@@ -59,6 +59,7 @@ parallel -a all_source_sha256.txt \
      --env PYTHONPATH  \
      --jobs $JOBS_COUNT \
      -S $HOSTS  \
+     --joblog parallel.log \
      --verbose \
      --workdir /tmp \
       python3 /home/sokirko/smart_parser/tools/smart_parser_http/scripts/rebuid_smart_parser_worker.py {}
