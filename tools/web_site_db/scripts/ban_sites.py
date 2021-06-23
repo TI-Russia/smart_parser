@@ -1,5 +1,5 @@
 from web_site_db.web_sites import TDeclarationWebSiteList
-from web_site_db.robot_web_site import TWebSiteReachStatus
+from web_site_db.web_site_status import TWebSiteReachStatus
 
 import argparse
 import logging

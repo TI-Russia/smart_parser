@@ -2,13 +2,13 @@ from common.content_types import ACCEPTED_DOCUMENT_EXTENSIONS
 from common.logging_wrapper import setup_logging
 
 import http.client
-import logging
 import urllib.request
 import urllib.error
 import os
 import json
 import argparse
 import sys
+import socket
 
 
 class TSourceDocClient(object):
@@ -54,17 +54,22 @@ class TSourceDocClient(object):
             self.assert_server_alive()
 
     def send_file(self, file_path):
-        conn = http.client.HTTPConnection(self.server_address)
         with open(file_path, "rb") as inp:
             file_contents = inp.read()
-        self.logger.debug("send {} to source document server".format(file_path))
-        conn.request("PUT", os.path.basename(file_path), file_contents)
-        response = conn.getresponse()
-        if response.code != 201:
-            self.logger.error("could not put a task to smart parser cache")
-            return False
-        else:
-            return True
+
+        for try_index in range(3):
+            try:
+                self.logger.debug("send {} to source document server (try_index={})".format(file_path, try_index))
+                conn = http.client.HTTPConnection(self.server_address, timeout=60*(try_index + 1))
+                conn.request("PUT", os.path.basename(file_path), file_contents)
+                response = conn.getresponse()
+                if response.code != 201:
+                    self.logger.error("could not put a task to smart parser cache")
+                    return False
+                else:
+                    return True
+            except socket.timeout as st:
+                self.logger.error("timeout in source_doc_client.send_file")
 
     def get_stats(self):
         data = None

@@ -7,7 +7,7 @@ from common.primitives import convert_timeout_to_seconds
 from common.http_request import THttpRequester
 from dl_robot.declaration_link import looks_like_a_declaration_link, check_sveden_url_sitemap_xml
 from common.logging_wrapper import setup_logging
-from dl_robot.tomsk import tomsk_gov_ru
+from dl_robot.adhoc import process_adhoc
 
 import platform
 import tempfile
@@ -114,9 +114,7 @@ class TDlrobot:
         raise Exception("cannot find step {}".format(name))
 
     def make_steps(self, project):
-        if project.web_site_snapshots[0].get_domain_name() == "tomsk.gov.ru":
-            tomsk_gov_ru(project.web_site_snapshots[0])
-        else:
+        if not process_adhoc(project):
             if self.args.start_from != "last_step":
                 start = self.step_index_by_name(self.args.start_from) if self.args.start_from is not None else 0
                 end = self.step_index_by_name(self.args.stop_after) + 1 if self.args.stop_after is not None else len(ROBOT_STEPS)

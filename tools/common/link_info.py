@@ -1,6 +1,7 @@
 from DeclDocRecognizer.dlrecognizer import DL_RECOGNIZER_ENUM
 from common.primitives import normalize_and_russify_anchor_text, strip_html_url, build_dislosures_sha256_by_html
 
+
 class TClickEngine:
     urllib = 'urllib'
     selenium = 'selenium'

@@ -513,7 +513,7 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
 
     def log_request(self, code='-', size='-'):
         aux_params = str(self.client_address[0])
-        if self.last_error_message != "":
+        if hasattr(self, "last_error_message") and self.last_error_message != "":
             aux_params += " error: " + self.last_error_message
         self.log_message("%s %s %s from %s",  self.requestline, str(code), str(size), aux_params)
 

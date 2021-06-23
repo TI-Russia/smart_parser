@@ -1,6 +1,6 @@
 from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
 from common.selenium_driver import TSeleniumDriver
-from web_site_db.robot_web_site import TWebSiteReachStatus
+from web_site_db.web_site_status import TWebSiteReachStatus
 from common.export_files import TExportFile
 
 import json

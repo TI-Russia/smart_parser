@@ -1,7 +1,9 @@
+from common.primitives import get_site_domain_wo_www
+from web_site_db.web_site_status import TWebSiteReachStatus
+
 import json
 import os
-from common.primitives import get_site_domain_wo_www
-from web_site_db.robot_web_site import TWebSiteReachStatus
+from collections import defaultdict
 
 
 class TDeclarationWebSite:
@@ -33,6 +35,7 @@ class TDeclarationWebSite:
 
 class TDeclarationWebSiteList:
     disclosures_office_start_id = 20000
+    default_input_task_list_path = os.path.join(os.path.dirname(__file__), "data/web_sites.json")
 
     def __init__(self, logger, file_name=None):
         self.web_sites = dict()
@@ -55,8 +58,15 @@ class TDeclarationWebSiteList:
         s.calculated_office_id = office_id
         self.web_sites[web_site] = s
 
+    def build_office_to_website(self):
+        office_to_website = defaultdict(set)
+        for url, web_site in self.web_sites.items():
+            if TWebSiteReachStatus.can_communicate(web_site.reach_status) and url != 'declarator.org':
+                office_to_website[web_site.calculated_office_id].add(url)
+        return office_to_website
+
     def has_web_site(self, web_site):
-        return  web_site in self.web_sites
+        return web_site in self.web_sites
 
     def set_status_to_web_site(self, web_site, reach_status):
         assert TWebSiteReachStatus.check_status(reach_status)

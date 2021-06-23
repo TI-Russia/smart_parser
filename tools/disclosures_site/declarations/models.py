@@ -19,6 +19,23 @@ def get_django_language():
     return lang
 
 
+def russian_numeral_group(num, singular_nominativ, singular_genitiv, plural_genitiv):
+    if num is None:
+        return ""
+    s = str(num)
+    if len(s) == 0:
+        return ""
+    if len(s) > 1 and s[-2] == '1':       #10, 11, 12, ...,19, 110, 111...
+        return plural_genitiv
+    elif s[-1] == "1":                    #1, 21, 31, 41, 101, 121, ...201, ...
+        return singular_nominativ
+    elif s[-1] == "2" or s[-1] == "3" or s[-1] == "4":    # 2, 3, 4, 22, 23, 24, 32, 33...
+        return singular_genitiv
+    else:
+        return plural_genitiv         # 5,6,7,8,9,...,25,26,27....
+
+
+
 class Region(models.Model):
     name = models.TextField(verbose_name='region name')
     wikibase_id = models.CharField(max_length=10, null=True)
@@ -39,11 +56,11 @@ class Region_Synonyms(models.Model):
 
 class Office(models.Model):
     name = models.TextField(verbose_name='office name')
-    #region_id = models.IntegerField(null=True)
     region = models.ForeignKey('declarations.Region', verbose_name="region", on_delete=models.CASCADE, null=True)
     type_id = models.IntegerField(null=True)
     parent_id = models.IntegerField(null=True)
     rubric_id = models.IntegerField(null=True, default=None) # see TOfficeRubrics
+    calculated_params = models.JSONField(null=True, default=None)
 
     @property
     def source_document_count(self):
@@ -62,41 +79,41 @@ class Office(models.Model):
         except Exception as exp:
             raise
 
-    def get_source_documents(self, max_count=10):
-        cnt = 0
-        for src_doc in self.source_document_set.all():
-            yield src_doc
-            cnt += 1
-            if cnt >= max_count:
-                break
+    @property
+    def source_document_count_html(self):
+        num = self.calculated_params['source_document_count']
+        s = "{} {}".format(num, russian_numeral_group(num, "документ", "документа", "документов"))
+        return s
 
     @property
-    def source_documents(self):
-        return self.get_source_documents(max_count=10)
+    def section_count_html(self):
+        num = self.calculated_params['section_count']
+        s = "{} {}".format(num, russian_numeral_group(num, "декларация", "декларации", "деклараций"))
+        return s
+
+    @property
+    def section_count_by_years_html(self):
+        data = self.calculated_params['section_count_by_years']
+        html = "<table class=\"section_by_count\"> <tr> "
+        for year in data.keys():
+            html += "<th>{}</th>".format(year)
+        html += "</tr><tr>"
+        for year, cnt in data.items():
+            html += "<td><a href=\"/section?office_id={}&income_year={}\">{}</a></td>".format(self.id, year, cnt)
+        html += "</tr></table>"
+        return html
+
+    @property
+    def urls_html(self):
+        pairs = ((u, (u.encode('latin').decode('idna') if u.startswith('xn-') else u))
+                  for u in self.calculated_params['urls'])
+        return "&nbsp;&nbsp;&nbsp;".join("<a href=\"//{}\">{}</a>".format(u1, u2) for u1,u2 in pairs)
 
     @property
     def parent_office_name(self):
         if self.parent_id is None:
             return ""
         return Office.objects.get(pk=self.parent_id).name
-
-    @property
-    def child_offices_count(self):
-        return Office.objects.all().filter(parent_id=self.id).count()
-
-    def get_child_offices(self, max_count=5):
-        if self.parent_id is None:
-            return ""
-        cnt = 0
-        for x in Office.objects.all().filter(parent_id=self.id):
-            yield x.id, x.name
-            cnt += 1
-            if  cnt >= max_count:
-                break
-
-    @property
-    def child_offices(self):
-        return self.get_child_offices(max_count=5)
 
     @property
     def rubric_str(self):
@@ -394,14 +411,7 @@ def format_income_in_html(income):
     if income is None:
         return income
     s = "{:_.0f}".format(income).replace('_', '&nbsp;')
-    if len(s) == 0:
-        return s
-    elif s[-1] == "1":
-        s += " рубль"
-    elif s[-1] == "2" or s[-1] == "3" or s[-1] == "4":
-        s += " рубля"
-    else:
-        s += " рублeй"
+    s += " " + russian_numeral_group(income, "рубль", "рубля", "рублeй")
     return s
 
 

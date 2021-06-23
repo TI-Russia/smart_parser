@@ -124,6 +124,9 @@ echo $DEDUPE_HOSTS | tr "," "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dl
 #15 создание рейтингов
     python3 $TOOLS/disclosures_site/manage.py build_ratings --settings disclosures.settings.dev
 
+#15.1 построение дополнительных параметров ведомств (calculated_params)
+    python3 $TOOLS/disclosures_site/manage.py build_office_calculated_params --settings disclosures.settings.dev
+
 #16 создание дампа базы (для debug)
     cd $DLROBOT_FOLDER
     mysqldump -u disclosures -pdisclosures disclosures_db_dev  |  gzip -c > $DLROBOT_FOLDER/disclosures.sql.gz

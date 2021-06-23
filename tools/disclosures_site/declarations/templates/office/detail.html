@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<table>
+<table cellpadding="5px">
     <tr><td><b>ID</b>:</td><td>{{ office.id }} </td></tr>
     <tr><td><b>Название</b>:</td><td>{{ office.name }} </td></tr>
     <tr><td><b>Регион</b>:</td><td>{{ office.region_name }} (id={{ office.region_id }}) </td></tr>
@@ -18,52 +18,40 @@
             </tr>
     {% endif %}
 
-    {% if office.child_offices_count > 0 %}
+    {% if office.calculated_params.child_offices_count > 0 %}
         <tr>
             <td valign="baseline"><b>Нижестоящие организации</b>:</td>
-            <td>{% for child_id, child_name in office.child_offices %}
+            <td>{% for child_id, child_name in office.calculated_params.child_office_examples %}
               <a href="/office/{{ child_id }}"> {{ child_name }} </a><br/>
             {% endfor %}
 
-            {% if office.child_offices_count > 5 %}
+            {% if office.calculated_params.child_offices_count > 5 %}
                 <a href="/office?parent_id={{office.id}}">...</a>
             {% endif %}
             </td>
         </tr>
     {% endif %}
 
-    {% if office.source_document_count > 0 %}
-        <tr>
-            <td valign="baseline"><b>Документы</b>:</td>
+    <tr>
+        <td><b>Вебстраницы:</b></td>
+        <td>{{office.urls_html|safe}}</td>
+    </tr>
 
-            <td>
-                <table border="1" style="border-collapse: collapse;" cellpadding="10" >
-                    <tr>
-                        <th>ID</th>
-                        <th>Год</th>
-                        <th>Число секций</th>
-                    </tr>
-                    {% for src_doc in office.get_source_documents %}
-                        <tr>
-                            <td><a href="/file/{{ src_doc.id }}">{{ src_doc.id }}</a></td>
-                            <td align="center" >{{src_doc.min_income_year}}</td>
-                            <td align="center">{{src_doc.section_count}}</td>
-                        </tr>
-                    {% endfor %}
-                    {% if office.source_document_count > 10 %}
-                        <tr>
-                            <td colspan="3" border="0">
-                                <a href="/file?office_id={{office.id}}">остальные документы</a>
-                            </td>
-                        </tr>
-                    {% endif %}
-                </table>
-            </td>
-        </tr>
-    {% endif %}
+    <tr>
+        <td><b>Исходные документы:</b></td>
+        <td><a href="/file?office_id={{office.id}}">{{office.source_document_count_html}}</a></td>
+    </tr>
 
-    <tr><td>
-    <a href=/section?office_id={{office.id}}>Все декларации этого ведомства</a>
-    </td></tr>
+    <tr>
+        <td><b>Найденные декларации:</b></td>
+        <td><a href="/section?office_id={{office.id}}">{{office.section_count_html}}</a></td>
+    </tr>
+
+    <tr>
+        <td><b>Декларации по годам:</b></td>
+        <td>{{office.section_count_by_years_html|safe}}</td>
+    </tr>
+
 </table>
+
 {% endblock content %}
