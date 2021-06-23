@@ -279,7 +279,6 @@ class TConvertProcessor(http.server.HTTPServer):
                 self.logger.debug(winword_errors)
         except Exception as exp:
             success = False
-            status.
             self.logger.error("Exception {} in winword while processing {}".format(exp, filename))
             pass
         self.kill_winword()
