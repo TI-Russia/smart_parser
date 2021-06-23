@@ -18,7 +18,7 @@ from pathlib import Path
 from logging.handlers import RotatingFileHandler
 from http import HTTPStatus
 import telegram_send
-
+import threading
 
 def convert_to_seconds(s):
     seconds_per_unit = {"s": 1, "m": 60, "h": 3600}
@@ -39,10 +39,13 @@ def convert_pdf_to_docx_with_abiword(input_path, out_path):
     shutil.move(temp_outfile, out_path)
 
 
-def move_file_with_retry(logger, file_name, folder):
+def move_file_with_retry(logger, file_name, output_folder):
+    output_file = os.path.join(output_folder, os.path.basename(file_name))
     for try_index in [1, 2, 3]:
         try:
-            shutil.move(file_name, folder)
+            if os.path.exists(output_file):
+                os.unlink(output_file)
+            shutil.move(file_name, output_folder)
             return
         except Exception as exp:
             logger.error("cannot move {}, exception={}, wait 20 seconds...".format(file_name, exp))
@@ -101,12 +104,6 @@ class TInputTask:
 
 
 class TConvertProcessor(http.server.HTTPServer):
-    #max time between putting file to ocr queue and getting the result
-    ocr_timeout_with_waiting_in_queue = 60 * 60 * 3 #3 hours
-
-    # if the ocr queue is not empty and ocr produces no results in  1 hour, we have to restart ocr
-    ocr_restart_time = 60*60  #1 hour
-
     @staticmethod
     def parse_args(arglist):
         parser = argparse.ArgumentParser()
@@ -126,8 +123,16 @@ class TConvertProcessor(http.server.HTTPServer):
         parser.add_argument("--ocr-input-folder", dest='ocr_input_folder', required=False, default="pdf.ocr")
         parser.add_argument("--ocr-output-folder", dest='ocr_output_folder', required=False, default="pdf.ocr.out")
         parser.add_argument("--ocr-logs-folder", dest='ocr_logs_folder', required=False, default="ocr.logs")
+
+        # max time between putting file to ocr queue and getting the result
         parser.add_argument("--ocr-timeout", dest='ocr_timeout', required=False,
-                            help="delete file if ocr cannot process it in this timeout, default 3h", default="3h")
+                            help="delete file if ocr cannot process it in this timeout, default 3h",
+                            default="3h")
+
+        parser.add_argument("--winword-timeout", dest='winword_timeout', required=False,
+                            help="stop winword (that was called by MicrosoftPdf2Docx) if it processes file longer than timeout",
+                            default="60s")
+
         parser.add_argument("--microsoft-pdf-2-docx",
                             dest='microsoft_pdf_2_docx',
                             required=False,
@@ -137,16 +142,20 @@ class TConvertProcessor(http.server.HTTPServer):
         parser.add_argument("--request-rate-serialize",
                             dest='request_rate_serialize', default=100, required=False, type=int,
                             help="save db on each Nth get request")
+
+        # if the ocr queue is not empty and ocr produces no results in  1 hour, we have to restart ocr
         parser.add_argument("--ocr-restart-time", dest='ocr_restart_time', required=False,
                             help="restart ocr if it produces no results", default="3h")
+
         parser.add_argument("--central-heart-rate", dest='central_heart_rate', type=int, required=False, default='10')
         parser.add_argument("--bin-file-size", dest='user_bin_file_size', type=int, required=False)
         parser.add_argument("--disable-telegram", dest="enable_telegram",
                             default=True,  required=False, action="store_false")
 
         args = parser.parse_args(arglist)
-        TConvertProcessor.ocr_timeout_with_waiting_in_queue = convert_to_seconds(args.ocr_timeout)
-        TConvertProcessor.ocr_restart_time = convert_to_seconds(args.ocr_restart_time)
+        args.ocr_timeout = convert_to_seconds(args.ocr_timeout)
+        args.ocr_restart_time = convert_to_seconds(args.ocr_restart_time)
+        args.winword_timeout = convert_to_seconds(args.winword_timeout)
         if args.server_address is None:
             args.server_address = os.environ['DECLARATOR_CONV_URL']
         return args
@@ -156,7 +165,7 @@ class TConvertProcessor(http.server.HTTPServer):
         self.logger = setup_logging(args.logfile)
         self.convert_storage = None
 
-        self.input_thread = None
+        self.server_actions_thread = None
         self.stop_input_thread = False
         self.input_task_queue = queue.Queue()
         self.ocr_tasks = dict()
@@ -167,7 +176,7 @@ class TConvertProcessor(http.server.HTTPServer):
         self.successful_get_requests = 0
         self.finished_ocr_tasks = 0
 
-        self.last_heart_beat = time.time()
+
         self.file_garbage_collection_timestamp = 0
         self.ocr_queue_is_empty_last_time_stamp = time.time()
         self.got_ocred_file_last_time_stamp = time.time()
@@ -197,6 +206,10 @@ class TConvertProcessor(http.server.HTTPServer):
     def start_http_server(self):
         self.logger.debug("myServer.serve_forever(): {}".format(self.args.server_address))
         self.http_server_is_working = True
+        self.server_actions_thread = threading.Thread(target=self.service_actions_in_a_thread)
+        # Exit the server thread when the main thread terminates
+        self.server_actions_thread.daemon = True
+        self.server_actions_thread.start()
         self.serve_forever()
 
     def stop_http_server(self):
@@ -205,8 +218,12 @@ class TConvertProcessor(http.server.HTTPServer):
             self.http_server_is_working = False
             self.shutdown()
             self.server_close()
-            if os.path.exists(self.args.input_folder_cracked):
-                shutil.rmtree(self.args.input_folder_cracked, ignore_errors=False)
+            self.server_actions_thread.join(1)
+            try:
+                if os.path.exists(self.args.input_folder_cracked):
+                    shutil.rmtree(self.args.input_folder_cracked, ignore_errors=False)
+            except Exception as exp:
+                self.logger.error(exp)
             self.logger.debug("http server was stopped")
             self.convert_storage.close_storage()
             for i in self.logger.handlers:
@@ -242,27 +259,32 @@ class TConvertProcessor(http.server.HTTPServer):
                 del self.ocr_tasks[input_task.sha256]
                 self.finished_ocr_tasks += 1
 
+    def kill_winword(self):
+        if self.args.use_winword_exlusively:
+            taskkill_windows('winword.exe')
+        taskkill_windows('pdfreflow.exe')
+
     def convert_with_microsoft_word(self, filename):
         if not self.args.enable_winword:
             return
         self.logger.info("convert {} with microsoft word".format(filename))
-        if self.args.use_winword_exlusively:
-            taskkill_windows('winword.exe')
-        taskkill_windows('pdfreflow.exe')
-        with tempfile.NamedTemporaryFile(prefix="microsoft_pdf_2_docx.log", dir=".") as log_file:
-            subprocess.run([self.args.microsoft_pdf_2_docx, filename], timeout=60 * 10, stderr=log_file, stdout=log_file)
-            try:
-                log_file.seek(0)
-                log_data = log_file.read().decode("utf8").replace("\n", " ").strip()
-                self.logger.debug(log_data)
-            except Exception as exp:
-                pass
-
-        if self.args.use_winword_exlusively:
-            taskkill_windows('winword.exe')
-        taskkill_windows('pdfreflow.exe')
+        self.kill_winword()
         docx_file = filename + ".docx"
-        if os.path.exists(docx_file):
+        try:
+            status = subprocess.run([self.args.microsoft_pdf_2_docx, filename],
+                       timeout=self.args.winword_timeout, capture_output=True)
+            success = (status.returncode == 0 and os.path.exists(docx_file))
+            if not success:
+                winword_errors = status.stderr.decode("utf8").replace("\n", " ").strip()
+                self.logger.debug(winword_errors)
+        except Exception as exp:
+            success = False
+            status.
+            self.logger.error("Exception {} in winword while processing {}".format(exp, filename))
+            pass
+        self.kill_winword()
+
+        if success:
             self.continuous_winword_failures_count = 0
             return docx_file
         else:
@@ -452,9 +474,9 @@ class TConvertProcessor(http.server.HTTPServer):
         for pdf_file in os.listdir(self.args.ocr_input_folder):
             fpath = os.path.join(self.args.ocr_input_folder, pdf_file)
             timestamp = Path(fpath).stat().st_mtime
-            if current_time - timestamp > TConvertProcessor.ocr_timeout_with_waiting_in_queue:
+            if current_time - timestamp > self.args.ocr_timeout:
                 self.logger.error("delete orphan file {} after stalling {} seconds".format(
-                    fpath, TConvertProcessor.ocr_timeout_with_waiting_in_queue))
+                    fpath, self.args.ocr_timeout))
                 self.convert_storage.delete_file_silently(fpath)
                 sha256 = TConvertStorage.get_sha256_from_filename(pdf_file)
                 self.register_ocr_process_finish(self.ocr_tasks.get(sha256), False)
@@ -478,17 +500,20 @@ class TConvertProcessor(http.server.HTTPServer):
             self.process_stalled_files()
 
         current_time = time.time()
-        if  current_time - self.got_ocred_file_last_time_stamp > TConvertProcessor.ocr_restart_time and \
-                current_time - self.ocr_queue_is_empty_last_time_stamp > TConvertProcessor.ocr_restart_time :
+        if  current_time - self.got_ocred_file_last_time_stamp > self.args.ocr_restart_time and \
+                current_time - self.ocr_queue_is_empty_last_time_stamp > self.args.ocr_restart_time :
             self.logger.debug("last ocr file was received long ago and all this time the ocr queue was not empty")
             self.restart_ocr()
             self.got_ocred_file_last_time_stamp = time.time()  #otherwize restart will be too often
 
-    def service_actions(self):
-        current_time = time.time()
-        if current_time - self.last_heart_beat >= self.args.central_heart_rate:
-            self.process_all_tasks()
-            self.last_heart_beat = time.time()
+    def service_actions_in_a_thread(self):
+        last_heart_beat = time.time()
+        while self.http_server_is_working:
+            if time.time() - last_heart_beat >= self.args.central_heart_rate:
+                self.process_all_tasks()
+                last_heart_beat = time.time()
+            else:
+                time.sleep(1)
 
 
 ALLOWED_FILE_EXTENSTIONS={'.pdf'}

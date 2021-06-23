@@ -4,7 +4,6 @@ from ConvStorage.conversion_client import TDocConversionClient
 from common.logging_wrapper import close_logger, setup_logging
 from common.primitives import build_dislosures_sha256
 from DeclDocRecognizer.external_convertors import TExternalConverters
-from common.primitives import run_with_timeout
 import concurrent.futures
 from unittest import TestCase
 import os
@@ -14,6 +13,7 @@ import time
 import subprocess
 import random
 from functools import partial
+
 
 def start_server(server):
     server.start_http_server()
@@ -145,9 +145,11 @@ class TTestEnv:
         else:
             self.server_process.terminate()
 
-        if os.path.exists(self.data_folder):
-            shutil.rmtree(self.data_folder, ignore_errors=True)
-        os.chdir( os.path.dirname(__file__))
+        try:
+            if os.path.exists(self.data_folder):
+                shutil.rmtree(self.data_folder, ignore_errors=True)
+        finally:
+            os.chdir(os.path.dirname(__file__))
 
 
 class TestPing(TestCase):
@@ -508,3 +510,33 @@ class TestQPDF(TestCase):
         self.assertTrue(os.path.exists(output_files[0]))
         file_size = os.stat(output_files[0]).st_size
         self.assertGreater(file_size, 12000)
+
+
+# winword 2019 hangs on ../files/winword_hangs.pdf, we wait 30s(10m in prod) in test environment and pass this file to ocr.
+# This test leaves a hanged winword instance, since server is started with --disable-killing-winword.
+# I do not know how to make it simplier
+
+class TestWinwordHangs(TestCase):
+    def setUp(self):
+        self.env = TTestEnv("winword_hangs", ['--winword-timeout', '30s'])
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def test_winword_hangs(self):
+        file_path = "../files/winword2019_hangs.pdf"
+        output_files = self.env.process_with_client([file_path], timeout=240, skip_receiving=True)
+        sha256 = build_dislosures_sha256(file_path)
+        for x in range(120):
+            time.sleep(1)
+            # server must answer and accept requests while winword is working(hanging) in background
+            self.assertTrue(self.env.client.assert_declarator_conv_alive())
+            if self.env.client.check_file_was_converted(sha256):
+                self.env.client.retrieve_document(sha256, output_files[0])
+                break
+
+        self.assertTrue(os.path.exists(output_files[0]))
+        file_size = os.stat(output_files[0]).st_size
+        self.assertGreater(file_size, 5000)
+        stats = self.env.server.get_stats()
+        self.assertEqual(1, stats['finished_ocr_tasks'])
