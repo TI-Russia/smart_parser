@@ -17,6 +17,7 @@ import queue
 from pathlib import Path
 from logging.handlers import RotatingFileHandler
 from http import HTTPStatus
+import telegram_send
 
 
 def convert_to_seconds(s):
@@ -148,8 +149,6 @@ class TConvertProcessor(http.server.HTTPServer):
         TConvertProcessor.ocr_restart_time = convert_to_seconds(args.ocr_restart_time)
         if args.server_address is None:
             args.server_address = os.environ['DECLARATOR_CONV_URL']
-        if args.enable_telegram:
-            import telegram_send
         return args
 
     def __init__(self, args):
