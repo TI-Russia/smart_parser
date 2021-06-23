@@ -492,3 +492,19 @@ class TestHighLoadPing(TestCase):
 
     def tearDown(self):
         self.env.tearDown()
+
+
+# use qpdf to strip drm
+class TestQPDF(TestCase):
+    def setUp(self):
+        self.env = TTestEnv("drm")
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    # the size of the output file must be less than 15000 (from Finereader), winword converts it to a chinese doc"
+    def test_qpdf(self):
+        output_files = self.env.process_with_client(["../files/drm.pdf"], timeout=240)
+        self.assertTrue(os.path.exists(output_files[0]))
+        file_size = os.stat(output_files[0]).st_size
+        self.assertGreater(file_size, 12000)

@@ -16,7 +16,6 @@ import sys
 import queue
 from pathlib import Path
 from logging.handlers import RotatingFileHandler
-import telegram_send
 from http import HTTPStatus
 
 
@@ -72,12 +71,16 @@ def strip_drm(logger, filename, stripped_file):
             if l.startswith(prefix):
                 password = prefix[len(prefix):].strip("'")
     os.unlink("crack.info")
+    qpdf = ['qpdf', '--decrypt']
     if password is not None:
-        logger.debug("run qpdf on {} with password {}".format(filename, password))
-        subprocess.run(['qpdf', '--password={}'.format(password), '--decrypt', filename, stripped_file],
-                       stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
-        return True
-    return False
+        qpdf.append('--password={}'.format(password))
+    qpdf.extend([filename, stripped_file])
+    logger.debug(" ".join(qpdf))
+    status = subprocess.run(qpdf, capture_output=True)
+    if status.returncode != 0 or not os.path.exists(stripped_file) or Path(stripped_file).stat().st_size == 0:
+        logger.error("qpdf failed on {}, error {} ".format(filename, status.stderr.decode('utf8')))
+        logger.error("try to use the original file")
+        shutil.copyfile(filename, stripped_file)
 
 
 def taskkill_windows(process_name):
@@ -145,6 +148,8 @@ class TConvertProcessor(http.server.HTTPServer):
         TConvertProcessor.ocr_restart_time = convert_to_seconds(args.ocr_restart_time)
         if args.server_address is None:
             args.server_address = os.environ['DECLARATOR_CONV_URL']
+        if args.enable_telegram:
+            import telegram_send
         return args
 
     def __init__(self, args):
@@ -272,8 +277,8 @@ class TConvertProcessor(http.server.HTTPServer):
         basename = os.path.basename(input_file)
         stripped_file = os.path.join(self.args.input_folder_cracked, basename)
         self.logger.debug("process input file {}, pwd={}".format(input_file, os.getcwd()))
-        if not strip_drm(self.logger, input_file, stripped_file):
-            shutil.copyfile(input_file, stripped_file)
+        strip_drm(self.logger, input_file, stripped_file)
+
         docxfile = None if input_task.only_ocr else self.convert_with_microsoft_word(stripped_file)
         if docxfile is not None:
             self.convert_storage.delete_file_silently(stripped_file)
