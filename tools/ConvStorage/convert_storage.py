@@ -89,7 +89,7 @@ class TConvertStorage:
         try:
             self.converted_file_storage.save_file(self.broken_stub, ".docx", None, force=force, sha256=sha256)
         except OSError as exp:
-            self.logger.error(exp)
+            self.logger.error("save_converted_file_broken_stub, sha256={}, Exception: {}".format(sha256, exp))
             self.snow_ball_os_error_count += 1
             raise
 
@@ -105,7 +105,7 @@ class TConvertStorage:
                                                        force=force,
                                                        sha256=sha256)
         except OSError as exp:
-            self.logger.error(exp)
+            self.logger.error("save_converted_file, sha256={} exception: {}".format(sha256, exp))
             self.snow_ball_os_error_count += 1
             raise
         if delete_file:
@@ -116,7 +116,8 @@ class TConvertStorage:
         try:
             with open(file_name, "rb") as inp:
                 self.input_file_storage.save_file(inp.read(), file_extension)
-        except OSerror:
+        except OSError as exp:
+            self.logger.error("save_input_file, file_name: {} exception: {}".format(file_name, exp))
             self.snow_ball_os_error_count += 1
             raise
         if delete_file:
