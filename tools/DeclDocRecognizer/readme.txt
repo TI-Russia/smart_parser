@@ -1,2 +1,2 @@
 ﻿follow ../INSTALL.txt
-bash run_tests.sh
+bash test_all.sh
