@@ -106,48 +106,6 @@ def check_internet(host="8.8.8.8", port=53, timeout=3):
         return False
 
 
-def string_contains_Russian_name(name):
-    if name.find('(') != -1:
-        name = name[:name.find('(')].strip()
-    words = name.split(' ')
-
-    relatives = {"супруг", "супруга", "сын", "дочь"}
-    while len(words) > 0 and words[-1].lower() in relatives:
-        words = words[0:-1]
-
-    if len(words) >= 0 and re.search('^[0-9]+[.]\s*$', words[0]) is not None:
-        words = words[1:]
-
-    if len(words) >= 3 and words[0].title() == words[0] and words[1].title() == words[1] and \
-            words[2].strip(',-').lower()[-3:] in {"вич", "вна", "мич", "ьич", "тич", "чна"}:
-        return True
-
-
-    if len(words) >= 3 and words[-3].title() == words[-3] and words[-2].title() == words[-2] and \
-            words[-1].strip(',-').lower()[-3:] in {"вич", "вна", "мич", "ьич", "тич", "чна"}:
-        return True
-
-    name = " ".join(words)
-    if re.search('[А-Я]\s*[.]\s*[А-Я]\s*[.]\s*$', name) is not None:
-        return True
-
-    # Иванов И.И.
-    if re.search('^[А-Я][а-я]+\s+[А-Я]\s*[.]\s*[А-Я]\s*[.]', name) is not None:
-        return True
-
-    # И.И. Иванов
-    if re.search('[А-Я]\s*[.]\s*[А-Я]\s*[.][А-Я][а-я]+$', name) is not None:
-        return True
-    return False
-
-
-def prepare_russian_names_for_search_index(str):
-    if str is None:
-        return None
-    str = str.replace("Ё", "Е").replace("ё", "е")
-    return str
-
-
 def build_dislosures_sha256_by_html(html_data):
     text = THtmlParser(html_data).get_plain_text()
     text_utf8 = text.encode("utf-8", errors="ignore")

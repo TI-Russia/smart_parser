@@ -1,12 +1,11 @@
 from . import models
 from .documents import ElasticSectionDocument, ElasticPersonDocument, ElasticOfficeDocument, ElasticFileDocument
-from declarations.russian_fio import TRussianFio
+from common.russian_fio import TRussianFio, TRussianFioRecognizer
 from disclosures_site.declarations.statistics import TDisclosuresStatisticsHistory
 from declarations.rubrics import fill_combo_box_with_rubrics
 from common.content_types import file_extension_to_content_type
 from declarations.apps import DeclarationsConfig
 from declarations.car_brands import CAR_BRANDS
-from common.primitives import prepare_russian_names_for_search_index
 from declarations.gender_recognize import TGender
 from declarations.input_json import TIntersectionStatus
 
@@ -267,7 +266,7 @@ class CommonSearchView(FormView, generic.ListView):
 
     def get_initial(self):
         dct =  {
-            'person_name': prepare_russian_names_for_search_index(self.request.GET.get('person_name')),
+            'person_name': TRussianFioRecognizer.prepare_for_search_index(self.request.GET.get('person_name')),
             'office_request': self.request.GET.get('office_request'),
             'rubric_id': self.request.GET.get('rubric_id'),
             'income_year': self.request.GET.get('income_year'),

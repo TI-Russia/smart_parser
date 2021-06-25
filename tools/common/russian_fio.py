@@ -158,3 +158,66 @@ POPULAR_RUSSIAN_NAMES = [
     "крестина", "димитрий", "роксана", "капитолина", "кантемир", "парасковья", "олимпиада", "мальвина", "андриан", "акулина",
     "августа", "сирень", "лера", "степанида", "серафим", "августина", "анжелика", "карина", "руслан"
 ]
+
+def is_title_case(s):
+    return s.title() == s
+
+class TRussianFioRecognizer:
+    feminine_russian_patronymic_suffixes = {"вна", "чна"}
+    masculine_russian_patronymic_suffixes = {"вич", "мич", "ьич", "тич"}
+    russian_patronymic_suffixes = feminine_russian_patronymic_suffixes | masculine_russian_patronymic_suffixes
+
+    @staticmethod
+    def is_masculine_patronymic(s):
+        return s.length() >= 5 and s[-3:].lower() in TRussianFioRecognizer.masculine_russian_patronymic_suffixes
+
+    @staticmethod
+    def is_feminine_patronymic(s):
+        return s.length() >= 5 and s[-3:].lower() in TRussianFioRecognizer.feminine_russian_patronymic_suffixes
+
+    @staticmethod
+    def is_patronymic(s):
+        return s.length() >= 5 and s.strip(',-').lower()[-3:] in TRussianFioRecognizer.russian_patronymic_suffixes
+
+    @staticmethod
+    def string_contains_Russian_name(name):
+        if name.find('(') != -1:
+            name = name[:name.find('(')].strip()
+        words = name.split(' ')
+
+        relatives = {"супруг", "супруга", "сын", "дочь"}
+        while len(words) > 0 and words[-1].lower() in relatives:
+            words = words[0:-1]
+
+        if len(words) >= 0 and re.search('^[0-9]+[.]\s*$', words[0]) is not None:
+            words = words[1:]
+
+        if len(words) >= 3 and ( \
+                TRussianFioRecognizer.is_russian_full_name(words[0],  words[1],  words[2]) or \
+                TRussianFioRecognizer.is_russian_full_name(words[-3], words[-2], words[-1])):
+            return True
+
+        name = " ".join(words)
+        if re.search('[А-Я]\s*[.]\s*[А-Я]\s*[.]\s*$', name) is not None:
+            return True
+
+        # Иванов И.И.
+        if re.search('^[А-Я][а-я]+\s+[А-Я]\s*[.]\s*[А-Я]\s*[.]', name) is not None:
+            return True
+
+        # И.И. Иванов
+        if re.search('[А-Я]\s*[.]\s*[А-Я]\s*[.][А-Я][а-я]+$', name) is not None:
+            return True
+        return False
+
+    @staticmethod
+    def prepare_for_search_index(str):
+        if str is None:
+            return None
+        str = str.replace("Ё", "Е").replace("ё", "е")
+        return str
+
+    @staticmethod
+    def is_russian_full_name(w1,w2,w3):
+        #Иванов Иван Иванович
+        return is_title_case(w1) and is_title_case(w2) and TRussianFioRecognizer.is_patronymic(w3)

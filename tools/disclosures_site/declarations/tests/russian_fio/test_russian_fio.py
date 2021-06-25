@@ -1,5 +1,5 @@
 from django.test import TestCase
-from declarations.russian_fio import TRussianFio
+from common.russian_fio import TRussianFio
 
 
 class ResolveFullNameTestCase(TestCase):

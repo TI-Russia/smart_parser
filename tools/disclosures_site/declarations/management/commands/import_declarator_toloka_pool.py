@@ -1,5 +1,5 @@
 #obsolete script, it is cheapier and better to create a new toloka pool than to import old pools
-from declarations.russian_fio import TRussianFio
+from common.russian_fio import TRussianFio
 import declarations.models as models
 from declarations.serializers import TSmartParserSectionJson
 from declarations.section_passport import TSectionPassportItems1

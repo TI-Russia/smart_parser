@@ -1,6 +1,6 @@
 from declarations.permalinks import TPermaLinksPerson
 from declarations.management.commands.copy_person_id import CopyPersonIdCommand, build_section_passport
-from declarations.russian_fio import TRussianFio
+from common.russian_fio import TRussianFio
 from declarations.management.commands.create_permalink_storage import CreatePermalinksStorageCommand
 
 import declarations.models as models

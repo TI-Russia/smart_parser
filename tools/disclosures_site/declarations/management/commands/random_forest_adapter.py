@@ -1,6 +1,6 @@
 import declarations.models as models
 import django.core.exceptions
-from declarations.russian_fio import TRussianFio
+from common.russian_fio import TRussianFio
 from common.primitives import normalize_whitespace
 
 import sys

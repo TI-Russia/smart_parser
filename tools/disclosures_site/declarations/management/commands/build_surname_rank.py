@@ -1,4 +1,4 @@
-from declarations.russian_fio import TRussianFio
+from common.russian_fio import TRussianFio
 from declarations.sql_helpers import run_sql_script
 import declarations.models as models
 from common.logging_wrapper import setup_logging

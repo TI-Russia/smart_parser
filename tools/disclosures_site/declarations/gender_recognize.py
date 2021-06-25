@@ -1,5 +1,5 @@
 from declarations.sql_helpers import fetch_cursor_by_chunks
-from declarations.russian_fio import TRussianFio, POPULAR_RUSSIAN_NAMES
+from common.russian_fio import TRussianFio, TRussianFioRecognizer
 from declarations.sql_helpers import run_sql_script
 
 from collections import defaultdict
@@ -58,12 +58,6 @@ class TGenderRecognizer:
         self.surnames_masc = set()
         self.surnames_fem = set()
 
-    def is_masculine_patronymic(self, s):
-        return s.endswith("вич") or s.endswith("мич") or s.endswith("ьич")
-
-    def is_feminine_patronymic(self, s):
-        return s.endswith("вна") or s.endswith("чна")
-
     def build_masc_and_fem_names(self, report_filename="names.masc_and_fem.txt"):
         query = """
             select person_name 
@@ -81,9 +75,9 @@ class TGenderRecognizer:
                 if fio.family_name is not None and len(fio.first_name) > 1:
                     surnames[fio.family_name] += 1
                     gender = None
-                    if self.is_feminine_patronymic(fio.patronymic):
+                    if TRussianFioRecognizer.is_feminine_patronymic(fio.patronymic):
                         gender = TGender.feminine
-                    elif self.is_masculine_patronymic(fio.patronymic):
+                    elif TRussianFioRecognizer.is_masculine_patronymic(fio.patronymic):
                         gender = TGender.masculine
                     elif fio.family_name[-1] == "а" or fio.family_name[-1] == "я":
                         gender = TGender.feminine
@@ -188,9 +182,9 @@ class TGenderRecognizer:
             return TGender.feminine
         if fio.family_name in self.surnames_masc:
             return TGender.masculine
-        if self.is_feminine_patronymic(fio.patronymic):
+        if TRussianFioRecognizer.is_feminine_patronymic(fio.patronymic):
             return TGender.feminine
-        if self.is_masculine_patronymic(fio.patronymic):
+        if TRussianFioRecognizer.is_masculine_patronymic(fio.patronymic):
             return TGender.masculine
         return None
 

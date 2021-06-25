@@ -13,10 +13,14 @@ def include_fns_json_to_html(json_path, html_path):
         filters = json.load(inp)['filters']
 
     upr_name = filters.get('upr_name', '')
+    if upr_name is None:
+        upr_name = ''
     if 'insp_name' in filters:
         department = filters['insp_name']
     else:
         department = upr_name
+    if department is None:
+        department = ''
 
     url = "service.nalog.ru"
     if len(upr_name) > 1 and upr_name[0:4].endswith("00"):

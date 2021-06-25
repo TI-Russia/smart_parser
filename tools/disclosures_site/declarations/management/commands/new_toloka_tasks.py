@@ -1,6 +1,6 @@
 from common.logging_wrapper import setup_logging
 from deduplicate.toloka import TToloka
-from declarations.russian_fio import TRussianFio
+from common.russian_fio import TRussianFio
 from declarations.rubrics import get_russian_rubric_str
 from declarations.serializers import get_section_json
 import declarations.models as models
@@ -14,7 +14,6 @@ from django.core.management import BaseCommand
 from django.core.exceptions import ObjectDoesNotExist
 import django.db.utils
 import random
-import logging
 
 
 class TDBSqueeze:

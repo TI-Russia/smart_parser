@@ -1,7 +1,7 @@
 import declarations.models as models
 from elasticsearch import helpers
 from declarations.car_brands import CAR_BRANDS
-from common.primitives import prepare_russian_names_for_search_index
+from common.russian_fio import TRussianFioRecognizer
 from common.logging_wrapper import setup_logging
 
 from itertools import groupby
@@ -172,7 +172,7 @@ class TSectionElasticIndexator:
                         'person_id': person_id,
                         'region_id': int(region_id),
                         'car_brands': car_brands,
-                        'person_name': prepare_russian_names_for_search_index(person_name),
+                        'person_name': TRussianFioRecognizer.prepare_for_search_index(person_name),
                         'rubric_id': rubric_id,
                         'income_year': income_year,
                         'gender': gender_code
@@ -214,7 +214,7 @@ class TPersonElasticIndexator:
                 "_index": self.index_name,
                 "_source": {
                         'id': person_id,
-                        'person_name': prepare_russian_names_for_search_index(person_name),
+                        'person_name': TRussianFioRecognizer.prepare_for_search_index(person_name),
                         'section_count': section_count
                     }
                 }

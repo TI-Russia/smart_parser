@@ -1,5 +1,5 @@
 import declarations.models as models
-from common.primitives import string_contains_Russian_name
+from common.russian_fio import TRussianFioRecognizer
 from common.logging_wrapper import setup_logging
 
 from django.core.management import BaseCommand
@@ -32,7 +32,7 @@ class Command(BaseCommand):
             elif s.surname_rank is not None and s.surname_rank < 10000:
                 good_name = True
             elif:
-                good_name = string_contains_Russian_name(s)
+                good_name = TRussianFioRecognizer.string_contains_Russian_name(s)
 
             if good_name:
                 good[s.source_document_id] += 1

@@ -22,9 +22,7 @@ BAD_LINKS = [
 ("minpromtorg.gov.ru", "pravo.gov.ru", True),
 ("minvostokrazvitia.ru", "data.gov.ru", True),
 ("minvostokrazvitia.ru", "gossluzhba.gov.ru", True),
-("minvostokrazvitia.ru", "minvr.ru", False),
 ("minvostokrazvitia.ru", "publication.pravo.gov.ru", True),
-("minvr.ru", "minvostokrazvitia.ru", False),
 ("oblsud.tula.sudrf.ru", "files.sudrf.ru", False),
 ("oblsud.tula.sudrf.ru", "kremlin.ru", True),
 ("oren-rshn.ru", "fsvps.ru", True),
@@ -68,4 +66,5 @@ class TestProhibitedLinks(TestCase):
                 if not target.startswith('http'):
                     target = 'http://' + target
 
-                self.assertEqual(is_prohibited, robot_step.web_link_is_absolutely_prohibited(source, target))
+                self.assertEqual(is_prohibited, robot_step.web_link_is_absolutely_prohibited(source, target),
+                                 msg="{} -> {}".format(source, target))

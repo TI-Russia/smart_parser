@@ -1,5 +1,5 @@
 import declarations.models as models
-from declarations.russian_fio import TRussianFio, POPULAR_RUSSIAN_NAMES
+from common.russian_fio import TRussianFio, POPULAR_RUSSIAN_NAMES
 from declarations.gender_recognize import TGender, TGenderRecognizer
 from common.logging_wrapper import setup_logging
 

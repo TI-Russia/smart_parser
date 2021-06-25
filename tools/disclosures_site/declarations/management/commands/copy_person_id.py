@@ -1,7 +1,7 @@
 import declarations.models as models
 from django.core.management import BaseCommand
 from declarations.permalinks import TPermaLinksPerson
-from declarations.russian_fio import TRussianFio
+from common.russian_fio import TRussianFio
 from common.logging_wrapper import setup_logging
 
 import pymysql

@@ -2,7 +2,8 @@ from DeclDocRecognizer.document_types import TCharCategory, SOME_OTHER_DOCUMENTS
         get_russian_normal_text_ratio
 from ConvStorage.conversion_client import TDocConversionClient
 from DeclDocRecognizer.external_convertors import TExternalConverters
-from common.primitives import normalize_whitespace, string_contains_Russian_name, build_dislosures_sha256
+from common.primitives import normalize_whitespace, build_dislosures_sha256
+from common.russian_fio import TRussianFioRecognizer
 
 from collections import defaultdict
 import argparse
@@ -83,7 +84,7 @@ def get_smart_parser_result(source_file):
     bad_names_count = 0
     for p in smart_parser_json.get("persons", []):
         name = p.get('person', {}).get('name_raw','')
-        if string_contains_Russian_name(name):
+        if TRussianFioRecognizer.string_contains_Russian_name(name):
             good_names_count += 1
         else:
             bad_names_count += 1
