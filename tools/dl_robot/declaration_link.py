@@ -101,12 +101,13 @@ def url_features(url):
 def looks_like_a_declaration_link(logger, link_info: TLinkInfo):
     # here is a place for ML
     anchor_text_russified = normalize_and_russify_anchor_text(link_info.anchor_text)
-    if re.search('^((сведения)|(справк[аи])) о доходах', anchor_text_russified):
-        link_info.weight = TLinkInfo.BEST_LINK_WEIGHT
-        logger.debug("case 0, weight={}, features: 'сведения о доходах'".format(link_info.weight))
-        return True
     page_html = normalize_and_russify_anchor_text(link_info.page_html)
-    if has_negative_words(anchor_text_russified):
+    positive_case = None
+    anchor_best_match = False
+    if re.search('^((сведения)|(справк[аи])) о доходах', anchor_text_russified):
+        anchor_best_match = True
+        positive_case = "case 0"
+    elif has_negative_words(anchor_text_russified):
         return False
     income_regexp = '(доход((ах)|(е)))|(коррупц)'
     sved_regexp = '(сведения)|(справк[аи])|(sveden)'
@@ -125,8 +126,6 @@ def looks_like_a_declaration_link(logger, link_info: TLinkInfo):
             for css_class_name in link_info.element_class:
                 if re.search(INCOME_URL_REGEXP, css_class_name, re.IGNORECASE):
                     income_url = True
-
-    positive_case = None
 
     if positive_case is None:
         if income_page or income_url:
@@ -160,6 +159,8 @@ def looks_like_a_declaration_link(logger, link_info: TLinkInfo):
 
     if positive_case is not None:
         weight = TLinkInfo.MINIMAL_LINK_WEIGHT
+        if anchor_best_match:
+            weight += TLinkInfo.BEST_LINK_WEIGHT
         if income_anchor:
             weight += TLinkInfo.BEST_LINK_WEIGHT
         if income_url:
@@ -183,7 +184,8 @@ def looks_like_a_declaration_link(logger, link_info: TLinkInfo):
                         ("sub_page", sub_page),
                         ("year_anchor", year_anchor),
                         ("corrupt_url", corrupt_url),
-                        ('role_anchor', role_anchor))
+                        ('role_anchor', role_anchor),
+                        ('anchor_best_match', anchor_best_match))
 
         all_features_str = ";".join(k for k, v in all_features if v)
         logger.debug("{}, weight={}, features: {}".format(positive_case, weight, all_features_str))

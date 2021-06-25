@@ -223,3 +223,17 @@ class TestCrawlingTimeout(TestCase):
     def test_timeout(self):
         self.assertTrue(self.env.dlrobot_project.web_site_snapshots[0].stopped_by_timeout)
         self.assertEqual(len(self.env.get_result_files()), 0)
+
+
+class TestFIOinAnchor(TestCase):
+    web_site_port = 8205
+
+    def setUp(self):
+        self.env = TTestEnv(self.web_site_port, "web_sites/admkrsk2")
+        self.env.start_server_and_robot()
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def test_fio_in_anchor_text(self):
+        self.assertEqual (len(self.env.get_result_files()), 1)
