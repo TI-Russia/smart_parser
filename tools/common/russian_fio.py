@@ -173,11 +173,11 @@ class TRussianFioRecognizer:
 
     @staticmethod
     def is_feminine_patronymic(s):
-        return s.length() >= 5 and s[-3:].lower() in TRussianFioRecognizer.feminine_russian_patronymic_suffixes
+        return len(s) >= 5 and s[-3:].lower() in TRussianFioRecognizer.feminine_russian_patronymic_suffixes
 
     @staticmethod
     def is_patronymic(s):
-        return s.length() >= 5 and s.strip(',-').lower()[-3:] in TRussianFioRecognizer.russian_patronymic_suffixes
+        return len(s) >= 5 and s.strip(',-').lower()[-3:] in TRussianFioRecognizer.russian_patronymic_suffixes
 
     @staticmethod
     def string_contains_Russian_name(name):
@@ -218,6 +218,6 @@ class TRussianFioRecognizer:
         return str
 
     @staticmethod
-    def is_russian_full_name(w1,w2,w3):
+    def is_russian_full_name(w1, w2, w3):
         #Иванов Иван Иванович
         return is_title_case(w1) and is_title_case(w2) and TRussianFioRecognizer.is_patronymic(w3)
