@@ -111,6 +111,7 @@ class TRobotStep:
     panic_mode_url_count = 600
     max_step_url_count = 800
     check_local_address = False
+    selenium_timeout = 6
 
     def __init__(self, website, step_name=None, step_urls=None, max_links_from_one_page=1000000,
                  transitive=False, fallback_to_selenium=True, use_urllib=True, is_last_step=False,
@@ -395,7 +396,7 @@ class TRobotStep:
     def click_all_selenium(self, main_url, check_link_func):
         self.logger.debug("find_links_with_selenium url={} ".format(main_url))
         THttpRequester.consider_request_policy(main_url, "GET_selenium")
-        elements = self.get_selenium_driver().navigate_and_get_links(main_url)
+        elements = self.get_selenium_driver().navigate_and_get_links(main_url, TRobotStep.selenium_timeout)
         page_html = self.get_selenium_driver().the_driver.page_source
         self.logger.debug("html_size={}, elements_count={}".format(len(page_html), len(elements)))
         for element_index in range(len(elements)):
@@ -437,7 +438,7 @@ class TRobotStep:
                     except (WebDriverException, InvalidSwitchToTargetException) as exp:
                         self.logger.error("exception: {}, try restart and get the next element".format(str(exp)))
                         self.get_selenium_driver().restart()
-                        elements = self.get_selenium_driver().navigate_and_get_links(main_url)
+                        elements = self.get_selenium_driver().navigate_and_get_links(main_url, TRobotStep.selenium_timeout)
 
     def apply_function_to_links(self, check_link_func):
         assert len(self.pages_to_process) > 0

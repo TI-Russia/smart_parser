@@ -82,8 +82,13 @@ class TDlrobot:
                                 default=20 * 2**20,
                                 type=int,
                                 help="max sum pdf size to end ")
+        parser.add_argument("--selenium-timeout", dest='selenium_timeout',
+                            default="6s",
+                            help="sleep for this timeout to let selenium draw a web page")
+
         args = parser.parse_args(arg_list)
         TRobotStep.max_step_url_count = args.max_step_url_count
+        TRobotStep.selenium_timeout = convert_timeout_to_seconds(args.selenium_timeout)
         if args.step is  not None:
             args.start_from = args.step
             args.stop_after = args.step

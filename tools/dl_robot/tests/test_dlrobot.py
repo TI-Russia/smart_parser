@@ -24,7 +24,7 @@ def start_server(server):
 
 class TTestEnv:
 
-    def     __init__(self, port, website_folder, regional_main_pages=[]):
+    def __init__(self, port, website_folder, regional_main_pages=[]):
         self.dlrobot = None
         self.dlrobot_project = None
         self.web_site_folder = os.path.join(os.path.dirname(__file__), website_folder)
@@ -49,10 +49,12 @@ class TTestEnv:
             outp.write(project)
 
 
-
     def start_server_and_robot(self, crawling_timeout=None):
         threading.Thread(target=start_server, args=(self.web_site,)).start()
-        dlrobot_args = ['--clear-cache-folder',  '--project', self.project_path]
+        dlrobot_args = ['--clear-cache-folder',
+                        '--project', self.project_path,
+                        '--selenium-timeout', '1s'
+                        ]
         if crawling_timeout is not None:
             dlrobot_args.extend(['--crawling-timeout', str(crawling_timeout)])
         self.dlrobot = TDlrobot(TDlrobot.parse_args(dlrobot_args))
@@ -137,11 +139,11 @@ class TestRandomPdf(TestCase):
         conv_project = os.path.join(self.env.data_folder, "conv.json")
         TConvertStorage.create_empty_db("db_input_files", "db_converted_files", conv_project)
 
-
         conv_server_args = [
             '--server-address', self.conv_server_address,
             '--use-abiword',
             '--disable-winword',
+            '--disable-telegram',
             '--disable-killing-winword',
             '--db-json', conv_project
         ]

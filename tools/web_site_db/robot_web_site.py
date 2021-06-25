@@ -13,8 +13,6 @@ import time
 import datetime
 
 
-
-
 class TWebSiteCrawlSnapshot:
     SINGLE_DECLARATION_TIMEOUT = 60 * 30 # half an hour in seconds,
     DEFAULT_CRAWLING_TIMEOUT = 60 * 60 * 3 # 3 hours
