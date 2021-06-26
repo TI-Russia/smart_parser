@@ -5,7 +5,7 @@ from unittest import TestCase
 
 
 class TestRecursion(TestCase):
-    def test_yandex(self):
+    def test_yandex_redirect(self):
         THttpRequester.initialize(setup_logging())
         redirected_url, headers = THttpRequester.request_url_headers_with_global_cache("http://www.yandex.ru")
         self.assertIsNotNone(headers)

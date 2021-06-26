@@ -98,7 +98,7 @@ def url_features(url):
     return income_url, svedenija_url, corrupt_url
 
 
-def looks_like_a_declaration_link(logger, link_info: TLinkInfo):
+def looks_like_a_declaration_link_without_cache(logger, link_info: TLinkInfo):
     # here is a place for ML
     anchor_text_russified = normalize_and_russify_anchor_text(link_info.anchor_text)
     page_html = normalize_and_russify_anchor_text(link_info.page_html)
@@ -192,6 +192,22 @@ def looks_like_a_declaration_link(logger, link_info: TLinkInfo):
         link_info.weight = weight
         return True
     return False
+
+
+DECLARATION_LINK_CACHE = dict()
+
+
+def looks_like_a_declaration_link(logger, link_info: TLinkInfo):
+    #return looks_like_a_declaration_link_without_cache(logger, link_info)
+    global DECLARATION_LINK_CACHE
+    if link_info.is_hashable():
+        result = DECLARATION_LINK_CACHE.get(link_info.hash_by_target())
+        if result is not None:
+            return result
+    result = looks_like_a_declaration_link_without_cache(logger, link_info)
+    if link_info.is_hashable():
+        DECLARATION_LINK_CACHE[link_info.hash_by_target()] = result
+    return result
 
 
 def check_sveden_url_sitemap_xml(url):
