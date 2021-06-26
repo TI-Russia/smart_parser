@@ -191,8 +191,7 @@ class TSeleniumDriver:
 
         if link_info.downloaded_file is None:
             if self.the_driver.current_url != link_info.source_url:
-                link_info.target_url = self.the_driver.current_url
-                link_info.target_title = self.the_driver.title
+                link_info.set_target(self.the_driver.current_url, self.the_driver.title)
         if self.the_driver.current_url != save_current_url:
             self.the_driver.back()
         if self.the_driver.current_url != save_current_url:

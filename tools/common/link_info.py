@@ -1,5 +1,8 @@
 from DeclDocRecognizer.dlrecognizer import DL_RECOGNIZER_ENUM
-from common.primitives import normalize_and_russify_anchor_text, strip_html_url, build_dislosures_sha256_by_html
+from common.primitives import normalize_and_russify_anchor_text, strip_html_url, build_dislosures_sha256_by_html, \
+    strip_viewer_prefix
+
+import urllib.parse
 
 
 class TClickEngine:
@@ -29,13 +32,17 @@ class TLinkInfo:
         self.page_html = "" if source_html is None else source_html
         self.source_sha256 = None if source_html is None else build_dislosures_sha256_by_html(source_html)
         self.source_url = source_url
-        self.target_url = target_url
+        self.target_title = None
+        self.url_query = ""
+        self.url_path = ""
+        self.target_url = None
+        self.set_target(target_url)
+
         self.anchor_text = ""
         self.set_anchor_text(anchor_text)
         self.tag_name = tag_name
         self.text_proxim = False
         self.downloaded_file = downloaded_file
-        self.target_title = None
         self.weight = TLinkInfo.MINIMAL_LINK_WEIGHT
         self.dl_recognizer_result = DL_RECOGNIZER_ENUM.UNKNOWN
         self.element_class = element_class
@@ -46,6 +53,19 @@ class TLinkInfo:
 
     def set_anchor_text(self, anchor_text):
         self.anchor_text = '' if anchor_text is None else anchor_text.strip(" \r\n\t")
+
+    def set_target(self, target_url, target_title=None):
+        if target_url is None or len(target_url) == 0:
+            self.target_url = None
+            self.target_title = None
+            self.url_query = ''
+            self.url_path = ''
+        else:
+            self.target_url = strip_viewer_prefix(target_url).strip(" \r\n\t")
+            self.target_title = target_title
+            o = urllib.parse.urlparse(self.target_url)
+            self.url_query = o.query
+            self.url_path = o.path
 
     def to_json(self):
         rec = {
@@ -69,9 +89,15 @@ class TLinkInfo:
             rec['declaration_year'] = self.declaration_year
         return rec
 
+    def is_hashable(self):
+        return len(self.url_path + self.url_query) > 3 and len(self.anchor_text) > 5
+
+    def hash_by_target(self):
+        return hash(hash(self.url_path + self.url_query) + hash(self.anchor_text))
+
     def from_json(self, rec):
         self.source_url = rec['src']
-        self.target_url = rec['trg']
+        self.set_target(rec['trg'])
         self.anchor_text = rec['text']
         self.engine = rec['engine']
         self.element_index = rec['element_index']
@@ -108,6 +134,7 @@ def check_anticorr_link_text_2(logger, link_info: TLinkInfo):
         link_info.weight = 5
         return True
     return False
+
 
 def check_sub_page_or_iframe(logger,  link_info: TLinkInfo):
     if link_info.target_url is None:

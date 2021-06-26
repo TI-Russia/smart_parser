@@ -56,6 +56,7 @@ class THttpRequester:
     HEADER_MEMORY_CACHE = dict()
     WEB_PAGE_LINKS_PROCESSING_MAX_TIME = 60 * 20  # 20 minutes
     ENABLE_VIDEO_AND_AUDIO = False
+    ENABLE_HEAD_REQUESTS = True
 
     @staticmethod
     def initialize(logger):

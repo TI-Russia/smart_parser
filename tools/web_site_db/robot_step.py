@@ -1,5 +1,5 @@
 from common.download import TDownloadedFile, DEFAULT_HTML_EXTENSION, are_web_mirrors
-from common.primitives import prepare_for_logging, strip_viewer_prefix, get_site_domain_wo_www, build_dislosures_sha256_by_html
+from common.primitives import prepare_for_logging, get_site_domain_wo_www, build_dislosures_sha256_by_html
 from common.html_parser import THtmlParser
 from common.link_info import TLinkInfo, TClickEngine
 from common.primitives import get_html_title
@@ -14,6 +14,8 @@ import time
 import hashlib
 import re
 from usp.tree import sitemap_tree_for_homepage
+import urllib.parse
+
 
 #disable logging for usp.tree
 import logging
@@ -169,28 +171,33 @@ class TRobotStep:
     def web_link_is_absolutely_prohibited(self, source, href):
         if len(href) == 0:
             return True
+        if not check_href_elementary(href):
+            return True
+        if source.strip('/') == href.strip('/'):
+            return True
+
+        #spaces are not prohibited, but should be converted
+        if href.find('\n') != -1 or href.find('\t') != -1:
+            return True
 
         # http://adm.ugorsk.ru/about/vacancies/information_about_income/?SECTION_ID=5244&ELEMENT_ID=79278
         # href = "/bitrix/redirect.php?event1=catalog_out&amp;event2=%2Fupload%2Fiblock%2Fb59%2Fb59f80e6eaf7348f74e713219c169a24.pdf&amp;event3=%D0%9F%D0%B5%D1%87%D0%B5%D0%BD%D0%B5%D0%B2%D0%B0+%D0%9D%D0%98.pdf&amp;goto=%2Fupload%2Fiblock%2Fb59%2Fb59f80e6eaf7348f74e713219c169a24.pdf" > Загрузить < / a > < / b > < br / >
         # if href.find('redirect') != -1:
         #    return True
 
-        # не знаю пока, что делать с сайтом khabkrai.ru, где от каждой страницы идет 20 страниц с
-        # со специальными настройками для лучшей видимости, может быть, им просто понизить вес?
-        # пока пробуем отключать....
-        # может быть, искать еще стоит слово "версия" в  anchor TestDeclarationLink.test_khabkrai
-        if href.find("version=special") != -1:
-            return True
+        if href.find('?'):
+            o = urllib.parse.urlparse(href)
+            if o.query != '':
+                query = urllib.parse.parse_qs(o.query)
+                if 'print' in query:
+                    return True
+                # khabkrai.ru
+                if 'special' in query.get('version', list()):
+                    return True
+                # admkrsk.ru
+                if 'accessability' in query:
+                    return True
 
-        if not check_href_elementary(href):
-            return True
-        if source.strip('/') == href.strip('/'):
-            return True
-        #spaces are not prohibited, but should be converted
-        if href.find('\n') != -1 or href.find('\t') != -1:
-            return True
-        if href.find('print=') != -1:
-            return True
         href_domain = get_site_domain_wo_www(href)
         source_domain = get_site_domain_wo_www(source)
         if is_super_popular_domain(href_domain):
@@ -213,7 +220,6 @@ class TRobotStep:
 
     def normalize_and_check_link(self, link_info: TLinkInfo, check_link_func):
         if link_info.target_url is not None:
-            link_info.target_url = strip_viewer_prefix(link_info.target_url).strip(" \r\n\t")
             if self.web_link_is_absolutely_prohibited(link_info.source_url, link_info.target_url):
                 return False
         self.logger.debug(
