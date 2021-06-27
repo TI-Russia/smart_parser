@@ -2,7 +2,7 @@
     "sites": [
         {
         "name": "",
-        "morda_url": "http://minvostokrazvitia.ru"
+        "morda_url": "https://minvr.gov.ru/"
         }
     ]
 }
