@@ -27,6 +27,7 @@ class TestDeclarationLinkUrllib(TestCase):
                            enable_selenium=False) as project:
             project.read_project()
             office_info = project.web_site_snapshots[0]
+            office_info.check_urllib_access()
             office_info.create_export_folder()
             office_info.url_nodes[start_url] = TUrlInfo(title="", step_name=None)
 
@@ -69,9 +70,9 @@ class TestDeclarationLinkUrllib(TestCase):
             for l in links:
                 outp.write(l + "\n")
 
-    #№def test_rosminzdrav_real(self):
-    #    self.maxDiff = None
-     #   found_links = self.download_website('web_sites/minzdrav2/minzdrav.txt', 'https://minzdrav.gov.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/4/2')
-     #   #self.canonize_links(found_links, 'web_sites/minzdrav2/found_links')
-     #   self.compare_to_file(found_links, 'web_sites/minzdrav2/found_links')
+    def test_rosminzdrav_real(self):
+        self.maxDiff = None
+        found_links = self.download_website('web_sites/minzdrav2/minzdrav.txt', 'https://minzdrav.gov.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/4/2')
+        #self.canonize_links(found_links, 'web_sites/minzdrav2/found_links')
+        self.compare_to_file(found_links, 'web_sites/minzdrav2/found_links')
 

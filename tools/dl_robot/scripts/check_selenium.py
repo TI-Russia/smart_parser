@@ -17,7 +17,7 @@ def parse_args():
     parser.add_argument("--firefox", dest='use_firefox', required=False, action="store_true", default=False)
     parser.add_argument("--gui", dest='gui', required=False, action="store_true", default=False)
     parser.add_argument("--action", dest='action', required=False, default="title",
-                        help="can be title, links, click, speed default action is title")
+                        help="can be title, links, click, speed, head default action is title")
     parser.add_argument("--element-index", dest='element_index', required=False, type=int, default=0)
     parser.add_argument("--element-id", dest='element_id', required=False)
     parser.add_argument("--download-folder", dest='download_folder', required=False, default=None)
@@ -59,6 +59,17 @@ def calc_page_speed(driver_holder, url, element_id):
     WebDriverWait(driver_holder.the_driver, 5).until(EC.presence_of_element_located((By.ID, element_id)))
     end = time.time()
     return int((end - start) * 1000)
+
+
+def httphead(driver_holder, url):
+    from seleniumrequests import Chrome
+    from selenium.webdriver.chrome.options import Options as ChromeOptions
+    options = ChromeOptions()
+    options.headless = True
+    webdriver = Chrome(options=options)
+    response = webdriver.request('HEAD', url)
+    print(response.headers)
+    webdriver.close()
 
 
 def pagespeed(driver_holder, url, element_id, repeat_count):
@@ -105,6 +116,8 @@ if __name__ == '__main__':
         click(driver, url, args.element_index)
     elif args.action.startswith("speed"):
         pagespeed(driver, url, args.element_id, args.repeat_count)
+    elif args.action.startswith("head"):
+        httphead(driver, url)
     else:
         print("unknown action {}".format(args.action))
 

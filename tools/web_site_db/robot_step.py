@@ -410,8 +410,8 @@ class TRobotStep:
                 break
             element = elements[element_index]
             link_text = element.text.strip('\n\r\t ') if element.text is not None else ""
-            if len(link_text) == 0:
-                continue
+            #if len(link_text) == 0:
+            #    continue
             mandatory_link = re.search('скачать', link_text, re.IGNORECASE) is not None
 
             #temp debug

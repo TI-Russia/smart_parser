@@ -54,23 +54,30 @@ def looks_like_a_document_link(logger, link_info: TLinkInfo):
         return True
     if anchor_text_en.find("download") != -1:
         return True
+    target_url = ''
+    if link_info.target_url is not None:
+        target_url = link_info.target_url.lower()
     for e in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
         if e == DEFAULT_HTML_EXTENSION:
             continue
         # mos.ru: anchor text is "[ docx/ 1.1Mb ]Сведения"
         if anchor_text_en.find(e[1:]) != -1:
             return True
+        if target_url.endswith(e):
+            return True
 
     # check url path or make http head request
-    if link_info.target_url is not None:
-        target = link_info.target_url.lower()
-        if re.search('(docs)|(documents)|(files)|(download)', target):
+    if target_url != "":
+        if re.search('(docs)|(documents)|(files)|(download)', target_url):
             return True
-        if target.endswith('html') or target.endswith('htm'):
+        if target_url.endswith('html') or target_url.endswith('htm'):
             return False
-        if target.endswith('.jpg') or target.endswith('.png'):
+        if target_url.endswith('.jpg') or target_url.endswith('.png'):
             return False
         try:
+            # think that www.example.com/aaa/aa is always an html
+            if link_info.url_query == "":
+                return False
             ext = get_file_extension_only_by_headers(link_info.target_url)
             return ext != DEFAULT_HTML_EXTENSION and ext in ACCEPTED_DECLARATION_FILE_EXTENSIONS
         except THttpRequester.RobotHttpException as err:
