@@ -41,6 +41,13 @@ class TRobotProject:
     def get_robot_step_names(self):
         return list(r['step_name'] for r in self.robot_step_passports)
 
+    def reenable_selenium(self):
+        if not self.enable_selenium:
+            self.logger.info("enable selenium")
+            self.enable_selenium = True
+            self.selenium_driver.download_folder = tempfile.mkdtemp()
+            self.selenium_driver.start_executable()
+
     def __enter__(self):
         if self.enable_selenium:
             self.selenium_driver.download_folder = tempfile.mkdtemp()

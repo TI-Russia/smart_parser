@@ -71,6 +71,14 @@ class TWebSiteCrawlSnapshot:
     def get_domain_name(self):
         return get_site_domain_wo_www(self.morda_url)
 
+    def check_urllib_access(self):
+        if self.enable_urllib:
+            if not THttpRequester.check_urllib_access_with_many_head_requests(self.morda_url):
+                self.logger.info("disable urllib, since there are too many timeouts to head requests")
+                self.enable_urllib = False
+                if not self.parent_project.enable_selenium:
+                    self.parent_project.reenable_selenium()
+
     def fetch_the_main_page(self):
         if len(self.url_nodes) > 0:
             return True

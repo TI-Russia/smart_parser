@@ -6073,7 +6073,8 @@
         "calc_office_id": 505
     },
     "minvr.ru": {
-        "calc_office_id": 982
+        "calc_office_id": 982,
+        "status": "abandoned"
     },
     "spb.fas.gov.ru": {
         "calc_office_id": 1293
@@ -13115,7 +13116,8 @@
         "status": "abandoned"
     },
     "minvostokrazvitia.ru": {
-        "calc_office_id": 982
+        "calc_office_id": 982,
+        "status": "abandoned"
     },
     "moscow.sledcom.ru": {
         "calc_office_id": 1278
