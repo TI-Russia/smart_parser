@@ -1,3 +1,5 @@
+import random
+
 from common.content_types import content_type_to_file_extension, is_video_or_audio_file_extension
 
 import ssl
@@ -26,7 +28,15 @@ def has_cyrillic(text):
 
 
 def get_user_agent():
-    return 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
+    # два curl к https://minzdrav.gov.ru/special с этим user agent и IP забанен
+    user_agents = [
+        #'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36',
+        "Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)",
+        "Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)",
+        "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+        "Mozilla/5.0 (compatible; Linux x86_64; Mail.RU_Bot/2.0; +http://go.mail.ru/help/robots)"
+    ]
+    return random.choice(user_agents)
 
 
 def convert_russian_web_domain_if_needed(url):
@@ -298,6 +308,21 @@ class THttpRequester:
         if redirected_url != url:
             THttpRequester.HEADER_MEMORY_CACHE[redirected_url] = (redirected_url,headers)
         return redirected_url, headers
+
+    @staticmethod
+    def check_urllib_access_with_many_head_requests(url):
+        #see  https://minzdrav.gov.ru
+        for i in range(3):
+            start_time = time.time()
+            try:
+                THttpRequester.make_http_request(url, "HEAD")
+            except THttpRequester.RobotHttpException as exp:
+                pass
+
+            if time.time() - start_time > 10:
+                return False
+            time.sleep(2)
+        return True
 
     @staticmethod
     def make_http_request(url, method):
