@@ -55,6 +55,17 @@ class Command(BaseCommand):
             help='',
         )
         parser.add_argument(
+            '--input-dedupe-objects',
+            dest='input_dedupe_objects',
+            help='read objects that were written by option --dump-dedupe-objects-file',
+        )
+        parser.add_argument(
+            '--recreate-sections-and-persons',
+            dest='recreate_db',
+            help='create fake sections and persons that are written in --input-dedupe-objects',
+        )
+
+        parser.add_argument(
             '--write-to-db',
             dest='write_to_db',
             action='store_true',
@@ -126,6 +137,7 @@ class Command(BaseCommand):
         # we need these records to build valid clusters
         cnt = 0
         take_sections_with_empty_income = self.options.get('take_sections_with_empty_income', False)
+        trace = (self.options['verbosity'] == 3)
         for s in sections.all():
             o = TDeduplicationObject().initialize_from_section(s)
             if not o.fio.is_resolved:
@@ -135,6 +147,8 @@ class Command(BaseCommand):
                 self.logger.debug("ignore section id={} person_name={}, no income or zero-income".format(s.id, s.person_name))
                 continue
             self.section_cache[s.id] = s
+            if trace:
+                self.logger.debug("read section id = {}".format(s.id))
             self.cluster_by_minimal_fio[o.fio.build_fio_with_initials()].append(o)
             cnt += 1
             if cnt % 10000 == 0:
@@ -144,6 +158,7 @@ class Command(BaseCommand):
     def read_people(self, lower_bound, upper_bound):
         persons = self.filter_table(models.Person, lower_bound, upper_bound)
         cnt = 0
+        trace = (self.options['verbosity'] == 3)
         for p in persons.all():
             o = TDeduplicationObject().initialize_from_person(p)
             if len(o.years) > 0:
@@ -151,6 +166,8 @@ class Command(BaseCommand):
             else:
                 self.logger.debug("skip person id={}, because this record has no related sections with"
                                   " defined income years".format(p.id))
+            if trace:
+                self.logger.debug("read person id = {}".format(p.id))
             cnt += 1
             if cnt % 1000 == 0:
                 self.logger.info("Read {} records from person table".format(cnt))
@@ -187,20 +204,41 @@ class Command(BaseCommand):
         with connection.cursor() as cursor:
             cursor.execute(sql)
 
+    def read_dumped_objects(self, file_name):
+        if self.options.get('recreate_db'):
+            assert models.Section.objects.count() == 0
+        with open(file_name) as inp:
+            for line in inp:
+                js = json.loads(line)
+                o = TDeduplicationObject().from_json(js)
+                if self.options.get('recreate_db'):
+                    if o.record_id.source_table == TDeduplicationObject.SECTION:
+                        s = models.Section(id=o.record_id.id)
+                        self.section_cache[o.record_id.id] = s
+                        s.save()
+                    else:
+                        models.Person(id=o.record_id.id).save()
+                self.cluster_by_minimal_fio[o.fio.build_fio_with_initials()].append(o)
+
+    def dump_dedupe_objects(self, dump_file_name):
+        with open(dump_file_name, "w", encoding="utf-8") as of:
+            for o in self.get_all_leaf_objects():
+                js = json.dumps(o.to_json(), ensure_ascii=False)
+                of.write(js + "\n")
+
     def fill_dedupe_data(self, lower_bound, upper_bound):
         self.cluster_by_minimal_fio = defaultdict(list)
         if self.rebuild:
             self.delete_person_ids_from_previous_deduplication(lower_bound, upper_bound)
-
-        self.read_sections(lower_bound, upper_bound)
-        self.read_people(lower_bound, upper_bound)
+        if self.options.get('input_dedupe_objects') is not None:
+            self.read_dumped_objects(self.options.get('input_dedupe_objects'))
+        else:
+            self.read_sections(lower_bound, upper_bound)
+            self.read_people(lower_bound, upper_bound)
 
         dump_file_name = self.options.get("dump_dedupe_objects_file")
         if dump_file_name:
-            with open(dump_file_name, "w", encoding="utf-8") as of:
-                for o in self.get_all_leaf_objects():
-                    js = json.dumps(o.to_json(), ensure_ascii=False)
-                    of.write(js + "\n")
+            self.dump_dedupe_objects(dump_file_name)
 
     def write_results_to_file(self, clusters, dump_stream):
         self.logger.info('{} clusters generated'.format(len(clusters)))
@@ -267,13 +305,13 @@ class Command(BaseCommand):
                     break
 
         old_to_new_clusters = dict()
+        max_clusters_size = defaultdict(int)
         for person_id, sections in old_to_new_sections.items():
             sections.sort()  # take always the cluster with that the minimal section_id
-            max_cluster_size = 0
             for cluster_id, items in itertools.groupby(sections, lambda x: x[0]):
                 items_len = len(list(items))
-                if items_len > max_cluster_size:
-                    max_cluster_size = items_len
+                if items_len > max_clusters_size[cluster_id]:
+                    max_clusters_size[cluster_id] = items_len
                     old_to_new_clusters[cluster_id] = person_id
         return old_to_new_clusters
 

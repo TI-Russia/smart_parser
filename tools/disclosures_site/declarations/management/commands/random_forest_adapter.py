@@ -172,7 +172,9 @@ class TDeduplicationObject:
 
     def from_json(self, js):
         for k in js:
-            if isinstance(js[k], list):
+            if k == 'record_id':
+                js[k] = TDeduplicationRecordId(js[k][0], js[k][1])
+            elif isinstance(js[k], list):
                 js[k] = set(js[k])
         self.__dict__ = dict(js.items())
         self.fio = TRussianFio(self.person_name)
