@@ -137,7 +137,7 @@ class Command(BaseCommand):
         # we need these records to build valid clusters
         cnt = 0
         take_sections_with_empty_income = self.options.get('take_sections_with_empty_income', False)
-        trace = (self.options['verbosity'] == 3)
+        trace = (self.options.get('verbosity', 0) == 3)
         for s in sections.all():
             o = TDeduplicationObject().initialize_from_section(s)
             if not o.fio.is_resolved:
@@ -158,7 +158,7 @@ class Command(BaseCommand):
     def read_people(self, lower_bound, upper_bound):
         persons = self.filter_table(models.Person, lower_bound, upper_bound)
         cnt = 0
-        trace = (self.options['verbosity'] == 3)
+        trace = (self.options.get('verbosity', 0) == 3)
         for p in persons.all():
             o = TDeduplicationObject().initialize_from_person(p)
             if len(o.years) > 0:
@@ -289,7 +289,7 @@ class Command(BaseCommand):
             self.link_section_to_person(section, person, distance)
 
     def build_cluster_to_old_person_id(self, clusters):
-        old_to_new_sections = defaultdict(list)
+        old_person_to_new_sections = defaultdict(list)
 
         for cluster_id, items in clusters.items():
             for obj, distance in items:
@@ -297,22 +297,29 @@ class Command(BaseCommand):
                     section_id = obj.record_id.id
                     person_id = self.permalinks_db.get_person_id_by_section_id(section_id)
                     if person_id is not None:
-                        old_to_new_sections[person_id].append((cluster_id, section_id))
+                        old_person_to_new_sections[person_id].append((cluster_id, section_id))
                 else:
                     # a person is already in this cluster, use it
-                    if cluster_id in old_to_new_sections:
-                        del old_to_new_sections[person_id]
+                    if cluster_id in old_person_to_new_sections:
+                        del old_person_to_new_sections[person_id]
                     break
 
         old_to_new_clusters = dict()
         max_clusters_size = defaultdict(int)
-        for person_id, sections in old_to_new_sections.items():
+
+        for person_id, sections in old_person_to_new_sections.items():
             sections.sort()  # take always the cluster with that the minimal section_id
+            max_cluster_size_for_this_person = 0
+            best_cluster_id = None
             for cluster_id, items in itertools.groupby(sections, lambda x: x[0]):
                 items_len = len(list(items))
-                if items_len > max_clusters_size[cluster_id]:
-                    max_clusters_size[cluster_id] = items_len
-                    old_to_new_clusters[cluster_id] = person_id
+                if items_len > max_clusters_size[cluster_id] and items_len > max_cluster_size_for_this_person:
+                    best_cluster_id = cluster_id
+                    max_cluster_size_for_this_person = items_len
+
+            if best_cluster_id is not None:
+                max_clusters_size[best_cluster_id] = items_len
+                old_to_new_clusters[best_cluster_id] = person_id
         return old_to_new_clusters
 
     def write_results_to_db(self, clusters):

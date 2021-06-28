@@ -61,7 +61,7 @@ class DividePersonInHalf(TestCase):
                           take_sections_with_empty_income=True,
                           rebuild=True)
 
-        self.assertEqual(models.Person.objects.count(), 2)
+        self.assertEqual(2, models.Person.objects.count())
 
         #"person_id" is inherited by the minimal section_id, if there is no other grounds
         sec1 = models.Section.objects.get(id=1)
