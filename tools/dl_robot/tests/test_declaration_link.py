@@ -1,7 +1,6 @@
 from common.download import TDownloadEnv
 from web_site_db.robot_step import TRobotStep, TUrlInfo
 from web_site_db.robot_project import TRobotProject
-from dl_robot.declaration_link import looks_like_a_declaration_link
 from common.http_request import THttpRequester
 from common.logging_wrapper import close_logger, setup_logging
 
@@ -76,7 +75,7 @@ class TestDeclarationLink(TestCase):
             step_info = TRobotStep(office_info, **robot_steps[0])
             step_info.pages_to_process[start_url] = 0
             step_info.processed_pages = set()
-            step_info.apply_function_to_links(looks_like_a_declaration_link)
+            step_info.apply_function_to_links(TRobotStep.looks_like_a_declaration_link)
             links = list()
             for url in step_info.step_urls:
                 u = list(urllib.parse.urlparse(url))

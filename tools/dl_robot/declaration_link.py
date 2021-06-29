@@ -6,6 +6,7 @@ from common.http_request import THttpRequester
 from common.link_info import TLinkInfo, check_sub_page_or_iframe
 from common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
 
+
 NEGATIVE_WORDS = [
     'координат',  'заседании',
     #'должност', # замещающих должности
@@ -199,22 +200,6 @@ def looks_like_a_declaration_link_without_cache(logger, link_info: TLinkInfo):
         link_info.weight = weight
         return True
     return False
-
-
-DECLARATION_LINK_CACHE = dict()
-
-
-def looks_like_a_declaration_link(logger, link_info: TLinkInfo):
-    #return looks_like_a_declaration_link_without_cache(logger, link_info)
-    global DECLARATION_LINK_CACHE
-    if link_info.is_hashable():
-        result = DECLARATION_LINK_CACHE.get(link_info.hash_by_target())
-        if result is not None:
-            return result
-    result = looks_like_a_declaration_link_without_cache(logger, link_info)
-    if link_info.is_hashable():
-        DECLARATION_LINK_CACHE[link_info.hash_by_target()] = result
-    return result
 
 
 def check_sveden_url_sitemap_xml(url):

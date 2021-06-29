@@ -1,11 +1,13 @@
 from common.download import TDownloadedFile, DEFAULT_HTML_EXTENSION, are_web_mirrors
-from common.primitives import prepare_for_logging, get_site_domain_wo_www, build_dislosures_sha256_by_html
+from common.primitives import prepare_for_logging, get_site_domain_wo_www
 from common.html_parser import THtmlParser
 from common.link_info import TLinkInfo, TClickEngine
 from common.primitives import get_html_title
 from common.http_request import THttpRequester
 from common.popular_sites import is_super_popular_domain
 from common.serp_parser import SearchEngine, SearchEngineEnum, SerpException
+from common.primitives import normalize_and_russify_anchor_text
+from dl_robot.declaration_link import looks_like_a_declaration_link_without_cache
 
 from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
 from collections import defaultdict
@@ -137,6 +139,7 @@ class TRobotStep:
         # see https://www.gov.spb.ru/sitemap/ with 8000 links (and it is normal for great web sites)
         self.max_links_from_one_page = max_links_from_one_page
         self.profiler = dict() if profiler is None else profiler
+        self.declaration_links_cache = dict()
 
         # runtime members
         self.processed_pages = set()
@@ -218,6 +221,40 @@ class TRobotStep:
             'profiler': self.profiler
         }
 
+    def check_link_sitemap(self, link_info: TLinkInfo):
+        text = normalize_and_russify_anchor_text(link_info.anchor_text)
+        return text.startswith('карта сайта')
+
+    def check_anticorr_link_text(self, link_info: TLinkInfo):
+        text = link_info.anchor_text.strip().lower()
+        if text.find('антикоррупционная комиссия') != -1:
+            link_info.weight = 5
+            return True
+
+        if text.startswith(u'противодействие') or text.startswith(u'борьба') or text.startswith(u'нет'):
+            if text.find("коррупц") != -1:
+                link_info.weight = 5
+                return True
+        return False
+
+    def check_anticorr_link_text_2(self, link_info: TLinkInfo):
+        text = link_info.anchor_text.strip().lower()
+        if text.find("отчеты") != -1:
+            link_info.weight = 5
+            return True
+        return False
+
+    def looks_like_a_declaration_link(self, link_info: TLinkInfo):
+        # return looks_like_a_declaration_link_without_cache(self.logger, link_info)
+        if link_info.is_hashable():
+            result = self.declaration_links_cache.get(link_info.hash_by_target())
+            if result is not None:
+                return result
+        result = looks_like_a_declaration_link_without_cache(self.logger, link_info)
+        if link_info.is_hashable():
+            self.declaration_links_cache[link_info.hash_by_target()] = result
+        return result
+
     def normalize_and_check_link(self, link_info: TLinkInfo, check_link_func):
         if link_info.target_url is not None:
             if self.web_link_is_absolutely_prohibited(link_info.source_url, link_info.target_url):
@@ -228,7 +265,7 @@ class TRobotStep:
                 prepare_for_logging(link_info.target_url), # not redirected yet
                 prepare_for_logging(link_info.anchor_text)))
         try:
-            return check_link_func(self.logger, link_info)
+            return check_link_func(self, link_info)
         except UnicodeEncodeError as exp:
             self.logger.debug(exp)
             return False
@@ -408,10 +445,11 @@ class TRobotStep:
         for element_index in range(len(elements)):
             if element_index >= self.max_links_from_one_page:
                 break
+            if element_index >= len(elements):
+                self.logger.error("elements array has index out of range")
+                break
             element = elements[element_index]
             link_text = element.text.strip('\n\r\t ') if element.text is not None else ""
-            #if len(link_text) == 0:
-            #    continue
             mandatory_link = re.search('скачать', link_text, re.IGNORECASE) is not None
 
             #temp debug
@@ -440,7 +478,7 @@ class TRobotStep:
                     self.logger.debug("click element {}".format(element_index))
                     try:
                         self.click_selenium_if_no_href(main_url, element, element_index, check_link_func)
-                        elements = self.get_selenium_driver().get_buttons_and_links()
+                        #elements = self.get_selenium_driver().get_buttons_and_links()
                     except (WebDriverException, InvalidSwitchToTargetException) as exp:
                         self.logger.error("exception: {}, try restart and get the next element".format(str(exp)))
                         self.get_selenium_driver().restart()

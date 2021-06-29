@@ -1,5 +1,5 @@
 from DeclDocRecognizer.dlrecognizer import DL_RECOGNIZER_ENUM
-from common.primitives import normalize_and_russify_anchor_text, strip_html_url, build_dislosures_sha256_by_html, \
+from common.primitives import strip_html_url, build_dislosures_sha256_by_html, \
     strip_viewer_prefix
 
 import urllib.parse
@@ -108,32 +108,6 @@ class TLinkInfo:
         self.dl_recognizer_result = rec.get('dl_recognizer_result', DL_RECOGNIZER_ENUM.UNKNOWN)
         self.declaration_year = rec.get('declaration_year')
         return self
-
-
-def check_link_sitemap(logger, link_info: TLinkInfo):
-    text = normalize_and_russify_anchor_text(link_info.anchor_text)
-    return text.startswith('карта сайта')
-
-
-def check_anticorr_link_text(logger, link_info: TLinkInfo):
-    text = link_info.anchor_text.strip().lower()
-    if text.find('антикоррупционная комиссия') != -1:
-        link_info.weight = 5
-        return True
-
-    if text.startswith(u'противодействие') or text.startswith(u'борьба') or text.startswith(u'нет'):
-        if text.find("коррупц") != -1:
-            link_info.weight = 5
-            return True
-    return False
-
-
-def check_anticorr_link_text_2(logger, link_info: TLinkInfo):
-    text = link_info.anchor_text.strip().lower()
-    if text.find("отчеты") != -1:
-        link_info.weight = 5
-        return True
-    return False
 
 
 def check_sub_page_or_iframe(logger,  link_info: TLinkInfo):

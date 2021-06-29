@@ -1,7 +1,6 @@
 from common.download import  TDownloadEnv
 from web_site_db.robot_step import TRobotStep, TUrlInfo
 from web_site_db.robot_project import TRobotProject
-from dl_robot.declaration_link import looks_like_a_declaration_link
 from common.http_request import THttpRequester
 from common.logging_wrapper import close_logger, setup_logging
 
@@ -23,18 +22,21 @@ class TestDeclarationLinkUrllib(TestCase):
                 'use_urllib': True
             }
         ]
+        self.urllib_was_enabled = True
         with TRobotProject(self.logger, project_path, robot_steps, "result", enable_search_engine=False,
                            enable_selenium=False) as project:
             project.read_project()
             office_info = project.web_site_snapshots[0]
             office_info.check_urllib_access()
+            if not office_info.enable_urllib:
+                self.urllib_was_enabled = False
             office_info.create_export_folder()
             office_info.url_nodes[start_url] = TUrlInfo(title="", step_name=None)
 
             step_info = TRobotStep(office_info, **robot_steps[0])
             step_info.pages_to_process[start_url] = 0
             step_info.processed_pages = set()
-            step_info.apply_function_to_links(looks_like_a_declaration_link)
+            step_info.apply_function_to_links(TRobotStep.looks_like_a_declaration_link)
             links = list()
             for url in step_info.step_urls:
                 u = list(urllib.parse.urlparse(url))
@@ -74,5 +76,8 @@ class TestDeclarationLinkUrllib(TestCase):
         self.maxDiff = None
         found_links = self.download_website('web_sites/minzdrav2/minzdrav.txt', 'https://minzdrav.gov.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/4/2')
         #self.canonize_links(found_links, 'web_sites/minzdrav2/found_links')
-        self.compare_to_file(found_links, 'web_sites/minzdrav2/found_links')
+        if self.urllib_was_enabled:
+            self.compare_to_file(found_links, 'web_sites/minzdrav2/found_links.urllib')
+        else:
+            self.compare_to_file(found_links, 'web_sites/minzdrav2/found_links.selenium')
 
