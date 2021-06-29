@@ -288,39 +288,47 @@ class Command(BaseCommand):
         for (section, distance) in zip(sections,section_distances):
             self.link_section_to_person(section, person, distance)
 
-    def build_cluster_to_old_person_id(self, clusters):
+    def _get_old_clustering(self, clusters):
         old_person_to_new_sections = defaultdict(list)
-
         for cluster_id, items in clusters.items():
+            section_to_person = list()
+            found_person = False
             for obj, distance in items:
                 if obj.record_id.source_table == TDeduplicationObject.SECTION:
                     section_id = obj.record_id.id
                     person_id = self.permalinks_db.get_person_id_by_section_id(section_id)
                     if person_id is not None:
-                        old_person_to_new_sections[person_id].append((cluster_id, section_id))
+                        section_to_person.append((section_id, person_id))
                 else:
                     # a person is already in this cluster, use it
-                    if cluster_id in old_person_to_new_sections:
-                        del old_person_to_new_sections[person_id]
+                    found_person = True
                     break
+            if not found_person:
+                for (section_id, person_id) in section_to_person:
+                    old_person_to_new_sections[person_id].append((cluster_id, section_id))
+        return old_person_to_new_sections
 
-        old_to_new_clusters = dict()
-        max_clusters_size = defaultdict(int)
+    def build_cluster_to_old_person_id(self, clusters):
+        old_person_to_sections = self._get_old_clustering(clusters)
 
-        for person_id, sections in old_person_to_new_sections.items():
-            sections.sort()  # take always the cluster with that the minimal section_id
-            max_cluster_size_for_this_person = 0
-            best_cluster_id = None
+        intersections = list()
+        for person_id, sections in old_person_to_sections.items():
+            # take always the cluster with that the minimal section_id
+            min_section = min(section for section, _ in sections)
             for cluster_id, items in itertools.groupby(sections, lambda x: x[0]):
-                items_len = len(list(items))
-                if items_len > max_clusters_size[cluster_id] and items_len > max_cluster_size_for_this_person:
-                    best_cluster_id = cluster_id
-                    max_cluster_size_for_this_person = items_len
-
-            if best_cluster_id is not None:
-                max_clusters_size[best_cluster_id] = items_len
-                old_to_new_clusters[best_cluster_id] = person_id
-        return old_to_new_clusters
+                intersection_size = len(list(items))
+                intersections.append((-intersection_size, -min_section, person_id, cluster_id))
+        intersections = sorted(intersections)
+        used_person_ids = set()
+        used_cluster_ids = set()
+        new_to_old_clusters = dict()
+        for _, _, person_id, cluster_id in intersections:
+            already = (person_id in used_person_ids) or (cluster_id in used_cluster_ids)
+            used_person_ids.add(person_id)
+            used_cluster_ids.add(cluster_id)
+            if not already:
+                new_to_old_clusters[cluster_id] = person_id
+        return new_to_old_clusters
 
     def write_results_to_db(self, clusters):
         clusters_to_old_person_ids = self.build_cluster_to_old_person_id(clusters)
