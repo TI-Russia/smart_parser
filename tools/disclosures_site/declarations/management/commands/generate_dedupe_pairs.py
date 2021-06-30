@@ -121,6 +121,7 @@ class Command(BaseCommand):
             self.logger.info('Warning! Threshold is not set. Is it just a test?')
 
     def filter_table(self, model_type, lower_bound, upper_bound):
+        #By default, string comparisons in sql are case insensitive because strings are non-binary.
         records = model_type.objects
         if lower_bound != '':
             records = records.filter(person_name__gte=lower_bound)
@@ -179,12 +180,12 @@ class Command(BaseCommand):
                 yield o
 
     def filter_sql_by_person_name(self, sql, lower_bound, upper_bound):
-        if lower_bound == '':
-            assert upper_bound == ''
-            return sql
+        # By default, string comparisons in sql are case insensitive because strings are non-binary.
         if lower_bound != '':
-            assert upper_bound != ''
-        return sql + " and person_name >= '{}' and person_name < '{}' ".format(lower_bound, upper_bound)
+            sql += " and person_name >= '{}' ".format(lower_bound)
+        if upper_bound != '':
+            sql += " and person_name <  '{}' ".format(upper_bound)
+        return sql
 
     def delete_person_ids_from_previous_deduplication(self, lower_bound, upper_bound):
         sql = self.filter_sql_by_person_name("update declarations_section set " \
@@ -358,13 +359,36 @@ class Command(BaseCommand):
                 self.logger.debug("  cluster sections: ".format(left_sections))
                 self.logger.debug("  cluster persons: ".format(persons))
 
-    def get_family_name_bounds(self):
+    def get_person_name_baskets(self):
         if self.options.get('surname_bounds') is not None:
             yield self.options.get('surname_bounds').split(',')
         else:
-            all_borders = ',А,Б,БП,В,Г,ГП,Д,Е,Ж,ЖР,З,И,К,КИ,КП,КС,Л,М,МН,Н,О,П,ПН,Р,С,СН,Т,ТП,У,Ф,Х,Ц,Ч,Ш,ШП,Щ,Э,Ю,Я,'.split(',')
-            for x in range(1, len(all_borders)):
-                yield all_borders[x-1], all_borders[x]
+            # By default, string comparisons in sql are case insensitive because strings are non-binary.
+            sql = """
+                    select substring(upper(person_name), 1, 3) as a, count(id) 
+                    from declarations_section
+                    group by a
+                    order by a 
+                   """;
+            borders = list([''])
+            with connection.cursor() as cursor:
+                cursor.execute(sql)
+                cnt = 0
+                accum = 0
+                last_trigram = None
+                for trigram, trigram_count in cursor:
+                    cnt += trigram_count
+                    if accum + trigram_count > 50000 and last_trigram is not None and trigram.find('/') == -1 \
+                            and trigram.find('-') == -1:
+                        borders.append(last_trigram)
+                        #print (accum)
+                        accum = 0
+                    accum += trigram_count
+                    last_trigram = trigram
+                assert cnt == models.Section.objects.count()
+            borders.append('')
+            for x in range(1, len(borders)):
+                yield borders[x-1], borders[x]
 
     def load_dedupe_model(self):
         if not self.options.get("fake_dedupe", False):
@@ -402,7 +426,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.init_options(options)
         if options.get('print_family_prefixes'):
-            for lower_bound, upper_bound in self.get_family_name_bounds():
+            for lower_bound, upper_bound in self.get_person_name_baskets():
                 sys.stdout.write("{},{}\n".format(lower_bound, upper_bound))
             return
         self.logger.info('surname bounds are {}'.format(options.get('surname_bounds', "")))
@@ -413,7 +437,7 @@ class Command(BaseCommand):
             dump_stream = open(dump_file_name, "w", encoding="utf8")
             self.logger.debug('write result pairs to {}\n'.format(dump_file_name))
 
-        for lower_bound, upper_bound in self.get_family_name_bounds():
+        for lower_bound, upper_bound in self.get_person_name_baskets():
             self.logger.info("lower_bound={}, upper_bound={}".format(lower_bound, upper_bound))
             self.fill_dedupe_data(lower_bound, upper_bound)
             for clusters_for_one_fio in self.cluster_sections_by_minimal_fio():
