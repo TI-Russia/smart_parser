@@ -27,6 +27,9 @@ class TRemoteDlrobotCall:
     def task_ended(self):
         return self.end_time is not None
 
+    def task_was_successful(self):
+        return self.result_files_count > 0
+
     def get_website(self):
         return self.web_site
 
@@ -81,9 +84,10 @@ class TRemoteDlrobotCall:
 
 
 class TRemoteDlrobotCallList:
-    def __init__(self, logger=None, file_name=None):
+    def __init__(self, logger=None, file_name=None, min_start_time_stamp=None):
         self.remote_calls_by_project_file = defaultdict(list)
         self.logger = logger
+        self.min_start_time_stamp = min_start_time_stamp
         if file_name is None:
             self.file_name = os.path.join(os.path.dirname(__file__), "data/dlrobot_remote_calls.dat")
         else:
@@ -113,7 +117,8 @@ class TRemoteDlrobotCallList:
                     remote_call = TRemoteDlrobotCall()
                     remote_call.read_from_json(line)
                     remote_call.file_line_index = line_no
-                    self.remote_calls_by_project_file[remote_call.project_file].append(remote_call)
+                    if remote_call.start_time > self.min_start_time_stamp:
+                        self.remote_calls_by_project_file[remote_call.project_file].append(remote_call)
                     line_no += 1
         except Exception as exp:
             self.error("cannot read file {}, line no {}\n".format(self.file_name, line_no))
@@ -125,14 +130,14 @@ class TRemoteDlrobotCallList:
         with open(self.file_name, "a") as outp:
             outp.write(json.dumps(remote_call.write_to_json()) + "\n")
 
-    def get_interactions_count(self, project_file):
-        return len(self.remote_calls_by_project_file[project_file])
+    def get_interactions(self, project_file):
+        return self.remote_calls_by_project_file.get(project_file, list())
 
-    def get_min_interactions_count(self):
-        if len(self.remote_calls_by_project_file) == 0:
-            return 0
-        else:
-            return min(len(x) for x in self.remote_calls_by_project_file.values())
+    def has_success(self, project_file):
+        for x in self.remote_calls_by_project_file.get(project_file, list()):
+            if x.task_was_successful():
+                return True
+        return False
 
     def get_last_failures_count(self, project_file):
         l = list(self.remote_calls_by_project_file[project_file])

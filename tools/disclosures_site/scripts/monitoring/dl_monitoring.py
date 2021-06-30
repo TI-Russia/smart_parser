@@ -67,7 +67,7 @@ class TDlrobotStats:
 
             website_count += 1
             self.cumulative_processed_websites_count.append(website_count)
-            if remote_call.exit_code != 0:
+            if not remote_call.task_was_successful():
                 self.failures.append(remote_call.worker_host_name)
                 self.failures_by_hostnames[remote_call.worker_host_name] += 1
             else:

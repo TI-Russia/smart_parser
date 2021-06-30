@@ -5,6 +5,7 @@ from dlrobot_server.common_server_worker import TTimeouts, PITSTOP_FILE
 from smart_parser_http.smart_parser_server import TSmartParserHTTPServer
 from source_doc_http.source_doc_server import TSourceDocHTTPServer
 from web_site_db.web_site_status import TWebSiteReachStatus
+from web_site_db.web_sites import TDeclarationRounds
 from common.primitives import build_dislosures_sha256, is_local_http_port_free
 from common.archives import TDearchiver
 from unittest import TestCase
@@ -16,7 +17,7 @@ import time
 import json
 import http.server
 from functools import partial
-
+import datetime
 
 def start_server(server):
     try:
@@ -93,6 +94,10 @@ class TTestEnv:
                 pass
         else:
             remote_calls_file_name = history_file
+        round_file = os.path.join(self.data_folder, "dlrobot_rounds.json")
+        with open(round_file, "w") as outp:
+            yesterday = (datetime.date.today() - datetime.timedelta(days=1))
+            json.dump(TDeclarationRounds.build_an_example(yesterday), outp)
         server_args = [
             '--input-task-list', self.input_web_sites_file,
             '--remote-calls-file', remote_calls_file_name,
@@ -104,7 +109,8 @@ class TTestEnv:
             '--log-file-name', os.path.join(self.data_folder, "dlrobot_central.log"),
             '--disable-search-engines',
             '--disable-telegram',
-            '--disable-pdf-conversion-server-checking'
+            '--disable-pdf-conversion-server-checking',
+            '--round-file', round_file
         ]
         if not enable_smart_parser:
             server_args.append('--disable-smart-parser-server')
@@ -172,6 +178,25 @@ class TTestEnv:
         assert len(remote_calls) > 0
         return remote_calls[-1].reach_status
 
+    def build_history_file(self, web_sites, file_name, set_end_time_to_none=False):
+        start_time = int(time.time())
+        with open(file_name, "w") as outp:
+            for web_site, result_files in web_sites:
+                rec = {"worker_ip": "95.165.96.61",
+                       "project_file": web_site + ".txt",
+                       "web_site": web_site,
+                       "exit_code": 0,
+                       "start_time": start_time,
+                       "end_time": start_time + 1,
+                       "result_folder": None,
+                       "reach_status": TWebSiteReachStatus.normal,
+                       "result_files_count": result_files,
+                       "worker_host_name": None}
+                if set_end_time_to_none:
+                    rec["end_time"] = None
+                json.dump(rec, outp)
+                outp.write("\n")
+
 
 class TestAotRu(TestCase):
     central_port = 8290
@@ -220,8 +245,6 @@ class TestBadDomain(TestCase):
         self.env.start_worker_thread()
         self.env.worker_thread.join(200)
         self.assertEqual(2, self.env.central.get_stats()['processed_tasks'])
-        self.assertEqual(TWebSiteReachStatus.out_of_reach2,
-        self.env.central.web_sites_db.get_web_site("bad_domain").reach_status)
 
 
 class WorkerPitStop(TestCase):
@@ -337,38 +360,6 @@ class DlrobotWithSmartParserAndSourceDocServer(TestCase):
         self.assertEqual(stats['source_doc_count'], 1)
 
 
-class TestHistoryFiles(TestCase):
-    central_port = 8305
-
-    def build_history_file(self, web_sites, file_name):
-        with open(file_name, "w") as outp:
-            for web_site in web_sites:
-                rec = {"worker_ip": "95.165.96.61",
-                       "project_file": web_site + ".txt",
-                       "web_site": web_site,
-                       "exit_code": 0,
-                       "start_time": 1601799469,
-                       "end_time": None,
-                       "result_folder": None,
-                       "reach_status": TWebSiteReachStatus.normal,
-                       "result_files_count": 0, "worker_host_name": None}
-                json.dump(rec, outp)
-                outp.write("\n")
-
-    def setUp(self):
-        self.env = TTestEnv(self.central_port)
-        history_file = os.path.join(self.env.data_folder, "history.txt")
-        self.build_history_file(["olddomain.ru", "olddomain.ru", "olddomain2.ru"], history_file)
-        self.env.setup_central(False, ["olddomain.ru", "newdomain.ru", "olddomain2.ru"], history_file=history_file)
-
-    def tearDown(self):
-        self.env.tearDown()
-
-    def test_task_order(self):
-        self.assertListEqual(["newdomain.ru", "olddomain2.ru"],
-                                self.env.central.web_sites_to_process)
-
-
 class TestUnzipArchive(TestCase):
     central_port = 8306
     website_port = 8307
@@ -413,3 +404,78 @@ class TestUnzipArchive(TestCase):
         js = json.loads(self.env.smart_parser_server.get_smart_parser_json(sha256))
         self.assertEqual('51.service.nalog.ru', js['document_sheet_props'][0]['url'])
 
+
+class TestHistoryFiles(TestCase):
+    central_port = 8305
+
+    def setUp(self):
+        self.env = TTestEnv(self.central_port)
+        history_file = os.path.join(self.env.data_folder, "history.txt")
+        self.env.build_history_file([("olddomain.ru", 1),
+                                     ("olddomain.ru", 1),
+                                     ("olddomain2.ru", 0)], history_file)
+        self.env.setup_central(False, ["olddomain.ru", "newdomain.ru", "olddomain2.ru"], history_file=history_file)
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def test_task_order(self):
+        self.assertListEqual(["newdomain.ru", "olddomain2.ru"], self.env.central.web_sites_to_process)
+
+
+
+
+class TestHistoryFiles2(TestCase):
+    central_port = 8308
+
+    def setUp(self):
+        self.env = TTestEnv(self.central_port)
+        history_file = os.path.join(self.env.data_folder, "history.txt")
+        self.env.build_history_file([
+                ("a.ru", 1),
+                ("b.ru", 0)], history_file)
+        self.env.setup_central(False, ["a.ru", "b.ru"], history_file=history_file)
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def test_b_ru_was_a_success(self):
+        self.assertListEqual(["b.ru"], self.env.central.web_sites_to_process)
+
+
+class TestHistoryFiles3(TestCase):
+    central_port = 8308
+
+    def setUp(self):
+        self.env = TTestEnv(self.central_port)
+        history_file = os.path.join(self.env.data_folder, "history.txt")
+        self.env.build_history_file([
+                ("a.ru", 0),
+                ("a.ru", 0),
+                ("b.ru", 0)], history_file)
+        self.env.setup_central(False, ["a.ru", "b.ru"], history_file=history_file)
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def test_website_a_ru_has_enough_tries(self):
+        self.assertListEqual(["b.ru"], self.env.central.web_sites_to_process)
+
+
+class TestHistoryFiles4(TestCase):
+    central_port = 8309
+
+    def setUp(self):
+        self.env = TTestEnv(self.central_port)
+        history_file = os.path.join(self.env.data_folder, "history.txt")
+        self.env.build_history_file([
+                ("a.ru", 0),
+                ("a.ru", 0),
+                ], history_file, set_end_time_to_none=True)
+        self.env.setup_central(False, ["a.ru"], history_file=history_file)
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def test_one_more_retry_for_lost_tasks(self):
+        self.assertListEqual(["a.ru"], self.env.central.web_sites_to_process)

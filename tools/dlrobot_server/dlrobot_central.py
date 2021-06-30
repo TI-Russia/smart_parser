@@ -6,7 +6,7 @@ from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from web_site_db.remote_call import TRemoteDlrobotCall, TRemoteDlrobotCallList
 from source_doc_http.source_doc_client import TSourceDocClient
 from web_site_db.web_site_status import TWebSiteReachStatus
-from web_site_db.web_sites import TDeclarationWebSiteList
+from web_site_db.web_sites import TDeclarationWebSiteList, TDeclarationRounds
 from web_site_db.robot_project import TRobotProject
 from common.logging_wrapper import setup_logging
 
@@ -59,6 +59,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         parser.add_argument("--disable-pdf-conversion-server-checking", dest="pdf_conversion_server_checking",
                             default=True,  required=False, action="store_false")
         parser.add_argument("--web-site-regexp", dest="web_site_regexp", required=False)
+        parser.add_argument("--round-file", dest="round_file", default=TDeclarationRounds.default_dlrobot_round_path)
 
         args = parser.parse_args(arg_list)
         args.central_heart_rate = convert_timeout_to_seconds(args.central_heart_rate)
@@ -75,13 +76,15 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         self.logger = setup_logging(log_file_name=args.log_file_name, append_mode=True)
         self.conversion_client = TDocConversionClient(TDocConversionClient.parse_args([]), self.logger)
         self.args = args
-        self.dlrobot_remote_calls = TRemoteDlrobotCallList(logger=self.logger, file_name=args.remote_calls_file)
+        rounds = TDeclarationRounds(args.round_file)
+        self.dlrobot_remote_calls = TRemoteDlrobotCallList(logger=self.logger, file_name=args.remote_calls_file,
+                                                           min_start_time_stamp=rounds.start_time_stamp)
         self.worker_2_running_tasks = defaultdict(list)
         self.worker_2_continuous_failures_count = defaultdict(int)
         self.web_sites_db = TDeclarationWebSiteList(self.logger, self.args.input_task_list).load_from_disk()
         if not os.path.exists(self.args.result_folder):
             os.makedirs(self.args.result_folder)
-        self.web_sites_to_process = self.find_projects_to_process(self.dlrobot_remote_calls.get_min_interactions_count())
+        self.web_sites_to_process = self.find_projects_to_process()
         self.cloud_id_to_worker_ip = dict()
         self.last_remote_call = None  # for testing
         host, port = self.args.server_address.split(":")
@@ -134,36 +137,39 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
     def have_tasks(self):
         return len(self.web_sites_to_process) > 0 and not self.stop_process
 
+    def project_is_to_process(self, project_file):
+        interactions = self.dlrobot_remote_calls.get_interactions(project_file)
+        if sum(1 for i in interactions if i.task_was_successful()) > 0:
+            return False
+        tries_count = self.args.tries_count
+        if sum(1 for i in interactions if not i.task_ended()) > 0:
+            # if the last result was not obtained, may be,
+            # worker is down, so the problem is not in the task but in the worker
+            # so give this task one more chance
+            tries_count += 1
+            self.logger.debug("increase max_tries_count for {} to {}".format(project_file, tries_count))
+        return len(interactions) < tries_count
+
     def save_dlrobot_remote_call(self, remote_call: TRemoteDlrobotCall):
         self.dlrobot_remote_calls.add_dlrobot_remote_call(remote_call)
-        if remote_call.exit_code != 0:
-            max_tries_count = self.args.tries_count
-            failures_count = self.dlrobot_remote_calls.get_last_failures_count(remote_call.project_file)
-            if not remote_call.task_ended() and failures_count == max_tries_count:
-                # if the last result was not obtained, may be,
-                # worker is down, so the problem is not in the task but in the worker
-                # so give this task one more chance
-                max_tries_count += 1
-                self.logger.debug("increase max_tries_count for {} to {}".format(remote_call.project_file, max_tries_count))
-
-            if failures_count < max_tries_count:
+        if not remote_call.task_was_successful():
+            if self.project_is_to_process(remote_call.project_file):
                 self.web_sites_to_process.append(remote_call.web_site)
                 self.logger.debug("register retry for {}".format(remote_call.web_site))
-            else:
-                self.logger.debug("set web_site status to {}".format(remote_call.web_site, TWebSiteReachStatus.out_of_reach2))
-                self.web_sites_db.set_status_to_web_site(remote_call.web_site, TWebSiteReachStatus.out_of_reach2)
 
-    def find_projects_to_process(self, min_interaction_count):
+    def find_projects_to_process(self):
         web_sites_to_process = list()
-        self.logger.info("filter web sites with interactions count = {}".format(min_interaction_count))
-        for web_site, web_site_info in self.web_sites_db.web_sites.items():
-            if self.args.web_site_regexp is not None:
-                if re.match(self.args.web_site_regexp, web_site) is None:
-                    continue
-            if TWebSiteReachStatus.can_communicate(web_site_info.reach_status):
-                project_file = TRemoteDlrobotCall.web_site_to_project_file(web_site)
-                if self.dlrobot_remote_calls.get_interactions_count(project_file) <= min_interaction_count:
-                    web_sites_to_process.append(web_site)
+        self.logger.info("filter web sites")
+        with open("web_sites_to_process_debug.txt", "w") as out:
+            for web_site, web_site_info in self.web_sites_db.web_sites.items():
+                if self.args.web_site_regexp is not None:
+                    if re.match(self.args.web_site_regexp, web_site) is None:
+                        continue
+                if TWebSiteReachStatus.can_communicate(web_site_info.reach_status):
+                    project_file = TRemoteDlrobotCall.web_site_to_project_file(web_site)
+                    if self.project_is_to_process(project_file):
+                        web_sites_to_process.append(web_site)
+                        out.write(web_site + "\n")
 
         self.logger.info("there are {} sites in the input queue".format(len(web_sites_to_process)))
         return web_sites_to_process

@@ -79,7 +79,7 @@ echo $DEDUPE_HOSTS | tr "," "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dl
 #11 создание surname_rank (40 мин)
   python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclosures.settings.dev
 
-  #12.  запуск сливалки, 4 gb memory each family portion, 30 GB temp files, no more than one process per workstation
+  #12.  запуск сливалки, 1 gb memory each family basket, 30 GB temp files, no more than 2 processes per workstation
      #optional, if you have to run dedupe more than one time
      #python3 $TOOLS/disclosures_site/manage.py clear_dedupe_artefacts --settings disclosures.settings.dev
 
