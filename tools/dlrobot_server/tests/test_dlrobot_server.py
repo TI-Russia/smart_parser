@@ -420,9 +420,8 @@ class TestHistoryFiles(TestCase):
         self.env.tearDown()
 
     def test_task_order(self):
+        # there is no newdomain.ru in the history, that's why it goes before olddomain2.ru
         self.assertListEqual(["newdomain.ru", "olddomain2.ru"], self.env.central.web_sites_to_process)
-
-
 
 
 class TestHistoryFiles2(TestCase):

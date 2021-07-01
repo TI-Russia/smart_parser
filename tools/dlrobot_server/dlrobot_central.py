@@ -160,18 +160,21 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
     def find_projects_to_process(self):
         web_sites_to_process = list()
         self.logger.info("filter web sites")
-        with open("web_sites_to_process_debug.txt", "w") as out:
-            for web_site, web_site_info in self.web_sites_db.web_sites.items():
-                if self.args.web_site_regexp is not None:
-                    if re.match(self.args.web_site_regexp, web_site) is None:
-                        continue
-                if TWebSiteReachStatus.can_communicate(web_site_info.reach_status):
-                    project_file = TRemoteDlrobotCall.web_site_to_project_file(web_site)
-                    if self.project_is_to_process(project_file):
-                        web_sites_to_process.append(web_site)
-                        out.write(web_site + "\n")
+        for web_site, web_site_info in self.web_sites_db.web_sites.items():
+            if self.args.web_site_regexp is not None:
+                if re.match(self.args.web_site_regexp, web_site) is None:
+                    continue
+            if TWebSiteReachStatus.can_communicate(web_site_info.reach_status):
+                project_file = TRemoteDlrobotCall.web_site_to_project_file(web_site)
+                if self.project_is_to_process(project_file):
+                    web_sites_to_process.append(web_site)
 
         self.logger.info("there are {} sites in the input queue".format(len(web_sites_to_process)))
+        web_sites_to_process.sort(key=(lambda x: self.dlrobot_remote_calls.last_interaction[x]))
+
+        with open("web_sites_to_process_debug.txt", "w") as out:
+            for w in web_sites_to_process:
+                out.write(w + "\n")
         return web_sites_to_process
 
     def get_running_jobs_count(self):
