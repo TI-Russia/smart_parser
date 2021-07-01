@@ -1,12 +1,12 @@
 from web_site_db.web_sites import TDeclarationWebSiteList
 from common.primitives import get_site_domain_wo_www
 from common.russian_regions import TRussianRegions
+from common.logging_wrapper import setup_logging
 
 import json
 import argparse
 import os
 import pymysql
-import logging
 from operator import itemgetter
 from collections import defaultdict
 
@@ -14,30 +14,14 @@ from collections import defaultdict
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--declarator-host", dest='declarator_host', default='localhost')
+    parser.add_argument("--action", dest='action', default='all', help="can be all, from_calculated_urls")
     return parser.parse_args()
-
-
-def setup_logging(logfilename="update_offices.log"):
-    logger = logging.getLogger("export")
-    logger.setLevel(logging.DEBUG)
-
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    fh = logging.FileHandler(logfilename, "a+", encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-    return logger
 
 
 class TOfficeJoiner:
     def __init__(self, args):
         self.args = args
-        self.logger = setup_logging()
+        self.logger = setup_logging(log_file_name="update_offices.log")
         self.logger.debug("start joining")
         self.regions = TRussianRegions()
         self.region_name_to_id = None
@@ -199,7 +183,6 @@ class TOfficeJoiner:
         return districts
 
     def build_offices_and_web_sites (self):
-        args = parse_args()
         self.read_offices()
 
         self.logger.info("update_offices_from_declarator")
@@ -227,9 +210,28 @@ class TOfficeJoiner:
         self.write_offices()
         self.logger.info("do not forget to commit changes to git")
 
+    def update_websites_from_calculated_urls (self):
+        db_connection = pymysql.connect(db="disclosures_db", user="disclosures", password="disclosures")
+        in_cursor = db_connection.cursor()
+        in_cursor.execute("select  id,calculated_params from declarations_office")
+        for id, calculated_params in in_cursor:
+            urls = json.loads(calculated_params)['urls']
+            for u in urls:
+                if not self.web_sites.has_web_site(u):
+                    self.logger.debug("add website {} to office {}".format(u, id))
+
+
+def main():
+    args = parse_args()
+    joiner = TOfficeJoiner(args)
+    if args.action == "all":
+        joiner.build_offices_and_web_sites()
+    elif args.action == "from_calculated_urls":
+        joiner.update_websites_from_calculated_urls()
+    else:
+        raise Exception("unknown action")
+
 
 if __name__ == '__main__':
-    joiner = TOfficeJoiner(parse_args())
-    joiner.build_offices_and_web_sites()
-
+    main()
 

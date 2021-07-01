@@ -53,6 +53,9 @@ class TDeclarationWebSiteList:
         return self
 
     def add_web_site(self, web_site, office_id):
+        # russian domain must be in utf8
+        assert not web_site.startswith('xn--')
+
         self.logger.debug("add web site {} ".format(web_site))
         assert web_site not in self.web_sites
         s = TDeclarationWebSite()

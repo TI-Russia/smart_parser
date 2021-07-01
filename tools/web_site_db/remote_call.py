@@ -86,6 +86,7 @@ class TRemoteDlrobotCall:
 class TRemoteDlrobotCallList:
     def __init__(self, logger=None, file_name=None, min_start_time_stamp=None):
         self.remote_calls_by_project_file = defaultdict(list)
+        self.last_interaction = defaultdict(int)
         self.logger = logger
         self.min_start_time_stamp = min_start_time_stamp
         if file_name is None:
@@ -117,6 +118,10 @@ class TRemoteDlrobotCallList:
                     remote_call = TRemoteDlrobotCall()
                     remote_call.read_from_json(line)
                     remote_call.file_line_index = line_no
+                    self.last_interaction[remote_call.web_site] = max(
+                        self.last_interaction[remote_call.web_site],
+                        remote_call.start_time
+                    )
                     if remote_call.start_time > self.min_start_time_stamp:
                         self.remote_calls_by_project_file[remote_call.project_file].append(remote_call)
                     line_no += 1

@@ -90,7 +90,7 @@ echo $DEDUPE_HOSTS | tr "," "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dl
      echo $DEDUPE_HOSTS | tr "," "\n"  | xargs  --verbose -P 4 -I {} -n 1 scp $DLROBOT_FOLDER/permalinks_declarations_person.dbm {}:/tmp
 
      #22 hours
-     parallel --halt soon,fail=1 -a surname_spans.txt --jobs 2 --joblog parallel.log \
+     parallel --halt soon,fail=1 -a surname_spans.txt --jobs 3 --joblog parallel.log \
           --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $DEDUPE_HOSTS --basefile $DEDUPE_MODEL  --verbose --workdir /tmp \
           python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --permalinks-folder /tmp --ml-model-file $DEDUPE_MODEL  \
                   --threshold 0.61  --surname-bounds {} --write-to-db --settings disclosures.settings.dev --logfile dedupe.{}.log
