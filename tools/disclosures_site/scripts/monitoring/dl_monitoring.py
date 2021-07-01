@@ -1,6 +1,7 @@
 from web_site_db.remote_call import TRemoteDlrobotCallList
 from web_site_db.web_sites import TDeclarationRounds
 from source_doc_http.source_doc_client import TSourceDocClient
+from common.logging_wrapper import setup_logging
 
 import argparse
 import plotly.express as px
@@ -11,7 +12,7 @@ import sys
 import json
 from collections import defaultdict
 import time
-import logging
+
 
 #see examples in crontab.txt
 
@@ -23,13 +24,16 @@ def build_html(args, fig, output_file):
 
 class TDlrobotStats:
 
-    def __init__(self,  args, min_date=None,  min_total_minutes=0):
+    def __init__(self,  args, min_date=None,  min_total_minutes=0, logger=None):
         self.args = args
         self.min_date = min_date
+        self.logger = logger
         rounds = TDeclarationRounds(args.round_file)
 
-        self.remote_calls = TRemoteDlrobotCallList(file_name=args.central_stats_file,
+        self.remote_calls = TRemoteDlrobotCallList(file_name=args.central_stats_file, logger=self.logger,
                                                       min_start_time_stamp=rounds.start_time_stamp)
+        self.logger.debug("read {} records from {}".format(len(list(self.remote_calls.get_all_calls())),
+                                                           args.central_stats_file))
         self.cumulative_declaration_files_count = []
         self.cumulative_processed_websites_count = []
         self.end_times = []
@@ -45,7 +49,8 @@ class TDlrobotStats:
         self.build_stats(min_date)
 
     def build_stats(self, min_date=None, min_total_minutes=0):
-        min_time_stamp = min_date.timestamp() if min_date is not None else 0;
+        self.logger.info("build_stats")
+        min_time_stamp = min_date.timestamp() if min_date is not None else 0
         website_count = 0
         sum_count = 0
         all_calls_sorted_by_end_time = sorted(self.remote_calls.get_all_calls(), key=lambda x: x.file_line_index)
@@ -77,6 +82,7 @@ class TDlrobotStats:
                 self.failures_by_hostnames[remote_call.worker_host_name] += 1
             else:
                 self.successes_by_hostnames[remote_call.worker_host_name] += 1
+        self.logger.debug("build_stats: min_date={} web_sites_count={}".format(min_date, website_count))
 
     def write_declaration_crawling_stats(self, html_file):
         df = pd.DataFrame({'Date': self.end_times,
@@ -107,9 +113,12 @@ class TDlrobotStats:
 
     def get_project_error_rates(self):
         error_rates = dict()
-        for host_name in set (self.host_names):
+        worker_hosts = set(self.host_names)
+        self.logger.debug("build get_project_error_rates for {} worker hosts".format(len(worker_hosts)))
+        for host_name in worker_hosts:
             f = self.failures_by_hostnames[host_name]
             s = self.successes_by_hostnames[host_name]
+            self.logger.debug("host {} fail count={} success count={}".format(host_name, f, s))
             error_rates[host_name] = 100 * (f / (s + f))
         return error_rates
 
@@ -128,10 +137,13 @@ class TDlrobotAllStats:
                             help="for example ~/smart_parser.disclosures_prod/tools/disclosures_site/disclosures/static")
         parser.add_argument("--central-stats-history", dest='central_stats_history', required=False,
                             help="for example /tmp/dlrobot_central_stats_history.txt")
+        parser.add_argument("--log-file-name", dest='log_file_name', required=False, default="dl_monitoring.log")
+        parser.add_argument("--round-file", dest="round_file", default=TDeclarationRounds.default_dlrobot_round_path)
         return parser.parse_args(arg_list)
 
     def __init__(self,  args):
         self.args = args
+        self.logger = setup_logging(log_file_name=args.log_file_name)
 
     def build_source_doc_stats(self):
         history_file = "/tmp/source_doc.history"
@@ -141,7 +153,7 @@ class TDlrobotAllStats:
         else:
             history = list()
 
-        source_doc_client = TSourceDocClient(TSourceDocClient.parse_args([]), logger=logging)
+        source_doc_client = TSourceDocClient(TSourceDocClient.parse_args([]), logger=self.logger)
         stats = source_doc_client.get_stats()
         now = int(time.time())
         stats['ts'] = now
@@ -166,6 +178,7 @@ class TDlrobotAllStats:
         build_html(self.args, fig, "source_doc_count.html")
 
     def process_dlrobot_central_history_stats(self):
+        self.logger.info("process_dlrobot_central_history_stats")
         times = list()
         left_projects_count = list()
         with open(self.args.central_stats_history, "r") as inp:
@@ -183,12 +196,13 @@ class TDlrobotAllStats:
         build_html(self.args, fig, "left_projects_count.html")
 
     def process_dlrobot_stats(self):
-        stats = TDlrobotStats(self.args)
+        self.logger.info("process_dlrobot_stats")
+        stats = TDlrobotStats(self.args, logger=self.logger)
         stats.write_declaration_crawling_stats('declaration_crawling_stats.html')
         stats.write_website_progress('file_progress.html')
 
         min_time = datetime.datetime.now() - datetime.timedelta(hours=12)
-        stats12hours = TDlrobotStats(self.args, min_time)
+        stats12hours = TDlrobotStats(self.args, min_time, logger=self.logger)
         stats12hours.write_declaration_crawling_stats('declaration_crawling_stats_12h.html')
         stats12hours.write_website_progress('file_progress_12h.html')
 
@@ -214,6 +228,7 @@ class TDlrobotAllStats:
         self.build_source_doc_stats()
 
     def process_convert_stats(self):
+        self.logger.info("process_convert_stats")
         with open(self.args.conversion_server_stats, encoding="utf8") as inp:
             timestamps = list()
             ocr_pending_all_file_sizes = list()
@@ -235,6 +250,7 @@ class TDlrobotAllStats:
         build_html(self.args, fig, "ocr_pending_file_sizes.html")
 
     def process_cpu_and_mem_stats(self):
+        self.logger.info("process_cpu_and_mem_stats")
         # input file is built by ~/smart_parser/tools/workstation_monitoring.py
         with open(self.args.central_server_cpu_and_mem) as inp:
             data_points = json.load(inp)

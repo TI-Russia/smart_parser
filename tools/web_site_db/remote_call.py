@@ -139,16 +139,6 @@ class TRemoteDlrobotCallList:
                 return True
         return False
 
-    def get_last_failures_count(self, project_file):
-        l = list(self.remote_calls_by_project_file[project_file])
-        l.sort(key=lambda x: -x.start_time)
-        failures_cnt = 0
-        for i in l:
-            if TWebSiteReachStatus.can_communicate(i.reach_status):
-                break
-            failures_cnt += 1
-        return failures_cnt
-
     def get_all_calls(self):
         for l in self.remote_calls_by_project_file.values():
             for c in l:
