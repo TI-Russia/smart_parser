@@ -1,3 +1,7 @@
+from web_site_db.remote_call import TRemoteDlrobotCallList
+from web_site_db.web_sites import TDeclarationRounds
+from source_doc_http.source_doc_client import TSourceDocClient
+
 import argparse
 import plotly.express as px
 import pandas as pd
@@ -9,8 +13,6 @@ from collections import defaultdict
 import time
 import logging
 
-from web_site_db.remote_call import TRemoteDlrobotCallList
-from source_doc_http.source_doc_client import TSourceDocClient
 #see examples in crontab.txt
 
 
@@ -24,7 +26,10 @@ class TDlrobotStats:
     def __init__(self,  args, min_date=None,  min_total_minutes=0):
         self.args = args
         self.min_date = min_date
-        self.remote_calls = TRemoteDlrobotCallList(file_name=args.central_stats_file)
+        rounds = TDeclarationRounds(args.round_file)
+
+        self.remote_calls = TRemoteDlrobotCallList(file_name=args.central_stats_file,
+                                                      min_start_time_stamp=rounds.start_time_stamp)
         self.cumulative_declaration_files_count = []
         self.cumulative_processed_websites_count = []
         self.end_times = []
