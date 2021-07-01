@@ -19,6 +19,7 @@ import http.server
 from functools import partial
 import datetime
 
+
 def start_server(server):
     try:
         server.serve_forever()
@@ -120,14 +121,16 @@ class TTestEnv:
         self.central_thread = threading.Thread(target=start_server, args=(self.central,))
         self.central_thread.start()
 
-    def setup_worker(self, action):
+    def setup_worker(self, action, fake_dlrobot=False):
         os.mkdir(self.worker_folder)
         worker_args = [
             '--server-address', self.central_address,
             '--working-folder', self.worker_folder,
-            '--timeout-before-next-task', '1',
-            action
+            '--timeout-before-next-task', '1'
         ]
+        if fake_dlrobot:
+            worker_args.append('--fake-dlrobot')
+        worker_args.append(action)
         self.worker = TDlrobotWorker(TDlrobotWorker.parse_args(worker_args))
         self.start_worker_thread()
 
@@ -478,3 +481,20 @@ class TestHistoryFiles4(TestCase):
 
     def test_one_more_retry_for_lost_tasks(self):
         self.assertListEqual(["a.ru"], self.env.central.web_sites_to_process)
+
+
+class TestRussianDomain(TestCase):
+    central_port = 8310
+
+    def setUp(self):
+        self.env = TTestEnv(self.central_port)
+        self.env.setup_central(False, "лотошинье.рф")
+        self.env.setup_worker("run_once", fake_dlrobot=True)
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def test_Russsian_domain(self):
+        self.env.worker_thread.join(200)
+        self.assertEqual(1, self.env.count_projects_results())
+        self.assertEqual(1, self.env.central.get_stats()['processed_tasks'])

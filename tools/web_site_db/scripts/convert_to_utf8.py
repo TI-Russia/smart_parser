@@ -1,5 +1,5 @@
 from web_site_db.web_sites import TDeclarationWebSiteList
-from web_site_db.web_site_status import TWebSiteReachStatus
+from common.primitives import TUrlUtf8Encode
 
 import argparse
 import logging
@@ -17,7 +17,7 @@ if __name__ == '__main__':
     new_web_sites = dict()
     for k,v in web_sites.web_sites.items():
         if k.startswith("xn--"):
-            k = k.encode('latin').decode('idna')
+            k = TUrlUtf8Encode.from_idna(k)
         new_web_sites[k] = v
     web_sites.web_sites = new_web_sites
     web_sites.save_to_disk()

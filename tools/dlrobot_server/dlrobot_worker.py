@@ -1,5 +1,6 @@
 from dlrobot_server.common_server_worker import DLROBOT_HTTP_CODE, TTimeouts, PITSTOP_FILE, DLROBOT_HEADER_KEYS
 from common.logging_wrapper import setup_logging
+from common.primitives import TUrlUtf8Encode
 
 import argparse
 import os
@@ -136,7 +137,7 @@ class TDlrobotWorker:
                     response.status
                 ))
             raise DlrobotWorkerException()
-        project_file = response.getheader(DLROBOT_HEADER_KEYS.PROJECT_FILE)
+        project_file = TUrlUtf8Encode.from_idna(response.getheader(DLROBOT_HEADER_KEYS.PROJECT_FILE))
         if project_file is None:
             self.logger.error("cannot find header {}".format(DLROBOT_HEADER_KEYS.PROJECT_FILE))
             raise DlrobotWorkerException()
@@ -190,7 +191,7 @@ class TDlrobotWorker:
         project_folder = os.path.dirname(os.path.realpath(project_file)).replace('\\', '/')
         if self.args.fake_dlrobot:
             with open(project_file + ".dummy_random", "wb") as outp:
-                outp.write(bytearray(random.getrandbits(8) for _ in range(200 * 1024 * 1024)))
+                outp.write(bytearray(random.getrandbits(8) for _ in range(2 * 1024 * 1024)))
             return 1
 
         my_env = os.environ.copy()
@@ -250,7 +251,7 @@ class TDlrobotWorker:
         project_folder = os.path.dirname(project_file)
         headers = {
             DLROBOT_HEADER_KEYS.EXIT_CODE: exitcode,
-            DLROBOT_HEADER_KEYS.PROJECT_FILE: os.path.basename(project_file),
+            DLROBOT_HEADER_KEYS.PROJECT_FILE: TUrlUtf8Encode.to_idna(os.path.basename(project_file)),
             DLROBOT_HEADER_KEYS.WORKER_HOST_NAME: platform.node(),
             "Content-Type": "application/binary"
         }
@@ -271,7 +272,7 @@ class TDlrobotWorker:
                 conn = http.client.HTTPConnection(self.args.server_address, timeout=self.args.http_put_timeout)
                 with open(dlrobot_results_file_name, "rb") as inp:
                     self.logger.debug("put file {} to {}".format(dlrobot_results_file_name, self.args.server_address))
-                    conn.request("PUT", dlrobot_results_file_name, inp.read(), headers=headers)
+                    conn.request("PUT", TUrlUtf8Encode.to_idna(dlrobot_results_file_name), inp.read(), headers=headers)
                     response = conn.getresponse()
                     conn.close()
                     conn = None

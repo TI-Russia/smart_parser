@@ -1,6 +1,6 @@
 from ConvStorage.conversion_client import TDocConversionClient
 from dlrobot_server.common_server_worker import DLROBOT_HTTP_CODE, TTimeouts, TYandexCloud, DLROBOT_HEADER_KEYS, PITSTOP_FILE
-from common.primitives import convert_timeout_to_seconds, check_internet
+from common.primitives import convert_timeout_to_seconds, check_internet, TUrlUtf8Encode
 from common.content_types import ACCEPTED_DOCUMENT_EXTENSIONS
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from web_site_db.remote_call import TRemoteDlrobotCall, TRemoteDlrobotCallList
@@ -471,7 +471,7 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             return
 
         self.send_response(200)
-        self.send_header(DLROBOT_HEADER_KEYS.PROJECT_FILE, remote_call.project_file)
+        self.send_header(DLROBOT_HEADER_KEYS.PROJECT_FILE, TUrlUtf8Encode.to_idna(remote_call.project_file))
         self.send_header(DLROBOT_HEADER_KEYS.CRAWLING_TIMEOUT, remote_call.crawling_timeout)
         self.end_headers()
         self.wfile.write(project_content)
@@ -485,7 +485,7 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             send_error("no file specified")
             return
 
-        _, file_extension = os.path.splitext(os.path.basename(self.path))
+        _, file_extension = os.path.splitext(os.path.basename(TUrlUtf8Encode.from_idna(self.path)))
 
         file_length = self.headers.get('Content-Length')
         if file_length is None or not file_length.isdigit():
@@ -493,7 +493,7 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             return
         file_length = int(file_length)
 
-        project_file = self.headers.get('dlrobot_project_file_name')
+        project_file = TUrlUtf8Encode.from_idna(self.headers.get('dlrobot_project_file_name'))
         if project_file is None:
             send_error('cannot find header "dlrobot_project_file_name"')
             return

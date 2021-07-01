@@ -2,6 +2,7 @@ from django.db import models
 from django.utils.translation import  get_language
 from .countries import get_country_str
 from .rubrics import get_russian_rubric_str
+from common.primitives import TUrlUtf8Encode
 from declarations.nominal_income import get_average_nominal_incomes, YearIncome
 from declarations.ratings import TPersonRatings
 from declarations.car_brands import CAR_BRANDS
@@ -105,7 +106,7 @@ class Office(models.Model):
 
     @property
     def urls_html(self):
-        pairs = ((u, (u.encode('latin').decode('idna') if u.startswith('xn-') else u))
+        pairs = ((u, (TUrlUtf8Encode.from_idna(u) if u.startswith('xn-') else u))
                   for u in self.calculated_params['urls'])
         return "&nbsp;&nbsp;&nbsp;".join("<a href=\"//{}\">{}</a>".format(u1, u2) for u1,u2 in pairs)
 

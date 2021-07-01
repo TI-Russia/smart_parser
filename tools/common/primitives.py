@@ -144,3 +144,13 @@ def run_with_timeout(args, timeout=20*60):
         p.wait(timeout)
     except subprocess.TimeoutExpired:
         p.kill()
+
+
+class TUrlUtf8Encode:
+    @staticmethod
+    def to_idna(s):
+        return s.encode('idna').decode('latin')
+
+    @staticmethod
+    def from_idna(s):
+        return s.encode('latin').decode('idna')

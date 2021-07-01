@@ -1,6 +1,6 @@
-import random
 
 from common.content_types import content_type_to_file_extension, is_video_or_audio_file_extension
+from common.primitives import TUrlUtf8Encode
 
 import ssl
 import urllib.error
@@ -16,6 +16,7 @@ import socket
 import http.client
 from functools import partial
 import os
+import random
 
 #for curl
 import pycurl
@@ -42,7 +43,7 @@ def get_user_agent():
 def convert_russian_web_domain_if_needed(url):
     o = list(urllib.parse.urlparse(url)[:])
     if has_cyrillic(o[1]):
-        o[1] = o[1].encode('idna').decode('latin')
+        o[1] = TUrlUtf8Encode.to_idna(o[1])
 
     o[2] = urllib.parse.unquote(o[2])
     o[2] = urllib.parse.quote(o[2])
