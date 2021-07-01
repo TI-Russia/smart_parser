@@ -169,7 +169,7 @@ class TRussianFioRecognizer:
 
     @staticmethod
     def is_masculine_patronymic(s):
-        return s.length() >= 5 and s[-3:].lower() in TRussianFioRecognizer.masculine_russian_patronymic_suffixes
+        return len(s) >= 5 and s[-3:].lower() in TRussianFioRecognizer.masculine_russian_patronymic_suffixes
 
     @staticmethod
     def is_feminine_patronymic(s):
