@@ -1,4 +1,4 @@
-from common.primitives import get_site_domain_wo_www
+from common.primitives import get_site_domain_wo_www, TUrlUtf8Encode
 from web_site_db.web_site_status import TWebSiteReachStatus
 
 import json
@@ -54,7 +54,7 @@ class TDeclarationWebSiteList:
 
     def add_web_site(self, web_site, office_id):
         # russian domain must be in utf8
-        assert not web_site.startswith('xn--')
+        assert not TUrlUtf8Encode.is_idna_string(web_site)
 
         self.logger.debug("add web site {} ".format(web_site))
         assert web_site not in self.web_sites

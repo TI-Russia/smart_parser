@@ -106,7 +106,7 @@ class Office(models.Model):
 
     @property
     def urls_html(self):
-        pairs = ((u, (TUrlUtf8Encode.from_idna(u) if u.startswith('xn-') else u))
+        pairs = ((u, (TUrlUtf8Encode.from_idna(u) if TUrlUtf8Encode.is_idna_string(u) else u))
                   for u in self.calculated_params['urls'])
         return "&nbsp;&nbsp;&nbsp;".join("<a href=\"//{}\">{}</a>".format(u1, u2) for u1,u2 in pairs)
 

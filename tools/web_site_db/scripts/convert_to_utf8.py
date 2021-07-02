@@ -16,7 +16,7 @@ if __name__ == '__main__':
     web_sites.load_from_disk()
     new_web_sites = dict()
     for k,v in web_sites.web_sites.items():
-        if k.startswith("xn--"):
+        if TUrlUtf8Encode.is_idna_string(k):
             k = TUrlUtf8Encode.from_idna(k)
         new_web_sites[k] = v
     web_sites.web_sites = new_web_sites

@@ -148,6 +148,10 @@ def run_with_timeout(args, timeout=20*60):
 
 class TUrlUtf8Encode:
     @staticmethod
+    def is_idna_string(s):
+        return s.startswith("xn--")
+
+    @staticmethod
     def to_idna(s):
         return s.encode('idna').decode('latin')
 
