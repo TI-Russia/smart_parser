@@ -37,7 +37,7 @@ source $COMMON_SCRIPT
 
 
 #3  получение статистики по dlrobot_human.json, сравнение с предыдущим обходом
-    python3 $TOOLS/disclosures_site/scripts/dlrobot_human_stats.py dlrobot_human.json > dlrobot_human.json.stats
+    python3 $TOOLS/disclosures_site/scripts/dlrobot_human.py --action stats --input-file dlrobot_human.json > dlrobot_human.json.stats
     new_size=$(stat -c%s "dlrobot_human.json")
     old_size=$(stat -c%s "$OLD_DLROBOT_FOLDER/dlrobot_human.json")
     if (( $old_size > $new_size )); then
