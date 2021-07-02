@@ -56,12 +56,15 @@ namespace Smart.Parser.Lib
             };
             if (columnOrdering.YearFromIncome != null)
             {
-                properties.Year = columnOrdering.YearFromIncome;
+                if (properties.Year != null)
+                {
+                    properties.Year = Math.Max(columnOrdering.YearFromIncome.Value, properties.Year.Value);
+                }
+                else
+                {
+                    properties.Year = columnOrdering.YearFromIncome;
+                }
             }
-            /*if (properties.Year == null)
-            {
-                properties.Year = columnOrdering.YearFromIncome;
-            }*/
             Declaration declaration = new Declaration()
             {
                 Properties = properties

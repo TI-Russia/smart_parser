@@ -45,6 +45,7 @@ namespace Smart.Parser
         public static bool IgnoreDirectoryIds = false;
         public static bool BuildTrigrams = false;
         public static int? UserDocumentFileId;
+        public static ColumnOrdering LastGoodOrdering = null;
 
         static string ParseArgs(string[] args)
         {
@@ -486,7 +487,26 @@ namespace Smart.Parser
 
             if (adapter.CurrentScheme == default)
             {
-                var columnOrdering = ColumnDetector.ExamineTableBeginning(adapter);
+                ColumnOrdering? columnOrdering = null;
+                try
+                {
+                    columnOrdering = ColumnDetector.ExamineTableBeginning(adapter);
+                    LastGoodOrdering = columnOrdering;
+                }
+                catch (Exception ex)
+                {
+                    Logger.Info(ex.Message);
+                    if (LastGoodOrdering != null)
+                    {
+                        Logger.Info("use the last known table header scheme");
+                        columnOrdering = LastGoodOrdering;
+                        columnOrdering.FirstDataRow = 0;
+                    }
+                    else {
+                        throw ex;
+                    }
+                    
+                }
 
                 // Try to extract declaration year from file name if we weren't able to get it from document title
                 if (!columnOrdering.Year.HasValue)

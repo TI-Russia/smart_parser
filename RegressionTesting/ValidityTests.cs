@@ -13,7 +13,7 @@ using TI.Declarator.JsonSerialization;
 namespace RegressionTesting
 {
     /// <summary>
-    /// Summary description for ValidityTests
+    /// Summary description for cha
     /// </summary>
     [TestClass]
     public class ValidityTests
@@ -151,6 +151,14 @@ namespace RegressionTesting
         {
             TestSmartParser("MinDalVostok2015.xlsx", "prod");
         }
+
+        [TestMethod]
+        [TestCategory("xls")]
+        public void Chab2019()
+        {
+            TestSmartParser("chab2019.xls", "prod", false, SmartParserJsonFormatEnum.Disclosures);
+        }
+
 
         [TestMethod]
         [TestCategory("docx")]
@@ -901,7 +909,7 @@ namespace RegressionTesting
         [TestCategory("xls")]
         public void DisclosuresJsonFormat()
         {
-            TestSmartParser("disclosures_format.xls", "prod",false, SmartParserJsonFormatEnum.Disclosures);
+            TestSmartParser("disclosures_format.xls", "prod", false, SmartParserJsonFormatEnum.Disclosures);
         }
 
         [TestMethod]

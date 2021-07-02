@@ -18,7 +18,21 @@ namespace Smart.Parser.Lib
     public class ColumnDetector
     {
         public static List<string> AbsenceMarkers = new List<string> { "-", "отсутствует", "?", "не указано", "не имеет"};
-       
+
+        public static string CheckDate(Match match)
+        {
+            // delete all dates except the first ones or the last ones 01.01.2010 and 31.12.2010
+            bool first_date = match.Value.StartsWith("1.1") || match.Value.StartsWith("01.01");
+            bool last_date = match.Value.StartsWith("31.12");
+            if (first_date || last_date)
+            {
+                return match.Value;
+            } 
+            else
+            {
+                return "";
+            }
+        }
         static public bool GetValuesFromTitle(string text, ref string title, ref int? year, ref string ministry)
         {
             int text_len = text.Length;
@@ -34,7 +48,8 @@ namespace Smart.Parser.Lib
                 return false;
 
             text = Regex.Replace(text, "8\\s+июля\\s+2013", "");
-            
+            text = Regex.Replace(text, @"\d\d?\.\d\d?\.20\d\d", new MatchEvaluator(CheckDate));
+
             var decemberYearMatches = Regex.Matches(text, @"(31\s+декабря\s+)(20\d\d)(\s+года)");
             if (decemberYearMatches.Count > 0)
             {
