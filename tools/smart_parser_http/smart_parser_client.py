@@ -60,7 +60,7 @@ class TSmartParserCacheClient(object):
         self.assert_server_alive()
         self.args = args
 
-    def send_file(self, file_path, rebuild=False, external_json=False):
+    def send_file(self, file_path, rebuild=False, external_json=False, smart_parser_version=None):
         conn = http.client.HTTPConnection(self.server_address)
         with open(file_path, "rb") as inp:
             file_contents = inp.read()
@@ -73,6 +73,8 @@ class TSmartParserCacheClient(object):
             sha256 = sha256[0:sha256.find('.')] # remember double file extension .docx.json
             assert len(sha256) == 64
             path += "?external_json=1&sha256=" + sha256
+            if smart_parser_version is not None:
+                path += "&smart_parser_version=" + smart_parser_version
         conn.request("PUT", path, file_contents)
         response = conn.getresponse()
         if response.code != 201:

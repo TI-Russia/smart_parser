@@ -47,7 +47,7 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         self.logger = setup_logging(log_file_name=self.args.log_file_name, append_mode=True)
         self.converters = TExternalConverters()
         self.json_cache_dbm = dbm.gnu.open(args.cache_file, "w" if os.path.exists(args.cache_file) else "c")
-        self.last_version = self.read_smart_parser_versions()
+        self.versions = self.read_smart_parser_versions()
         self.task_queue = self.initialize_input_queue()
         self.session_write_count = 0
         self.worker_pool = None
@@ -95,24 +95,29 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
 
     def read_smart_parser_versions(self):
         with open (os.path.join(os.path.dirname(__file__), "../../src/Resources/versions.txt"), "r") as inp:
-            versions = json.load(inp)
-            last_version = versions['versions'][-1]['id']
+            versions = list(x['id'] for x in json.load(inp)['versions'])
+            last_version = versions[-1]
             assert last_version is not None
             self.logger.error("last smart parser version is {}".format(last_version))
             version_in_binary = self.converters.get_smart_parser_version()
             if version_in_binary != last_version:
                 self.logger.error("smart parser binary is outdated, compile it  ")
                 assert version_in_binary == last_version
-            return last_version
+            return versions
 
     def build_key(self, sha256, smart_parser_version):
         if smart_parser_version is None:
-            smart_parser_version = self.last_version
+            smart_parser_version = self.versions[-1]
         return ",".join([sha256, smart_parser_version])
 
     def get_smart_parser_json(self, sha256, smart_parser_version=None):
         key = self.build_key(sha256, smart_parser_version)
         js = self.json_cache_dbm.get(key)
+        if js is None and smart_parser_version is None and len(self.versions) > 1:
+            # try the previous version
+            key = self.build_key(sha256, self.versions[-2])
+            js = self.json_cache_dbm.get(key)
+
         if js is None:
             self.logger.debug("cannot find key {}".format(key))
             return None
@@ -150,8 +155,8 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
                 self.unsynced_records_count = 0
             self.logger.debug("there are {} records to be stored to disk".format(self.unsynced_records_count))
 
-    def register_built_smart_parser_json(self, sha256, json_data):
-        key = self.build_key(sha256, None)
+    def register_built_smart_parser_json(self, sha256, json_data, smart_parser_version=None):
+        key = self.build_key(sha256, smart_parser_version)
         self.logger.debug("add json to key  {}".format(key))
         self.session_write_count += 1
         if json_data != TSmartParserHTTPServer.SMART_PARSE_FAIL_CONSTANT:
@@ -296,7 +301,8 @@ class TSmartParserRequestHandler(http.server.BaseHTTPRequestHandler):
                 self.server.put_to_task_queue(file_bytes, file_extension, ('rebuild' in query_components))
             else:
                 sha256 = query_components['sha256']
-                self.server.register_built_smart_parser_json(sha256, file_bytes)
+                self.server.register_built_smart_parser_json(sha256, file_bytes,
+                                                             smart_parser_version=query_components.get('smart_parser_version'))
         except Exception as exp:
             self.send_error_wrapper('register_task_result failed: {}'.format(str(exp)))
             return

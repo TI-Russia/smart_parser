@@ -161,3 +161,24 @@ class TestSendJson(TestCase):
         self.assertEqual(self.env.client.get_stats()['session_write_count'], 1)
         js = self.env.client.retrieve_json_by_sha256(sha256)
         self.assertIsNotNone(js)
+
+
+class TestSendJsonPrevVersion(TestCase):
+    def setUp(self):
+        self.env = TTestEnv(8393)
+        self.env.setUp(1)
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def test_send_json(self):
+        prev_version = self.env.server.versions[-2]
+        sha256 = "a9aa9e3edb4676abdf88092d00715f6ad8a0606628c349afcd977bbd1922885f"
+        file_path1 = sha256 + ".docx.json"
+        with open(file_path1, "w") as outp:
+            json.dump({"aaa": 1}, outp)
+        self.assertTrue(self.env.client.send_file(file_path1, external_json=True, smart_parser_version=prev_version))
+        time.sleep(1)
+        self.assertEqual(self.env.client.get_stats()['session_write_count'], 1)
+        js = self.env.client.retrieve_json_by_sha256(sha256)
+        self.assertIsNotNone(js)
