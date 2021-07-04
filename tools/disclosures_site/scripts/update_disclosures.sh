@@ -45,16 +45,13 @@ source $COMMON_SCRIPT
         exit 1
     endif
 
-#4.  инициализация базы disclosures
+#4  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод (1 час)
+   python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.prod --directory $DLROBOT_FOLDER
+
+#5.  инициализация базы disclosures
     python3 $TOOLS/disclosures_site/manage.py create_database --settings disclosures.settings.dev --skip-checks --username db_creator --password root
     python3 $TOOLS/disclosures_site/manage.py makemigrations --settings disclosures.settings.dev
     python3 $TOOLS/disclosures_site/manage.py migrate --settings disclosures.settings.dev
-    #python3 $TOOLS/disclosures_site/manage.py test $TOOLS/disclosures_site/declarations/tests --settings disclosures.settings.dev
-
-
-#5  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод (1 час)
-   python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.prod --directory $DLROBOT_FOLDER
-
 
 #9 (надо включить в import_json?)
     cd $DLROBOT_FOLDER # im portant

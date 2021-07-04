@@ -624,7 +624,12 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
             self.send_error_404("file is too large (size must less than {} bytes ".format(max_file_size))
             return
         self.server.logger.debug("receive file {} length {}".format(self.path, file_length))
-        file_bytes = self.rfile.read(file_length)
+        try:
+            file_bytes = self.rfile.read(file_length)
+        except ConnectionError as exp:
+            self.send_error_404("ConnectionError : {}".format(exp))
+            return
+
         sha256 = build_dislosures_sha256_by_file_data(file_bytes, file_extension)
         if not rebuild and self.server.convert_storage.has_converted_file(sha256):
             self.send_response(201, 'Already exists')
@@ -639,7 +644,7 @@ class THttpServerRequestHandler(http.server.BaseHTTPRequestHandler):
 
         self.server.all_put_files_count += 1
 
-        self.send_response(201, 'Created')
+        self.send_response(201, 'Cre    ated')
         self.end_headers()
 
     def do_PUT(self):
