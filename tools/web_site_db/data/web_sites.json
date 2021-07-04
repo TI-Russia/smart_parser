@@ -1634,6 +1634,10 @@
     "azovskiy.donland.ru": {
         "calc_office_id": 1623
     },
+    "rayon.azov-info.ru": {
+        "calc_office_id": 1623,
+        "status": "abandoned"
+    },
     "aksayland.ru": {
         "calc_office_id": 1624
     },
@@ -44142,6 +44146,10 @@
         "calc_office_id": 3816
     },
     "sudak.rk.gov.ru:8880": {
+        "calc_office_id": 6594,
+        "status": "abandoned"
+    },
+    "sudak.rk.gov.ru": {
         "calc_office_id": 6594
     },
     "ffoms.gov.ru": {
