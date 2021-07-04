@@ -369,7 +369,8 @@
         "calc_office_id": 981
     },
     "mvd.ru": {
-        "calc_office_id": 4
+        "calc_office_id": 4,
+        "status": "abandoned"
     },
     "rpn.gov.ru": {
         "calc_office_id": 501
@@ -7671,6 +7672,10 @@
         "calc_office_id": 952
     },
     "30.mvd.ru": {
+        "calc_office_id": 4343,
+        "status": "abandoned"
+    },
+    "30.мвд.рф": {
         "calc_office_id": 4343
     },
     "31.rospotrebnadzor.ru": {
@@ -10915,6 +10920,10 @@
         "calc_office_id": 1319
     },
     "32.mvd.ru": {
+        "calc_office_id": 4346,
+        "status": "abandoned"
+    },
+    "32.мвд.рф": {
         "calc_office_id": 4346
     },
     "06.rospotrebnadzor.ru": {
@@ -12245,6 +12254,10 @@
         "calc_office_id": 6907
     },
     "nalog.ru": {
+        "calc_office_id": 470,
+        "status": "abandoned"
+    },
+    "nalog.gov.ru": {
         "calc_office_id": 470
     },
     "adm.rkomi.ru": {
@@ -12258,7 +12271,8 @@
         "status": "abandoned"
     },
     "prockurskobl.ru": {
-        "calc_office_id": 41
+        "calc_office_id": 41,
+        "status": "abandoned"
     },
     "gubernator96.ru": {
         "calc_office_id": 97
@@ -12303,15 +12317,31 @@
         "status": "abandoned"
     },
     "50.mvd.ru": {
+        "calc_office_id": 4377,
+        "status": "abandoned"
+    },
+    "50.мвд.рф": {
         "calc_office_id": 4377
     },
     "54.mvd.ru": {
+        "calc_office_id": 4382,
+        "status": "abandoned"
+    },
+    "54.мвд.рф": {
         "calc_office_id": 4382
     },
     "57.mvd.ru": {
+        "calc_office_id": 4385,
+        "status": "abandoned"
+    },
+    "57.мвд.рф": {
         "calc_office_id": 4385
     },
     "21.mvd.ru": {
+        "calc_office_id": 4415,
+        "status": "abandoned"
+    },
+    "21.мвд.рф": {
         "calc_office_id": 4415
     },
     "01.rospotrebnadzor.ru": {
@@ -13390,9 +13420,17 @@
         "calc_office_id": 922
     },
     "szfout.mvd.ru": {
+        "calc_office_id": 4329,
+        "status": "abandoned"
+    },
+    "szfout.мвд.рф": {
         "calc_office_id": 4329
     },
     "dfout.mvd.ru": {
+        "calc_office_id": 4335,
+        "status": "abandoned"
+    },
+    "dfout.мвд.рф": {
         "calc_office_id": 4335
     },
     "amurbvu.ru": {
@@ -13780,12 +13818,24 @@
         "calc_office_id": 1335
     },
     "22.mvd.ru": {
+        "calc_office_id": 4340,
+        "status": "abandoned"
+    },
+    "22.мвд.рф": {
         "calc_office_id": 4340
     },
     "29.mvd.ru": {
+        "calc_office_id": 4342,
+        "status": "abandoned"
+    },
+    "29.мвд.рф": {
         "calc_office_id": 4342
     },
     "41.mvd.ru": {
+        "calc_office_id": 4361,
+        "status": "abandoned"
+    },
+    "41.мвд.рф": {
         "calc_office_id": 4361
     },
     "05.rospotrebnadzor.ru": {
@@ -15426,7 +15476,7 @@
         "calc_office_id": 6913
     },
     "мвд.рф": {
-        "calc_office_id": 6520
+        "calc_office_id": 4
     },
     "fskn.gov.ru": {
         "calc_office_id": 468,
@@ -15525,15 +15575,31 @@
         "calc_office_id": 4194
     },
     "36.mvd.ru": {
+        "calc_office_id": 4351,
+        "status": "abandoned"
+    },
+    "36.мвд.рф": {
         "calc_office_id": 4351
     },
     "40.mvd.ru": {
+        "calc_office_id": 4360,
+        "status": "abandoned"
+    },
+    "40.мвд.рф": {
         "calc_office_id": 4360
     },
     "09.mvd.ru": {
+        "calc_office_id": 4362,
+        "status": "abandoned"
+    },
+    "09.мвд.рф": {
         "calc_office_id": 4362
     },
     "56.mvd.ru": {
+        "calc_office_id": 4384,
+        "status": "abandoned"
+    },
+    "56.мвд.рф": {
         "calc_office_id": 4384
     },
     "15.rospotrebnadzor.ru": {
@@ -16964,6 +17030,10 @@
         "calc_office_id": 1310
     },
     "vsut.mvd.ru": {
+        "calc_office_id": 4336,
+        "status": "abandoned"
+    },
+    "vsut.мвд.рф": {
         "calc_office_id": 4336
     },
     "ougrn.tu.rostransnadzor.ru": {
@@ -17573,33 +17643,70 @@
         "calc_office_id": 1373
     },
     "39.mvd.ru": {
+        "calc_office_id": 4247,
+        "status": "abandoned"
+    },
+    "39.мвд.рф": {
         "calc_office_id": 4247
     },
     "01.mvd.ru": {
+        "calc_office_id": 4338,
+        "status": "abandoned"
+    },
+    "01.мвд.рф": {
         "calc_office_id": 4338
     },
     "04.mvd.ru": {
-        "calc_office_id": 4339
+        "calc_office_id": 4339,
+        "status": "abandoned"
     },
     "02.mvd.ru": {
+        "calc_office_id": 4344,
+        "status": "abandoned"
+    },
+    "02.мвд.рф": {
         "calc_office_id": 4344
     },
     "03.mvd.ru": {
+        "calc_office_id": 4347,
+        "status": "abandoned"
+    },
+    "03.мвд.рф": {
         "calc_office_id": 4347
     },
     "75.mvd.ru": {
+        "calc_office_id": 4354,
+        "status": "abandoned"
+    },
+    "75.мвд.рф": {
         "calc_office_id": 4354
     },
     "44.mvd.ru": {
+        "calc_office_id": 4367,
+        "status": "abandoned"
+    },
+    "44.мвд.рф": {
         "calc_office_id": 4367
     },
     "12.mvd.ru": {
+        "calc_office_id": 4374,
+        "status": "abandoned"
+    },
+    "12.мвд.рф": {
         "calc_office_id": 4374
     },
     "53.mvd.ru": {
+        "calc_office_id": 4381,
+        "status": "abandoned"
+    },
+    "53.мвд.рф": {
         "calc_office_id": 4381
     },
     "25.mvd.ru": {
+        "calc_office_id": 4388,
+        "status": "abandoned"
+    },
+    "25.мвд.рф": {
         "calc_office_id": 4388
     },
     "tu03.rosim.ru": {
@@ -19063,6 +19170,10 @@
         "status": "abandoned"
     },
     "pfout.mvd.ru": {
+        "calc_office_id": 4332,
+        "status": "abandoned"
+    },
+    "pfout.мвд.рф": {
         "calc_office_id": 4332
     },
     "augmrn.tu.rostransnadzor.ru": {
@@ -19674,33 +19785,73 @@
         "calc_office_id": 1353
     },
     "43.mvd.ru": {
+        "calc_office_id": 4365,
+        "status": "abandoned"
+    },
+    "43.мвд.рф": {
         "calc_office_id": 4365
     },
     "11.mvd.ru": {
+        "calc_office_id": 4366,
+        "status": "abandoned"
+    },
+    "11.мвд.рф": {
         "calc_office_id": 4366
     },
     "77.mvd.ru": {
+        "calc_office_id": 4376,
+        "status": "abandoned"
+    },
+    "77.мвд.рф": {
         "calc_office_id": 4376
     },
     "66.mvd.ru": {
+        "calc_office_id": 4397,
+        "status": "abandoned"
+    },
+    "66.мвд.рф": {
         "calc_office_id": 4397
     },
     "15.mvd.ru": {
+        "calc_office_id": 4398,
+        "status": "abandoned"
+    },
+    "15.мвд.рф": {
         "calc_office_id": 4398
     },
     "69.mvd.ru": {
+        "calc_office_id": 4403,
+        "status": "abandoned"
+    },
+    "69.мвд.рф": {
         "calc_office_id": 4403
     },
     "17.mvd.ru": {
+        "calc_office_id": 4405,
+        "status": "abandoned"
+    },
+    "17.мвд.рф": {
         "calc_office_id": 4405
     },
     "72.mvd.ru": {
+        "calc_office_id": 4407,
+        "status": "abandoned"
+    },
+    "72.мвд.рф": {
         "calc_office_id": 4407
     },
     "89.mvd.ru": {
+        "calc_office_id": 4417,
+        "status": "abandoned"
+    },
+    "89.мвд.рф": {
         "calc_office_id": 4417
     },
     "76.mvd.ru": {
+        "calc_office_id": 4418,
+        "status": "abandoned"
+    },
+    "76.мвд.рф": {
         "calc_office_id": 4418
     },
     "09.rospotrebnadzor.ru": {
@@ -21924,12 +22075,24 @@
         "status": "abandoned"
     },
     "cfout.mvd.ru": {
+        "calc_office_id": 4328,
+        "status": "abandoned"
+    },
+    "cfout.мвд.рф": {
         "calc_office_id": 4328
     },
     "ufout.mvd.ru": {
+        "calc_office_id": 4330,
+        "status": "abandoned"
+    },
+    "ufout.мвд.рф": {
         "calc_office_id": 4330
     },
     "uralfout.mvd.ru": {
+        "calc_office_id": 4333,
+        "status": "abandoned"
+    },
+    "uralfout.мвд.рф": {
         "calc_office_id": 4333
     },
     "zkbvu.ru": {
@@ -22169,36 +22332,77 @@
         "calc_office_id": 1348
     },
     "28.mvd.ru": {
+        "calc_office_id": 4341,
+        "status": "abandoned"
+    },
+    "28.мвд.рф": {
         "calc_office_id": 4341
     },
     "34.mvd.ru": {
+        "calc_office_id": 4349,
+        "status": "abandoned"
+    },
+    "34.мвд.рф": {
         "calc_office_id": 4349
     },
     "05.mvd.ru": {
+        "calc_office_id": 4352,
+        "status": "abandoned"
+    },
+    "05.мвд.рф": {
         "calc_office_id": 4352
     },
     "06.mvd.ru": {
+        "calc_office_id": 4356,
+        "status": "abandoned"
+    },
+    "06.мвд.рф": {
         "calc_office_id": 4356
     },
     "24.mvd.ru": {
+        "calc_office_id": 4369,
+        "status": "abandoned"
+    },
+    "24.мвд.рф": {
         "calc_office_id": 4369
     },
     "58.mvd.ru": {
+        "calc_office_id": 4386,
+        "status": "abandoned"
+    },
+    "58.мвд.рф": {
         "calc_office_id": 4386
     },
     "63.mvd.ru": {
+        "calc_office_id": 4392,
+        "status": "abandoned"
+    },
+    "63.мвд.рф": {
         "calc_office_id": 4392
     },
     "26.mvd.ru": {
+        "calc_office_id": 4400,
+        "status": "abandoned"
+    },
+    "26.мвд.рф": {
         "calc_office_id": 4400
     },
     "68.mvd.ru": {
-        "calc_office_id": 4401
+        "calc_office_id": 4401,
+        "status": "abandoned"
     },
     "18.mvd.ru": {
+        "calc_office_id": 4408,
+        "status": "abandoned"
+    },
+    "18.мвд.рф": {
         "calc_office_id": 4408
     },
     "86.mvd.ru": {
+        "calc_office_id": 4412,
+        "status": "abandoned"
+    },
+    "86.мвд.рф": {
         "calc_office_id": 4412
     },
     "tu83.rosim.ru": {
@@ -23831,6 +24035,10 @@
         "calc_office_id": 7158
     },
     "zbut.mvd.ru": {
+        "calc_office_id": 4337,
+        "status": "abandoned"
+    },
+    "zbut.мвд.рф": {
         "calc_office_id": 4337
     },
     "lbvu.ru": {
@@ -24091,61 +24299,134 @@
         "calc_office_id": 4339
     },
     "35.mvd.ru": {
+        "calc_office_id": 4350,
+        "status": "abandoned"
+    },
+    "35.мвд.рф": {
         "calc_office_id": 4350
     },
     "37.mvd.ru": {
+        "calc_office_id": 4355,
+        "status": "abandoned"
+    },
+    "37.мвд.рф": {
         "calc_office_id": 4355
     },
     "10.mvd.ru": {
+        "calc_office_id": 4363,
+        "status": "abandoned"
+    },
+    "10.мвд.рф": {
         "calc_office_id": 4363
     },
     "42.mvd.ru": {
+        "calc_office_id": 4364,
+        "status": "abandoned"
+    },
+    "42.мвд.рф": {
         "calc_office_id": 4364
     },
     "48.mvd.ru": {
+        "calc_office_id": 4372,
+        "status": "abandoned"
+    },
+    "48.мвд.рф": {
         "calc_office_id": 4372
     },
     "49.mvd.ru": {
+        "calc_office_id": 4373,
+        "status": "abandoned"
+    },
+    "49.мвд.рф": {
         "calc_office_id": 4373
     },
     "13.mvd.ru": {
+        "calc_office_id": 4375,
+        "status": "abandoned"
+    },
+    "13.мвд.рф": {
         "calc_office_id": 4375
     },
     "51.mvd.ru": {
+        "calc_office_id": 4378,
+        "status": "abandoned"
+    },
+    "51.мвд.рф": {
         "calc_office_id": 4378
     },
     "83.mvd.ru": {
+        "calc_office_id": 4379,
+        "status": "abandoned"
+    },
+    "83.мвд.рф": {
         "calc_office_id": 4379
     },
     "78.mvd.ru": {
+        "calc_office_id": 4393,
+        "status": "abandoned"
+    },
+    "78.мвд.рф": {
         "calc_office_id": 4393
     },
     "64.mvd.ru": {
+        "calc_office_id": 4394,
+        "status": "abandoned"
+    },
+    "64.мвд.рф": {
         "calc_office_id": 4394
     },
     "14.mvd.ru": {
+        "calc_office_id": 4395,
+        "status": "abandoned"
+    },
+    "14.мвд.рф": {
         "calc_office_id": 4395
     },
     "65.mvd.ru": {
+        "calc_office_id": 4396,
+        "status": "abandoned"
+    },
+    "65.мвд.рф": {
         "calc_office_id": 4396
     },
     "67.mvd.ru": {
+        "calc_office_id": 4399,
+        "status": "abandoned"
+    },
+    "67.мвд.рф": {
         "calc_office_id": 4399
     },
     "70.mvd.ru": {
+        "calc_office_id": 4404,
+        "status": "abandoned"
+    },
+    "70.мвд.рф": {
         "calc_office_id": 4404
     },
     "27.mvd.ru": {
+        "calc_office_id": 4410,
+        "status": "abandoned"
+    },
+    "27.мвд.рф": {
         "calc_office_id": 4410
     },
     "74.mvd.ru": {
+        "calc_office_id": 4413,
+        "status": "abandoned"
+    },
+    "74.мвд.рф": {
         "calc_office_id": 4413
     },
     "95.mvd.ru": {
+        "calc_office_id": 4414,
+        "status": "abandoned"
+    },
+    "95.мвд.рф": {
         "calc_office_id": 4414
     },
     "87.mvd.ru": {
-        "calc_office_id": 4416
+        "calc_office_id": 4416,
+        "status": "abandoned"
     },
     "87.мвд.рф": {
         "calc_office_id": 4416
@@ -27212,36 +27493,77 @@
         "calc_office_id": 1347
     },
     "31.mvd.ru": {
+        "calc_office_id": 4345,
+        "status": "abandoned"
+    },
+    "31.мвд.рф": {
         "calc_office_id": 4345
     },
     "38.mvd.ru": {
-        "calc_office_id": 4357
+        "calc_office_id": 4357,
+        "status": "abandoned"
     },
     "07.mvd.ru": {
+        "calc_office_id": 4358,
+        "status": "abandoned"
+    },
+    "07.мвд.рф": {
         "calc_office_id": 4358
     },
     "08.mvd.ru": {
+        "calc_office_id": 4359,
+        "status": "abandoned"
+    },
+    "08.мвд.рф": {
         "calc_office_id": 4359
     },
     "23.mvd.ru": {
+        "calc_office_id": 4368,
+        "status": "abandoned"
+    },
+    "23.мвд.рф": {
         "calc_office_id": 4368
     },
     "45.mvd.ru": {
+        "calc_office_id": 4370,
+        "status": "abandoned"
+    },
+    "45.мвд.рф": {
         "calc_office_id": 4370
     },
     "59.mvd.ru": {
+        "calc_office_id": 4387,
+        "status": "abandoned"
+    },
+    "59.мвд.рф": {
         "calc_office_id": 4387
     },
     "61.mvd.ru": {
+        "calc_office_id": 4390,
+        "status": "abandoned"
+    },
+    "61.мвд.рф": {
         "calc_office_id": 4390
     },
     "62.mvd.ru": {
+        "calc_office_id": 4391,
+        "status": "abandoned"
+    },
+    "62.мвд.рф": {
         "calc_office_id": 4391
     },
     "16.mvd.ru": {
+        "calc_office_id": 4402,
+        "status": "abandoned"
+    },
+    "16.мвд.рф": {
         "calc_office_id": 4402
     },
     "71.mvd.ru": {
+        "calc_office_id": 4406,
+        "status": "abandoned"
+    },
+    "71.мвд.рф": {
         "calc_office_id": 4406
     },
     "rospotrebnadzor95.ru": {
@@ -28575,6 +28897,10 @@
         "calc_office_id": 905
     },
     "sibfout.mvd.ru": {
+        "calc_office_id": 4334,
+        "status": "abandoned"
+    },
+    "sibfout.мвд.рф": {
         "calc_office_id": 4334
     },
     "забайкальскоелу.мвд.рф": {
@@ -29093,30 +29419,66 @@
         "calc_office_id": 4309
     },
     "skfout.mvd.ru": {
+        "calc_office_id": 4331,
+        "status": "abandoned"
+    },
+    "skfout.мвд.рф": {
         "calc_office_id": 4331
     },
     "33.mvd.ru": {
+        "calc_office_id": 4348,
+        "status": "abandoned"
+    },
+    "33.мвд.рф": {
         "calc_office_id": 4348
     },
     "79.mvd.ru": {
+        "calc_office_id": 4353,
+        "status": "abandoned"
+    },
+    "79.мвд.рф": {
         "calc_office_id": 4353
     },
     "46.mvd.ru": {
+        "calc_office_id": 4371,
+        "status": "abandoned"
+    },
+    "46.мвд.рф": {
         "calc_office_id": 4371
     },
     "52.mvd.ru": {
+        "calc_office_id": 4380,
+        "status": "abandoned"
+    },
+    "52.мвд.рф": {
         "calc_office_id": 4380
     },
     "55.mvd.ru": {
+        "calc_office_id": 4383,
+        "status": "abandoned"
+    },
+    "55.мвд.рф": {
         "calc_office_id": 4383
     },
     "60.mvd.ru": {
+        "calc_office_id": 4389,
+        "status": "abandoned"
+    },
+    "60.мвд.рф": {
         "calc_office_id": 4389
     },
     "73.mvd.ru": {
+        "calc_office_id": 4409,
+        "status": "abandoned"
+    },
+    "73.мвд.рф": {
         "calc_office_id": 4409
     },
     "19.mvd.ru": {
+        "calc_office_id": 4411,
+        "status": "abandoned"
+    },
+    "19.мвд.рф": {
         "calc_office_id": 4411
     },
     "novosibstat.gks.ru": {
