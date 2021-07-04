@@ -13,20 +13,10 @@ import time
 import subprocess
 import random
 from functools import partial
-
+import sys
 
 def start_server(server):
     server.start_http_server()
-
-
-def find_abbyy_process():
-    os.system("tasklist > tasklist.txt")
-    with open ("tasklist.txt", "r") as inp:
-        for l in inp:
-            if 'HotFolder' in l:
-                return True
-    os.unlink("tasklist.txt")
-    return False
 
 
 def recreate_folder(folder):
@@ -54,7 +44,6 @@ class TTestEnv:
         self.pdf_ocr_out_folder = os.path.join(os.path.dirname(__file__), "pdf.ocr.out")
         if not os.path.exists(self.pdf_ocr_folder) or not os.path.exists(self.pdf_ocr_out_folder):
             raise Exception("run python update_finereader_task.py, and upload test.hft to finreader hot folder")
-        assert (find_abbyy_process())
         self.project_file = "converted_file_storage.json"
         self.client = None
         self.server_args = None
@@ -309,9 +298,23 @@ class TestWinwordConvertToJpg(TestCase):
         self.assertListEqual(file_sizes, new_file_sizes)
 
 
+class TestRestart(TestCase):
+    def setUp(self):
+        self.env = TTestEnv("restart")
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def test_restart(self):
+        # it seems that there is a problem in this test  under Pycharm because Pycharm deletes all child processes
+        # after test end
+        self.env.server.restart_ocr()
+        self.assertIsNotNone(self.env.server.get_hot_folder_path_from_running_tasks())
+
+
 class TestRebuild(TestCase):
     def setUp(self):
-        self.env = TTestEnv("rebuild", ['--disable-ocr'])
+        self.env = TTestEnv("rebuild1", ['--disable-ocr'])
 
     def tearDown(self):
         self.env.tearDown()
@@ -326,14 +329,15 @@ class TestRebuild(TestCase):
         self.assertEqual(stats["all_put_files_count"], 2) # the first client call and the third client call
 
 
-class TestRestartOcr(TestCase):
+class TestRestartOcrAfterFreeze(TestCase):
     def setUp(self):
         self.env = TTestEnv("restart-ocr", ['--ocr-timeout',  '160s', '--disable-winword', '--ocr-restart-time', '180s'])
 
     def tearDown(self):
         self.env.tearDown()
 
-    def test_restart_ocr(self):
+    def test_restart_after_freeze(self):
+
         #may be we should also restart "hot folder" application
         output_files = self.env.process_with_client(['../files/freeze.pdf'], timeout=200)
         self.assertFalse(os.path.exists(output_files[0]))

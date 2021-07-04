@@ -20,6 +20,7 @@ from http import HTTPStatus
 import telegram_send
 import threading
 
+
 def convert_to_seconds(s):
     seconds_per_unit = {"s": 1, "m": 60, "h": 3600}
     if s is None or len(s) == 0:
@@ -103,6 +104,7 @@ class TInputTask:
         self.only_ocr = only_ocr
 
 
+
 class TConvertProcessor(http.server.HTTPServer):
     @staticmethod
     def parse_args(arglist):
@@ -175,7 +177,9 @@ class TConvertProcessor(http.server.HTTPServer):
         self.failed_files_size = 0
         self.successful_get_requests = 0
         self.finished_ocr_tasks = 0
-
+        self.hot_folder_path = self.get_hot_folder_path_from_running_tasks()
+        if self.hot_folder_path is None:
+            raise Exception ("cannot find running HotFolder.exe")
 
         self.file_garbage_collection_timestamp = 0
         self.ocr_queue_is_empty_last_time_stamp = time.time()
@@ -197,6 +201,12 @@ class TConvertProcessor(http.server.HTTPServer):
             self.logger.error(msg)
             raise Exception(msg)
         self.send_to_telegram("conversion server started on {}".format(self.args.server_address))
+
+    def get_hot_folder_path_from_running_tasks(self):
+        p1 = subprocess.run(['wmic', 'process', 'get', 'ExecutablePath'], capture_output=True)
+        for x in p1.stdout.decode('utf8', errors="ignore").split("\n"):
+            if x.find('HotFolder.exe') != -1:
+                return x.strip(" \r\n")
 
     def send_to_telegram(self, message):
         if self.args.enable_telegram:
@@ -485,8 +495,18 @@ class TConvertProcessor(http.server.HTTPServer):
                 self.register_ocr_process_finish(self.ocr_tasks.get(sha256), False)
 
     def restart_ocr(self):
-        self.logger.debug("restart ocr: taskkill fineexec.exe");
-        taskkill_windows('fineexec.exe')
+        self.logger.debug("restart ocr")
+        self.logger.debug("taskkill HotFolder.exe");
+        taskkill_windows('HotFolder.exe')
+
+        self.logger.debug("taskkill fineexec.exe");
+        taskkill_windows('FineExec.exe')
+
+        self.logger.debug("start HotFolder.exe")
+        creationflags = subprocess.DETACHED_PROCESS | subprocess.CREATE_NEW_PROCESS_GROUP | \
+                                subprocess.CREATE_BREAKAWAY_FROM_JOB | subprocess.SW_HIDE
+        subprocess.Popen([self.hot_folder_path], creationflags=creationflags, stdin=subprocess.DEVNULL,
+                         stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
 
     def process_all_tasks(self):
         if len(self.ocr_tasks) == 0:
