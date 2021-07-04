@@ -21,3 +21,4 @@ Ubuntu install
 sudo apt-get install libreoffice
 sudo apt-get install -y libgdiplus
 
+
