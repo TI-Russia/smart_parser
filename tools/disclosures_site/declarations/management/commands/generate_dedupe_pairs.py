@@ -9,6 +9,7 @@ import json
 from collections import defaultdict
 import itertools
 from django.db import connection
+import re
 
 
 class Command(BaseCommand):
@@ -378,13 +379,12 @@ class Command(BaseCommand):
                 last_trigram = None
                 for trigram, trigram_count in cursor:
                     cnt += trigram_count
-                    if accum + trigram_count > 50000 and last_trigram is not None and trigram.find('/') == -1 \
-                            and trigram.find('-') == -1:
+                    if accum + trigram_count > 50000 and last_trigram is not None:
                         borders.append(last_trigram)
-                        #print (accum)
                         accum = 0
                     accum += trigram_count
-                    last_trigram = trigram
+                    if re.search('[/.,"\\:-]', trigram) is None:
+                        last_trigram = trigram
                 assert cnt == models.Section.objects.count()
             borders.append('')
             for x in range(1, len(borders)):
