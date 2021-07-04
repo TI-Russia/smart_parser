@@ -210,7 +210,11 @@ class TConvertProcessor(http.server.HTTPServer):
         # Exit the server thread when the main thread terminates
         self.server_actions_thread.daemon = True
         self.server_actions_thread.start()
-        self.serve_forever()
+        try:
+            self.serve_forever()
+        except Exception as exp:
+            self.logger.error("exit due exception {}".format(exp))
+            self.stop_http_server()
 
     def stop_http_server(self):
         if self.http_server_is_working:
