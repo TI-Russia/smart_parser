@@ -8,11 +8,12 @@ import argparse
 import pymysql
 from datetime import datetime
 
+
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--action", dest='action', help="can be ban, to_utf8, mvd")
-    parser.add_argument("--input-file", dest='input_file')
-    parser.add_argument("--output-file", dest='output_file', required=False)
+    parser.add_argument("--action", dest='action', help="can be ban, to_utf8, mvd, mark_large_sites")
+    parser.add_argument("--input-file", dest='input_file', required=True)
+    parser.add_argument("--output-file", dest='output_file', required=True)
     parser.add_argument("--ban-list", dest='ban_list', required=False)
     return parser.parse_args()
 
@@ -51,7 +52,7 @@ class TWebSitesManager:
                 v.reach_status = TWebSiteReachStatus.abandoned
             self.out_web_sites.web_sites[k] = v
 
-    def mark_large_sites(self, year):
+    def mark_large_sites(self):
         db_connection = pymysql.connect(db="disclosures_db", user="disclosures", password="disclosures")
         in_cursor = db_connection.cursor()
         in_cursor.execute("""
@@ -63,12 +64,14 @@ class TWebSitesManager:
                 group by r.web_domain 
                 having count(s.id) > 500
                 """.format(datetime.now().year - 2))
-
+        self.out_web_sites.web_sites = self.in_web_sites.web_sites
         for web_domain, count in in_cursor:
-            if not self.web_sites.has_web_site(web_domain):
+            if web_domain.find('rospotrebnadzor.ru') != -1:
+                continue
+            if not self.out_web_sites.has_web_site(web_domain):
                 self.logger.debug("cannot find website {} ".format(web_domain))
             else:
-                site = self.get_web_site(web_domain)
+                site = self.out_web_sites.get_web_site(web_domain)
                 site.dlrobot_max_time_coeff = 2.0
 
     def main(self):
@@ -78,6 +81,8 @@ class TWebSitesManager:
             self.to_utf8()
         elif self.args.action == "mvd":
             self.convert_mvd()
+        elif self.args.action == "mark_large_sites":
+            self.mark_large_sites()
         else:
             raise Exception("unknown action")
         self.out_web_sites.save_to_disk()

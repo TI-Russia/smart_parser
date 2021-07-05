@@ -4,19 +4,22 @@
     },
     "mkrf.ru": {
         "calc_office_id": 579,
-        "status": "abandoned"
+        "status": "abandoned",
+        "dlrobot_max_time_coeff": 2.0
     },
     "culture.gov.ru": {
         "calc_office_id": 579
     },
     "mcx.ru": {
-        "calc_office_id": 607
+        "calc_office_id": 607,
+        "dlrobot_max_time_coeff": 2.0
     },
     "duma.yar.ru": {
         "calc_office_id": 563
     },
     "city-yaroslavl.ru": {
-        "calc_office_id": 2386
+        "calc_office_id": 2386,
+        "dlrobot_max_time_coeff": 2.0
     },
     "minjust.ru": {
         "calc_office_id": 595
@@ -25,10 +28,12 @@
         "calc_office_id": 951
     },
     "minfin.ru": {
-        "calc_office_id": 604
+        "calc_office_id": 604,
+        "dlrobot_max_time_coeff": 2.0
     },
     "mos-gorsud.ru": {
-        "calc_office_id": 634
+        "calc_office_id": 634,
+        "dlrobot_max_time_coeff": 2.0
     },
     "minsvyaz.ru": {
         "calc_office_id": 601
@@ -82,13 +87,15 @@
         "status": "abandoned"
     },
     "minsport.gov.ru": {
-        "calc_office_id": 606
+        "calc_office_id": 606,
+        "dlrobot_max_time_coeff": 2.0
     },
     "fssprus.ru": {
         "calc_office_id": 461
     },
     "dvinaland.ru": {
-        "calc_office_id": 169
+        "calc_office_id": 169,
+        "dlrobot_max_time_coeff": 2.0
     },
     "tambov.gov.ru": {
         "calc_office_id": 242
@@ -118,7 +125,8 @@
         "calc_office_id": 425
     },
     "fas.gov.ru": {
-        "calc_office_id": 446
+        "calc_office_id": 446,
+        "dlrobot_max_time_coeff": 2.0
     },
     "kchr.ru": {
         "calc_office_id": 147
@@ -142,7 +150,8 @@
         "calc_office_id": 950
     },
     "krd.ru": {
-        "calc_office_id": 2188
+        "calc_office_id": 2188,
+        "dlrobot_max_time_coeff": 2.0
     },
     "prahtarsk.ru": {
         "calc_office_id": 2269
@@ -166,7 +175,8 @@
         "calc_office_id": 3612
     },
     "minpromtorg.gov.ru": {
-        "calc_office_id": 600
+        "calc_office_id": 600,
+        "dlrobot_max_time_coeff": 2.0
     },
     "adm44.ru": {
         "calc_office_id": 175
@@ -225,7 +235,8 @@
         "calc_office_id": 2178
     },
     "kmscity.ru": {
-        "calc_office_id": 2481
+        "calc_office_id": 2481,
+        "dlrobot_max_time_coeff": 2.0
     },
     "spasskd.ru": {
         "calc_office_id": 2703
@@ -262,7 +273,8 @@
         "calc_office_id": 3794
     },
     "dszn.ru": {
-        "calc_office_id": 5973
+        "calc_office_id": 5973,
+        "dlrobot_max_time_coeff": 2.0
     },
     "audit.gov.ru": {
         "calc_office_id": 15,
@@ -275,7 +287,8 @@
         "calc_office_id": 506
     },
     "belregion.ru": {
-        "calc_office_id": 197
+        "calc_office_id": 197,
+        "dlrobot_max_time_coeff": 2.0
     },
     "admoblkaluga.ru": {
         "calc_office_id": 216
@@ -299,13 +312,16 @@
         "calc_office_id": 949
     },
     "oskolregion.ru": {
-        "calc_office_id": 1421
+        "calc_office_id": 1421,
+        "dlrobot_max_time_coeff": 2.0
     },
     "okrug-wyksa.ru": {
-        "calc_office_id": 1904
+        "calc_office_id": 1904,
+        "dlrobot_max_time_coeff": 2.0
     },
     "kstovo-adm.ru": {
-        "calc_office_id": 1914
+        "calc_office_id": 1914,
+        "dlrobot_max_time_coeff": 2.0
     },
     "zatoshihany.ru": {
         "calc_office_id": 2108
@@ -374,7 +390,8 @@
         "status": "abandoned"
     },
     "rpn.gov.ru": {
-        "calc_office_id": 501
+        "calc_office_id": 501,
+        "dlrobot_max_time_coeff": 2.0
     },
     "stategovernor.admhmao.ru": {
         "calc_office_id": 263
@@ -398,7 +415,8 @@
         "calc_office_id": 781
     },
     "tularegion.ru": {
-        "calc_office_id": 869
+        "calc_office_id": 869,
+        "dlrobot_max_time_coeff": 2.0
     },
     "sobranie.info": {
         "calc_office_id": 946
@@ -413,7 +431,8 @@
         "calc_office_id": 1925
     },
     "kzn.ru": {
-        "calc_office_id": 1939
+        "calc_office_id": 1939,
+        "dlrobot_max_time_coeff": 2.0
     },
     "agryz.tatarstan.ru": {
         "calc_office_id": 1943
@@ -455,7 +474,8 @@
         "calc_office_id": 3125
     },
     "adm-saransk.ru": {
-        "calc_office_id": 3343
+        "calc_office_id": 3343,
+        "dlrobot_max_time_coeff": 2.0
     },
     "gov.cap.ru": {
         "calc_office_id": 3349
@@ -473,7 +493,8 @@
         "calc_office_id": 481
     },
     "mchs.gov.ru": {
-        "calc_office_id": 580
+        "calc_office_id": 580,
+        "dlrobot_max_time_coeff": 2.0
     },
     "elkurultay.ru": {
         "calc_office_id": 116
@@ -503,7 +524,8 @@
         "calc_office_id": 1564
     },
     "admkrsk.ru": {
-        "calc_office_id": 1697
+        "calc_office_id": 1697,
+        "dlrobot_max_time_coeff": 2.0
     },
     "adm-achinsk.ru": {
         "calc_office_id": 1724
@@ -577,7 +599,8 @@
         "calc_office_id": 610
     },
     "favt.ru": {
-        "calc_office_id": 509
+        "calc_office_id": 509,
+        "dlrobot_max_time_coeff": 2.0
     },
     "roszdravnadzor.ru": {
         "calc_office_id": 495
@@ -703,7 +726,8 @@
         "status": "abandoned"
     },
     "kurgan-city.ru": {
-        "calc_office_id": 3239
+        "calc_office_id": 3239,
+        "dlrobot_max_time_coeff": 2.0
     },
     "poladmin.ru": {
         "calc_office_id": 3254
@@ -773,7 +797,8 @@
         "calc_office_id": 1513
     },
     "novo-sibirsk.ru": {
-        "calc_office_id": 1575
+        "calc_office_id": 1575,
+        "dlrobot_max_time_coeff": 2.0
     },
     "kamensk.donland.ru": {
         "calc_office_id": 1619
@@ -815,7 +840,8 @@
         "calc_office_id": 2234
     },
     "dinskoi-raion.ru": {
-        "calc_office_id": 2251
+        "calc_office_id": 2251,
+        "dlrobot_max_time_coeff": 2.0
     },
     "nmalykla.ulregion.ru": {
         "calc_office_id": 2400
@@ -877,7 +903,8 @@
         "calc_office_id": 3171
     },
     "vladikavkaz-osetia.ru": {
-        "calc_office_id": 3345
+        "calc_office_id": 3345,
+        "dlrobot_max_time_coeff": 2.0
     },
     "tikhvin.org": {
         "calc_office_id": 3368
@@ -909,11 +936,13 @@
     },
     "rosreserv.ru": {
         "calc_office_id": 514,
-        "status": "abandoned"
+        "status": "abandoned",
+        "dlrobot_max_time_coeff": 2.0
     },
     "rosrezerv.gov.ru": {
         "calc_office_id": 514,
-        "status": "abandoned"
+        "status": "abandoned",
+        "dlrobot_max_time_coeff": 2.0
     },
     "roszeldor.ru": {
         "calc_office_id": 511
@@ -925,7 +954,8 @@
         "calc_office_id": 183
     },
     "gov.spb.ru": {
-        "calc_office_id": 191
+        "calc_office_id": 191,
+        "dlrobot_max_time_coeff": 2.0
     },
     "sao.mos.ru": {
         "calc_office_id": 987
@@ -1099,7 +1129,8 @@
         "calc_office_id": 3221
     },
     "yuzhno-sakh.ru": {
-        "calc_office_id": 3316
+        "calc_office_id": 3316,
+        "dlrobot_max_time_coeff": 2.0
     },
     "voljsk.gov12.ru": {
         "calc_office_id": 3342
@@ -1117,7 +1148,8 @@
         "calc_office_id": 3476
     },
     "admsr.ru": {
-        "calc_office_id": 3492
+        "calc_office_id": 3492,
+        "dlrobot_max_time_coeff": 2.0
     },
     "admmuji.ru": {
         "calc_office_id": 3510
@@ -1149,7 +1181,8 @@
         "calc_office_id": 402
     },
     "economy.gov.ru": {
-        "calc_office_id": 603
+        "calc_office_id": 603,
+        "dlrobot_max_time_coeff": 2.0
     },
     "donland.ru": {
         "calc_office_id": 188
@@ -1288,7 +1321,8 @@
         "calc_office_id": 1654
     },
     "nmosk.ru": {
-        "calc_office_id": 1670
+        "calc_office_id": 1670,
+        "dlrobot_max_time_coeff": 2.0
     },
     "norilsk-city.ru": {
         "calc_office_id": 1698
@@ -1345,7 +1379,8 @@
         "calc_office_id": 2237
     },
     "anapa-official.ru": {
-        "calc_office_id": 2238
+        "calc_office_id": 2238,
+        "dlrobot_max_time_coeff": 2.0
     },
     "krasnarm.ru": {
         "calc_office_id": 2257
@@ -1460,7 +1495,8 @@
         "calc_office_id": 3256
     },
     "citymurmansk.ru": {
-        "calc_office_id": 3378
+        "calc_office_id": 3378,
+        "dlrobot_max_time_coeff": 2.0
     },
     "dolinsk.admsakhalin.ru": {
         "calc_office_id": 3425
@@ -1470,7 +1506,8 @@
         "status": "abandoned"
     },
     "adm-essentuki.ru": {
-        "calc_office_id": 3441
+        "calc_office_id": 3441,
+        "dlrobot_max_time_coeff": 2.0
     },
     "akmrsk-portal.ru": {
         "calc_office_id": 3457,
@@ -1520,7 +1557,8 @@
         "calc_office_id": 826
     },
     "ptu.customs.ru": {
-        "calc_office_id": 5502
+        "calc_office_id": 5502,
+        "dlrobot_max_time_coeff": 2.0
     },
     "vao.mos.ru": {
         "calc_office_id": 989
@@ -1551,7 +1589,8 @@
         "calc_office_id": 170
     },
     "kirovreg.ru": {
-        "calc_office_id": 174
+        "calc_office_id": 174,
+        "dlrobot_max_time_coeff": 2.0
     },
     "cao.mos.ru": {
         "calc_office_id": 984
@@ -1560,7 +1599,8 @@
         "calc_office_id": 121
     },
     "r-19.ru": {
-        "calc_office_id": 163
+        "calc_office_id": 163,
+        "dlrobot_max_time_coeff": 2.0
     },
     "vladimir.izbirkom.ru": {
         "calc_office_id": 544
@@ -1737,7 +1777,8 @@
         "calc_office_id": 2208
     },
     "gelendzhik.org": {
-        "calc_office_id": 2240
+        "calc_office_id": 2240,
+        "dlrobot_max_time_coeff": 2.0
     },
     "gorkluch.ru": {
         "calc_office_id": 2241
@@ -1764,7 +1805,8 @@
         "calc_office_id": 2409
     },
     "admrzn.ru": {
-        "calc_office_id": 2478
+        "calc_office_id": 2478,
+        "dlrobot_max_time_coeff": 2.0
     },
     "raionosipenkoadm.khabkrai.ru": {
         "calc_office_id": 2493
@@ -1825,7 +1867,8 @@
         "calc_office_id": 3072
     },
     "ivgoradm.ru": {
-        "calc_office_id": 3127
+        "calc_office_id": 3127,
+        "dlrobot_max_time_coeff": 2.0
     },
     "teikovo37.ru": {
         "calc_office_id": 3130
@@ -1852,10 +1895,12 @@
         "calc_office_id": 20978
     },
     "vsevreg.ru": {
-        "calc_office_id": 3357
+        "calc_office_id": 3357,
+        "dlrobot_max_time_coeff": 2.0
     },
     "radm.gtn.ru": {
-        "calc_office_id": 3359
+        "calc_office_id": 3359,
+        "dlrobot_max_time_coeff": 2.0
     },
     "zatovid.ru": {
         "calc_office_id": 3380
@@ -1930,10 +1975,12 @@
         "calc_office_id": 4503
     },
     "utu.customs.ru": {
-        "calc_office_id": 5506
+        "calc_office_id": 5506,
+        "dlrobot_max_time_coeff": 2.0
     },
     "ctu.customs.ru": {
-        "calc_office_id": 5510
+        "calc_office_id": 5510,
+        "dlrobot_max_time_coeff": 2.0
     },
     "kalmyk.izbirkom.ru": {
         "calc_office_id": 369
@@ -1951,14 +1998,16 @@
         "calc_office_id": 500
     },
     "rosminzdrav.ru": {
-        "calc_office_id": 596
+        "calc_office_id": 596,
+        "dlrobot_max_time_coeff": 2.0
     },
     "fano.gov.ru": {
         "calc_office_id": 4199,
         "status": "abandoned"
     },
     "egov-buryatia.ru": {
-        "calc_office_id": 151
+        "calc_office_id": 151,
+        "dlrobot_max_time_coeff": 2.0
     },
     "gov.karelia.ru": {
         "calc_office_id": 155
@@ -2236,7 +2285,8 @@
         "calc_office_id": 2708
     },
     "primorsky.ru": {
-        "calc_office_id": 2721
+        "calc_office_id": 2721,
+        "dlrobot_max_time_coeff": 2.0
     },
     "sebezh.reg60.ru": {
         "calc_office_id": 2802
@@ -2308,7 +2358,8 @@
         "calc_office_id": 3462
     },
     "newalexandrovsk.ru": {
-        "calc_office_id": 3464
+        "calc_office_id": 3464,
+        "dlrobot_max_time_coeff": 2.0
     },
     "oktregion.ru": {
         "calc_office_id": 3490
@@ -2375,13 +2426,16 @@
         "calc_office_id": 5054
     },
     "dvtu.customs.ru": {
-        "calc_office_id": 5499
+        "calc_office_id": 5499,
+        "dlrobot_max_time_coeff": 2.0
     },
     "sztu.customs.ru": {
-        "calc_office_id": 5503
+        "calc_office_id": 5503,
+        "dlrobot_max_time_coeff": 2.0
     },
     "yutu.customs.ru": {
-        "calc_office_id": 5512
+        "calc_office_id": 5512,
+        "dlrobot_max_time_coeff": 2.0
     },
     "khakas.izbirkom.ru": {
         "calc_office_id": 380
@@ -2404,7 +2458,6 @@
     },
     "genproc.gov.ru": {
         "calc_office_id": 831,
-        "dlrobot_max_time_coeff": 2.0,
         "regional": {
             "epp.genproc.gov.ru/web/gprf": {
                 "calc_office_id": 831
@@ -2719,14 +2772,17 @@
                 "calc_office_id": 278
             }
         },
-        "disable_selenium": true
+        "disable_selenium": true,
+        "dlrobot_max_time_coeff": 2.0
     },
     "fsin.su": {
         "calc_office_id": 482,
-        "status": "abandoned"
+        "status": "abandoned",
+        "dlrobot_max_time_coeff": 2.0
     },
     "fsin.gov.ru": {
-        "calc_office_id": 873
+        "calc_office_id": 873,
+        "dlrobot_max_time_coeff": 2.0
     },
     "pravitelstvorb.ru": {
         "calc_office_id": 150
@@ -2738,10 +2794,12 @@
         "calc_office_id": 177
     },
     "admlip.ru": {
-        "calc_office_id": 220
+        "calc_office_id": 220,
+        "dlrobot_max_time_coeff": 2.0
     },
     "zelao.mos.ru": {
-        "calc_office_id": 995
+        "calc_office_id": 995,
+        "dlrobot_max_time_coeff": 2.0
     },
     "assembly.spb.ru": {
         "calc_office_id": 1
@@ -2768,7 +2826,8 @@
         "calc_office_id": 655
     },
     "krasnodar.arbitr.ru": {
-        "calc_office_id": 667
+        "calc_office_id": 667,
+        "dlrobot_max_time_coeff": 2.0
     },
     "mari-el.arbitr.ru": {
         "calc_office_id": 675
@@ -2913,7 +2972,8 @@
         "calc_office_id": 1606
     },
     "rostov-gorod.ru": {
-        "calc_office_id": 1612
+        "calc_office_id": 1612,
+        "dlrobot_max_time_coeff": 2.0
     },
     "donetsk-ro.donland.ru": {
         "calc_office_id": 1617
@@ -3161,7 +3221,8 @@
         "status": "abandoned"
     },
     "nadymregion.ru": {
-        "calc_office_id": 3506
+        "calc_office_id": 3506,
+        "dlrobot_max_time_coeff": 2.0
     },
     "malgobek.ru": {
         "calc_office_id": 3553
@@ -3213,10 +3274,12 @@
         "calc_office_id": 824
     },
     "stu.customs.ru": {
-        "calc_office_id": 5505
+        "calc_office_id": 5505,
+        "dlrobot_max_time_coeff": 2.0
     },
     "declarator.org": {
-        "calc_office_id": 14
+        "calc_office_id": 14,
+        "dlrobot_max_time_coeff": 2.0
     },
     "permkrai.izbirkom.ru": {
         "calc_office_id": 388
@@ -3255,16 +3318,19 @@
         "calc_office_id": 168
     },
     "adm.rkursk.ru": {
-        "calc_office_id": 179
+        "calc_office_id": 179,
+        "dlrobot_max_time_coeff": 2.0
     },
     "permkrai.ru": {
         "calc_office_id": 186
     },
     "vologda-oblast.ru": {
-        "calc_office_id": 206
+        "calc_office_id": 206,
+        "dlrobot_max_time_coeff": 2.0
     },
     "govvrn.ru": {
-        "calc_office_id": 207
+        "calc_office_id": 207,
+        "dlrobot_max_time_coeff": 2.0
     },
     "omskportal.ru": {
         "calc_office_id": 226
@@ -3352,7 +3418,8 @@
     },
     "service.nalog.ru": {
         "calc_office_id": 1306,
-        "status": "abandoned"
+        "status": "abandoned",
+        "dlrobot_max_time_coeff": 2.0
     },
     "46.rkn.gov.ru": {
         "calc_office_id": 4535
@@ -3613,7 +3680,8 @@
         "calc_office_id": 2546
     },
     "osinniki.org": {
-        "calc_office_id": 2552
+        "calc_office_id": 2552,
+        "dlrobot_max_time_coeff": 2.0
     },
     "atr.my1.ru": {
         "calc_office_id": 2567
@@ -3631,7 +3699,8 @@
         "calc_office_id": 2615
     },
     "ufacity.info": {
-        "calc_office_id": 2634
+        "calc_office_id": 2634,
+        "dlrobot_max_time_coeff": 2.0
     },
     "admkumertau.ru": {
         "calc_office_id": 2636
@@ -3779,7 +3848,8 @@
         "calc_office_id": 3435
     },
     "izobadmin.ru": {
-        "calc_office_id": 3455
+        "calc_office_id": 3455,
+        "dlrobot_max_time_coeff": 2.0
     },
     "turkmenskiy.ru": {
         "calc_office_id": 3471
@@ -4238,7 +4308,8 @@
         "calc_office_id": 2160
     },
     "gorodperm.ru": {
-        "calc_office_id": 2186
+        "calc_office_id": 2186,
+        "dlrobot_max_time_coeff": 2.0
     },
     "adm.solkam.ru": {
         "calc_office_id": 2197
@@ -4254,7 +4325,8 @@
         "status": "abandoned"
     },
     "chaikovskiyregion.ru": {
-        "calc_office_id": 2231
+        "calc_office_id": 2231,
+        "dlrobot_max_time_coeff": 2.0
     },
     "debesy.udmurt.ru": {
         "calc_office_id": 2296
@@ -4278,7 +4350,8 @@
         "calc_office_id": 2371
     },
     "irkraion.ru": {
-        "calc_office_id": 2427
+        "calc_office_id": 2427,
+        "dlrobot_max_time_coeff": 2.0
     },
     "mchr.irkobl.ru": {
         "calc_office_id": 2433
@@ -4362,7 +4435,8 @@
         "calc_office_id": 2948
     },
     "kaluga-gov.ru": {
-        "calc_office_id": 2957
+        "calc_office_id": 2957,
+        "dlrobot_max_time_coeff": 2.0
     },
     "maloyar.ru": {
         "calc_office_id": 2970
@@ -4409,7 +4483,8 @@
         "status": "abandoned"
     },
     "gradkostroma.ru": {
-        "calc_office_id": 3092
+        "calc_office_id": 3092,
+        "dlrobot_max_time_coeff": 2.0
     },
     "tarnoga-region.ru": {
         "calc_office_id": 3114
@@ -4571,7 +4646,8 @@
         "calc_office_id": 192
     },
     "irkobl.ru": {
-        "calc_office_id": 212
+        "calc_office_id": 212,
+        "dlrobot_max_time_coeff": 2.0
     },
     "proc.gov12.ru": {
         "calc_office_id": 47,
@@ -4785,7 +4861,8 @@
         "calc_office_id": 1270
     },
     "beladm.ru": {
-        "calc_office_id": 1420
+        "calc_office_id": 1420,
+        "dlrobot_max_time_coeff": 2.0
     },
     "oskoladmin.ru": {
         "calc_office_id": 1435
@@ -4847,7 +4924,8 @@
         "calc_office_id": 1645
     },
     "tula.ru": {
-        "calc_office_id": 1667
+        "calc_office_id": 1667,
+        "dlrobot_max_time_coeff": 2.0
     },
     "aleksin.tula.ru": {
         "calc_office_id": 1672,
@@ -4951,7 +5029,8 @@
         "calc_office_id": 2015
     },
     "admomsk.ru": {
-        "calc_office_id": 2025
+        "calc_office_id": 2025,
+        "dlrobot_max_time_coeff": 2.0
     },
     "tarsk.omskportal.ru": {
         "calc_office_id": 2054
@@ -4999,7 +5078,8 @@
         "calc_office_id": 2260
     },
     "slavyansk.ru": {
-        "calc_office_id": 2271
+        "calc_office_id": 2271,
+        "dlrobot_max_time_coeff": 2.0
     },
     "kez.udmurt.ru": {
         "calc_office_id": 2301
@@ -5155,7 +5235,8 @@
         "calc_office_id": 3090
     },
     "vologda-portal.ru": {
-        "calc_office_id": 3095
+        "calc_office_id": 3095,
+        "dlrobot_max_time_coeff": 2.0
     },
     "belozer.ru": {
         "calc_office_id": 3098
@@ -5347,11 +5428,11 @@
     },
     "pfrf.ru": {
         "calc_office_id": 974,
-        "status": "abandoned"
+        "status": "abandoned",
+        "dlrobot_max_time_coeff": 2.0
     },
     "pfr.gov.ru": {
         "calc_office_id": 974,
-        "dlrobot_max_time_coeff": 2.0,
         "regional": {
             "pfr.gov.ru/branches/moscow/": {
                 "calc_office_id": 974
@@ -5600,7 +5681,8 @@
                 "calc_office_id": 974
             }
         },
-        "disable_selenium": true
+        "disable_selenium": true,
+        "dlrobot_max_time_coeff": 2.0
     },
     "atu-fishcom.ru": {
         "calc_office_id": 904
@@ -5639,7 +5721,8 @@
         "calc_office_id": 612
     },
     "78.mchs.gov.ru": {
-        "calc_office_id": 1314
+        "calc_office_id": 1314,
+        "dlrobot_max_time_coeff": 2.0
     },
     "crimea.gov.ru": {
         "calc_office_id": 6531
@@ -6028,7 +6111,8 @@
         "calc_office_id": 1984
     },
     "samadm.ru": {
-        "calc_office_id": 1987
+        "calc_office_id": 1987,
+        "dlrobot_max_time_coeff": 2.0
     },
     "zhigulevsk.org": {
         "calc_office_id": 1988
@@ -6087,7 +6171,8 @@
         "calc_office_id": 2226
     },
     "labinskadmin.ru": {
-        "calc_office_id": 2262
+        "calc_office_id": 2262,
+        "dlrobot_max_time_coeff": 2.0
     },
     "votkinsk.ru": {
         "calc_office_id": 2286
@@ -6128,7 +6213,8 @@
         "calc_office_id": 2368
     },
     "admirk.ru": {
-        "calc_office_id": 2384
+        "calc_office_id": 2384,
+        "dlrobot_max_time_coeff": 2.0
     },
     "mo-veshkaima.ru": {
         "calc_office_id": 2393
@@ -7088,7 +7174,8 @@
         "calc_office_id": 2880
     },
     "tver.ru": {
-        "calc_office_id": 2895
+        "calc_office_id": 2895,
+        "dlrobot_max_time_coeff": 2.0
     },
     "udomelskij-okrug.ru": {
         "calc_office_id": 2935
@@ -7768,7 +7855,8 @@
         "calc_office_id": 4759
     },
     "murmansk.roskazna.ru": {
-        "calc_office_id": 4762
+        "calc_office_id": 4762,
+        "dlrobot_max_time_coeff": 2.0
     },
     "novgorod.roskazna.ru": {
         "calc_office_id": 4764
@@ -7963,7 +8051,8 @@
         "calc_office_id": 1401
     },
     "gubkinadm.ru": {
-        "calc_office_id": 1422
+        "calc_office_id": 1422,
+        "dlrobot_max_time_coeff": 2.0
     },
     "voladm.ru": {
         "calc_office_id": 1428
@@ -8038,7 +8127,8 @@
         "calc_office_id": 1703
     },
     "vagai.admtyumen.ru": {
-        "calc_office_id": 1707
+        "calc_office_id": 1707,
+        "dlrobot_max_time_coeff": 2.0
     },
     "omutinka.admtyumen.ru": {
         "calc_office_id": 1714
@@ -8064,7 +8154,8 @@
         "calc_office_id": 1768
     },
     "evenkya.ru": {
-        "calc_office_id": 1782
+        "calc_office_id": 1782,
+        "dlrobot_max_time_coeff": 2.0
     },
     "adm-bolhov.ru": {
         "calc_office_id": 1789
@@ -8116,7 +8207,8 @@
         "calc_office_id": 1930
     },
     "nabchelny.ru": {
-        "calc_office_id": 1940
+        "calc_office_id": 1940,
+        "dlrobot_max_time_coeff": 2.0
     },
     "drogganoye.tatarstan.ru": {
         "calc_office_id": 1959
@@ -8143,7 +8235,8 @@
         "calc_office_id": 2059
     },
     "argayash.ru": {
-        "calc_office_id": 2076
+        "calc_office_id": 2076,
+        "dlrobot_max_time_coeff": 2.0
     },
     "kasli.org": {
         "calc_office_id": 2084
@@ -8152,7 +8245,8 @@
         "calc_office_id": 2085
     },
     "chesmamr74.ru": {
-        "calc_office_id": 2101
+        "calc_office_id": 2101,
+        "dlrobot_max_time_coeff": 2.0
     },
     "volgsovet.ru": {
         "calc_office_id": 2105
@@ -8176,7 +8270,8 @@
         "calc_office_id": 2195
     },
     "adm-lysva.ru": {
-        "calc_office_id": 2196
+        "calc_office_id": 2196,
+        "dlrobot_max_time_coeff": 2.0
     },
     "barda-rayon.ru": {
         "calc_office_id": 2199,
@@ -8186,7 +8281,8 @@
         "calc_office_id": 2225
     },
     "sochiadm.ru": {
-        "calc_office_id": 2243
+        "calc_office_id": 2243,
+        "dlrobot_max_time_coeff": 2.0
     },
     "sochi.ru": {
         "calc_office_id": 2243
@@ -8310,7 +8406,8 @@
         "calc_office_id": 2620
     },
     "pskovadmin.ru": {
-        "calc_office_id": 2629
+        "calc_office_id": 2629,
+        "dlrobot_max_time_coeff": 2.0
     },
     "smoladmin.ru": {
         "calc_office_id": 2631
@@ -8341,7 +8438,8 @@
         "status": "abandoned"
     },
     "tuimazy.bashkortostan.ru": {
-        "calc_office_id": 2687
+        "calc_office_id": 2687,
+        "dlrobot_max_time_coeff": 2.0
     },
     "дагогни.рф": {
         "calc_office_id": 2730
@@ -8380,7 +8478,8 @@
         "calc_office_id": 2834
     },
     "admobninsk.ru": {
-        "calc_office_id": 2857
+        "calc_office_id": 2857,
+        "dlrobot_max_time_coeff": 2.0
     },
     "kotovsk.tmbreg.ru": {
         "calc_office_id": 2867
@@ -8406,7 +8505,8 @@
         "calc_office_id": 2947
     },
     "petushki.info": {
-        "calc_office_id": 2951
+        "calc_office_id": 2951,
+        "dlrobot_max_time_coeff": 2.0
     },
     "admduminichi.ru": {
         "calc_office_id": 2961
@@ -8494,7 +8594,8 @@
         "calc_office_id": 3340
     },
     "petrozavodsk-mo.ru": {
-        "calc_office_id": 3340
+        "calc_office_id": 3340,
+        "dlrobot_max_time_coeff": 2.0
     },
     "абакан.рф": {
         "calc_office_id": 3347
@@ -8627,7 +8728,8 @@
         "calc_office_id": 6574
     },
     "krgv.rk.gov.ru": {
-        "calc_office_id": 6582
+        "calc_office_id": 6582,
+        "dlrobot_max_time_coeff": 2.0
     },
     "sovmo.rk.gov.ru": {
         "calc_office_id": 6593
@@ -8797,7 +8899,8 @@
         "calc_office_id": 4122
     },
     "56.mchs.gov.ru": {
-        "calc_office_id": 4162
+        "calc_office_id": 4162,
+        "dlrobot_max_time_coeff": 2.0
     },
     "57.mchs.gov.ru": {
         "calc_office_id": 4163
@@ -8870,7 +8973,8 @@
         "calc_office_id": 6914
     },
     "customs.ru": {
-        "calc_office_id": 576
+        "calc_office_id": 576,
+        "dlrobot_max_time_coeff": 2.0
     },
     "portal.mari.ru": {
         "calc_office_id": 157
@@ -9939,7 +10043,8 @@
         "calc_office_id": 2058
     },
     "magnitogorsk.ru": {
-        "calc_office_id": 2066
+        "calc_office_id": 2066,
+        "dlrobot_max_time_coeff": 2.0
     },
     "bredy74.ru": {
         "calc_office_id": 2078
@@ -9970,7 +10075,8 @@
         "calc_office_id": 2256
     },
     "ulmeria.ru": {
-        "calc_office_id": 2285
+        "calc_office_id": 2285,
+        "dlrobot_max_time_coeff": 2.0
     },
     "balezino.udmurt.ru": {
         "calc_office_id": 2291
@@ -10093,7 +10199,8 @@
         "calc_office_id": 2723
     },
     "gazikumuh.ru": {
-        "calc_office_id": 2761
+        "calc_office_id": 2761,
+        "dlrobot_max_time_coeff": 2.0
     },
     "khasrayon.ru": {
         "calc_office_id": 2773
@@ -10191,7 +10298,8 @@
         "calc_office_id": 3164
     },
     "mo-kirov.ru": {
-        "calc_office_id": 3166
+        "calc_office_id": 3166,
+        "dlrobot_max_time_coeff": 2.0
     },
     "kotelnich-omv.ru": {
         "calc_office_id": 3168
@@ -10245,7 +10353,8 @@
         "calc_office_id": 3361
     },
     "magadangorod.ru": {
-        "calc_office_id": 3370
+        "calc_office_id": 3370,
+        "dlrobot_max_time_coeff": 2.0
     },
     "omsukchan-adm.ru": {
         "calc_office_id": 3371
@@ -10374,7 +10483,8 @@
         "calc_office_id": 5974
     },
     "stroinadzor.mos.ru": {
-        "calc_office_id": 5981
+        "calc_office_id": 5981,
+        "dlrobot_max_time_coeff": 2.0
     },
     "kgu.mos.ru": {
         "calc_office_id": 5982
@@ -10465,7 +10575,8 @@
         "status": "abandoned"
     },
     "ach.gov.ru": {
-        "calc_office_id": 15
+        "calc_office_id": 15,
+        "dlrobot_max_time_coeff": 2.0
     },
     "izbirkom.rkomi.ru": {
         "calc_office_id": 372
@@ -10564,7 +10675,8 @@
         "calc_office_id": 3848
     },
     "kuban.sledcom.ru": {
-        "calc_office_id": 3850
+        "calc_office_id": 3850,
+        "dlrobot_max_time_coeff": 2.0
     },
     "krk.sledcom.ru": {
         "calc_office_id": 3851
@@ -10648,7 +10760,8 @@
         "calc_office_id": 4150
     },
     "51.mchs.gov.ru": {
-        "calc_office_id": 4156
+        "calc_office_id": 4156,
+        "dlrobot_max_time_coeff": 2.0
     },
     "53.mchs.gov.ru": {
         "calc_office_id": 4159
@@ -10708,7 +10821,8 @@
         "calc_office_id": 4282
     },
     "novgorod.fas.gov.ru": {
-        "calc_office_id": 4289
+        "calc_office_id": 4289,
+        "dlrobot_max_time_coeff": 2.0
     },
     "novosibirsk.fas.gov.ru": {
         "calc_office_id": 4290
@@ -10717,7 +10831,8 @@
         "calc_office_id": 4291
     },
     "orel.fas.gov.ru": {
-        "calc_office_id": 4293
+        "calc_office_id": 4293,
+        "dlrobot_max_time_coeff": 2.0
     },
     "penza.fas.gov.ru": {
         "calc_office_id": 4294
@@ -12188,7 +12303,8 @@
         "calc_office_id": 4274
     },
     "krsk.fas.gov.ru": {
-        "calc_office_id": 4278
+        "calc_office_id": 4278,
+        "dlrobot_max_time_coeff": 2.0
     },
     "mari-el.fas.gov.ru": {
         "calc_office_id": 4283
@@ -12273,7 +12389,8 @@
         "calc_office_id": 156
     },
     "kamgov.ru": {
-        "calc_office_id": 172
+        "calc_office_id": 172,
+        "dlrobot_max_time_coeff": 2.0
     },
     "volganet.ru": {
         "calc_office_id": 204,
@@ -13100,7 +13217,8 @@
         "calc_office_id": 2815
     },
     "lipetskcity.ru": {
-        "calc_office_id": 2831
+        "calc_office_id": 2831,
+        "dlrobot_max_time_coeff": 2.0
     },
     "elets-adm.ru": {
         "calc_office_id": 2832
@@ -13121,7 +13239,8 @@
         "calc_office_id": 2857
     },
     "astrgorod.ru": {
-        "calc_office_id": 2861
+        "calc_office_id": 2861,
+        "dlrobot_max_time_coeff": 2.0
     },
     "bryansk032.ru": {
         "calc_office_id": 2865
@@ -13407,7 +13526,8 @@
         "calc_office_id": 6388
     },
     "sever.midural.ru": {
-        "calc_office_id": 6460
+        "calc_office_id": 6460,
+        "dlrobot_max_time_coeff": 2.0
     },
     "fss.ru": {
         "calc_office_id": 976
@@ -13624,7 +13744,8 @@
         "calc_office_id": 4133
     },
     "38.mchs.gov.ru": {
-        "calc_office_id": 4134
+        "calc_office_id": 4134,
+        "dlrobot_max_time_coeff": 2.0
     },
     "08.mchs.gov.ru": {
         "calc_office_id": 4137
@@ -13752,7 +13873,8 @@
         "calc_office_id": 210
     },
     "gov39.ru": {
-        "calc_office_id": 214
+        "calc_office_id": 214,
+        "dlrobot_max_time_coeff": 2.0
     },
     "sakhalin.gov.ru": {
         "calc_office_id": 238
@@ -14418,7 +14540,8 @@
         "calc_office_id": 2407
     },
     "angarsk-adm.ru": {
-        "calc_office_id": 2420
+        "calc_office_id": 2420,
+        "dlrobot_max_time_coeff": 2.0
     },
     "adminbalagansk.ru": {
         "calc_office_id": 2421
@@ -15146,7 +15269,8 @@
         "calc_office_id": 5313
     },
     "mru52.fmbaros.ru": {
-        "calc_office_id": 5314
+        "calc_office_id": 5314,
+        "dlrobot_max_time_coeff": 2.0
     },
     "mru58.fmbaros.ru": {
         "calc_office_id": 5315
@@ -15380,7 +15504,8 @@
         "calc_office_id": 4126
     },
     "75.mchs.gov.ru": {
-        "calc_office_id": 4131
+        "calc_office_id": 4131,
+        "dlrobot_max_time_coeff": 2.0
     },
     "10.mchs.gov.ru": {
         "calc_office_id": 4141
@@ -16027,7 +16152,8 @@
         "calc_office_id": 7939
     },
     "road.lenobl.ru": {
-        "calc_office_id": 7960
+        "calc_office_id": 7960,
+        "dlrobot_max_time_coeff": 2.0
     },
     "minzdrav.49gov.ru": {
         "calc_office_id": 8026
@@ -17339,7 +17465,8 @@
         "calc_office_id": 879
     },
     "39.fsin.su": {
-        "calc_office_id": 3920
+        "calc_office_id": 3920,
+        "dlrobot_max_time_coeff": 2.0
     },
     "08.fsin.su": {
         "calc_office_id": 3922
@@ -17382,7 +17509,8 @@
         "status": "abandoned"
     },
     "rosgvard.ru": {
-        "calc_office_id": 6101
+        "calc_office_id": 6101,
+        "dlrobot_max_time_coeff": 2.0
     },
     "igma.ru": {
         "calc_office_id": 6402
@@ -21458,7 +21586,8 @@
         "calc_office_id": 2460
     },
     "admin.orenburg.ru": {
-        "calc_office_id": 2473
+        "calc_office_id": 2473,
+        "dlrobot_max_time_coeff": 2.0
     },
     "kemgorsovet.ru": {
         "calc_office_id": 2475
@@ -22256,7 +22385,8 @@
         "status": "abandoned"
     },
     "lenobl.ru": {
-        "calc_office_id": 108
+        "calc_office_id": 108,
+        "dlrobot_max_time_coeff": 2.0
     },
     "dmitrienkodv.ru": {
         "calc_office_id": 109
@@ -23169,7 +23299,8 @@
         "status": "abandoned"
     },
     "yaruga.belregion.ru": {
-        "calc_office_id": 1434
+        "calc_office_id": 1434,
+        "dlrobot_max_time_coeff": 2.0
     },
     "bobrovedu.ru": {
         "calc_office_id": 1447
@@ -23763,7 +23894,8 @@
         "calc_office_id": 3280
     },
     "mun.rkursk.ru": {
-        "calc_office_id": 3280
+        "calc_office_id": 3280,
+        "dlrobot_max_time_coeff": 2.0
     },
     "суджанский-район.рф": {
         "calc_office_id": 3290
@@ -24103,7 +24235,8 @@
         "calc_office_id": 1291
     },
     "mchs.ru": {
-        "calc_office_id": 1315
+        "calc_office_id": 1315,
+        "dlrobot_max_time_coeff": 2.0
     },
     "28.fsin.su": {
         "calc_office_id": 3903
@@ -24302,7 +24435,8 @@
         "calc_office_id": 1342
     },
     "tushinsky.mos-gorsud.ru": {
-        "calc_office_id": 1347
+        "calc_office_id": 1347,
+        "dlrobot_max_time_coeff": 2.0
     },
     "04.мвд.рф": {
         "calc_office_id": 4339
@@ -24567,7 +24701,8 @@
         "calc_office_id": 5431
     },
     "sevreestr.ru": {
-        "calc_office_id": 6554
+        "calc_office_id": 6554,
+        "dlrobot_max_time_coeff": 2.0
     },
     "92.мвд.рф": {
         "calc_office_id": 6569
@@ -24591,7 +24726,8 @@
         "calc_office_id": 6977
     },
     "minfin.midural.ru": {
-        "calc_office_id": 6978
+        "calc_office_id": 6978,
+        "dlrobot_max_time_coeff": 2.0
     },
     "mpr.midural.ru": {
         "calc_office_id": 6983
@@ -26728,7 +26864,8 @@
         "status": "abandoned"
     },
     "cherinfo.ru": {
-        "calc_office_id": 3080
+        "calc_office_id": 3080,
+        "dlrobot_max_time_coeff": 2.0
     },
     "birduma.ru": {
         "calc_office_id": 3088
@@ -27318,7 +27455,8 @@
         "calc_office_id": 6510
     },
     "sev.gov.ru": {
-        "calc_office_id": 6528
+        "calc_office_id": 6528,
+        "dlrobot_max_time_coeff": 2.0
     },
     "ochakovo-matv.ru": {
         "calc_office_id": 6844
@@ -27339,7 +27477,8 @@
     },
     "old.gov.spb.ru": {
         "calc_office_id": 191,
-        "status": "abandoned"
+        "status": "abandoned",
+        "dlrobot_max_time_coeff": 2.0
     },
     "krs.gov39.ru": {
         "calc_office_id": 214,
@@ -28040,7 +28179,8 @@
         "status": "abandoned"
     },
     "achmr.ru": {
-        "calc_office_id": 1512
+        "calc_office_id": 1512,
+        "dlrobot_max_time_coeff": 2.0
     },
     "sovet-deputatov.info": {
         "calc_office_id": 1515,
@@ -29597,7 +29737,8 @@
         "calc_office_id": 5463
     },
     "customs.gov.ru": {
-        "calc_office_id": 5508
+        "calc_office_id": 5508,
+        "dlrobot_max_time_coeff": 2.0
     },
     "centr.favt.ru": {
         "calc_office_id": 5601
@@ -29725,7 +29866,8 @@
         "calc_office_id": 6543
     },
     "yutu.customs.gov.ru": {
-        "calc_office_id": 6562
+        "calc_office_id": 6562,
+        "dlrobot_max_time_coeff": 2.0
     },
     "82.мвд.рф": {
         "calc_office_id": 6568
@@ -30334,7 +30476,8 @@
         "calc_office_id": 7972
     },
     "pravo.lenobl.ru": {
-        "calc_office_id": 7976
+        "calc_office_id": 7976,
+        "dlrobot_max_time_coeff": 2.0
     },
     "finance.lenobl.ru": {
         "calc_office_id": 7979
@@ -31309,7 +31452,8 @@
         "calc_office_id": 8880
     },
     "msu.tularegion.ru": {
-        "calc_office_id": 8882
+        "calc_office_id": 8882,
+        "dlrobot_max_time_coeff": 2.0
     },
     "gkh.tularegion.ru": {
         "calc_office_id": 8883
@@ -31401,7 +31545,8 @@
         "calc_office_id": 8911
     },
     "gosteh.tularegion.ru": {
-        "calc_office_id": 8912
+        "calc_office_id": 8912,
+        "dlrobot_max_time_coeff": 2.0
     },
     "agto.admtyumen.ru": {
         "calc_office_id": 8913
@@ -34845,7 +34990,8 @@
         "calc_office_id": 20775
     },
     "rudavss.rkursk.ru": {
-        "calc_office_id": 20776
+        "calc_office_id": 20776,
+        "dlrobot_max_time_coeff": 2.0
     },
     "ribbudss.rkursk.ru": {
         "calc_office_id": 20777
@@ -42993,10 +43139,12 @@
         "calc_office_id": 512
     },
     "minzdrav.gov.ru": {
-        "calc_office_id": 596
+        "calc_office_id": 596,
+        "dlrobot_max_time_coeff": 2.0
     },
     "minfin.gov.ru": {
-        "calc_office_id": 604
+        "calc_office_id": 604,
+        "dlrobot_max_time_coeff": 2.0
     },
     "mintrans.gov.ru": {
         "calc_office_id": 605
@@ -43047,7 +43195,8 @@
         "calc_office_id": 7222
     },
     "zakaz.govvrn.ru": {
-        "calc_office_id": 7386
+        "calc_office_id": 7386,
+        "dlrobot_max_time_coeff": 2.0
     },
     "edu.kbr.ru": {
         "calc_office_id": 7535
@@ -44273,7 +44422,8 @@
         "calc_office_id": 5334
     },
     "ctu.customs.gov.ru": {
-        "calc_office_id": 5510
+        "calc_office_id": 5510,
+        "dlrobot_max_time_coeff": 2.0
     },
     "1.service.nalog.ru": {
         "calc_office_id": 1305,
