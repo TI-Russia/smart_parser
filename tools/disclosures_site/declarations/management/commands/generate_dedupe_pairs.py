@@ -383,7 +383,7 @@ class Command(BaseCommand):
                         borders.append(last_trigram)
                         accum = 0
                     accum += trigram_count
-                    if re.search('[/.,"\\:-]', trigram) is None:
+                    if re.search(r'[\s/.,"\\:-]', trigram) is None:
                         last_trigram = trigram
                 assert cnt == models.Section.objects.count()
             borders.append('')

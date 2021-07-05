@@ -22,7 +22,7 @@ class TestDeclarationLinkSelenium(TestCase):
         robot_steps = [
             {
                 'step_name': "declarations",
-                'fallback_to_selenium': True,
+                'enable_selenium': True,
                 'use_urllib': False
             }
         ]

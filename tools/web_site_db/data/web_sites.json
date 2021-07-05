@@ -265,7 +265,8 @@
         "calc_office_id": 5973
     },
     "audit.gov.ru": {
-        "calc_office_id": 15
+        "calc_office_id": 15,
+        "status": "abandoned"
     },
     "rosnedra.gov.ru": {
         "calc_office_id": 503
@@ -719,9 +720,6 @@
     "kuzhener.ru": {
         "calc_office_id": 3637
     },
-    "go-aginskoe.ru": {
-        "calc_office_id": 3788
-    },
     "чикой.забайкальскийкрай.рф": {
         "calc_office_id": 3800,
         "status": "abandoned"
@@ -910,7 +908,12 @@
         "calc_office_id": 716
     },
     "rosreserv.ru": {
-        "calc_office_id": 514
+        "calc_office_id": 514,
+        "status": "abandoned"
+    },
+    "rosrezerv.gov.ru": {
+        "calc_office_id": 514,
+        "status": "abandoned"
     },
     "roszeldor.ru": {
         "calc_office_id": 511
@@ -2401,6 +2404,7 @@
     },
     "genproc.gov.ru": {
         "calc_office_id": 831,
+        "dlrobot_max_time_coeff": 2.0,
         "regional": {
             "epp.genproc.gov.ru/web/gprf": {
                 "calc_office_id": 831
@@ -5347,6 +5351,7 @@
     },
     "pfr.gov.ru": {
         "calc_office_id": 974,
+        "dlrobot_max_time_coeff": 2.0,
         "regional": {
             "pfr.gov.ru/branches/moscow/": {
                 "calc_office_id": 974
@@ -42820,6 +42825,9 @@
     "176.114.22.107": {
         "calc_office_id": 3788
     },
+    "go-aginskoe.ru": {
+        "calc_office_id": 3788
+    },
     "rossvyaz.gov.ru": {
         "calc_office_id": 6718
     },
@@ -43154,9 +43162,6 @@
     },
     "mru71.fmba.gov.ru": {
         "calc_office_id": 5317
-    },
-    "rosrezerv.gov.ru": {
-        "calc_office_id": 5623
     },
     "rosavtodor.gov.ru": {
         "calc_office_id": 510

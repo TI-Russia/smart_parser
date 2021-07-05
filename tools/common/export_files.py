@@ -95,6 +95,7 @@ class TExportEnvironment:
         self.exported_files = list()
         self.exported_urls = set()
         self.last_found_declaration_time = time.time()
+        self.found_declarations_count = 0
 
     def to_json(self):
         return list(x.to_json() for x in self.exported_files)
@@ -141,6 +142,7 @@ class TExportEnvironment:
                     if file_set.dl_recognizer_result == DL_RECOGNIZER_ENUM.POSITIVE:
                         self.last_found_declaration_time = time.time()
                         self.logger.debug("found a declaration")
+                        self.found_declarations_count += 1
                 self.export_files_by_sha256[new_file.sha256] = file_set
             else:
                 found_file.file_copies.append(new_file)

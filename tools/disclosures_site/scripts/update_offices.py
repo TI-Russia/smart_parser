@@ -14,7 +14,7 @@ from collections import defaultdict
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--declarator-host", dest='declarator_host', default='localhost')
-    parser.add_argument("--action", dest='action', default='all', help="can be all, from_calculated_urls")
+    parser.add_argument("--action", dest='action', default='all', help="can be all")
     return parser.parse_args()
 
 
@@ -210,24 +210,12 @@ class TOfficeJoiner:
         self.write_offices()
         self.logger.info("do not forget to commit changes to git")
 
-    def update_websites_from_calculated_urls (self):
-        db_connection = pymysql.connect(db="disclosures_db", user="disclosures", password="disclosures")
-        in_cursor = db_connection.cursor()
-        in_cursor.execute("select  id,calculated_params from declarations_office")
-        for id, calculated_params in in_cursor:
-            urls = json.loads(calculated_params)['urls']
-            for u in urls:
-                if not self.web_sites.has_web_site(u):
-                    self.logger.debug("add website {} to office {}".format(u, id))
-
 
 def main():
     args = parse_args()
     joiner = TOfficeJoiner(args)
     if args.action == "all":
         joiner.build_offices_and_web_sites()
-    elif args.action == "from_calculated_urls":
-        joiner.update_websites_from_calculated_urls()
     else:
         raise Exception("unknown action")
 

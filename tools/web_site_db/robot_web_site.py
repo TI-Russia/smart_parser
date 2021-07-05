@@ -44,6 +44,11 @@ class TWebSiteCrawlSnapshot:
             step = TRobotStep(self, **passport, is_last_step=is_last_step)
             self.robot_steps.append(step)
 
+    # declarations number per minute
+    def get_robot_speed(self):
+        elapsed_time_in_seconds = time.time() - self.start_crawling_time + 0.00000001
+        return (60.0 * self.export_env.found_declarations_count) / elapsed_time_in_seconds;
+
     def recognize_protocol_and_www(self):
         if self.morda_url.startswith('http://'):
             self.protocol = "http"

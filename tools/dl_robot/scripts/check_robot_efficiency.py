@@ -5,6 +5,7 @@ import argparse
 import json
 import matplotlib.pyplot as plt
 
+
 class TTimeDistribution:
     def __init__(self):
         self.start_time = None
@@ -98,6 +99,7 @@ class TStats:
     def all_seconds(self):
         return (self.end_time - self.start_time).total_seconds()
 
+    # number declarations per minute
     def robot_speed(self):
         return round(60*self.exported_files_count / (self.all_seconds() + 0.00000001), 4)
 

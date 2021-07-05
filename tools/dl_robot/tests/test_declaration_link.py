@@ -62,7 +62,7 @@ class TestDeclarationLink(TestCase):
         robot_steps = [
             {
                 'step_name': "declarations",
-                'fallback_to_selenium': use_selenium
+                'enable_selenium': use_selenium
             }
         ]
         with TRobotProject(self.logger, self.project_path, robot_steps, "result", enable_search_engine=False,
