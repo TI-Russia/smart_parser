@@ -6736,7 +6736,8 @@
         "calc_office_id": 5013
     },
     "ugadn28.tu.rostransnadzor.ru": {
-        "calc_office_id": 5166
+        "calc_office_id": 5166,
+        "http_protocol": "http"
     },
     "fsvps.chita.ru": {
         "calc_office_id": 5420
@@ -7950,7 +7951,8 @@
         "calc_office_id": 5031
     },
     "ugadn2301.tu.rostransnadzor.ru": {
-        "calc_office_id": 5186
+        "calc_office_id": 5186,
+        "http_protocol": "http"
     },
     "to33.rosreestr.ru": {
         "calc_office_id": 5232,
@@ -12640,16 +12642,20 @@
         "calc_office_id": 5006
     },
     "ugadn32.tu.rostransnadzor.ru": {
-        "calc_office_id": 5171
+        "calc_office_id": 5171,
+        "http_protocol": "http"
     },
     "ugadn34.tu.rostransnadzor.ru": {
-        "calc_office_id": 5174
+        "calc_office_id": 5174,
+        "http_protocol": "http"
     },
     "ugadn36.tu.rostransnadzor.ru": {
-        "calc_office_id": 5176
+        "calc_office_id": 5176,
+        "http_protocol": "http"
     },
     "ugadn51.tu.rostransnadzor.ru": {
-        "calc_office_id": 5194
+        "calc_office_id": 5194,
+        "status": "abandoned"
     },
     "to28.rosreestr.ru": {
         "calc_office_id": 5225,
@@ -14097,16 +14103,20 @@
         "status": "abandoned"
     },
     "ugadn27.tu.rostransnadzor.ru": {
-        "calc_office_id": 5135
+        "calc_office_id": 5135,
+        "http_protocol": "http"
     },
     "ugadn66.tu.rostransnadzor.ru": {
-        "calc_office_id": 5158
+        "calc_office_id": 5158,
+        "http_protocol": "http"
     },
     "ugadn61.tu.rostransnadzor.ru": {
-        "calc_office_id": 5162
+        "calc_office_id": 5162,
+        "http_protocol": "http"
     },
     "ugadn3008.tu.rostransnadzor.ru": {
-        "calc_office_id": 5168
+        "calc_office_id": 5168,
+        "http_protocol": "http"
     },
     "ugadn72.ru": {
         "calc_office_id": 5214,
@@ -15812,16 +15822,20 @@
         "status": "abandoned"
     },
     "ugadn78.tu.rostransnadzor.ru": {
-        "calc_office_id": 5146
+        "calc_office_id": 5146,
+        "http_protocol": "http"
     },
     "ugadn29.ru": {
-        "calc_office_id": 5167
+        "calc_office_id": 5167,
+        "http_protocol": "http"
     },
     "ugadn241719.tu.rostransnadzor.ru": {
-        "calc_office_id": 5187
+        "calc_office_id": 5187,
+        "http_protocol": "http"
     },
     "ugadn53.tu.rostransnadzor.ru": {
-        "calc_office_id": 5195
+        "calc_office_id": 5195,
+        "http_protocol": "http"
     },
     "ugadn67.ru": {
         "calc_office_id": 5208,
@@ -17891,39 +17905,48 @@
         "status": "abandoned"
     },
     "ugadn54.tu.rostransnadzor.ru": {
-        "calc_office_id": 5149
+        "calc_office_id": 5149,
+        "http_protocol": "http"
     },
     "ugadn0422.tu.rostransnadzor.ru": {
-        "calc_office_id": 5165
+        "calc_office_id": 5165,
+        "http_protocol": "http"
     },
     "ugadn0338.tu.rostransnadzor.ru": {
-        "calc_office_id": 5172
+        "calc_office_id": 5172,
+        "http_protocol": "http"
     },
     "ugadn35.tu.rostransnadzor.ru": {
-        "calc_office_id": 5175
+        "calc_office_id": 5175,
+        "http_protocol": "http"
     },
     "ugadn77.tu.rostransnadzor.ru": {
-        "calc_office_id": 5192
+        "calc_office_id": 5192,
+        "http_protocol": "http"
     },
     "ooorti.ru": {
         "calc_office_id": 5196,
         "status": "abandoned"
     },
     "ugadn5813.tu.rostransnadzor.ru": {
-        "calc_office_id": 5199
+        "calc_office_id": 5199,
+        "http_protocol": "http"
     },
     "ugadn59.tu.rostransnadzor.ru": {
-        "calc_office_id": 5200
+        "calc_office_id": 5200,
+        "http_protocol": "http"
     },
     "ugadn25.tu.rostransnadzor.ru": {
         "calc_office_id": 5201,
         "status": "abandoned"
     },
     "ugadn62.tu.rostransnadzor.ru": {
-        "calc_office_id": 5203
+        "calc_office_id": 5203,
+        "http_protocol": "http"
     },
     "ugadn67.tu.rostransnadzor.ru": {
-        "calc_office_id": 5208
+        "calc_office_id": 5208,
+        "http_protocol": "http"
     },
     "ugadn68.ru": {
         "calc_office_id": 5209,
@@ -20045,35 +20068,40 @@
         "status": "abandoned"
     },
     "ugadn52.tu.rostransnadzor.ru": {
-        "calc_office_id": 5142
+        "calc_office_id": 5142,
+        "http_protocol": "http"
     },
     "ugadn78.ru": {
         "calc_office_id": 5146,
         "status": "abandoned"
     },
     "ugadn02.tu.rostransnadzor.ru": {
-        "calc_office_id": 5169
+        "calc_office_id": 5169,
+        "http_protocol": "http"
     },
     "ugadn31.ru": {
         "calc_office_id": 5170,
         "status": "abandoned"
     },
     "ugadn60.tu.rostransnadzor.ru": {
-        "calc_office_id": 5202
+        "calc_office_id": 5202,
+        "http_protocol": "http"
     },
     "ugadn64.ru": {
         "calc_office_id": 5205,
         "status": "abandoned"
     },
     "ugadn14.tu.rostransnadzor.ru": {
-        "calc_office_id": 5206
+        "calc_office_id": 5206,
+        "http_protocol": "http"
     },
     "угадн16.рф": {
         "calc_office_id": 5210,
         "status": "abandoned"
     },
     "ugadn16.tu.rostransnadzor.ru": {
-        "calc_office_id": 5210
+        "calc_office_id": 5210,
+        "http_protocol": "http"
     },
     "ugadn70.tu.rostransnadzor.ru": {
         "calc_office_id": 5212,
@@ -22628,7 +22656,8 @@
         "status": "abandoned"
     },
     "ugadn76.tu.rostransnadzor.ru": {
-        "calc_office_id": 5130
+        "calc_office_id": 5130,
+        "status": "abandoned"
     },
     "ugadn54.ru": {
         "calc_office_id": 5149,
@@ -22650,10 +22679,12 @@
         "status": "abandoned"
     },
     "ugadn37.tu.rostransnadzor.ru": {
-        "calc_office_id": 5178
+        "calc_office_id": 5178,
+        "status": "abandoned"
     },
     "ugadn39.tu.rostransnadzor.ru": {
-        "calc_office_id": 5179
+        "calc_office_id": 5179,
+        "http_protocol": "http"
     },
     "ugadn40.tu.rostransnadzor.ru": {
         "calc_office_id": 5180,
@@ -22664,50 +22695,60 @@
         "status": "abandoned"
     },
     "ugadn10.tu.rostransnadzor.ru": {
-        "calc_office_id": 5181
+        "calc_office_id": 5181,
+        "status": "abandoned"
     },
     "ugadn42.tu.rostransnadzor.ru": {
-        "calc_office_id": 5182
+        "calc_office_id": 5182,
+        "http_protocol": "http"
     },
     "ugadn11.tu.rostransnadzor.ru": {
-        "calc_office_id": 5184
+        "calc_office_id": 5184,
+        "status": "abandoned"
     },
     "ugadn11.ru": {
         "calc_office_id": 5184,
         "status": "abandoned"
     },
     "ugadn44.tu.rostransnadzor.ru": {
-        "calc_office_id": 5185
+        "calc_office_id": 5185,
+        "status": "abandoned"
     },
     "ugadn24.ru": {
         "calc_office_id": 5187,
         "status": "abandoned"
     },
     "ugadn45.tu.rostransnadzor.ru": {
-        "calc_office_id": 5188
+        "calc_office_id": 5188,
+        "http_protocol": "http"
     },
     "ugadn46.tu.rostransnadzor.ru": {
-        "calc_office_id": 5189
+        "calc_office_id": 5189,
+        "http_protocol": "http"
     },
     "ugadn49.tu.rostransnadzor.ru": {
         "calc_office_id": 5191,
         "status": "abandoned"
     },
     "ugadn50.tu.rostransnadzor.ru": {
-        "calc_office_id": 5193
+        "calc_office_id": 5193,
+        "http_protocol": "http"
     },
     "ugadn50.ru": {
         "calc_office_id": 5193,
         "status": "abandoned"
     },
     "ugadn55.tu.rostransnadzor.ru": {
-        "calc_office_id": 5196
+        "calc_office_id": 5196,
+        "http_protocol": "http"
     },
     "ugadn56.tu.rostransnadzor.ru": {
-        "calc_office_id": 5197
+        "calc_office_id": 5197,
+        "http_protocol": "http"
     },
     "ugadn62.ru": {
-        "calc_office_id": 5203
+        "calc_office_id": 5203,
+        "http_protocol": "http"
     },
     "ugadn64.tu.rostransnadzor.ru": {
         "calc_office_id": 5205,
@@ -22722,20 +22763,24 @@
         "status": "abandoned"
     },
     "ugadn728689.tu.rostransnadzor.ru": {
-        "calc_office_id": 5214
+        "calc_office_id": 5214,
+        "http_protocol": "http"
     },
     "ugadn18.ru": {
         "calc_office_id": 5215,
         "status": "abandoned"
     },
     "ugadn73.tu.rostransnadzor.ru": {
-        "calc_office_id": 5216
+        "calc_office_id": 5216,
+        "status": "abandoned"
     },
     "ugadn74.tu.rostransnadzor.ru": {
-        "calc_office_id": 5217
+        "calc_office_id": 5217,
+        "http_protocol": "http"
     },
     "ugadn87.tu.rostransnadzor.ru": {
-        "calc_office_id": 5219
+        "calc_office_id": 5219,
+        "http_protocol": "http"
     },
     "to65.rosreestr.ru": {
         "calc_office_id": 5277,
@@ -24650,14 +24695,16 @@
         "status": "abandoned"
     },
     "ugadn2983.tu.rostransnadzor.ru": {
-        "calc_office_id": 5167
+        "calc_office_id": 5167,
+        "http_protocol": "http"
     },
     "ugadn31.tu.rostransnadzor.ru": {
         "calc_office_id": 5170,
         "status": "abandoned"
     },
     "ugadn75.tu.rostransnadzor.ru": {
-        "calc_office_id": 5177
+        "calc_office_id": 5177,
+        "http_protocol": "http"
     },
     "ugadn.karelia.ru": {
         "calc_office_id": 5181,
@@ -24668,7 +24715,8 @@
         "status": "abandoned"
     },
     "ugadn4312.tu.rostransnadzor.ru": {
-        "calc_office_id": 5183
+        "calc_office_id": 5183,
+        "http_protocol": "http"
     },
     "ugadn57.orel.ru": {
         "calc_office_id": 5198,
@@ -24683,7 +24731,8 @@
         "status": "abandoned"
     },
     "ugadn63.tu.rostransnadzor.ru": {
-        "calc_office_id": 5204
+        "calc_office_id": 5204,
+        "http_protocol": "http"
     },
     "ugadn69.tu.rostransnadzor.ru": {
         "calc_office_id": 5211,
@@ -27850,7 +27899,8 @@
         "status": "abandoned"
     },
     "ugadn41.tu.rostransnadzor.ru": {
-        "calc_office_id": 5220
+        "calc_office_id": 5220,
+        "http_protocol": "http"
     },
     "rsn-kurgan.ru": {
         "calc_office_id": 5434
@@ -27869,7 +27919,8 @@
         "calc_office_id": 5464
     },
     "ugadn82.tu.rostransnadzor.ru": {
-        "calc_office_id": 6561
+        "calc_office_id": 6561,
+        "http_protocol": "http"
     },
     "zakupki.bashkortostan.ru": {
         "calc_office_id": 7035
@@ -29706,7 +29757,8 @@
         "status": "abandoned"
     },
     "ugadn68.tu.rostransnadzor.ru": {
-        "calc_office_id": 5209
+        "calc_office_id": 5209,
+        "http_protocol": "http"
     },
     "ugadn18.tu.rostransnadzor.ru": {
         "calc_office_id": 5215,
@@ -44122,7 +44174,8 @@
         "calc_office_id": 4956
     },
     "ugadn2301.tu.rostransnadzor.gov.ru": {
-        "calc_office_id": 5186
+        "calc_office_id": 5186,
+        "http_protocol": "http"
     },
     "82reg.roszdravnadzor.gov.ru": {
         "calc_office_id": 6558

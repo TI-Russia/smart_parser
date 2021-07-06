@@ -18,7 +18,7 @@ class TWebSiteCrawlSnapshot:
     DEFAULT_CRAWLING_TIMEOUT = 60 * 60 * 3 # 3 hours
     CRAWLING_TIMEOUT = DEFAULT_CRAWLING_TIMEOUT
 
-    def __init__(self, project):
+    def __init__(self, project, morda_url=""):
         #runtime members (no serialization)
         self.start_crawling_time = time.time()
         self.parent_project = project
@@ -29,7 +29,7 @@ class TWebSiteCrawlSnapshot:
         #serialized members
         self.url_nodes = dict()
         self.enable_urllib = True
-        self.morda_url = ""
+        self.morda_url = morda_url
         self.office_name = ""
         self.reach_status = TWebSiteReachStatus.normal
         self.regional_main_pages = list()
@@ -84,7 +84,7 @@ class TWebSiteCrawlSnapshot:
                 if not self.parent_project.enable_selenium:
                     self.parent_project.reenable_selenium()
 
-    def fetch_the_main_page(self):
+    def fetch_the_main_page(self, enable_search_engine=True):
         if len(self.url_nodes) > 0:
             return True
         self.recognize_protocol_and_www()
@@ -111,13 +111,14 @@ class TWebSiteCrawlSnapshot:
             self.logger.error("cannot access the main page using selenium")
             self.reach_status = TWebSiteReachStatus.out_of_reach
 
-        try:
-            urls = SearchEngine().site_search(0, get_site_domain_wo_www(self.morda_url), "", self.parent_project.selenium_driver)
-            if len(urls) == 0:
+        if enable_search_engine:
+            try:
+                urls = SearchEngine().site_search(0, get_site_domain_wo_www(self.morda_url), "", self.parent_project.selenium_driver)
+                if len(urls) == 0:
+                    self.reach_status = TWebSiteReachStatus.abandoned
+            except SerpException as exp:
+                self.logger.error("cannot find this page using search engine")
                 self.reach_status = TWebSiteReachStatus.abandoned
-        except SerpException as exp:
-            self.logger.error("cannot find this page using search engine")
-            self.reach_status = TWebSiteReachStatus.abandoned
 
         return False
 

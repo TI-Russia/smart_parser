@@ -87,12 +87,12 @@ class TRobotProject:
         return json.dumps(project_content, indent=4, ensure_ascii=False)
 
     @staticmethod
-    def create_project(url, file_path):
+    def create_project(url, file_path, enable_selenium=False):
         with open(file_path, "w") as outp:
             outp.write(TRobotProject.create_project_str(
                 url,
                 [],
-                True, #disable_selinium in tests
+                not enable_selenium, #disable_selinium in tests
                 False))
         if os.path.exists(file_path + TRobotProject.visited_pages_extension):
             os.unlink(file_path + TRobotProject.visited_pages_extension)

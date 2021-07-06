@@ -14,6 +14,7 @@ class TDeclarationWebSite:
         self.regional_main_pages = None
         self.disable_selenium = None
         self.dlrobot_max_time_coeff = 1.0
+        self.http_protocol = None
 
     def read_from_json(self, js):
         self.calculated_office_id = js['calc_office_id']
@@ -21,6 +22,7 @@ class TDeclarationWebSite:
         self.regional_main_pages = js.get('regional')
         self.disable_selenium = js.get('disable_selenium')
         self.dlrobot_max_time_coeff = js.get('dlrobot_max_time_coeff', 1.0)
+        self.http_protocol = js.get('http_protocol')
         return self
 
     def write_to_json(self):
@@ -35,6 +37,8 @@ class TDeclarationWebSite:
             rec['disable_selenium'] = self.disable_selenium
         if self.dlrobot_max_time_coeff != 1.0:
             rec['dlrobot_max_time_coeff'] = self.dlrobot_max_time_coeff
+        if self.http_protocol is not None:
+            rec['http_protocol'] = self.http_protocol
         return rec
 
 
