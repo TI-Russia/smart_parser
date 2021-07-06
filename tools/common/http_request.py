@@ -30,14 +30,20 @@ def has_cyrillic(text):
 
 def get_user_agent():
     # два curl к https://minzdrav.gov.ru/special с этим user agent и IP забанен
-    user_agents = [
-        #'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36',
+    robot_user_agents = [
         "Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)",
         "Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)",
         "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
         "Mozilla/5.0 (compatible; Linux x86_64; Mail.RU_Bot/2.0; +http://go.mail.ru/help/robots)"
     ]
-    return random.choice(user_agents)
+    # admkumertau.ru responds only to "human" user agents
+    human_user_agents = [
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36',
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.106 YaBrowser/21.6.0.616 Yowser/2.5 Safari/537.36'
+    ]
+    #return random.choice(robot_user_agents)
+    return random.choice(human_user_agents)
 
 
 def convert_russian_web_domain_if_needed(url):
