@@ -1,3 +1,5 @@
+import urllib.parse
+
 from common.download import TDownloadedFile
 from common.http_request import THttpRequester
 from common.primitives import get_site_domain_wo_www, get_html_title
@@ -29,13 +31,13 @@ class TWebSiteCrawlSnapshot:
         #serialized members
         self.url_nodes = dict()
         self.enable_urllib = True
-        self.morda_url = morda_url
+        self.main_page_url = morda_url
         self.office_name = ""
         self.reach_status = TWebSiteReachStatus.normal
         self.regional_main_pages = list()
         self.reach_status = None
         self.protocol = "http"
-        self.only_with_www = False
+        self.web_domain = None
 
         self.robot_steps = list()
         for i in range(len(project.robot_step_passports)):
@@ -50,9 +52,9 @@ class TWebSiteCrawlSnapshot:
         return (60.0 * self.export_env.found_declarations_count) / elapsed_time_in_seconds;
 
     def recognize_protocol_and_www(self):
-        if self.morda_url.startswith('http://'):
+        if self.main_page_url.startswith('http://'):
             self.protocol = "http"
-        elif self.morda_url.startswith('https://'):
+        elif self.main_page_url.startswith('https://'):
             self.protocol = "https"
         else:
             for only_with_www in [False, True]:
@@ -61,24 +63,35 @@ class TWebSiteCrawlSnapshot:
                         url = protocol + "://"
                         if only_with_www:
                             url += "www."
-                        url += self.morda_url
-                        html_data = TDownloadedFile(url).data
-                        self.morda_url = url
+                        url += self.main_page_url
+                        file = TDownloadedFile(url)
+                        html_data = file.data
+                        o = urllib.parse.urlsplit(file.redirected_url)
+                        self.protocol = o.scheme
+                        self.main_page_url = urllib.parse.urlunsplit(
+                            [o.scheme,
+                             o.netloc,
+                             '', # path
+                             '', # query
+                             ''])
                         self.logger.debug('read {} bytes from url {}, treat this url as the main url'.format(
                             len(html_data), url))
-                        self.protocol = protocol
-                        self.only_with_www = only_with_www
+                        self.web_domain = o.netloc
+                        if self.web_domain.startswith('www.'):
+                            self.web_domain = self.web_domain[4:]
+                        if o.scheme == "https" and self.web_domain.endswith(':443'):
+                            self.web_domain = self.web_domain[:-4]
                         return
                     except THttpRequester.RobotHttpException as exp:
                         self.logger.error("cannot fetch {}  with urllib, sleep 3 sec".format(url))
                         time.sleep(3)
 
     def get_domain_name(self):
-        return get_site_domain_wo_www(self.morda_url)
+        return get_site_domain_wo_www(self.main_page_url)
 
     def check_urllib_access(self):
         if self.enable_urllib:
-            if not THttpRequester.check_urllib_access_with_many_head_requests(self.morda_url):
+            if not THttpRequester.check_urllib_access_with_many_head_requests(self.main_page_url):
                 self.logger.info("disable urllib, since there are too many timeouts to head requests")
                 self.enable_urllib = False
                 if not self.parent_project.enable_selenium:
@@ -90,22 +103,22 @@ class TWebSiteCrawlSnapshot:
         self.recognize_protocol_and_www()
         for i in range(3):
             try:
-                html_data = TDownloadedFile(self.morda_url).data
+                html_data = TDownloadedFile(self.main_page_url).data
                 title = get_html_title(html_data)
                 self.reach_status = TWebSiteReachStatus.normal
-                self.url_nodes[self.morda_url] = TUrlInfo(title=title)
+                self.url_nodes[self.main_page_url] = TUrlInfo(title=title)
                 return
             except THttpRequester.RobotHttpException as exp:
-                self.logger.error("cannot fetch morda url {} with urllib, sleep 3 sec".format(self.morda_url))
+                self.logger.error("cannot fetch morda url {} with urllib, sleep 3 sec".format(self.main_page_url))
                 time.sleep(3)
         try:
             self.logger.error("disable urllib for this website since we cannot reach the main page with urllib")
-            self.parent_project.selenium_driver.navigate(self.morda_url)
+            self.parent_project.selenium_driver.navigate(self.main_page_url)
             time.sleep(3)
             title = self.parent_project.selenium_driver.the_driver.title
             self.enable_urllib = False
             self.reach_status = TWebSiteReachStatus.only_selenium
-            self.url_nodes[self.morda_url] = TUrlInfo(title=title)
+            self.url_nodes[self.main_page_url] = TUrlInfo(title=title)
             return True
         except Exception as exp:
             self.logger.error("cannot access the main page using selenium")
@@ -113,7 +126,7 @@ class TWebSiteCrawlSnapshot:
 
         if enable_search_engine:
             try:
-                urls = SearchEngine().site_search(0, get_site_domain_wo_www(self.morda_url), "", self.parent_project.selenium_driver)
+                urls = SearchEngine().site_search(0, get_site_domain_wo_www(self.main_page_url), "", self.parent_project.selenium_driver)
                 if len(urls) == 0:
                     self.reach_status = TWebSiteReachStatus.abandoned
             except SerpException as exp:
@@ -136,9 +149,8 @@ class TWebSiteCrawlSnapshot:
 
     def read_from_json(self, init_json):
         self.reach_status = init_json.get('reach_status')
-        self.only_with_www = init_json.get('only_with_www')
         self.protocol = init_json.get('protocol', "http")
-        self.morda_url = init_json['morda_url']
+        self.main_page_url = init_json['morda_url']
         self.office_name = init_json.get('name', '')
         self.enable_urllib = init_json.get('enable_urllib', True)
         self.export_env.from_json(init_json.get('exported_files'))
@@ -157,7 +169,7 @@ class TWebSiteCrawlSnapshot:
     def to_json(self):
         return {
             'reach_status': self.reach_status,
-            'morda_url': self.morda_url,
+            'morda_url': self.main_page_url,
             'regional': self.regional_main_pages,
             'name': self.office_name,
             'enable_urllib': self.enable_urllib,
@@ -165,7 +177,6 @@ class TWebSiteCrawlSnapshot:
             'url_nodes': dict( (url, info.to_json()) for url,info in self.url_nodes.items()),
             'exported_files': self.export_env.to_json(),
             'protocol': self.protocol,
-            'only_with_www': self.only_with_www
         }
 
     def get_parents(self, url):
@@ -180,7 +191,7 @@ class TWebSiteCrawlSnapshot:
         assert type(all_paths) is list
         top_node = path[-1]
         top_url = top_node['source:url']
-        if top_url == self.morda_url:
+        if top_url == self.main_page_url:
             all_paths.append(list(path))
             return
         start = datetime.datetime.now()
@@ -237,7 +248,7 @@ class TWebSiteCrawlSnapshot:
             return
 
         if step_index == 0:
-            previous_step_urls = {self.morda_url: 0}
+            previous_step_urls = {self.main_page_url: 0}
         else:
             previous_step_urls = self.robot_steps[step_index - 1].step_urls
 

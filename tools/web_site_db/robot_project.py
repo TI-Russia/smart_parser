@@ -136,7 +136,7 @@ class TRobotProject:
 
     def add_web_site(self, morda_url):
         web_site = TWebSiteCrawlSnapshot(self)
-        web_site.morda_url = morda_url
+        web_site.main_page_url = morda_url
         self.web_site_snapshots.append(web_site)
 
     def read_project(self, check_step_names=True):
@@ -179,7 +179,7 @@ class TRobotProject:
         result = []
         for web_site in self.web_site_snapshots:
             downloaded_files_count =  sum(len(v.downloaded_files) for v in web_site.url_nodes.values())
-            self.logger.info("find useless nodes in {}".format(web_site.morda_url))
+            self.logger.info("find useless nodes in {}".format(web_site.main_page_url))
             self.logger.info("all url nodes and downloaded with selenium: {}".format(
                 len(web_site.url_nodes) + downloaded_files_count))
             for url, info in web_site.url_nodes.items():

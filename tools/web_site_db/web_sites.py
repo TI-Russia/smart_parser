@@ -15,6 +15,8 @@ class TDeclarationWebSite:
         self.disable_selenium = None
         self.dlrobot_max_time_coeff = 1.0
         self.http_protocol = None
+        self.comments = None
+        self.redirect_to = None
 
     def read_from_json(self, js):
         self.calculated_office_id = js['calc_office_id']
@@ -23,6 +25,10 @@ class TDeclarationWebSite:
         self.disable_selenium = js.get('disable_selenium')
         self.dlrobot_max_time_coeff = js.get('dlrobot_max_time_coeff', 1.0)
         self.http_protocol = js.get('http_protocol')
+        self.comments = js.get('comments')
+        self.redirect_to = js.get('redirect_to')
+        if self.redirect_to is not None:
+            self.reach_status = TWebSiteReachStatus.abandoned
         return self
 
     def write_to_json(self):
@@ -39,6 +45,10 @@ class TDeclarationWebSite:
             rec['dlrobot_max_time_coeff'] = self.dlrobot_max_time_coeff
         if self.http_protocol is not None:
             rec['http_protocol'] = self.http_protocol
+        if self.comments is not None:
+            rec['comments'] = self.comments
+        if self.redirect_to is not None:
+            rec['redirect_to'] = self.redirect_to
         return rec
 
 

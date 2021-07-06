@@ -311,8 +311,8 @@ class TRobotStep:
 
     def add_downloaded_file_manually(self, downloaded_file: TDownloadedFile, href=None, declaration_year=None):
         if href is None:
-            href = self.website.morda_url
-        link_info = TLinkInfo(TClickEngine.selenium, self.website.morda_url, href,
+            href = self.website.main_page_url
+        link_info = TLinkInfo(TClickEngine.selenium, self.website.main_page_url, href,
                               source_html="", anchor_text="", tag_name="a",
                               element_index=1, downloaded_file=downloaded_file,
                               declaration_year=declaration_year)
@@ -520,7 +520,7 @@ class TRobotStep:
         for url in regional_main_pages:
             if not url.startswith('http'):
                 url = self.protocol + "://" + url
-            link_info = TLinkInfo(TClickEngine.manual, self.website.morda_url, url)
+            link_info = TLinkInfo(TClickEngine.manual, self.website.main_page_url, url)
             link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
             self.add_link_wrapper(link_info)
 
@@ -584,11 +584,11 @@ class TRobotStep:
             self.step_urls.update(self.pages_to_process)
 
         if self.need_search_engine_before():
-            self.use_search_engine(self.website.morda_url)
+            self.use_search_engine(self.website.main_page_url)
             self.pages_to_process.update(self.step_urls)
 
         if self.sitemap_xml_processor:
-            self.add_links_from_sitemap_xml(self.website.morda_url, self.sitemap_xml_processor.get('check_url_func'))
+            self.add_links_from_sitemap_xml(self.website.main_page_url, self.sitemap_xml_processor.get('check_url_func'))
 
         save_input_urls = dict(self.pages_to_process.items())
 
@@ -601,7 +601,7 @@ class TRobotStep:
                 self.apply_function_to_links(self.check_link_func_2)
 
         if self.need_search_engine_after():
-            self.use_search_engine(self.website.morda_url)
+            self.use_search_engine(self.website.main_page_url)
 
         if self.step_name == "sitemap":
             self.add_regional_main_pages(regional_main_pages)

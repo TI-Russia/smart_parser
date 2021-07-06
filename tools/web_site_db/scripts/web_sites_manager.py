@@ -93,34 +93,51 @@ class TWebSitesManager:
                 site = self.out_web_sites.get_web_site(web_domain)
                 site.dlrobot_max_time_coeff = 2.0
 
-    def check_alive_one_site(self, project, url, site_info: TDeclarationWebSite):
+    def check_alive_one_site(self, project, url):
         self.logger.info("check {}".format(url))
         web_site = TWebSiteCrawlSnapshot(project, morda_url=url)
         web_site.fetch_the_main_page(enable_search_engine=False)
         if TWebSiteReachStatus.can_communicate(web_site.reach_status):
-            self.logger.info("     {} is alive, protocol = {}".format(url, web_site.protocol))
-            site_info.http_protocol = web_site.protocol
-            return True
+            return web_site
         else:
-            self.logger.info("     {} is dead".format(url))
-            return False
+            return None
 
     def check_alive(self, status=TWebSiteReachStatus.abandoned):
         assert self.args.filter_regex is not None
         self.logger.info("rm {}".format(TDownloadEnv.FILE_CACHE_FOLDER))
         TDownloadEnv.clear_cache_folder()
-        self.out_web_sites.web_sites = self.in_web_sites.web_sites
+        self.out_web_sites.web_sites = deepcopy(self.in_web_sites.web_sites)
         cnt = 0
         project_path = "project.txt"
         TRobotProject.create_project("dummy.ru", project_path)
         with TRobotProject(self.logger, project_path, [], "result") as project:
-            for web_domain, site_info in self.out_web_sites.web_sites.items():
+            for web_domain in self.in_web_sites.web_sites.keys():
+                site_info = self.out_web_sites.get_web_site(web_domain)
                 if re.search(self.args.filter_regex, web_domain) is not None:
                     if not self.args.force and not TWebSiteReachStatus.can_communicate(site_info.reach_status):
                         self.logger.info("skip {}".format(web_domain))
-                    elif not self.check_alive_one_site(project, web_domain, site_info):
-                        site_info.reach_status = status
-                        cnt += 1
+                    else:
+                        web_site = self.check_alive_one_site(project, web_domain)
+                        if web_site is None:
+                            self.logger.info("     {} is dead".format(web_domain))
+                            site_info.reach_status = status
+                            cnt += 1
+                        else:
+                            self.logger.info("     {} is alive, protocol = {}, morda = {}".format(
+                                web_domain, web_site.protocol, web_site.web_domain))
+                            site_info.http_protocol = web_site.protocol
+                            if web_site.web_domain != web_domain:
+                                if not self.out_web_sites.has_web_site(web_site.web_domain):
+                                    self.logger.info('move {}  to {}'.format(web_domain, web_site.web_domain))
+                                    copy = deepcopy(site_info)
+                                    copy.reach_status = TWebSiteReachStatus.normal
+                                    self.out_web_sites.web_sites[web_site.web_domain] = copy
+                                else:
+                                    self.out_web_sites.web_sites[web_site.web_domain].http_protocol = web_site.protocol
+                                if site_info.reach_status != TWebSiteReachStatus.abandoned:
+                                    self.logger.error('set {} is dead'.format(web_domain))
+                                    site_info.reach_status = TWebSiteReachStatus.abandoned
+
         os.unlink(project_path)
         self.logger.info("set {} web sites status to {}".format(cnt, status))
 

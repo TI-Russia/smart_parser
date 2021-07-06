@@ -4,15 +4,16 @@
     },
     "mkrf.ru": {
         "calc_office_id": 579,
-        "status": "abandoned",
-        "dlrobot_max_time_coeff": 2.0
+        "status": "abandoned"
     },
     "culture.gov.ru": {
-        "calc_office_id": 579
+        "calc_office_id": 579,
+        "dlrobot_max_time_coeff": 2.0
     },
     "mcx.ru": {
         "calc_office_id": 607,
-        "dlrobot_max_time_coeff": 2.0
+        "status": "abandoned",
+        "redirect_to": "mcx.gov.ru"
     },
     "duma.yar.ru": {
         "calc_office_id": 563
@@ -22,14 +23,16 @@
         "dlrobot_max_time_coeff": 2.0
     },
     "minjust.ru": {
-        "calc_office_id": 595
+        "calc_office_id": 595,
+        "redirect_to": "minjust.gov.ru"
     },
     "dumahmao.ru": {
         "calc_office_id": 951
     },
     "minfin.ru": {
         "calc_office_id": 604,
-        "dlrobot_max_time_coeff": 2.0
+        "dlrobot_max_time_coeff": 2.0,
+        "redirect_to": "minfin.gov.ru"
     },
     "mos-gorsud.ru": {
         "calc_office_id": 634,
@@ -68,7 +71,8 @@
         "http_protocol": "http"
     },
     "rospotrebnadzor.ru": {
-        "calc_office_id": 474
+        "calc_office_id": 474,
+        "http_protocol": "https"
     },
     "fsvps.ru": {
         "calc_office_id": 483
@@ -288,10 +292,13 @@
         "status": "abandoned"
     },
     "rosnedra.gov.ru": {
-        "calc_office_id": 503
+        "calc_office_id": 503,
+        "http_protocol": "https"
     },
     "rossvyaz.ru": {
-        "calc_office_id": 506
+        "calc_office_id": 506,
+        "status": "abandoned",
+        "http_protocol": "https"
     },
     "belregion.ru": {
         "calc_office_id": 197,
@@ -357,7 +364,8 @@
         "calc_office_id": 2319
     },
     "roslavl.ru": {
-        "calc_office_id": 2820
+        "calc_office_id": 2820,
+        "http_protocol": "http"
     },
     "r46.tmbreg.ru": {
         "calc_office_id": 2881
@@ -393,7 +401,9 @@
         "calc_office_id": 508
     },
     "rosmintrud.ru": {
-        "calc_office_id": 981
+        "calc_office_id": 981,
+        "status": "abandoned",
+        "http_protocol": "https"
     },
     "mvd.ru": {
         "calc_office_id": 4,
@@ -626,7 +636,9 @@
         "dlrobot_max_time_coeff": 2.0
     },
     "roszdravnadzor.ru": {
-        "calc_office_id": 495
+        "calc_office_id": 495,
+        "status": "abandoned",
+        "http_protocol": "https"
     },
     "belduma.ru": {
         "calc_office_id": 448
@@ -977,14 +989,17 @@
     },
     "rosrezerv.gov.ru": {
         "calc_office_id": 514,
-        "status": "abandoned",
-        "dlrobot_max_time_coeff": 2.0
+        "dlrobot_max_time_coeff": 2.0,
+        "http_protocol": "https"
     },
     "roszeldor.ru": {
-        "calc_office_id": 511
+        "calc_office_id": 511,
+        "status": "abandoned",
+        "http_protocol": "http"
     },
     "rosim.ru": {
-        "calc_office_id": 515
+        "calc_office_id": 515,
+        "http_protocol": "http"
     },
     "admin.adm-nao.ru": {
         "calc_office_id": 183,
@@ -1029,7 +1044,8 @@
         "calc_office_id": 664
     },
     "rostov.arbitr.ru": {
-        "calc_office_id": 689
+        "calc_office_id": 689,
+        "http_protocol": "https"
     },
     "vs.kbr.sudrf.ru": {
         "calc_office_id": 736
@@ -1216,7 +1232,8 @@
         "calc_office_id": 816
     },
     "rosleshoz.gov.ru": {
-        "calc_office_id": 518
+        "calc_office_id": 518,
+        "http_protocol": "http"
     },
     "минобрнауки.рф": {
         "calc_office_id": 598,
@@ -2083,7 +2100,9 @@
     },
     "rosminzdrav.ru": {
         "calc_office_id": 596,
-        "dlrobot_max_time_coeff": 2.0
+        "status": "abandoned",
+        "dlrobot_max_time_coeff": 2.0,
+        "http_protocol": "https"
     },
     "fano.gov.ru": {
         "calc_office_id": 4199,
@@ -2545,7 +2564,9 @@
         "calc_office_id": 487
     },
     "rosavtodor.ru": {
-        "calc_office_id": 510
+        "calc_office_id": 510,
+        "status": "abandoned",
+        "http_protocol": "https"
     },
     "morflot.ru": {
         "calc_office_id": 512
@@ -3081,7 +3102,8 @@
     },
     "rostov-gorod.ru": {
         "calc_office_id": 1612,
-        "dlrobot_max_time_coeff": 2.0
+        "dlrobot_max_time_coeff": 2.0,
+        "http_protocol": "https"
     },
     "donetsk-ro.donland.ru": {
         "calc_office_id": 1617
@@ -3429,10 +3451,14 @@
         "calc_office_id": 473
     },
     "rostransnadzor.ru": {
-        "calc_office_id": 477
+        "calc_office_id": 477,
+        "status": "abandoned",
+        "http_protocol": "https"
     },
     "rostrud.ru": {
-        "calc_office_id": 496
+        "calc_office_id": 496,
+        "status": "abandoned",
+        "http_protocol": "https"
     },
     "adygheya.ru": {
         "calc_office_id": 148,
@@ -4081,7 +4107,8 @@
         "calc_office_id": 6595
     },
     "rosatom.ru": {
-        "calc_office_id": 969
+        "calc_office_id": 969,
+        "http_protocol": "https"
     },
     "1aas.arbitr.ru": {
         "calc_office_id": 799
@@ -4950,7 +4977,9 @@
         "calc_office_id": 4758
     },
     "rostov.roskazna.ru": {
-        "calc_office_id": 4773
+        "calc_office_id": 4773,
+        "status": "abandoned",
+        "http_protocol": "https"
     },
     "tula.roskazna.ru": {
         "calc_office_id": 4788
@@ -5981,13 +6010,16 @@
         "calc_office_id": 6765
     },
     "rostokino.info": {
-        "calc_office_id": 6785
+        "calc_office_id": 6785,
+        "http_protocol": "http"
     },
     "munsolncevo.ru": {
         "calc_office_id": 6847
     },
     "roskazna.ru": {
-        "calc_office_id": 479
+        "calc_office_id": 479,
+        "status": "abandoned",
+        "http_protocol": "https"
     },
     "fsa.gov.ru": {
         "calc_office_id": 513
@@ -6212,7 +6244,8 @@
         "calc_office_id": 1461
     },
     "rossadm.ru": {
-        "calc_office_id": 1471
+        "calc_office_id": 1471,
+        "http_protocol": "https"
     },
     "egoradmin.ru": {
         "calc_office_id": 1482
@@ -10080,7 +10113,8 @@
         "calc_office_id": 5005
     },
     "rostov.gks.ru": {
-        "calc_office_id": 5007
+        "calc_office_id": 5007,
+        "http_protocol": "https"
     },
     "ryazan.gks.ru": {
         "calc_office_id": 5008
@@ -10173,7 +10207,8 @@
         "calc_office_id": 1033
     },
     "rostokino.mos.ru": {
-        "calc_office_id": 1034
+        "calc_office_id": 1034,
+        "http_protocol": "https"
     },
     "severny.mos.ru": {
         "calc_office_id": 1036
@@ -10242,7 +10277,9 @@
         "calc_office_id": 1530
     },
     "roshaladm.ru": {
-        "calc_office_id": 1539
+        "calc_office_id": 1539,
+        "status": "abandoned",
+        "http_protocol": "https"
     },
     "electrostal.ru": {
         "calc_office_id": 1544
@@ -10988,7 +11025,8 @@
         "calc_office_id": 449
     },
     "roscosmos.ru": {
-        "calc_office_id": 517
+        "calc_office_id": 517,
+        "http_protocol": "https"
     },
     "bryansk.sledcom.ru": {
         "calc_office_id": 3819
@@ -11215,7 +11253,8 @@
         "calc_office_id": 4294
     },
     "rostov.fas.gov.ru": {
-        "calc_office_id": 4298
+        "calc_office_id": 4298,
+        "http_protocol": "https"
     },
     "ryazan.fas.gov.ru": {
         "calc_office_id": 4299
@@ -12522,7 +12561,8 @@
         "calc_office_id": 892
     },
     "rostov-fishcom.ru": {
-        "calc_office_id": 905
+        "calc_office_id": 905,
+        "http_protocol": "http"
     },
     "zbtu39.ru": {
         "calc_office_id": 913
@@ -13899,7 +13939,8 @@
         "calc_office_id": 6767
     },
     "rostec.ru": {
-        "calc_office_id": 970
+        "calc_office_id": 970,
+        "http_protocol": "https"
     },
     "r29.fss.ru": {
         "calc_office_id": 4038
@@ -14099,7 +14140,8 @@
         "calc_office_id": 404
     },
     "rostov.izbirkom.ru": {
-        "calc_office_id": 423
+        "calc_office_id": 423,
+        "http_protocol": "http"
     },
     "tambov.izbirkom.ru": {
         "calc_office_id": 430
@@ -14156,7 +14198,8 @@
         "calc_office_id": 3870
     },
     "rostov.sledcom.ru": {
-        "calc_office_id": 3871
+        "calc_office_id": 3871,
+        "http_protocol": "https"
     },
     "ryazan.sledcom.ru": {
         "calc_office_id": 3872
@@ -18017,7 +18060,9 @@
     },
     "rosgvard.ru": {
         "calc_office_id": 6101,
-        "dlrobot_max_time_coeff": 2.0
+        "status": "abandoned",
+        "dlrobot_max_time_coeff": 2.0,
+        "http_protocol": "https"
     },
     "igma.ru": {
         "calc_office_id": 6402
@@ -20058,7 +20103,8 @@
         "calc_office_id": 476
     },
     "rosoboronpostavka.ru": {
-        "calc_office_id": 490
+        "calc_office_id": 490,
+        "http_protocol": "https"
     },
     "24.fsin.su": {
         "calc_office_id": 873
@@ -22917,7 +22963,8 @@
         "calc_office_id": 6410
     },
     "rostgmu.ru": {
-        "calc_office_id": 6419
+        "calc_office_id": 6419,
+        "http_protocol": "http"
     },
     "tvgmu.ru": {
         "calc_office_id": 6432
@@ -24731,7 +24778,8 @@
         "calc_office_id": 3993
     },
     "rosvoencentr-rf.ru": {
-        "calc_office_id": 3994
+        "calc_office_id": 3994,
+        "http_protocol": "http"
     },
     "rfh.ru": {
         "calc_office_id": 3995,
@@ -26545,7 +26593,9 @@
         "calc_office_id": 8468
     },
     "rostobrnadzor.ru": {
-        "calc_office_id": 8471
+        "calc_office_id": 8471,
+        "status": "abandoned",
+        "http_protocol": "https"
     },
     "ombudsman.donland.ru": {
         "calc_office_id": 8473
@@ -28403,7 +28453,8 @@
         "calc_office_id": 4406
     },
     "rospotrebnadzor95.ru": {
-        "calc_office_id": 4491
+        "calc_office_id": 4491,
+        "http_protocol": "https"
     },
     "old.vladimir.roskazna.ru": {
         "calc_office_id": 4731,
@@ -29624,7 +29675,8 @@
         "calc_office_id": 4006
     },
     "rosmorport.ru": {
-        "calc_office_id": 4008
+        "calc_office_id": 4008,
+        "http_protocol": "https"
     },
     "voenipoteka.ru": {
         "calc_office_id": 4010
@@ -29643,7 +29695,9 @@
         "calc_office_id": 4017
     },
     "rostelecom.ru": {
-        "calc_office_id": 4018
+        "calc_office_id": 4018,
+        "status": "abandoned",
+        "http_protocol": "https"
     },
     "svo.aero": {
         "calc_office_id": 4019,
@@ -29666,7 +29720,8 @@
         "status": "abandoned"
     },
     "rosseti.ru": {
-        "calc_office_id": 4028
+        "calc_office_id": 4028,
+        "http_protocol": "https"
     },
     "rshb.ru": {
         "calc_office_id": 4029
@@ -29751,7 +29806,8 @@
         "calc_office_id": 6702
     },
     "rostov-fis.nichost.ru": {
-        "calc_office_id": 905
+        "calc_office_id": 905,
+        "http_protocol": "http"
     },
     "sibfout.mvd.ru": {
         "calc_office_id": 4334,
@@ -29837,7 +29893,8 @@
         "calc_office_id": 20008
     },
     "rosatomflot.ru": {
-        "calc_office_id": 20009
+        "calc_office_id": 20009,
+        "http_protocol": "http"
     },
     "vniipik.ru": {
         "calc_office_id": 20010,
@@ -30152,10 +30209,13 @@
         "calc_office_id": 497
     },
     "rospatent.gov.ru": {
-        "calc_office_id": 499
+        "calc_office_id": 499,
+        "http_protocol": "https"
     },
     "rosnedra.com": {
-        "calc_office_id": 503
+        "calc_office_id": 503,
+        "status": "abandoned",
+        "http_protocol": "https"
     },
     "duma.murman.ru": {
         "calc_office_id": 551
@@ -30265,7 +30325,8 @@
         "calc_office_id": 4015
     },
     "rosneft.ru": {
-        "calc_office_id": 4020
+        "calc_office_id": 4020,
+        "http_protocol": "https"
     },
     "sovcomflot.ru": {
         "calc_office_id": 4031,
@@ -31322,7 +31383,8 @@
         "calc_office_id": 8427
     },
     "minobr.donland.ru": {
-        "calc_office_id": 8447
+        "calc_office_id": 8447,
+        "http_protocol": "https"
     },
     "minfin.donland.ru": {
         "calc_office_id": 8455
@@ -34035,7 +34097,8 @@
         "calc_office_id": 20255
     },
     "rospt.ru": {
-        "calc_office_id": 20256
+        "calc_office_id": 20256,
+        "http_protocol": "http"
     },
     "novonik-adm.ru": {
         "calc_office_id": 20257
@@ -37080,7 +37143,8 @@
         "status": "abandoned"
     },
     "rossoshen.ru": {
-        "calc_office_id": 20984
+        "calc_office_id": 20984,
+        "http_protocol": "https"
     },
     "amocentr.ru": {
         "calc_office_id": 20985,
@@ -38662,7 +38726,8 @@
         "calc_office_id": 21476
     },
     "rossoshansky.vrn.sudrf.ru": {
-        "calc_office_id": 21477
+        "calc_office_id": 21477,
+        "http_protocol": "http"
     },
     "semiluksky.vrn.sudrf.ru": {
         "calc_office_id": 21478
@@ -42727,7 +42792,8 @@
         "calc_office_id": 22789
     },
     "roslavl.sml.sudrf.ru": {
-        "calc_office_id": 22790
+        "calc_office_id": 22790,
+        "http_protocol": "http"
     },
     "rudnya.sml.sudrf.ru": {
         "calc_office_id": 22791
@@ -43881,7 +43947,8 @@
         "calc_office_id": 23160
     },
     "rostovsky.jrs.sudrf.ru": {
-        "calc_office_id": 23161
+        "calc_office_id": 23161,
+        "http_protocol": "http"
     },
     "rybinskygor.jrs.sudrf.ru": {
         "calc_office_id": 23162
@@ -43902,7 +43969,8 @@
         "calc_office_id": 23167
     },
     "rosreestr.gov.ru": {
-        "calc_office_id": 478
+        "calc_office_id": 478,
+        "http_protocol": "https"
     },
     "pace.coe.int": {
         "calc_office_id": 14,
@@ -43927,10 +43995,12 @@
         "calc_office_id": 3788
     },
     "rossvyaz.gov.ru": {
-        "calc_office_id": 6718
+        "calc_office_id": 6718,
+        "http_protocol": "https"
     },
     "minjust.gov.ru": {
-        "calc_office_id": 595
+        "calc_office_id": 595,
+        "http_protocol": "https"
     },
     "educrub.edu22.info": {
         "calc_office_id": 2320
@@ -43946,7 +44016,8 @@
         "http_protocol": "http"
     },
     "rosstat.gov.ru": {
-        "calc_office_id": 472
+        "calc_office_id": 472,
+        "http_protocol": "https"
     },
     "mineco174.eps74.ru": {
         "calc_office_id": 9102
@@ -44002,10 +44073,12 @@
         "calc_office_id": 3528
     },
     "mintrud.gov.ru": {
-        "calc_office_id": 981
+        "calc_office_id": 981,
+        "http_protocol": "https"
     },
     "rostransnadzor.gov.ru": {
-        "calc_office_id": 477
+        "calc_office_id": 477,
+        "http_protocol": "https"
     },
     "fsvps.gov.ru": {
         "calc_office_id": 483
@@ -44097,7 +44170,8 @@
     },
     "minzdrav.gov.ru": {
         "calc_office_id": 596,
-        "dlrobot_max_time_coeff": 2.0
+        "dlrobot_max_time_coeff": 2.0,
+        "http_protocol": "https"
     },
     "minfin.gov.ru": {
         "calc_office_id": 604,
@@ -44107,7 +44181,8 @@
         "calc_office_id": 605
     },
     "mcx.gov.ru": {
-        "calc_office_id": 607
+        "calc_office_id": 607,
+        "dlrobot_max_time_coeff": 2.0
     },
     "minvr.gov.ru": {
         "calc_office_id": 982
@@ -44119,16 +44194,20 @@
         "calc_office_id": 6780
     },
     "roskazna.gov.ru": {
-        "calc_office_id": 479
+        "calc_office_id": 479,
+        "http_protocol": "https"
     },
     "roszdravnadzor.gov.ru": {
-        "calc_office_id": 495
+        "calc_office_id": 495,
+        "http_protocol": "https"
     },
     "rostrud.gov.ru": {
-        "calc_office_id": 496
+        "calc_office_id": 496,
+        "http_protocol": "https"
     },
     "rlw.gov.ru": {
-        "calc_office_id": 511
+        "calc_office_id": 511,
+        "http_protocol": "http"
     },
     "anticorrupt.adm-nao.ru": {
         "calc_office_id": 91,
@@ -44277,7 +44356,8 @@
         "calc_office_id": 5317
     },
     "rosavtodor.gov.ru": {
-        "calc_office_id": 510
+        "calc_office_id": 510,
+        "http_protocol": "https"
     },
     "glava.mncp-marfino.ru": {
         "calc_office_id": 6783
@@ -44679,7 +44759,8 @@
         "calc_office_id": 4772
     },
     "rostov.roskazna.gov.ru": {
-        "calc_office_id": 4773
+        "calc_office_id": 4773,
+        "http_protocol": "https"
     },
     "ryazan.roskazna.gov.ru": {
         "calc_office_id": 4774
@@ -45737,5 +45818,10 @@
     "110.service.nalog.ru": {
         "calc_office_id": 6552,
         "status": "abandoned"
+    },
+    "rosguard.gov.ru": {
+        "calc_office_id": 6101,
+        "dlrobot_max_time_coeff": 2.0,
+        "http_protocol": "https"
     }
 }
