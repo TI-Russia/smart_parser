@@ -22,6 +22,7 @@ def parse_args():
     parser.add_argument("--output-file", dest='output_file', required=True)
     parser.add_argument("--ban-list", dest='ban_list', required=False)
     parser.add_argument("--filter-regex", dest='filter_regex', required=False)
+    parser.add_argument("--force", dest='force', required=False, action="store_true", default=False)
     parser.add_argument("--replace-substring", dest='replace_substring', required=False,
                         help="for example, --action move --filter-regex '.mvd.ru$'  --replace-substring .мвд.рф")
     return parser.parse_args()
@@ -115,7 +116,7 @@ class TWebSitesManager:
         with TRobotProject(self.logger, project_path, [], "result") as project:
             for web_domain, site_info in self.out_web_sites.web_sites.items():
                 if re.search(self.args.filter_regex, web_domain) is not None:
-                    if not TWebSiteReachStatus.can_communicate(site_info.reach_status):
+                    if not self.args.force and not TWebSiteReachStatus.can_communicate(site_info.reach_status):
                         self.logger.info("skip {}".format(web_domain))
                     elif not self.check_alive_one_site(project, web_domain, site_info):
                         site_info.reach_status = status
