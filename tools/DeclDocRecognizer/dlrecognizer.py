@@ -4,6 +4,7 @@ from ConvStorage.conversion_client import TDocConversionClient
 from DeclDocRecognizer.external_convertors import TExternalConverters
 from common.primitives import normalize_whitespace, build_dislosures_sha256
 from common.russian_fio import TRussianFioRecognizer
+from common.recognizer_enum import DL_RECOGNIZER_ENUM
 
 from collections import defaultdict
 import argparse
@@ -15,12 +16,6 @@ import sys
 
 
 EXTERNAl_CONVERTORS = TExternalConverters()
-
-
-class DL_RECOGNIZER_ENUM:
-    UNKNOWN = "unknown_result"
-    POSITIVE = "declaration_result"
-    NEGATIVE = "some_other_document_result"
 
 
 class FEATURE_ENUM:

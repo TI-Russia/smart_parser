@@ -1,4 +1,4 @@
-from DeclDocRecognizer.dlrecognizer import DL_RECOGNIZER_ENUM
+from common.recognizer_enum import DL_RECOGNIZER_ENUM
 from common.primitives import strip_html_url, build_dislosures_sha256_by_html, \
     strip_viewer_prefix
 
