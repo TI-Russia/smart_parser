@@ -23,16 +23,16 @@ class TExportFile:
         self.archive_index = archive_index
         self.name_in_archive = name_in_archive
         self.sha256 = None
+        if link_info is not None:
+            self.declaration_year = link_info.declaration_year
+        else:
+            self.declaration_year = None
         if init_json is not None:
             self.from_json(init_json)
         else:
             self.sha256 = build_dislosures_sha256(export_path)
         self.file_extension = os.path.splitext(self.export_path)[1]
         self.smart_parser_json_sha256 = None
-        if link_info is not None:
-            self.declaration_year = link_info.declaration_year
-        else:
-            self.declaration_year = None
 
     def to_json(self):
         rec = {

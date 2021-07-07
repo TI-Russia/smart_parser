@@ -109,15 +109,31 @@ class TImporter:
         self.all_section_passports.add(passport)
         return True
 
+    def calc_income_year(self, input_json, src_doc: TSourceDocument, section_json, section_index):
+        # do not use here default value for get, since smart_parser explicitly write "year": null
+        year = section_json.get('year')
+        if year is not None:
+            return int(year)
+
+        # take income_year from the document heading
+        year = input_json.get('document', dict()).get('year')
+
+        # If absent, take it from declarator db
+        if year is None:
+            year = src_doc.get_declarator_income_year()
+
+        # If absent, take it from html anchor text
+        if year is None:
+            year = src_doc.get_external_income_year_from_dlrobot()
+
+        # otherwise the file is useless
+        if year is None:
+            raise TSmartParserSectionJson.SerializerException(
+                "year is not defined: section No {}".format(section_index))
+
+        return int(year)
+
     def import_one_smart_parser_json(self, source_document_in_db, input_json, src_doc: TSourceDocument):
-        # take income_year from smart_parser. If absent, take it from declarator, otherwise the file is useless
-        document_income_year = input_json.get('document', dict()).get('year', src_doc.get_declarator_income_year())
-        if document_income_year is None:
-            document_income_year = src_doc.get_external_income_year_from_dlrobot()
-
-        if document_income_year is not None:
-            document_income_year = int(document_income_year)
-
         imported_section_years = list()
         section_index = 0
         TImporter.logger.debug("try to import {} declarants".format(len(input_json['persons'])))
@@ -125,16 +141,7 @@ class TImporter:
 
         for raw_section in input_json['persons']:
             section_index += 1
-
-            # do not use here default value for get, since smart_parser explicitly write "year": null
-            #section_income_year = raw_section.get('year', document_income_year)
-
-            section_income_year = raw_section.get('year')
-            if section_income_year is None:
-                section_income_year = document_income_year
-
-            if section_income_year is None:
-                raise TSmartParserSectionJson.SerializerException("year is not defined: section No {}".format(section_index))
+            section_income_year = self.calc_income_year(input_json, src_doc,  raw_section, section_index)
             with transaction.atomic():
                 try:
                     prepared_section = TSmartParserSectionJson(section_income_year, source_document_in_db)

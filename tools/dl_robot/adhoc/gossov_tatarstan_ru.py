@@ -12,7 +12,7 @@ def gossov_tatarstan_ru(web_site: TWebSiteCrawlSnapshot):
     for element in elements:
         person_href = element.get_attribute('href')
         if person_href is not None and person_href.find('person_id') != -1:
-            robot_step.add_link_wrapper(TLinkInfo(TClickEngine.manual, robot_step.website.morda_url, person_href))
+            robot_step.add_link_wrapper(TLinkInfo(TClickEngine.manual, robot_step.website.main_page_url, person_href))
             file = TDownloadedFile(person_href)
             parser = THtmlParser(file.data, url=person_href)
             for html_link in THtmlParser(file.data, url=person_href).soup.findAll("a"):

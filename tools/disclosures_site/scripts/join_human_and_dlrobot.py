@@ -39,7 +39,7 @@ class TJoiner:
         self.web_sites.load_from_disk()
         self.old_files_with_office_count = 0
 
-    def add_dlrobot_file(self, sha256, file_extension, web_refs=[], decl_refs=[], declaration_year=None):
+    def add_dlrobot_file(self, sha256, file_extension, web_refs=[], decl_refs=[]):
         src_doc = self.output_dlrobot_human.document_collection.get(sha256)
         if src_doc is None:
             src_doc = TSourceDocument()

@@ -101,13 +101,13 @@ class TSourceDocument:
     def get_declarator_income_year(self):
         for r in self.decl_references:
             if r.income_year is not None:
-                return r.income_year
+                return int(r.income_year)
         return None
 
     def get_external_income_year_from_dlrobot(self):
         for r in self.web_references:
             if r.declaration_year is not None:
-                return r.declaration_year
+                return int(r.declaration_year)
         return None
 
     def add_web_reference(self, web_ref):

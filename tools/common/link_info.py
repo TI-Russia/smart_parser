@@ -1,3 +1,5 @@
+import re
+
 from common.recognizer_enum import DL_RECOGNIZER_ENUM
 from common.primitives import strip_html_url, build_dislosures_sha256_by_html, \
     strip_viewer_prefix
@@ -50,6 +52,10 @@ class TLinkInfo:
         if self.source_page_title is None:
             self.source_page_title = ""
         self.declaration_year = declaration_year
+        if self.anchor_text != '' and self.declaration_year is None:
+            m = re.search('20[12][0-9]', self.anchor_text)
+            if m is not None:
+                self.declaration_year = m.group(0)
 
     def set_anchor_text(self, anchor_text):
         self.anchor_text = '' if anchor_text is None else anchor_text.strip(" \r\n\t")
