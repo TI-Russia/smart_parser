@@ -177,9 +177,11 @@ class TConvertProcessor(http.server.HTTPServer):
         self.failed_files_size = 0
         self.successful_get_requests = 0
         self.finished_ocr_tasks = 0
-        self.hot_folder_path = self.get_hot_folder_path_from_running_tasks()
-        if self.hot_folder_path is None:
-            raise Exception ("cannot find running HotFolder.exe")
+        self.hot_folder_path = None
+        if sys.platform.startswith('win32'):
+            self.hot_folder_path = self.get_hot_folder_path_from_running_tasks()
+            if self.hot_folder_path is None:
+                raise Exception("cannot find running HotFolder.exe")
 
         self.file_garbage_collection_timestamp = 0
         self.ocr_queue_is_empty_last_time_stamp = time.time()

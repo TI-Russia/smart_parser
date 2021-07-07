@@ -48,7 +48,6 @@ class TTestEnv:
         with open(self.project_path, "w") as outp:
             outp.write(project)
 
-
     def start_server_and_robot(self, crawling_timeout=None):
         threading.Thread(target=start_server, args=(self.web_site,)).start()
         dlrobot_args = ['--clear-cache-folder',
@@ -92,7 +91,7 @@ class TestSimple(TestCase):
     def tearDown(self):
         self.env.tearDown()
 
-    def test_simple(self):
+    def test_download_one_document(self):
         self.assertEqual (len(self.env.get_result_files()), 1)
 
 
