@@ -51,6 +51,22 @@ class TWebSiteCrawlSnapshot:
         elapsed_time_in_seconds = time.time() - self.start_crawling_time + 0.00000001
         return (60.0 * self.export_env.found_declarations_count) / elapsed_time_in_seconds;
 
+    def init_main_page_url_from_redirected_url(self, url):
+        o = urllib.parse.urlsplit(url)
+        self.protocol = o.scheme
+        self.main_page_url = urllib.parse.urlunsplit(
+            [o.scheme,
+             o.netloc,
+             '',  # path
+             '',  # query
+             ''])
+        self.web_domain = o.netloc
+        assert isinstance(self.web_domain, str)
+        if self.web_domain.startswith('www.'):
+            self.web_domain = self.web_domain[4:]
+        if o.scheme == "https" and self.web_domain.endswith(':443'):
+            self.web_domain = self.web_domain[:-4]
+
     def recognize_protocol_and_www(self):
         if self.main_page_url.startswith('http://'):
             self.protocol = "http"
@@ -66,21 +82,9 @@ class TWebSiteCrawlSnapshot:
                         url += self.main_page_url
                         file = TDownloadedFile(url)
                         html_data = file.data
-                        o = urllib.parse.urlsplit(file.redirected_url)
-                        self.protocol = o.scheme
-                        self.main_page_url = urllib.parse.urlunsplit(
-                            [o.scheme,
-                             o.netloc,
-                             '', # path
-                             '', # query
-                             ''])
                         self.logger.debug('read {} bytes from url {}, treat this url as the main url'.format(
                             len(html_data), url))
-                        self.web_domain = o.netloc
-                        if self.web_domain.startswith('www.'):
-                            self.web_domain = self.web_domain[4:]
-                        if o.scheme == "https" and self.web_domain.endswith(':443'):
-                            self.web_domain = self.web_domain[:-4]
+                        self.init_main_page_url_from_redirected_url(file.redirected_url)
                         return
                     except THttpRequester.RobotHttpException as exp:
                         self.logger.error("cannot fetch {}  with urllib, sleep 3 sec".format(url))
@@ -113,15 +117,19 @@ class TWebSiteCrawlSnapshot:
                 time.sleep(3)
         try:
             self.logger.error("disable urllib for this website since we cannot reach the main page with urllib")
+            if not self.main_page_url.startswith('http'):
+                self.main_page_url = "http://" + self.main_page_url
+
             self.parent_project.selenium_driver.navigate(self.main_page_url)
             time.sleep(3)
+            self.init_main_page_url_from_redirected_url(self.parent_project.selenium_driver.the_driver.current_url)
             title = self.parent_project.selenium_driver.the_driver.title
             self.enable_urllib = False
             self.reach_status = TWebSiteReachStatus.only_selenium
             self.url_nodes[self.main_page_url] = TUrlInfo(title=title)
             return True
         except Exception as exp:
-            self.logger.error("cannot access the main page using selenium")
+            self.logger.error("cannot access the main page using selenium, exception: {}".format(exp))
             self.reach_status = TWebSiteReachStatus.out_of_reach
 
         if enable_search_engine:

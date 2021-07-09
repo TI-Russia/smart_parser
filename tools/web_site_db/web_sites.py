@@ -28,7 +28,7 @@ class TDeclarationWebSite:
         self.comments = js.get('comments')
         self.redirect_to = js.get('redirect_to')
         if self.redirect_to is not None:
-            self.reach_status = TWebSiteReachStatus.abandoned
+            self.ban()
         return self
 
     def write_to_json(self):
@@ -50,6 +50,17 @@ class TDeclarationWebSite:
         if self.redirect_to is not None:
             rec['redirect_to'] = self.redirect_to
         return rec
+
+    def set_redirect(self, to_url):
+        self.redirect_to = to_url
+        self.ban()
+
+    def ban(self):
+        self.reach_status = TWebSiteReachStatus.abandoned
+
+    def set_protocol(self, protocol):
+        self.http_protocol = protocol
+        self.reach_status = TWebSiteReachStatus.normal
 
 
 class TDeclarationWebSiteList:
@@ -90,11 +101,7 @@ class TDeclarationWebSiteList:
     def has_web_site(self, web_site):
         return web_site in self.web_sites
 
-    def set_status_to_web_site(self, web_site, reach_status):
-        assert TWebSiteReachStatus.check_status(reach_status)
-        self.web_sites[web_site].reach_status = reach_status
-
-    def get_web_site(self, web_site):
+    def get_web_site(self, web_site) -> TDeclarationWebSite:
         return self.web_sites.get(web_site)
 
     def save_to_disk(self):

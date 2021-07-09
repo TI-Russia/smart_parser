@@ -16,6 +16,10 @@
         "redirect_to": "mcx.gov.ru"
     },
     "duma.yar.ru": {
+        "calc_office_id": 563,
+        "status": "abandoned"
+    },
+    "yarduma.ru": {
         "calc_office_id": 563
     },
     "city-yaroslavl.ru": {
@@ -2285,7 +2289,12 @@
         "http_protocol": "http"
     },
     "dk.nnov.ru": {
-        "calc_office_id": 1907
+        "calc_office_id": 1907,
+        "status": "abandoned"
+    },
+    "dknnov.nubex.ru": {
+        "calc_office_id": 1907,
+        "http_protocol": "https"
     },
     "lukojanov.omsu-nnov.ru": {
         "calc_office_id": 1916

@@ -1,3 +1,5 @@
+import urllib.parse
+
 from web_site_db.web_sites import TDeclarationWebSiteList, TDeclarationWebSite
 from web_site_db.web_site_status import TWebSiteReachStatus
 from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
@@ -17,16 +19,16 @@ import os
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--action", dest='action', help="can be ban, to_utf8, move, mark_large_sites, check_alive")
+    parser.add_argument("--action", dest='action', help="can be ban, to_utf8, move, mark_large_sites, check_alive, print_urls")
     parser.add_argument("--input-file", dest='input_file', required=True)
     parser.add_argument("--output-file", dest='output_file', required=True)
-    parser.add_argument("--ban-list", dest='ban_list', required=False)
+    parser.add_argument("--url-list", dest='url_list', required=False)
+    parser.add_argument("--take-all-web-sites", dest='take_all_web_sites', required=False, action="store_true", default=False,
+                        help="by default we skip all abandoned web sites")
     parser.add_argument("--filter-regex", dest='filter_regex', required=False)
-    parser.add_argument("--force", dest='force', required=False, action="store_true", default=False)
     parser.add_argument("--replace-substring", dest='replace_substring', required=False,
                         help="for example, --action move --filter-regex '.mvd.ru$'  --replace-substring .мвд.рф")
     return parser.parse_args()
-
 
 
 class TWebSitesManager:
@@ -38,15 +40,43 @@ class TWebSitesManager:
         self.out_web_sites = TDeclarationWebSiteList(self.logger, file_name=self.args.output_file)
         THttpRequester.initialize(self.logger)
 
+    def check_web_site_filters(self, web_domain):
+        if self.args.filter_regex is not None:
+            if re.search(self.args.filter_regex, web_domain) is None:
+                return False
+
+        site_info = self.in_web_sites.get_web_site(web_domain)
+        if site_info is None:
+            self.logger.error("skip {}, cannot find this site".format(web_domain))
+            return False
+        else:
+            if self.args.take_all_web_sites or TWebSiteReachStatus.can_communicate(site_info.reach_status):
+                return True
+            else:
+                self.logger.debug("skip abandoned {}".format(web_domain))
+                return False
+
+    def get_url_list(self):
+        web_domains = list()
+        if self.args.url_list is not None:
+            self.logger.info("read url list from {}".format(self.args.url_list))
+            with open(self.args.url_list) as inp:
+                for url in inp:
+                    url = url.strip(" \r\n")
+                    web_domains.append(urllib.parse.urlsplit(url).netloc)
+        else:
+            #take all web domains
+            web_domains = list(self.in_web_sites.web_sites.keys())
+
+        for w in web_domains:
+            if self.check_web_site_filters(w):
+                yield w
+
     def ban_sites(self):
-        with open(self.args.ban_list) as inp:
-            self.out_web_sites.web_sites = self.in_web_sites.web_sites
-            for x in inp:
-                x = x.strip(" \r\n")
-                if self.out_web_sites.has_web_site(x):
-                    self.out_web_sites.set_status_to_web_site(x, TWebSiteReachStatus.abandoned)
-                else:
-                    self.out_web_sites.logger.error("skip {}, cannot find this site".format(x))
+        self.out_web_sites.web_sites = self.in_web_sites.web_sites
+        for url in self.get_url_list():
+            self.logger.debug("ban {}".format(url))
+            self.out_web_sites.get_web_site(url).ban()
 
     def to_utf8(self):
         for k,v in self.in_web_sites.web_sites.items():
@@ -67,7 +97,7 @@ class TWebSitesManager:
                     self.logger("{} -> {}".format(k, new_key))
                     self.out_web_sites.web_sites[new_key] = deepcopy(v)
                     cnt += 1
-                v.reach_status = TWebSiteReachStatus.abandoned
+                v.ban()
             self.out_web_sites.web_sites[k] = v
         self.logger.info("{} replacements made".format(cnt))
 
@@ -102,44 +132,39 @@ class TWebSitesManager:
         else:
             return None
 
-    def check_alive(self, status=TWebSiteReachStatus.abandoned):
+    def check_alive(self):
         assert self.args.filter_regex is not None
         self.logger.info("rm {}".format(TDownloadEnv.FILE_CACHE_FOLDER))
         TDownloadEnv.clear_cache_folder()
         self.out_web_sites.web_sites = deepcopy(self.in_web_sites.web_sites)
-        cnt = 0
+        complete_bans = list()
         project_path = "project.txt"
         TRobotProject.create_project("dummy.ru", project_path)
         with TRobotProject(self.logger, project_path, [], "result") as project:
-            for web_domain in self.in_web_sites.web_sites.keys():
+            for web_domain in self.get_url_list():
+                site_info: TDeclarationWebSite
                 site_info = self.out_web_sites.get_web_site(web_domain)
-                if re.search(self.args.filter_regex, web_domain) is not None:
-                    if not self.args.force and not TWebSiteReachStatus.can_communicate(site_info.reach_status):
-                        self.logger.info("skip {}".format(web_domain))
+                web_site = self.check_alive_one_site(project, web_domain)
+                if web_site is None:
+                    self.logger.info("     {} is dead".format(web_domain))
+                    site_info.ban()
+                    complete_bans.append(web_domain)
+                else:
+                    if web_site.web_domain != web_domain:
+                        self.logger.info('   {} is alive, but is redirected to {}, protocol = {}'.format(
+                            web_domain, web_site.web_domain, web_site.protocol))
+                        if not self.out_web_sites.has_web_site(web_site.web_domain):
+                            self.out_web_sites.web_sites[web_site.web_domain] = deepcopy(site_info)
+                        main_site_info = self.out_web_sites.get_web_site(web_site.web_domain)
+                        main_site_info.set_protocol(web_site.protocol)
+                        site_info.set_redirect(web_site.web_domain)
                     else:
-                        web_site = self.check_alive_one_site(project, web_domain)
-                        if web_site is None:
-                            self.logger.info("     {} is dead".format(web_domain))
-                            site_info.reach_status = status
-                            cnt += 1
-                        else:
-                            self.logger.info("     {} is alive, protocol = {}, morda = {}".format(
-                                web_domain, web_site.protocol, web_site.web_domain))
-                            site_info.http_protocol = web_site.protocol
-                            if web_site.web_domain != web_domain:
-                                if not self.out_web_sites.has_web_site(web_site.web_domain):
-                                    self.logger.info('move {}  to {}'.format(web_domain, web_site.web_domain))
-                                    copy = deepcopy(site_info)
-                                    copy.reach_status = TWebSiteReachStatus.normal
-                                    self.out_web_sites.web_sites[web_site.web_domain] = copy
-                                else:
-                                    self.out_web_sites.web_sites[web_site.web_domain].http_protocol = web_site.protocol
-                                if site_info.reach_status != TWebSiteReachStatus.abandoned:
-                                    self.logger.error('set {} is dead'.format(web_domain))
-                                    site_info.reach_status = TWebSiteReachStatus.abandoned
+                        self.logger.info("     {} is alive, protocol = {}, morda = {}".format(
+                            web_domain, web_site.protocol, web_site.web_domain))
+                        site_info.set_protocol(web_site.protocol)
 
         os.unlink(project_path)
-        self.logger.info("set {} web sites status to {}".format(cnt, status))
+        self.logger.info("ban {} web sites".format(len(complete_bans)))
 
     def main(self):
         if self.args.action == "ban":

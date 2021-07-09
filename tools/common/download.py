@@ -163,15 +163,15 @@ class TDownloadedFile:
             self.redirected_url = self.page_info.get('redirected_url', self.original_url)
             self.file_extension = self.page_info.get('file_extension')
         else:
-            redirected_url, info, data = self._http_get_request_with_simple_js_redirect()
+            redirected_url, headers, data = self._http_get_request_with_simple_js_redirect()
             self.redirected_url = redirected_url
             self.data = data
-            if hasattr(info, "_headers"):
-                self.page_info['headers'] = dict(info._headers)
+            if hasattr(headers, "_headers"):
+                self.page_info['headers'] = dict(headers._headers)
             else:
-                assert type(info) == dict
-                self.page_info['headers'] = info
-            self.page_info['charset'] = get_content_charset(info)
+                assert type(headers) == dict
+                self.page_info['headers'] = headers
+            self.page_info['charset'] = get_content_charset(headers)
             self.page_info['redirected_url'] = redirected_url
             self.page_info['original_url'] = original_url
             if len(self.data) > 0:

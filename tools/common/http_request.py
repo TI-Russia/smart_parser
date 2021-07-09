@@ -3,6 +3,11 @@ from common.content_types import content_type_to_file_extension, is_video_or_aud
 from common.primitives import TUrlUtf8Encode
 
 import ssl
+
+import urllib3
+urllib3.disable_warnings()
+urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH:!aNULL'
+
 import urllib.error
 import urllib.request
 import urllib.parse
@@ -17,6 +22,7 @@ import http.client
 from functools import partial
 import os
 import random
+
 
 #for curl
 import pycurl
@@ -57,6 +63,20 @@ def convert_russian_web_domain_if_needed(url):
     return url
 
 
+def get_redirected_url_urllib3(response, original_url):
+    redirected_url = response.geturl()
+    if redirected_url is None:
+        return original_url
+    if redirected_url.startswith('http'):
+        return redirected_url
+    if response.retries is not None and len(response.retries.history):
+        for i in range(1, len(response.retries.history)+1):
+            history_url = response.retries.history[-i].redirect_location
+            if history_url.startswith('http'):
+                return urllib.parse.urljoin(history_url, redirected_url)
+    return urllib.parse.urljoin(original_url, redirected_url)
+
+
 class THttpRequester:
     HTTP_TIMEOUT = 30  # in seconds
     ENABLE = True
@@ -67,7 +87,7 @@ class THttpRequester:
     HTTP_EXCEPTION_COUNTER = defaultdict(int)  # (url, method) -> number of exception
     HTTP_503_ERRORS_COUNT = 0
     SSL_CONTEXT = None
-    USE_CURL = False
+    HTTP_LIB = os.environ.get("DLROBOT_HTTP_LIB", "urllib")
     logger = None
     LAST_HEAD_REQUEST_TIME = datetime.datetime.now()
     HEADER_MEMORY_CACHE = dict()
@@ -79,7 +99,8 @@ class THttpRequester:
     def initialize(logger):
         THttpRequester.logger = logger
         THttpRequester.SSL_CONTEXT = ssl._create_unverified_context()
-        THttpRequester.SSL_CONTEXT.set_ciphers('DEFAULT@SECLEVEL=1')
+        #THttpRequester.SSL_CONTEXT.set_ciphers('DEFAULT@SECLEVEL=1')
+        THttpRequester.SSL_CONTEXT.set_ciphers('HIGH:!DH:!aNULL')
         if os.environ.get("DLROBOT_HTTP_TIMEOUT"):
             THttpRequester.logger.info("set http timeout to {}".format(os.environ.get("DLROBOT_HTTP_TIMEOUT")))
             THttpRequester.HTTP_TIMEOUT = int(os.environ.get("DLROBOT_HTTP_TIMEOUT"))
@@ -238,6 +259,61 @@ class THttpRequester:
                 return THttpRequester.make_http_request_urllib(url, "GET")
             raise THttpRequester.RobotHttpException("{} extype:{}".format(str(e), type(e)), url, e.code, method)
 
+
+    @staticmethod
+    def make_http_request_urllib3(url, method):
+        assert THttpRequester.logger is not None
+        assert method in {"GET", "HEAD"}
+
+        if not url.lower().startswith('http'):
+            raise THttpRequester.RobotHttpException('unknown protocol, can be only http or https', url, 520, method)
+
+        try:
+            url = THttpRequester._prepare_url_before_http_request(url, method)
+            http_pool = urllib3.PoolManager(
+                #ca_certs=certifi.where()
+            )
+            THttpRequester.logger.debug("urllib.request.urlopen ({}) method={}".format(url, method))
+            req = http_pool.request(method,
+                         url,
+                         headers={'User-Agent': get_user_agent()},
+                         timeout=THttpRequester.HTTP_TIMEOUT
+                         )
+            if req.status >= 400:
+                raise THttpRequester.RobotHttpException('get http code={}, while requesting {}, method={}',
+                                                        req.status, url, method)
+            headers = dict(req.headers)
+            data = ''
+            if method == 'GET':
+                file_extension = THttpRequester.get_file_extension_by_content_type(headers)
+                if not is_video_or_audio_file_extension(file_extension) or THttpRequester.ENABLE_VIDEO_AND_AUDIO:
+                    data = req.data
+            THttpRequester.register_successful_request()
+            return get_redirected_url_urllib3(req, url), headers, data
+        except IndexError as exp:
+            raise THttpRequester.RobotHttpException("general IndexError inside urllib.request.urlopen",
+                                                    url, 520, method)
+        except UnicodeError as exp:
+            raise THttpRequester.RobotHttpException("cannot redirect to cyrillic web domains or some unicode error",
+                                                    url, 520, method)
+        except (ConnectionError, http.client.HTTPException) as exp:
+            raise THttpRequester.RobotHttpException(str(exp), url, 520, method)
+        except socket.timeout as exp:
+            THttpRequester.logger.error("socket timeout, while getting {}: {}".format(url, exp))
+            raise THttpRequester.RobotHttpException("socket.timeout", url, 504, method)
+        except ssl.SSLError as exp:
+            THttpRequester.logger.error("ssl error, while getting {}: {}".format(url, exp))
+            raise THttpRequester.RobotHttpException("ssl.SSLError", url, 504, method)
+        except urllib3.exceptions.HTTPError as exp:
+            code = -1
+            if hasattr(exp, 'code'):
+                code = exp.code
+            if code == 503:
+                THttpRequester.deal_with_http_code_503()
+            if code == 405 and method == "HEAD":
+                return THttpRequester.make_http_request_urllib(url, "GET")
+            raise THttpRequester.RobotHttpException("{} extype:{}".format(str(exp), type(exp)), url, code, method) #
+
     @staticmethod
     def collect_http_headers_for_curl(header_dict, header_line):
         header_line = header_line.decode('iso-8859-1')
@@ -254,11 +330,13 @@ class THttpRequester:
         h_value = h_value.strip()
         h_name = h_name.lower() # Convert header names to lowercase
         header_dict[h_name] = h_value # Header name and value.
+        if h_name.lower() == "location" and h_value.startswith('http'):
+            header_dict['last_full_redirected_url'] = h_value
 
     @staticmethod
     def make_http_request_curl(url, method):
-        if not url.lower.startswith('http'):
-            raise THttpRequester.RobotHttpException('unknown protocol, can be http or https')
+        if not url.lower().startswith('http'):
+            raise THttpRequester.RobotHttpException('unknown protocol, can be http or https', url, 400, method)
         url = THttpRequester._prepare_url_before_http_request(url, method)
         buffer = BytesIO()
         curl = pycurl.Curl()
@@ -273,11 +351,13 @@ class THttpRequester:
         else:
             curl.setopt(curl.WRITEDATA, buffer)
         curl.setopt(curl.FOLLOWLOCATION, True)
+        curl.setopt(pycurl.SSL_VERIFYPEER, False)
         assert THttpRequester.HTTP_TIMEOUT > 20
         curl.setopt(curl.CONNECTTIMEOUT, 20)
         curl.setopt(curl.TIMEOUT, THttpRequester.HTTP_TIMEOUT)
 
         curl.setopt(curl.CAINFO, certifi.where())
+        curl.setopt(curl.SSL_CIPHER_LIST, 'DEFAULT:!DH')
         user_agent = get_user_agent()
         curl.setopt(curl.USERAGENT, user_agent)
         THttpRequester.logger.debug("curl ({}) method={}".format(url, method))
@@ -294,7 +374,7 @@ class THttpRequester:
                     return THttpRequester.make_http_request_curl(url, "GET")
                 raise THttpRequester.RobotHttpException("curl failed", url, http_code, method)
             data = b"" if method == "HEAD" else buffer.getvalue()
-            redirected_url = headers.get('Location', headers.get('location', url))
+            redirected_url = headers.get('last_full_redirected_url', url)
             THttpRequester.register_successful_request()
             return redirected_url, headers, data
         except pycurl.error as err:
@@ -333,10 +413,13 @@ class THttpRequester:
 
     @staticmethod
     def make_http_request(url, method):
-        if THttpRequester.USE_CURL:
-            return THttpRequester.make_http_request_curl(url, method)
-        else:
+        if THttpRequester.HTTP_LIB == "urllib":
             return THttpRequester.make_http_request_urllib(url, method)
-
+        elif THttpRequester.HTTP_LIB == "curl":
+            return THttpRequester.make_http_request_curl(url, method)
+        elif THttpRequester.HTTP_LIB == "urllib3":
+            return THttpRequester.make_http_request_urllib3(url, method)
+        else:
+            raise Exception("unknown http_lib, can be urllib, curl or urllib3")
 
 
