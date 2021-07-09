@@ -99,8 +99,8 @@ class THttpRequester:
     def initialize(logger):
         THttpRequester.logger = logger
         THttpRequester.SSL_CONTEXT = ssl._create_unverified_context()
-        #THttpRequester.SSL_CONTEXT.set_ciphers('DEFAULT@SECLEVEL=1')
-        THttpRequester.SSL_CONTEXT.set_ciphers('HIGH:!DH:!aNULL')
+        THttpRequester.SSL_CONTEXT.set_ciphers('DEFAULT@SECLEVEL=1')
+        #THttpRequester.SSL_CONTEXT.set_ciphers('HIGH:!DH:!aNULL')
         if os.environ.get("DLROBOT_HTTP_TIMEOUT"):
             THttpRequester.logger.info("set http timeout to {}".format(os.environ.get("DLROBOT_HTTP_TIMEOUT")))
             THttpRequester.HTTP_TIMEOUT = int(os.environ.get("DLROBOT_HTTP_TIMEOUT"))
