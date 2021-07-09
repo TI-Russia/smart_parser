@@ -3,11 +3,7 @@ from common.content_types import content_type_to_file_extension, is_video_or_aud
 from common.primitives import TUrlUtf8Encode
 
 import ssl
-
 import urllib3
-urllib3.disable_warnings()
-urllib3.util.ssl_.DEFAULT_CIPHERS += ':HIGH:!DH:!aNULL'
-
 import urllib.error
 import urllib.request
 import urllib.parse
@@ -22,12 +18,14 @@ import http.client
 from functools import partial
 import os
 import random
-
-
-#for curl
 import pycurl
 from io import BytesIO
 import certifi
+
+DLROBOT_CIPHERS_LIST =  os.environ.get("DLROBOT_CIPHERS", "DEFAULT@SECLEVEL=1")
+
+urllib3.disable_warnings()
+urllib3.util.ssl_.DEFAULT_CIPHERS += DLROBOT_CIPHERS_LIST #(':HIGH:!DH:!aNULL'
 
 
 def has_cyrillic(text):
@@ -99,8 +97,7 @@ class THttpRequester:
     def initialize(logger):
         THttpRequester.logger = logger
         THttpRequester.SSL_CONTEXT = ssl._create_unverified_context()
-        THttpRequester.SSL_CONTEXT.set_ciphers('DEFAULT@SECLEVEL=1')
-        #THttpRequester.SSL_CONTEXT.set_ciphers('HIGH:!DH:!aNULL')
+        THttpRequester.SSL_CONTEXT.set_ciphers(DLROBOT_CIPHERS_LIST)
         if os.environ.get("DLROBOT_HTTP_TIMEOUT"):
             THttpRequester.logger.info("set http timeout to {}".format(os.environ.get("DLROBOT_HTTP_TIMEOUT")))
             THttpRequester.HTTP_TIMEOUT = int(os.environ.get("DLROBOT_HTTP_TIMEOUT"))
@@ -357,7 +354,7 @@ class THttpRequester:
         curl.setopt(curl.TIMEOUT, THttpRequester.HTTP_TIMEOUT)
 
         curl.setopt(curl.CAINFO, certifi.where())
-        curl.setopt(curl.SSL_CIPHER_LIST, 'DEFAULT:!DH')
+        curl.setopt(curl.SSL_CIPHER_LIST, DLROBOT_CIPHERS_LIST)
         user_agent = get_user_agent()
         curl.setopt(curl.USERAGENT, user_agent)
         THttpRequester.logger.debug("curl ({}) method={}".format(url, method))
@@ -420,6 +417,6 @@ class THttpRequester:
         elif THttpRequester.HTTP_LIB == "urllib3":
             return THttpRequester.make_http_request_urllib3(url, method)
         else:
-            raise Exception("unknown http_lib, can be urllib, curl or urllib3")
+            raise Exception("unknown http_lib=\"{}\", can be urllib, curl or urllib3".format(THttpRequester.HTTP_LIB))
 
 
