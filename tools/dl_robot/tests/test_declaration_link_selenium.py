@@ -9,6 +9,17 @@ import os
 import urllib
 import shutil
 import json
+import threading
+import http
+from functools import partial
+
+
+def start_server(server):
+    try:
+        server.serve_forever()
+    except Exception as exp:
+        print (exp)
+        pass
 
 
 # it looks like mkrf has changed the site structure, so there is no income declaratiosn
@@ -16,8 +27,18 @@ import json
 
 class TestDeclarationLinkSelenium(TestCase):
 
+    def setup_server(self, port, web_site_folder, project_path):
+        project = TRobotProject.create_project_str("http://127.0.0.1:{}".format(port),
+                                                   disable_search_engine=True, disable_selenium=False)
+        with open(project_path, "w") as outp:
+            outp.write(project)
+        assert os.path.exists(web_site_folder)
+        handler = partial(http.server.SimpleHTTPRequestHandler, directory=web_site_folder)
+        self.web_site = http.server.HTTPServer(server_address=("127.0.0.1", port), RequestHandlerClass=handler)
+        threading.Thread(target=start_server, args=(self.web_site,)).start()
+
     def download_website(self, project_path, start_url):
-        project_path = os.path.join(os.path.dirname(__file__), project_path)
+
         TDownloadEnv.clear_cache_folder()
         robot_steps = [
             {
@@ -60,6 +81,8 @@ class TestDeclarationLinkSelenium(TestCase):
         THttpRequester.initialize(self.logger)
 
     def tearDown(self):
+        if hasattr(self, "web_site") and self.web_site is not None:
+            self.web_site.shutdown()
         close_logger(self.logger)
         os.chdir(os.path.dirname(__file__))
         if os.path.exists(self.data_folder):
@@ -76,19 +99,31 @@ class TestDeclarationLinkSelenium(TestCase):
         with open(os.path.join(os.path.dirname(__file__), file_name), "w") as outp:
             json.dump(links, outp, indent=4)
 
-    def test_culture(self):
-        found_links = self.download_website('web_sites/culture.gov.ru/culture.gov.ru.txt', 'https://culture.gov.ru/activities/reports/index.php')
+    # this test is too unstable, because web site culture.gov.ru is unstable
+    #def test_culture(self):
+     #   found_links = self.download_website('web_sites/culture.gov.ru/culture.gov.ru.txt', 'https://culture.gov.ru/activities/reports/index.php')
         #self.canonize_links(found_links, 'web_sites/culture.gov.ru/found_links')
-        self.compare_to_file(found_links, 'web_sites/culture.gov.ru/found_links')
+      #  self.compare_to_file(found_links, 'web_sites/culture.gov.ru/found_links')
+
+    #def test_culture1(self):
+    #    port = 10000
+    #    project_path = os.path.join(os.path.dirname(__file__), 'web_sites/culture.gov.ru/project.txt')
+    #    web_site_folder = os.path.join(os.path.dirname(__file__), "web_sites/culture.gov.ru/complete_save")
+    #    self.setup_server(port, web_site_folder, project_path)
+    #    found_links = self.download_website(project_path, 'http://127.0.0.1:{}/index.html'.format(port))
+    #    #self.canonize_links(found_links, 'web_sites/culture.gov.ru/found_links')
+    #    self.compare_to_file(found_links, 'web_sites/culture.gov.ru/found_links')
 
     def test_kolomnagrad(self):
-        found_links = self.download_website('web_sites/kolomnagrad/project.txt', 'https://kolomnagrad.ru/docs/protivodejstvie-korrupcii/svedeniya-o-dohodah/12831-svedenija-o-dohodah-ob-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera-rukovoditelej-municipalnyh-uchrezhdenij-za-2019-god.html')
+        project_path = os.path.join(os.path.dirname(__file__), 'web_sites/kolomnagrad/project.txt')
+        found_links = self.download_website(project_path, 'https://kolomnagrad.ru/docs/protivodejstvie-korrupcii/svedeniya-o-dohodah/12831-svedenija-o-dohodah-ob-imuschestve-i-objazatelstvah-imuschestvennogo-haraktera-rukovoditelej-municipalnyh-uchrezhdenij-za-2019-god.html')
         found_links = dict((k, v) for k, v in found_links.items() if k.find('svedeniya-o-dohodah') != -1)
         #self.canonize_links(found_links, 'web_sites/kolomnagrad/found_links')
         self.compare_to_file(found_links, 'web_sites/kolomnagrad/found_links')
 
     def test_kolomnagrad1(self):
-        found_links = self.download_website('web_sites/kolomnagrad1/project.txt', 'https://kolomnagrad.ru/index.php?do=download&id=3005')
+        project_path = os.path.join(os.path.dirname(__file__), 'web_sites/kolomnagrad1/project.txt')
+        found_links = self.download_website(project_path, 'https://kolomnagrad.ru/index.php?do=download&id=3005')
         found_links = dict((k,v) for k, v in found_links.items() if k.find('svedeniya-o-dohodah') != -1)
         #self.canonize_links(found_links, 'web_sites/kolomnagrad1/found_links')
         self.compare_to_file(found_links, 'web_sites/kolomnagrad1/found_links')

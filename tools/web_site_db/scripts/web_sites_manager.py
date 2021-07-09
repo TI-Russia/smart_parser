@@ -140,6 +140,7 @@ class TWebSitesManager:
         complete_bans = list()
         project_path = "project.txt"
         TRobotProject.create_project("dummy.ru", project_path)
+        only_selenium_sites = list()
         with TRobotProject(self.logger, project_path, [], "result") as project:
             for web_domain in self.get_url_list():
                 site_info: TDeclarationWebSite
@@ -150,6 +151,9 @@ class TWebSitesManager:
                     site_info.ban()
                     complete_bans.append(web_domain)
                 else:
+                    if not web_site.enable_urllib:
+                        only_selenium_sites.append(web_domain)
+                        self.logger.debug('   {} is only selenium'.format(web_domain))
                     if web_site.web_domain != web_domain:
                         self.logger.info('   {} is alive, but is redirected to {}, protocol = {}'.format(
                             web_domain, web_site.web_domain, web_site.protocol))
@@ -164,7 +168,7 @@ class TWebSitesManager:
                         site_info.set_protocol(web_site.protocol)
 
         os.unlink(project_path)
-        self.logger.info("ban {} web sites".format(len(complete_bans)))
+        self.logger.info("ban {} web sites, only selenium sites: {}".format(len(complete_bans), len(only_selenium_sites)))
 
     def main(self):
         if self.args.action == "ban":
