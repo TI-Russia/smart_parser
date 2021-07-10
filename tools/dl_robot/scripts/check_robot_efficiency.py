@@ -46,7 +46,7 @@ class TStats:
     def __init__(self, file_path):
         self.file_path = file_path
         self.urllib_find_links_count = 0
-        self.urllib_request_head_count = 0
+        self.http_lib_request_head_count = 0
         self.exported_files_count = 0.0
         self.robot_step_count = 0
         self.engine_stats = TTimeDistribution()
@@ -85,7 +85,13 @@ class TStats:
                 if mo:
                     method = mo.group(1)
                     if method == "HEAD":
-                        self.urllib_request_head_count += 1.0
+                        self.http_lib_request_head_count += 1.0
+
+                mo = re.match('.*curl \([^ ]+\) method=([A-Z]+).*', line)
+                if mo:
+                    method = mo.group(1)
+                    if method == "HEAD":
+                        self.http_lib_request_head_count += 1.0
 
                 mo = re.match('.*exported\s+([0-9]+)\s+files.*', line)
                 if mo:
@@ -109,7 +115,7 @@ class TStats:
             'all_seconds': self.all_seconds(),
             'engine_time_stats': self.engine_stats.to_json(),
             'step_time_stats': self.step_stats.to_json(),
-            "urllib_request_head": int(self.urllib_request_head_count),
+            "http_lib_request_head": int(self.http_lib_request_head_count),
             "exported_files": int(self.exported_files_count),
             "robot_steps":  self.robot_step_count,
             "robot_speed": self.robot_speed()
