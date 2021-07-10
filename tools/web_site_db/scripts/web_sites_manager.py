@@ -74,9 +74,12 @@ class TWebSitesManager:
 
     def ban_sites(self):
         self.out_web_sites.web_sites = self.in_web_sites.web_sites
+        cnt = 0
         for url in self.get_url_list():
             self.logger.debug("ban {}".format(url))
             self.out_web_sites.get_web_site(url).ban()
+            cnt += 1
+        self.logger.info("ban {} web sites".format(cnt))
 
     def to_utf8(self):
         for k,v in self.in_web_sites.web_sites.items():
@@ -88,18 +91,18 @@ class TWebSitesManager:
         assert self.args.filter_regex is not None
         assert self.args.replace_substring is not None
         cnt = 0
-        for k, v in self.in_web_sites.web_sites.items():
-            self.out_web_sites.web_sites[k] = v
-            if re.match(self.args.filter_regex, k) is not None:
-                new_key = re.sub(self.args.filter_regex, self.args.replace_substring, k)
-                #new_key = k[:-len('.mvd.ru')] + '.мвд.рф'
-                if new_key not in self.in_web_sites.web_sites:
-                    self.logger("{} -> {}".format(k, new_key))
-                    self.out_web_sites.web_sites[new_key] = deepcopy(v)
-                    cnt += 1
-                v.ban()
-            self.out_web_sites.web_sites[k] = v
-        self.logger.info("{} replacements made".format(cnt))
+        self.out_web_sites.web_sites = deepcopy(self.in_web_sites.web_sites)
+        for web_domain in self.get_url_list():
+            site_info = self.out_web_sites.get_web_site(web_domain)
+            new_web_domain = re.sub(self.args.filter_regex, self.args.replace_substring, web_domain)
+            assert new_web_domain != web_domain
+            if not self.out_web_sites.has_web_site(new_web_domain):
+                self.logger.info("{} -> {}".format(web_domain, new_web_domain))
+                self.out_web_sites.web_sites[new_web_domain] = deepcopy(site_info)
+            assert self.out_web_sites.get_web_site(new_web_domain).calculated_office_id == site_info.calculated_office_id
+            site_info.set_redirect(new_web_domain)
+            cnt += 1
+        self.logger.info("{} redirects made".format(cnt))
 
     def mark_large_sites(self):
         db_connection = pymysql.connect(db="disclosures_db", user="disclosures", password="disclosures")
@@ -133,7 +136,6 @@ class TWebSitesManager:
             return None
 
     def check_alive(self):
-        assert self.args.filter_regex is not None
         self.logger.info("rm {}".format(TDownloadEnv.FILE_CACHE_FOLDER))
         TDownloadEnv.clear_cache_folder()
         self.out_web_sites.web_sites = deepcopy(self.in_web_sites.web_sites)
@@ -170,6 +172,10 @@ class TWebSitesManager:
         os.unlink(project_path)
         self.logger.info("ban {} web sites, only selenium sites: {}".format(len(complete_bans), len(only_selenium_sites)))
 
+    def print_keys(self):
+        for web_domain in self.get_url_list():
+            print(web_domain)
+
     def main(self):
         if self.args.action == "ban":
             self.ban_sites()
@@ -181,6 +187,8 @@ class TWebSitesManager:
             self.mark_large_sites()
         elif self.args.action == "check_alive":
             self.check_alive()
+        elif self.args.action == "print_keys":
+            self.print_keys()
         else:
             raise Exception("unknown action")
         self.out_web_sites.save_to_disk()

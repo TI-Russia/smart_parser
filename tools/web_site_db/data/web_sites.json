@@ -28,6 +28,7 @@
     },
     "minjust.ru": {
         "calc_office_id": 595,
+        "status": "abandoned",
         "redirect_to": "minjust.gov.ru"
     },
     "dumahmao.ru": {
@@ -35,6 +36,7 @@
     },
     "minfin.ru": {
         "calc_office_id": 604,
+        "status": "abandoned",
         "dlrobot_max_time_coeff": 2.0,
         "redirect_to": "minfin.gov.ru"
     },
@@ -5341,7 +5343,9 @@
         "calc_office_id": 2346
     },
     "tumencevo.ucoz.ru": {
-        "calc_office_id": 2374
+        "calc_office_id": 2374,
+        "status": "abandoned",
+        "redirect_to": "тюменцево.рф"
     },
     "maina-admin.ru": {
         "calc_office_id": 2397
@@ -24295,7 +24299,9 @@
         "calc_office_id": 2364
     },
     "taishetcom.do.am": {
-        "calc_office_id": 2438
+        "calc_office_id": 2438,
+        "status": "abandoned",
+        "redirect_to": "taishet.irkmo.ru"
     },
     "uo.nukutr.ru": {
         "calc_office_id": 2450,
@@ -26449,7 +26455,9 @@
         "calc_office_id": 8270
     },
     "tarif56.ru": {
-        "calc_office_id": 8274
+        "calc_office_id": 8274,
+        "status": "abandoned",
+        "redirect_to": "tarif56.orb.ru"
     },
     "gochs.orb.ru": {
         "calc_office_id": 8275
@@ -30055,7 +30063,7 @@
     "fakel-russia.com": {
         "calc_office_id": 20055
     },
-    "tmnpo.ru›node": {
+    "tmnpo.ru": {
         "calc_office_id": 20056
     },
     "kerc.msk.ru": {
@@ -41562,7 +41570,8 @@
         "calc_office_id": 22394
     },
     "trpsud.komi.sudrf.ru": {
-        "calc_office_id": 22395
+        "calc_office_id": 22395,
+        "status": "abandoned"
     },
     "udorasud.komi.sudrf.ru": {
         "calc_office_id": 22396
@@ -45832,5 +45841,8 @@
         "calc_office_id": 6101,
         "dlrobot_max_time_coeff": 2.0,
         "http_protocol": "https"
+    },
+    "tarif56.orb.ru": {
+        "calc_office_id": 8274
     }
 }

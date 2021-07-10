@@ -75,6 +75,54 @@ def get_redirected_url_urllib3(response, original_url):
     return urllib.parse.urljoin(original_url, redirected_url)
 
 
+class TCurlResponse:
+    def __init__(self, url, method):
+        self.method = method
+        self.original_url = url
+        self.headers = dict()
+        self.last_full_redirected_url = None
+        self.write_data = True
+        self.first_write = True
+        self.data = b''
+
+    def get_redirected_url(self):
+        if self.last_full_redirected_url is not None:
+            return self.last_full_redirected_url
+        else:
+            return self.original_url
+
+    def collect_http_headers(self, header_line):
+        header_line = header_line.decode('iso-8859-1')
+
+        # Ignore all lines without a colon
+        if ':' not in header_line:
+            return
+
+        # Break the header line into header name and value
+        h_name, h_value = header_line.split(':', 1)
+
+        # Remove whitespace that may be present
+        h_name = h_name.strip()
+        h_value = h_value.strip()
+        h_name = h_name.lower() # Convert header names to lowercase
+        self.headers[h_name] = h_value # Header name and value.
+        if h_name.lower() == "location" and h_value.startswith('http'):
+            self.last_full_redirected_url = h_value
+
+    def write_callback(self, buffer):
+        if self.first_write:
+            self.first_write = False
+            if self.method == "GET":
+                file_ext = THttpRequester.get_file_extension_by_content_type(self.headers)
+                if is_video_or_audio_file_extension(file_ext) and not THttpRequester.ENABLE_VIDEO_AND_AUDIO:
+                    self.write_data = False
+                    return 0
+        if not self.write_data:
+            return 0
+        self.data += buffer
+        return len(buffer)
+
+
 class THttpRequester:
     HTTP_TIMEOUT = 30  # in seconds
     ENABLE = True
@@ -85,7 +133,8 @@ class THttpRequester:
     HTTP_EXCEPTION_COUNTER = defaultdict(int)  # (url, method) -> number of exception
     HTTP_503_ERRORS_COUNT = 0
     SSL_CONTEXT = None
-    HTTP_LIB = os.environ.get("DLROBOT_HTTP_LIB", "urllib")
+    #HTTP_LIB = os.environ.get("DLROBOT_HTTP_LIB", "urllib")
+    HTTP_LIB = os.environ.get("DLROBOT_HTTP_LIB", "curl")
     logger = None
     LAST_HEAD_REQUEST_TIME = datetime.datetime.now()
     HEADER_MEMORY_CACHE = dict()
@@ -191,7 +240,7 @@ class THttpRequester:
 
     @staticmethod
     def get_file_extension_by_content_type(headers):
-        content_disposition = headers.get('Content-Disposition')
+        content_disposition = headers.get('Content-Disposition', headers.get('content-disposition'))
         if content_disposition is not None:
             found = re.findall("filename\s*=\s*(.+)", content_disposition.lower())
             if len(found) > 0:
@@ -290,9 +339,6 @@ class THttpRequester:
         except IndexError as exp:
             raise THttpRequester.RobotHttpException("general IndexError inside urllib.request.urlopen",
                                                     url, 520, method)
-        except UnicodeError as exp:
-            raise THttpRequester.RobotHttpException("cannot redirect to cyrillic web domains or some unicode error",
-                                                    url, 520, method)
         except (ConnectionError, http.client.HTTPException) as exp:
             raise THttpRequester.RobotHttpException(str(exp), url, 520, method)
         except socket.timeout as exp:
@@ -311,42 +357,21 @@ class THttpRequester:
                 return THttpRequester.make_http_request_urllib(url, "GET")
             raise THttpRequester.RobotHttpException("{} extype:{}".format(str(exp), type(exp)), url, code, method) #
 
-    @staticmethod
-    def collect_http_headers_for_curl(header_dict, header_line):
-        header_line = header_line.decode('iso-8859-1')
-
-        # Ignore all lines without a colon
-        if ':' not in header_line:
-            return
-
-        # Break the header line into header name and value
-        h_name, h_value = header_line.split(':', 1)
-
-        # Remove whitespace that may be present
-        h_name = h_name.strip()
-        h_value = h_value.strip()
-        h_name = h_name.lower() # Convert header names to lowercase
-        header_dict[h_name] = h_value # Header name and value.
-        if h_name.lower() == "location" and h_value.startswith('http'):
-            header_dict['last_full_redirected_url'] = h_value
 
     @staticmethod
     def make_http_request_curl(url, method):
         if not url.lower().startswith('http'):
             raise THttpRequester.RobotHttpException('unknown protocol, can be http or https', url, 400, method)
         url = THttpRequester._prepare_url_before_http_request(url, method)
-        buffer = BytesIO()
         curl = pycurl.Curl()
         try:
             curl.setopt(curl.URL, url)
         except UnicodeError as exp:
             raise THttpRequester.RobotHttpException("unicode error", url, 520, method)
-        headers = dict()
-        curl.setopt(curl.HEADERFUNCTION, partial(THttpRequester.collect_http_headers_for_curl, headers))
+        curl_response = TCurlResponse(url, method)
+        curl.setopt(curl.HEADERFUNCTION, curl_response.collect_http_headers)
         if method == "HEAD":
             curl.setopt(curl.NOBODY, True)
-        else:
-            curl.setopt(curl.WRITEDATA, buffer)
         curl.setopt(curl.FOLLOWLOCATION, True)
         curl.setopt(pycurl.SSL_VERIFYPEER, False)
         assert THttpRequester.HTTP_TIMEOUT > 20
@@ -357,6 +382,7 @@ class THttpRequester:
         curl.setopt(curl.SSL_CIPHER_LIST, DLROBOT_CIPHERS_LIST)
         user_agent = get_user_agent()
         curl.setopt(curl.USERAGENT, user_agent)
+        curl.setopt(curl.WRITEFUNCTION, curl_response.write_callback)
         THttpRequester.logger.debug("curl ({}) method={}".format(url, method))
         try:
             curl.perform()
@@ -370,11 +396,13 @@ class THttpRequester:
                 if http_code == 405 and method == "HEAD":
                     return THttpRequester.make_http_request_curl(url, "GET")
                 raise THttpRequester.RobotHttpException("curl failed", url, http_code, method)
-            data = b"" if method == "HEAD" else buffer.getvalue()
-            redirected_url = headers.get('last_full_redirected_url', url)
             THttpRequester.register_successful_request()
-            return redirected_url, headers, data
+            return curl_response.get_redirected_url(), curl_response.headers, curl_response.data
         except pycurl.error as err:
+            if err.args[0] == pycurl.E_WRITE_ERROR:
+                # stop reading video content
+                return curl_response.get_redirected_url(), curl_response.headers, curl_response.data
+
             raise THttpRequester.RobotHttpException(str(err), url, 520, method)
 
     @staticmethod
@@ -410,13 +438,17 @@ class THttpRequester:
 
     @staticmethod
     def make_http_request(url, method):
-        if THttpRequester.HTTP_LIB == "urllib":
-            return THttpRequester.make_http_request_urllib(url, method)
-        elif THttpRequester.HTTP_LIB == "curl":
-            return THttpRequester.make_http_request_curl(url, method)
-        elif THttpRequester.HTTP_LIB == "urllib3":
-            return THttpRequester.make_http_request_urllib3(url, method)
-        else:
-            raise Exception("unknown http_lib=\"{}\", can be urllib, curl or urllib3".format(THttpRequester.HTTP_LIB))
+        try:
+            if THttpRequester.HTTP_LIB == "urllib":
+                return THttpRequester.make_http_request_urllib(url, method)
+            elif THttpRequester.HTTP_LIB == "curl":
+                return THttpRequester.make_http_request_curl(url, method)
+            elif THttpRequester.HTTP_LIB == "urllib3":
+                return THttpRequester.make_http_request_urllib3(url, method)
+            else:
+                raise Exception("unknown http_lib=\"{}\", can be urllib, curl or urllib3".format(THttpRequester.HTTP_LIB))
+        except UnicodeError as exp:
+            raise THttpRequester.RobotHttpException("cannot redirect to cyrillic web domains or some unicode error",
+                                                    url, 520, method)
 
 
