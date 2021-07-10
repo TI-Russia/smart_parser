@@ -1223,8 +1223,7 @@
         "calc_office_id": 3059
     },
     "biradm.ru": {
-        "calc_office_id": 3088,
-        "status": "abandoned"
+        "calc_office_id": 3088
     },
     "vichuga-mr.ru": {
         "calc_office_id": 3133
@@ -5105,7 +5104,6 @@
     },
     "duma39.ru": {
         "calc_office_id": 546,
-        "status": "abandoned"
     },
     "vladimir.arbitr.ru": {
         "calc_office_id": 646
@@ -32138,7 +32136,7 @@
     },
     "aeroflot.ru": {
         "calc_office_id": 4012,
-        "status": "abandoned"
+        "http_protocol": "https"
     },
     "gazprom.ru": {
         "calc_office_id": 4013
@@ -46432,6 +46430,10 @@
     },
     "go-aginskoe.ru": {
         "calc_office_id": 3788
+    },
+    "adm-aginskoe.ru": {
+        "calc_office_id": 3788,
+        "http_protocol": "https"
     },
     "rossvyaz.gov.ru": {
         "calc_office_id": 6718,
