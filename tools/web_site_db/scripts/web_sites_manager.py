@@ -61,9 +61,12 @@ class TWebSitesManager:
         if self.args.url_list is not None:
             self.logger.info("read url list from {}".format(self.args.url_list))
             with open(self.args.url_list) as inp:
-                for url in inp:
+                for url in inp: 
                     url = url.strip(" \r\n")
-                    web_domains.append(urllib.parse.urlsplit(url).netloc)
+                    if url.startswith('http'):
+                        web_domains.append(urllib.parse.urlsplit(url).netloc)
+                    else:
+                        web_domains.append(url)
         else:
             #take all web domains
             web_domains = list(self.in_web_sites.web_sites.keys())
