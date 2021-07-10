@@ -1,0 +1,9 @@
+{
+    "sites": [
+        {
+            "morda_url": "https://duma39.ru",
+            "name": ""
+        }
+    ]
+}
+
