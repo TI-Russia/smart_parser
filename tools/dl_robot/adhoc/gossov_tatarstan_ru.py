@@ -8,9 +8,9 @@ def gossov_tatarstan_ru(web_site: TWebSiteCrawlSnapshot):
     web_site.create_export_folder()
     robot_step = web_site.robot_steps[-1]
     driver = robot_step.get_selenium_driver()
-    elements = driver.navigate_and_get_links("https://gossov.tatarstan.ru/structure/deputaty")
+    elements = driver.navigate_and_get_links_js("https://gossov.tatarstan.ru/structure/deputaty")
     for element in elements:
-        person_href = element.get_attribute('href')
+        person_href = element['href']
         if person_href is not None and person_href.find('person_id') != -1:
             robot_step.add_link_wrapper(TLinkInfo(TClickEngine.manual, robot_step.website.main_page_url, person_href))
             file = TDownloadedFile(person_href)

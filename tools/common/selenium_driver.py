@@ -122,7 +122,7 @@ class TSeleniumDriver:
     def get_buttons_and_links(self):
         return list(self.the_driver.find_elements_by_xpath('//button | //a'))
 
-    def _navigate_and_get_links(self, url, timeout=4):
+    def _navigate_and_get_links_obsolete(self, url, timeout=4):
         self.logger.debug("navigate to {}".format(url))
         self.navigate(url)
 
@@ -146,15 +146,60 @@ class TSeleniumDriver:
             time.sleep(timeout)
             return self.get_buttons_and_links()
 
+    #to be replaced by navigate_and_get_links_js
+    def navigate_and_get_links_obsolete(self, url, timeout=6):
+        try:
+            return self._navigate_and_get_links_obsolete(url, timeout)
+        except (WebDriverException, InvalidSwitchToTargetException) as exp:
+            self.logger.error("exception during selenium navigate and get elements: {}".format(str(exp)))
+            self.restart()
+            return self._navigate_and_get_links(url, timeout)
+
+    def _navigate_and_get_links_js(self, url, timeout=4):
+        self.logger.debug("navigate to {}".format(url))
+        self.navigate(url)
+
+        self.logger.debug("sleep for {}".format(timeout))
+        time.sleep(timeout)
+
+        body = self.the_driver.find_element_by_tag_name('body')
+
+        self.logger.debug("scroll down")
+        if self.scroll_to_bottom_and_wait_more_results and body:
+            self.the_driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+            time.sleep(1)
+            self.the_driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+            time.sleep(1)
+
+        js = """
+                function add_link(el, element_list) {
+                    element_list.push({"id":el, "href": el.href, "anchor": el.innerText})
+                }
+                hrefs = [];
+                links = document.getElementsByTagName("a");
+                [].forEach.call(links, function (el) { add_link(el, hrefs);  });
+                buttons = document.getElementsByTagName("button");
+                [].forEach.call(buttons, function (el) { add_link(el, hrefs);  });
+                return hrefs;
+        """
+
+        try:
+            return self.the_driver.execute_script(js)
+        except Exception as exp:
+            self.logger.error("Exception = {}, retry get links, after timeout".format(exp))
+            #  second timeout
+            time.sleep(timeout)
+            return self.the_driver.execute_script(js)
+
     def restart(self):
         self.logger.error("restart selenium")
         self.stop_executable()
         self.start_executable()
         time.sleep(10)
 
-    def navigate_and_get_links(self, url, timeout=6):
+    def navigate_and_get_links_js(self, url, timeout=4):
         try:
-            return self._navigate_and_get_links(url, timeout)
+            return self._navigate_and_get_links_js(url, timeout)
         except (WebDriverException, InvalidSwitchToTargetException) as exp:
             self.logger.error("exception during selenium navigate and get elements: {}".format(str(exp)))
             self.restart()

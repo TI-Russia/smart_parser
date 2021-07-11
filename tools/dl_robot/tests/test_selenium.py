@@ -12,23 +12,21 @@ class TestSelenium(TestCase):
 
     def filter_link_elements_by_anchor(self, link_elements, start_anchor_text):
         urls_and_elements = set()
-        element_index = 0
-        for e in link_elements:
-            element_index += 1
+        for element_index, element in enumerate(link_elements):
             try:
-                if e.text is None:
+                if element['anchor'] is None:
                     continue
-                link_text = e.text.strip('\n\r\t ')
+                link_text = element['anchor'].strip('\n\r\t ')
                 self.logger.debug("check link anchor={}, element_index={}".format(link_text, element_index))
                 if link_text.lower().startswith(start_anchor_text.lower()):
                     self.logger.debug("found link anchor={}".format(link_text))
-                    href = e.get_attribute('href')
+                    href = element['href']
                     if href is None:
                         link_info = TLinkInfo(TClickEngine.selenium, driver_holder.the_driver.current_url, None)
-                        self.driver_holder.click_element(e, link_info)
+                        self.driver_holder.click_element(element['id'], link_info)
                         href = self.driver_holder.the_driver.current_url
                         self.driver_holder.the_driver.back()
-                    urls_and_elements.add((href, e))
+                    urls_and_elements.add((href, element['id']))
             except Exception as exp:
                 self.logger.error(exp)
         return urls_and_elements
@@ -63,10 +61,10 @@ class TestSelenium(TestCase):
 
     def get_all_link_elements(self, url):
         self.logger.info("navigate to {}\n".format(url))
-        links = self.driver_holder.navigate_and_get_links(url)
-        self.logger.info("Title:{}, type={}\n".format(self.driver_holder.the_driver.title,
-                                                      type(self.driver_holder.the_driver.title)))
-        self.logger.info("html len: {0}".format(len(self.driver_holder.the_driver.page_source)))
+        links = self.driver_holder.navigate_and_get_links_js(url)
+        #self.logger.info("Title:{}, type={}\n".format(self.driver_holder.the_driver.title,
+        #                                              type(self.driver_holder.the_driver.title)))
+        #self.logger.info("html len: {0}".format(len(self.driver_holder.the_driver.page_source)))
         return links
 
     def check_anchor(self, elements, anchor, child_url=None):
@@ -80,8 +78,8 @@ class TestSelenium(TestCase):
 
     def check_scroll_down(self, url, links_with_scroll_down):
         self.driver_holder.scroll_to_bottom_and_wait_more_results = False
-        self.logger.info("navigate to {}\n".format(url))
-        links_without_scroll_down = self.driver_holder.navigate_and_get_links(url)
+        #self.logger.info("navigate to {}\n".format(url))
+        links_without_scroll_down = self.driver_holder.navigate_and_get_links_js(url)
         self.assertGreater(len(links_with_scroll_down), len(links_without_scroll_down),
                            msg="no additional information with page scroll down found")
 

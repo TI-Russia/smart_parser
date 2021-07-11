@@ -48,6 +48,7 @@ class TStats:
         self.urllib_find_links_count = 0
         self.http_lib_request_head_count = 0
         self.exported_files_count = 0.0
+        self.http_lib_elapsed_time_sum = 0.0
         self.robot_step_count = 0
         self.engine_stats = TTimeDistribution()
         self.step_stats = TTimeDistribution()
@@ -73,6 +74,10 @@ class TStats:
                     self.engine_stats.save_start_point(line_time, 'urllib')
                 if line.find('find_links_with_selenium') != -1:
                     self.engine_stats.save_start_point(line_time, 'selenium')
+                #
+                mo = re.match('.*make_http_request, elapsed time: ([0-9\.]+)', line)
+                if mo:
+                    self.http_lib_elapsed_time_sum += float(mo.group(1))
 
                 mo = re.match('.*=+ step ([^=]+) =+', line)
                 if mo:
@@ -116,6 +121,7 @@ class TStats:
             'engine_time_stats': self.engine_stats.to_json(),
             'step_time_stats': self.step_stats.to_json(),
             "http_lib_request_head": int(self.http_lib_request_head_count),
+            "http_lib_elapsed_time_sum": self.http_lib_elapsed_time_sum,
             "exported_files": int(self.exported_files_count),
             "robot_steps":  self.robot_step_count,
             "robot_speed": self.robot_speed()

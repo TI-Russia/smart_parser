@@ -48,5 +48,5 @@ class TestSimple(TestCase):
 
     def test_simple_navigate(self):
         #assert selenium is working after google search
-        links = self.driver_holder.navigate_and_get_links("http://aot.ru")
+        links = self.driver_holder.navigate_and_get_links_js("http://aot.ru")
         self.assertGreater(len(links), 0)

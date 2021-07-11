@@ -27,25 +27,37 @@ def parse_args():
     return args
 
 
-def get_square_area(element):
-    return element.rect.get('height', 0) * element.rect.get('width', 0)
-
-
-def print_links (driver_holder, url):
-    elements = driver_holder.navigate_and_get_links(url)
+def print_links_old(driver_holder, url):
+    elements = driver_holder.navigate_and_get_links_obsolete(url)
     print("elements count: {}".format(len(elements)))
     for element_index in range(len(elements)):
         element = elements[element_index]
+        square = element.rect.get('height', 0) * element.rect.get('width', 0)
         rec = {'index': element_index,
                'href': element.get_attribute('href'),
                'anchor': element.text,
-               'area': get_square_area(element)}
+               'area': square
+               }
+        print(json.dumps(rec, ensure_ascii=False))
+
+
+def print_links_java_script(driver_holder, url):
+    elements = driver_holder.navigate_and_get_links_js(url)
+
+    for element_index, element in enumerate(elements):
+        rect = element['id'].size
+        square = rect.get('height', 0) * rect.get('width', 0)
+        rec = {'index': element_index,
+               'href': element['href'],
+               'anchor': element['anchor'],
+               'area': square
+               }
         print(json.dumps(rec, ensure_ascii=False))
 
 
 def click(driver_holder, url, element_index):
-    elements = driver_holder.navigate_and_get_links(url)
-    element = elements[element_index]
+    elements = driver_holder.navigate_and_get_links_js(url)
+    element = elements[element_index]['id']
     print ("click element {} anchor={}".format(element_index, element.text))
     link_info = TLinkInfo(TClickEngine.selenium, url, None, anchor_text=element.text)
     driver_holder.click_element(element, link_info)
@@ -59,17 +71,6 @@ def calc_page_speed(driver_holder, url, element_id):
     WebDriverWait(driver_holder.the_driver, 5).until(EC.presence_of_element_located((By.ID, element_id)))
     end = time.time()
     return int((end - start) * 1000)
-
-
-def httphead(driver_holder, url):
-    from seleniumrequests import Chrome
-    from selenium.webdriver.chrome.options import Options as ChromeOptions
-    options = ChromeOptions()
-    options.headless = True
-    webdriver = Chrome(options=options)
-    response = webdriver.request('HEAD', url)
-    print(response.headers)
-    webdriver.close()
 
 
 def pagespeed(driver_holder, url, element_id, repeat_count):
@@ -111,13 +112,12 @@ if __name__ == '__main__':
         driver.navigate(url)
         print("Title: {}".format(driver.the_driver.title))
     elif args.action == "links":
-        print_links(driver, url)
+        #print_links(driver, url)
+        print_links_java_script(driver, url)
     elif args.action.startswith("click"):
         click(driver, url, args.element_index)
     elif args.action.startswith("speed"):
         pagespeed(driver, url, args.element_id, args.repeat_count)
-    elif args.action.startswith("head"):
-        httphead(driver, url)
     else:
         print("unknown action {}".format(args.action))
 

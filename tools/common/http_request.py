@@ -268,7 +268,6 @@ class THttpRequester:
                 method=method
             )
 
-            THttpRequester.logger.debug("urllib.request.urlopen ({}) method={}".format(url, method))
             with urllib.request.urlopen(req, context=THttpRequester.SSL_CONTEXT, timeout=THttpRequester.HTTP_TIMEOUT) as request:
                 headers = request.info()
                 data = ''
@@ -357,7 +356,6 @@ class THttpRequester:
                 return THttpRequester.make_http_request_urllib(url, "GET")
             raise THttpRequester.RobotHttpException("{} extype:{}".format(str(exp), type(exp)), url, code, method) #
 
-
     @staticmethod
     def make_http_request_curl(url, method):
         if not url.lower().startswith('http'):
@@ -383,11 +381,9 @@ class THttpRequester:
         user_agent = get_user_agent()
         curl.setopt(curl.USERAGENT, user_agent)
         curl.setopt(curl.WRITEFUNCTION, curl_response.write_callback)
-        THttpRequester.logger.debug("curl ({}) method={}".format(url, method))
         try:
             curl.perform()
             http_code = curl.getinfo(curl.RESPONSE_CODE)
-            THttpRequester.logger.debug('http_code = {} Time: {}'.format(http_code, curl.getinfo(curl.TOTAL_TIME)))
             curl.close()
 
             if http_code < 200 or http_code >= 300:
@@ -438,6 +434,8 @@ class THttpRequester:
 
     @staticmethod
     def make_http_request(url, method):
+        start_time = time.time()
+        THttpRequester.logger.debug("make_http_request start ({}) method={}".format(url, method))
         try:
             if THttpRequester.HTTP_LIB == "urllib":
                 return THttpRequester.make_http_request_urllib(url, method)
@@ -450,5 +448,6 @@ class THttpRequester:
         except UnicodeError as exp:
             raise THttpRequester.RobotHttpException("cannot redirect to cyrillic web domains or some unicode error",
                                                     url, 520, method)
+        finally:
 
-
+            THttpRequester.logger.debug("make_http_request, elapsed time: {0:0.3f}".format(time.time() - start_time))

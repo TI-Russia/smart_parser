@@ -1940,6 +1940,9 @@
         "calc_office_id": 1199,
         "status": "abandoned"
     },
+    "mokolpino.spb.ru": {
+        "calc_office_id": 1199
+    },
     "mo-ladushkin.ru": {
         "calc_office_id": 1413
     },
@@ -9428,7 +9431,8 @@
     },
     "krasnoznamensk.com": {
         "calc_office_id": 1549,
-        "status": "abandoned"
+        "status": "abandoned",
+        "redirect_to": "краснознаменск-зато.рф"
     },
     "zato-molod.ru": {
         "calc_office_id": 1550
@@ -52825,5 +52829,9 @@
     "sport.bashkortostan.ru": {
         "calc_office_id": 7023,
         "http_protocol": "https"
+    },
+    "краснознаменск-зато.рф": {
+        "calc_office_id": 1549,
+        "status": "abandoned"
     }
 }

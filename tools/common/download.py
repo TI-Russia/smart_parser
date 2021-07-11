@@ -245,7 +245,7 @@ def get_file_extension_only_by_headers(url):
     return ext
 
 
-def are_web_mirrors(url1, url2):
+def are_mirrors_by_html(url1, url2):
     try:
         # check all mirrors including simple javascript
         html1 = TDownloadedFile(url1).data

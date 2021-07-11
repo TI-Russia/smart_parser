@@ -1,4 +1,4 @@
-from common.download import TDownloadedFile, DEFAULT_HTML_EXTENSION, are_web_mirrors
+from common.download import TDownloadedFile, DEFAULT_HTML_EXTENSION, are_mirrors_by_html
 from common.primitives import prepare_for_logging, get_site_domain_wo_www
 from common.html_parser import THtmlParser
 from common.link_info import TLinkInfo, TClickEngine
@@ -210,7 +210,7 @@ class TRobotStep:
 
         if get_office_domain(href_domain) != get_office_domain(source_domain) and (
                 not self.check_local_address or source_domain != "127.0.0.1"):
-            if not are_web_mirrors(source, href):
+            if not are_mirrors_by_html(source, href):
                 return True
         return False
 
@@ -439,32 +439,24 @@ class TRobotStep:
     def click_all_selenium(self, main_url, check_link_func):
         self.logger.debug("find_links_with_selenium url={} ".format(main_url))
         THttpRequester.consider_request_policy(main_url, "GET_selenium")
-        elements = self.get_selenium_driver().navigate_and_get_links(main_url, TRobotStep.selenium_timeout)
+        elements = self.get_selenium_driver().navigate_and_get_links_js(main_url, TRobotStep.selenium_timeout)
         page_html = self.get_selenium_driver().the_driver.page_source
         self.logger.debug("html_size={}, elements_count={}".format(len(page_html), len(elements)))
-        for element_index in range(len(elements)):
+        for element_index, element, in enumerate(elements):
             if element_index >= self.max_links_from_one_page:
                 break
-            if element_index >= len(elements):
-                self.logger.error("elements array has index out of range")
-                break
-            element = elements[element_index]
-            link_text = element.text.strip('\n\r\t ') if element.text is not None else ""
+            link_text = element['anchor'].strip('\n\r\t ') if element['anchor'] is not None else ""
             mandatory_link = re.search('скачать', link_text, re.IGNORECASE) is not None
 
-            #temp debug
-            #self.logger.debug("index={} text={} href={}".format(
-            #    element_index,
-            #    link_text,
-            #    element.get_attribute('href')))
-
-            href = element.get_attribute('href')
+            href = element['href']
             if href is not None and not mandatory_link:
                 href = THtmlParser.make_link(main_url, href)  # may be we do not need it in selenium?
                 link_info = TLinkInfo(TClickEngine.selenium,
                                       main_url, href,
-                                      source_html=page_html, anchor_text=link_text,
-                                      tag_name=element.tag_name, element_index=element_index,
+                                      source_html=page_html,
+                                      anchor_text=link_text,
+                                      tag_name=element['id'].tag_name,
+                                      element_index=element_index,
                                       source_page_title=self.get_selenium_driver().the_driver.title)
 
                 if self.normalize_and_check_link(link_info, check_link_func):
@@ -476,13 +468,7 @@ class TRobotStep:
                     source_page_title=self.get_selenium_driver().the_driver.title)
                 if self.normalize_and_check_link(only_anchor_text, check_link_func):
                     self.logger.debug("click element {}".format(element_index))
-                    try:
-                        self.click_selenium_if_no_href(main_url, element, element_index, check_link_func)
-                        #elements = self.get_selenium_driver().get_buttons_and_links()
-                    except (WebDriverException, InvalidSwitchToTargetException) as exp:
-                        self.logger.error("exception: {}, try restart and get the next element".format(str(exp)))
-                        self.get_selenium_driver().restart()
-                        elements = self.get_selenium_driver().navigate_and_get_links(main_url, TRobotStep.selenium_timeout)
+                    self.click_selenium_if_no_href(main_url, element['id'], element_index, check_link_func)
 
     def apply_function_to_links(self, check_link_func):
         assert len(self.pages_to_process) > 0
