@@ -1,12 +1,14 @@
-import json
-import time
-import os
-import random
-from unidecode import unidecode
 from common.download import TDownloadEnv
 from selenium.webdriver.common.keys import Keys
 from common.primitives import get_site_domain_wo_www
 from common.selenium_driver import TSeleniumDriver
+
+from unidecode import unidecode
+import json
+import time
+import os
+import random
+import re
 
 
 class SerpException(Exception):
@@ -46,10 +48,7 @@ class SearchEngine:
     @staticmethod
     def get_cached_file_name(site_url, query):
         filename = unidecode(site_url + " " + query)
-        filename = filename.replace(' ', '_')
-        filename = filename.replace('"', '_')
-        filename = filename.replace(':', '_')
-        filename = filename.replace('\\', '_').replace('/', '_')
+        filename = re.sub('[ :"\\/]', "_", )
         return os.path.join(TDownloadEnv.get_search_engine_cache_folder(), filename)
 
     @staticmethod
@@ -100,7 +99,6 @@ class SearchEngine:
         else:
             return random.choice(YANDEX_SEARCH_URLS)
 
-
     @staticmethod
     def _send_request(search_engine, site_url, query, selenium_holder: TSeleniumDriver):
         if SearchEngine.is_search_engine_ref(query) or SearchEngine.is_search_engine_ref(site_url):
@@ -140,8 +138,6 @@ class SearchEngine:
     @staticmethod
     def site_search(search_engine, site_url, query, selenium_holder: TSeleniumDriver,
                     enable_cache=True):
-        #serp matching is made by without www and http
-        site_url = get_site_domain_wo_www(site_url)
 
         if enable_cache:
             cached_results = SearchEngine.read_cache(site_url, query)
@@ -162,9 +158,9 @@ class SearchEngine:
                 raise SerpException("no search results, look in debug_captcha.html, may be captcha")
 
         site_search_results = list()
+        search_web_domain = get_site_domain_wo_www(site_url).lower()
         for url in search_results:
-            curr_site = get_site_domain_wo_www(url)
-            if curr_site.lower() == site_url.lower():
+            if get_site_domain_wo_www(url).lower() == search_web_domain:
                 if url not in site_search_results:
                     site_search_results.append(url)
 

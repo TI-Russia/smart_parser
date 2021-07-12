@@ -15,7 +15,7 @@ class THtmlParser:
         self.page_title = self.soup.title.string if self.soup.title is not None else ""
         self.base = None
         if url is not None:
-            self.base = self.get_base_url()
+            self.base = self._get_base_url()
 
     def get_plain_text(self):
         return self.soup.get_text()
@@ -39,14 +39,16 @@ class THtmlParser:
     def make_link_soup(self, href):
         return THtmlParser.make_link(self.base, href)
 
-    def get_base_url(self):
+    def _get_base_url(self):
         base = self.url
         for l in self.soup.findAll('base'):
             href = l.attrs.get('href')
             if href is not None:
                 base = href
                 break
-        if base.startswith('/'):
-            base = make_link(main_url, base)
+        if base.startswith('/') and not base.startswith('//'):
+            o = urllib.parse.urlsplit(self.url)
+            scheme_and_web_domain = urllib.parse.urlunsplit((o.scheme, o.netloc, "", "", ""))
+            base = THtmlParser.make_link(scheme_and_web_domain, base)
 
         return base

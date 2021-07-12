@@ -60,7 +60,7 @@ def copy_files(args, toloka_results):
         project.read_project()
         office_info = project.web_site_snapshots[0]
         index = 0
-        domain = strip_html_url(office_info.main_page_url)
+        domain = office_info.web_domain
         for export_record in office_info.exported_files:
             index += 1
             cached_file = export_record['cached_file']

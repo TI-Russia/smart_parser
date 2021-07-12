@@ -31,13 +31,14 @@ class TWebSiteCrawlSnapshot:
         #serialized members
         self.url_nodes = dict()
         self.enable_urllib = True
-        self.main_page_url = morda_url
+        self.main_page_url = None
+        self.protocol = "http"
+        self.web_domain = None
         self.office_name = ""
         self.reach_status = TWebSiteReachStatus.normal
         self.regional_main_pages = list()
         self.reach_status = None
-        self.protocol = "http"
-        self.web_domain = None
+        self.init_main_page_default(morda_url)
 
         self.robot_steps = list()
         for i in range(len(project.robot_step_passports)):
@@ -57,7 +58,7 @@ class TWebSiteCrawlSnapshot:
         self.main_page_url = urllib.parse.urlunsplit(
             [o.scheme,
              o.netloc,
-             '',  # path
+             o.path,  # path
              '',  # query
              ''])
         self.web_domain = o.netloc
@@ -66,6 +67,8 @@ class TWebSiteCrawlSnapshot:
             self.web_domain = self.web_domain[4:]
         if o.scheme == "https" and self.web_domain.endswith(':443'):
             self.web_domain = self.web_domain[:-4]
+        self.logger.debug("main_url_page={}, web_domain={}, protocol={}".format(
+            self.main_page_url, self.web_domain, self.protocol))
 
     def recognize_protocol_and_www(self):
         if self.main_page_url.startswith('http://'):
@@ -91,7 +94,23 @@ class TWebSiteCrawlSnapshot:
                         time.sleep(3)
 
     def get_domain_name(self):
-        return get_site_domain_wo_www(self.main_page_url)
+        # return example.com (without http)
+        assert self.web_domain is not None
+        return self.web_domain
+
+    def get_domain_root_page(self):
+        # return http://example.com
+        assert self.web_domain is not None
+        return urllib.parse.urlunsplit((self.protocol, self.web_domain, "", "", ""))
+
+    def init_main_page_default(self, morda_url):
+        self.main_page_url = morda_url
+        if len(morda_url) > 0:
+            if not morda_url.startswith('http'):
+                morda_url = 'http://' + morda_url
+            o = urllib.parse.urlsplit(morda_url)
+            self.web_domain = o.netloc
+            self.protocol = o.scheme
 
     def check_urllib_access(self):
         if self.enable_urllib:
@@ -134,7 +153,7 @@ class TWebSiteCrawlSnapshot:
 
         if enable_search_engine:
             try:
-                urls = SearchEngine().site_search(0, get_site_domain_wo_www(self.main_page_url), "", self.parent_project.selenium_driver)
+                urls = SearchEngine().site_search(0, self.main_page_url, "", self.parent_project.selenium_driver)
                 if len(urls) == 0:
                     self.reach_status = TWebSiteReachStatus.abandoned
             except SerpException as exp:
@@ -163,6 +182,9 @@ class TWebSiteCrawlSnapshot:
         self.enable_urllib = init_json.get('enable_urllib', True)
         self.export_env.from_json(init_json.get('exported_files'))
         self.regional_main_pages = init_json.get('regional', list())
+        self.web_domain = init_json.get('web_domain')
+        if self.web_domain is None:
+            self.init_main_page_default(self.main_page_url)
 
         if init_json.get('steps') is not None:
             self.robot_steps = list()
@@ -178,6 +200,7 @@ class TWebSiteCrawlSnapshot:
         return {
             'reach_status': self.reach_status,
             'morda_url': self.main_page_url,
+            'web_domain': self.web_domain,
             'regional': self.regional_main_pages,
             'name': self.office_name,
             'enable_urllib': self.enable_urllib,

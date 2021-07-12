@@ -1,3 +1,5 @@
+import urllib.parse
+
 from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
 from common.selenium_driver import TSeleniumDriver
 from web_site_db.web_site_status import TWebSiteReachStatus
@@ -135,9 +137,7 @@ class TRobotProject:
         return robot_project_path
 
     def add_web_site(self, morda_url):
-        web_site = TWebSiteCrawlSnapshot(self)
-        web_site.main_page_url = morda_url
-        self.web_site_snapshots.append(web_site)
+        self.web_site_snapshots.append(TWebSiteCrawlSnapshot(self, morda_url=morda_url))
 
     def read_project(self, check_step_names=True):
         self.web_site_snapshots = list()
@@ -152,15 +152,8 @@ class TRobotProject:
                 for step_name in json_dict['step_names']:
                     self.robot_step_passports.append({'step_name': step_name})
 
-            uniq_domains = set()
             for o in json_dict.get('sites', []):
                 web_site = TWebSiteCrawlSnapshot(self).read_from_json(o)
-
-                web_domain = web_site.get_domain_name()
-                assert web_domain not in uniq_domains  # do not write twice the same web domain in one project,
-                                                  # since the result folder is normally the same web domain
-                uniq_domains.add(web_domain)
-
                 self.web_site_snapshots.append(web_site)
 
             if "disable_search_engine" in json_dict:

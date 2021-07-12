@@ -2,7 +2,6 @@ from django.db import models
 from django.utils.translation import  get_language
 from .countries import get_country_str
 from .rubrics import get_russian_rubric_str
-from common.primitives import TUrlUtf8Encode
 from declarations.nominal_income import get_average_nominal_incomes, YearIncome
 from declarations.ratings import TPersonRatings
 from declarations.car_brands import CAR_BRANDS
@@ -10,6 +9,7 @@ from declarations.car_brands import CAR_BRANDS
 from collections import defaultdict
 from operator import attrgetter
 from itertools import groupby
+import urllib
 import os
 
 
@@ -106,9 +106,8 @@ class Office(models.Model):
 
     @property
     def urls_html(self):
-        pairs = ((u, (TUrlUtf8Encode.from_idna(u) if TUrlUtf8Encode.is_idna_string(u) else u))
-                  for u in self.calculated_params['urls'])
-        return "&nbsp;&nbsp;&nbsp;".join("<a href=\"//{}\">{}</a>".format(u1, u2) for u1,u2 in pairs)
+        pairs = ((u, urllib.parse.urlsplit(u).netloc) for u in self.calculated_params['urls'])
+        return "&nbsp;&nbsp;&nbsp;".join('<a href="{}">{}</a>'.format(url, anchor) for url, anchor in pairs)
 
     @property
     def parent_office_name(self):

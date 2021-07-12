@@ -17,6 +17,7 @@ class TDeclarationWebSite:
         self.http_protocol = None
         self.comments = None
         self.redirect_to = None
+        self.start_sub_page = None
 
     def read_from_json(self, js):
         self.calculated_office_id = js['calc_office_id']
@@ -29,6 +30,7 @@ class TDeclarationWebSite:
         self.redirect_to = js.get('redirect_to')
         if self.redirect_to is not None:
             self.ban()
+        self.start_sub_page = js.get('start_sub_page')
         return self
 
     def write_to_json(self):
@@ -49,6 +51,8 @@ class TDeclarationWebSite:
             rec['comments'] = self.comments
         if self.redirect_to is not None:
             rec['redirect_to'] = self.redirect_to
+        if self.start_sub_page is not None:
+            rec['start_sub_page'] = self.start_sub_page
         return rec
 
     def set_redirect(self, to_url):
@@ -93,8 +97,12 @@ class TDeclarationWebSiteList:
 
     def build_office_to_website(self):
         office_to_website = defaultdict(set)
-        for url, web_site in self.web_sites.items():
-            if TWebSiteReachStatus.can_communicate(web_site.reach_status) and url != 'declarator.org':
+        for web_domain, web_site in self.web_sites.items():
+            if TWebSiteReachStatus.can_communicate(web_site.reach_status) and web_domain != 'declarator.org':
+                p = web_site.http_protocol
+                if p is None:
+                    p = "http"
+                url = p + "://" + web_domain
                 office_to_website[web_site.calculated_office_id].add(url)
         return office_to_website
 

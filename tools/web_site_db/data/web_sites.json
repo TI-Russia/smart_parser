@@ -809,7 +809,7 @@
     },
     "zsko.ru": {
         "calc_office_id": 548,
-        "http_protocol": "http"
+        "status": "abandoned"
     },
     "zsro.ru": {
         "calc_office_id": 557,
@@ -1466,8 +1466,7 @@
         "http_protocol": "http"
     },
     "biradm.ru": {
-        "calc_office_id": 3088,
-        "http_protocol": "http"
+        "calc_office_id": 3088
     },
     "vichuga-mr.ru": {
         "calc_office_id": 3133,
@@ -2578,10 +2577,6 @@
         "calc_office_id": 3801,
         "status": "abandoned"
     },
-    "kyrinskiy.75.ru": {
-        "calc_office_id": 3801,
-        "http_protocol": "http"
-    },
     "чернышевск.забайкальскийкрай.рф": {
         "calc_office_id": 3815,
         "http_protocol": "http"
@@ -2842,10 +2837,6 @@
     "ирбейское.рф": {
         "calc_office_id": 1754,
         "status": "abandoned"
-    },
-    "irbeiskoe.ru": {
-       "calc_office_id": 1754,
-        "http_protocol": "http"
     },
     "ktr24.ru": {
         "calc_office_id": 1760,
@@ -6002,10 +5993,6 @@
         "calc_office_id": 3810,
         "status": "abandoned"
     },
-    "sretensk.75.ru": {
-        "calc_office_id": 3810,
-        "http_protocol": "http"
-    },
     "читинск.забайкальскийкрай.рф": {
         "calc_office_id": 3816,
         "status": "abandoned"
@@ -6015,9 +6002,7 @@
         "http_protocol": "http"
     },
     "dkr.mos.ru": {
-        "calc_office_id": 5958,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5958
     },
     "prim-fishcom.ru": {
         "calc_office_id": 919,
@@ -6111,8 +6096,7 @@
         "http_protocol": "http"
     },
     "duma39.ru": {
-        "calc_office_id": 546,
-        "http_protocol": "http"
+        "calc_office_id": 546
     },
     "vladimir.arbitr.ru": {
         "calc_office_id": 646,
@@ -6952,10 +6936,6 @@
     "целинный-район.рф": {
         "calc_office_id": 3257,
         "status": "abandoned"
-    },
-    "целинный-район08.рф": {
-        "calc_office_id": 3257,
-        "http_protocol": "http"
     },
     "щучанский-район.рф": {
         "calc_office_id": 3262,
@@ -8044,9 +8024,8 @@
     },
     "sivaperm.ru": {
         "calc_office_id": 2226,
-        "status": "abandoned",
-        "redirect_to": "adobe.com"
-    },
+        "http_protocol": "http"
+      },
     "labinskadmin.ru": {
         "calc_office_id": 2262,
         "dlrobot_max_time_coeff": 2.0,
@@ -9729,19 +9708,13 @@
         "http_protocol": "http"
     },
     "dgi.mos.ru": {
-        "calc_office_id": 5953,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5953
     },
     "welcome.mos.ru": {
-        "calc_office_id": 5962,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5962
     },
     "ud.mos.ru": {
-        "calc_office_id": 5988,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5988
     },
     "rshu.ru": {
         "calc_office_id": 6141,
@@ -11447,39 +11420,25 @@
         "http_protocol": "http"
     },
     "mgi.mos.ru": {
-        "calc_office_id": 5948,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5948
     },
     "tender.mos.ru": {
-        "calc_office_id": 5952,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5952
     },
     "dgkh.mos.ru": {
-        "calc_office_id": 5955,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5955
     },
     "dnpp.mos.ru": {
-        "calc_office_id": 5961,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5961
     },
     "dogm.mos.ru": {
-        "calc_office_id": 5963,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5963
     },
     "drbez.mos.ru": {
-        "calc_office_id": 5967,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5967
     },
     "depr.mos.ru": {
-        "calc_office_id": 5977,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5977
     },
     "spbftu.ru": {
         "calc_office_id": 6142,
@@ -11595,7 +11554,7 @@
     },
     "yaroslavl.izbirkom.ru": {
         "calc_office_id": 437,
-        "http_protocol": "http"
+        "status": "abandoned"
     },
     "fsb.ru": {
         "calc_office_id": 467,
@@ -13812,29 +13771,21 @@
         "http_protocol": "http"
     },
     "dvms.mos.ru": {
-        "calc_office_id": 5951,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5951
     },
     "dt.mos.ru": {
         "calc_office_id": 5972,
         "status": "abandoned"
     },
     "sport.mos.ru": {
-        "calc_office_id": 5974,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5974
     },
     "stroinadzor.mos.ru": {
         "calc_office_id": 5981,
-        "status": "abandoned",
-        "dlrobot_max_time_coeff": 2.0,
-        "redirect_to": "mos.ru"
+        "dlrobot_max_time_coeff": 2.0
     },
     "kgu.mos.ru": {
-        "calc_office_id": 5982,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5982
     },
     "ivgpu.com": {
         "calc_office_id": 6126,
@@ -15881,29 +15832,19 @@
         "http_protocol": "http"
     },
     "eco.mos.ru": {
-        "calc_office_id": 5965,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5965
     },
     "ds.mos.ru": {
-        "calc_office_id": 5969,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5969
     },
     "dtu.mos.ru": {
-        "calc_office_id": 5971,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5971
     },
     "mke.mos.ru": {
-        "calc_office_id": 5980,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5980
     },
     "oati.mos.ru": {
-        "calc_office_id": 5986,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5986
     },
     "dvfu.ru": {
         "calc_office_id": 6127,
@@ -17713,24 +17654,16 @@
         "http_protocol": "http"
     },
     "kultura.mos.ru": {
-        "calc_office_id": 5960,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5960
     },
     "emercom.mos.ru": {
-        "calc_office_id": 5964,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5964
     },
     "dtoiv.mos.ru": {
-        "calc_office_id": 5975,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5975
     },
     "findep.mos.ru": {
-        "calc_office_id": 5976,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5976
     },
     "ggpi.org": {
         "calc_office_id": 6171,
@@ -19723,24 +19656,16 @@
         "http_protocol": "http"
     },
     "ggi.mos.ru": {
-        "calc_office_id": 5950,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5950
     },
     "dit.mos.ru": {
-        "calc_office_id": 5957,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5957
     },
     "dsmir.mos.ru": {
-        "calc_office_id": 5968,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5968
     },
     "zags.mos.ru": {
-        "calc_office_id": 5989,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5989
     },
     "kgeu.ru": {
         "calc_office_id": 6124,
@@ -22181,38 +22106,26 @@
         "http_protocol": "http"
     },
     "mosarchiv.mos.ru": {
-        "calc_office_id": 5945,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5945
     },
     "mosgik.mos.ru": {
-        "calc_office_id": 5949,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5949
     },
     "dgp.mos.ru": {
-        "calc_office_id": 5954,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5954
     },
     "dkn.mos.ru": {
-        "calc_office_id": 5959,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5959
     },
     "moskomvet.mos.ru": {
         "calc_office_id": 5978,
         "status": "abandoned"
     },
     "invest.mos.ru": {
-        "calc_office_id": 5979,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5979
     },
     "mka.mos.ru": {
-        "calc_office_id": 5984,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5984
     },
     "voenmeh.ru": {
         "calc_office_id": 6135,
@@ -24567,11 +24480,12 @@
     },
     "vyazma-region67.ru": {
         "calc_office_id": 2807,
-        "http_protocol": "https"
+        "status": "abandoned"
     },
     "admin-safonovo.ru": {
         "calc_office_id": 2822,
         "status": "abandoned",
+        "http_protocol": "http",
         "redirect_to": "safonovo-admin.ru"
     },
     "lipsport.ru": {
@@ -24891,19 +24805,13 @@
         "status": "abandoned"
     },
     "glavkontrol.mos.ru": {
-        "calc_office_id": 5947,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5947
     },
     "drnt.mos.ru": {
-        "calc_office_id": 5966,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5966
     },
     "rec.mos.ru": {
-        "calc_office_id": 5987,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5987
     },
     "dgpu.net": {
         "calc_office_id": 6122,
@@ -25320,8 +25228,7 @@
     },
     "news.kremlin.ru": {
         "calc_office_id": 449,
-        "status": "abandoned",
-        "redirect_to": "kremlin.ru"
+        "status": "abandoned"
     },
     "recrut.mil.ru": {
         "calc_office_id": 450,
@@ -26443,7 +26350,7 @@
     },
     "udg.alregn.ru": {
         "calc_office_id": 7114,
-        "http_protocol": "http"
+        "status": "abandoned"
     },
     "altairegion-im.ru": {
         "calc_office_id": 7115,
@@ -28405,10 +28312,6 @@
         "calc_office_id": 3460,
         "status": "abandoned"
     },
-    "курский-округ.рф": {
-        "calc_office_id": 3460,
-        "http_protocol": "https"
-    },
     "obrmv.ru": {
         "calc_office_id": 3462,
         "http_protocol": "http"
@@ -28626,14 +28529,10 @@
         "http_protocol": "http"
     },
     "kos.mos.ru": {
-        "calc_office_id": 5983,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5983
     },
     "madi.mos.ru": {
-        "calc_office_id": 5985,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5985
     },
     "bmstu.ru": {
         "calc_office_id": 6123,
@@ -31176,14 +31075,10 @@
         "status": "abandoned"
     },
     "depteh.mos.ru": {
-        "calc_office_id": 5970,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5970
     },
     "ums.mos.ru": {
-        "calc_office_id": 5990,
-        "status": "abandoned",
-        "redirect_to": "mos.ru"
+        "calc_office_id": 5990
     },
     "vshni.ru": {
         "calc_office_id": 6131,
@@ -32313,7 +32208,7 @@
     },
     "urt.govvrn.ru": {
         "calc_office_id": 7362,
-        "http_protocol": "http"
+        "status": "abandoned"
     },
     "goszakupki.govvrn.ru": {
         "calc_office_id": 7386,
@@ -32761,8 +32656,7 @@
     },
     "up-mirsud.kurganobl.ru": {
         "calc_office_id": 7868,
-        "status": "abandoned",
-        "redirect_to": "adobe.com"
+        "http_protocol": "http"
     },
     "gji.kurganobl.ru": {
         "calc_office_id": 7873,
@@ -32959,7 +32853,7 @@
     },
     "vet.adm-nao.ru": {
         "calc_office_id": 8122,
-        "http_protocol": "https"
+        "status": "abandoned"
     },
     "stroy.adm-nao.ru": {
         "calc_office_id": 8123,
@@ -35487,7 +35381,8 @@
     },
     "yandex.ru": {
         "calc_office_id": 85,
-        "http_protocol": "https"
+        "http_protocol": "https",
+        "status": "abandoned"
     },
     "kommersant.ru": {
         "calc_office_id": 97,
@@ -37176,14 +37071,9 @@
     },
     "voenipoteka.ru": {
         "calc_office_id": 4010,
-        "status": "abandoned",
-        "redirect_to": "rosvoenipoteka.ru"
+        "status": "abandoned"
     },
-    "rosvoenipoteka.ru": {
-        "calc_office_id": 4010,
-        "http_protocol": "https"
-    },
-   "transneft.ru": {
+    "transneft.ru": {
         "calc_office_id": 4011,
         "status": "abandoned"
     },
@@ -37739,6 +37629,9 @@
     "aviacomplect.com": {
         "calc_office_id": 20079,
         "http_protocol": "http"
+    },
+    "": {
+        "calc_office_id": 6
     },
     "гувм.мвд.рф": {
         "calc_office_id": 7,
@@ -41264,10 +41157,6 @@
         "status": "abandoned",
         "redirect_to": "udg.gov74.ru"
     },
-    "udg.gov74.ru": {
-        "calc_office_id": 9114,
-        "http_protocol": "https"
-    },
     "minavtodor-chr.ru": {
         "calc_office_id": 9115,
         "http_protocol": "https"
@@ -42156,8 +42045,7 @@
     },
     "spvolodarskoe.ru": {
         "calc_office_id": 20108,
-        "status": "abandoned",
-        "redirect_to": "yandex.ru"
+        "status": "abandoned"
     },
     "volchenki.ru": {
         "calc_office_id": 20109,
@@ -43985,8 +43873,7 @@
     },
     "terskyi.ru": {
         "calc_office_id": 20561,
-        "status": "abandoned",
-        "redirect_to": "yandex.ru"
+        "status": "abandoned"
     },
     "timsp.ru": {
         "calc_office_id": 20562,
@@ -58915,8 +58802,7 @@
         "http_protocol": "https"
     },
     "mokolpino.spb.ru": {
-        "calc_office_id": 1199,
-        "http_protocol": "http"
+        "calc_office_id": 1199
     },
     "краснознаменск-зато.рф": {
         "calc_office_id": 1549,

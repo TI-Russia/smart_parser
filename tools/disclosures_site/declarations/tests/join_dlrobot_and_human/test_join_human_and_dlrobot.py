@@ -55,6 +55,7 @@ CANON_HUMAN_DLROBOT = {
             "w_refs": [
                 {
                     "crawl_epoch": 5602811863,
+                    "declaration_year": 2014,
                     "url": "http://05.fsin.su/1984.xlsx",
                     "web_domain": "05.fsin.su"
                 }

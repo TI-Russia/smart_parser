@@ -20,7 +20,7 @@ import os
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--action", dest='action', help="can be ban, to_utf8, move, mark_large_sites, check_alive, "
-                                                        "print_urls, check")
+                                                        "print_urls, check, redirect_subdomain")
     parser.add_argument("--input-file", dest='input_file', required=True)
     parser.add_argument("--output-file", dest='output_file', required=True)
     parser.add_argument("--url-list", dest='url_list', required=False)
@@ -39,6 +39,7 @@ class TWebSitesManager:
         self.in_web_sites = TDeclarationWebSiteList(self.logger, file_name=self.args.input_file)
         self.in_web_sites.load_from_disk()
         self.out_web_sites = TDeclarationWebSiteList(self.logger, file_name=self.args.output_file)
+        self.temp_dlrobot_project = None
         THttpRequester.initialize(self.logger)
 
     def check_web_site_filters(self, web_domain):
@@ -57,7 +58,7 @@ class TWebSitesManager:
                 self.logger.debug("skip abandoned {}".format(web_domain))
                 return False
 
-    def get_url_list(self):
+    def get_url_list(self, start_selenium=False):
         web_domains = list()
         if self.args.url_list is not None:
             self.logger.info("read url list from {}".format(self.args.url_list))
@@ -72,8 +73,17 @@ class TWebSitesManager:
             #take all web domains
             web_domains = list(self.in_web_sites.web_sites.keys())
 
-        for w in web_domains:
-            if self.check_web_site_filters(w):
+        domains_filtered = (w for w in web_domains if self.check_web_site_filters(w))
+        if start_selenium:
+            self.logger.info("rm {}".format(TDownloadEnv.FILE_CACHE_FOLDER))
+            project_path = "project.txt"
+            TRobotProject.create_project("dummy.ru", project_path)
+            with TRobotProject(self.logger, project_path, [], "result") as self.temp_dlrobot_project:
+                for w in domains_filtered:
+                    yield w
+            os.unlink(project_path)
+        else:
+            for w in domains_filtered:
                 yield w
 
     def ban_sites(self):
@@ -142,9 +152,9 @@ class TWebSitesManager:
                 site = self.out_web_sites.get_web_site(web_domain)
                 site.dlrobot_max_time_coeff = 2.0
 
-    def check_alive_one_site(self, project, url):
+    def check_alive_one_site(self,  url):
         self.logger.info("check {}".format(url))
-        web_site = TWebSiteCrawlSnapshot(project, morda_url=url)
+        web_site = TWebSiteCrawlSnapshot(self.temp_dlrobot_project, morda_url=url)
         web_site.fetch_the_main_page(enable_search_engine=False)
         if TWebSiteReachStatus.can_communicate(web_site.reach_status):
             return web_site
@@ -156,39 +166,35 @@ class TWebSitesManager:
         TDownloadEnv.clear_cache_folder()
         self.out_web_sites.web_sites = deepcopy(self.in_web_sites.web_sites)
         complete_bans = list()
-        project_path = "project.txt"
-        TRobotProject.create_project("dummy.ru", project_path)
         only_selenium_sites = list()
-        with TRobotProject(self.logger, project_path, [], "result") as project:
-            for web_domain in self.get_url_list():
-                site_info: TDeclarationWebSite
-                site_info = self.out_web_sites.get_web_site(web_domain)
-                web_site = self.check_alive_one_site(project, web_domain)
-                if web_site is None:
-                    self.logger.info("     {} is dead".format(web_domain))
-                    site_info.ban()
-                    complete_bans.append(web_domain)
+        for web_domain in self.get_url_list(start_selenium=True):
+            site_info: TDeclarationWebSite
+            site_info = self.out_web_sites.get_web_site(web_domain)
+            web_site = self.check_alive_one_site(web_domain)
+            if web_site is None:
+                self.logger.info("     {} is dead".format(web_domain))
+                site_info.ban()
+                complete_bans.append(web_domain)
+            else:
+                if not web_site.enable_urllib:
+                    only_selenium_sites.append(web_domain)
+                    self.logger.debug('   {} is only selenium'.format(web_domain))
+                new_web_domain = web_site.web_domain
+                if TUrlUtf8Encode.is_idna_string(new_web_domain):
+                    new_web_domain = TUrlUtf8Encode.from_idna(new_web_domain)
+                if new_web_domain != web_domain:
+                    self.logger.info('   {} is alive, but is redirected to {}, protocol = {}'.format(
+                        web_domain, new_web_domain, web_site.protocol))
+                    if not self.out_web_sites.has_web_site(new_web_domain):
+                        self.out_web_sites.web_sites[new_web_domain] = deepcopy(site_info)
+                    main_site_info = self.out_web_sites.get_web_site(new_web_domain)
+                    main_site_info.set_protocol(web_site.protocol)
+                    site_info.set_redirect(new_web_domain)
                 else:
-                    if not web_site.enable_urllib:
-                        only_selenium_sites.append(web_domain)
-                        self.logger.debug('   {} is only selenium'.format(web_domain))
-                    new_web_domain = web_site.web_domain
-                    if TUrlUtf8Encode.is_idna_string(new_web_domain):
-                        new_web_domain = TUrlUtf8Encode.from_idna(new_web_domain)
-                    if new_web_domain != web_domain:
-                        self.logger.info('   {} is alive, but is redirected to {}, protocol = {}'.format(
-                            web_domain, new_web_domain, web_site.protocol))
-                        if not self.out_web_sites.has_web_site(new_web_domain):
-                            self.out_web_sites.web_sites[new_web_domain] = deepcopy(site_info)
-                        main_site_info = self.out_web_sites.get_web_site(new_web_domain)
-                        main_site_info.set_protocol(web_site.protocol)
-                        site_info.set_redirect(new_web_domain)
-                    else:
-                        self.logger.info("     {} is alive, protocol = {}, morda = {}".format(
-                            web_domain, web_site.protocol, web_site.web_domain))
-                        site_info.set_protocol(web_site.protocol)
+                    self.logger.info("     {} is alive, protocol = {}, morda = {}".format(
+                        web_domain, web_site.protocol, web_site.web_domain))
+                    site_info.set_protocol(web_site.protocol)
 
-        os.unlink(project_path)
         self.logger.info("ban {} web sites, only selenium sites: {}".format(len(complete_bans), len(only_selenium_sites)))
 
     def print_keys(self):
@@ -198,13 +204,20 @@ class TWebSitesManager:
     def check(self):
         for web_domain in self.get_url_list():
             site_info = self.in_web_sites.get_web_site(web_domain)
-
             if TWebSiteReachStatus.can_communicate(site_info.reach_status):
                 if site_info.http_protocol is None:
                     self.logger.error("{} has no protocol".format(web_domain))
             if site_info.redirect_to is not None:
                 if not self.in_web_sites.has_web_site(site_info.redirect_to):
                     self.logger.error("{} has missing redirect {}".format(web_domain, site_info.redirect_to))
+
+    def redirect_subdomain(self):
+        for web_domain in self.get_url_list(start_selenium=True):
+            site_info = self.in_web_sites.get_web_site(web_domain)
+            if site_info.redirect_to is None or not web_domain.endswith(site_info.redirect_to):
+                continue
+            self.check_alive_one_site(web_domain)
+
 
     def main(self):
         if self.args.action == "ban":
@@ -221,6 +234,8 @@ class TWebSitesManager:
             self.print_keys()
         elif self.args.action == "check":
             self.check()
+        elif self.args.action == "redirect_subdomain":
+            self.redirect_subdomain()
         else:
             raise Exception("unknown action")
         self.out_web_sites.save_to_disk()

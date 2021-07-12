@@ -510,7 +510,7 @@ class TRobotStep:
             link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
             self.add_link_wrapper(link_info)
 
-    def add_links_from_sitemap_xml(self, morda_url, check_url_func):
+    def add_links_from_sitemap_xml(self, root_page, check_url_func):
         tree = sitemap_tree_for_homepage(morda_url)
         cnt = 0
         useful = 0
@@ -520,16 +520,16 @@ class TRobotStep:
             if weight > TLinkInfo.MINIMAL_LINK_WEIGHT:
                 if page.url not in self.pages_to_process:
                     useful += 1
-                    link_info = TLinkInfo(TClickEngine.sitemap_xml, morda_url, page.url, anchor_text="")
+                    link_info = TLinkInfo(TClickEngine.sitemap_xml, root_page, page.url, anchor_text="")
                     link_info.weight = weight
                     self.add_link_wrapper(link_info)
-        self.logger.info("processed {} links from sitemap.xml found {} useful links".format(cnt, useful))
+        self.logger.info("processed {} links from {}/sitemap.xml found {} useful links".format(cnt, root_page, useful))
 
     def use_search_engine(self, morda_url):
         request = self.search_engine['request']
         max_results = self.search_engine.get('max_serp_results', 10)
-        self.logger.info('search engine request: {}'.format(request))
-        site = self.website.get_domain_name()
+        site = self.website.main_page_url
+        self.logger.info('search engine request: {} site:{}'.format(request, site))
         serp_urls = list()
         search_engine = None
         for search_engine in range(0, SearchEngineEnum.SearchEngineCount):
@@ -556,7 +556,7 @@ class TRobotStep:
 
     def make_one_step(self, start_pages, regional_main_pages):
         self.logger.info("=== step {0} =========".format(self.step_name))
-        self.logger.info(self.website.get_domain_name())
+        self.logger.info(self.website.main_page_url)
         self.step_urls = dict()
         start_time = time.time()
         if self.is_last_step:
@@ -574,7 +574,7 @@ class TRobotStep:
             self.pages_to_process.update(self.step_urls)
 
         if self.sitemap_xml_processor:
-            self.add_links_from_sitemap_xml(self.website.main_page_url, self.sitemap_xml_processor.get('check_url_func'))
+            self.add_links_from_sitemap_xml(self.website.get_domain_root_page(), self.sitemap_xml_processor.get('check_url_func'))
 
         save_input_urls = dict(self.pages_to_process.items())
 

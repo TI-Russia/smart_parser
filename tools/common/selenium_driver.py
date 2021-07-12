@@ -203,7 +203,7 @@ class TSeleniumDriver:
         except (WebDriverException, InvalidSwitchToTargetException) as exp:
             self.logger.error("exception during selenium navigate and get elements: {}".format(str(exp)))
             self.restart()
-            return self._navigate_and_get_links(url, timeout)
+            return self._navigate_and_get_links_js(url, timeout)
 
     def wait_download_finished(self, timeout=120):
         dl_wait = True
