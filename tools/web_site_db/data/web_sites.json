@@ -1466,7 +1466,8 @@
         "http_protocol": "http"
     },
     "biradm.ru": {
-        "calc_office_id": 3088
+        "calc_office_id": 3088,
+        "http_protocol": "http"
     },
     "vichuga-mr.ru": {
         "calc_office_id": 3133,
@@ -6110,7 +6111,8 @@
         "http_protocol": "http"
     },
     "duma39.ru": {
-        "calc_office_id": 546
+        "calc_office_id": 546,
+        "http_protocol": "http"
     },
     "vladimir.arbitr.ru": {
         "calc_office_id": 646,
@@ -37738,9 +37740,6 @@
         "calc_office_id": 20079,
         "http_protocol": "http"
     },
-    "": {
-        "calc_office_id": 6
-    },
     "гувм.мвд.рф": {
         "calc_office_id": 7,
         "status": "abandoned",
@@ -58916,7 +58915,8 @@
         "http_protocol": "https"
     },
     "mokolpino.spb.ru": {
-        "calc_office_id": 1199
+        "calc_office_id": 1199,
+        "http_protocol": "http"
     },
     "краснознаменск-зато.рф": {
         "calc_office_id": 1549,

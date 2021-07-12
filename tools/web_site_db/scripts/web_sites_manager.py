@@ -19,7 +19,8 @@ import os
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--action", dest='action', help="can be ban, to_utf8, move, mark_large_sites, check_alive, print_urls")
+    parser.add_argument("--action", dest='action', help="can be ban, to_utf8, move, mark_large_sites, check_alive, "
+                                                        "print_urls, check")
     parser.add_argument("--input-file", dest='input_file', required=True)
     parser.add_argument("--output-file", dest='output_file', required=True)
     parser.add_argument("--url-list", dest='url_list', required=False)
@@ -194,6 +195,17 @@ class TWebSitesManager:
         for web_domain in self.get_url_list():
             print(web_domain)
 
+    def check(self):
+        for web_domain in self.get_url_list():
+            site_info = self.in_web_sites.get_web_site(web_domain)
+
+            if TWebSiteReachStatus.can_communicate(site_info.reach_status):
+                if site_info.http_protocol is None:
+                    self.logger.error("{} has no protocol".format(web_domain))
+            if site_info.redirect_to is not None:
+                if not self.in_web_sites.has_web_site(site_info.redirect_to):
+                    self.logger.error("{} has missing redirect {}".format(web_domain, site_info.redirect_to))
+
     def main(self):
         if self.args.action == "ban":
             self.ban_sites()
@@ -207,6 +219,8 @@ class TWebSitesManager:
             self.check_alive()
         elif self.args.action == "print_keys":
             self.print_keys()
+        elif self.args.action == "check":
+            self.check()
         else:
             raise Exception("unknown action")
         self.out_web_sites.save_to_disk()
