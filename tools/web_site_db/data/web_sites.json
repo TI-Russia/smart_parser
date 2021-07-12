@@ -809,7 +809,7 @@
     },
     "zsko.ru": {
         "calc_office_id": 548,
-        "status": "abandoned"
+        "http_protocol": "http"
     },
     "zsro.ru": {
         "calc_office_id": 557,
@@ -2577,6 +2577,10 @@
         "calc_office_id": 3801,
         "status": "abandoned"
     },
+    "kyrinskiy.75.ru": {
+        "calc_office_id": 3801,
+        "http_protocol": "http"
+    },
     "чернышевск.забайкальскийкрай.рф": {
         "calc_office_id": 3815,
         "http_protocol": "http"
@@ -2837,6 +2841,10 @@
     "ирбейское.рф": {
         "calc_office_id": 1754,
         "status": "abandoned"
+    },
+    "irbeiskoe.ru": {
+       "calc_office_id": 1754,
+        "http_protocol": "http"
     },
     "ktr24.ru": {
         "calc_office_id": 1760,
@@ -5993,6 +6001,10 @@
         "calc_office_id": 3810,
         "status": "abandoned"
     },
+    "sretensk.75.ru": {
+        "calc_office_id": 3810,
+        "http_protocol": "http"
+    },
     "читинск.забайкальскийкрай.рф": {
         "calc_office_id": 3816,
         "status": "abandoned"
@@ -6938,6 +6950,10 @@
     "целинный-район.рф": {
         "calc_office_id": 3257,
         "status": "abandoned"
+    },
+    "целинный-район08.рф": {
+        "calc_office_id": 3257,
+        "http_protocol": "http"
     },
     "щучанский-район.рф": {
         "calc_office_id": 3262,
@@ -11116,7 +11132,7 @@
     },
     "petushki.info": {
         "calc_office_id": 2951,
-        "status": "abandoned",
+        "http_protocol": "https",
         "dlrobot_max_time_coeff": 2.0
     },
     "admduminichi.ru": {
@@ -11577,7 +11593,7 @@
     },
     "yaroslavl.izbirkom.ru": {
         "calc_office_id": 437,
-        "status": "abandoned"
+        "http_protocol": "http"
     },
     "fsb.ru": {
         "calc_office_id": 467,
@@ -20082,7 +20098,8 @@
     },
     "sevastopol.gov.ru": {
         "calc_office_id": 6530,
-        "status": "abandoned"
+        "status": "abandoned",
+        "redirect_to": "sev.gov.ru"
     },
     "fms-ra.ru": {
         "calc_office_id": 266,
@@ -21501,7 +21518,7 @@
     },
     "sargat.omskportal.ru": {
         "calc_office_id": 2051,
-        "status": "abandoned"
+        "http_protocol": "http"
     },
     "kopeysk-okrug.ru": {
         "calc_office_id": 2063,
@@ -24548,12 +24565,11 @@
     },
     "vyazma-region67.ru": {
         "calc_office_id": 2807,
-        "status": "abandoned"
+        "http_protocol": "https"
     },
     "admin-safonovo.ru": {
         "calc_office_id": 2822,
         "status": "abandoned",
-        "http_protocol": "http",
         "redirect_to": "safonovo-admin.ru"
     },
     "lipsport.ru": {
@@ -25315,7 +25331,6 @@
     },
     "rosoboronpostavka.ru": {
         "calc_office_id": 490,
-        "status": "abandoned",
         "http_protocol": "https"
     },
     "24.fsin.su": {
@@ -26426,7 +26441,7 @@
     },
     "udg.alregn.ru": {
         "calc_office_id": 7114,
-        "status": "abandoned"
+        "http_protocol": "http"
     },
     "altairegion-im.ru": {
         "calc_office_id": 7115,
@@ -28387,6 +28402,10 @@
     "курский-район.рф": {
         "calc_office_id": 3460,
         "status": "abandoned"
+    },
+    "курский-округ.рф": {
+        "calc_office_id": 3460,
+        "http_protocol": "https"
     },
     "obrmv.ru": {
         "calc_office_id": 3462,
@@ -32292,7 +32311,7 @@
     },
     "urt.govvrn.ru": {
         "calc_office_id": 7362,
-        "status": "abandoned"
+        "http_protocol": "http"
     },
     "goszakupki.govvrn.ru": {
         "calc_office_id": 7386,
@@ -32938,7 +32957,7 @@
     },
     "vet.adm-nao.ru": {
         "calc_office_id": 8122,
-        "status": "abandoned"
+        "http_protocol": "https"
     },
     "stroy.adm-nao.ru": {
         "calc_office_id": 8123,
@@ -37155,9 +37174,14 @@
     },
     "voenipoteka.ru": {
         "calc_office_id": 4010,
-        "status": "abandoned"
+        "status": "abandoned",
+        "redirect_to": "rosvoenipoteka.ru"
     },
-    "transneft.ru": {
+    "rosvoenipoteka.ru": {
+        "calc_office_id": 4010,
+        "http_protocol": "https"
+    },
+   "transneft.ru": {
         "calc_office_id": 4011,
         "status": "abandoned"
     },
@@ -39827,7 +39851,7 @@
     },
     "sport.admin-smolensk.ru": {
         "calc_office_id": 8731,
-        "status": "abandoned"
+        "http_protocol": "https"
     },
     "mirsud-sl.admin-smolensk.ru": {
         "calc_office_id": 8732,
@@ -41238,7 +41262,12 @@
     },
     "udg74.ru": {
         "calc_office_id": 9114,
-        "status": "abandoned"
+        "status": "abandoned",
+        "redirect_to": "udg.gov74.ru"
+    },
+    "udg.gov74.ru": {
+        "calc_office_id": 9114,
+        "http_protocol": "https"
     },
     "minavtodor-chr.ru": {
         "calc_office_id": 9115,
@@ -42951,7 +42980,7 @@
     },
     "sabsk.ru": {
         "calc_office_id": 20314,
-        "status": "abandoned"
+        "http_protocol": "http"
     },
     "sayranovo.ru": {
         "calc_office_id": 20315,
@@ -43864,7 +43893,12 @@
     },
     "skucher.ru": {
         "calc_office_id": 20539,
-        "status": "abandoned"
+        "status": "abandoned",
+        "redirect_to": "adm-skucher.ru"
+    },
+    "adm-skucher.ru": {
+        "calc_office_id": 20539,
+        "http_protocol": "http"
     },
     "staraya-ladoga.ru": {
         "calc_office_id": 20540,
@@ -46120,7 +46154,8 @@
     },
     "svet.orb.ru": {
         "calc_office_id": 2533,
-        "status": "abandoned"
+        "status": "abandoned",
+        "redirect_to": "mo-sv.orb.ru"
     },
     "admin.pogran.com": {
         "calc_office_id": 2718,
