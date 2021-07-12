@@ -85,10 +85,22 @@ class TWebSitesManager:
         self.logger.info("ban {} web sites".format(cnt))
 
     def to_utf8(self):
-        for k,v in self.in_web_sites.web_sites.items():
-            if TUrlUtf8Encode.is_idna_string(k):
-                k = TUrlUtf8Encode.from_idna(k)
-            self.out_web_sites.web_sites[k] = v
+        self.out_web_sites.web_sites = deepcopy(self.in_web_sites.web_sites)
+        cnt = 0
+        for web_domain in self.get_url_list():
+            site_info = self.out_web_sites.get_web_site(web_domain)
+            if site_info.redirect_to is not None and TUrlUtf8Encode.is_idna_string(site_info.redirect_to):
+                site_info.redirect_to = TUrlUtf8Encode.from_idna(site_info.redirect_to)
+                if site_info.redirect_to == web_domain and site_info.reach_status == TWebSiteReachStatus.abandoned:
+                    site_info.redirect_to = None
+                    site_info.reach_status = TWebSiteReachStatus.normal
+                cnt += 1
+            if TUrlUtf8Encode.is_idna_string(web_domain):
+                del self.out_web_sites.web_sites[web_domain]
+                web_domain = TUrlUtf8Encode.from_idna(web_domain)
+                self.out_web_sites.web_sites[web_domain] = site_info
+                cnt += 1
+        self.logger.info("{} conversions made".format(cnt))
 
     def move(self):
         assert self.args.filter_regex is not None
@@ -159,14 +171,17 @@ class TWebSitesManager:
                     if not web_site.enable_urllib:
                         only_selenium_sites.append(web_domain)
                         self.logger.debug('   {} is only selenium'.format(web_domain))
-                    if web_site.web_domain != web_domain:
+                    new_web_domain = web_site.web_domain
+                    if TUrlUtf8Encode.is_idna_string(new_web_domain):
+                        new_web_domain = TUrlUtf8Encode.from_idna(new_web_domain)
+                    if new_web_domain != web_domain:
                         self.logger.info('   {} is alive, but is redirected to {}, protocol = {}'.format(
-                            web_domain, web_site.web_domain, web_site.protocol))
-                        if not self.out_web_sites.has_web_site(web_site.web_domain):
-                            self.out_web_sites.web_sites[web_site.web_domain] = deepcopy(site_info)
-                        main_site_info = self.out_web_sites.get_web_site(web_site.web_domain)
+                            web_domain, new_web_domain, web_site.protocol))
+                        if not self.out_web_sites.has_web_site(new_web_domain):
+                            self.out_web_sites.web_sites[new_web_domain] = deepcopy(site_info)
+                        main_site_info = self.out_web_sites.get_web_site(new_web_domain)
                         main_site_info.set_protocol(web_site.protocol)
-                        site_info.set_redirect(web_site.web_domain)
+                        site_info.set_redirect(new_web_domain)
                     else:
                         self.logger.info("     {} is alive, protocol = {}, morda = {}".format(
                             web_domain, web_site.protocol, web_site.web_domain))
@@ -182,7 +197,7 @@ class TWebSitesManager:
     def main(self):
         if self.args.action == "ban":
             self.ban_sites()
-        elif self.args.action == "to_utf":
+        elif self.args.action == "to_utf8":
             self.to_utf8()
         elif self.args.action == "move":
             self.move()
