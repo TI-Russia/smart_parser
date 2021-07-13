@@ -511,7 +511,7 @@ class TRobotStep:
             self.add_link_wrapper(link_info)
 
     def add_links_from_sitemap_xml(self, root_page, check_url_func):
-        tree = sitemap_tree_for_homepage(morda_url)
+        tree = sitemap_tree_for_homepage(root_page)
         cnt = 0
         useful = 0
         for page in tree.all_pages():
