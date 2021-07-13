@@ -48,7 +48,7 @@ class SearchEngine:
     @staticmethod
     def get_cached_file_name(site_url, query):
         filename = unidecode(site_url + " " + query)
-        filename = re.sub('[ :"\\/]', "_", )
+        filename = re.sub('[ :"\\/]', "_", filename)
         return os.path.join(TDownloadEnv.get_search_engine_cache_folder(), filename)
 
     @staticmethod
