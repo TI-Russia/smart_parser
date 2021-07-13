@@ -1,7 +1,6 @@
 import re
 
 from web_site_db.robot_project import TRobotProject
-from web_site_db.web_site_status import TWebSiteReachStatus
 import os
 import time
 import json
@@ -133,7 +132,7 @@ class TRemoteDlrobotCallList:
     def add_dlrobot_remote_call(self, remote_call: TRemoteDlrobotCall):
         self.remote_calls_by_project_file[remote_call.project_file].append(remote_call)
         with open(self.file_name, "a") as outp:
-            outp.write(json.dumps(remote_call.write_to_json()) + "\n")
+            outp.write(json.dumps(remote_call.write_to_json(), ensure_ascii=False) + "\n")
 
     def get_interactions(self, project_file):
         return self.remote_calls_by_project_file.get(project_file, list())

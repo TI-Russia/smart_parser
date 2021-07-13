@@ -11554,7 +11554,7 @@
     },
     "yaroslavl.izbirkom.ru": {
         "calc_office_id": 437,
-        "status": "abandoned"
+        "http_protocol": "http"
     },
     "fsb.ru": {
         "calc_office_id": 467,

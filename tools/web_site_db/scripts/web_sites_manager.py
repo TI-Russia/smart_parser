@@ -76,6 +76,7 @@ class TWebSitesManager:
         domains_filtered = (w for w in web_domains if self.check_web_site_filters(w))
         if start_selenium:
             self.logger.info("rm {}".format(TDownloadEnv.FILE_CACHE_FOLDER))
+            TDownloadEnv.clear_cache_folder()
             project_path = "project.txt"
             TRobotProject.create_project("dummy.ru", project_path)
             with TRobotProject(self.logger, project_path, [], "result") as self.temp_dlrobot_project:
@@ -162,8 +163,6 @@ class TWebSitesManager:
             return None
 
     def check_alive(self):
-        self.logger.info("rm {}".format(TDownloadEnv.FILE_CACHE_FOLDER))
-        TDownloadEnv.clear_cache_folder()
         self.out_web_sites.web_sites = deepcopy(self.in_web_sites.web_sites)
         complete_bans = list()
         only_selenium_sites = list()
