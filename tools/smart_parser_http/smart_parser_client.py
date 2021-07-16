@@ -1,6 +1,6 @@
 from common.content_types import ACCEPTED_DOCUMENT_EXTENSIONS
 from smart_parser_http.smart_parser_server import TSmartParserHTTPServer
-from common.primitives import build_dislosures_sha256
+from common.primitives import build_dislosures_sha256, normalize_whitespace
 from common.logging_wrapper import setup_logging
 
 import http.client
@@ -19,10 +19,12 @@ class TSmartParserCacheClient(object):
         parser = argparse.ArgumentParser()
         parser.add_argument("--server-address", dest='server_address', default=None,
                             help="by default read it from environment variable SMART_PARSER_SERVER_ADDRESS")
-        parser.add_argument("--action", dest='action', default=None, help="can be put, get, get_by_sha256, put_json or stats", required=False)
+        parser.add_argument("--action", dest='action',
+                            help="can be put, get, get_by_sha256, title, put_json or stats", required=False)
         parser.add_argument("--walk-folder-recursive", dest='walk_folder_recursive', default=None, required=False)
         parser.add_argument("--timeout", dest='timeout', default=300, type=int)
         parser.add_argument("--rebuild", dest='rebuild', action="store_true", default=False)
+        parser.add_argument("--sha256-list", dest='sha_256_list')
         parser.add_argument('files', nargs='*')
         args = parser.parse_args(arg_list)
         if args.server_address is None:
@@ -121,9 +123,24 @@ class TSmartParserCacheClient(object):
                     _, extension = os.path.splitext(filename)
                     if extension in ACCEPTED_DOCUMENT_EXTENSIONS:
                         yield os.path.join(root, filename)
+        elif self.args.sha_256_list is not None:
+            with open(self.args.sha_256_list, "r") as inp:
+                for x in inp:
+                    yield x.strip()
         else:
             for f in self.args.files:
                 yield f
+
+    @staticmethod
+    def get_title_from_smart_parser_json(js):
+        default_value = "null"
+        if js is None:
+            default_value
+        else:
+            props = js.get('document_sheet_props', [])
+            if len(props) < 1:
+                return default_value
+            return normalize_whitespace(props[0].get('sheet_title', default_value))
 
     def main(self):
         if self.args.action == "stats":
@@ -136,6 +153,10 @@ class TSmartParserCacheClient(object):
                         print("not found")
                     else:
                         print(json.dumps(js, ensure_ascii=False))
+                elif self.args.action == "title":
+                    js = self.retrieve_json_by_sha256(f)
+                    title = TSmartParserCacheClient.get_title_from_smart_parser_json(js)
+                    print (title)
                 elif self.args.action == "get":
                     js = self.retrieve_json_by_source_file(f)
                     if js is None:

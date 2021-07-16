@@ -35,29 +35,9 @@ class FileView(generic.DetailView):
     template_name = 'file/detail.html'
 
 
-class HomePageView(generic.TemplateView):
-    template_name = 'morda/index.html'
-
-
 class OfficeView(generic.DetailView):
     model = models.Office
     template_name = 'office/detail.html'
-
-
-class AboutPageView(generic.TemplateView):
-    template_name = 'morda/about.html'
-
-
-class NewsPageView(generic.TemplateView):
-    template_name = 'morda/news_mobile.html'
-
-
-class PermalinksPageView(generic.TemplateView):
-    template_name = 'morda/permalinks.html'
-
-
-class SmartParserSpecView(generic.TemplateView):
-    template_name = 'morda/smart_parser_spec.html'
 
 
 def anyUrlView(request):
