@@ -142,6 +142,7 @@ class Command(BaseCommand):
                      "about.html",
                      "permalinks.html",
                      "smart_parser_spec.html",
+                     "second_office.html",
                      "statistics",
                      "office",
                      "reports/car-brands/car-brands-by-years.html",

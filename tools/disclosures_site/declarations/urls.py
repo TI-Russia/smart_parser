@@ -3,11 +3,12 @@ from . import views
 from django.views.generic import TemplateView
 
 urlpatterns = [
-    path('', views.HomePageView.as_view(), name='home_page'),
-    path('about.html', views.AboutPageView.as_view(), name='about_page'),
-    path('permalinks.html', views.PermalinksPageView.as_view(), name='permalinks'),
-    path('smart_parser_spec.html', views.SmartParserSpecView.as_view(), name='spv'),
-    path('news.html', views.NewsPageView.as_view(), name='news_page'),
+    path('', TemplateView.as_view(template_name="morda/index.html"), name='home_page'),
+    path('about.html', TemplateView.as_view(template_name="morda/about.html"), name='about_page'),
+    path('permalinks.html', TemplateView.as_view(template_name="morda/permalinks.html"), name='permalinks'),
+    path('second_office.html', TemplateView.as_view(template_name='morda/second_office.html'), name='second_office'),
+    path('smart_parser_spec.html', TemplateView.as_view(template_name='morda/smart_parser_spec.html'), name='spv'),
+    path('news.html', TemplateView.as_view(template_name='morda/news_mobile.html'), name='news_page'),
 
     path('sitemap.txt', views.sitemapView, name='sitemap'),
     path('sitemap.xml', views.sitemapXmlView, name='sitemapxml'),

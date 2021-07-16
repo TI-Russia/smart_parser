@@ -6,7 +6,7 @@ import json
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--action", dest='action', help="can be stats, select, print_sha256, print_web_sites, delete, to_utf8")
+    parser.add_argument("--action", dest='action', help="can be stats, select, print_sha256, print_web_sites, delete, to_utf8, titles")
     parser.add_argument("--input-file", dest='input_file')
     parser.add_argument("--output-file", dest='output_file', required=False)
     parser.add_argument("--sha256-list-file", dest='sha256_list_file', required=False)
@@ -53,6 +53,17 @@ def to_utf8(dlrobot_human, output_file):
 
     new_dlrobot_human.write()
 
+def get_title():
+
+def titles(dlrobot_human, output_file):
+    for key, src_doc in dlrobot_human.document_collection.items():
+        for ref in src_doc.decl_references:
+            ref.web_domain = ref.web_domain
+            src_doc.calculated_office_id
+        new_dlrobot_human.add_source_document(key, src_doc)
+
+    new_dlrobot_human.write()
+
 
 def main():
     args = parse_args()
@@ -67,6 +78,8 @@ def main():
         select_or_delete_by_sha256(dlrobot_human, sha_list, args.output_file, args.action == "select")
     elif args.action == "to_utf8":
         to_utf8(dlrobot_human, args.output_file)
+    elif args.action == "titles":
+        titles(dlrobot_human, args.output_file)
     else:
         raise Exception("unknown action")
 
