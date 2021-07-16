@@ -510,7 +510,9 @@ class TRobotStep:
             link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
             self.add_link_wrapper(link_info)
 
-    def add_links_from_sitemap_xml(self, root_page, check_url_func):
+    def add_links_from_sitemap_xml(self,  check_url_func):
+        assert self.website.main_page_url in self.website.url_nodes
+        root_page = self.website.get_domain_root_page() #can differ from self.website.main_page_url
         tree = sitemap_tree_for_homepage(root_page)
         cnt = 0
         useful = 0
@@ -520,7 +522,7 @@ class TRobotStep:
             if weight > TLinkInfo.MINIMAL_LINK_WEIGHT:
                 if page.url not in self.pages_to_process:
                     useful += 1
-                    link_info = TLinkInfo(TClickEngine.sitemap_xml, root_page, page.url, anchor_text="")
+                    link_info = TLinkInfo(TClickEngine.sitemap_xml, self.website.main_page_url, page.url, anchor_text="")
                     link_info.weight = weight
                     self.add_link_wrapper(link_info)
         self.logger.info("processed {} links from {}/sitemap.xml found {} useful links".format(cnt, root_page, useful))
@@ -574,7 +576,7 @@ class TRobotStep:
             self.pages_to_process.update(self.step_urls)
 
         if self.sitemap_xml_processor:
-            self.add_links_from_sitemap_xml(self.website.get_domain_root_page(), self.sitemap_xml_processor.get('check_url_func'))
+            self.add_links_from_sitemap_xml(self.sitemap_xml_processor.get('check_url_func'))
 
         save_input_urls = dict(self.pages_to_process.items())
 

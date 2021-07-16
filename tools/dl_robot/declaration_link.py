@@ -97,7 +97,7 @@ def url_features(url):
     svedenija_url = False
     corrupt_url = False
     if url is not None:
-        if re.search('(^sved)|(sveodoh)|(de[ck]lara)', url, re.IGNORECASE):
+        if re.search('(sveden)|(sveodoh)|(de[ck]lara)', url, re.IGNORECASE):
             svedenija_url = True
         if re.search(INCOME_URL_REGEXP, url, re.IGNORECASE):
             income_url = True
