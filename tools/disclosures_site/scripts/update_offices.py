@@ -102,7 +102,7 @@ class TOfficeJoiner:
                 (name, region, web_site) = line.strip().split("\t")
                 fgup[web_site] =  {
                     "name": name,
-                    "region_id": self.regions.get_region_by_str(region.lower()).id,
+                    "region_id": self.regions.get_region_in_nominative(region.lower()).id,
                     'type_id': None,
                     'parent_id': None
                     }
@@ -119,7 +119,7 @@ class TOfficeJoiner:
             web_site = get_site_domain_wo_www(court['link'])
             output_courts[web_site] = {
                 "name": court['name'],
-                "region_id": self.regions.get_region_by_str(court['region']),
+                "region_id": self.regions.get_region_in_nominative(court['region']),
                 'type_id': None,
                 'parent_id': None
                 }

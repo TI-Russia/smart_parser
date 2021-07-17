@@ -33,3 +33,4 @@ pytest
 setuptools_rust
 pymysql
 ultimate-sitemap-parser
+pyahocorasick

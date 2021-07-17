@@ -78,7 +78,7 @@ class Command(BaseCommand):
         with open(filepath, "r") as inp:
             for line in inp:
                 year, region_str, income = line.split(',')
-                region = self.regions.get_region_by_str(region_str)
+                region = self.regions.get_region_in_nominative(region_str)
                 assert region is not None
                 year = int(year)
                 if year != year_to_read:
