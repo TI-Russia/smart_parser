@@ -1,10 +1,12 @@
-import urllib.parse
+from common.logging_wrapper import setup_logging
+from common.russian_regions import TRussianRegions
 
+import urllib.parse
 import tensorflow as tf
 import json
-from common.logging_wrapper import setup_logging
 import random
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 import numpy as np
 import re
 import pymysql
@@ -96,7 +98,10 @@ class TOfficeIndex:
         for office_id, name, region_id, calculated_params in in_cursor:
             if region_id is None:
                 region_id = 0
-            self.offices[office_id] = {'name': name, 'region': int(region_id)}
+            self.offices[office_id] = {
+                'name': name,
+                'region': int(region_id),
+            }
             self.max_office_id = max(self.max_office_id, office_id)
             if name.lower().startswith("сведения о"):
                 continue
@@ -121,23 +126,53 @@ class TOfficeIndex:
 
 
 class TPredictionCase:
-    def __init__(self, ml_model=None, sha256=None, text=None, web_domain=None, true_office_id=None):
+    def __init__(self, ml_model=None, sha256=None, web_domain=None, true_office_id=None, office_strings=None):
         self.ml_model = ml_model
         self.sha256 = sha256
-        self.text = text
+        self.office_strings = office_strings
         self.web_domain = web_domain
         self.true_office_id = true_office_id
-        self.true_region_id = ml_model.office_index.get_office_region(true_office_id)
+
+        self.text = self.get_text_from_office_strings()
+        self.true_region_id = ml_model.office_index.get_office_region(self.true_office_id)
+
+    def get_text_from_office_strings(self):
+        if self.office_strings is None or len(self.office_strings) == 0:
+            return ""
+        office_strings = json.loads(self.office_strings)
+        text = ""
+        title = office_strings['title']
+        if title is not None and len(title) > 0:
+             text += office_strings['title'] + " "
+        for t in office_strings['roles']:
+            if len(t) > 0:
+                text += t + " "
+        for t in office_strings['departments']:
+            if len(t) > 0:
+                text += t + " "
+        return text.strip()
 
     def from_json(self, js):
-        self.__dict__ = json.loads(js)
+        js = json.loads(js)
+        self.sha256 = js['sha256']
+        self.web_domain = js['web_domain']
+        self.true_office_id = js['true_office_id']
+        self.office_strings = js['office_strings']
+        self.true_region_id = self.ml_model.office_index.get_office_region(self.true_office_id)
+        self.text = self.get_text_from_office_strings()
 
     def get_features_count(self):
         cnt = len(self.ml_model.office_index.bigrams_index_by_str.keys())
         return cnt + 1
 
     def to_json(self, js):
-        return json.dumps(self.__dict__, ensure_ascii=False)
+        js = {
+            'sha256': self.sha256,
+            'web_domain': self.web_domain,
+            'true_office_id': self.true_office_id,
+            'office_strings': self.office_strings
+        }
+        return json.dumps(js, ensure_ascii=False)
 
     def build_features(self):
         features = np.zeros(self.get_features_count(), dtype='int')
@@ -152,6 +187,7 @@ class TPredictionCase:
         if self.ml_model.learn_target_is_office:
             return self.true_office_id
         else:
+            assert self.ml_model.learn_target_is_region
             return self.true_region_id
 
     #  пока не используется, дает слишком низкую точность
@@ -176,10 +212,12 @@ class TPredictionCase:
             return sorted_hypots[0][1]
         return None
 
-    #select d.sha256, f.web_domain, d.office_id from declarations_declarator_file_reference f join declarations_source_document d on d.id = f.source_document_id  into  outfile "/tmp/docs.txt";
-#cut -f 1  /tmp/docs.txt >/tmp/docs.txt.id
-#python3 ~/smart_parser/tools/smart_parser_http/smart_parser_client.py --action title --sha256-list /tmp/docs.txt.id > /tmp/docs_titles.txt
-#paste /tmp/docs.txt /tmp/docs_titles.txt >/tmp/office_declarator_pool.txt
+#select d.sha256, f.web_domain, d.office_id from declarations_declarator_file_reference f join declarations_source_document d on d.id = f.source_document_id  into  outfile "/tmp/docs.txt";
+#mv "/tmp/docs.txt" ~/tmp/docs_and_titles
+#cd ~/tmp/docs_and_titles
+#cut -f 1  docs.txt >docs.txt.id
+#python3 ~/smart_parser/tools/smart_parser_http/smart_parser_client.py --action office_strings --sha256-list docs.txt.id > docs_office_strings.txt
+#paste docs.txt docs_office_strings.txt >office_declarator_pool.txt
 
 class TOfficePool:
     def __init__(self, ml_model, file_name: str, row_count=None):
@@ -214,9 +252,11 @@ class TOfficePool:
         with open(file_name, "r") as inp:
             for line in inp:
                 try:
-                    sha256, web_domain, office_id, title = line.strip().split("\t")
-
-                    case = TPredictionCase(self.ml_model, sha256, title, web_domain, int(office_id))
+                    sha256, web_domain, office_id, office_strings = line.strip().split("\t")
+                    case = TPredictionCase(self.ml_model, sha256, web_domain, int(office_id), office_strings)
+                    if len(case.text) == 0:
+                        self.logger.debug("skip {} (empty text)".format(sha256))
+                        continue
                     self.pool.append(case)
                     cnt += 1
                     if row_count is not None and cnt >= row_count:
@@ -231,7 +271,7 @@ class TOfficePool:
         c: TPredictionCase
         with open(output_path, "w") as outp:
             for c in cases:
-                outp.write("{}\n".format("\t".join([c.sha256, c.web_domain,  str(c.true_office_id), c.text])))
+                outp.write("{}\n".format("\t".join([c.sha256, c.web_domain,  str(c.true_office_id), c.office_strings])))
 
     def split(self, train_pool_path, test_pool_path):
         random.shuffle(self.pool)
@@ -246,8 +286,6 @@ class TOfficePool:
             office_by_web_domain[c.web_domain].add(c.true_office_id)
         new_pool = list()
         for c in self.pool:
-            if c.text == "null" or len(c.text) == 0:
-                continue
             if len(office_by_web_domain[c.web_domain]) <= 1:
                 continue
             new_pool.append(c)
@@ -262,7 +300,7 @@ class TPredictionModel:
         self.office_index = TOfficeIndex(args)
         self.office_index.read()
         self.learn_target_is_office = self.args.learn_target == "office"
-        self.learn_target_is_region = self.args.learn_target == "region"
+        self.learn_target_is_region = self.args.learn_target.startswith("region")
         self.train_pool = None
         self.features_count = None
 
@@ -302,8 +340,7 @@ class TPredictionModel:
 
         with open(output_path, "w") as outp:
             case: TPredictionCase
-            for case, pred_proba_y in zip(cases, test_y_pred):
-                pred_target, pred_proba  = max( enumerate(pred_proba_y), key=operator.itemgetter(1))
+            for case, (pred_target, pred_proba) in zip(cases, test_y_pred):
                 rec = {
                     "status": ("positive" if case.get_learn_target() == pred_target else "negative"),
                     "true_office_id": case.true_office_id,
@@ -351,17 +388,43 @@ class TPredictionModel:
                   validation_split=0.2)
         model.save(self.args.model_folder)
 
+    def build_handmade_regions(self, pool: TOfficePool):
+        regions = TRussianRegions()
+        y_true = list()
+        y_pred = list()
+        y_pred_proba = list()
+        c: TPredictionCase
+        for c in pool.pool:
+            pred_region_id = regions.get_region_all_forms(c.text)
+            if pred_region_id is None:
+                pred_region_id = -1
+            y_pred_proba.append((pred_region_id, 1))
+            y_pred.append(pred_region_id)
+            y_true.append(c.true_region_id)
+        self.logger.info("accuracy = {} pool size = {}".format(accuracy_score(y_true, y_pred), len(y_true)))
+        return y_pred_proba
+
     def test(self):
-        model = tf.keras.models.load_model(self.args.model_folder)
-        test_x, test_y = self.to_ml_input(self.test_pool.pool, "test")
-        res = model.evaluate(test_x, test_y)
-        self.logger.info(res)
+        if self.args.learn_target == "region_handmade":
+            self.build_handmade_regions(self.test_pool)
+        else:
+            model = tf.keras.models.load_model(self.args.model_folder)
+            test_x, test_y = self.to_ml_input(self.test_pool.pool, "test")
+            res = model.evaluate(test_x, test_y)
+            self.logger.info(res)
 
     def toloka(self):
-        model = tf.keras.models.load_model(self.args.model_folder)
-        test_x, test_y = self.to_ml_input(self.test_pool.pool, "test")
-        test_y_pred = model.predict(test_x)
-        self.build_toloka_pool(self.test_pool.pool, test_y_pred, self.args.toloka_pool)
+        if self.args.learn_target == "region_handmade":
+            test_y_pred = self.build_handmade_regions(self.test_pool)
+            self.build_toloka_pool(self.test_pool.pool, test_y_pred, self.args.toloka_pool)
+        else:
+            model = tf.keras.models.load_model(self.args.model_folder)
+            test_x, test_y = self.to_ml_input(self.test_pool.pool, "test")
+            test_y_pred = model.predict(test_x)
+            test_y_max = list()
+            for pred_proba_y in test_y_pred:
+                test_y_max.append( max(enumerate(pred_proba_y), key=operator.itemgetter(1)) )
+            self.build_toloka_pool(self.test_pool.pool, test_y_max, self.args.toloka_pool)
 
 
 def parse_args():
@@ -373,7 +436,8 @@ def parse_args():
     parser.add_argument("--test-pool", dest='test_pool')
     parser.add_argument("--model-folder", dest='model_folder', required=False)
     parser.add_argument("--epoch-count", dest='epoch_count', required=False, type=int, default=10)
-    parser.add_argument("--learn-target", dest='learn_target', required=False, default="office", help="can be office or region")
+    parser.add_argument("--learn-target", dest='learn_target', required=False, default="office",
+                        help="can be office, region, region_handmade",)
     parser.add_argument("--row-count", dest='row_count', required=False, type=int)
     parser.add_argument("--layer-size", dest='layer_size', required=False, type=int, default=256)
     parser.add_argument("--toloka-pool", dest='toloka_pool', required=False)

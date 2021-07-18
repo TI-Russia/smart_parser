@@ -27,12 +27,12 @@ class RegionsTestCase(TestCase):
         self.assertEqual(None, regions.get_region_in_nominative_and_dative("по московской области   мусор"))
 
     def test_regions_all_forms(self):
-        def most_freq_region(s):
+        def r(s):
             d = regions.get_region_all_forms(s)
             return d
         regions = TRussianRegions()
-        self.assertEqual(63, most_freq_region("мэр Москвы Собянин"))
-        self.assertEqual(1, most_freq_region("Московский район Санкт-Петербурга"))
-        self.assertEqual(28, most_freq_region("Никита Рязанский из Красноярского края"))
-        self.assertEqual(28, most_freq_region("представитель Москвы в Красноярском крае")) #longest match
-
+        self.assertEqual(63, r("мэр Москвы Собянин"))
+        self.assertEqual(1, r("Московский район Санкт-Петербурга"))
+        self.assertEqual(28, r("Никита Рязанский из Красноярского края"))
+        self.assertEqual(28, r("представитель Москвы в Красноярском крае")) #longest match
+        self.assertEqual(28, r("Межрегиональное управление № 042 ФМБА (Красноярский край, г. Зеленогорск"))
