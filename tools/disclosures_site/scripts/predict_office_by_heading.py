@@ -359,10 +359,18 @@ class TPredictionModel:
                 outp.write("{}\n".format(json.dumps(rec, ensure_ascii=False)))
 
     def init_model(self):
+        web_domain_feat = tf.feature_column.numeric_column('web_domain_feat')
+        bigrams_feat = tf.feature_column.\
+            categorical_column_with_vocabulary_list('bigrams_feat', self.office_index.bigrams_index_by_str.keys())
+        bigrams_embedding_feat = tf.feature_column.embedding_column(bigrams_feat, dimension=8)
+        feature_columns = [web_domain_feat, bigrams_embedding_feat]
+        feature_layer = tf.keras.layers.DenseFeatures(feature_columns)
         return tf.keras.Sequential([
-            tf.keras.layers.Dense(self.args.layer_size, activation='relu', input_shape=(self.features_count,)),
-            tf.keras.layers.Dense(self.args.layer_size),
-            # tf.keras.layers.Dropout(0.5),
+            feature_layer,
+            #tf.keras.layers.Dense(self.args.layer_size, activation='relu', input_shape=(self.features_count,)),
+            tf.keras.layers.Dense(self.args.layer_size, activation='relu'),
+            tf.keras.layers.Dense(self.args.layer_size, activation='relu'),
+            tf.keras.layers.Dropout(0.1),
             # tf.keras.layers.Dense(1, activation="sigmoid", bias_initializer=output_bias)
             tf.keras.layers.Dense(self.office_index.max_office_id + 1, activation="softmax")
         ])
