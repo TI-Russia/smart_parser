@@ -1,7 +1,7 @@
 from common.logging_wrapper import setup_logging
 from common.russian_regions import TRussianRegions
+from common.primitives import TUrlUtf8Encode
 
-import urllib.parse
 import tensorflow as tf
 import json
 import random
@@ -32,6 +32,8 @@ def get_word_stems(text):
 
 def get_bigrams(text):
     words = list(get_word_stems(text))
+    #for w in words:
+    #    yield w
 
     for w1, w2 in zip(words[:-1], words[1:]) :
         yield "_".join((w1, w2))
@@ -44,6 +46,55 @@ def get_trigrams(text):
         yield "_".join((w1, w2, w3))
 
 
+def reshape_to_category_feature(x, category_count):
+    return tf.one_hot(x, category_count)
+    dataframe = np.zeros((len(x), category_count))
+    for index, found_categories in enumerate(x):
+        for category_id in found_categories:
+            dataframe[index][category_id] = 1.0
+    return dataframe
+
+
+class TDisclosuresConnection:
+    def __init__(self, sql):
+        self.connection = None
+        self.sql = sql
+        self.cursor = None
+
+    def __enter__(self):
+        self.connection = pymysql.connect(db="disclosures_db", user="disclosures", password="disclosures")
+        self.cursor = self.connection.cursor()
+        self.cursor.execute(self.sql)
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.cursor.close()
+        self.connection.close()
+
+
+def build_web_site_to_offices():
+    sql = """
+        (
+            select d.office_id, r.web_domain 
+            from declarations_source_document d
+            join declarations_web_reference r on r.source_document_id = d.id
+        )
+        union  (
+            select d.office_id, r.web_domain 
+            from declarations_source_document d
+            join declarations_declarator_file_reference r on r.source_document_id = d.id
+        )
+    """
+
+    with TDisclosuresConnection(sql) as conn:
+        website_to_offices = defaultdict(set)
+        for office_id, web_domain in conn.cursor:
+            if TUrlUtf8Encode.is_idna_string(web_domain):
+                web_domain = TUrlUtf8Encode.from_idna(web_domain)
+            website_to_offices[web_domain].add(office_id)
+    return website_to_offices
+
+
 class TOfficeIndex:
 
     def __init__(self, args):
@@ -51,17 +102,17 @@ class TOfficeIndex:
         self.bigrams_index_by_str = None
         self.uniq_trigrams_to_office_id = None
         self.offices = None
-        self.max_office_id = None
         self.web_domains = None
+        self.deterministic_web_domains = None
 
     def read(self):
         with open(self.args.bigrams_path) as inp:
             js = json.load(inp)
             self.bigrams_index_by_str = js['bigrams']
             self.uniq_trigrams_to_office_id = js['trigrams']
-            self.max_office_id = js['max_office_id']
             self.offices = js['offices']
             self.web_domains = js['web_domains']
+            self.deterministic_web_domains = js['deterministic_web_domains']
         self.args.logger.info("bigrams count = {}".format(len(self.bigrams_index_by_str)))
 
     def write(self):
@@ -70,9 +121,9 @@ class TOfficeIndex:
             rec = {
                 'bigrams': self.bigrams_index_by_str,
                 'trigrams': self.uniq_trigrams_to_office_id,
-                'max_office_id': self.max_office_id,
                 'offices': self.offices,
-                'web_domains': self.web_domains
+                'web_domains': self.web_domains,
+                'deterministic_web_domains': self.deterministic_web_domains
             }
             json.dump(rec, outp, ensure_ascii=False, indent=4)
 
@@ -82,39 +133,28 @@ class TOfficeIndex:
     def get_office_region(self, id):
         return self.offices[str(id)]['region']
 
-    def build(self):
+    def build_bigrams(self):
         self.args.logger.info("build bigrams")
-        db_connection = pymysql.connect(db="disclosures_db", user="disclosures", password="disclosures")
-        in_cursor = db_connection.cursor()
-        sql = "select id, name, region_id, calculated_params from declarations_office"
-        self.args.logger.info(sql)
-        in_cursor.execute(sql)
+
         bigrams_to_office_ids = defaultdict(set)
         trigram_to_office_ids = defaultdict(set)
         self.offices = dict()
-        self.web_domains = dict()
-        self.max_office_id = -1
-        max_web_domain = 1
-        for office_id, name, region_id, calculated_params in in_cursor:
-            if region_id is None:
-                region_id = 0
-            self.offices[office_id] = {
-                'name': name,
-                'region': int(region_id),
-            }
-            self.max_office_id = max(self.max_office_id, office_id)
-            if name.lower().startswith("сведения о"):
-                continue
-            for b in get_bigrams(name):
-                bigrams_to_office_ids[b].add(office_id)
-            for b in get_trigrams(name):
-                trigram_to_office_ids[b].add(office_id)
-            for u in json.loads(calculated_params)['urls']:
-                web_domain = urllib.parse.urlsplit(u).netloc
-                if web_domain not in self.web_domains:
-                    self.web_domains[web_domain] = max_web_domain
-                    max_web_domain += 1
-        db_connection.close()
+        sql = "select id, name, region_id from declarations_office"
+        self.args.logger.info(sql)
+        with TDisclosuresConnection(sql) as conn:
+            for office_id, name, region_id in conn.cursor:
+                if region_id is None:
+                    region_id = 0
+                self.offices[office_id] = {
+                    'name': name,
+                    'region': int(region_id),
+                }
+                if name.lower().startswith("сведения о"):
+                    continue
+                for b in get_bigrams(name):
+                    bigrams_to_office_ids[b].add(office_id)
+                for b in get_trigrams(name):
+                    trigram_to_office_ids[b].add(office_id)
         pairs = enumerate(sorted(bigrams_to_office_ids.keys()))
         self.bigrams_index_by_str = dict((k, i) for (i, k) in pairs)
         self.args.logger.info("bigrams count = {}".format(len(self.bigrams_index_by_str)))
@@ -123,6 +163,21 @@ class TOfficeIndex:
             if len(value) == 1:
                 self.uniq_trigrams_to_office_id[key] = list(value)[0]
         self.args.logger.info("uniq_trigrams_to_office_id count = {}".format(len(self.uniq_trigrams_to_office_id)))
+
+    def build_web_domains(self):
+        self.args.logger.info("build web domains")
+        web_domains = build_web_site_to_offices()
+        self.deterministic_web_domains = dict()
+        self.web_domains = dict()
+        for web_domain, office_ids in web_domains.items():
+            if len(office_ids) == 1:
+                self.deterministic_web_domains[web_domain] = list(office_ids)[0]
+            else:
+                self.web_domains[web_domain] = len(self.web_domains)
+
+    def build(self):
+        self.build_bigrams()
+        self.build_web_domains()
 
 
 class TPredictionCase:
@@ -161,10 +216,6 @@ class TPredictionCase:
         self.true_region_id = self.ml_model.office_index.get_office_region(self.true_office_id)
         self.text = self.get_text_from_office_strings()
 
-    def get_features_count(self):
-        cnt = len(self.ml_model.office_index.bigrams_index_by_str.keys())
-        return cnt + 1
-
     def to_json(self, js):
         js = {
             'sha256': self.sha256,
@@ -174,14 +225,26 @@ class TPredictionCase:
         }
         return json.dumps(js, ensure_ascii=False)
 
-    def build_features(self):
-        features = np.zeros(self.get_features_count(), dtype='int')
+    def get_bigrams_count(self):
+        return len(self.ml_model.office_index.bigrams_index_by_str)
+
+    def get_web_domains_count(self):
+        return len(self.ml_model.office_index.web_domains)
+
+    def get_bigram_feature(self):
+        bigrams_one_hot = np.zeros(self.get_bigrams_count())
         for b in get_bigrams(self.text):
             bigram_id = self.ml_model.office_index.bigrams_index_by_str.get(b)
             if bigram_id is not None:
-                features[bigram_id] = 1
-        features[-1] = self.ml_model.office_index.web_domains.get(self.web_domain, 0)
-        return features
+                bigrams_one_hot[bigram_id] = 1
+
+        return bigrams_one_hot
+
+    def get_web_domain_feature(self):
+        web_domain_index = self.ml_model.office_index.web_domains.get(self.web_domain, 0)
+        web_domain_one_hot = np.zeros(self.get_web_domains_count())
+        web_domain_one_hot[web_domain_index] = 1
+        return web_domain_one_hot
 
     def get_learn_target(self):
         if self.ml_model.learn_target_is_office:
@@ -211,6 +274,7 @@ class TPredictionCase:
         if sorted_hypots[1][0] * 3 <= sorted_hypots[0][0]:
             return sorted_hypots[0][1]
         return None
+
 
 #select d.sha256, f.web_domain, d.office_id from declarations_declarator_file_reference f join declarations_source_document d on d.id = f.source_document_id  into  outfile "/tmp/docs.txt";
 #mv "/tmp/docs.txt" ~/tmp/docs_and_titles
@@ -281,12 +345,9 @@ class TOfficePool:
         self.ml_model.logger.info("train size = {}, test size = {}".format(len(train), len(test)))
 
     def delete_deterministic_web_domains(self):
-        office_by_web_domain = defaultdict(set)
-        for c in self.pool:
-            office_by_web_domain[c.web_domain].add(c.true_office_id)
         new_pool = list()
         for c in self.pool:
-            if len(office_by_web_domain[c.web_domain]) <= 1:
+            if c.web_domain in self.ml_model.office_index.deterministic_web_domains:
                 continue
             new_pool.append(c)
         self.pool = new_pool
@@ -302,29 +363,27 @@ class TPredictionModel:
         self.learn_target_is_office = self.args.learn_target == "office"
         self.learn_target_is_region = self.args.learn_target.startswith("region")
         self.train_pool = None
-        self.features_count = None
 
     def read_train(self):
         self.train_pool = TOfficePool(self, self.args.train_pool, row_count=self.args.row_count)
         assert len(self.train_pool.pool) > 0
-        self.features_count = self.train_pool.pool[0].get_features_count()
 
     def read_test(self):
         self.test_pool = TOfficePool(self, self.args.test_pool, row_count=self.args.row_count)
         assert len(self.test_pool.pool) > 0
-        self.features_count = self.test_pool.pool[0].get_features_count()
 
     def to_ml_input(self, cases, name):
         self.args.logger.info("build features for {} pool of {} cases".format(name, len(cases)))
-        features = list()
-        labels = list()
-        c: TPredictionCase
-        for cnt, c in enumerate(cases):
-            features.append(c.build_features())
-            labels.append(c.get_learn_target())
-            if cnt % 10000 == 0:
-                print(".")
-        return np.array(features), np.array(labels)
+        bigrams = np.array(list(c.get_bigram_feature() for c in cases))
+
+        web_domains = np.array(list(c.get_web_domain_feature() for c in cases))
+        features = {
+            "text_feat": bigrams,
+            "web_domain_feat": web_domains
+        }
+
+        labels = np.array(list(c.get_learn_target() for c in cases))
+        return features, labels
 
     def create_test_and_train(self, cases):
         random.shuffle(cases)
@@ -358,38 +417,44 @@ class TPredictionModel:
                     rec['pred_region_id'] = pred_target
                 outp.write("{}\n".format(json.dumps(rec, ensure_ascii=False)))
 
+    def get_learn_target_count(self):
+        if self.learn_target_is_office:
+            return len(self.office_index.offices)
+        else:
+            assert self.learn_target_is_region
+            return 111
+
     def init_model(self):
-        web_domain_feat = tf.feature_column.numeric_column('web_domain_feat')
-        bigrams_feat = tf.feature_column.\
-            categorical_column_with_vocabulary_list('bigrams_feat', self.office_index.bigrams_index_by_str.keys())
-        bigrams_embedding_feat = tf.feature_column.embedding_column(bigrams_feat, dimension=8)
-        feature_columns = [web_domain_feat, bigrams_embedding_feat]
-        feature_layer = tf.keras.layers.DenseFeatures(feature_columns)
-        return tf.keras.Sequential([
-            feature_layer,
-            #tf.keras.layers.Dense(self.args.layer_size, activation='relu', input_shape=(self.features_count,)),
-            tf.keras.layers.Dense(self.args.layer_size, activation='relu'),
-            tf.keras.layers.Dense(self.args.layer_size, activation='relu'),
-            tf.keras.layers.Dropout(0.1),
-            # tf.keras.layers.Dense(1, activation="sigmoid", bias_initializer=output_bias)
-            tf.keras.layers.Dense(self.office_index.max_office_id + 1, activation="softmax")
-        ])
+        bigrams_count = len(self.office_index.bigrams_index_by_str)
+        text_input = tf.keras.Input(shape=(bigrams_count,), name="text_feat")
+
+        web_domain_count = len(self.office_index.web_domains)
+        web_domain_input = tf.keras.Input(shape=(web_domain_count,), name="web_domain_feat")
+        concatenated_layer = tf.keras.layers.concatenate([text_input, web_domain_input])
+        dense_layer = tf.keras.layers.Dense(self.args.layer_size, activation='relu')(concatenated_layer)
+        target_layer = tf.keras.layers.Dense(self.get_learn_target_count(), name="target")(dense_layer)
+        model = tf.keras.Model(
+            inputs=[text_input, web_domain_input],
+            outputs=target_layer,
+        )
+        tf.keras.utils.plot_model(model, "predict_office.png", show_shapes=True)
+        return model
 
     def train_tensorflow(self):
         assert self.args.model_folder is not None
-        #batch_size = 64 prod?
-        batch_size = 256
+        #batch_size = 64
+        batch_size =    256
         self.logger.info("train_tensorflow layer_size={}".format(self.args.layer_size))
         train_x, train_y = self.to_ml_input(self.train_pool.pool, "train")
-        assert self.features_count == train_x.shape[-1]
 
         model = self.init_model()
-
+        print(model.summary())
         model.compile(optimizer='adam',
                       loss=tf.keras.losses.SparseCategoricalCrossentropy(),
                       metrics=['accuracy'])
 
-        model.fit(train_x, train_y,
+        model.fit(train_x,
+                  train_y,
                   epochs=self.args.epoch_count,
                   workers=3,
                   batch_size=batch_size,

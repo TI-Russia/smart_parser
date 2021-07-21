@@ -1,6 +1,7 @@
 from web_site_db.web_sites import TDeclarationWebSiteList
 from common.logging_wrapper import setup_logging
 import declarations.models as models
+from common.primitives import TUrlUtf8Encode
 
 from django.core.management import BaseCommand
 from django.db import connection
@@ -19,6 +20,7 @@ def get_child_offices(office, max_count=5):
             break
 
 
+
 class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
@@ -26,7 +28,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         web_sites_db = TDeclarationWebSiteList(self.logger, TDeclarationWebSiteList.default_input_task_list_path).load_from_disk()
-        office_to_urls = web_sites_db.build_office_to_website()
+        office_to_urls = web_sites_db.build_office_to_main_website()
         query = """
             select o.id, min(s.income_year), count(s.id) 
             from declarations_office o

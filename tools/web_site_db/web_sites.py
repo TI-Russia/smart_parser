@@ -95,7 +95,7 @@ class TDeclarationWebSiteList:
         s.calculated_office_id = office_id
         self.web_sites[web_site] = s
 
-    def build_office_to_website(self):
+    def build_office_to_main_website(self):
         office_to_website = defaultdict(set)
         for web_domain, web_site in self.web_sites.items():
             if TWebSiteReachStatus.can_communicate(web_site.reach_status) and web_domain != 'declarator.org':

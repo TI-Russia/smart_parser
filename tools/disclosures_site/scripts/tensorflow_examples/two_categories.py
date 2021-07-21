@@ -7,10 +7,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '0'
 
 
 def reshape_to_category_feature(x, category_count=2):
-    dataframe = np.zeros((len(x), category_count))
-    for index, category_id in enumerate(x):
-        dataframe[index][category_id] = 1.0
-    return dataframe
+    return tf.one_hot(x, depth=category_count)
 
 
 def reshape_input(cat1, cat2):
