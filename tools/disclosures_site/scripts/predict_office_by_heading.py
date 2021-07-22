@@ -48,11 +48,6 @@ def get_trigrams(text):
 
 def reshape_to_category_feature(x, category_count):
     return tf.one_hot(x, category_count)
-    dataframe = np.zeros((len(x), category_count))
-    for index, found_categories in enumerate(x):
-        for category_id in found_categories:
-            dataframe[index][category_id] = 1.0
-    return dataframe
 
 
 class TDisclosuresConnection:
@@ -100,7 +95,6 @@ class TOfficeIndex:
     def __init__(self, args):
         self.args = args
         self.bigrams_index_by_str = None
-        self.uniq_trigrams_to_office_id = None
         self.offices = None
         self.web_domains = None
         self.deterministic_web_domains = None
@@ -109,7 +103,6 @@ class TOfficeIndex:
         with open(self.args.bigrams_path) as inp:
             js = json.load(inp)
             self.bigrams_index_by_str = js['bigrams']
-            self.uniq_trigrams_to_office_id = js['trigrams']
             self.offices = js['offices']
             self.web_domains = js['web_domains']
             self.deterministic_web_domains = js['deterministic_web_domains']
@@ -120,7 +113,6 @@ class TOfficeIndex:
         with open(self.args.bigrams_path, "w") as outp:
             rec = {
                 'bigrams': self.bigrams_index_by_str,
-                'trigrams': self.uniq_trigrams_to_office_id,
                 'offices': self.offices,
                 'web_domains': self.web_domains,
                 'deterministic_web_domains': self.deterministic_web_domains
@@ -158,11 +150,6 @@ class TOfficeIndex:
         pairs = enumerate(sorted(bigrams_to_office_ids.keys()))
         self.bigrams_index_by_str = dict((k, i) for (i, k) in pairs)
         self.args.logger.info("bigrams count = {}".format(len(self.bigrams_index_by_str)))
-        self.uniq_trigrams_to_office_id = dict()
-        for key, value in trigram_to_office_ids.items():
-            if len(value) == 1:
-                self.uniq_trigrams_to_office_id[key] = list(value)[0]
-        self.args.logger.info("uniq_trigrams_to_office_id count = {}".format(len(self.uniq_trigrams_to_office_id)))
 
     def build_web_domains(self):
         self.args.logger.info("build web domains")
@@ -252,29 +239,6 @@ class TPredictionCase:
         else:
             assert self.ml_model.learn_target_is_region
             return self.true_region_id
-
-    #  пока не используется, дает слишком низкую точность
-    def check_uniq_trigram(self):
-        hypots = defaultdict(set)
-        for t in get_trigrams(self.text):
-            office_id = self.ml_model.office_index.uniq_trigrams_to_office_id.get(t)
-            if office_id is not None:
-                hypots[office_id].add(t)
-        self.ml_model.logger.debug("{} -> {}".format(self.text, hypots))
-        if len(hypots) == 0:
-            return None
-        if len(hypots) == 1:
-            office_id = list(hypots.keys())[0]
-            if len(hypots[office_id]) > 1:
-                return office_id
-            else:
-                return None
-
-        sorted_hypots = sorted(((len(v), k) for (k, v) in hypots.items()), reverse=True)
-        if sorted_hypots[1][0] * 3 <= sorted_hypots[0][0]:
-            return sorted_hypots[0][1]
-        return None
-
 
 #select d.sha256, f.web_domain, d.office_id from declarations_declarator_file_reference f join declarations_source_document d on d.id = f.source_document_id  into  outfile "/tmp/docs.txt";
 #mv "/tmp/docs.txt" ~/tmp/docs_and_titles
@@ -431,7 +395,7 @@ class TPredictionModel:
         web_domain_count = len(self.office_index.web_domains)
         web_domain_input = tf.keras.Input(shape=(web_domain_count,), name="web_domain_feat")
         concatenated_layer = tf.keras.layers.concatenate([text_input, web_domain_input])
-        dense_layer = tf.keras.layers.Dense(self.args.layer_size, activation='relu')(concatenated_layer)
+        dense_layer = tf.keras.layers.Dense(self.get_learn_target_count(), activation='relu')(concatenated_layer)
         target_layer = tf.keras.layers.Dense(self.get_learn_target_count(), name="target")(dense_layer)
         model = tf.keras.Model(
             inputs=[text_input, web_domain_input],
@@ -443,7 +407,7 @@ class TPredictionModel:
     def train_tensorflow(self):
         assert self.args.model_folder is not None
         #batch_size = 64
-        batch_size =    256
+        batch_size = 256
         self.logger.info("train_tensorflow layer_size={}".format(self.args.layer_size))
         train_x, train_y = self.to_ml_input(self.train_pool.pool, "train")
 
