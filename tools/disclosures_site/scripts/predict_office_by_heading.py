@@ -94,28 +94,31 @@ class TOfficeIndex:
 
     def __init__(self, args):
         self.args = args
-        self.bigrams_index_by_str = None
+        self.office_name_bigrams = None
         self.offices = None
         self.web_domains = None
         self.deterministic_web_domains = None
+        self.region_words = None
 
     def read(self):
         with open(self.args.bigrams_path) as inp:
             js = json.load(inp)
-            self.bigrams_index_by_str = js['bigrams']
+            self.office_name_bigrams = js['bigrams']
             self.offices = js['offices']
             self.web_domains = js['web_domains']
             self.deterministic_web_domains = js['deterministic_web_domains']
-        self.args.logger.info("bigrams count = {}".format(len(self.bigrams_index_by_str)))
+            self.region_words = js['region_words']
+        self.args.logger.info("bigrams count = {}".format(len(self.office_name_bigrams)))
 
     def write(self):
         self.args.logger.info("write to {}".format(self.args.bigrams_path))
         with open(self.args.bigrams_path, "w") as outp:
             rec = {
-                'bigrams': self.bigrams_index_by_str,
+                'bigrams': self.office_name_bigrams,
                 'offices': self.offices,
                 'web_domains': self.web_domains,
-                'deterministic_web_domains': self.deterministic_web_domains
+                'deterministic_web_domains': self.deterministic_web_domains,
+                'region_words': self.region_words
             }
             json.dump(rec, outp, ensure_ascii=False, indent=4)
 
@@ -127,9 +130,9 @@ class TOfficeIndex:
 
     def build_bigrams(self):
         self.args.logger.info("build bigrams")
-
-        bigrams_to_office_ids = defaultdict(set)
-        trigram_to_office_ids = defaultdict(set)
+        regions = TRussianRegions()
+        office_bigrams = set()
+        region_words = set()
         self.offices = dict()
         sql = "select id, name, region_id from declarations_office"
         self.args.logger.info(sql)
@@ -144,12 +147,15 @@ class TOfficeIndex:
                 if name.lower().startswith("сведения о"):
                     continue
                 for b in get_bigrams(name):
-                    bigrams_to_office_ids[b].add(office_id)
-                for b in get_trigrams(name):
-                    trigram_to_office_ids[b].add(office_id)
-        pairs = enumerate(sorted(bigrams_to_office_ids.keys()))
-        self.bigrams_index_by_str = dict((k, i) for (i, k) in pairs)
-        self.args.logger.info("bigrams count = {}".format(len(self.bigrams_index_by_str)))
+                    office_bigrams.add(b)
+                region = regions.get_region_by_id(region_id)
+                for w in get_word_stems(region.name):
+                    region_words.add(w)
+                for w in get_word_stems(region.short_name):
+                    region_words.add(w)
+        self.office_name_bigrams = dict((k, i) for (i, k) in enumerate(office_bigrams))
+        self.region_words = dict((k, i) for (i, k) in enumerate(region_words))
+        self.args.logger.info("bigrams count = {}".format(len(self.office_name_bigrams)))
 
     def build_web_domains(self):
         self.args.logger.info("build web domains")
@@ -212,24 +218,27 @@ class TPredictionCase:
         }
         return json.dumps(js, ensure_ascii=False)
 
-    def get_bigrams_count(self):
-        return len(self.ml_model.office_index.bigrams_index_by_str)
-
-    def get_web_domains_count(self):
-        return len(self.ml_model.office_index.web_domains)
-
-    def get_bigram_feature(self):
-        bigrams_one_hot = np.zeros(self.get_bigrams_count())
+    def get_office_name_bigram_feature(self):
+        bigrams_one_hot = np.zeros(len(self.ml_model.office_index.office_name_bigrams))
         for b in get_bigrams(self.text):
-            bigram_id = self.ml_model.office_index.bigrams_index_by_str.get(b)
+            bigram_id = self.ml_model.office_index.office_name_bigrams.get(b)
             if bigram_id is not None:
                 bigrams_one_hot[bigram_id] = 1
 
         return bigrams_one_hot
 
+    def get_region_words_feature(self):
+        one_hot = np.zeros(len(self.ml_model.office_index.region_words))
+        for b in get_word_stems(self.text):
+            word_id = self.ml_model.office_index.region_words.get(b)
+            if word_id is not None:
+                one_hot[word_id] = 1
+
+        return one_hot
+
     def get_web_domain_feature(self):
         web_domain_index = self.ml_model.office_index.web_domains.get(self.web_domain, 0)
-        web_domain_one_hot = np.zeros(self.get_web_domains_count())
+        web_domain_one_hot = np.zeros(len(self.ml_model.office_index.web_domains))
         web_domain_one_hot[web_domain_index] = 1
         return web_domain_one_hot
 
@@ -338,12 +347,13 @@ class TPredictionModel:
 
     def to_ml_input(self, cases, name):
         self.args.logger.info("build features for {} pool of {} cases".format(name, len(cases)))
-        bigrams = np.array(list(c.get_bigram_feature() for c in cases))
+        bigrams = np.array(list(c.get_office_name_bigram_feature() for c in cases))
 
         web_domains = np.array(list(c.get_web_domain_feature() for c in cases))
         features = {
-            "text_feat": bigrams,
-            "web_domain_feat": web_domains
+            "office_name_feat": bigrams,
+            "web_domain_feat": web_domains,
+            "region_name_feat": np.array(list(c.get_region_words_feature() for c in cases))
         }
 
         labels = np.array(list(c.get_learn_target() for c in cases))
@@ -389,16 +399,23 @@ class TPredictionModel:
             return 111
 
     def init_model(self):
-        bigrams_count = len(self.office_index.bigrams_index_by_str)
-        text_input = tf.keras.Input(shape=(bigrams_count,), name="text_feat")
+        office_bigrams_count = len(self.office_index.office_name_bigrams)
+        office_name_input = tf.keras.Input(shape=(office_bigrams_count,), name="office_name_feat")
 
         web_domain_count = len(self.office_index.web_domains)
         web_domain_input = tf.keras.Input(shape=(web_domain_count,), name="web_domain_feat")
-        concatenated_layer = tf.keras.layers.concatenate([text_input, web_domain_input])
+
+        region_word_count = len(self.office_index.region_words)
+        region_words_input = tf.keras.Input(shape=(region_word_count,), name="region_name_feat")
+
+        inputs = [office_name_input, web_domain_input, region_words_input]
+        #inputs = [web_domain_input, region_words_input]
+        concatenated_layer = tf.keras.layers.concatenate(inputs)
+
         dense_layer = tf.keras.layers.Dense(self.get_learn_target_count(), activation='relu')(concatenated_layer)
         target_layer = tf.keras.layers.Dense(self.get_learn_target_count(), name="target")(dense_layer)
         model = tf.keras.Model(
-            inputs=[text_input, web_domain_input],
+            inputs=inputs,
             outputs=target_layer,
         )
         tf.keras.utils.plot_model(model, "predict_office.png", show_shapes=True)
@@ -449,7 +466,8 @@ class TPredictionModel:
             test_x, test_y = self.to_ml_input(self.test_pool.pool, "test")
             res = model.evaluate(test_x, test_y)
             self.logger.info(res)
-
+            debug = model.predict(test_x)
+            pass
     def toloka(self):
         if self.args.learn_target == "region_handmade":
             test_y_pred = self.build_handmade_regions(self.test_pool)

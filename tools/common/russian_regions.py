@@ -1,10 +1,10 @@
 import sys
 from common.primitives import normalize_whitespace
 import ahocorasick
-from collections import defaultdict
 
 
 RUSSIAN_REGIONS = [
+{"id":0,"name":"Россия","code":0,"short_name":"РФ","extra_short_name":"РФ","name_ru":"Россия","name_en":"Russia","short_name_ru":"РФ","short_name_en":"","extra_short_name_ru":"","extra_short_name_en":"","slug":"RU","federal_district_id":0},
 {"id":1,"name":"Санкт-Петербург","code":78,"short_name":"Санкт-Петербург","extra_short_name":"Санкт-Петербург","name_ru":"Санкт-Петербург","name_en":"Saint Petersburg","short_name_ru":"Санкт-Петербург","short_name_en":"Saint Petersburg","extra_short_name_ru":"Санкт-Петербург","extra_short_name_en":"","slug":"RU.SP","federal_district_id":2},
 {"id":3,"name":"Республика Адыгея","code":1,"short_name":"Адыгея","extra_short_name":"Адыгея","name_ru":"Республика Адыгея","name_en":"Republic of Adygea","short_name_ru":"Адыгея","short_name_en":"Republic of Adygea","extra_short_name_ru":"Адыгея","extra_short_name_en":"","slug":"RU.AD","federal_district_id":6},
 {"id":4,"name":"Республика Башкортостан","code":2,"short_name":"Башкортостан","extra_short_name":"Башкортостан","name_ru":"Республика Башкортостан","name_en":"Republic of Bashkortostan","short_name_ru":"Башкортостан","short_name_en":"Republic of Bashkortostan","extra_short_name_ru":"Башкортостан","extra_short_name_en":"","slug":"RU.BK","federal_district_id":7},
@@ -1095,6 +1095,9 @@ class TRussianRegions:
             self.region_id_to_region[r.id] = r
 
         self.all_forms = self.build_all_forms()
+
+    def get_region_by_id(self, id: int):
+        return self.region_id_to_region[id]
 
     def build_all_forms(self):
         all_forms = ahocorasick.Automaton()
