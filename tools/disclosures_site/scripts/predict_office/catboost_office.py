@@ -1,7 +1,7 @@
-
 from common.logging_wrapper import setup_logging
 from scripts.predict_office.office_index import TOfficeIndex
 from scripts.predict_office.office_pool import TOfficePool, TPredictionCase
+from common.russian_regions import TRussianRegions
 
 from catboost import CatBoostClassifier, Pool
 import numpy as np
@@ -18,6 +18,7 @@ class TPredictionModel:
         self.learn_target_is_office = self.args.learn_target == "office"
         self.learn_target_is_region = self.args.learn_target.startswith("region")
         self.train_pool = None
+        self.regions = TRussianRegions()
 
     def read_train(self):
         self.train_pool = TOfficePool(self, self.args.train_pool, row_count=self.args.row_count)
@@ -59,17 +60,29 @@ class TPredictionModel:
 
     def build_features(self, case):
         web_domain_index = self.office_index.web_domains.get(case.web_domain, 0)
-        return np.array(list([web_domain_index]))
+        #text = " ".join(TOfficeIndex.get_word_stems(case.text[0:200]))
+        #return np.array(list([web_domain_index, text]))
+        region_id_from_text = self.regions.get_region_all_forms(case.text)
+        if region_id_from_text is None:
+            region_id_from_text = 0
+        return np.array(list([web_domain_index, region_id_from_text]))
 
     def to_ml_input(self, cases, name):
-        self.args.logger.info("build features for {} po ol of {} cases".format(name, len(cases)))
+        self.args.logger.info("build features for {} pool of {} cases".format(name, len(cases)))
         features = list()
         for case in cases:
             features.append(self.build_features(case))
         labels = np.array(list(c.get_learn_target() for c in cases))
-        feature_names = ["web_domain"]
-        cat_features = ["web_domain"]
-        catboost_test_pool = Pool(features, labels, feature_names=feature_names, cat_features=cat_features)
+
+        #feature_names = ["web_domain_feat", "title_feat"]
+        #text_features = ["title_feat"]
+
+        feature_names = ["web_domain_feat", "region_id_from_text_feat"]
+        cat_features = ["web_domain_feat", "region_id_from_text_feat"]
+        catboost_test_pool = Pool(features, labels, feature_names=feature_names,
+                                  cat_features=cat_features,
+                                  #text_features=text_features
+                                  )
         return catboost_test_pool
 
     def train_catboost(self, iter_count=100):
