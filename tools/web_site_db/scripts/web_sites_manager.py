@@ -184,15 +184,16 @@ class TWebSitesManager:
                 if new_web_domain != web_domain:
                     self.logger.info('   {} is alive, but is redirected to {}, protocol = {}'.format(
                         web_domain, new_web_domain, web_site.protocol))
+                    site_info.set_redirect(new_web_domain)
                     if not self.out_web_sites.has_web_site(new_web_domain):
                         self.out_web_sites.web_sites[new_web_domain] = deepcopy(site_info)
-                    main_site_info = self.out_web_sites.get_web_site(new_web_domain)
-                    main_site_info.set_protocol(web_site.protocol)
-                    site_info.set_redirect(new_web_domain)
+                    site_info = self.out_web_sites.get_web_site(new_web_domain)
                 else:
                     self.logger.info("     {} is alive, protocol = {}, morda = {}".format(
                         web_domain, web_site.protocol, web_site.web_domain))
-                    site_info.set_protocol(web_site.protocol)
+                site_info.set_protocol(web_site.protocol)
+                site_info.set_title(web_site.get_title(web_site.main_page_url))
+
 
         self.logger.info("ban {} web sites, only selenium sites: {}".format(len(complete_bans), len(only_selenium_sites)))
 
@@ -216,7 +217,6 @@ class TWebSitesManager:
             if site_info.redirect_to is None or not web_domain.endswith(site_info.redirect_to):
                 continue
             self.check_alive_one_site(web_domain)
-
 
     def main(self):
         if self.args.action == "ban":

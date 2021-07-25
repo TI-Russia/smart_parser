@@ -12,7 +12,7 @@ class THtmlParser:
         self.file_data = file_data
         self.soup = BeautifulSoup(self.file_data, "html.parser")
         self.html_with_markup = str(self.soup)
-        self.page_title = self.soup.title.string if self.soup.title is not None else ""
+        self.page_title = str(self.soup.title.string) if self.soup.title is not None else ""
         self.base = None
         if url is not None:
             self.base = self._get_base_url()
@@ -52,3 +52,10 @@ class THtmlParser:
             base = THtmlParser.make_link(scheme_and_web_domain, base)
 
         return base
+
+
+def get_html_title(html):
+    try:
+        return THtmlParser(html).page_title.strip(" \n\r\t")
+    except Exception as err:
+        return ""

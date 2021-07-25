@@ -75,15 +75,6 @@ def prepare_for_logging(s):
     return s.strip()
 
 
-def get_html_title(html):
-    try:
-        if soup.title is None:
-            return ""
-        return soup.title.string.strip(" \n\r\t")
-    except Exception as err:
-        return ""
-
-
 def convert_timeout_to_seconds(s):
     if isinstance(s, int):
         return s

@@ -80,7 +80,7 @@ class TPredictionModel:
         feature_names = ["web_domain_feat", "region_id_from_text_feat"]
         cat_features = ["web_domain_feat", "region_id_from_text_feat"]
         catboost_test_pool = Pool(features, labels, feature_names=feature_names,
-                                  cat_features=cat_features,
+                                      cat_features=cat_features,
                                   #text_features=text_features
                                   )
         return catboost_test_pool

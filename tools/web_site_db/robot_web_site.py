@@ -2,7 +2,8 @@ import urllib.parse
 
 from common.download import TDownloadedFile
 from common.http_request import THttpRequester
-from common.primitives import get_site_domain_wo_www, get_html_title
+from common.primitives import get_site_domain_wo_www
+from common.html_parser import get_html_title
 from common.link_info import TClickEngine
 from web_site_db.robot_step import TRobotStep, TUrlInfo
 from web_site_db.web_site_status import TWebSiteReachStatus
@@ -97,11 +98,6 @@ class TWebSiteCrawlSnapshot:
         # return example.com (without http)
         assert self.web_domain is not None
         return self.web_domain
-
-    def get_domain_root_page(self):
-        # return http://example.com
-        assert self.web_domain is not None
-        return urllib.parse.urlunsplit((self.protocol, self.web_domain, "", "", ""))
 
     def init_main_page_default(self, morda_url):
         self.main_page_url = morda_url
@@ -216,6 +212,11 @@ class TWebSiteCrawlSnapshot:
             raise Exception("cannot find parent for {}".format(url))
         for p in parents:
             yield p
+
+    def get_title(self, url):
+        info: TUrlInfo
+        info = self.url_nodes[url]
+        return info.title
 
     def get_path_to_root_recursive(self, path, all_paths):
         assert len(path) >= 1
