@@ -238,11 +238,6 @@ class TestBadDomain(TestCase):
     def tearDown(self):
         self.env.tearDown()
 
-    def test_idna(self):
-        bad_idna_string = ".bad_domain"  # error in encoding
-        s = TUrlUtf8Encode.to_idna(bad_idna_string)
-        self.assertEqual(s, bad_idna_string)
-
     def test_bad_domain_and_two_retries(self):
         self.env.worker_thread.join(200)
         self.assertEqual(1, self.env.count_projects_results())

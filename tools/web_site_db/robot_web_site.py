@@ -177,7 +177,7 @@ class TWebSiteCrawlSnapshot:
         self.input_site_url = init_json.get('morda_url')
         self.reach_status = init_json.get('reach_status')
         self.protocol = init_json.get('protocol', "http")
-        self.main_page_url = init_json.get('main_page_url')
+        self.main_page_url = init_json.get('main_page_url', init_json.get('morda_url'))
         self.office_name = init_json.get('name', '')
         self.enable_urllib = init_json.get('enable_urllib', self.default_enable_urllib())
         self.export_env.from_json(init_json.get('exported_files'))

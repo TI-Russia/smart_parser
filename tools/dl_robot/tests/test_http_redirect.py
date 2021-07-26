@@ -56,16 +56,17 @@ class TestRecursion(TestCase):
         THttpRequester.initialize(setup_logging())
         self.assertIsNone(TDownloadedFile.get_simple_js_redirect("http://www.aot.ru", html))
 
-    def test_js_redirect2(self):
-        html = """
-        <html>
-        <script>
-            window.location.href = 'newPage.html';
-        </script>
-        </html>
-        """
-        redirect = TDownloadedFile.get_simple_js_redirect("http://www.aot.ru", html)
-        self.assertEqual(redirect, "http://www.aot.ru/newPage.html")
+    # too dangerous (see "window.location = a.href;" in http://батайск-официальный.рф)
+    # def test_js_redirect2(self):
+    #     html = """
+    #     <html>
+    #     <script>
+    #         window.location.href = 'newPage.html';
+    #     </script>
+    #     </html>
+    #     """
+    #     redirect = TDownloadedFile.get_simple_js_redirect("http://www.aot.ru", html)
+    #     self.assertEqual(redirect, "http://www.aot.ru/newPage.html")
 
 
     def test_js_redirect3(self):

@@ -188,8 +188,11 @@ class TDownloadedFile:
             redirect_url = match.group(4)
             if redirect_url.startswith('http'):
                 return redirect_url
-            else:
-                return urllib.parse.urljoin(main_url, redirect_url)
+
+            # the "else" is too dangerous (see "window.location = a.href;" in http://батайск-официальный.рф)
+            #else:
+            #    return urllib.parse.urljoin(main_url, redirect_url)
+
         return None
 
     def _http_get_request_with_simple_js_redirect(self):

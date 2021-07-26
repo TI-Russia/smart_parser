@@ -199,7 +199,17 @@ class TUrlUtf8Encode:
 
     @staticmethod
     def from_idna(s):
-        return s.encode('latin').decode('idna')
+        url = s
+        http_added = False
+        if not s.startswith('http'):
+            http_added = True
+            url = "http://" + s
+        o = urllib.parse.urlsplit(url)
+        o_converted = o.encode('latin').decode('idna')
+        s = urllib.parse.urlunsplit(o_converted)
+        if http_added:
+            s = s[len('http://'):]
+        return s
 
     @staticmethod
     def convert_if_idna(s):
