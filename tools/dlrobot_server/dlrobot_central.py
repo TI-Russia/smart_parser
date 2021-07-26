@@ -493,9 +493,9 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             return
         file_length = int(file_length)
 
-        project_file = TUrlUtf8Encode.from_idna(self.headers.get('dlrobot_project_file_name'))
+        project_file = TUrlUtf8Encode.from_idna(self.headers.get(DLROBOT_HEADER_KEYS.PROJECT_FILE))
         if project_file is None:
-            send_error('cannot find header "dlrobot_project_file_name"')
+            send_error('cannot find header "{}"'.format(DLROBOT_HEADER_KEYS.PROJECT_FILE))
             return
 
         exitcode = self.headers.get(DLROBOT_HEADER_KEYS.EXIT_CODE)
