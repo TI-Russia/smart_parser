@@ -8025,7 +8025,7 @@
     "sivaperm.ru": {
         "calc_office_id": 2226,
         "http_protocol": "http"
-      },
+    },
     "labinskadmin.ru": {
         "calc_office_id": 2262,
         "dlrobot_max_time_coeff": 2.0,
@@ -9708,7 +9708,9 @@
         "http_protocol": "http"
     },
     "dgi.mos.ru": {
-        "calc_office_id": 5953
+        "calc_office_id": 5953,
+        "status": "abandoned",
+        "redirect_to": "mos.ru/dgi"
     },
     "welcome.mos.ru": {
         "calc_office_id": 5962
@@ -11107,8 +11109,8 @@
     },
     "petushki.info": {
         "calc_office_id": 2951,
-        "http_protocol": "https",
-        "dlrobot_max_time_coeff": 2.0
+        "dlrobot_max_time_coeff": 2.0,
+        "http_protocol": "https"
     },
     "admduminichi.ru": {
         "calc_office_id": 2961,
@@ -35381,8 +35383,8 @@
     },
     "yandex.ru": {
         "calc_office_id": 85,
-        "http_protocol": "https",
-        "status": "abandoned"
+        "status": "abandoned",
+        "http_protocol": "https"
     },
     "kommersant.ru": {
         "calc_office_id": 97,
@@ -58884,5 +58886,10 @@
     "тельмановский.рф": {
         "calc_office_id": 20846,
         "http_protocol": "http"
+    },
+    "mos.ru/dgi": {
+        "calc_office_id": 5953,
+        "http_protocol": "https",
+        "title": "Органы власти / Сайт Москвы"
     }
 }

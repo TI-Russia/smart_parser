@@ -1,4 +1,4 @@
-from common.primitives import get_site_domain_wo_www, TUrlUtf8Encode
+from common.primitives import strip_scheme_and_query, TUrlUtf8Encode
 from web_site_db.web_site_status import TWebSiteReachStatus
 
 import json
@@ -17,7 +17,6 @@ class TDeclarationWebSite:
         self.http_protocol = None
         self.comments = None
         self.redirect_to = None
-        self.start_sub_page = None
         self.title = None
 
     def read_from_json(self, js):
@@ -31,7 +30,6 @@ class TDeclarationWebSite:
         self.redirect_to = js.get('redirect_to')
         if self.redirect_to is not None:
             self.ban()
-        self.start_sub_page = js.get('start_sub_page')
         self.title = js.get('title')
         return self
 
@@ -53,8 +51,6 @@ class TDeclarationWebSite:
             rec['comments'] = self.comments
         if self.redirect_to is not None:
             rec['redirect_to'] = self.redirect_to
-        if self.start_sub_page is not None:
-            rec['start_sub_page'] = self.start_sub_page
         if self.title is not None:
             rec['title'] = self.title
         return rec
@@ -92,24 +88,25 @@ class TDeclarationWebSiteList:
                 self.web_sites[k] = TDeclarationWebSite().read_from_json(v)
         return self
 
-    def add_web_site(self, web_site, office_id):
+    def add_web_site(self, site_url: str, office_id):
         # russian domain must be in utf8
-        assert not TUrlUtf8Encode.is_idna_string(web_site)
+        assert not TUrlUtf8Encode.is_idna_string(site_url)
+        assert not site_url.startswith("http")
+        assert site_url not in self.web_sites
 
-        self.logger.debug("add web site {} ".format(web_site))
-        assert web_site not in self.web_sites
+        self.logger.debug("add web site {} ".format(site_url))
         s = TDeclarationWebSite()
         s.calculated_office_id = office_id
-        self.web_sites[web_site] = s
+        self.web_sites[site_url] = s
 
     def build_office_to_main_website(self):
         office_to_website = defaultdict(set)
-        for web_domain, web_site in self.web_sites.items():
-            if TWebSiteReachStatus.can_communicate(web_site.reach_status) and web_domain != 'declarator.org':
+        for web_site, web_site in self.web_sites.items():
+            if TWebSiteReachStatus.can_communicate(web_site.reach_status) and web_site.find('declarator.org') == -1:
                 p = web_site.http_protocol
                 if p is None:
                     p = "http"
-                url = p + "://" + web_domain
+                url = p + "://" + web_site
                 office_to_website[web_site.calculated_office_id].add(url)
         return office_to_website
 
@@ -142,7 +139,7 @@ class TDeclarationWebSiteList:
 
     def update_from_office_urls(self, offices, logger):
         for o in offices:
-            web_site = get_site_domain_wo_www(o.get('url'))
+            web_site = strip_scheme_and_query(o.get('url'))
             if web_site not in self.web_sites:
                 self.add_web_site(web_site, o['id'])
                 logger.info ('add a website {} from office.url'.format(web_site))

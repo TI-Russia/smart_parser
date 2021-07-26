@@ -123,6 +123,7 @@ class TOfficePool:
 
     def delete_deterministic_web_domains(self):
         new_pool = list()
+        c: TPredictionCase
         for c in self.pool:
             if c.web_domain in self.ml_model.office_index.deterministic_web_domains:
                 continue

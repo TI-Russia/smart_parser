@@ -1,10 +1,8 @@
-import urllib.parse
-
 from web_site_db.web_sites import TDeclarationWebSiteList, TDeclarationWebSite
 from web_site_db.web_site_status import TWebSiteReachStatus
 from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
 from web_site_db.robot_project import TRobotProject
-from common.primitives import  TUrlUtf8Encode
+from common.primitives import  TUrlUtf8Encode, strip_scheme_and_query
 from common.logging_wrapper import setup_logging
 from common.http_request import THttpRequester
 from common.download import TDownloadEnv
@@ -42,20 +40,20 @@ class TWebSitesManager:
         self.temp_dlrobot_project = None
         THttpRequester.initialize(self.logger)
 
-    def check_web_site_filters(self, web_domain):
+    def check_web_site_filters(self, site_url):
         if self.args.filter_regex is not None:
-            if re.search(self.args.filter_regex, web_domain) is None:
+            if re.search(self.args.filter_regex, site_url) is None:
                 return False
 
-        site_info = self.in_web_sites.get_web_site(web_domain)
+        site_info = self.in_web_sites.get_web_site(site_url)
         if site_info is None:
-            self.logger.error("skip {}, cannot find this site".format(web_domain))
+            self.logger.error("skip {}, cannot find this site".format(site_url))
             return False
         else:
             if self.args.take_all_web_sites or TWebSiteReachStatus.can_communicate(site_info.reach_status):
                 return True
             else:
-                self.logger.debug("skip abandoned {}".format(web_domain))
+                self.logger.debug("skip abandoned {}".format(site_url))
                 return False
 
     def get_url_list(self, start_selenium=False):
@@ -66,7 +64,7 @@ class TWebSitesManager:
                 for url in inp:
                     url = url.strip(" \r\n")
                     if url.startswith('http'):
-                        web_domains.append(urllib.parse.urlsplit(url).netloc)
+                        web_domains.append(strip_scheme_and_query(url))
                     else:
                         web_domains.append(url)
         else:
@@ -99,18 +97,18 @@ class TWebSitesManager:
     def to_utf8(self):
         self.out_web_sites.web_sites = deepcopy(self.in_web_sites.web_sites)
         cnt = 0
-        for web_domain in self.get_url_list():
-            site_info = self.out_web_sites.get_web_site(web_domain)
+        for site_url in self.get_url_list():
+            site_info = self.out_web_sites.get_web_site(site_url)
             if site_info.redirect_to is not None and TUrlUtf8Encode.is_idna_string(site_info.redirect_to):
                 site_info.redirect_to = TUrlUtf8Encode.from_idna(site_info.redirect_to)
-                if site_info.redirect_to == web_domain and site_info.reach_status == TWebSiteReachStatus.abandoned:
+                if site_info.redirect_to == site_url and site_info.reach_status == TWebSiteReachStatus.abandoned:
                     site_info.redirect_to = None
                     site_info.reach_status = TWebSiteReachStatus.normal
                 cnt += 1
-            if TUrlUtf8Encode.is_idna_string(web_domain):
-                del self.out_web_sites.web_sites[web_domain]
-                web_domain = TUrlUtf8Encode.from_idna(web_domain)
-                self.out_web_sites.web_sites[web_domain] = site_info
+            if TUrlUtf8Encode.is_idna_string(site_url):
+                del self.out_web_sites.web_sites[site_url]
+                site_url = TUrlUtf8Encode.from_idna(site_url)
+                self.out_web_sites.web_sites[site_url] = site_info
                 cnt += 1
         self.logger.info("{} conversions made".format(cnt))
 
@@ -119,12 +117,12 @@ class TWebSitesManager:
         assert self.args.replace_substring is not None
         cnt = 0
         self.out_web_sites.web_sites = deepcopy(self.in_web_sites.web_sites)
-        for web_domain in self.get_url_list():
-            site_info = self.out_web_sites.get_web_site(web_domain)
-            new_web_domain = re.sub(self.args.filter_regex, self.args.replace_substring, web_domain)
-            assert new_web_domain != web_domain
+        for site_url in self.get_url_list():
+            site_info = self.out_web_sites.get_web_site(site_url)
+            new_web_domain = re.sub(self.args.filter_regex, self.args.replace_substring, site_url)
+            assert new_web_domain != site_url
             if not self.out_web_sites.has_web_site(new_web_domain):
-                self.logger.info("{} -> {}".format(web_domain, new_web_domain))
+                self.logger.info("{} -> {}".format(site_url, new_web_domain))
                 self.out_web_sites.web_sites[new_web_domain] = deepcopy(site_info)
             assert self.out_web_sites.get_web_site(new_web_domain).calculated_office_id == site_info.calculated_office_id
             site_info.set_redirect(new_web_domain)
@@ -166,31 +164,29 @@ class TWebSitesManager:
         self.out_web_sites.web_sites = deepcopy(self.in_web_sites.web_sites)
         complete_bans = list()
         only_selenium_sites = list()
-        for web_domain in self.get_url_list(start_selenium=True):
+        for site_url in self.get_url_list(start_selenium=True):
             site_info: TDeclarationWebSite
-            site_info = self.out_web_sites.get_web_site(web_domain)
-            web_site = self.check_alive_one_site(web_domain)
+            site_info = self.out_web_sites.get_web_site(site_url)
+            web_site = self.check_alive_one_site(site_url)
             if web_site is None:
-                self.logger.info("     {} is dead".format(web_domain))
+                self.logger.info("     {} is dead".format(site_url))
                 site_info.ban()
-                complete_bans.append(web_domain)
+                complete_bans.append(site_url)
             else:
                 if not web_site.enable_urllib:
-                    only_selenium_sites.append(web_domain)
-                    self.logger.debug('   {} is only selenium'.format(web_domain))
-                new_web_domain = web_site.web_domain
-                if TUrlUtf8Encode.is_idna_string(new_web_domain):
-                    new_web_domain = TUrlUtf8Encode.from_idna(new_web_domain)
-                if new_web_domain != web_domain:
+                    only_selenium_sites.append(site_url)
+                    self.logger.debug('   {} is only selenium'.format(site_url))
+                new_site_url = strip_scheme_and_query(web_site.main_page_url)
+                if new_site_url != site_url:
                     self.logger.info('   {} is alive, but is redirected to {}, protocol = {}'.format(
-                        web_domain, new_web_domain, web_site.protocol))
-                    site_info.set_redirect(new_web_domain)
-                    if not self.out_web_sites.has_web_site(new_web_domain):
-                        self.out_web_sites.web_sites[new_web_domain] = deepcopy(site_info)
-                    site_info = self.out_web_sites.get_web_site(new_web_domain)
+                        site_url, new_site_url, web_site.protocol))
+                    if not self.out_web_sites.has_web_site(new_site_url):
+                        self.out_web_sites.web_sites[new_site_url] = deepcopy(site_info)
+                    site_info.set_redirect(new_site_url)
+                    site_info = self.out_web_sites.get_web_site(new_site_url)
                 else:
-                    self.logger.info("     {} is alive, protocol = {}, morda = {}".format(
-                        web_domain, web_site.protocol, web_site.web_domain))
+                    self.logger.info("     {} is alive, protocol = {}, main_page_url = {}".format(
+                        site_url, web_site.protocol, web_site.main_page_url))
                 site_info.set_protocol(web_site.protocol)
                 site_info.set_title(web_site.get_title(web_site.main_page_url))
 

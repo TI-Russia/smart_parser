@@ -2,7 +2,7 @@ from DeclDocRecognizer.external_convertors import TExternalConverters
 from common.download import TDownloadEnv
 from ConvStorage.conv_storage_server import TConvertProcessor
 from ConvStorage.conv_storage_server import TConvertStorage
-from .web_site_monkey import TTestEnv
+from dl_robot.tests.web_site_monkey import TTestEnv
 
 from unittest import TestCase
 import os

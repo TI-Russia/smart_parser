@@ -1,4 +1,4 @@
-from .selenium_for_tests import TestDeclarationLinkSelenium
+from dl_robot.tests.selenium_for_tests import TestDeclarationLinkSelenium
 import os
 
 

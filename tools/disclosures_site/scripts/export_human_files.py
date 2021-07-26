@@ -178,7 +178,7 @@ class TExportHumanFiles:
                 ref = TDeclaratorReference()
                 ref.document_id = document_id
                 ref.document_file_id = document_file_id
-                ref.web_domain = web_site
+                ref._site_url = web_site
                 ref.office_id = office_id
                 ref.income_year = income_year
                 ref.document_file_url = declarator_url

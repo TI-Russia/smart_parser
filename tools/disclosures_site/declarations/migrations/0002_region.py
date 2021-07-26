@@ -13,6 +13,9 @@ def add_regions(apps, schema_editor):
     RegionSynonyms = apps.get_model('declarations', 'Region_Synonyms')
     regions = TRussianRegions()
     for r in regions.regions:
+        if r.id == 0:
+            continue  # skip Russian Federation
+
         rec = Region(
             id=r.id,
             name=r.name

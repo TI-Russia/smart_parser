@@ -2,9 +2,9 @@ import argparse
 import sys
 import os
 from web_site_db.robot_project import TRobotProject
+from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
 from common.download import TDownloadedFile
 from dl_robot.dlrobot import ROBOT_STEPS
-from common.primitives import strip_html_url
 from DeclDocRecognizer.external_convertors import TExternalConverters
 import shutil
 import csv
@@ -29,6 +29,7 @@ def create_toloka_pool(project_path, toloka_stream):
     logger = logging.getLogger("")
     with TRobotProject(logger, project_path, ROBOT_STEPS, None) as project:
         project.read_project()
+        office_info: TWebSiteCrawlSnapshot
         office_info = project.web_site_snapshots[0]
         toloka_stream.write("INPUT:url\tINPUT:file_link\tINPUT:file_extension\tINPUT:html\n")
         ec = TExternalConverters()
@@ -58,16 +59,17 @@ def copy_files(args, toloka_results):
     logger = logging.getLogger("")
     with TRobotProject(args.project, ROBOT_STEPS) as project:
         project.read_project()
+        office_info: TWebSiteCrawlSnapshot
         office_info = project.web_site_snapshots[0]
         index = 0
-        domain = office_info.web_domain
+        site_url = office_info.get_site_url()
         for export_record in office_info.exported_files:
             index += 1
             cached_file = export_record['cached_file']
             url = export_record['url']
             print ()
             extension = TDownloadedFile(url).file_extension
-            out_file = "{}_{}_{}{}".format(domain, index, int(time.time()), extension)
+            out_file = "{}_{}_{}{}".format(site_url.replace('/', '_'), index, int(time.time()), extension)
             tol_res = toloka_results.get(cached_file)
             if tol_res == "YES":
                 folder = args.positive_folder

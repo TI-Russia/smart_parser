@@ -58,7 +58,7 @@ class TPredictionModel:
             assert self.learn_target_is_region
             return 111
 
-    def build_features(self, case):
+    def build_features(self, case: TPredictionCase):
         web_domain_index = self.office_index.web_domains.get(case.web_domain, 0)
         #text = " ".join(TOfficeIndex.get_word_stems(case.text[0:200]))
         #return np.array(list([web_domain_index, text]))

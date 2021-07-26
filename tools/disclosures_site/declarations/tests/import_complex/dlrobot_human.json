@@ -8,7 +8,8 @@
             "w_refs": [
                 {
                     "crawl_epoch": 1,
-                    "url": null
+                    "url": null,
+                    "web_domain": "test1.ru"
                 }
             ]
         },
@@ -19,7 +20,8 @@
             "w_refs": [
                 {
                     "crawl_epoch": 1,
-                    "url": null
+                    "url": null,
+                    "web_domain": "test1.ru"
                 }
             ],
             "d_refs": [
