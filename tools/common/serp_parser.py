@@ -1,6 +1,6 @@
 from common.download import TDownloadEnv
 from selenium.webdriver.common.keys import Keys
-from common.primitives import get_site_domain_wo_www
+from common.primitives import strip_scheme_and_query
 from common.selenium_driver import TSeleniumDriver
 
 from unidecode import unidecode
@@ -158,9 +158,10 @@ class SearchEngine:
                 raise SerpException("no search results, look in debug_captcha.html, may be captcha")
 
         site_search_results = list()
-        search_web_domain = get_site_domain_wo_www(site_url).lower()
+        # https://www.mos.ru/dgi/ -> mos.ru/dgi
+        web_site = strip_scheme_and_query(site_url)
         for url in search_results:
-            if get_site_domain_wo_www(url).lower() == search_web_domain:
+            if strip_scheme_and_query(url).startswith(web_site):
                 if url not in site_search_results:
                     site_search_results.append(url)
 

@@ -1,7 +1,7 @@
+from common.primitives import TUrlUtf8Encode
+
 import os
 import json
-
-from common.primitives import get_site_domain_wo_www
 from collections import defaultdict
 
 
@@ -15,9 +15,20 @@ class TIntersectionStatus:
         return [TIntersectionStatus.only_dlrobot, TIntersectionStatus.only_human, TIntersectionStatus.both_found]
 
 
-class TDeclaratorReference:
+class TReferenceBase:
+    def __init__(self, site_url: ''):
+        self._site_url = site_url
+
+    def get_site_url(self):
+        return self._site_url
+
+    def convert_to_utf8(self):
+        self._site_url = TUrlUtf8Encode.convert_if_idna(self._site_url)
+
+
+class TDeclaratorReference (TReferenceBase):
     def __init__(self, from_json=dict()):
-        self.web_domain = from_json.get('web_domain')
+        self._site_url = from_json.get('web_domain')
         self.office_id = from_json.get('office_id')
         self.income_year = from_json.get('income_year')
         self.document_id = from_json.get('document_id')
@@ -31,7 +42,7 @@ class TDeclaratorReference:
 
     def write_to_json(self):
         s = {
-            'web_domain': self.web_domain,
+            'web_domain': self._site_url,
             'office_id': self.office_id,
             'income_year': self.income_year,
             'document_id': self.document_id,
@@ -46,12 +57,11 @@ class TDeclaratorReference:
         return self.document_file_id == other.document_file_id
 
 
-class TWebReference:
-    def __init__(self, from_json=dict(), url=None, crawl_epoch=None, web_domain=None, declaration_year=None):
+class TWebReference (TReferenceBase):
+    def __init__(self, from_json=dict(), url=None, crawl_epoch=None, site_url=None, declaration_year=None):
         self.url = from_json.get('url', url)
-        self.web_domain = from_json.get('web_domain', web_domain)
-        if self.web_domain is None:
-            self.web_domain = get_site_domain_wo_www(self.url)
+        self._site_url = from_json.get('web_domain', site_url)
+        assert self._site_url is not None
         self.declaration_year = from_json.get('declaration_year', declaration_year)
         self.crawl_epoch = from_json.get('crawl_epoch', crawl_epoch)
 
@@ -59,7 +69,7 @@ class TWebReference:
         rec = {
             'url': self.url,
             'crawl_epoch': self.crawl_epoch,
-            'web_domain': self.web_domain,
+            'web_domain': self._site_url,
         }
         if self.declaration_year is not None:
             rec['declaration_year'] = self.declaration_year
@@ -93,9 +103,9 @@ class TSourceDocument:
 
     def get_web_site(self):
         for r in self.decl_references:
-            return r.web_domain
+            return r.get_site_url()
         for r in self.web_references:
-            return get_site_domain_wo_www(r.url)
+            return r.get_site_url()
         return ""
 
     def get_declarator_income_year(self):
@@ -128,6 +138,13 @@ class TSourceDocument:
         if len(self.decl_references) > 0:
             res['d_refs'] = list(x.write_to_json() for x in self.decl_references)
         return res
+
+    def convert_refs_to_utf8(self):
+        ref: TReferenceBase
+        for ref in self.decl_references:
+            ref.convert_to_utf8()
+        for ref in self.web_references:
+            ref.convert_to_utf8()
 
 
 class TDlrobotHumanFile:

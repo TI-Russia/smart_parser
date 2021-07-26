@@ -1,6 +1,6 @@
-import re
-
 from web_site_db.robot_project import TRobotProject
+from common.primitives import site_url_to_file_name
+
 import os
 import time
 import json
@@ -34,8 +34,7 @@ class TRemoteDlrobotCall:
 
     @staticmethod
     def web_site_to_project_file(s):
-        s = re.sub('(:)(?=[0-9])', '_port_delim_', s)
-        return s + ".txt"
+        return site_url_to_file_name(s) + ".txt"
 
     def get_total_minutes(self):
         end_time = self.end_time if self.end_time is not None else 0

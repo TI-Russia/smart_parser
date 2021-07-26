@@ -1,6 +1,7 @@
 from declarations.input_json import TSourceDocument, TDlrobotHumanFile, TWebReference
 from web_site_db.web_sites import TDeclarationWebSiteList
 from web_site_db.robot_project import TRobotProject
+from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
 from common.logging_wrapper import setup_logging
 from common.export_files import TExportFile
 
@@ -50,37 +51,33 @@ class TJoiner:
         for decl_ref in decl_refs:
             src_doc.add_decl_reference(decl_ref)
 
-    def read_export_file_from_dlrobot_project(self, robot_project_path):
-        file_info = {}
-        try:
-            with TRobotProject(self.logger, robot_project_path, [], None, enable_selenium=False, enable_search_engine=False) as project:
-                project.read_project(check_step_names=False)
-                office_info = project.web_site_snapshots[0]
-                for export_record in office_info.export_env.exported_files:
-                    file_info[export_record.sha256] = export_record
-                return file_info
-        except Exception as exp:
-            self.logger.debug("Fail on {}, exception={}".format(robot_project_path, exp))
-
     def add_files_of_one_project(self, dlrobot_project):
         self.logger.debug("process {}".format(dlrobot_project))
         project_folder = os.path.join(self.args.input_dlrobot_folder, dlrobot_project)
         dlrobot_project_without_timestamp = re.sub('\.[0-9]+$', '', dlrobot_project)
-        robot_project = os.path.join(project_folder, dlrobot_project_without_timestamp + ".txt")
-        if not os.path.exists(robot_project):
+        project_path = os.path.join(project_folder, dlrobot_project_without_timestamp + ".txt")
+        if not os.path.exists(project_path):
             self.logger.error("no dlrobot project file found".format(project_folder))
             return
-        exported_files = self.read_export_file_from_dlrobot_project(robot_project)
-        if exported_files is None:
-            self.logger.error("cannot get exported files from {}".format(robot_project))
+        try:
+            project = TRobotProject(self.logger, project_path, [], None)
+            project.read_project(check_step_names=False)
+            office_info: TWebSiteCrawlSnapshot
+            office_info = project.web_site_snapshots[0]
+            site_url = office_info.get_site_url()
+            exported_files = dict()
+            for export_record in office_info.export_env.exported_files:
+                exported_files[export_record.sha256] = export_record
+        except Exception as exp:
+            self.logger.error("cannot read project {}, exp={}".format(project_path, exp))
             return
+
         file_info: TExportFile
         for sha256, file_info in exported_files.items():
-            web_domain = dlrobot_project_without_timestamp
             web_ref = TWebReference(
                 url=file_info.url,
                 crawl_epoch=self.args.max_ctime,
-                web_domain=web_domain,
+                site_url=site_url,
                 declaration_year=file_info.declaration_year
             )
             self.add_dlrobot_file(sha256, file_info.file_extension, [web_ref])
@@ -125,8 +122,9 @@ class TJoiner:
                 break
 
             if office_id is None:
+                web_ref: TWebReference
                 for web_ref in src_doc.web_references:
-                    web_site = self.web_sites.get_web_site(web_ref.web_domain)
+                    web_site = self.web_sites.get_web_site(web_ref._site_url)
                     if web_site is not None:
                         office_id = web_site.calculated_office_id
                         break

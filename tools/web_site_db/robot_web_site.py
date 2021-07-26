@@ -2,12 +2,13 @@ import urllib.parse
 
 from common.download import TDownloadedFile
 from common.http_request import THttpRequester
-from common.primitives import get_site_domain_wo_www, get_html_title
+from common.html_parser import get_html_title
 from common.link_info import TClickEngine
 from web_site_db.robot_step import TRobotStep, TUrlInfo
 from web_site_db.web_site_status import TWebSiteReachStatus
 from common.export_files import TExportEnvironment
 from common.serp_parser import SearchEngine, SerpException
+from common.primitives import urlsplit_pro, strip_scheme_and_query, site_url_to_file_name
 
 import os
 import shutil
@@ -53,7 +54,7 @@ class TWebSiteCrawlSnapshot:
         return (60.0 * self.export_env.found_declarations_count) / elapsed_time_in_seconds;
 
     def init_main_page_url_from_redirected_url(self, url):
-        o = urllib.parse.urlsplit(url)
+        o = urlsplit_pro(url)
         self.protocol = o.scheme
         self.main_page_url = urllib.parse.urlunsplit(
             [o.scheme,
@@ -67,8 +68,7 @@ class TWebSiteCrawlSnapshot:
             self.web_domain = self.web_domain[4:]
         if o.scheme == "https" and self.web_domain.endswith(':443'):
             self.web_domain = self.web_domain[:-4]
-        self.logger.debug("main_url_page={}, web_domain={}, protocol={}".format(
-            self.main_page_url, self.web_domain, self.protocol))
+        self.logger.debug("main_url_page={}".format(self.main_page_url))
 
     def recognize_protocol_and_www(self):
         if self.main_page_url.startswith('http://'):
@@ -93,15 +93,10 @@ class TWebSiteCrawlSnapshot:
                         self.logger.error("cannot fetch {}  with urllib, sleep 3 sec".format(url))
                         time.sleep(3)
 
-    def get_domain_name(self):
-        # return example.com (without http)
-        assert self.web_domain is not None
-        return self.web_domain
-
-    def get_domain_root_page(self):
-        # return http://example.com
-        assert self.web_domain is not None
-        return urllib.parse.urlunsplit((self.protocol, self.web_domain, "", "", ""))
+    def get_site_url(self):
+        # in 99% cases this function returns the web domain, sometimes it can return the web domain and url path
+        # like "mos.ru/dpi"
+        return strip_scheme_and_query(self.main_page_url)
 
     def init_main_page_default(self, morda_url):
         self.main_page_url = morda_url
@@ -217,6 +212,11 @@ class TWebSiteCrawlSnapshot:
         for p in parents:
             yield p
 
+    def get_title(self, url):
+        info: TUrlInfo
+        info = self.url_nodes[url]
+        return info.title
+
     def get_path_to_root_recursive(self, path, all_paths):
         assert len(path) >= 1
         assert type(all_paths) is list
@@ -266,7 +266,8 @@ class TWebSiteCrawlSnapshot:
         return min_path
 
     def get_export_folder(self):
-        return os.path.join(self.parent_project.export_folder, self.get_domain_name()).replace(':', '_')
+        folder = site_url_to_file_name(self.get_site_url())
+        return os.path.join(self.parent_project.export_folder, folder)
 
     def create_export_folder(self):
         office_folder = self.get_export_folder()

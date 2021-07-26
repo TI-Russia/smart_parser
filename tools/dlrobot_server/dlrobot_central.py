@@ -184,14 +184,14 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         return len(list(self.dlrobot_remote_calls.get_all_calls()))
 
     def get_new_project_to_process(self, worker_host_name, worker_ip):
-        web_site = self.web_sites_to_process.pop(0)
-        project_file = TRemoteDlrobotCall.web_site_to_project_file(web_site)
+        site_url = self.web_sites_to_process.pop(0)
+        project_file = TRemoteDlrobotCall.web_site_to_project_file(site_url)
         self.logger.info("start job: {} on {} (host name={}), left jobs: {}, running jobs: {}".format(
                 project_file, worker_ip, worker_host_name, len(self.web_sites_to_process), self.get_running_jobs_count()))
-        remote_call = TRemoteDlrobotCall(worker_ip=worker_ip, project_file=project_file, web_site=web_site)
+        remote_call = TRemoteDlrobotCall(worker_ip=worker_ip, project_file=project_file, web_site=site_url)
         remote_call.worker_host_name = worker_host_name
         remote_call.crawling_timeout = self.args.dlrobot_crawling_timeout
-        web_site_passport = self.web_sites_db.get_web_site(web_site)
+        web_site_passport = self.web_sites_db.get_web_site(site_url)
         enable_selenium = True
         regional_main_pages = list()
         if web_site_passport is None:
@@ -202,7 +202,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                 regional_main_pages = list(web_site_passport.regional_main_pages.keys())
             if web_site_passport.disable_selenium:
                 enable_selenium = False
-        project_content_str = TRobotProject.create_project_str(web_site,
+        project_content_str = TRobotProject.create_project_str(site_url,
                                                                regional_main_pages,
                                                                not self.args.enable_search_engines,
                                                                not enable_selenium)

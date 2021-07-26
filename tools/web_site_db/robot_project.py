@@ -101,6 +101,7 @@ class TRobotProject:
 
     @staticmethod
     def create_project_from_exported_files(logger, web_domain, file_paths, file_web_domains=None):
+        assert web_domain.find('/') == -1
         assert file_web_domains is None or len(file_web_domains) == len(file_paths)
         project_folder = web_domain
         if os.path.exists(project_folder):

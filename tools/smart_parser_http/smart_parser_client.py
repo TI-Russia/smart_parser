@@ -20,7 +20,7 @@ class TSmartParserCacheClient(object):
         parser.add_argument("--server-address", dest='server_address', default=None,
                             help="by default read it from environment variable SMART_PARSER_SERVER_ADDRESS")
         parser.add_argument("--action", dest='action',
-                            help="can be put, get, get_by_sha256, title, put_json or stats", required=False)
+                            help="can be put, get, get_by_sha256, title, office_strings,  put_json or stats", required=False)
         parser.add_argument("--walk-folder-recursive", dest='walk_folder_recursive', default=None, required=False)
         parser.add_argument("--timeout", dest='timeout', default=300, type=int)
         parser.add_argument("--rebuild", dest='rebuild', action="store_true", default=False)
@@ -135,12 +135,38 @@ class TSmartParserCacheClient(object):
     def get_title_from_smart_parser_json(js):
         default_value = "null"
         if js is None:
-            default_value
+            return default_value
         else:
             props = js.get('document_sheet_props', [])
             if len(props) < 1:
                 return default_value
             return normalize_whitespace(props[0].get('sheet_title', default_value))
+
+    @staticmethod
+    def get_office_strings(js):
+        rec = {
+            'title': "",
+            'roles': [],
+            'departments': []
+        }
+        if js is None:
+            return rec
+
+        props = js.get('document_sheet_props', [])
+        if len(props) > 0 and props[0].get('sheet_title') is not None:
+            rec['title'] = normalize_whitespace(props[0]['sheet_title'])
+        roles = set()
+        departments = set()
+        for p in js.get('persons', []):
+            role = p.get('person', {}).get('role')
+            if role is not None and len(role) > 0 and len(roles) < 10:
+                roles.add(normalize_whitespace(role))
+            department = p.get('person', {}).get('department')
+            if department is not None and len(department) > 0 and len(departments) < 10:
+                departments.add(normalize_whitespace(department))
+        rec['roles'] = list(roles)
+        rec['departments'] = list(departments)
+        return rec
 
     def main(self):
         if self.args.action == "stats":
@@ -157,6 +183,10 @@ class TSmartParserCacheClient(object):
                     js = self.retrieve_json_by_sha256(f)
                     title = TSmartParserCacheClient.get_title_from_smart_parser_json(js)
                     print (title)
+                elif self.args.action == "office_strings":
+                    js = self.retrieve_json_by_sha256(f)
+                    of_strings = TSmartParserCacheClient.get_office_strings(js)
+                    print(json.dumps(of_strings, ensure_ascii=False))
                 elif self.args.action == "get":
                     js = self.retrieve_json_by_source_file(f)
                     if js is None:

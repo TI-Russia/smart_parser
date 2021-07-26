@@ -2,7 +2,7 @@ import declarations.models as models
 from declarations.serializers import TSmartParserSectionJson
 from declarations.permalinks import TPermaLinksSection, TPermaLinksSourceDocument
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
-from declarations.input_json import TDlrobotHumanFile, TSourceDocument
+from declarations.input_json import TDlrobotHumanFile, TSourceDocument, TDeclaratorReference, TWebReference
 from common.logging_wrapper import setup_logging
 
 from multiprocessing import Pool
@@ -87,16 +87,18 @@ class TImporter:
         self.logger.debug("register doc sha256={} id={}, new_file={}".format(sha256, source_document_in_db.id, new_file))
         source_document_in_db.file_extension = src_doc.file_extension
         source_document_in_db.save()
+        ref: TDeclaratorReference
         for ref in src_doc.decl_references:
             models.Declarator_File_Reference(source_document=source_document_in_db,
                                              declarator_documentfile_id=ref.document_file_id,
                                              declarator_document_id=ref.document_id,
-                                             web_domain=ref.web_domain,
+                                             web_domain=ref._site_url,
                                              declarator_document_file_url=ref.document_file_url).save()
+        ref: TWebReference
         for ref in src_doc.web_references:
             models.Web_Reference(source_document=source_document_in_db,
                                  dlrobot_url=ref.url,
-                                 web_domain=ref.web_domain,
+                                 web_domain=ref._site_url,
                                  crawl_epoch=ref.crawl_epoch).save()
 
         return source_document_in_db

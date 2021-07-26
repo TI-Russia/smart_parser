@@ -1,8 +1,7 @@
 from common.download import TDownloadedFile, DEFAULT_HTML_EXTENSION, are_mirrors_by_html
 from common.primitives import prepare_for_logging, get_site_domain_wo_www
-from common.html_parser import THtmlParser
+from common.html_parser import THtmlParser, get_html_title
 from common.link_info import TLinkInfo, TClickEngine
-from common.primitives import get_html_title
 from common.http_request import THttpRequester
 from common.popular_sites import is_super_popular_domain
 from common.serp_parser import SearchEngine, SearchEngineEnum, SerpException
@@ -512,7 +511,7 @@ class TRobotStep:
 
     def add_links_from_sitemap_xml(self,  check_url_func):
         assert self.website.main_page_url in self.website.url_nodes
-        root_page = self.website.get_domain_root_page() #can differ from self.website.main_page_url
+        root_page = self.website.main_page_url.strip('/')
         tree = sitemap_tree_for_homepage(root_page)
         cnt = 0
         useful = 0

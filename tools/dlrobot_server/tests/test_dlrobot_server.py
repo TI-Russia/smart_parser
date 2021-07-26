@@ -6,7 +6,7 @@ from smart_parser_http.smart_parser_server import TSmartParserHTTPServer
 from source_doc_http.source_doc_server import TSourceDocHTTPServer
 from web_site_db.web_site_status import TWebSiteReachStatus
 from web_site_db.web_sites import TDeclarationRounds
-from common.primitives import build_dislosures_sha256, is_local_http_port_free
+from common.primitives import build_dislosures_sha256, is_local_http_port_free, TUrlUtf8Encode
 from common.archives import TDearchiver
 from unittest import TestCase
 from disclosures_site.scripts.join_human_and_dlrobot import TJoiner
@@ -232,11 +232,16 @@ class TestBadDomain(TestCase):
 
     def setUp(self):
         self.env = TTestEnv(self.central_port)
-        self.env.setup_central(False, "bad_domain")
+        self.env.setup_central(False, ".bad_domain")
         self.env.setup_worker("run_once")
 
     def tearDown(self):
         self.env.tearDown()
+
+    def test_idna(self):
+        bad_idna_string = ".bad_domain"  # error in encoding
+        s = TUrlUtf8Encode.to_idna(bad_idna_string)
+        self.assertEqual(s, bad_idna_string)
 
     def test_bad_domain_and_two_retries(self):
         self.env.worker_thread.join(200)
@@ -294,7 +299,7 @@ class DlrobotTimeout(TestCase):
 
     def setUp(self):
         self.env = TTestEnv(self.central_port)
-        self.env.setup_central(False, "bad_domain", dlrobot_project_timeout=2, tries_count=1)
+        self.env.setup_central(False, ".bad_domain", dlrobot_project_timeout=2, tries_count=1)
         self.env.setup_worker("run_once")
 
     def tearDown(self):
@@ -539,3 +544,43 @@ class DlrobotIncomeYearInAnchorText(TestCase):
         src_doc: TSourceDocument
         src_doc = list(dlrobot_human.document_collection.values())[0]
         self.assertEqual(2020, src_doc.get_external_income_year_from_dlrobot())
+
+
+class WebSiteWithSubdirectory(TestCase):
+    central_port = 8313
+    website_port = 8314
+    smart_parser_server_port = 8315
+
+    def setUp(self):
+        self.site_url = "127.0.0.1:{}/ru".format(self.website_port)
+        self.env = TTestEnv(self.central_port)
+        self.env.setup_website(self.website_port, html_folder="web_sites/site_with_subfolder")
+        self.env.setup_smart_parser_server(self.smart_parser_server_port)
+        self.env.setup_central(True, self.site_url)
+        self.env.setup_worker("run_once")
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def test_site_with_subdirectory(self):
+        self.env.worker_thread.join(200)
+        self.assertEqual(self.env.count_projects_results(), 1)
+        time.sleep(5)  # give time for smart parser to process documents
+        self.assertEqual(self.env.smart_parser_server.get_stats()['session_write_count'], 1)
+        dlrobot_human_json_path = os.path.join(self.env.data_folder, "dlrobot_human.json")
+        human_json_path = os.path.join(self.env.data_folder, "human.json")
+        TDlrobotHumanFile(human_json_path, read_db=False).write()
+
+        args = ['--max-ctime', '5602811863', #the far future
+                '--input-dlrobot-folder', self.env.result_folder,
+                '--human-json', human_json_path,
+                '--output-json', dlrobot_human_json_path
+                ]
+        joiner = TJoiner(TJoiner.parse_args(args))
+        joiner.main()
+        dlrobot_human = TDlrobotHumanFile(dlrobot_human_json_path)
+        self.assertEqual(1,  dlrobot_human.get_documents_count())
+        src_doc: TSourceDocument
+        src_doc = list(dlrobot_human.document_collection.values())[0]
+        site_url = src_doc.get_web_site()
+        self.assertEqual(self.site_url, site_url)

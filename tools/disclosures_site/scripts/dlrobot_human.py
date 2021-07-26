@@ -1,4 +1,3 @@
-from common.primitives import TUrlUtf8Encode
 from declarations.input_json import TSourceDocument, TDlrobotHumanFile
 import argparse
 import json
@@ -37,31 +36,12 @@ def select_or_delete_by_sha256(dlrobot_human, sha256_list, output_file, select=T
     new_dlrobot_human.write()
 
 
-def convert_refs_to_utf8(refs):
-    for ref in refs:
-        if TUrlUtf8Encode.is_idna_string(ref.web_domain):
-            ref.web_domain = TUrlUtf8Encode.from_idna(ref.web_domain)
-
-
 def to_utf8(dlrobot_human, output_file):
     new_dlrobot_human = TDlrobotHumanFile(output_file, read_db=False, document_folder=dlrobot_human.document_folder)
-
+    src_doc: TSourceDocument
     for key, src_doc in dlrobot_human.document_collection.items():
-        convert_refs_to_utf8(src_doc.decl_references)
-        convert_refs_to_utf8(src_doc.web_references)
+        src_doc.convert_refs_to_utf8()
         new_dlrobot_human.add_source_document(key, src_doc)
-
-    new_dlrobot_human.write()
-
-def get_title():
-
-def titles(dlrobot_human, output_file):
-    for key, src_doc in dlrobot_human.document_collection.items():
-        for ref in src_doc.decl_references:
-            ref.web_domain = ref.web_domain
-            src_doc.calculated_office_id
-        new_dlrobot_human.add_source_document(key, src_doc)
-
     new_dlrobot_human.write()
 
 
@@ -78,8 +58,6 @@ def main():
         select_or_delete_by_sha256(dlrobot_human, sha_list, args.output_file, args.action == "select")
     elif args.action == "to_utf8":
         to_utf8(dlrobot_human, args.output_file)
-    elif args.action == "titles":
-        titles(dlrobot_human, args.output_file)
     else:
         raise Exception("unknown action")
 

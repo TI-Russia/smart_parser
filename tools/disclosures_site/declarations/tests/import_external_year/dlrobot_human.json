@@ -9,7 +9,8 @@
                 {
                     "crawl_epoch": 1,
                     "declaration_year": 2014,
-                    "url": null
+                    "url": null,
+                    "web_domain": "test1.ru"
                 }
             ]
         }

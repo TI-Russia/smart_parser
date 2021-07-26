@@ -15,7 +15,6 @@ import sys
 import json
 import socket
 import http.client
-from functools import partial
 import os
 import random
 import pycurl
@@ -27,9 +26,6 @@ DLROBOT_CIPHERS_LIST =  os.environ.get("DLROBOT_CIPHERS", "DEFAULT@SECLEVEL=1")
 urllib3.disable_warnings()
 urllib3.util.ssl_.DEFAULT_CIPHERS += DLROBOT_CIPHERS_LIST #(':HIGH:!DH:!aNULL'
 
-
-def has_cyrillic(text):
-    return bool(re.search('[Ёёа-яА-Я]', text))
 
 
 def get_user_agent():
@@ -52,7 +48,7 @@ def get_user_agent():
 
 def convert_russian_web_domain_if_needed(url):
     o = list(urllib.parse.urlparse(url)[:])
-    if has_cyrillic(o[1]):
+    if TUrlUtf8Encode.has_cyrillic(o[1]):
         o[1] = TUrlUtf8Encode.to_idna(o[1])
 
     o[2] = urllib.parse.unquote(o[2])

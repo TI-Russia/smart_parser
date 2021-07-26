@@ -24,7 +24,7 @@ def include_fns_json_to_html(json_path, html_path):
 
     url = "service.nalog.ru"
     if len(upr_name) > 1 and upr_name[0:4].endswith("00"):
-        region = regions.get_region_by_str_all_forms(upr_name)
+        region = regions.get_region_in_nominative_and_dative(upr_name)
         assert region is not None
         url = "{}.{}".format(region.id, url)
 

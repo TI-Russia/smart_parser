@@ -53,16 +53,54 @@ def normalize_and_russify_anchor_text(text):
     return ""
 
 
+def urlsplit_pro(url):
+    url = re.sub(r'^(https?)://(/+)', r'\1://', url)  # http://petushki.info -> https:////petushki.info
+    return urllib.parse.urlsplit(url)
+
+
+# get_site_domain_wo_www returns netloc without www
+# for excample http://www.aot.ru -> aot.ru
+# http://www.aot.ru/xxxx?aaa -> aot.ru
+
 def get_site_domain_wo_www(url):
     if url is None or len(url) == 0:
         return ""
 
     if not re.search(r'^[A-Za-z0-9+.\-]+://', url):
         url = 'http://{0}'.format(url)
-    domain = urllib.parse.urlparse(url).netloc
+    domain = urlsplit_pro(url).netloc
     if domain.startswith('www.'):
         domain = domain[len('www.'):]
     return domain
+
+
+# get_web_site_identifier returns netloc  + url path without www
+# for example http://www.aot.ru/some_page?aaa=1 -> aot.ru/some_page
+def strip_scheme_and_query(url):
+    if url.startswith("https"):
+        url = url.replace(':443/', '/')
+        if url.endswith(':443'):
+            url = url[:-4]
+
+    url = url.strip('/').lower()
+
+    for p in ['http://', 'https://', "www."]:
+        if url.startswith(p):
+            url = url[len(p):]
+    if TUrlUtf8Encode.is_idna_string(url):
+        url = TUrlUtf8Encode.from_idna(url)
+    return url
+
+
+def site_url_to_file_name(site_url: str):
+    file_name = strip_scheme_and_query(site_url)
+    file_name = re.sub('(:)(?=[0-9])', '_port_delim_', file_name)
+    i = file_name.find('/')
+    if i != -1:
+        file_name = file_name[:i]
+    assert len(file_name) > 0
+    assert file_name.find('.') != -1
+    return file_name
 
 
 def prepare_for_logging(s):
@@ -73,15 +111,6 @@ def prepare_for_logging(s):
          "\t": " ",
          "\r": " "}))
     return s.strip()
-
-
-def get_html_title(html):
-    try:
-        if soup.title is None:
-            return ""
-        return soup.title.string.strip(" \n\r\t")
-    except Exception as err:
-        return ""
 
 
 def convert_timeout_to_seconds(s):
@@ -153,9 +182,28 @@ class TUrlUtf8Encode:
         return s.find("xn--") != -1
 
     @staticmethod
+    def has_cyrillic(text):
+        return bool(re.search('[Ёёа-яА-Я]', text))
+
+    @staticmethod
     def to_idna(s):
-        return s.encode('idna').decode('latin')
+        try:
+            return s.encode('idna').decode('latin')
+        except UnicodeError as err:
+            #see     def test_idna(self):
+            if TUrlUtf8Encode.has_cyrillic(s):
+                raise
+            else:
+                return s
+
 
     @staticmethod
     def from_idna(s):
         return s.encode('latin').decode('idna')
+
+    @staticmethod
+    def convert_if_idna(s):
+        if TUrlUtf8Encode.is_idna_string(s):
+            return TUrlUtf8Encode.from_idna(s)
+        else:
+            return s
