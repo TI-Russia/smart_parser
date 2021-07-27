@@ -147,7 +147,7 @@ class TSeleniumDriver:
 
         js = """
                 function add_link(el, element_list) {
-                    element_list.push({"id":el, "href": el.href, "anchor": el.innerText})
+                    element_list.push({"id":el, "href": el.href, "anchor": el.innerText, "class":el.className})
                 }
                 hrefs = [];
                 links = document.getElementsByTagName("a");

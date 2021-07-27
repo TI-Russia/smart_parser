@@ -54,19 +54,18 @@ class TestDeclarationLink(TestCase):
     def build_url(self, path):
         return 'http://127.0.0.1:{}{}'.format(self.web_site_port, path)
 
-    def download_website(self, file_path, use_selenium):
+    def download_website(self, file_path):
         self.web_server.test_file_path = os.path.join(os.path.dirname(__file__), file_path)
         assert os.path.exists(self.web_server.test_file_path)
         TDownloadEnv.clear_cache_folder()
         start_url = self.build_url(THttpServerHandler.SVED_URL_PATH)
         robot_steps = [
             {
-                'step_name': "declarations",
-                'enable_selenium': use_selenium
+                'step_name': "declarations"
             }
         ]
-        with TRobotProject(self.logger, self.project_path, robot_steps, "result", enable_search_engine=False,
-                           enable_selenium=use_selenium) as project:
+        with TRobotProject(self.logger, self.project_path, robot_steps, "result", enable_search_engine=False
+                           ) as project:
             project.add_web_site(self.server_address)
             office_info = project.web_site_snapshots[0]
             office_info.create_export_folder()
@@ -125,40 +124,44 @@ class TestDeclarationLink(TestCase):
                 outp.write(l + "\n")
 
     def test_akrvo(self):
-        links = self.download_website("web_sites/arkvo/sved.html", False)
+        links = self.download_website("web_sites/arkvo/sved.html")
+        #self.canonize_links(links, 'web_sites/arkvo/found_links')
         self.compare_to_file(links, 'web_sites/arkvo/found_links')
 
     def test_page_text(self):
-        links = self.download_website("web_sites/page_text/sved.html", False)
+        links = self.download_website("web_sites/page_text/sved.html")
+        #self.canonize_links(links, 'web_sites/page_text/found_links')
         self.compare_to_file(links, 'web_sites/page_text/found_links')
 
     def test_other_website(self):
         save = TRobotStep.check_local_address
         TRobotStep.check_local_address = False
-        links = self.download_website("web_sites/other_website/sved.html", False)
+        links = self.download_website("web_sites/other_website/sved.html")
+        # self.canonize_links(links, 'web_sites/other_website/found_links')
         self.compare_to_file(links, 'web_sites/other_website/found_links')
         TRobotStep.check_local_address = save
 
     def test_simple_doc(self):
-        links = self.download_website("web_sites/simple_doc/sved.html", False)
+        links = self.download_website("web_sites/simple_doc/sved.html")
+        # self.canonize_links(links, 'web_sites/simple_doc/found_links')
         self.compare_to_file(links, 'web_sites/simple_doc/found_links')
 
     def test_admkrsk(self):
-        links = self.download_website("web_sites/admkrsk/sved.html", False)
+        links = self.download_website("web_sites/admkrsk/sved.html")
         #self.canonize_links(links, 'web_sites/admkrsk/found_links')
         self.compare_to_file(links, 'web_sites/admkrsk/found_links')
 
     def test_rosminzdrav(self):
-        links = self.download_website("web_sites/minzdrav/6_4_2.html", False)
+        links = self.download_website("web_sites/minzdrav/6_4_2.html")
         #self.canonize_links(links, 'web_sites/minzdrav/found_links')
         self.compare_to_file(links, 'web_sites/minzdrav/found_links')
 
     def test_zsro(self):
-        links = self.download_website("web_sites/zsro/sved.html", False)
+        links = self.download_website("web_sites/zsro/sved.html")
         #self.canonize_links(links, 'web_sites/zsro/found_links')
         self.compare_to_file(links, 'web_sites/zsro/found_links')
 
     def test_khabkrai(self):
-        links = self.download_website("web_sites/khabkrai/sved.html", False)
+        links = self.download_website("web_sites/khabkrai/sved.html")
         #self.canonize_links(links, 'web_sites/khabkrai/found_links')
         self.compare_to_file(links, 'web_sites/khabkrai/found_links')

@@ -221,7 +221,7 @@ class TestAotRu(TestCase):
         self.assertEqual(1, stats['running_count'])
         self.env.worker_thread.join(200)
         self.assertEqual(1, self.env.count_projects_results())
-        self.assertEqual(TWebSiteReachStatus.normal, self.env.get_last_reach_status())
+        self.assertTrue(TWebSiteReachStatus.can_communicate(self.env.get_last_reach_status()))
         # one more time
         self.env.start_worker_thread()
         self.env.worker_thread.join(200)

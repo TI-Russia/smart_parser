@@ -26,7 +26,6 @@ class TestDeclarationLinkSelenium(TestCase):
             {
                 'step_name': "declarations",
                 'enable_selenium': True,
-                'use_urllib': False
             }
         ]
         with TRobotProject(self.logger, "project.txt", robot_steps, "result", enable_search_engine=False,
