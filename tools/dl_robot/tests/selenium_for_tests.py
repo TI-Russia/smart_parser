@@ -14,30 +14,12 @@ import http
 from functools import partial
 
 
-def start_server(server):
-    try:
-        server.serve_forever()
-    except Exception as exp:
-        print (exp)
-        pass
-
-
 # it looks like mkrf has changed the site structure, so there is no income declaratiosn
 # on https://www.mkrf.ru/activities/reports/index.php
 
 class TestDeclarationLinkSelenium(TestCase):
 
-    def setup_server(self, port, web_site_folder, project_path):
-        project = TRobotProject.create_project_str("http://127.0.0.1:{}".format(port),
-                                                   disable_search_engine=True, disable_selenium=False)
-        with open(project_path, "w") as outp:
-            outp.write(project)
-        assert os.path.exists(web_site_folder)
-        handler = partial(http.server.SimpleHTTPRequestHandler, directory=web_site_folder)
-        self.web_site = http.server.HTTPServer(server_address=("127.0.0.1", port), RequestHandlerClass=handler)
-        threading.Thread(target=start_server, args=(self.web_site,)).start()
-
-    def download_website(self, project_path, start_url):
+    def collect_links_selenium(self, start_url):
 
         TDownloadEnv.clear_cache_folder()
         robot_steps = [
@@ -47,7 +29,7 @@ class TestDeclarationLinkSelenium(TestCase):
                 'use_urllib': False
             }
         ]
-        with TRobotProject(self.logger, project_path, robot_steps, "result", enable_search_engine=False,
+        with TRobotProject(self.logger, "project.txt", robot_steps, "result", enable_search_engine=False,
                            enable_selenium=True) as project:
             project.read_project()
             office_info = project.web_site_snapshots[0]
@@ -59,7 +41,7 @@ class TestDeclarationLinkSelenium(TestCase):
             step_info.processed_pages = set()
             step_info.apply_function_to_links(TRobotStep.looks_like_a_declaration_link)
             links = dict()
-            for url,weight in step_info.step_urls.items():
+            for url, weight in step_info.step_urls.items():
                 u = list(urllib.parse.urlparse(url))
                 u[1] = "dummy"
                 links[urllib.parse.urlunparse(u)] = weight
@@ -69,12 +51,14 @@ class TestDeclarationLinkSelenium(TestCase):
                     links[d.downloaded_file] = 1
             return links
 
-    def setUp(self, folder):
+    def setUp(self, website_folder):
         TRobotStep.check_local_address = True
-        self.data_folder = os.path.join(os.path.dirname(__file__), folder)
+        name = os.path.basename(website_folder)
+        self.data_folder = os.path.join(os.path.dirname(__file__), "data.{}".format(name))
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
         os.mkdir(self.data_folder)
+        shutil.copy2(os.path.join(website_folder, "project.txt"), self.data_folder)
         os.chdir(self.data_folder)
         THttpRequester.ENABLE = False
         self.logger = setup_logging(log_file_name="dlrobot.log")

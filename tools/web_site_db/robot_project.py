@@ -15,7 +15,8 @@ import time
 class TRobotProject:
     visited_pages_extension = ".visited_pages"
 
-    def __init__(self, logger, filename, robot_step_passports, export_folder, enable_selenium=True, enable_search_engine=True):
+    def __init__(self, logger, filename, robot_step_passports, export_folder, enable_selenium=True,
+                 enable_search_engine=True):
         self.logger = logger
         self.start_time = time.time()
         self.total_timeout = 0

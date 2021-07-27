@@ -447,17 +447,18 @@ class TRobotStep:
             link_text = element['anchor'].strip('\n\r\t ') if element['anchor'] is not None else ""
             mandatory_link = re.search('скачать', link_text, re.IGNORECASE) is not None
 
-            href = element['href']
-            if href is not None and not mandatory_link:
-                href = THtmlParser.make_link(main_url, href)  # may be we do not need it in selenium?
-                link_info = TLinkInfo(TClickEngine.selenium,
-                                      main_url, href,
-                                      source_html=page_html,
-                                      anchor_text=link_text,
-                                      tag_name=element['id'].tag_name,
-                                      element_index=element_index,
-                                      source_page_title=self.get_selenium_driver().the_driver.title)
 
+            href = element['href']
+            link_info = TLinkInfo(TClickEngine.selenium,
+                                  main_url, href,
+                                  source_html=page_html,
+                                  anchor_text=link_text,
+                                  tag_name=element['id'].tag_name,
+                                  element_index=element_index,
+                                  source_page_title=self.get_selenium_driver().the_driver.title)
+
+            if href is not None and not mandatory_link:
+                #href = THtmlParser.make_link(main_url, href)  # may be we do not need it in selenium?
                 if self.normalize_and_check_link(link_info, check_link_func):
                     self.add_link_wrapper(link_info)
             else:
@@ -466,8 +467,14 @@ class TRobotStep:
                     source_html=page_html, anchor_text=link_text,
                     source_page_title=self.get_selenium_driver().the_driver.title)
                 if self.normalize_and_check_link(only_anchor_text, check_link_func):
-                    self.logger.debug("click element {}".format(element_index))
-                    self.click_selenium_if_no_href(main_url, element['id'], element_index, check_link_func)
+                    try:
+                        self.logger.debug("click element {}".format(element_index))
+                        self.click_selenium_if_no_href(main_url, element['id'], element_index, check_link_func)
+                    except WebDriverException as exp:
+                        self.logger.debug("exception: {}".format(exp))
+                        if href is not None: #see gorsovet-podolsk in tests
+                            if self.normalize_and_check_link(link_info, check_link_func):
+                                self.add_link_wrapper(link_info)
 
     def apply_function_to_links(self, check_link_func):
         assert len(self.pages_to_process) > 0
