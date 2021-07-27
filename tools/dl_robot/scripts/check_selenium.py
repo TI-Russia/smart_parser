@@ -27,20 +27,6 @@ def parse_args():
     return args
 
 
-def print_links_old(driver_holder, url):
-    elements = driver_holder.navigate_and_get_links_obsolete(url)
-    print("elements count: {}".format(len(elements)))
-    for element_index in range(len(elements)):
-        element = elements[element_index]
-        square = element.rect.get('height', 0) * element.rect.get('width', 0)
-        rec = {'index': element_index,
-               'href': element.get_attribute('href'),
-               'anchor': element.text,
-               'area': square
-               }
-        print(json.dumps(rec, ensure_ascii=False))
-
-
 def print_links_java_script(driver_holder, url):
     elements = driver_holder.navigate_and_get_links_js(url)
 

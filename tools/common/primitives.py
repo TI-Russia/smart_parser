@@ -31,20 +31,6 @@ def strip_viewer_prefix(href):
     return href
 
 
-def strip_html_url(url):
-    if url.endswith('.html'):
-        url = url[:-len('.html')]
-    if url.endswith('.htm'):
-        url = url[:-len('.htm')]
-    if url.startswith('http://'):
-        url = url[len('http://'):]
-    if url.startswith('http://'):
-        url = url[len('https://'):]
-    if url.startswith('www.'):
-        url = url[len('www.'):]
-    return url
-
-
 def normalize_and_russify_anchor_text(text):
     if text is not None:
         text = text.strip(' \n\t\r"').lower()
@@ -57,11 +43,9 @@ def urlsplit_pro(url):
     url = re.sub(r'^(https?)://(/+)', r'\1://', url)  # http://petushki.info -> https:////petushki.info
     return urllib.parse.urlsplit(url)
 
-
 # get_site_domain_wo_www returns netloc without www
 # for excample http://www.aot.ru -> aot.ru
 # http://www.aot.ru/xxxx?aaa -> aot.ru
-
 def get_site_domain_wo_www(url):
     if url is None or len(url) == 0:
         return ""
@@ -190,26 +174,15 @@ class TUrlUtf8Encode:
         try:
             return s.encode('idna').decode('latin')
         except UnicodeError as err:
-            #see     def test_idna(self):
+            #see     def test_idna_exception(self):
             if TUrlUtf8Encode.has_cyrillic(s):
                 raise
             else:
                 return s
 
-
     @staticmethod
     def from_idna(s):
-        url = s
-        http_added = False
-        if not s.startswith('http'):
-            http_added = True
-            url = "http://" + s
-        o = urllib.parse.urlsplit(url)
-        o_converted = o.encode('latin').decode('idna')
-        s = urllib.parse.urlunsplit(o_converted)
-        if http_added:
-            s = s[len('http://'):]
-        return s
+        return s.encode('latin').decode('idna')
 
     @staticmethod
     def convert_if_idna(s):
@@ -217,3 +190,22 @@ class TUrlUtf8Encode:
             return TUrlUtf8Encode.from_idna(s)
         else:
             return s
+
+    @staticmethod
+    def convert_url_to_idna(url):
+        o = urllib.parse.urlsplit(url)
+        host = o.netloc
+        if TUrlUtf8Encode.has_cyrillic(host):
+            host = TUrlUtf8Encode.to_idna(host)
+        url = urllib.parse.urlunsplit((o.scheme, host, o.path, o.query, o.fragment))
+        return url
+
+    @staticmethod
+    def convert_url_from_idna(url):
+        if not TUrlUtf8Encode.is_idna_string(url):
+            return url
+        o = urllib.parse.urlsplit(url)
+        host = TUrlUtf8Encode.from_idna(o.netloc)
+        s = urllib.parse.urlunsplit((o.scheme, host, o.path, o.query, o.fragment))
+        return s
+

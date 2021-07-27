@@ -46,17 +46,6 @@ def get_user_agent():
     return random.choice(human_user_agents)
 
 
-def convert_russian_web_domain_if_needed(url):
-    o = list(urllib.parse.urlparse(url)[:])
-    if TUrlUtf8Encode.has_cyrillic(o[1]):
-        o[1] = TUrlUtf8Encode.to_idna(o[1])
-
-    o[2] = urllib.parse.unquote(o[2])
-    o[2] = urllib.parse.quote(o[2])
-    url = urllib.parse.urlunparse(o)
-    return url
-
-
 def get_redirected_url_urllib3(response, original_url):
     redirected_url = response.geturl()
     if redirected_url is None:
@@ -228,7 +217,12 @@ class THttpRequester:
     @staticmethod
     def _prepare_url_before_http_request(url, method):
         THttpRequester.consider_request_policy(url, method)
-        return convert_russian_web_domain_if_needed(url)
+        url = TUrlUtf8Encode.convert_url_to_idna(url)
+        o = urllib.parse.urlsplit(url)
+        path = urllib.parse.unquote(o.path)
+        path = urllib.parse.quote(path)
+        url = urllib.parse.urlunsplit((o.scheme, o.netloc, path, o.query, o.fragment))
+        return url
 
     @staticmethod
     def get_content_type_from_headers(headers, default_value="text"):

@@ -485,8 +485,6 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             send_error("no file specified")
             return
 
-        _, file_extension = os.path.splitext(os.path.basename(TUrlUtf8Encode.from_idna(self.path)))
-
         file_length = self.headers.get('Content-Length')
         if file_length is None or not file_length.isdigit():
             send_error('cannot find header  Content-Length')

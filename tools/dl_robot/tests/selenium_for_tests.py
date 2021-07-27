@@ -58,7 +58,7 @@ class TestDeclarationLinkSelenium(TestCase):
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
         os.mkdir(self.data_folder)
-        shutil.copy2(os.path.join(website_folder, "project.txt"), self.data_folder)
+        shutil.copy2(os.path.join(os.path.dirname(__file__), website_folder, "project.txt"), self.data_folder)
         os.chdir(self.data_folder)
         THttpRequester.ENABLE = False
         self.logger = setup_logging(log_file_name="dlrobot.log")

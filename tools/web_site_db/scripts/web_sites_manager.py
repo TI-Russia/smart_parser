@@ -37,6 +37,7 @@ class TWebSitesManager:
         self.in_web_sites = TDeclarationWebSiteList(self.logger, file_name=self.args.input_file)
         self.in_web_sites.load_from_disk()
         self.out_web_sites = TDeclarationWebSiteList(self.logger, file_name=self.args.output_file)
+        self.temp_dlrobot_project: TRobotProject
         self.temp_dlrobot_project = None
         THttpRequester.initialize(self.logger)
 
@@ -100,14 +101,14 @@ class TWebSitesManager:
         for site_url in self.get_url_list():
             site_info = self.out_web_sites.get_web_site(site_url)
             if site_info.redirect_to is not None and TUrlUtf8Encode.is_idna_string(site_info.redirect_to):
-                site_info.redirect_to = TUrlUtf8Encode.from_idna(site_info.redirect_to)
+                site_info.redirect_to = TUrlUtf8Encode.convert_url_from_idna(site_info.redirect_to)
                 if site_info.redirect_to == site_url and site_info.reach_status == TWebSiteReachStatus.abandoned:
                     site_info.redirect_to = None
                     site_info.reach_status = TWebSiteReachStatus.normal
                 cnt += 1
             if TUrlUtf8Encode.is_idna_string(site_url):
                 del self.out_web_sites.web_sites[site_url]
-                site_url = TUrlUtf8Encode.from_idna(site_url)
+                site_url = TUrlUtf8Encode.convert_url_from_idna(site_url)
                 self.out_web_sites.web_sites[site_url] = site_info
                 cnt += 1
         self.logger.info("{} conversions made".format(cnt))
@@ -158,7 +159,14 @@ class TWebSitesManager:
         if TWebSiteReachStatus.can_communicate(web_site.reach_status):
             return web_site
         else:
-            return None
+            self.logger.info("restart selenium, and try again")
+            self.temp_dlrobot_project.selenium_driver.restart()
+            web_site = TWebSiteCrawlSnapshot(self.temp_dlrobot_project, morda_url=url)
+            web_site.fetch_the_main_page(enable_search_engine=False)
+            if TWebSiteReachStatus.can_communicate(web_site.reach_status):
+                return web_site
+            else:
+                return None
 
     def check_alive(self):
         self.out_web_sites.web_sites = deepcopy(self.in_web_sites.web_sites)
@@ -178,16 +186,16 @@ class TWebSitesManager:
                     self.logger.debug('   {} is only selenium'.format(site_url))
                 new_site_url = strip_scheme_and_query(web_site.main_page_url)
                 if new_site_url != site_url:
-                    self.logger.info('   {} is alive, but is redirected to {}, protocol = {}'.format(
-                        site_url, new_site_url, web_site.protocol))
+                    self.logger.info('   {} is alive, but is redirected to {}'.format(
+                        site_url, new_site_url))
                     if not self.out_web_sites.has_web_site(new_site_url):
                         self.out_web_sites.web_sites[new_site_url] = deepcopy(site_info)
                     site_info.set_redirect(new_site_url)
                     site_info = self.out_web_sites.get_web_site(new_site_url)
                 else:
-                    self.logger.info("     {} is alive, protocol = {}, main_page_url = {}".format(
-                        site_url, web_site.protocol, web_site.main_page_url))
-                site_info.set_protocol(web_site.protocol)
+                    self.logger.info("     {} is alive, main_page_url = {}".format(
+                        site_url, web_site.main_page_url))
+                site_info.set_protocol(web_site.get_main_url_protocol())
                 site_info.set_title(web_site.get_title(web_site.main_page_url))
 
 

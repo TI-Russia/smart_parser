@@ -1,5 +1,3 @@
-import urllib.parse
-
 from common.download import TDownloadedFile
 from common.http_request import THttpRequester
 from common.html_parser import get_html_title
@@ -9,11 +7,13 @@ from web_site_db.web_site_status import TWebSiteReachStatus
 from common.export_files import TExportEnvironment
 from common.serp_parser import SearchEngine, SerpException
 from common.primitives import urlsplit_pro, strip_scheme_and_query, site_url_to_file_name
+from selenium.common.exceptions import WebDriverException
 
 import os
 import shutil
 import time
 import datetime
+import urllib.parse
 
 
 class TWebSiteCrawlSnapshot:
@@ -38,7 +38,6 @@ class TWebSiteCrawlSnapshot:
         self.url_nodes = dict()
         self.enable_urllib = self.default_enable_urllib()
         self.main_page_url = None
-        self.protocol = "http"
         self.input_site_url = None
         self.office_name = ""
         self.reach_status = TWebSiteReachStatus.normal
@@ -60,7 +59,6 @@ class TWebSiteCrawlSnapshot:
 
     def init_main_page_url_from_redirected_url(self, url):
         o = urlsplit_pro(url)
-        self.protocol = o.scheme
         self.main_page_url = urllib.parse.urlunsplit(
             [o.scheme,
              o.netloc,
@@ -70,52 +68,56 @@ class TWebSiteCrawlSnapshot:
         self.logger.debug("main_url_page={}".format(self.main_page_url))
 
     def recognize_protocol_and_www(self):
-        if self.main_page_url.startswith('http://'):
-            self.protocol = "http"
-        elif self.main_page_url.startswith('https://'):
-            self.protocol = "https"
-        else:
-            for only_with_www in [False, True]:
-                for protocol in ["http", "https"]:
-                    try:
-                        url = protocol + "://"
-                        if only_with_www:
-                            url += "www."
-                        url += self.main_page_url
-                        file = TDownloadedFile(url)
-                        html_data = file.data
-                        self.logger.debug('read {} bytes from url {}, treat this url as the main url'.format(
-                            len(html_data), url))
-                        self.init_main_page_url_from_redirected_url(file.redirected_url)
-                        return
-                    except THttpRequester.RobotHttpException as exp:
-                        self.logger.error("cannot fetch {}  with urllib, sleep 3 sec".format(url))
-                        time.sleep(3)
+        for only_with_www in [False, True]:
+            for protocol in ["http", "https"]:
+                try:
+                    url = protocol + "://"
+                    if only_with_www:
+                        url += "www."
+                    url += self.main_page_url
+                    file = TDownloadedFile(url)
+                    html_data = file.data
+                    self.logger.debug('read {} bytes from url {}, treat this url as the main url'.format(
+                        len(html_data), url))
+                    self.init_main_page_url_from_redirected_url(file.redirected_url)
+                    return
+                except THttpRequester.RobotHttpException as exp:
+                    self.logger.error("cannot fetch {}  with urllib, sleep 3 sec".format(url))
+                    time.sleep(3)
 
     def recognize_protocol_and_www_selenium(self):
         url = self.input_site_url
         if not url.startswith('http'):
             url = "http://" + url
-        self.parent_project.selenium_driver.navigate(url)
-        time.sleep(3)
+        try:
+            self.parent_project.selenium_driver.navigate(url)
+            time.sleep(3)
+        except WebDriverException:
+            if url.find('www.') == -1:
+                self.logger.info("try add www like for biradm.ru, where there is no redirection")
+                o = urlsplit_pro(url)
+                host = "www." + str(o.netloc)
+                url = urllib.parse.urlunsplit((o.scheme, host, o.path, o.query, o.fragment))
+                self.parent_project.selenium_driver.navigate(url)
+                time.sleep(3)
+
         self.init_main_page_url_from_redirected_url(self.parent_project.selenium_driver.the_driver.current_url)
         title = self.parent_project.selenium_driver.the_driver.title
         self.reach_status = TWebSiteReachStatus.only_selenium
         self.url_nodes[self.main_page_url] = TUrlInfo(title=title)
 
     def get_site_url(self):
-        # in 99% cases this function returns the web domain, sometimes it can return the web domain and url path
+        # 1. in many cases this function returns the web domain, sometimes it can return the web domain and url path
         # like "mos.ru/dpi"
+        # 2. self.get_site_url() can differ from self.input_site_url, if there is a new http-redirection
         return strip_scheme_and_query(self.main_page_url)
+
+    def get_main_url_protocol(self):
+        return str(urllib.parse.urlsplit(self.main_page_url).scheme)
 
     def init_main_page_default(self, morda_url):
         self.input_site_url = morda_url
         self.main_page_url = morda_url
-        if len(morda_url) > 0:
-            if not morda_url.startswith('http'):
-                morda_url = 'http://' + morda_url
-            o = urllib.parse.urlsplit(morda_url)
-            self.protocol = o.scheme
 
     def check_urllib_access(self):
         if self.enable_urllib:
@@ -176,7 +178,6 @@ class TWebSiteCrawlSnapshot:
     def read_from_json(self, init_json):
         self.input_site_url = init_json.get('morda_url')
         self.reach_status = init_json.get('reach_status')
-        self.protocol = init_json.get('protocol', "http")
         self.main_page_url = init_json.get('main_page_url', init_json.get('morda_url'))
         self.office_name = init_json.get('name', '')
         self.enable_urllib = init_json.get('enable_urllib', self.default_enable_urllib())
@@ -204,7 +205,6 @@ class TWebSiteCrawlSnapshot:
             'steps': [s.to_json() for s in self.robot_steps],
             'url_nodes': dict( (url, info.to_json()) for url,info in self.url_nodes.items()),
             'exported_files': self.export_env.to_json(),
-            'protocol': self.protocol,
         }
 
     def get_parents(self, url):

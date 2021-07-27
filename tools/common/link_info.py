@@ -1,9 +1,7 @@
-import re
-
 from common.recognizer_enum import DL_RECOGNIZER_ENUM
-from common.primitives import strip_html_url, build_dislosures_sha256_by_html, \
-    strip_viewer_prefix
+from common.primitives import strip_viewer_prefix
 
+import re
 import urllib.parse
 
 
@@ -115,11 +113,25 @@ class TLinkInfo:
         return self
 
 
+def strip_url_before_iframe_check(url):
+    if url.endswith('.html'):
+        url = url[:-len('.html')]
+    if url.endswith('.htm'):
+        url = url[:-len('.htm')]
+    if url.startswith('http://'):
+        url = url[len('http://'):]
+    if url.startswith('http://'):
+        url = url[len('https://'):]
+    if url.startswith('www.'):
+        url = url[len('www.'):]
+    return url
+
+
 def check_sub_page_or_iframe(logger,  link_info: TLinkInfo):
     if link_info.target_url is None:
         return False
     if link_info.tag_name is not None and link_info.tag_name.lower() == "iframe":
         return True
-    parent = strip_html_url(link_info.source_url)
-    subpage = strip_html_url(link_info.target_url)
+    parent = strip_url_before_iframe_check(link_info.source_url)
+    subpage = strip_url_before_iframe_check(link_info.target_url)
     return subpage.startswith(parent)

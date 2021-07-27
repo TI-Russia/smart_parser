@@ -5,7 +5,7 @@ from common.http_request import THttpRequester
 
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
-from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
+from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException, TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 
@@ -114,46 +114,20 @@ class TSeleniumDriver:
 
         # navigation
         try:
+            self.the_driver.set_page_load_timeout(20)
             self.the_driver.get(url)
         except IndexError as exp:
             raise THttpRequester.RobotHttpException("general IndexError inside urllib.request.urlopen",
                                                     url, 520, "GET")
+        except TimeoutException as exp:
+            title = self.the_driver.title
+            if len(title) == 0:
+                raise
+        finally:
+            self.the_driver.set_page_load_timeout(-1)
 
     def get_buttons_and_links(self):
         return list(self.the_driver.find_elements_by_xpath('//button | //a'))
-
-    def _navigate_and_get_links_obsolete(self, url, timeout=4):
-        self.logger.debug("navigate to {}".format(url))
-        self.navigate(url)
-
-        self.logger.debug("sleep for {}".format(timeout))
-        time.sleep(timeout)
-
-        body = self.the_driver.find_element_by_tag_name('body')
-
-        self.logger.debug("scroll down")
-        if self.scroll_to_bottom_and_wait_more_results and body:
-            self.the_driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
-            time.sleep(1)
-            self.the_driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
-            time.sleep(1)
-
-        try:
-            return self.get_buttons_and_links()
-        except Exception as exp:
-            self.logger.error("Exception = {}, retry get links, after timeout".format(exp))
-            #  second timeout
-            time.sleep(timeout)
-            return self.get_buttons_and_links()
-
-    #to be replaced by navigate_and_get_links_js
-    def navigate_and_get_links_obsolete(self, url, timeout=6):
-        try:
-            return self._navigate_and_get_links_obsolete(url, timeout)
-        except (WebDriverException, InvalidSwitchToTargetException) as exp:
-            self.logger.error("exception during selenium navigate and get elements: {}".format(str(exp)))
-            self.restart()
-            return self._navigate_and_get_links(url, timeout)
 
     def _navigate_and_get_links_js(self, url, timeout=4):
         self.logger.debug("navigate to {}".format(url))
