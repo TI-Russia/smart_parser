@@ -23,7 +23,7 @@ class TWebSiteCrawlSnapshot:
 
     @staticmethod
     def default_enable_urllib():
-        s = os.environ.get('DLROBOT_ENABLE_URLLIB', "1")
+        s = os.environ.get('DLROBOT_ENABLE_URLLIB', "0")
         return s == "True" or s == "1"
 
     def __init__(self, project, morda_url=""):
