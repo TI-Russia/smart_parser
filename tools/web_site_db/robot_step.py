@@ -442,7 +442,13 @@ class TRobotStep:
         self.logger.debug("find_links_with_selenium url={} ".format(main_url))
         THttpRequester.consider_request_policy(main_url, "GET_selenium")
         elements = self.get_selenium_driver().navigate_and_get_links_js(main_url, TRobotStep.selenium_timeout)
+        if elements is None:
+            self.logger.error("cannot get child elements using javascript for url={}".format(main_url))
+            return
         page_html = self.get_selenium_driver().the_driver.page_source
+        if page_html is None:
+            self.logger.error("cannot get html source for url={}".format(main_url))
+            return
         self.logger.debug("html_size={}, elements_count={}".format(len(page_html), len(elements)))
         for element_index, element, in enumerate(elements):
             if element_index >= self.max_links_from_one_page:
