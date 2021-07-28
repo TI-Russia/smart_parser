@@ -1,8 +1,7 @@
 from common.recognizer_enum import DL_RECOGNIZER_ENUM
-from common.primitives import strip_viewer_prefix
+from common.primitives import strip_viewer_prefix, urlsplit_pro
 
 import re
-import urllib.parse
 
 
 class TClickEngine:
@@ -66,7 +65,7 @@ class TLinkInfo:
         else:
             self.target_url = strip_viewer_prefix(target_url).strip(" \r\n\t")
             self.target_title = target_title
-            o = urllib.parse.urlparse(self.target_url)
+            o = urlsplit_pro(self.target_url)
             self.url_query = o.query
             self.url_path = o.path
 

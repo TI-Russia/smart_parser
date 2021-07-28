@@ -113,7 +113,7 @@ class TWebSiteCrawlSnapshot:
         return strip_scheme_and_query(self.main_page_url)
 
     def get_main_url_protocol(self):
-        return str(urllib.parse.urlsplit(self.main_page_url).scheme)
+        return str(urlsplit_pro(self.main_page_url).scheme)
 
     def init_main_page_default(self, morda_url):
         self.input_site_url = morda_url

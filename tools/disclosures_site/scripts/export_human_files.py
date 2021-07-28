@@ -4,7 +4,7 @@ from source_doc_http.source_doc_client import TSourceDocClient
 from ConvStorage.conversion_client import TDocConversionClient
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from common.logging_wrapper import setup_logging
-from common.primitives import build_dislosures_sha256
+from common.primitives import build_dislosures_sha256, urlsplit_pro
 
 import pymysql
 import os
@@ -162,7 +162,7 @@ class TExportHumanFiles:
                 ))
                 time.sleep(5*60)
 
-            web_site = urlparse(link).netloc
+            web_site = urlsplit_pro(link).netloc
             if web_site.startswith('www.'):
                 web_site = web_site[len('www.'):]
 

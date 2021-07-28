@@ -1,3 +1,4 @@
+from common.urlparse_pro import urlsplit_pro
 from bs4 import BeautifulSoup
 import urllib
 
@@ -47,7 +48,7 @@ class THtmlParser:
                 base = href
                 break
         if base.startswith('/') and not base.startswith('//'):
-            o = urllib.parse.urlsplit(self.url)
+            o = urlsplit_pro(self.url)
             scheme_and_web_domain = urllib.parse.urlunsplit((o.scheme, o.netloc, "", "", ""))
             base = THtmlParser.make_link(scheme_and_web_domain, base)
 

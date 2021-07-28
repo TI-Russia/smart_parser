@@ -1,6 +1,6 @@
 
 from common.content_types import content_type_to_file_extension, is_video_or_audio_file_extension
-from common.primitives import TUrlUtf8Encode
+from common.primitives import TUrlUtf8Encode, urlsplit_pro
 
 import ssl
 import urllib3
@@ -218,7 +218,7 @@ class THttpRequester:
     def _prepare_url_before_http_request(url, method):
         THttpRequester.consider_request_policy(url, method)
         url = TUrlUtf8Encode.convert_url_to_idna(url)
-        o = urllib.parse.urlsplit(url)
+        o = urlsplit_pro(url)
         path = urllib.parse.unquote(o.path)
         path = urllib.parse.quote(path)
         url = urllib.parse.urlunsplit((o.scheme, o.netloc, path, o.query, o.fragment))

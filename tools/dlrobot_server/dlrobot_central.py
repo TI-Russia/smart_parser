@@ -391,7 +391,7 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
     timeout = 10*60
 
     def parse_cgi(self, query_components):
-        query = urllib.parse.urlparse(self.path).query
+        query = urllib.parse.urlsplit(self.path).query
         if query == "":
             return True
         for qc in query.split("&"):

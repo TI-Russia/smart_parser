@@ -1,5 +1,6 @@
-from .html_parser import THtmlParser
-from .content_types import DEFAULT_HTML_EXTENSION
+from common.content_types import DEFAULT_HTML_EXTENSION
+from common.urlparse_pro import urlsplit_pro
+from common.html_parser import THtmlParser
 
 import urllib.parse
 import re
@@ -39,9 +40,6 @@ def normalize_and_russify_anchor_text(text):
     return ""
 
 
-def urlsplit_pro(url):
-    url = re.sub(r'^(https?)://(/+)', r'\1://', url)  # http://petushki.info -> https:////petushki.info
-    return urllib.parse.urlsplit(url)
 
 # get_site_domain_wo_www returns netloc without www
 # for excample http://www.aot.ru -> aot.ru
@@ -72,7 +70,7 @@ def strip_scheme_and_query(url):
         if url.startswith(p):
             url = url[len(p):]
     if TUrlUtf8Encode.is_idna_string(url):
-        url = TUrlUtf8Encode.from_idna(url)
+        url = TUrlUtf8Encode.convert_url_from_idna(url)
     return url
 
 
@@ -117,7 +115,6 @@ def check_internet(host="8.8.8.8", port=53, timeout=3):
     except socket.error as ex:
         print(ex)
         return False
-
 
 def build_dislosures_sha256_by_html(html_data):
     text = THtmlParser(html_data).get_plain_text()
@@ -193,7 +190,7 @@ class TUrlUtf8Encode:
 
     @staticmethod
     def convert_url_to_idna(url):
-        o = urllib.parse.urlsplit(url)
+        o = urlsplit_pro(url)
         host = o.netloc
         if TUrlUtf8Encode.has_cyrillic(host):
             host = TUrlUtf8Encode.to_idna(host)
@@ -204,8 +201,10 @@ class TUrlUtf8Encode:
     def convert_url_from_idna(url):
         if not TUrlUtf8Encode.is_idna_string(url):
             return url
-        o = urllib.parse.urlsplit(url)
+        o = urlsplit_pro(url)
         host = TUrlUtf8Encode.from_idna(o.netloc)
         s = urllib.parse.urlunsplit((o.scheme, host, o.path, o.query, o.fragment))
+        if not url.startswith('//') and s.startswith('//'):
+            s = s[2:]
         return s
 

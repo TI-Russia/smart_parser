@@ -80,11 +80,25 @@ class TSeleniumDriver:
     def start_executable_chrome(self):
         options = ChromeOptions()
         options.headless = self.headless
-        prefs = {'download.default_directory': self.download_folder}
+        user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
+        options.add_argument("user-agent={}".format(user_agent))
+
+        prefs = {
+            'download.default_directory': self.download_folder,
+
+             # it does not work, use environment variable LANG as it stated at https://bugs.chromium.org/p/chromium/issues/detail?id=755338
+             #'intl.accept_languages': 'ru,ru_RU'  # to do: it for Firefox
+             #'intl.accept_languages': 'ru'  # to do: it for Firefox
+
+        }
         options.add_experimental_option('prefs', prefs)
+        os.environ['LANG'] = 'ru'
         for retry in range(self.start_retry_count):
             try:
-                self.the_driver = webdriver.Chrome(options=options, service_log_path="geckodriver.log")
+                self.the_driver = webdriver.Chrome(options=options,
+                                                   #service_args=["--verbose", "--log-path=geckodriver.log"],
+                                                   service_args=["--log-path=geckodriver.log"],
+                                                )
                 self.the_driver.set_window_size(1440, 900)
                 break
             except (WebDriverException, InvalidSwitchToTargetException) as exp:
@@ -124,7 +138,7 @@ class TSeleniumDriver:
             if len(title) == 0:
                 raise
         finally:
-            self.the_driver.set_page_load_timeout(-1)
+            self.the_driver.set_page_load_timeout(30)
 
     def get_buttons_and_links(self):
         return list(self.the_driver.find_elements_by_xpath('//button | //a'))

@@ -5,11 +5,11 @@ from .rubrics import get_russian_rubric_str
 from declarations.nominal_income import get_average_nominal_incomes, YearIncome
 from declarations.ratings import TPersonRatings
 from declarations.car_brands import CAR_BRANDS
+from common.primitives import urlsplit_pro
 
 from collections import defaultdict
 from operator import attrgetter
 from itertools import groupby
-import urllib
 import os
 
 
@@ -106,7 +106,7 @@ class Office(models.Model):
 
     @property
     def urls_html(self):
-        pairs = ((u, urllib.parse.urlsplit(u).netloc) for u in self.calculated_params['urls'])
+        pairs = ((u, urlsplit_pro(u).netloc) for u in self.calculated_params['urls'])
         return "&nbsp;&nbsp;&nbsp;".join('<a href="{}">{}</a>'.format(url, anchor) for url, anchor in pairs)
 
     @property
