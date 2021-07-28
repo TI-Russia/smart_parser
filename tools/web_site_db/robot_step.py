@@ -467,8 +467,7 @@ class TRobotStep:
                                   element_class=[element.get('class')],
                                   source_page_title=self.get_selenium_driver().the_driver.title)
 
-            if href is not None and not mandatory_link:
-                #href = THtmlParser.make_link(main_url, href)  # may be we do not need it in selenium?
+            if link_info.target_url is not None and not mandatory_link:
                 if self.normalize_and_check_link(link_info, check_link_func):
                     self.add_link_wrapper(link_info)
             else:
