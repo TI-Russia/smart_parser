@@ -1,6 +1,6 @@
 
 from common.content_types import content_type_to_file_extension, is_video_or_audio_file_extension
-from common.primitives import TUrlUtf8Encode, urlsplit_pro
+from common.urllib_parse_pro import TUrlUtf8Encode, urlsplit_pro
 
 import ssl
 import urllib3

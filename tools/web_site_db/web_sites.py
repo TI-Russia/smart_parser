@@ -1,4 +1,4 @@
-from common.primitives import strip_scheme_and_query, TUrlUtf8Encode
+from common.urllib_parse_pro import strip_scheme_and_query, TUrlUtf8Encode
 from web_site_db.web_site_status import TWebSiteReachStatus
 
 import json

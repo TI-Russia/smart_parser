@@ -6,7 +6,8 @@ from web_site_db.robot_step import TRobotStep, TUrlInfo
 from web_site_db.web_site_status import TWebSiteReachStatus
 from common.export_files import TExportEnvironment
 from common.serp_parser import SearchEngine, SerpException
-from common.primitives import urlsplit_pro, strip_scheme_and_query, site_url_to_file_name
+import common.urllib_parse_pro as urllib_parse_pro
+from common.urllib_parse_pro import strip_scheme_and_query, site_url_to_file_name
 from selenium.common.exceptions import WebDriverException
 
 import os
@@ -57,8 +58,8 @@ class TWebSiteCrawlSnapshot:
         elapsed_time_in_seconds = time.time() - self.start_crawling_time + 0.00000001
         return (60.0 * self.export_env.found_declarations_count) / elapsed_time_in_seconds;
 
-    def init_main_page_url_from_redirected_url(self, url):
-        o = urlsplit_pro(url)
+    def init_main_page_url_from_redirected_url(self, url, title):
+        o = urllib_parse_pro.urlsplit_pro(url)
         self.main_page_url = urllib.parse.urlunsplit(
             [o.scheme,
              o.netloc,
@@ -66,45 +67,56 @@ class TWebSiteCrawlSnapshot:
              '',  # query
              ''])
         self.logger.debug("main_url_page={}".format(self.main_page_url))
+        self.reach_status = TWebSiteReachStatus.normal
+        self.url_nodes[self.main_page_url] = TUrlInfo(title=title)
+
+    def get_url_modifications(url: str):
+        o = urllib_parse_pro.urlsplit_pro(url)
+        if len(o.scheme) > 0:
+            protocols = [o.scheme]
+        else:
+            protocols = ["http", "https"]
+        if o.netloc.startswith("www."):
+            with_www = [True]
+        else:
+            with_www = [True, False]
+        for only_with_www in with_www:
+            for protocol in protocols:
+                host = o.netloc
+                if only_with_www:
+                    host = "www." + host
+                modified_url = urllib.parse.urlunsplit((protocol, host, o.path, o.query, o.fragment))
+                yield modified_url
 
     def recognize_protocol_and_www(self):
-        for only_with_www in [False, True]:
-            for protocol in ["http", "https"]:
-                try:
-                    url = protocol + "://"
-                    if only_with_www:
-                        url += "www."
-                    url += self.main_page_url
-                    file = TDownloadedFile(url)
-                    html_data = file.data
-                    self.logger.debug('read {} bytes from url {}, treat this url as the main url'.format(
-                        len(html_data), url))
-                    self.init_main_page_url_from_redirected_url(file.redirected_url)
-                    return
-                except THttpRequester.RobotHttpException as exp:
-                    self.logger.error("cannot fetch {}  with urllib, sleep 3 sec".format(url))
-                    time.sleep(3)
-
-    def recognize_protocol_and_www_selenium(self):
-        url = self.input_site_url
-        if not url.startswith('http'):
-            url = "http://" + url
-        try:
-            self.parent_project.selenium_driver.navigate(url)
-            time.sleep(3)
-        except WebDriverException:
-            if url.find('www.') == -1:
-                self.logger.info("try add www like for biradm.ru, where there is no redirection")
-                o = urlsplit_pro(url)
-                host = "www." + str(o.netloc)
-                url = urllib.parse.urlunsplit((o.scheme, host, o.path, o.query, o.fragment))
-                self.parent_project.selenium_driver.navigate(url)
+        for url in urllib_parse_pro.get_url_modifications(self.input_site_url):
+            try:
+                file = TDownloadedFile(url)
+                title = get_html_title(file.data)
+                self.init_main_page_url_from_redirected_url(file.redirected_url, title)
+                return
+            except THttpRequester.RobotHttpException as exp:
+                self.logger.error("cannot fetch {}  with urllib, sleep 3 sec".format(url))
                 time.sleep(3)
 
-        self.init_main_page_url_from_redirected_url(self.parent_project.selenium_driver.the_driver.current_url)
-        title = self.parent_project.selenium_driver.the_driver.title
-        self.reach_status = TWebSiteReachStatus.only_selenium
-        self.url_nodes[self.main_page_url] = TUrlInfo(title=title)
+    def recognize_protocol_and_www_selenium(self):
+        for url in urllib_parse_pro.get_url_modifications(self.input_site_url):
+            try:
+                self.parent_project.selenium_driver.navigate(url)
+                time.sleep(3)
+                title = self.parent_project.selenium_driver.the_driver.title
+                self.init_main_page_url_from_redirected_url(
+                    self.parent_project.selenium_driver.the_driver.current_url,
+                    title)
+                return
+            except WebDriverException as exp:
+                self.logger.error("cannot fetch {}  with selenium, sleep 3 sec".format(url))
+                time.sleep(3)
+        raise THttpRequester.RobotHttpException(
+            "there is no way to access {}".format(self.input_site_url),
+            self.input_site_url,
+            404,
+            "GET")
 
     def get_site_url(self):
         # 1. in many cases this function returns the web domain, sometimes it can return the web domain and url path
@@ -113,7 +125,7 @@ class TWebSiteCrawlSnapshot:
         return strip_scheme_and_query(self.main_page_url)
 
     def get_main_url_protocol(self):
-        return str(urlsplit_pro(self.main_page_url).scheme)
+        return str(urllib_parse_pro.urlsplit_pro(self.main_page_url).scheme)
 
     def init_main_page_default(self, morda_url):
         self.input_site_url = morda_url
@@ -131,25 +143,17 @@ class TWebSiteCrawlSnapshot:
         if len(self.url_nodes) > 0:
             return True
         if self.enable_urllib:
-            self.recognize_protocol_and_www()
-            for i in range(3):
-                try:
-                    html_data = TDownloadedFile(self.main_page_url).data
-                    title = get_html_title(html_data)
-                    self.reach_status = TWebSiteReachStatus.normal
-                    self.url_nodes[self.main_page_url] = TUrlInfo(title=title)
-                    return
-                except THttpRequester.RobotHttpException as exp:
-                    self.logger.error("cannot fetch morda url {} with urllib, sleep 3 sec".format(self.main_page_url))
-                    time.sleep(3)
-        try:
-            if self.enable_urllib:
+            try:
+                self.recognize_protocol_and_www()
+                return True
+            except THttpRequester.RobotHttpException as exp:
                 self.logger.error("disable urllib for this website since we cannot reach the main page with urllib")
                 self.enable_urllib = False
+
+        try:
             self.recognize_protocol_and_www_selenium()
             return True
-        except Exception as exp:
-            self.logger.error("cannot access the main page using selenium, exception: {}".format(exp))
+        except THttpRequester.RobotHttpException as exp:
             self.reach_status = TWebSiteReachStatus.out_of_reach
 
         if enable_search_engine:

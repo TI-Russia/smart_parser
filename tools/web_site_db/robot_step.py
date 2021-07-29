@@ -1,6 +1,7 @@
 from common.download import TDownloadedFile, DEFAULT_HTML_EXTENSION, are_mirrors_by_html, \
             get_file_extension_only_by_headers
-from common.primitives import prepare_for_logging, get_site_domain_wo_www, urlsplit_pro
+from common.primitives import prepare_for_logging
+from common.urllib_parse_pro import get_site_domain_wo_www, urlsplit_pro
 from common.html_parser import THtmlParser, get_html_title
 from common.link_info import TLinkInfo, TClickEngine
 from common.http_request import THttpRequester

@@ -4,12 +4,12 @@ from source_doc_http.source_doc_client import TSourceDocClient
 from ConvStorage.conversion_client import TDocConversionClient
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from common.logging_wrapper import setup_logging
-from common.primitives import build_dislosures_sha256, urlsplit_pro
+from common.primitives import build_dislosures_sha256
+from common.urllib_parse_pro import urlsplit_pro
 
 import pymysql
 import os
 import argparse
-from urllib.parse import urlparse
 import requests
 import urllib.parse
 import sys

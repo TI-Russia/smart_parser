@@ -1,5 +1,5 @@
 from web_site_db.robot_project import TRobotProject
-from common.primitives import site_url_to_file_name
+from common.urllib_parse_pro import site_url_to_file_name
 
 import os
 import time
