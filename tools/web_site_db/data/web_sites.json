@@ -1927,7 +1927,9 @@
         "title": "Законодательное Собрание Владимирской области"
     },
     "vologdazso.ru": {
-        "calc_office_id": 545
+        "calc_office_id": 545,
+        "http_protocol": "https",
+        "title": "Официальный сайт Законодательного Собрания Вологодской области"
     },
     "zaksob.ru": {
         "calc_office_id": 554,
@@ -6261,8 +6263,8 @@
     },
     "41.mchs.gov.ru": {
         "calc_office_id": 4139,
-        "status": "abandoned",
-        "http_protocol": "https"
+        "http_protocol": "https",
+        "title": "Главное управление МЧС России по Камчатскому краю"
     },
     "mlosinka.ru": {
         "calc_office_id": 6775,
@@ -8006,8 +8008,8 @@
     },
     "kotelnikovo-region.ru": {
         "calc_office_id": 2164,
-        "status": "abandoned",
-        "http_protocol": "http"
+        "http_protocol": "http",
+        "title": "Добро пожаловать - Администрация Котельниковского района"
     },
     "bsosnovsky.ru": {
         "calc_office_id": 2201,
@@ -10285,8 +10287,8 @@
     },
     "83.mchs.gov.ru": {
         "calc_office_id": 4157,
-        "status": "abandoned",
-        "http_protocol": "https"
+        "http_protocol": "https",
+        "title": "Главное управление МЧС России по Ненецкому АО"
     },
     "73.mchs.gov.ru": {
         "calc_office_id": 4186,
@@ -13934,8 +13936,8 @@
     },
     "31.mchs.gov.ru": {
         "calc_office_id": 4122,
-        "status": "abandoned",
-        "http_protocol": "https"
+        "http_protocol": "https",
+        "title": "Главное управление МЧС России по Белгородской области"
     },
     "56.mchs.gov.ru": {
         "calc_office_id": 4162,
@@ -13945,13 +13947,13 @@
     },
     "57.mchs.gov.ru": {
         "calc_office_id": 4163,
-        "status": "abandoned",
-        "http_protocol": "https"
+        "http_protocol": "https",
+        "title": "Главное управление МЧС России по Орловской области"
     },
     "58.mchs.gov.ru": {
         "calc_office_id": 4164,
-        "status": "abandoned",
-        "http_protocol": "https"
+        "http_protocol": "https",
+        "title": "Главное управление МЧС России по Пензенской области"
     },
     "60.mchs.gov.ru": {
         "calc_office_id": 4167,
@@ -14070,8 +14072,8 @@
     },
     "ako.ru": {
         "calc_office_id": 173,
-        "status": "abandoned",
-        "http_protocol": "https"
+        "http_protocol": "https",
+        "title": "Администрация Правительства Кузбасса"
     },
     "администрация.курскаяобласть.рф": {
         "calc_office_id": 179,
@@ -16876,8 +16878,8 @@
     },
     "35.mchs.gov.ru": {
         "calc_office_id": 4127,
-        "status": "abandoned",
-        "http_protocol": "https"
+        "http_protocol": "https",
+        "title": "Главное управление МЧС России по Вологодской области"
     },
     "79.mchs.gov.ru": {
         "calc_office_id": 4130,
@@ -16896,49 +16898,49 @@
     },
     "47.mchs.gov.ru": {
         "calc_office_id": 4150,
-        "status": "abandoned",
-        "http_protocol": "https"
+        "http_protocol": "https",
+        "title": "Главное управление МЧС России по Ленинградской области"
     },
     "51.mchs.gov.ru": {
         "calc_office_id": 4156,
-        "status": "abandoned",
         "dlrobot_max_time_coeff": 2.0,
-        "http_protocol": "https"
+        "http_protocol": "https",
+        "title": "Главное управление МЧС России по Мурманской области"
     },
     "53.mchs.gov.ru": {
         "calc_office_id": 4159,
-        "status": "abandoned",
-        "http_protocol": "https"
+        "http_protocol": "https",
+        "title": "Главное управление МЧС России по Новгородской области"
     },
     "25.mchs.gov.ru": {
         "calc_office_id": 4166,
-        "status": "abandoned",
-        "http_protocol": "https"
+        "http_protocol": "https",
+        "title": "Главное управление МЧС России по Приморскому краю"
     },
     "69.mchs.gov.ru": {
         "calc_office_id": 4180,
-        "status": "abandoned",
-        "http_protocol": "https"
+        "http_protocol": "https",
+        "title": "Главное управление МЧС России по Тверской области"
     },
     "70.mchs.gov.ru": {
         "calc_office_id": 4181,
-        "status": "abandoned",
-        "http_protocol": "https"
+        "http_protocol": "https",
+        "title": "Главное управление МЧС России по Томской области"
     },
     "71.mchs.gov.ru": {
         "calc_office_id": 4183,
-        "status": "abandoned",
-        "http_protocol": "https"
+        "http_protocol": "https",
+        "title": "Главное управление МЧС России по Тульской области"
     },
     "18.mchs.gov.ru": {
         "calc_office_id": 4185,
-        "status": "abandoned",
-        "http_protocol": "https"
+        "http_protocol": "https",
+        "title": "Главное управление МЧС России по Удмуртской Республике"
     },
     "74.mchs.gov.ru": {
         "calc_office_id": 4190,
-        "status": "abandoned",
-        "http_protocol": "https"
+        "http_protocol": "https",
+        "title": "Главное управление МЧС России по Челябинской области"
     },
     "gusp.gov.ru": {
         "calc_office_id": 4198,
@@ -19116,8 +19118,8 @@
     },
     "kaluga.sledcom.ru": {
         "calc_office_id": 3842,
-        "status": "abandoned",
-        "http_protocol": "https"
+        "http_protocol": "http",
+        "title": "Следственный комитет России"
     },
     "kuzbass.sledcom.ru": {
         "calc_office_id": 3846,
@@ -20315,6 +20317,7 @@
     },
     "goslog.ru": {
         "calc_office_id": 1876,
+        "status": "abandoned",
         "http_protocol": "http",
         "redirect_to": "goslog.ru:80",
         "title": "Официальный сайт городского округа Сухой Лог"
@@ -22199,8 +22202,8 @@
     },
     "socialkirov.ru": {
         "calc_office_id": 7729,
-        "status": "abandoned",
-        "http_protocol": "http"
+        "http_protocol": "https",
+        "title": ""
     },
     "mtur.rk.gov.ru": {
         "calc_office_id": 7879,
@@ -22345,8 +22348,8 @@
     },
     "moivanovskiy.ru": {
         "calc_office_id": 1235,
-        "status": "abandoned",
-        "http_protocol": "http"
+        "http_protocol": "http",
+        "title": "Муниципальный округ Ивановский"
     },
     "msapt-ostrov.ru": {
         "calc_office_id": 1248,
@@ -28091,8 +28094,8 @@
     },
     "mprdag.ru": {
         "calc_office_id": 7400,
-        "status": "abandoned",
-        "http_protocol": "http"
+        "http_protocol": "https",
+        "title": ""
     },
     "minfinrd.ru": {
         "calc_office_id": 7406,
@@ -33294,8 +33297,8 @@
     },
     "admmeleuz.ru": {
         "calc_office_id": 2678,
-        "status": "abandoned",
-        "http_protocol": "http"
+        "http_protocol": "http",
+        "title": "Главная"
     },
     "mechetly.ru": {
         "calc_office_id": 2679,
@@ -33445,8 +33448,8 @@
     },
     "kilmezraiduma.ru": {
         "calc_office_id": 3181,
-        "status": "abandoned",
-        "http_protocol": "https"
+        "http_protocol": "https",
+        "title": "Кильмезская Районная Дума Кировской области | Официальный сайт"
     },
     "podosadm.ru": {
         "calc_office_id": 3197,
@@ -41528,8 +41531,7 @@
     },
     "old.vsuet.ru": {
         "calc_office_id": 6196,
-        "status": "abandoned",
-        "http_protocol": "http"
+        "status": "abandoned"
     },
     "vorstu.ru": {
         "calc_office_id": 6197,
@@ -41862,11 +41864,6 @@
         "calc_office_id": 85,
         "http_protocol": "http",
         "title": "Шадринск.Инфо - Шадринский городской информационный портал"
-    },
-    "yandex.ru": {
-        "calc_office_id": 85,
-        "status": "abandoned",
-        "http_protocol": "https"
     },
     "kommersant.ru": {
         "calc_office_id": 97,
@@ -50906,7 +50903,8 @@
     "борское.047.рф": {
         "calc_office_id": 20340,
         "status": "abandoned",
-        "http_protocol": "http"
+        "http_protocol": "http",
+        "redirect_to": "047.рф"
     },
     "borshevpeski.ru": {
         "calc_office_id": 20341,
@@ -52781,8 +52779,8 @@
     },
     "rodnikovka.ru": {
         "calc_office_id": 20739,
-        "status": "abandoned",
-        "http_protocol": "http"
+        "http_protocol": "https",
+        "title": "Льготы ветеранам труда в тамбовской области 2019 году - rodnikovka.ru"
     },
     "adm-mosadovoe.ru": {
         "calc_office_id": 20740,
@@ -72003,5 +72001,10 @@
         "calc_office_id": 3996,
         "http_protocol": "https",
         "title": "Портал РФФИ"
+    },
+    "047.рф": {
+        "calc_office_id": 20340,
+        "http_protocol": "http",
+        "title": "Главная - Окрестности Санкт-Петербурга"
     }
 }
