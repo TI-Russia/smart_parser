@@ -18,6 +18,9 @@ class TDearchiver:
     def __init__(self, logger, outfolder):
         self.outfolder = outfolder
         self.logger = logger
+        if not os.path.exists(self.outfolder):
+            self.logger.error("export folder {} must exist before calling TDearchiver".format(outfolder))
+            os.makedirs(self.outfolder, exist_ok=True)
 
     def unzip_one_archive(self, input_file, main_index):
         global FILE_EXTENSIONS_IN_ARCHIVE
@@ -51,14 +54,17 @@ class TDearchiver:
         temp_folder = os.path.join(self.outfolder, "unrar_temp")
         if os.path.exists(temp_folder):
             shutil.rmtree(temp_folder)
-        os.mkdir(temp_folder)
+        os.makedirs(temp_folder, exist_ok=True)
         handle, logfile = tempfile.mkstemp(prefix='unrar')
         os.close(handle)
         cmd = "unrar e -o+ -y {} {} >{}".format(input_file, temp_folder, logfile)
         self.logger.debug(cmd)
         os.system(cmd)
+        cnt = 0
         for x in self.process_temp_folder(temp_folder, main_index):
             yield x
+            cnt += 1
+        self.logger.debug("extracted {} files from {}".format(cnt, input_file))
         os.unlink(logfile)
 
     def un7z_one_archive(self, input_file, main_index):
