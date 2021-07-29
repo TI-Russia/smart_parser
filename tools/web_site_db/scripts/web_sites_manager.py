@@ -2,7 +2,7 @@ from web_site_db.web_sites import TDeclarationWebSiteList, TDeclarationWebSite
 from web_site_db.web_site_status import TWebSiteReachStatus
 from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
 from web_site_db.robot_project import TRobotProject
-from common.primitives import  TUrlUtf8Encode, strip_scheme_and_query
+from common.urllib_parse_pro import strip_scheme_and_query, TUrlUtf8Encode
 from common.logging_wrapper import setup_logging
 from common.http_request import THttpRequester
 from common.download import TDownloadEnv
@@ -171,7 +171,6 @@ class TWebSitesManager:
     def check_alive(self):
         self.out_web_sites.web_sites = deepcopy(self.in_web_sites.web_sites)
         complete_bans = list()
-        only_selenium_sites = list()
         for site_url in self.get_url_list(start_selenium=True):
             site_info: TDeclarationWebSite
             site_info = self.out_web_sites.get_web_site(site_url)
@@ -181,9 +180,6 @@ class TWebSitesManager:
                 site_info.ban()
                 complete_bans.append(site_url)
             else:
-                if not web_site.enable_urllib:
-                    only_selenium_sites.append(site_url)
-                    self.logger.debug('   {} is only selenium'.format(site_url))
                 new_site_url = strip_scheme_and_query(web_site.main_page_url)
                 if new_site_url != site_url:
                     self.logger.info('   {} is alive, but is redirected to {}'.format(
@@ -199,7 +195,7 @@ class TWebSitesManager:
                 site_info.set_title(web_site.get_title(web_site.main_page_url))
 
 
-        self.logger.info("ban {} web sites, only selenium sites: {}".format(len(complete_bans), len(only_selenium_sites)))
+        self.logger.info("ban {} web sites".format(len(complete_bans)))
 
     def print_keys(self):
         for web_domain in self.get_url_list():

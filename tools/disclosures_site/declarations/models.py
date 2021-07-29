@@ -5,7 +5,7 @@ from .rubrics import get_russian_rubric_str
 from declarations.nominal_income import get_average_nominal_incomes, YearIncome
 from declarations.ratings import TPersonRatings
 from declarations.car_brands import CAR_BRANDS
-from common.primitives import urlsplit_pro
+from common.urllib_parse_pro import urlsplit_pro
 
 from collections import defaultdict
 from operator import attrgetter

@@ -1,4 +1,4 @@
-from common.primitives import TUrlUtf8Encode, urlsplit_pro, strip_scheme_and_query
+from common.urllib_parse_pro import urlsplit_pro, strip_scheme_and_query, TUrlUtf8Encode, get_url_modifications
 from unittest import TestCase
 
 
@@ -63,3 +63,10 @@ class TestUrlParse(TestCase):
         self.assertEqual(strip_scheme_and_query('www.aot.ru/test'), 'aot.ru/test')
         self.assertEqual(strip_scheme_and_query('www.aot.ru/test'), 'aot.ru/test')
         self.assertEqual(strip_scheme_and_query('https://xn--80agabx3af.xn--p1ai/'), 'дагогни.рф')
+
+    def test_url_modifications(self):
+        m = sorted(list(get_url_modifications('http://aot.ru')))
+        self.assertListEqual(['http://aot.ru', 'http://www.aot.ru'], m)
+
+        m = sorted(list(get_url_modifications('aot.ru')))
+        self.assertListEqual(['http://aot.ru', 'http://www.aot.ru', 'https://aot.ru', 'https://www.aot.ru'], m)

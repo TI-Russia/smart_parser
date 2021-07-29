@@ -1,5 +1,6 @@
 from common.recognizer_enum import DL_RECOGNIZER_ENUM
-from common.primitives import strip_viewer_prefix, urlsplit_pro
+from common.urllib_parse_pro import urlsplit_pro, strip_viewer_prefix
+
 
 import re
 

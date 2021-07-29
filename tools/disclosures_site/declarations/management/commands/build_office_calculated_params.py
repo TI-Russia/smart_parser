@@ -1,7 +1,7 @@
 from web_site_db.web_sites import TDeclarationWebSiteList
 from common.logging_wrapper import setup_logging
 import declarations.models as models
-from common.primitives import TUrlUtf8Encode
+from common.urllib_parse_pro import TUrlUtf8Encode
 
 from django.core.management import BaseCommand
 from django.db import connection

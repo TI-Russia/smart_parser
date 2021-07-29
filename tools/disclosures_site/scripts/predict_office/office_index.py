@@ -1,4 +1,4 @@
-from common.primitives import TUrlUtf8Encode
+from common.urllib_parse_pro import TUrlUtf8Encode
 from common.russian_regions import TRussianRegions
 
 import re

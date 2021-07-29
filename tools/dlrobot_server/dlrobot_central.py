@@ -1,6 +1,7 @@
 from ConvStorage.conversion_client import TDocConversionClient
 from dlrobot_server.common_server_worker import DLROBOT_HTTP_CODE, TTimeouts, TYandexCloud, DLROBOT_HEADER_KEYS, PITSTOP_FILE
-from common.primitives import convert_timeout_to_seconds, check_internet, TUrlUtf8Encode
+from common.primitives import convert_timeout_to_seconds, check_internet
+from common.urllib_parse_pro import TUrlUtf8Encode
 from common.content_types import ACCEPTED_DOCUMENT_EXTENSIONS
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from web_site_db.remote_call import TRemoteDlrobotCall, TRemoteDlrobotCallList

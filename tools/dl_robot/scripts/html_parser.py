@@ -1,4 +1,4 @@
-from common.primitives import get_site_domain_wo_www
+from common.urllib_parse_pro import get_site_domain_wo_www
 import argparse
 from bs4 import BeautifulSoup
 from common.http_request import THttpRequester

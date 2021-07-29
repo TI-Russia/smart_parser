@@ -6,7 +6,8 @@ from smart_parser_http.smart_parser_server import TSmartParserHTTPServer
 from source_doc_http.source_doc_server import TSourceDocHTTPServer
 from web_site_db.web_site_status import TWebSiteReachStatus
 from web_site_db.web_sites import TDeclarationRounds
-from common.primitives import build_dislosures_sha256, is_local_http_port_free, TUrlUtf8Encode
+from common.primitives import build_dislosures_sha256, is_local_http_port_free
+from common.urllib_parse_pro import TUrlUtf8Encode
 from common.archives import TDearchiver
 from unittest import TestCase
 from disclosures_site.scripts.join_human_and_dlrobot import TJoiner

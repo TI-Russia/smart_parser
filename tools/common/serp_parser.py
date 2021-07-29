@@ -1,6 +1,6 @@
 from common.download import TDownloadEnv
 from selenium.webdriver.common.keys import Keys
-from common.primitives import strip_scheme_and_query
+from common.urllib_parse_pro import strip_scheme_and_query
 from common.selenium_driver import TSeleniumDriver
 
 from unidecode import unidecode

@@ -1,6 +1,6 @@
 from dlrobot_server.common_server_worker import DLROBOT_HTTP_CODE, TTimeouts, PITSTOP_FILE, DLROBOT_HEADER_KEYS
 from common.logging_wrapper import setup_logging
-from common.primitives import TUrlUtf8Encode
+from common.urllib_parse_pro import TUrlUtf8Encode
 
 import argparse
 import os

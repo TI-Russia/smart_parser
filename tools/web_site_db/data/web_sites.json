@@ -1588,8 +1588,7 @@
         "http_protocol": "https"
     },
     "vologdazso.ru": {
-        "calc_office_id": 545,
-        "status": "abandoned"
+        "calc_office_id": 545
     },
     "zaksob.ru": {
         "calc_office_id": 554,

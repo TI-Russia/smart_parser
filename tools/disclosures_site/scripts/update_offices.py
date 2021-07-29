@@ -1,5 +1,5 @@
 from web_site_db.web_sites import TDeclarationWebSiteList
-from common.primitives import get_site_domain_wo_www
+from common.urllib_parse_pro import get_site_domain_wo_www
 from common.russian_regions import TRussianRegions
 from common.logging_wrapper import setup_logging
 
