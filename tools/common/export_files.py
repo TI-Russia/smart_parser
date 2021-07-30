@@ -1,7 +1,7 @@
 from common.primitives import build_dislosures_sha256
 from common.archives import TDearchiver
 from common.download import ACCEPTED_DECLARATION_FILE_EXTENSIONS, TDownloadEnv, TDownloadedFile
-from common.content_types import DEFAULT_HTML_EXTENSION, DEFAULT_PDF_EXTENSION
+from common.content_types import DEFAULT_HTML_EXTENSION, DEFAULT_PDF_EXTENSION, file_extension_by_file_contents
 from DeclDocRecognizer.dlrecognizer import run_dl_recognizer, DL_RECOGNIZER_ENUM
 from common.link_info import TLinkInfo
 
@@ -108,6 +108,7 @@ class TExportEnvironment:
     # todo: do not save file copies
     def export_one_file_or_send_to_conversion(self, url, cached_file, extension, link_info):
         if extension not in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
+            self.logger.debug('skip export {}, because it has a bad file extension')
             return
         index = self.sent_to_export_files_count
         self.sent_to_export_files_count += 1
@@ -163,6 +164,8 @@ class TExportEnvironment:
     def export_selenium_doc_if_relevant(self, link_info: TLinkInfo):
         cached_file = link_info.downloaded_file
         extension = os.path.splitext(cached_file)[1]
+        if len(extension) == 0:
+            extension = file_extension_by_file_contents(cached_file)
         self.export_one_file_or_send_to_conversion(link_info.source_url, cached_file, extension, link_info)
 
     # more than 1 document in archive are declarations
