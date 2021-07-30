@@ -1,72 +1,25 @@
-from common.urllib_parse_pro import urlsplit_pro, strip_scheme_and_query, TUrlUtf8Encode, get_url_modifications
+import os
+
+from common.content_types import file_extension_by_file_contents
 from unittest import TestCase
 
 
-class TestUrlParse(TestCase):
+class TestFileExtensionByFileContent(TestCase):
 
-    def test_idna_basic(self):
-        def check(s):
-            idna = TUrlUtf8Encode.to_idna(s)
-            s1 = TUrlUtf8Encode.from_idna(idna)
-            self.assertEqual(s, s1)
-        check("дом.рф")
-        check("дом.рф:443")
-        check("дом.рф.txt") # we use it for file names (without path)
+    def test_lib_magic(self):
+        def check(file_path):
+            file_path = os.path.join(os.path.dirname(__file__), file_path)
+            predicted_extension = file_extension_by_file_contents(file_path)
+            _, file_extension = os.path.splitext(file_path)
+            self.assertEqual(file_extension, predicted_extension)
 
-    def test_idna_url(self):
-        def check(s):
-            idna = TUrlUtf8Encode.convert_url_to_idna(s)
-            s1 = TUrlUtf8Encode.convert_url_from_idna(idna)
-            self.assertEqual(s, s1)
-        check("дом.рф/html.html")
-        check("http://дом.рф/html.html")
-        check("http://дом.рф")
-
-        self.assertEqual(TUrlUtf8Encode.convert_url_from_idna('xn--80agabx3af.xn--p1ai'), 'дагони.рф')
-
-    def test_idna_exception(self):
-        bad_idna_string = ".bad_domain"  # error in encoding
-        s = TUrlUtf8Encode.to_idna(bad_idna_string)
-        self.assertEqual(s, bad_idna_string)
-
-    def test_idna_url(self):
-        s = "https://xn----7sbabb9bafefpyi3bm2b9a2gra.xn--p1ai/a.href"
-        u = TUrlUtf8Encode.convert_url_from_idna(s)
-        self.assertEqual("https://батайск-официальный.рф/a.href", u)
-
-    def test_url_split(self):
-        self.assertEqual(urlsplit_pro('http://petushki.info').netloc, 'petushki.info')
-        self.assertEqual(urlsplit_pro('https://petushki.info').netloc, 'petushki.info')
-        self.assertEqual(urlsplit_pro('ftp://petushki.info').netloc, 'petushki.info')
-        self.assertEqual(urlsplit_pro('mailto://petushki.info').netloc, 'petushki.info')
-        self.assertEqual(urlsplit_pro('http://petushki.info:99').netloc, 'petushki.info:99')
-
-        self.assertEqual(urlsplit_pro('https:////petushki.info').netloc, 'petushki.info')
-        self.assertEqual(urlsplit_pro('petushki.info').netloc, 'petushki.info')
-        self.assertEqual(urlsplit_pro('//petushki.info').netloc, 'petushki.info')
-
-        self.assertEqual(urlsplit_pro('https:////petushki.info/test').netloc, 'petushki.info')
-        self.assertEqual(urlsplit_pro('petushki.info/test').netloc, 'petushki.info')
-        self.assertEqual(urlsplit_pro('//petushki.info/test').netloc, 'petushki.info')
-
-        self.assertEqual(urlsplit_pro('дагогни.рф').netloc, 'дагогни.рф')
-        self.assertEqual(urlsplit_pro('дагогни.рф/test').netloc, 'дагогни.рф')
-        self.assertEqual(urlsplit_pro('http://дагогни.рф/test').netloc, 'дагогни.рф')
-
-        self.assertEqual(urlsplit_pro('https://xn--80agabx3af.xn--p1ai').netloc, 'xn--80agabx3af.xn--p1ai')
-        self.assertEqual(urlsplit_pro('xn--80agabx3af.xn--p1ai').netloc, 'xn--80agabx3af.xn--p1ai')
-        self.assertEqual(urlsplit_pro('xn--80agabx3af.xn--p1ai/test').netloc, 'xn--80agabx3af.xn--p1ai')
-
-    def test_url_strip(self):
-        self.assertEqual(strip_scheme_and_query('https://aot.ru/test'), 'aot.ru/test')
-        self.assertEqual(strip_scheme_and_query('https://www.aot.ru/test'), 'aot.ru/test')
-        self.assertEqual(strip_scheme_and_query('www.aot.ru/test'), 'aot.ru/test')
-        self.assertEqual(strip_scheme_and_query('www.aot.ru/test'), 'aot.ru/test')
-        self.assertEqual(strip_scheme_and_query('https://xn--80agabx3af.xn--p1ai/'), 'дагогни.рф')
-
-    def test_url_modifications(self):
-        m = sorted(list(get_url_modifications('http://aot.ru')))
-        self.assertListEqual(['http://aot.ru', 'http://www.aot.ru'], m)
-
-        m = sorted(list(get_url_modifications('aot.ru')))
-        self.assertListEqual(['http://aot.ru', 'http://www.aot.ru', 'https://aot.ru', 'https://www.aot.ru'], m)
+        check('web_sites/pdf/sved.pdf')
+        check('web_sites/admkrsk2/clerk/incomes/Lists/supreme/Attachments/92/Одинцов2020.docx')
+        check('web_sites/unrar/file.rar')
+        check('web_sites/archives/sved.docx.zip')
+        check('../../DeclDocRecognizer/regression_tests/3223.doc')
+        check('web_sites/archives/sved.docx.7z')
+        check('../../DeclDocRecognizer/regression_tests/simple_minus.rtf')
+        check('../../DeclDocRecognizer/regression_tests/3384_0.xls')
+        check('../../DeclDocRecognizer/regression_tests/35078_3.xlsx')
+        check('web_sites/khabkrai/sved.html')

@@ -1,16 +1,16 @@
 from dl_robot.tests.selenium_for_tests import TestDeclarationLinkSelenium
 
 
-class Kolomna2(TestDeclarationLinkSelenium):
+class TestMid(TestDeclarationLinkSelenium):
 
     def setUp(self):
-        super().setUp("web_sites/kolomnagrad2")
+        super().setUp("web_sites/mid")
 
     def tearDown(self):
         super().tearDown()
 
-    def test_kolomnagrad2(self):
-        found_links = self.collect_links_selenium('https://kolomnagrad.ru/index.php?do=download&id=3005')
-        found_links = dict((k, v) for k, v in found_links.items() if k.find('svedeniya-o-dohodah') != -1)
-        #self.canonize_links(found_links, 'web_sites/kolomnagrad2/found_links')
-        self.compare_to_file(found_links, 'web_sites/kolomnagrad2/found_links')
+    def test_mid(self):
+        url = 'https://www.mid.ru/activity/corruption/incomes/-/asset_publisher/bFsmjKXYVJ9O/content/id/1276672'
+        found_links = self.collect_links_selenium(url, is_last_step=True)
+        downloaded_files = list(k for k in found_links.keys() if k.find('/downloads/') != -1)
+        self.assertEqual(1, len(downloaded_files))

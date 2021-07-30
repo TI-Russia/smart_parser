@@ -19,7 +19,7 @@ from functools import partial
 
 class TestDeclarationLinkSelenium(TestCase):
 
-    def collect_links_selenium(self, start_url):
+    def collect_links_selenium(self, start_url, is_last_step=False):
 
         TDownloadEnv.clear_cache_folder()
         robot_steps = [
@@ -35,7 +35,7 @@ class TestDeclarationLinkSelenium(TestCase):
             office_info.create_export_folder()
             office_info.url_nodes[start_url] = TUrlInfo(title="", step_name=None)
 
-            step_info = TRobotStep(office_info, **robot_steps[0])
+            step_info = TRobotStep(office_info, **robot_steps[0], is_last_step=is_last_step)
             step_info.pages_to_process[start_url] = 0
             step_info.processed_pages = set()
             step_info.apply_function_to_links(TRobotStep.looks_like_a_declaration_link)
