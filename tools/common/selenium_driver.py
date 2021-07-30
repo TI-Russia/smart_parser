@@ -92,9 +92,10 @@ class TSeleniumDriver:
 
         }
         options.add_experimental_option('prefs', prefs)
-        os.environ['LANG'] = 'ru'
+        save_LANG = os.environ.get('LANG')
         for retry in range(self.start_retry_count):
             try:
+                os.environ['LANG'] = 'ru'
                 self.the_driver = webdriver.Chrome(options=options,
                                                    #service_args=["--verbose", "--log-path=geckodriver.log"],
                                                    service_args=["--log-path=geckodriver.log"],
@@ -106,6 +107,8 @@ class TSeleniumDriver:
                     raise
                 self.logger.error("Cannot start selenium, exception:{}, sleep and retry...".format(str(exp)))
                 time.sleep(10)
+            finally:
+                os.environ['LANG'] = save_LANG
 
     def stop_executable(self):
         if self.the_driver is not None:

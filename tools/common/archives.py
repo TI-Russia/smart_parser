@@ -1,12 +1,13 @@
+from common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_ZIP_EXTENSION, DEFAULT_RAR_EXTENSION, \
+    DEFAULT_7Z_EXTENSION
+
 import zipfile
 import os
 import shutil
-from common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_ZIP_EXTENSION, DEFAULT_RAR_EXTENSION, \
-    DEFAULT_7Z_EXTENSION
-import tempfile
+
 
 if shutil.which('unrar') is None:
-    raise Exception("cannot find unrar (Copyright (c) 1993-2017 Alexander Roshal),\n sudo apt intall unrar")
+    raise Exception("cannot find unrar (Copyright (c) 1993-2017 Alexander Roshal),\n sudo apt install unrar")
 
 FILE_EXTENSIONS_IN_ARCHIVE = set()
 FILE_EXTENSIONS_IN_ARCHIVE.update(ACCEPTED_DECLARATION_FILE_EXTENSIONS)
@@ -22,6 +23,7 @@ class TDearchiver:
             self.logger.error("export folder {} must exist before calling TDearchiver".format(outfolder))
             os.makedirs(self.outfolder, exist_ok=True)
 
+
     def unzip_one_archive(self, input_file, main_index):
         global FILE_EXTENSIONS_IN_ARCHIVE
         with zipfile.ZipFile(input_file) as zf:
@@ -35,9 +37,29 @@ class TDearchiver:
                 zf.extract(zipinfo, path=self.outfolder)
                 yield archive_index, old_file_name, os.path.join(self.outfolder, zipinfo.filename)
 
-    def process_temp_folder(self, temp_folder, main_index):
-        global FILE_EXTENSIONS_IN_ARCHIVE
-        for archive_index, filename in enumerate(os.listdir(temp_folder)):
+    def _dearchive_one_archive_template(self, input_file, main_index, dearchive_template_str):
+        input_file = os.path.abspath(input_file)
+        temp_folder = os.path.abspath(os.path.join(self.outfolder, "dearchive_temp"))
+        if os.path.exists(temp_folder):
+            shutil.rmtree(temp_folder)
+        os.makedirs(temp_folder, exist_ok=True)
+        log_path = "log.log"
+        cmd = "cd {}; {} {} > {}".format(temp_folder, dearchive_template_str, input_file, log_path)
+        self.logger.debug(cmd)
+        os.system(cmd)
+
+        archive_files = os.listdir(temp_folder)
+        if len(archive_files) == 1:  #only log file
+            log_file_path = os.path.join(temp_folder, log_path)
+            try:
+                with open(log_file_path) as inp:
+                    log_contents = inp.read()
+                self.logger.error(log_contents.replace("\n", " "))
+            except Exception as exp:
+                pass
+
+        cnt = 0
+        for archive_index, filename in enumerate(archive_files):
             _, file_extension = os.path.splitext(filename)
             file_extension = file_extension.lower()
             if file_extension not in FILE_EXTENSIONS_IN_ARCHIVE:
@@ -45,43 +67,24 @@ class TDearchiver:
             normalized_file_name = os.path.join(self.outfolder, "{}_{}{}".format(main_index, archive_index, file_extension))
             try:
                 shutil.move(os.path.join(temp_folder, filename), normalized_file_name)
+                cnt += 1
                 yield archive_index, filename, normalized_file_name
             except Exception as e:
                 self.logger.error("cannot move file N {} (file name encoding?)".format(archive_index))
         shutil.rmtree(temp_folder)
 
-    def unrar_one_archive(self, input_file, main_index):
-        temp_folder = os.path.join(self.outfolder, "unrar_temp")
-        if os.path.exists(temp_folder):
-            shutil.rmtree(temp_folder)
-        os.makedirs(temp_folder, exist_ok=True)
-        handle, logfile = tempfile.mkstemp(prefix='unrar')
-        os.close(handle)
-        cmd = "unrar e -o+ -y {} {} >{}".format(input_file, temp_folder, logfile)
-        self.logger.debug(cmd)
-        os.system(cmd)
-        cnt = 0
-        for x in self.process_temp_folder(temp_folder, main_index):
-            yield x
-            cnt += 1
         self.logger.debug("extracted {} files from {}".format(cnt, input_file))
-        os.unlink(logfile)
+
+    def unrar_one_archive(self, input_file, main_index):
+        for x in self._dearchive_one_archive_template(input_file, main_index, "unrar e -o+ -y"):
+            yield x
 
     def un7z_one_archive(self, input_file, main_index):
-        temp_folder = os.path.join(self.outfolder, "un7z_temp")
-        if os.path.exists(temp_folder):
-            shutil.rmtree(temp_folder)
-        os.mkdir(temp_folder)
-        seven_z_binary = "7z"
         if os.name == "nt":
-           seven_z_binary = "C:/cygwin64/lib/p7zip/7z.exe"
-        handle, logfile = tempfile.mkstemp(prefix='7zlog')
-        os.close(handle)
-        cmd = "{} e -bb -y -o{} {} >{}".format(seven_z_binary, temp_folder, input_file.replace("\\", "/"), logfile)
-        self.logger.debug(cmd)
-        os.system(cmd)
-        os.unlink(logfile)
-        for x in self.process_temp_folder(temp_folder, main_index):
+            cmd = 'C:/cygwin64/lib/p7zip/7z.exe e -bb -y'
+        else:
+            cmd = '7z e -bb -y'
+        for x in self._dearchive_one_archive_template(input_file.replace("\\", "/"), main_index, cmd):
             yield x
 
     @staticmethod

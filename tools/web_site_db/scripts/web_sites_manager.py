@@ -42,6 +42,9 @@ class TWebSitesManager:
         THttpRequester.initialize(self.logger)
 
     def check_web_site_filters(self, site_url):
+        if site_url.strip() == "":
+            return False
+
         if self.args.filter_regex is not None:
             if re.search(self.args.filter_regex, site_url) is None:
                 return False
