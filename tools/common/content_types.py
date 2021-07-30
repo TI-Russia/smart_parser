@@ -1,3 +1,6 @@
+import magic
+import mimetypes
+
 DEFAULT_HTML_EXTENSION = ".html"
 DEFAULT_ZIP_EXTENSION = ".zip"
 DEFAULT_RAR_EXTENSION = ".rar"
@@ -792,3 +795,16 @@ def file_extension_to_content_type(file_extension, default_content_type='applica
 
 def is_video_or_audio_file_extension(file_extension):
     return file_extension == VIDEO_FILE_EXTENSION or file_extension == AUDIO_FILE_EXTENSION
+
+
+def file_extension_by_file_contents(file_path):
+    m = magic.from_file(file_path, mime=True)
+    if m == 'application/x-rar':
+        e = '.rar'
+    elif m == 'text/rtf':
+        e = '.rtf'
+    else:
+        e = mimetypes.guess_extension(m)
+    if e is None:
+        e = ''
+    return e

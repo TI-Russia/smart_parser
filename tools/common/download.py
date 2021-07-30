@@ -1,5 +1,6 @@
 from common.http_request import THttpRequester
-from common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
+from common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION, \
+    file_extension_by_file_contents
 
 from ConvStorage.conversion_client import TDocConversionClient
 from common.primitives import build_dislosures_sha256
@@ -82,7 +83,6 @@ def convert_html_to_utf8_using_content_charset(content_charset, html_data):
         raise ValueError('unable to find encoding')
 
 
-
 def get_content_charset(headers):
     if hasattr(headers, "_headers"):
         # from urllib, headers is class Message
@@ -102,6 +102,8 @@ def save_downloaded_file(filename):
     assert (os.path.exists(filename))
     sha256 = build_dislosures_sha256(filename)
     file_extension = os.path.splitext(filename)[1]
+    if file_extension == '':
+        file_extension = file_extension_by_file_contents(filename)
     saved_filename = os.path.join(download_folder, sha256 + file_extension)
     if TDownloadEnv.logger is not None:
         TDownloadEnv.logger.debug("save file {} as {}".format(filename, saved_filename))
