@@ -244,19 +244,19 @@ class TRobotStep:
     def check_anticorr_link_text(self, link_info: TLinkInfo):
         text = link_info.anchor_text.strip().lower()
         if text.find('антикоррупционная комиссия') != -1:
-            link_info.weight = 5
+            link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
             return True
 
         if text.startswith(u'противодействие') or text.startswith(u'борьба') or text.startswith(u'нет'):
             if text.find("коррупц") != -1:
-                link_info.weight = 5
+                link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
                 return True
         return False
 
     def check_anticorr_link_text_2(self, link_info: TLinkInfo):
         text = link_info.anchor_text.strip().lower()
         if text.find("отчеты") != -1:
-            link_info.weight = 5
+            link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
             return True
         return False
 
