@@ -16,7 +16,7 @@ NEGATIVE_WORDS = [
     'схема',    'концепция',    'доктрина',
     'технические',    '^федеральный',    '^историческ',
     '^закон',    'новости', "^формы", "обратная", "обращения",
-    "^перечень", "прочие", "слабовидящих",
+    "^перечень", "прочие", "слабовидящих", "выступление", "вступительное"
 ] + ['^.{{0,10}}{}'.format(t) for t in SOME_OTHER_DOCUMENTS]
 # document type (SOME_OTHER_DOCUMENTS)  (указ, утверждена) can be inside the title, for example:
 #сведения о доходах, об имуществе и обязательствах имущественного характера, представленные руководителями федеральных государственных учреждений, находящихся в ведении министерства здравоохранения российской федерации за отчетный период с 1 января 2012 года по 31 декабря 2012 года, подлежащих размещению на официальном сайте министерства здравоохранения российской федерации в соответствии порядком размещения указанных сведений на официальных сайтах федеральных государственных органов, утвержденным указом президента российской федерации от 8 июля 2013 г. № 613
@@ -75,16 +75,11 @@ def looks_like_a_document_link(logger, link_info: TLinkInfo):
             return False
         if target_url.endswith('.jpg') or target_url.endswith('.png'):
             return False
-        try:
-            # think that www.example.com/aaa/aa is always an html
-            if link_info.url_query == "":
-                return False
-            ext = get_file_extension_only_by_headers(link_info.target_url)
-            return ext != DEFAULT_HTML_EXTENSION and ext in ACCEPTED_DECLARATION_FILE_EXTENSIONS
-        except THttpRequester.RobotHttpException as err:
-            if err.count == 1:
-                logger.error(err)
+        if link_info.url_query == "":
             return False
+        # think that www.example.com/aaa/aa is always an html
+        ext = get_file_extension_only_by_headers(link_info.target_url)
+        return ext != DEFAULT_HTML_EXTENSION and ext in ACCEPTED_DECLARATION_FILE_EXTENSIONS
 
     return False
 

@@ -767,9 +767,9 @@ def content_type_to_file_extension(content_type):
     elif content_type.startswith("image/"):
         return ".some_image_format"
     elif content_type.startswith("audio/"):
-        return ".some_audio_format"
+        return AUDIO_FILE_EXTENSION
     elif content_type.startswith("video/"):
-        return ".some_video_format"
+        return VIDEO_FILE_EXTENSION
     else:
         return DEFAULT_HTML_EXTENSION
 
@@ -794,7 +794,15 @@ def file_extension_to_content_type(file_extension, default_content_type='applica
 
 
 def is_video_or_audio_file_extension(file_extension):
-    return file_extension == VIDEO_FILE_EXTENSION or file_extension == AUDIO_FILE_EXTENSION
+    if  file_extension == VIDEO_FILE_EXTENSION or file_extension == AUDIO_FILE_EXTENSION:
+        return True
+    if file_extension is None or len(file_extension) == 0:
+        return False
+    mtype,_ = mimetypes.guess_type("test" + file_extension)
+    if mtype is not None and (mtype.startswith('video') or mtype.startswith('audio')):
+        return True
+    return False
+
 
 
 def file_extension_by_file_contents(file_path):

@@ -51,7 +51,7 @@ class TestDeclarationLinkSelenium(TestCase):
             return links
 
     def setUp(self, website_folder):
-        TRobotStep.check_local_address = True
+        #TRobotStep.check_local_address = True
         name = os.path.basename(website_folder)
         self.data_folder = os.path.join(os.path.dirname(__file__), "data.{}".format(name))
         if os.path.exists(self.data_folder):
