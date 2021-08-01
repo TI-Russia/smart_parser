@@ -110,4 +110,4 @@ class TestFileCache(TestCase):
         if codes != canon_result:
             print("test_request_too_many_404 is going to fail")
             print("THttpRequester.ALL_HTTP_REQUEST={}".format(str(THttpRequester.ALL_HTTP_REQUEST)))
-        self.assertSequenceEqual(codes, canon_result)
+        self.assertSequenceEqual(canon_result, codes)

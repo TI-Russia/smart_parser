@@ -16,6 +16,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--firefox", dest='use_firefox', required=False, action="store_true", default=False)
     parser.add_argument("--gui", dest='gui', required=False, action="store_true", default=False)
+    parser.add_argument("--verbose", dest='verbose', required=False, action="store_true", default=False)
     parser.add_argument("--action", dest='action', required=False, default="title",
                         help="can be title, links, click, speed, head default action is title")
     parser.add_argument("--element-index", dest='element_index', required=False, type=int, default=0)
@@ -85,7 +86,7 @@ if __name__ == '__main__':
             os.makedirs(args.download_folder)
         args.download_folder = os.path.abspath(args.download_folder)
     driver = TSeleniumDriver(logger, headless=(not args.gui), download_folder=args.download_folder,
-                             loglevel="DEBUG", start_retry_count=1, use_chrome=use_chrome)
+                             loglevel="DEBUG", start_retry_count=1, use_chrome=use_chrome, verbose=args.verbose)
     driver.start_executable()
     if len(args.urls) > 0:
         url = args.urls[0]

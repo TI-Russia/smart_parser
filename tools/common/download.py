@@ -245,12 +245,32 @@ class TDownloadedFile:
 
 # use it preliminary, because ContentDisposition and Content-type often contain errors
 def get_file_extension_only_by_headers(url):
+    try:
+        # think that www.example.com/aaa/aa is always an html
+        _, headers = THttpRequester.request_url_headers_with_global_cache(url)
+        ext = THttpRequester.get_file_extension_by_content_type(headers)
+        return ext
+    except THttpRequester.RobotHttpException as err:
+        return None
+
+
+# use it preliminary, because ContentDisposition and Content-type often contain errors
+def get_file_size_by_http_headers(url):
     _, headers = THttpRequester.request_url_headers_with_global_cache(url)
-    ext = THttpRequester.get_file_extension_by_content_type(headers)
-    return ext
+    len = headers.get('content-length', headers.get('Content-Length', 0))
+    return int(len)
 
 
-def are_mirrors_by_html(url1, url2):
+def have_the_same_content_length(url1, url2):
+    try:
+        len1 = get_file_size_by_http_headers(url1)
+        len2 = get_file_size_by_http_headers(url2)
+        return len1 == len2 and len1 > 0  # these urls are hyperlinked, so it is enough
+    except THttpRequester.RobotHttpException as exp:
+        return False
+
+
+def have_the_same_html(url1, url2):
     try:
         # check all mirrors including simple javascript
         html1 = TDownloadedFile(url1).data
@@ -259,3 +279,4 @@ def are_mirrors_by_html(url1, url2):
         return res
     except THttpRequester.RobotHttpException as exp:
         return False
+

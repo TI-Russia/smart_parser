@@ -1,9 +1,8 @@
-import urllib.parse
-
 from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
 from common.selenium_driver import TSeleniumDriver
 from web_site_db.web_site_status import TWebSiteReachStatus
 from common.export_files import TExportFile
+from web_site_db.web_sites import TDeclarationWebSiteList
 
 import json
 import shutil
@@ -24,13 +23,14 @@ class TRobotProject:
         self.visited_pages_file = filename + TRobotProject.visited_pages_extension
         self.click_paths_file = filename + ".click_paths"
         self.result_summary_file = filename + ".result_summary"
-        if not os.path.exists(self.visited_pages_file):
+        if len(filename)  > 0 and not os.path.exists(self.visited_pages_file):
             shutil.copy2(filename, self.visited_pages_file)
         self.web_site_snapshots = list()
         self.robot_step_passports = robot_step_passports
         self.enable_search_engine = enable_search_engine  #switched off in tests, otherwize google shows captcha
         self.export_folder = export_folder
         self.enable_selenium = enable_selenium
+        self.web_sites_db = TDeclarationWebSiteList(self.logger).load_from_disk()
 
     def have_time_for_last_dl_recognizer(self):
         if self.total_timeout == 0:
@@ -140,6 +140,7 @@ class TRobotProject:
 
     def add_web_site(self, morda_url):
         self.web_site_snapshots.append(TWebSiteCrawlSnapshot(self, morda_url=morda_url))
+        return self.web_site_snapshots[-1]
 
     def read_project(self, check_step_names=True):
         self.web_site_snapshots = list()

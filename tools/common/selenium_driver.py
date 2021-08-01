@@ -1,12 +1,13 @@
 from common.download import save_downloaded_file
 from common.link_info import TLinkInfo
-from common.content_types import ALL_CONTENT_TYPES
+from common.content_types import ALL_CONTENT_TYPES, is_video_or_audio_file_extension
 from common.http_request import THttpRequester
 
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options as FirefoxOptions
 from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException, TimeoutException
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options as ChromeOptions
 
 import os
@@ -30,7 +31,7 @@ def make_folder_empty(folder):
 class TSeleniumDriver:
 
     def __init__(self, logger, headless=True, download_folder=None, loglevel=None,
-                 scroll_to_bottom_and_wait_more_results=True, start_retry_count=3, use_chrome=True):
+                 scroll_to_bottom_and_wait_more_results=True, start_retry_count=3, use_chrome=True, verbose=False):
         self.logger = logger
         self.the_driver: webdriver.WebDriver = None
         self.driver_processed_urls_count = 0
@@ -38,6 +39,7 @@ class TSeleniumDriver:
         assert download_folder != "."
         self.headless = headless
         self.loglevel = loglevel
+        self.verbose = verbose
         self.use_chrome = use_chrome
         self.start_retry_count = start_retry_count
         self.scroll_to_bottom_and_wait_more_results = scroll_to_bottom_and_wait_more_results
@@ -93,13 +95,13 @@ class TSeleniumDriver:
         }
         options.add_experimental_option('prefs', prefs)
         save_LANG = os.environ.get('LANG')
+        service_args = ["--log-path=geckodriver.log"]
+        if self.verbose:
+            service_args.append("--verbose")
         for retry in range(self.start_retry_count):
             try:
                 os.environ['LANG'] = 'ru'
-                self.the_driver = webdriver.Chrome(options=options,
-                                                   #service_args=["--verbose", "--log-path=geckodriver.log"],
-                                                   service_args=["--log-path=geckodriver.log"],
-                                                )
+                self.the_driver = webdriver.Chrome(options=options, service_args=service_args)
                 self.the_driver.set_window_size(1440, 900)
                 break
             except (WebDriverException, InvalidSwitchToTargetException) as exp:
@@ -218,22 +220,30 @@ class TSeleniumDriver:
         assert link_info.target_url is None
         save_current_url = self.the_driver.current_url  # may differ from link_info.SourceUrl, because of redirects
 
-        ActionChains(self.the_driver).move_to_element(element)
+        ActionChains(self.the_driver)\
+            .move_to_element(element)\
+            .pause(1)\
+            .key_down(Keys.CONTROL) \
+            .click(element)\
+            .key_up(Keys.CONTROL) \
+            .perform()
 
-        element.click()
-        time.sleep(6)
+        #print (element.)
+        time.sleep(3)
+
+        #element.click()
+        #time.sleep(6)
         if self.download_folder is not None:
             link_info.downloaded_file = self.wait_download_finished(180)
 
-        if link_info.downloaded_file is None:
-            if self.the_driver.current_url != link_info.source_url:
+        if len(self.the_driver.window_handles) > 1:
+            self.the_driver.switch_to.window(self.the_driver.window_handles[-1])
+            if self.the_driver.current_url != link_info.source_url and self.the_driver.current_url != 'about:blank':
                 link_info.set_target(self.the_driver.current_url, self.the_driver.title)
-        if self.the_driver.current_url != save_current_url:
-            self.the_driver.back()
-        if self.the_driver.current_url != save_current_url:
-            self.the_driver.get(link_info.source_url)  # hope it leads to save_current_url
-            if save_current_url != link_info.source_url:
-                self.logger.debug("cannot switch to the saved url must be {}, got {}, keep going".format(
+            self.the_driver.close()
+            self.the_driver.switch_to.window(self.the_driver.window_handles[0])
+            if self.the_driver.current_url != save_current_url:
+                self.logger.error("cannot switch to the saved url must be {}, got {}, keep going".format(
                     save_current_url, self.the_driver.current_url))
 
 

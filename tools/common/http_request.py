@@ -77,8 +77,9 @@ class TCurlResponse:
             return self.original_url
 
     def collect_http_headers(self, header_line):
-        header_line = header_line.decode('iso-8859-1')
-
+        header_line = header_line.decode('iso-8859-1').strip()
+        if header_line.startswith('HTTP/1') or header_line.startswith('HTTP/2'):
+            self.headers = dict() # a redirect  occurs, forget all headers
         # Ignore all lines without a colon
         if ':' not in header_line:
             return
@@ -390,6 +391,11 @@ class THttpRequester:
                 return curl_response.get_redirected_url(), curl_response.headers, curl_response.data
 
             raise THttpRequester.RobotHttpException(str(err), url, 520, method)
+        except THttpRequester.RobotHttpException as exp:
+                raise exp
+        except Exception as exp:
+            THttpRequester.logger.debug("unknown exception {}, curl url={}".format(exp, url))
+            raise THttpRequester.RobotHttpException(str(exp), url, 520, method)
 
     @staticmethod
     def request_url_headers_with_global_cache(url):
@@ -431,6 +437,7 @@ class THttpRequester:
                 return THttpRequester.make_http_request_urllib(url, method)
             elif THttpRequester.HTTP_LIB == "curl":
                 return THttpRequester.make_http_request_curl(url, method)
+                #return THttpRequester.make_http_request_urllib(url, method)
             elif THttpRequester.HTTP_LIB == "urllib3":
                 return THttpRequester.make_http_request_urllib3(url, method)
             else:

@@ -1,5 +1,5 @@
-from common.download import TDownloadedFile, DEFAULT_HTML_EXTENSION, are_mirrors_by_html, \
-            get_file_extension_only_by_headers
+from common.download import TDownloadedFile, DEFAULT_HTML_EXTENSION, have_the_same_content_length, \
+            get_file_extension_only_by_headers, have_the_same_html
 from common.primitives import prepare_for_logging
 from common.urllib_parse_pro import get_site_domain_wo_www, urlsplit_pro
 from common.html_parser import THtmlParser, get_html_title
@@ -9,6 +9,7 @@ from common.popular_sites import is_super_popular_domain
 from common.serp_parser import SearchEngine, SearchEngineEnum, SerpException
 from common.primitives import normalize_and_russify_anchor_text
 from dl_robot.declaration_link import looks_like_a_declaration_link_without_cache
+from common.content_types import is_video_or_audio_file_extension
 
 from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
 from collections import defaultdict
@@ -79,15 +80,30 @@ class TUrlInfo:
         self.linked_nodes[href] = record
 
 
-def get_office_domain(web_domain):
-    index = 2
-    if web_domain.endswith("gov.ru"):
-        index = 3 #minpromtorg.gov.ru
+def check_common_domain(web_domain1, web_domain2):
+    web_domain1 = web_domain1.lower()
+    web_domain2 = web_domain2.lower()
+    domains1 = list(web_domain1.split("."))
+    domains2 = list(web_domain2.split("."))
+    domains1.reverse()
+    domains2.reverse()
+    pairs = list(zip(domains1, domains2))
+    common_domains_cnt = 0
+    for i1, i2 in pairs:
+        if i1 != i2:
+            break
+        else:
+            common_domains_cnt += 1
+    min_common_domains_count = 2
+    if web_domain1.endswith("gov.ru") or web_domain2.endswith("gov.ru"):
+        min_common_domains_count = 3
 
-    return ".".join(web_domain.split(".")[-index:])
+    return common_domains_cnt >= min_common_domains_count
 
 
 def check_href_elementary(href):
+    if len(href) == 0:
+        return False
     if href.startswith('mailto:'):
         return False
     if href.startswith('tel:'):
@@ -98,9 +114,25 @@ def check_href_elementary(href):
         return False
     if href.startswith('consultantplus:'):
         return False
+    # spaces are not prohibited, but should be converted
+    if href.find('\n') != -1 or href.find('\t') != -1:
+        return False
     if href.startswith('#'):
         if not href.startswith('#!'): # it is a hashbang (a starter for AJAX url) http://minpromtorg.gov.ru/open_ministry/anti/
             return False
+    if href.find('?') != -1:
+        o = urlsplit_pro(href)
+        if o.query != '':
+            query = urllib.parse.parse_qs(o.query)
+            if 'print' in query:
+                return False
+            # khabkrai.ru
+            if 'special' in query.get('version', list()):
+                return False
+            # admkrsk.ru
+            if 'accessability' in query:
+                return False
+
     return True
 
 
@@ -173,48 +205,30 @@ class TRobotStep:
             new_step_urls[urls[-1].input_url] = max_weight  # get the longest url and max weight
         self.step_urls = new_step_urls
 
-    def web_link_is_absolutely_prohibited(self, source, href):
-        if len(href) == 0:
-            return True
-        if not check_href_elementary(href):
-            return True
-        if source.strip('/') == href.strip('/'):
-            return True
-
-        #spaces are not prohibited, but should be converted
-        if href.find('\n') != -1 or href.find('\t') != -1:
-            return True
+    def can_follow_this_link(self, source_url, target_url):
+        if not check_href_elementary(target_url):
+            return False
+        if source_url.strip('/') == target_url.strip('/'):
+            return False
 
         # http://adm.ugorsk.ru/about/vacancies/information_about_income/?SECTION_ID=5244&ELEMENT_ID=79278
-        # href = "/bitrix/redirect.php?event1=catalog_out&amp;event2=%2Fupload%2Fiblock%2Fb59%2Fb59f80e6eaf7348f74e713219c169a24.pdf&amp;event3=%D0%9F%D0%B5%D1%87%D0%B5%D0%BD%D0%B5%D0%B2%D0%B0+%D0%9D%D0%98.pdf&amp;goto=%2Fupload%2Fiblock%2Fb59%2Fb59f80e6eaf7348f74e713219c169a24.pdf" > Загрузить < / a > < / b > < br / >
-        # if href.find('redirect') != -1:
+        # target_url = "/bitrix/redirect.php?event1=catalog_out&amp;event2=%2Fupload%2Fiblock%2Fb59%2Fb59f80e6eaf7348f74e713219c169a24.pdf&amp;event3=%D0%9F%D0%B5%D1%87%D0%B5%D0%BD%D0%B5%D0%B2%D0%B0+%D0%9D%D0%98.pdf&amp;goto=%2Fupload%2Fiblock%2Fb59%2Fb59f80e6eaf7348f74e713219c169a24.pdf" > Загрузить < / a > < / b > < br / >
+        # if target_url.find('redirect') != -1:
         #    return True
 
-        if href.find('?'):
-            o = urlsplit_pro(href)
-            if o.query != '':
-                query = urllib.parse.parse_qs(o.query)
-                if 'print' in query:
-                    return True
-                # khabkrai.ru
-                if 'special' in query.get('version', list()):
-                    return True
-                # admkrsk.ru
-                if 'accessability' in query:
-                    return True
-
-        href_domain = get_site_domain_wo_www(href)
-        source_domain = get_site_domain_wo_www(source)
+        href_domain = get_site_domain_wo_www(target_url)
+        source_domain = get_site_domain_wo_www(source_url)
         if is_super_popular_domain(href_domain):
-            return True
+            return False
         href_domain = re.sub(':[0-9]+$', '', href_domain)  # delete port
         source_domain = re.sub(':[0-9]+$', '', source_domain)  # delete port
-
-        if get_office_domain(href_domain) != get_office_domain(source_domain) and (
-                not self.check_local_address or source_domain != "127.0.0.1"):
-            if not are_mirrors_by_html(source, href):
-                return True
-        return False
+        if source_domain == href_domain:
+            return True
+        if self.website.parent_project.web_sites_db.are_redirected_domains(source_domain, href_domain):
+            return True
+        if TRobotStep.check_local_address:
+            return True
+        return check_common_domain(source_domain, href_domain)
 
     def to_json(self):
         return {
@@ -230,19 +244,19 @@ class TRobotStep:
     def check_anticorr_link_text(self, link_info: TLinkInfo):
         text = link_info.anchor_text.strip().lower()
         if text.find('антикоррупционная комиссия') != -1:
-            link_info.weight = 5
+            link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
             return True
 
         if text.startswith(u'противодействие') or text.startswith(u'борьба') or text.startswith(u'нет'):
             if text.find("коррупц") != -1:
-                link_info.weight = 5
+                link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
                 return True
         return False
 
     def check_anticorr_link_text_2(self, link_info: TLinkInfo):
         text = link_info.anchor_text.strip().lower()
         if text.find("отчеты") != -1:
-            link_info.weight = 5
+            link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
             return True
         return False
 
@@ -259,15 +273,25 @@ class TRobotStep:
 
     def normalize_and_check_link(self, link_info: TLinkInfo, check_link_func):
         if link_info.target_url is not None:
-            if self.web_link_is_absolutely_prohibited(link_info.source_url, link_info.target_url):
+            if not self.can_follow_this_link(link_info.source_url, link_info.target_url):
                 return False
+
         self.logger.debug(
             "check element {}, url={} text={}".format(
                 link_info.element_index,
                 prepare_for_logging(link_info.target_url), # not redirected yet
                 prepare_for_logging(link_info.anchor_text)))
         try:
-            return check_link_func(self, link_info)
+            #language codes
+            if link_info.anchor_text.lower() in ['en', 'de', 'fr', 'es', 'pt', '中文', 'عربية']:
+                return False
+            if not check_link_func(self, link_info):
+                return False
+            if link_info.target_url is not None:
+                file_extension = get_file_extension_only_by_headers(link_info.target_url)
+                if is_video_or_audio_file_extension(file_extension):
+                    return False
+            return True
         except UnicodeEncodeError as exp:
             self.logger.debug(exp)
             return False
@@ -439,6 +463,9 @@ class TRobotStep:
             elif link_info.target_url is not None:
                 self.add_link_wrapper(link_info)
 
+    def link_must_be_clicked(self, link_info: TLinkInfo):
+        return re.search('скачать', link_info.anchor_text, re.IGNORECASE) is not None
+
     def click_all_selenium(self, main_url, check_link_func):
         self.logger.debug("find_links_with_selenium url={} ".format(main_url))
         THttpRequester.consider_request_policy(main_url, "GET_selenium")
@@ -448,15 +475,13 @@ class TRobotStep:
             return
         page_html = self.get_selenium_driver().the_driver.page_source
         if page_html is None:
-            self.logger.error("cannot get html source for url={}".format(main_url))
+            self.logger.error("cannot get html source_url for url={}".format(main_url))
             return
         self.logger.debug("html_size={}, elements_count={}".format(len(page_html), len(elements)))
         for element_index, element, in enumerate(elements):
             if element_index >= self.max_links_from_one_page:
                 break
             link_text = element['anchor'].strip('\n\r\t ') if element['anchor'] is not None else ""
-            mandatory_link = re.search('скачать', link_text, re.IGNORECASE) is not None
-
 
             href = element['href']
             link_info = TLinkInfo(TClickEngine.selenium,
@@ -467,24 +492,19 @@ class TRobotStep:
                                   element_index=element_index,
                                   element_class=[element.get('class')],
                                   source_page_title=self.get_selenium_driver().the_driver.title)
-
-            if link_info.target_url is not None and not mandatory_link:
-                if self.normalize_and_check_link(link_info, check_link_func):
-                    self.add_link_wrapper(link_info)
+            if not self.normalize_and_check_link(link_info, check_link_func):
+                continue
+            if link_info.target_url is None or self.link_must_be_clicked(link_info):
+                try:
+                    self.logger.debug("click element {}".format(element_index))
+                    self.click_selenium_if_no_href(main_url, element['id'], element_index, check_link_func)
+                except WebDriverException as exp:
+                    self.logger.debug("exception: {}".format(exp))
+                    if href is not None: #see gorsovet-podolsk in tests
+                        if self.normalize_and_check_link(link_info, check_link_func):
+                            self.add_link_wrapper(link_info)
             else:
-                only_anchor_text = TLinkInfo(
-                    TClickEngine.selenium, main_url, None,
-                    source_html=page_html, anchor_text=link_text,
-                    source_page_title=self.get_selenium_driver().the_driver.title)
-                if self.normalize_and_check_link(only_anchor_text, check_link_func):
-                    try:
-                        self.logger.debug("click element {}".format(element_index))
-                        self.click_selenium_if_no_href(main_url, element['id'], element_index, check_link_func)
-                    except WebDriverException as exp:
-                        self.logger.debug("exception: {}".format(exp))
-                        if href is not None: #see gorsovet-podolsk in tests
-                            if self.normalize_and_check_link(link_info, check_link_func):
-                                self.add_link_wrapper(link_info)
+                self.add_link_wrapper(link_info)
 
     def apply_function_to_links(self, check_link_func):
         assert len(self.pages_to_process) > 0
@@ -616,4 +636,4 @@ class TRobotStep:
         }
         self.logger.debug("{}".format(str(self.profiler)))
         self.delete_url_mirrors_by_www_and_protocol_prefix()
-        self.logger.info('{0} source links -> {1} target links'.format(len(start_pages), len(self.step_urls)))
+        self.logger.info('{0} source_url links -> {1} target links'.format(len(start_pages), len(self.step_urls)))

@@ -16,7 +16,7 @@ def get_url_modifications(url: str):
     else:
         protocols = ["http", "https"]
     if o.netloc.startswith("www."):
-        with_www = [True]
+        with_www = [False] # already has www
     else:
         with_www = [True, False]
     for only_with_www in with_www:

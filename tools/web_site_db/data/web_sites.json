@@ -1553,8 +1553,7 @@
     "duma.khv.ru": {
         "calc_office_id": 543,
         "status": "abandoned",
-        "http_protocol": "http",
-        "redirect_to": "gossov.tatarstan.ru"
+        "http_protocol": "http"
     },
     "duma-murman.ru": {
         "calc_office_id": 551,
@@ -1671,9 +1670,7 @@
     },
     "vorotynec.omsu-nnov.ru": {
         "calc_office_id": 1902,
-        "status": "abandoned",
-        "http_protocol": "http",
-        "redirect_to": "балахтинскийрайон.рф"
+        "http_protocol": "http"
     },
     "e-nkama.ru": {
         "calc_office_id": 1972,
@@ -1742,9 +1739,7 @@
     },
     "sengilej.ru": {
         "calc_office_id": 2404,
-        "status": "abandoned",
-        "http_protocol": "http",
-        "redirect_to": "tuapseregion.ru"
+        "http_protocol": "http"
     },
     "mihrayadm.ru": {
         "calc_office_id": 2586,
@@ -2134,9 +2129,7 @@
     },
     "zeladmin.ru": {
         "calc_office_id": 1730,
-        "status": "abandoned",
-        "http_protocol": "https",
-        "redirect_to": "tobolsk-mr.admtyumen.ru"
+        "http_protocol": "https"
     },
     "kanskadm.ru": {
         "calc_office_id": 1756,
@@ -2964,8 +2957,7 @@
     "vladimir-city.ru": {
         "calc_office_id": 2937,
         "status": "abandoned",
-        "http_protocol": "https",
-        "redirect_to": "sonkovo.ru"
+        "http_protocol": "https"
     },
     "sbnray.ru": {
         "calc_office_id": 2953,
@@ -2975,8 +2967,7 @@
     "kozelskadm.ru": {
         "calc_office_id": 2967,
         "status": "abandoned",
-        "http_protocol": "http",
-        "redirect_to": "sbnray.ru"
+        "http_protocol": "http"
     },
     "kotlas-city.ru": {
         "calc_office_id": 2983,
@@ -3191,15 +3182,12 @@
     },
     "kalmyk.izbirkom.ru": {
         "calc_office_id": 369,
-        "status": "abandoned",
         "http_protocol": "http",
-        "redirect_to": "26.rkn.gov.ru"
+        "title": "Избирательная комиссия Республики Калмыкия"
     },
     "mari-el.izbirkom.ru": {
         "calc_office_id": 373,
-        "status": "abandoned",
-        "http_protocol": "http",
-        "redirect_to": "26.rkn.gov.ru"
+        "http_protocol": "http"
     },
     "kirov.izbirkom.ru": {
         "calc_office_id": 406,
@@ -3208,9 +3196,8 @@
     },
     "novgorod.izbirkom.ru": {
         "calc_office_id": 416,
-        "status": "abandoned",
         "http_protocol": "http",
-        "redirect_to": "kirov.izbirkom.ru"
+        "title": "Избирательная комиссия Новгородской области"
     },
     "obrnadzor.gov.ru": {
         "calc_office_id": 500,
@@ -3221,7 +3208,8 @@
         "calc_office_id": 596,
         "status": "abandoned",
         "dlrobot_max_time_coeff": 2.0,
-        "http_protocol": "https"
+        "http_protocol": "https",
+        "redirect_to": "minzdrav.gov.ru"
     },
     "fano.gov.ru": {
         "calc_office_id": 4199,
@@ -3420,7 +3408,7 @@
         "calc_office_id": 1537,
         "status": "abandoned",
         "http_protocol": "http",
-        "redirect_to": "pushchino.ru/redirect"
+        "redirect_to": "pushchinocity.ru"
     },
     "парфинский.рф": {
         "calc_office_id": 1565,
@@ -3681,8 +3669,7 @@
     "dalmdr.ru": {
         "calc_office_id": 2708,
         "status": "abandoned",
-        "http_protocol": "https",
-        "redirect_to": "mo-lgo.ru"
+        "http_protocol": "https"
     },
     "primorsky.ru": {
         "calc_office_id": 2721,
@@ -6757,8 +6744,7 @@
     "atkarsk.moyaokruga.ru": {
         "calc_office_id": 2111,
         "status": "abandoned",
-        "http_protocol": "http",
-        "redirect_to": "connect.ok.ru"
+        "http_protocol": "http"
     },
     "marksadm.ru": {
         "calc_office_id": 2128,
@@ -7680,8 +7666,7 @@
     "mo-72.spb.ru": {
         "calc_office_id": 1266,
         "status": "abandoned",
-        "http_protocol": "https",
-        "redirect_to": "postroyka.volyn.ua/atributiofisa/rol-programmnogo-obespecheniya-pri-sozdanii-sistemi-izmereniya"
+        "http_protocol": "https"
     },
     "mo-balkanskiy.ru": {
         "calc_office_id": 1270,
@@ -9262,8 +9247,7 @@
     },
     "mo53.net": {
         "calc_office_id": 1238,
-        "status": "abandoned",
-        "redirect_to": "ellen.timeweb.ru"
+        "status": "abandoned"
     },
     "mo58.ru": {
         "calc_office_id": 1246,
@@ -10228,8 +10212,7 @@
         "title": "Избирательная комиссия Волгоградской области"
     },
     "kurgan.izbirkom.ru": {
-        "calc_office_id": 408,
-        "status": "abandoned"
+        "calc_office_id": 408
     },
     "novosibirsk.izbirkom.ru": {
         "calc_office_id": 417,
@@ -11203,9 +11186,7 @@
     },
     "pogranichny.ru": {
         "calc_office_id": 2718,
-        "status": "abandoned",
-        "http_protocol": "http",
-        "redirect_to": "kavalerovsky.ru"
+        "http_protocol": "http"
     },
     "dno.reg60.ru": {
         "calc_office_id": 2785,
@@ -15625,9 +15606,7 @@
     },
     "orel-adm.ru": {
         "calc_office_id": 1786,
-        "status": "abandoned",
-        "http_protocol": "https",
-        "redirect_to": "shr24.ru"
+        "http_protocol": "https"
     },
     "orelgorsovet.ru": {
         "calc_office_id": 1786,
@@ -16757,10 +16736,8 @@
     },
     "kuban.sledcom.ru": {
         "calc_office_id": 3850,
-        "status": "abandoned",
         "dlrobot_max_time_coeff": 2.0,
-        "http_protocol": "https",
-        "redirect_to": "komi.sledcom.ru"
+        "http_protocol": "https"
     },
     "krk.sledcom.ru": {
         "calc_office_id": 3851,
@@ -16784,9 +16761,7 @@
     },
     "mosobl.sledcom.ru": {
         "calc_office_id": 3859,
-        "status": "abandoned",
-        "http_protocol": "https",
-        "redirect_to": "lenobl.sledcom.ru"
+        "http_protocol": "https"
     },
     "murmansk.sledcom.ru": {
         "calc_office_id": 3860,
@@ -16811,8 +16786,7 @@
     "saratov.sledcom.ru": {
         "calc_office_id": 3874,
         "status": "abandoned",
-        "http_protocol": "https",
-        "redirect_to": "orel.sledcom.ru"
+        "http_protocol": "https"
     },
     "ykt.sledcom.ru": {
         "calc_office_id": 3875,
@@ -16832,8 +16806,7 @@
     "smolensk.sledcom.ru": {
         "calc_office_id": 3879,
         "status": "abandoned",
-        "http_protocol": "https",
-        "redirect_to": "osetia.sledcom.ru"
+        "http_protocol": "https"
     },
     "tambov.sledcom.ru": {
         "calc_office_id": 3881,
@@ -16857,14 +16830,12 @@
     },
     "hakasia.sledcom.ru": {
         "calc_office_id": 3890,
-        "status": "abandoned",
-        "redirect_to": "krk.sledcom.ru"
+        "status": "abandoned"
     },
     "chuvashia.sledcom.ru": {
         "calc_office_id": 3894,
         "status": "abandoned",
-        "http_protocol": "https",
-        "redirect_to": "ulyanovsk.sledcom.ru"
+        "http_protocol": "https"
     },
     "yaroslavl.sledcom.ru": {
         "calc_office_id": 3897,
@@ -19113,8 +19084,7 @@
     "dagestan.sledcom.ru": {
         "calc_office_id": 3833,
         "status": "abandoned",
-        "http_protocol": "https",
-        "redirect_to": "buryatia.sledcom.ru"
+        "http_protocol": "https"
     },
     "kaluga.sledcom.ru": {
         "calc_office_id": 3842,
@@ -19164,8 +19134,7 @@
     "chukotka.sledcom.ru": {
         "calc_office_id": 3895,
         "status": "abandoned",
-        "http_protocol": "https",
-        "redirect_to": "chel.sledcom.ru"
+        "http_protocol": "https"
     },
     "36.mchs.gov.ru": {
         "calc_office_id": 4128,
@@ -21369,8 +21338,7 @@
     },
     "eao.sledcom.ru": {
         "calc_office_id": 3834,
-        "status": "abandoned",
-        "redirect_to": "khabkray.sledcom.ru"
+        "status": "abandoned"
     },
     "zabaykalye.sledcom.ru": {
         "calc_office_id": 3835,
@@ -21400,8 +21368,7 @@
     "mordovia.sledcom.ru": {
         "calc_office_id": 3858,
         "status": "abandoned",
-        "http_protocol": "https",
-        "redirect_to": "mari.sledcom.ru"
+        "http_protocol": "https"
     },
     "oren.sledcom.ru": {
         "calc_office_id": 3865,
@@ -21445,9 +21412,7 @@
     },
     "udm.sledcom.ru": {
         "calc_office_id": 3887,
-        "status": "abandoned",
-        "http_protocol": "https",
-        "redirect_to": "tuva.sledcom.ru"
+        "http_protocol": "https"
     },
     "yanao.sledcom.ru": {
         "calc_office_id": 3896,
@@ -24721,8 +24686,7 @@
     "rsn-ing.ru": {
         "calc_office_id": 5421,
         "status": "abandoned",
-        "http_protocol": "http",
-        "redirect_to": "vh364.timeweb.ru/parking"
+        "http_protocol": "http"
     },
     "primnadzor.ru": {
         "calc_office_id": 5445,
@@ -27134,8 +27098,7 @@
     },
     "sevastopol.sledcom.ru": {
         "calc_office_id": 6542,
-        "status": "abandoned",
-        "redirect_to": "crim.sledcom.ru"
+        "status": "abandoned"
     },
     "82.mchs.gov.ru": {
         "calc_office_id": 6544,
@@ -29319,8 +29282,7 @@
     },
     "gudsovet.ru": {
         "calc_office_id": 3747,
-        "status": "abandoned",
-        "redirect_to": "vh92.timeweb.ru"
+        "status": "abandoned"
     },
     "shatoy-chr.ru": {
         "calc_office_id": 3758,
@@ -35000,9 +34962,7 @@
     },
     "ofukem.ru": {
         "calc_office_id": 7696,
-        "status": "abandoned",
-        "http_protocol": "https",
-        "redirect_to": "emercom.gov.karelia.ru"
+        "http_protocol": "https"
     },
     "dep.keminvest.ru": {
         "calc_office_id": 7698,
@@ -36700,8 +36660,7 @@
     "obrazov-krarm.edu21.cap.ru": {
         "calc_office_id": 3772,
         "status": "abandoned",
-        "http_protocol": "http",
-        "redirect_to": "amotash.ru"
+        "http_protocol": "http"
     },
     "marpos.cap.ru": {
         "calc_office_id": 3774,
@@ -40228,9 +40187,7 @@
     },
     "ccc.adm-ngo.ru": {
         "calc_office_id": 1861,
-        "status": "abandoned",
-        "http_protocol": "http",
-        "redirect_to": "ngo.midural.ru"
+        "http_protocol": "http"
     },
     "sp-pervouralsk.ru": {
         "calc_office_id": 1863,
@@ -41378,9 +41335,7 @@
     },
     "obrazov-vurnar.edu21.cap.ru": {
         "calc_office_id": 3767,
-        "status": "abandoned",
-        "http_protocol": "http",
-        "redirect_to": "batyr.cap.ru"
+        "http_protocol": "http"
     },
     "vurnar.cap.ru": {
         "calc_office_id": 3767,
@@ -41888,8 +41843,7 @@
     "moscow_reg.izbirkom.ru": {
         "calc_office_id": 113,
         "status": "abandoned",
-        "http_protocol": "http",
-        "redirect_to": "shadrinsk.info"
+        "http_protocol": "http"
     },
     "mosoblduma.ru": {
         "calc_office_id": 113,
@@ -41902,9 +41856,7 @@
     },
     "altai_rep.izbirkom.ru": {
         "calc_office_id": 116,
-        "status": "abandoned",
-        "http_protocol": "http",
-        "redirect_to": "mosoblduma.ru"
+        "http_protocol": "http"
     },
     "tatarstan.izbirkom.ru": {
         "calc_office_id": 130,
@@ -41916,6 +41868,7 @@
     },
     "chirkunov.livejournal.com": {
         "calc_office_id": 139,
+        "status": "abandoned",
         "http_protocol": "https",
         "title": "Олег Чиркунов — ЖЖ"
     },
@@ -41995,8 +41948,7 @@
     },
     "48.rsoc.ru": {
         "calc_office_id": 885,
-        "status": "abandoned",
-        "redirect_to": "48.rkn.gov.ru"
+        "status": "abandoned"
     },
     "ast-news.ru": {
         "calc_office_id": 901,
@@ -42378,9 +42330,8 @@
     },
     "mincult-kuzbass.ru": {
         "calc_office_id": 7686,
-        "status": "abandoned",
         "http_protocol": "http",
-        "redirect_to": "social.karelia.ru"
+        "title": "Министерство Культуры и Национальной политики Кузбасса: Министерство культуры и национальной политики Кузбасса"
     },
     "ministerstvonew4.aiwoo.ru": {
         "calc_office_id": 7690,
@@ -43593,8 +43544,7 @@
     },
     "ivolgaruo.ru": {
         "calc_office_id": 3538,
-        "status": "abandoned",
-        "redirect_to": "unimys.com"
+        "status": "abandoned"
     },
     "kyakhtaruno.ucoz.ru": {
         "calc_office_id": 3542,
@@ -44559,14 +44509,11 @@
     "moscow-city.izbirkom.ru": {
         "calc_office_id": 438,
         "status": "abandoned",
-        "http_protocol": "http",
-        "redirect_to": "kaliningrad.izbirkom.ru"
+        "http_protocol": "http"
     },
     "khantu-mansy.izbirkom.ru": {
         "calc_office_id": 441,
-        "status": "abandoned",
-        "http_protocol": "http",
-        "redirect_to": "kaliningrad.izbirkom.ru"
+        "http_protocol": "http"
     },
     "rsoc.ru": {
         "calc_office_id": 481,
@@ -44591,8 +44538,7 @@
     },
     "duma.murman.ru": {
         "calc_office_id": 551,
-        "status": "abandoned",
-        "redirect_to": "region.murman.ru"
+        "status": "abandoned"
     },
     "chel.arbitr.ru": {
         "calc_office_id": 710,
@@ -45708,9 +45654,7 @@
     },
     "usurt.ru": {
         "calc_office_id": 6732,
-        "status": "abandoned",
-        "http_protocol": "http",
-        "redirect_to": "omgups.ru"
+        "http_protocol": "http"
     },
     "aumsu.ru": {
         "calc_office_id": 6733,
@@ -48729,9 +48673,7 @@
     },
     "gk74.ru": {
         "calc_office_id": 9111,
-        "status": "abandoned",
-        "http_protocol": "http",
-        "redirect_to": "chelarhiv.ru"
+        "http_protocol": "http"
     },
     "okn.eps74.ru": {
         "calc_office_id": 9112,
@@ -48859,9 +48801,7 @@
     },
     "naslediechr.ru": {
         "calc_office_id": 9137,
-        "status": "abandoned",
-        "http_protocol": "http",
-        "redirect_to": "chechpotreb.ru"
+        "http_protocol": "http"
     },
     "comchs.ru": {
         "calc_office_id": 9138,
@@ -49796,8 +49736,7 @@
     "adm-bulat.ru": {
         "calc_office_id": 20101,
         "status": "abandoned",
-        "http_protocol": "http",
-        "redirect_to": "timeweb.com"
+        "http_protocol": "http"
     },
     "admbunkovo.ru": {
         "calc_office_id": 20102,
@@ -50474,11 +50413,6 @@
         "calc_office_id": 20252,
         "http_protocol": "http",
         "title": "Главная - Официальный сайт Администрации Новоандросовского сельсовета Железногорского района Курской области"
-    },
-    "Новоблагодарненскийсельсовет.рф": {
-        "calc_office_id": 20253,
-        "status": "abandoned",
-        "redirect_to": "новоблагодарненскийсельсовет.рф"
     },
     "novoedevyatkino.ru": {
         "calc_office_id": 20254,
@@ -51161,8 +51095,7 @@
     },
     "sofino.su": {
         "calc_office_id": 20394,
-        "status": "abandoned",
-        "redirect_to": "sites.google.com"
+        "status": "abandoned"
     },
     "sp-spasskoe.ru": {
         "calc_office_id": 20395,
@@ -51624,9 +51557,7 @@
     },
     "ekaterinovkasp.ru": {
         "calc_office_id": 20492,
-        "status": "abandoned",
-        "http_protocol": "http",
-        "redirect_to": "edrovoadm.ru"
+        "http_protocol": "http"
     },
     "eozerskoesp.ru": {
         "calc_office_id": 20493,
@@ -51831,9 +51762,7 @@
     },
     "линецкий46.рф": {
         "calc_office_id": 20535,
-        "status": "abandoned",
-        "http_protocol": "http",
-        "redirect_to": "letselsovet.ru"
+        "http_protocol": "http"
     },
     "lipovka.roslavl.ru": {
         "calc_office_id": 20536,
@@ -52866,8 +52795,7 @@
     },
     "tempy.net": {
         "calc_office_id": 20759,
-        "status": "abandoned",
-        "redirect_to": "dan.com"
+        "status": "abandoned"
     },
     "ermolino-adm.ru": {
         "calc_office_id": 20760,
@@ -53390,9 +53318,7 @@
     },
     "ключевской.рф": {
         "calc_office_id": 20867,
-        "status": "abandoned",
-        "http_protocol": "http",
-        "redirect_to": "soldatsky.ru"
+        "http_protocol": "http"
     },
     "богатырево.рф": {
         "calc_office_id": 20868,
@@ -53555,9 +53481,7 @@
     },
     "kotovka.ru": {
         "calc_office_id": 20900,
-        "status": "abandoned",
-        "http_protocol": "http",
-        "redirect_to": "zhernovec.ru"
+        "http_protocol": "http"
     },
     "orehovskii.ru": {
         "calc_office_id": 20901,
@@ -54648,9 +54572,7 @@
     },
     "vladselsovet.ru": {
         "calc_office_id": 20986,
-        "status": "abandoned",
-        "http_protocol": "https",
-        "redirect_to": "amocentr.ru"
+        "http_protocol": "https"
     },
     "kkulakadm.ru": {
         "calc_office_id": 20987,
@@ -65923,12 +65845,6 @@
         "http_protocol": "http",
         "title": "Новости - Управление образованием"
     },
-    "sites.google.com": {
-        "calc_office_id": 3396,
-        "status": "abandoned",
-        "http_protocol": "https",
-        "redirect_to": "accounts.google.com/signin/v2/identifier"
-    },
     "роо-чоя.рф": {
         "calc_office_id": 3528,
         "http_protocol": "http",
@@ -68942,12 +68858,6 @@
         "http_protocol": "http",
         "redirect_to": "academy-skrf.ru/about_the_university/news"
     },
-    "timeweb.com": {
-        "calc_office_id": 20101,
-        "status": "abandoned",
-        "http_protocol": "https",
-        "redirect_to": "timeweb.com/ru"
-    },
     "pro-podolsk.ru": {
         "calc_office_id": 1535,
         "http_protocol": "https",
@@ -68997,12 +68907,6 @@
         "calc_office_id": 2859,
         "http_protocol": "https",
         "title": "Архангельск • Городская Администрация"
-    },
-    "connect.ok.ru": {
-        "calc_office_id": 2111,
-        "status": "abandoned",
-        "http_protocol": "https",
-        "redirect_to": "apiok.ru/ext"
     },
     "mtm.permkrai.ru": {
         "calc_office_id": 8366,
@@ -69398,12 +69302,6 @@
         "http_protocol": "http",
         "title": "Губахинский городской округ - Главная страница"
     },
-    "vh92.timeweb.ru": {
-        "calc_office_id": 3747,
-        "status": "abandoned",
-        "http_protocol": "https",
-        "redirect_to": "timeweb.com/ru"
-    },
     "dcr.sev.gov.ru": {
         "calc_office_id": 8656,
         "http_protocol": "https",
@@ -69449,11 +69347,6 @@
         "calc_office_id": 4738,
         "http_protocol": "https",
         "title": "УФК по Ивановской области"
-    },
-    "unimys.com": {
-        "calc_office_id": 3538,
-        "http_protocol": "https",
-        "title": "Премиум курсы по низкой цене"
     },
     "kachug.irkmo.ru": {
         "calc_office_id": 2430,
@@ -69586,12 +69479,6 @@
         "calc_office_id": 7023,
         "http_protocol": "https",
         "title": "Министерство спорта Республики Башкортостан"
-    },
-    "ellen.timeweb.ru": {
-        "calc_office_id": 1238,
-        "status": "abandoned",
-        "http_protocol": "https",
-        "redirect_to": "timeweb.com/ru"
     },
     "mo-gai.orb.ru": {
         "calc_office_id": 2515,
@@ -69817,12 +69704,6 @@
         "http_protocol": "http",
         "title": "Главная"
     },
-    "vh210.timeweb.ru": {
-        "calc_office_id": 3050,
-        "status": "abandoned",
-        "http_protocol": "https",
-        "redirect_to": "timeweb.com/ru"
-    },
     "sport.sakhalin.gov.ru": {
         "calc_office_id": 8615,
         "http_protocol": "https",
@@ -69862,11 +69743,6 @@
         "calc_office_id": 7469,
         "http_protocol": "https",
         "title": "Главная"
-    },
-    "dan.com": {
-        "calc_office_id": 20759,
-        "http_protocol": "https",
-        "title": "Buy and Sell Domain Names | Dan.com"
     },
     "to77.minjust.gov.ru": {
         "calc_office_id": 1292,
@@ -70434,10 +70310,10 @@
         "http_protocol": "https",
         "title": "Симферопольский район | Официальный портал"
     },
-    "pushchino.ru/redirect": {
+    "pushchinocity.ru": {
         "calc_office_id": 1537,
         "http_protocol": "http",
-        "title": "Главная - редирект"
+        "title": "Администрация городского округа Пущино"
     },
     "anzhero.ru/pages/start.asp": {
         "calc_office_id": 2542,
@@ -70560,11 +70436,6 @@
         "calc_office_id": 5958,
         "http_protocol": "https",
         "title": "Департамент капитального ремонта города Москвы / Электронная приемная / ДКР"
-    },
-    "postroyka.volyn.ua/atributiofisa/rol-programmnogo-obespecheniya-pri-sozdanii-sistemi-izmereniya": {
-        "calc_office_id": 1266,
-        "http_protocol": "http",
-        "title": "​Роль программного обеспечения при создании системы измерения - Ремонт Служебных Помещений"
     },
     "admomsk.ru/web/guest/main": {
         "calc_office_id": 2025,
@@ -71150,11 +71021,6 @@
         "calc_office_id": 6422,
         "http_protocol": "https",
         "title": "ПСПбГМУ"
-    },
-    "vh364.timeweb.ru/parking": {
-        "calc_office_id": 5421,
-        "http_protocol": "https",
-        "title": "Домен припаркован в Timeweb"
     },
     "tariff44.ru/index.aspx": {
         "calc_office_id": 7766,
@@ -71915,11 +71781,6 @@
         "calc_office_id": 595,
         "http_protocol": "https",
         "title": "Министерство юстиции Российской Федерации"
-    },
-    "accounts.google.com/signin/v2/identifier": {
-        "calc_office_id": 3396,
-        "http_protocol": "https",
-        "title": "Google Сайты: вход в систему"
     },
     "saki.rk.gov.ru/ru/index": {
         "calc_office_id": 6589,
