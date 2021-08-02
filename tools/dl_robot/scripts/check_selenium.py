@@ -97,6 +97,7 @@ if __name__ == '__main__':
     print("navigate {}".format(url))
     if args.action == "title":
         driver.navigate(url)
+        logger.info("selenium current url: {}".format(driver.the_driver.current_url))
         print("Title: {}".format(driver.the_driver.title))
     elif args.action == "links":
         #print_links(driver, url)

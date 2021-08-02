@@ -16,12 +16,17 @@ def get_url_modifications(url: str):
     else:
         protocols = ["http", "https"]
     if o.netloc.startswith("www."):
-        with_www = [False] # already has www
+        with_www = [False]  # already has www
     else:
-        with_www = [True, False]
+        with_www = [False, True]
+    input_netloc = o.netloc
+    if input_netloc.endswith(':443'):
+        #delete port and switch to  https
+        protocols = ["https"]
+        input_netloc = input_netloc[0:-len(":443")]
     for only_with_www in with_www:
         for protocol in protocols:
-            host = o.netloc
+            host = input_netloc
             if only_with_www:
                 host = "www." + host
             modified_url = urllib.parse.urlunsplit((protocol, host, o.path, o.query, o.fragment))

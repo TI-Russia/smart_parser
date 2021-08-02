@@ -60,9 +60,15 @@ class TWebSiteCrawlSnapshot:
 
     def init_main_page_url_from_redirected_url(self, url, title):
         o = urllib_parse_pro.urlsplit_pro(url)
+        netloc = o.netloc
+        scheme = o.scheme
+        if scheme == 'http' and netloc.endswith(':443'):
+            self.logger.debug("coerce url {} to https".format(url))
+            netloc = netloc[0:-len(':443')]
+            scheme = 'https'
         self.main_page_url = urllib.parse.urlunsplit(
-            [o.scheme,
-             o.netloc,
+            [scheme,
+             netloc,
              o.path,  # path
              '',  # query
              ''])

@@ -224,11 +224,18 @@ class TRobotStep:
         source_domain = re.sub(':[0-9]+$', '', source_domain)  # delete port
         if source_domain == href_domain:
             return True
-        if self.website.parent_project.web_sites_db.are_redirected_domains(source_domain, href_domain):
+        if check_common_domain(source_domain, href_domain):
             return True
         if TRobotStep.check_local_address:
             return True
-        return check_common_domain(source_domain, href_domain)
+        for redirect in self.website.parent_project.web_sites_db.get_mirrors(source_domain):
+            if check_common_domain(redirect, href_domain):
+                return True
+        for redirect in self.website.parent_project.web_sites_db.get_mirrors(href_domain):
+            if check_common_domain(source_domain, redirect):
+                return True
+
+        return False
 
     def to_json(self):
         return {
@@ -383,11 +390,13 @@ class TRobotStep:
 
     def add_page_links_selenium(self, url, check_link_func):
         try:
-            if get_file_extension_only_by_headers(url) != DEFAULT_HTML_EXTENSION:
-                # selenium reads only http headers, so downloaded_file.file_extension can be DEFAULT_HTML_EXTENSION
-                self.logger.debug("do not browse {} with selenium, since it has wrong http headers".format(url))
-            else:
+            ext = get_file_extension_only_by_headers(url)
+            if ext == DEFAULT_HTML_EXTENSION or ext is None:
+                # selenium reads only http headers, so url must be an html file,
+                # ext is None  if http  head request failed and we do not know file type
                 self.click_all_selenium(url, check_link_func)
+            else:
+                self.logger.debug("do not browse {} with selenium, since it does not look like an html file".format(url))
         except (THttpRequester.RobotHttpException, WebDriverException) as e:
             self.logger.error('add_page_links_selenium failed on url={}, exception: {}'.format(url, e))
 

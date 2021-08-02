@@ -386,13 +386,14 @@ class THttpRequester:
             THttpRequester.register_successful_request()
             return curl_response.get_redirected_url(), curl_response.headers, curl_response.data
         except pycurl.error as err:
+            THttpRequester.logger.debug("curl   exception {}".format(err))
             if err.args[0] == pycurl.E_WRITE_ERROR:
                 # stop reading video content
                 return curl_response.get_redirected_url(), curl_response.headers, curl_response.data
 
             raise THttpRequester.RobotHttpException(str(err), url, 520, method)
         except THttpRequester.RobotHttpException as exp:
-                raise exp
+            raise exp
         except Exception as exp:
             THttpRequester.logger.debug("unknown exception {}, curl url={}".format(exp, url))
             raise THttpRequester.RobotHttpException(str(exp), url, 520, method)

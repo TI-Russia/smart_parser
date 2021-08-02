@@ -52,6 +52,7 @@ class TestProhibitedLinks(TestCase):
     def test_redirects(self):
         pairs = [
             ("rosminzdrav.ru/bb", "https://minzdrav.gov.ru/aaa"),
+            ('static-0.minzdrav.gov.ru/aaa', 'rosminzdrav.ru/bbb')
         ]
         for (source, target) in pairs:
             self.check_follow(source, target, True)
