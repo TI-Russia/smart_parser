@@ -76,7 +76,7 @@ class TDeclarationWebSiteList:
 
     def __init__(self, logger, file_name=None):
         self.web_sites = dict()
-        self.web_domains_redirects = set()
+        self.web_domains_redirects = None
         self.build_web_domains_redirects()
         self.logger = logger
         if file_name is None:
@@ -92,17 +92,17 @@ class TDeclarationWebSiteList:
         return self
 
     def build_web_domains_redirects(self):
-        self.web_domains_redirects = set()
+        self.web_domains_redirects = defaultdict(set)
         for k, v in self.web_sites.items():
             if v.redirect_to is not None:
                 d1 = urlsplit_pro(k).hostname
                 d2 = urlsplit_pro(v.redirect_to).hostname
                 if d1 != d2:
-                    self.web_domains_redirects.add((d1, d2))
-                    self.web_domains_redirects.add((d2, d1))
+                    self.web_domains_redirects[d1].add(d2)
+                    self.web_domains_redirects[d2].add(d1)
 
-    def are_redirected_domains(self, d1, d2):
-        return (d1, d2) in self.web_domains_redirects
+    def get_mirrors(self, d):
+        return self.web_domains_redirects.get(d, set())
 
     def add_web_site(self, site_url: str, office_id):
         # russian domain must be in utf8
