@@ -38,6 +38,7 @@ class TSeleniumDriver:
         self.download_folder = download_folder
         assert download_folder != "."
         self.headless = headless
+        #self.headless = False
         self.loglevel = loglevel
         self.verbose = verbose
         self.use_chrome = use_chrome
@@ -116,6 +117,11 @@ class TSeleniumDriver:
         if self.the_driver is not None:
             self.the_driver.quit()
 
+    def close_not_first_tab(self):
+        while len(self.the_driver.window_handles) > 1:
+            self.the_driver.switch_to.window(self.the_driver.window_handles[len(self.the_driver.window_handles) - 1])
+            self.the_driver.close()
+
     def navigate(self, url):
         #to reduce memory usage
         if self.driver_processed_urls_count > 100:
@@ -125,9 +131,7 @@ class TSeleniumDriver:
         self.driver_processed_urls_count += 1
 
         #leave only one window tab, close other tabs
-        while len(self.the_driver.window_handles) > 1:
-            self.the_driver.switch_to.window(self.the_driver.window_handles[len(self.the_driver.window_handles) - 1])
-            self.the_driver.close()
+        self.close_not_first_tab()
         self.logger.debug("selenium navigate to {}, window tabs count={}".format(url, len(self.the_driver.window_handles)))
         self.the_driver.switch_to.window(self.the_driver.window_handles[0])
 
@@ -148,6 +152,29 @@ class TSeleniumDriver:
     def get_buttons_and_links(self):
         return list(self.the_driver.find_elements_by_xpath('//button | //a'))
 
+    def get_links_js(self, timeout=4):
+        js = """
+                function add_link(el, element_list) {
+                    el.scrollIntoView();
+                    element_list.push({"id":el, "href": el.href, "anchor": el.innerText, "class":el.className})
+                }
+                hrefs = [];
+                buttons = document.getElementsByTagName("button");
+                [].forEach.call(buttons, function (el) { add_link(el, hrefs);  });
+
+                links = document.getElementsByTagName("a");
+                [].forEach.call(links, function (el) { add_link(el, hrefs);  });
+                return hrefs;
+            """
+
+        try:
+            return self.the_driver.execute_script(js)
+        except Exception as exp:
+            self.logger.error("Exception = {}, retry get links, after timeout".format(exp))
+            #  second timeout
+            time.sleep(timeout)
+            return self.the_driver.execute_script(js)
+
     def _navigate_and_get_links_js(self, url, timeout=4):
         self.logger.debug("navigate to {}".format(url))
         self.navigate(url)
@@ -163,26 +190,8 @@ class TSeleniumDriver:
             time.sleep(1)
             self.the_driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
             time.sleep(1)
+        return self.get_links_js()
 
-        js = """
-                function add_link(el, element_list) {
-                    element_list.push({"id":el, "href": el.href, "anchor": el.innerText, "class":el.className})
-                }
-                hrefs = [];
-                links = document.getElementsByTagName("a");
-                [].forEach.call(links, function (el) { add_link(el, hrefs);  });
-                buttons = document.getElementsByTagName("button");
-                [].forEach.call(buttons, function (el) { add_link(el, hrefs);  });
-                return hrefs;
-        """
-
-        try:
-            return self.the_driver.execute_script(js)
-        except Exception as exp:
-            self.logger.error("Exception = {}, retry get links, after timeout".format(exp))
-            #  second timeout
-            time.sleep(timeout)
-            return self.the_driver.execute_script(js)
 
     def restart(self):
         self.logger.error("restart selenium")
@@ -237,10 +246,16 @@ class TSeleniumDriver:
             link_info.downloaded_file = self.wait_download_finished(180)
 
         if len(self.the_driver.window_handles) > 1:
-            self.the_driver.switch_to.window(self.the_driver.window_handles[-1])
-            if self.the_driver.current_url != link_info.source_url and self.the_driver.current_url != 'about:blank':
-                link_info.set_target(self.the_driver.current_url, self.the_driver.title)
-            self.the_driver.close()
+            try:
+                self.the_driver.switch_to.window(
+                    self.the_driver.window_handles[len(self.the_driver.window_handles) - 1])
+                if self.the_driver.current_url != link_info.source_url and self.the_driver.current_url != 'about:blank':
+                    link_info.set_target(self.the_driver.current_url, self.the_driver.title)
+            except WebDriverException as exp:
+                pass
+            except Exception as exp:
+                pass
+            self.close_not_first_tab()
             self.the_driver.switch_to.window(self.the_driver.window_handles[0])
             if self.the_driver.current_url != save_current_url:
                 self.logger.error("cannot switch to the saved url must be {}, got {}, keep going".format(

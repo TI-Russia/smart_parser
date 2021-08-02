@@ -106,7 +106,8 @@ class TestDownloadWithJs(TestCase):
         self.env.tearDown()
 
     def test_download_with_js1(self):
-        self.assertEqual (len(self.env.get_result_files()), 2)
+        result_files = self.env.get_result_files()
+        self.assertEqual(2, len(result_files))
 
 
 class TestWebsiteWithJs(TestCase):
