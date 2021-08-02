@@ -475,6 +475,34 @@ class TRobotStep:
     def link_must_be_clicked(self, link_info: TLinkInfo):
         return re.search('скачать', link_info.anchor_text, re.IGNORECASE) is not None
 
+    def process_element(self, main_url, page_html, element_index, element, check_link_func):
+        if element_index >= self.max_links_from_one_page:
+            return
+        link_text = element['anchor'].strip('\n\r\t ') if element['anchor'] is not None else ""
+
+        href = element['href']
+        link_info = TLinkInfo(TClickEngine.selenium,
+                              main_url, href,
+                              source_html=page_html,
+                              anchor_text=link_text,
+                              tag_name=element['id'].tag_name,
+                              element_index=element_index,
+                              element_class=[element.get('class')],
+                              source_page_title=self.get_selenium_driver().the_driver.title)
+        if not self.normalize_and_check_link(link_info, check_link_func):
+            return
+        if link_info.target_url is None or self.link_must_be_clicked(link_info):
+            try:
+                self.logger.debug("click element {}".format(element_index))
+                self.click_selenium_if_no_href(main_url, element['id'], element_index, check_link_func)
+            except WebDriverException as exp:
+                self.logger.debug("exception: {}".format(exp))
+                if href is not None:  # see gorsovet-podolsk in tests
+                    if self.normalize_and_check_link(link_info, check_link_func):
+                        self.add_link_wrapper(link_info)
+        else:
+            self.add_link_wrapper(link_info)
+
     def click_all_selenium(self, main_url, check_link_func):
         self.logger.debug("find_links_with_selenium url={} ".format(main_url))
         THttpRequester.consider_request_policy(main_url, "GET_selenium")
@@ -487,33 +515,18 @@ class TRobotStep:
             self.logger.error("cannot get html source_url for url={}".format(main_url))
             return
         self.logger.debug("html_size={}, elements_count={}".format(len(page_html), len(elements)))
+        processed_elements = set()
         for element_index, element, in enumerate(elements):
-            if element_index >= self.max_links_from_one_page:
-                break
-            link_text = element['anchor'].strip('\n\r\t ') if element['anchor'] is not None else ""
-
-            href = element['href']
-            link_info = TLinkInfo(TClickEngine.selenium,
-                                  main_url, href,
-                                  source_html=page_html,
-                                  anchor_text=link_text,
-                                  tag_name=element['id'].tag_name,
-                                  element_index=element_index,
-                                  element_class=[element.get('class')],
-                                  source_page_title=self.get_selenium_driver().the_driver.title)
-            if not self.normalize_and_check_link(link_info, check_link_func):
-                continue
-            if link_info.target_url is None or self.link_must_be_clicked(link_info):
-                try:
-                    self.logger.debug("click element {}".format(element_index))
-                    self.click_selenium_if_no_href(main_url, element['id'], element_index, check_link_func)
-                except WebDriverException as exp:
-                    self.logger.debug("exception: {}".format(exp))
-                    if href is not None: #see gorsovet-podolsk in tests
-                        if self.normalize_and_check_link(link_info, check_link_func):
-                            self.add_link_wrapper(link_info)
-            else:
-                self.add_link_wrapper(link_info)
+            processed_elements.add(element['id'])
+            self.process_element(main_url, page_html, element_index, element, check_link_func)
+        # one more time, hope new elements arrive
+        elements = self.get_selenium_driver().get_links_js(timeout=TRobotStep.selenium_timeout)
+        if elements is None:
+            self.logger.error("cannot get child elements using javascript for url={} (second)".format(main_url))
+            return
+        for element_index, element, in enumerate(elements):
+            if element['id'] not in processed_elements:
+                self.process_element(main_url, page_html, element_index, element, check_link_func)
 
     def apply_function_to_links(self, check_link_func):
         assert len(self.pages_to_process) > 0
