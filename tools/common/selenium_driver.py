@@ -39,6 +39,7 @@ class TSeleniumDriver:
         assert download_folder != "."
         self.headless = headless
         #self.headless = False
+        self.page_load_timeout = 30
         self.loglevel = loglevel
         self.verbose = verbose
         self.use_chrome = use_chrome
@@ -85,7 +86,8 @@ class TSeleniumDriver:
         options.headless = self.headless
         user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
         options.add_argument("user-agent={}".format(user_agent))
-
+        options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        options.add_experimental_option('useAutomationExtension', False)
         prefs = {
             'download.default_directory': self.download_folder,
 
@@ -137,7 +139,7 @@ class TSeleniumDriver:
 
         # navigation
         try:
-            self.the_driver.set_page_load_timeout(20)
+            self.the_driver.set_page_load_timeout(self.page_load_timeout)
             self.the_driver.get(url)
         except IndexError as exp:
             raise THttpRequester.RobotHttpException("general IndexError inside urllib.request.urlopen",
@@ -146,8 +148,6 @@ class TSeleniumDriver:
             title = self.the_driver.title
             if len(title) == 0:
                 raise
-        finally:
-            self.the_driver.set_page_load_timeout(30)
 
     def get_buttons_and_links(self):
         return list(self.the_driver.find_elements_by_xpath('//button | //a'))
@@ -192,7 +192,6 @@ class TSeleniumDriver:
             time.sleep(1)
         return self.get_links_js()
 
-
     def restart(self):
         self.logger.error("restart selenium")
         self.stop_executable()
@@ -211,10 +210,9 @@ class TSeleniumDriver:
         dl_wait = True
         seconds = 0
         while dl_wait and seconds < timeout:
-            browser_temp_file = sorted(Path(self.download_folder).glob('*.part'))
+            firefox_temp_file = sorted(Path(self.download_folder).glob('*.part'))
             chrome_temp_file = sorted(Path(self.download_folder).glob('*.crdownload'))
-            if (len(browser_temp_file) == 0) and \
-                    (len(chrome_temp_file) == 0):
+            if (len(firefox_temp_file) == 0) and (len(chrome_temp_file) == 0):
                 files = os.listdir(self.download_folder)
                 if len(files) > 0:
                     return save_downloaded_file(os.path.join(self.download_folder, files[0]))
@@ -237,28 +235,26 @@ class TSeleniumDriver:
             .key_up(Keys.CONTROL) \
             .perform()
 
-        #print (element.)
         time.sleep(3)
 
-        #element.click()
-        #time.sleep(6)
         if self.download_folder is not None:
             link_info.downloaded_file = self.wait_download_finished(180)
 
         if len(self.the_driver.window_handles) > 1:
             try:
+                self.the_driver.set_page_load_timeout(2)
                 self.the_driver.switch_to.window(
                     self.the_driver.window_handles[len(self.the_driver.window_handles) - 1])
                 if self.the_driver.current_url != link_info.source_url and self.the_driver.current_url != 'about:blank':
                     link_info.set_target(self.the_driver.current_url, self.the_driver.title)
-            except WebDriverException as exp:
-                pass
             except Exception as exp:
                 pass
-            self.close_not_first_tab()
-            self.the_driver.switch_to.window(self.the_driver.window_handles[0])
-            if self.the_driver.current_url != save_current_url:
-                self.logger.error("cannot switch to the saved url must be {}, got {}, keep going".format(
-                    save_current_url, self.the_driver.current_url))
+            finally:
+                self.the_driver.set_page_load_timeout(self.page_load_timeout)
+        self.close_not_first_tab()
+        self.the_driver.switch_to.window(self.the_driver.window_handles[0])
+        if self.the_driver.current_url != save_current_url:
+            self.logger.error("cannot switch to the saved url must be {}, got {}, keep going".format(
+                save_current_url, self.the_driver.current_url))
 
 

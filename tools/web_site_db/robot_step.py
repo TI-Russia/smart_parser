@@ -519,7 +519,11 @@ class TRobotStep:
         for element_index, element, in enumerate(elements):
             processed_elements.add(element['id'])
             self.process_element(main_url, page_html, element_index, element, check_link_func)
-        # one more time, hope new elements arrive
+
+        # получаем еще раз ссылки, может быть, что-то новое отрисовал javascript, хотя,
+        # может быть, надо брать ссылки не после, а до скролдауна и сравнивать их по href, а не по id,
+        # т.е. до того как javaскрипт начал скрывать их (поближе  к чистой странице, как будто мы ее скачали curl)
+
         elements = self.get_selenium_driver().get_links_js(timeout=TRobotStep.selenium_timeout)
         if elements is None:
             self.logger.error("cannot get child elements using javascript for url={} (second)".format(main_url))
