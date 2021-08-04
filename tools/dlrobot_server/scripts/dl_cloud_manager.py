@@ -85,7 +85,7 @@ def get_hosts(args):
             TYandexCloud.start_yandex_cloud_worker(cloud_id)
         yield (TYandexCloud.get_worker_ip(m), m['name'])
     yield ("avito", "avito")
-    yield ("lena", "lena")
+    #yield ("lena", "lena")
     yield ("samsung", "samsung")
 
 
@@ -111,6 +111,19 @@ def ssh_command(host, cmd_args):
     return subprocess.Popen(cmd_args, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
 
+def update_source_code(host, hostname):
+    proc = ssh_command(host, ["git", "-C", args.smart_parser_folder, "pull"])
+    proc.wait(600)
+    if proc.returncode != 0:
+        raise Exception("cannot update git on host {}".format(hostname))
+
+    req_file = os.path.join(args.smart_parser_folder, "tools/requirements.txt")
+    proc = ssh_command(host, ["python3", "-m", "pip", "install", "-r", req_file])
+    proc.wait(600)
+    if proc.returncode != 0:
+        raise Exception("cannot install requirements on host {}".format(hostname))
+
+
 def update_cloud_from_central(args):
     hosts = list(get_hosts(args))
     for host, name in hosts:
@@ -118,10 +131,8 @@ def update_cloud_from_central(args):
             raise Exception("cannot ping host {}".format(host))
 
     for host, name in hosts:
-        proc = ssh_command (host, ["git", "-C", args.smart_parser_folder,  "pull"])
-        proc.wait(600)
-        if proc.returncode != 0:
-            raise Exception("cannot update git on host {}".format(name))
+        update_source_code(host, name)
+
     if args.action == "only_git_pull":
         return
 
@@ -148,3 +159,4 @@ if __name__ == "__main__":
         update_cloud_from_central(args)
     else:
         update_one_worker_on_the_worker(args)
+    print("success!")
