@@ -1,7 +1,7 @@
 {
     "sites": [
         {
-            "morda_url": "http://www.mid.ru",
+            "morda_url": "https://www.mid.ru",
             "name": ""
         }
     ]
