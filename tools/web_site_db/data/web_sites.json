@@ -9919,6 +9919,7 @@
     "shimanovskadm.ru": {
         "calc_office_id": 3026,
         "http_protocol": "https",
+        "status": "abandoned",
         "title": "Туризм - Автобусные туры. Активный отдых. Архитектура. Круизы. Отдых с детьми"
     },
     "admdubrovka.ru": {
@@ -54383,6 +54384,7 @@
     "gafury.ru": {
         "calc_office_id": 2660,
         "http_protocol": "http",
+        "status": "abandoned",
         "title": ""
     },
     "mderbet-rmo.ru": {
