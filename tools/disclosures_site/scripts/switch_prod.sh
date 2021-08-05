@@ -21,6 +21,9 @@ function switch_service() {
   sudo systemctl status $service
 }
 
+#0
+python3 -m pip install -r $TOOLS/requirements.txt
+
 #1. mysql
 NEW_MYSQL=/var/lib/mysql.new
 BACKUP_MYSQL=/var/lib/mysql.old
