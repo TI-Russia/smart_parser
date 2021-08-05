@@ -117,13 +117,13 @@ class TDeclarationWebSiteList:
 
     def build_office_to_main_website(self):
         office_to_website = defaultdict(set)
-        for web_site, web_site in self.web_sites.items():
-            if TWebSiteReachStatus.can_communicate(web_site.reach_status) and web_site.find('declarator.org') == -1:
-                p = web_site.http_protocol
+        for site_url, web_site_info in self.web_sites.items():
+            if TWebSiteReachStatus.can_communicate(web_site_info.reach_status) and site_url.find('declarator.org') == -1:
+                p = web_site_info.http_protocol
                 if p is None:
                     p = "http"
-                url = p + "://" + web_site
-                office_to_website[web_site.calculated_office_id].add(url)
+                url = p + "://" + site_url
+                office_to_website[web_site_info.calculated_office_id].add(url)
         return office_to_website
 
     def has_web_site(self, web_site):

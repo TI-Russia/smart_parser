@@ -11,7 +11,7 @@ export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
 
 export DEDUPE_MODEL=$TOOLS/disclosures_site/deduplicate/model/random_forest.pickle
 export DISCLOSURES_DB_HOST=migalka
-export DEDUPE_HOSTS=avito,samsung
+export DEDUPE_HOSTS=$'avito\nsamsung'
 
 export CENTRAL_HOST_NAME=migalka
 export SMART_PARSER_SERVER_ADDRESS=$CENTRAL_HOST_NAME:8165

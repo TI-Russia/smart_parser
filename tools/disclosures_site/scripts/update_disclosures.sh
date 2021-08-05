@@ -71,12 +71,12 @@ source $COMMON_SCRIPT
      python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric sections_person_name_income_year_spouse_income_size  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
 
 #10.1  остановка dlrobot на $DEDUPE_HOSTS в параллель (максмимум 3 часа), может немного одновременно проработать со сливалкой
-echo $DEDUPE_HOSTS | tr "," "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/scripts/git_update_cloud_worker.py --action stop --host &
+echo $DEDUPE_HOSTS | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/scripts/dl_cloud_manager.py --action stop --host &
 
 #11 создание surname_rank (40 мин)
   python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclosures.settings.dev
 
-  #12.  запуск сливалки, 1 gb memory each family basket, 30 GB temp files, no more than 2 processes per workstation
+    #12.  запуск сливалки, 1 gb memory each family basket, 30 GB temp files, no more than 2 processes per workstation
      #optional, if you have to run dedupe more than one time
      #python3 $TOOLS/disclosures_site/manage.py clear_dedupe_artefacts --settings disclosures.settings.dev
 
@@ -84,11 +84,11 @@ echo $DEDUPE_HOSTS | tr "," "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dl
      python3 $TOOLS/disclosures_site/manage.py copy_person_id --settings disclosures.settings.dev --permalinks-folder $DLROBOT_FOLDER
 
      python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs  --print-family-prefixes   --permalinks-folder $DLROBOT_FOLDER --settings disclosures.settings.dev > surname_spans.txt
-     echo $DEDUPE_HOSTS | tr "," "\n"  | xargs  --verbose -P 4 -I {} -n 1 scp $DLROBOT_FOLDER/permalinks_declarations_person.dbm {}:/tmp
+     echo $DEDUPE_HOSTS | xargs  --verbose -P 4 -I {} -n 1 scp $DLROBOT_FOLDER/permalinks_declarations_person.dbm {}:/tmp
 
      #22 hours
      parallel --halt soon,fail=1 -a surname_spans.txt --jobs 3 --joblog parallel.log \
-          --env DISCLOSURES_DB_HOST --env PYTHONPATH -S $DEDUPE_HOSTS --basefile $DEDUPE_MODEL  --verbose --workdir /tmp \
+          --env DISCLOSURES_DB_HOST --env PYTHONPATH -S "$DEDUPE_HOSTS" --basefile $DEDUPE_MODEL  --verbose --workdir /tmp \
           python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --permalinks-folder /tmp --ml-model-file $DEDUPE_MODEL  \
                   --threshold 0.61  --surname-bounds {} --write-to-db --settings disclosures.settings.dev --logfile dedupe.{}.log
 
@@ -105,7 +105,7 @@ echo $DEDUPE_HOSTS | tr "," "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dl
      python3 $TOOLS/disclosures_site/scripts/check_person_id_permanence.py disclosures_db disclosures_db_dev
 
 #12.1 запускаем обратно dlrobot_worker
-echo $DEDUPE_HOSTS | tr "," "\n"  | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/scripts/git_update_cloud_worker.py --action start --host &
+echo $DEDUPE_HOSTS | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/scripts/dl_cloud_manager.py --action start --host &
 
 #13  Коммит статистики
    cd $TOOLS/disclosures_site
