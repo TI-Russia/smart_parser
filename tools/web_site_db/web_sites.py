@@ -126,11 +126,11 @@ class TDeclarationWebSiteList:
                 office_to_website[web_site_info.calculated_office_id].add(url)
         return office_to_website
 
-    def has_web_site(self, web_site):
-        return web_site in self.web_sites
+    def has_web_site(self, site_url):
+        return site_url in self.web_sites
 
-    def get_web_site(self, web_site) -> TDeclarationWebSite:
-        return self.web_sites.get(web_site)
+    def get_web_site(self, site_url) -> TDeclarationWebSite:
+        return self.web_sites.get(site_url)
 
     def save_to_disk(self):
         with open(self.file_name, "w") as outp:

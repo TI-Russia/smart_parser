@@ -2,6 +2,8 @@ from common.logging_wrapper import setup_logging
 from scripts.predict_office.office_index import TOfficeIndex
 from scripts.predict_office.office_pool import TOfficePool, TPredictionCase
 from common.russian_regions import TRussianRegions
+from web_site_db.web_sites import TDeclarationWebSiteList
+
 
 from catboost import CatBoostClassifier, Pool
 import numpy as np
@@ -19,6 +21,8 @@ class TPredictionModel:
         self.learn_target_is_region = self.args.learn_target.startswith("region")
         self.train_pool = None
         self.regions = TRussianRegions()
+        self.web_sites = TDeclarationWebSiteList(self.logger)
+        self.web_sites.load_from_disk()
 
     def read_train(self):
         self.train_pool = TOfficePool(self, self.args.train_pool, row_count=self.args.row_count)
@@ -60,12 +64,17 @@ class TPredictionModel:
 
     def build_features(self, case: TPredictionCase):
         web_domain_index = self.office_index.web_domains.get(case.web_domain, 0)
+        site_info = self.web_sites.get_web_site(case.web_domain)
+        if site_info is not None and site_info.title is not None:
+            region_id_from_site_title = self.regions.get_region_all_forms(site_info.title, 0)
+        else:
+            region_id_from_site_title = 0
         #text = " ".join(TOfficeIndex.get_word_stems(case.text[0:200]))
         #return np.array(list([web_domain_index, text]))
-        region_id_from_text = self.regions.get_region_all_forms(case.text)
-        if region_id_from_text is None:
-            region_id_from_text = 0
-        return np.array(list([web_domain_index, region_id_from_text]))
+        region_id_from_text = self.regions.get_region_all_forms(case.text, 0)
+        features = np.array(list([web_domain_index, region_id_from_text, region_id_from_site_title]))
+        self.logger.debug(features)
+        return  features
 
     def to_ml_input(self, cases, name):
         self.args.logger.info("build features for {} pool of {} cases".format(name, len(cases)))
@@ -77,8 +86,8 @@ class TPredictionModel:
         #feature_names = ["web_domain_feat", "title_feat"]
         #text_features = ["title_feat"]
 
-        feature_names = ["web_domain_feat", "region_id_from_text_feat"]
-        cat_features = ["web_domain_feat", "region_id_from_text_feat"]
+        feature_names = ["web_domain_feat", "region_id_from_text_feat", "region_id_from_html_title"]
+        cat_features = ["web_domain_feat", "region_id_from_text_feat", "region_id_from_html_title"]
         catboost_test_pool = Pool(features, labels, feature_names=feature_names,
                                       cat_features=cat_features,
                                   #text_features=text_features

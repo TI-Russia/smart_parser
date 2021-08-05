@@ -1146,9 +1146,9 @@ class TRussianRegions:
                     return self.region_id_to_region[int(region_id)]
         return self.get_region_in_nominative(russian_name)
 
-    def get_region_all_forms(self, text):
+    def get_region_all_forms(self, text, unknown_region=None):
         text = normalize_whitespace(text.strip().lower())
-        best_region_id = None
+        best_region_id = unknown_region
         max_form_len = 0
         for pos, (region_id, form) in self.all_forms.iter(text):
             if len(form) > max_form_len:

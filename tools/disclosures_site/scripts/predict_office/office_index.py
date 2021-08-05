@@ -7,8 +7,6 @@ import pymysql
 from collections import defaultdict
 
 
-
-
 class TDisclosuresConnection:
     def __init__(self, sql):
         self.connection = None
@@ -43,9 +41,9 @@ def build_web_site_to_offices():
     with TDisclosuresConnection(sql) as conn:
         website_to_offices = defaultdict(set)
         for office_id, site_url in conn.cursor:
-            if TUrlUtf8Encode.is_idna_string(web_domain):
-                web_domain = TUrlUtf8Encode.convert_url_from_idna(site_url)
-            website_to_offices[web_domain].add(office_id)
+            if TUrlUtf8Encode.is_idna_string(site_url):
+                site_url = TUrlUtf8Encode.convert_url_from_idna(site_url)
+            website_to_offices[site_url].add(office_id)
     return website_to_offices
 
 
