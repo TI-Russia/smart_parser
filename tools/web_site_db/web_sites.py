@@ -115,14 +115,19 @@ class TDeclarationWebSiteList:
         s.calculated_office_id = office_id
         self.web_sites[site_url] = s
 
-    def build_office_to_main_website(self):
+    def build_office_to_main_website(self, add_http_scheme=True, only_web_domain=False):
         office_to_website = defaultdict(set)
         for site_url, web_site_info in self.web_sites.items():
             if TWebSiteReachStatus.can_communicate(web_site_info.reach_status) and site_url.find('declarator.org') == -1:
-                p = web_site_info.http_protocol
-                if p is None:
-                    p = "http"
-                url = p + "://" + site_url
+                if add_http_scheme:
+                    p = web_site_info.http_protocol
+                    if p is None:
+                        p = "http"
+                    url = p + "://" + site_url
+                else:
+                    url = site_url
+                    if only_web_domain:
+                        url = urlsplit_pro(site_url).hostname
                 office_to_website[web_site_info.calculated_office_id].add(url)
         return office_to_website
 

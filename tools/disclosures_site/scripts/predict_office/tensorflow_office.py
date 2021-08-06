@@ -1,32 +1,15 @@
 from common.logging_wrapper import setup_logging
-from common.russian_regions import TRussianRegions
 from scripts.predict_office.office_index import TOfficeIndex
 from scripts.predict_office.office_pool import TOfficePool, TPredictionCase
+from scripts.predict_office.predict_office_model import TPredictionModelBase
+
 import tensorflow as tf
-import json
-from sklearn.metrics import accuracy_score
 import numpy as np
 import argparse
 import operator
 
 
-class TPredictionModel:
-    def __init__(self, args):
-        self.args = args
-        self.logger = args.logger
-        self.office_index = TOfficeIndex(args)
-        self.office_index.read()
-        self.learn_target_is_office = self.args.learn_target == "office"
-        self.learn_target_is_region = self.args.learn_target.startswith("region")
-        self.train_pool = None
-
-    def read_train(self):
-        self.train_pool = TOfficePool(self, self.args.train_pool, row_count=self.args.row_count)
-        assert len(self.train_pool.pool) > 0
-
-    def read_test(self):
-        self.test_pool = TOfficePool(self, self.args.test_pool, row_count=self.args.row_count)
-        assert len(self.test_pool.pool) > 0
+class TPredictionModel(TPredictionModelBase):
 
     def get_office_name_bigram_feature(self, case: TPredictionCase):
         bigrams_one_hot = np.zeros(self.office_index.get_bigrams_count())
@@ -51,14 +34,7 @@ class TPredictionModel:
         web_domain_one_hot[web_domain_index] = 1
         return web_domain_one_hot
 
-    def get_learn_target_count(self):
-        if self.learn_target_is_office:
-            return len(self.office_index.offices)
-        else:
-            assert self.learn_target_is_region
-            return 111
-
-    def to_ml_input(self, cases, name):
+    def to_ml_input_functional(self, cases, name):
         self.args.logger.info("build features for {} pool of {} cases".format(name, len(cases)))
         bigrams = np.array(list(self.get_office_name_bigram_feature(c) for c in cases))
 
@@ -69,25 +45,44 @@ class TPredictionModel:
             "region_name_feat": np.array(list(self.get_region_words_feature(c) for c in cases))
         }
 
-        labels = np.array(list(c.get_learn_target   () for c in cases))
+        labels = np.array(list(c.get_learn_target() for c in cases))
         return features, labels
 
+    def to_ml_input(self, cases, name):
+        self.args.logger.info("build features for {} pool of {} cases".format(name, len(cases)))
+        bigrams = np.array(list(self.get_office_name_bigram_feature(c) for c in cases))
+        labels = np.array(list(c.get_learn_target() for c in cases))
+        return bigrams, labels
+
     def init_model(self):
-        office_bigrams_count = len(self.office_index.office_name_bigrams_to_id)
-        office_name_input = tf.keras.Input(shape=(office_bigrams_count,), name="office_name_feat")
+        input_shape = (self.office_index.get_bigrams_count(),)
+        model = tf.keras.Sequential([
+            tf.keras.layers.Dense(self.args.dense_layer_size, activation='relu', input_shape=input_shape),
+            tf.keras.layers.Dense(self.args.dense_layer_size),
+            tf.keras.layers.Dense(self.get_learn_target_count(), activation="softmax")
+        ])
+        return model
+
+    def init_model_functional(self):
+        office_name_input = tf.keras.Input(shape=(self.office_index.get_bigrams_count(),), name="office_name_feat")
 
         web_domain_count = len(self.office_index.web_domains)
         web_domain_input = tf.keras.Input(shape=(web_domain_count,), name="web_domain_feat")
 
-        region_word_count = len(self.office_index.region_words)
-        region_words_input = tf.keras.Input(shape=(region_word_count,), name="region_name_feat")
+        #region_word_count = len(self.office_index.region_words)
+        #region_words_input = tf.keras.Input(shape=(region_word_count,), name="region_name_feat")
 
-        inputs = [office_name_input, web_domain_input, region_words_input]
+        inputs = [
+            office_name_input,
+            #web_domain_input,
+            #region_words_input
+        ]
         #inputs = [web_domain_input, region_words_input]
-        concatenated_layer = tf.keras.layers.concatenate(inputs)
-
-        dense_layer = tf.keras.layers.Dense(self.get_learn_target_count(), activation='relu')(concatenated_layer)
-        target_layer = tf.keras.layers.Dense(self.get_learn_target_count(), name="target")(dense_layer)
+        #concatenated_layer = tf.keras.layers.concatenate(inputs)
+        #input_layer = tf.keras.layers.Dense(self.args.dense_layer_size, activation='relu', input_shape=(self.train_x.shape[-1],)),
+        dense_layer1 = tf.keras.layers.Dense(self.args.dense_layer_size)(office_name_input)
+        dense_layer2 = tf.keras.layers.Dense(self.args.dense_layer_size)(dense_layer1)
+        target_layer = tf.keras.layers.Dense(self.get_learn_target_count(), name="target")(dense_layer2)
         model = tf.keras.Model(
             inputs=inputs,
             outputs=target_layer,
@@ -99,7 +94,7 @@ class TPredictionModel:
         assert self.args.model_folder is not None
         #batch_size = 64
         batch_size = 256
-        self.logger.info("train_tensorflow layer_size={}".format(self.args.layer_size))
+        self.logger.info("train_tensorflow layer_size={}".format(self.args.dense_layer_size))
         train_x, train_y = self.to_ml_input(self.train_pool.pool, "train")
 
         model = self.init_model()
@@ -116,21 +111,6 @@ class TPredictionModel:
                   validation_split=0.2)
         model.save(self.args.model_folder)
 
-    def build_handmade_regions(self, pool: TOfficePool):
-        regions = TRussianRegions()
-        y_true = list()
-        y_pred = list()
-        y_pred_proba = list()
-        c: TPredictionCase
-        for c in pool.pool:
-            pred_region_id = regions.get_region_all_forms(c.text)
-            if pred_region_id is None:
-                pred_region_id = -1
-            y_pred_proba.append((pred_region_id, 1))
-            y_pred.append(pred_region_id)
-            y_true.append(c.true_region_id)
-        self.logger.info("accuracy = {} pool size = {}".format(accuracy_score(y_true, y_pred), len(y_true)))
-        return y_pred_proba
 
     def test(self):
         if self.args.learn_target == "region_handmade":
@@ -159,7 +139,7 @@ class TPredictionModel:
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--action", dest='action', required=True, help="can be bigrams, train, test, toloka")
+    parser.add_argument("--action", dest='action', required=True, help="can be bigrams, train, test, toloka, split")
     parser.add_argument("--bigrams-path", dest='bigrams_path', required=False, default="office_ngrams.txt")
     parser.add_argument("--all-pool", dest='all_pool')
     parser.add_argument("--train-pool", dest='train_pool')
@@ -169,7 +149,7 @@ def parse_args():
     parser.add_argument("--learn-target", dest='learn_target', required=False, default="office",
                         help="can be office, region, region_handmade",)
     parser.add_argument("--row-count", dest='row_count', required=False, type=int)
-    parser.add_argument("--layer-size", dest='layer_size', required=False, type=int, default=256)
+    parser.add_argument("--dense-layer-size", dest='dense_layer_size', required=False, type=int, default=256)
     parser.add_argument("--toloka-pool", dest='toloka_pool', required=False)
     args = parser.parse_args()
     args.logger = setup_logging(log_file_name="predict_office.log")

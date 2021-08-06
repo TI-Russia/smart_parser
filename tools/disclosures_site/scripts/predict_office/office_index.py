@@ -1,5 +1,6 @@
 from common.urllib_parse_pro import TUrlUtf8Encode
 from common.russian_regions import TRussianRegions
+from web_site_db.web_sites import TDeclarationWebSiteList
 
 import re
 import json
@@ -62,7 +63,7 @@ class TBigram:
     @staticmethod
     def from_json(js):
         b = TBigram()
-        b.id = js['id']
+        b.bigram_id = js['id']
         b.offices = js['offices']
         return b
 
@@ -71,14 +72,23 @@ class TOfficeIndex:
 
     def __init__(self, args):
         self.args = args
+        self.logger = self.args.logger
         self.office_name_bigrams = None
         self.offices = None
         self.web_domains = None
         self.deterministic_web_domains = None
+        self.office_id_2_ml_office_id = None
+        self.ml_office_id_2_office_id = None
         self.region_words = None
+        self.web_sites = TDeclarationWebSiteList(self.logger)
+        self.web_sites.load_from_disk()
+        self.regions = TRussianRegions()
 
     def get_bigrams_count(self):
         return len(self.office_name_bigrams)
+
+    def get_ml_office_id(self, office_id: int):
+        return self.office_id_2_ml_office_id.get(office_id)
 
     def get_bigram_id(self, bigram):
         b = self.office_name_bigrams.get(bigram)
@@ -128,34 +138,38 @@ class TOfficeIndex:
             self.web_domains = js['web_domains']
             self.deterministic_web_domains = js['deterministic_web_domains']
             self.region_words = js['region_words']
-        self.args.logger.info("bigrams count = {}".format(self.get_bigrams_count()))
+            self.office_id_2_ml_office_id = dict((int(k), v) for k,v in js['office_id_2_ml_office_id'].items())
+            self.ml_office_id_2_office_id = dict((int(k), v) for k,v in js['ml_office_id_2_office_id'].items())
+        self.logger.info("bigrams count = {}".format(self.get_bigrams_count()))
 
     def write(self):
-        self.args.logger.info("write to {}".format(self.args.bigrams_path))
+        self.logger.info("write to {}".format(self.args.bigrams_path))
         with open(self.args.bigrams_path, "w") as outp:
             rec = {
                 'bigrams': dict((k, v.to_json()) for k, v in self.office_name_bigrams.items()),
                 'offices': self.offices,
                 'web_domains': self.web_domains,
                 'deterministic_web_domains': self.deterministic_web_domains,
-                'region_words': self.region_words
+                'region_words': self.region_words,
+                'office_id_2_ml_office_id': self.office_id_2_ml_office_id,
+                'ml_office_id_2_office_id': self.ml_office_id_2_office_id,
             }
             json.dump(rec, outp, ensure_ascii=False, indent=4)
 
-    def get_office_name(self, id):
-        return self.offices[str(id)]['name']
+    def get_office_name(self, office_id: int):
+        return self.offices[office_id]['name']
 
     def get_office_region(self, id):
         return self.offices[str(id)]['region']
 
     def build_bigrams(self):
-        self.args.logger.info("build bigrams")
+        self.logger.info("build bigrams")
         regions = TRussianRegions()
         office_bigrams = defaultdict(set)
         region_words = set()
         self.offices = dict()
         sql = "select id, name, region_id from declarations_office"
-        self.args.logger.info(sql)
+        self.logger.info(sql)
         with TDisclosuresConnection(sql) as conn:
             for office_id, name, region_id in conn.cursor:
                 if region_id is None:
@@ -181,10 +195,10 @@ class TOfficeIndex:
             self.office_name_bigrams[b] = bigram_info
 
         self.region_words = dict((k, i) for (i, k) in enumerate(region_words))
-        self.args.logger.info("bigrams count = {}".format(self.get_bigrams_count()))
+        self.logger.info("bigrams count = {}".format(self.get_bigrams_count()))
 
     def build_web_domains(self):
-        self.args.logger.info("build web domains")
+        self.logger.info("build web domains")
         web_domains = build_web_site_to_offices()
         self.deterministic_web_domains = dict()
         self.web_domains = dict()
@@ -193,7 +207,43 @@ class TOfficeIndex:
                 self.deterministic_web_domains[web_domain] = list(office_ids)[0]
             else:
                 self.web_domains[web_domain] = len(self.web_domains)
+        self.office_id_2_ml_office_id = dict()
+        self.ml_office_id_2_office_id = dict()
+        office_to_sites = self.web_sites.build_office_to_main_website(add_http_scheme=False, only_web_domain=True)
+        for office_id, office_info in self.offices.items():
+            sites = office_to_sites[office_id]
+            for u in sites:
+                if u in self.web_domains:
+                    ml_office_id = len(self.office_id_2_ml_office_id)
+                    self.office_id_2_ml_office_id[office_id] = ml_office_id
+                    self.ml_office_id_2_office_id[ml_office_id] = office_id
+                    break
+        self.logger.info("target office count = {}".format(len(self.office_id_2_ml_office_id)))
 
     def build(self):
         self.build_bigrams()
         self.build_web_domains()
+
+    def get_region_from_web_site_title(self, site_url: str):
+        site_info = self.web_sites.get_web_site(site_url)
+        if site_info is not None and site_info.title is not None:
+            return self.regions.get_region_all_forms(site_info.title, 0)
+        else:
+            return 0
+
+    def max_title_bigrams_office(self, title):
+        offices = defaultdict(int)
+        for bigram in TOfficeIndex.get_bigrams(title):
+            for office_id in self.get_offices_by_bigram(bigram):
+                offices[office_id] += 1
+        if len(offices) == 0:
+            return -1
+        max_office_id = max(((v, k) for k, v in offices.items()))[1]
+        return max_office_id
+
+    def get_office_from_web_site_title(self, site_url: str):
+        site_info = self.web_sites.get_web_site(site_url)
+        if site_info is not None and site_info.title is not None:
+            return self.max_title_bigrams_office(site_info.title)
+        else:
+            return -1

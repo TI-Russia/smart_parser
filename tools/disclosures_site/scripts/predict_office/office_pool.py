@@ -1,4 +1,6 @@
 import json
+import random
+from sklearn.model_selection import train_test_split
 
 
 class TPredictionCase:
@@ -48,7 +50,9 @@ class TPredictionCase:
 
     def get_learn_target(self):
         if self.ml_model.learn_target_is_office:
-            return self.true_office_id
+            target = self.ml_model.office_index.get_ml_office_id(self.true_office_id)
+            assert target is not None
+            return target
         else:
             assert self.ml_model.learn_target_is_region
             return self.true_region_id
@@ -126,6 +130,8 @@ class TOfficePool:
         c: TPredictionCase
         for c in self.pool:
             if c.web_domain in self.ml_model.office_index.deterministic_web_domains:
+                continue
+            if self.ml_model.office_index.get_ml_office_id(c.true_office_id) is None:
                 continue
             new_pool.append(c)
         self.pool = new_pool
