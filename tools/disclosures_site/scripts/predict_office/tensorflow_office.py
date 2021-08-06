@@ -34,7 +34,7 @@ class TPredictionModel(TPredictionModelBase):
         web_domain_one_hot[web_domain_index] = 1
         return web_domain_one_hot
 
-    def to_ml_input_functional(self, cases, name):
+    def to_ml_input(self, cases, name):
         self.args.logger.info("build features for {} pool of {} cases".format(name, len(cases)))
         bigrams = np.array(list(self.get_office_name_bigram_feature(c) for c in cases))
 
@@ -48,22 +48,7 @@ class TPredictionModel(TPredictionModelBase):
         labels = np.array(list(c.get_learn_target() for c in cases))
         return features, labels
 
-    def to_ml_input(self, cases, name):
-        self.args.logger.info("build features for {} pool of {} cases".format(name, len(cases)))
-        bigrams = np.array(list(self.get_office_name_bigram_feature(c) for c in cases))
-        labels = np.array(list(c.get_learn_target() for c in cases))
-        return bigrams, labels
-
     def init_model(self):
-        input_shape = (self.office_index.get_bigrams_count(),)
-        model = tf.keras.Sequential([
-            tf.keras.layers.Dense(self.args.dense_layer_size, activation='relu', input_shape=input_shape),
-            tf.keras.layers.Dense(self.args.dense_layer_size),
-            tf.keras.layers.Dense(self.get_learn_target_count(), activation="softmax")
-        ])
-        return model
-
-    def init_model_functional(self):
         office_name_input = tf.keras.Input(shape=(self.office_index.get_bigrams_count(),), name="office_name_feat")
 
         web_domain_count = len(self.office_index.web_domains)
@@ -74,15 +59,13 @@ class TPredictionModel(TPredictionModelBase):
 
         inputs = [
             office_name_input,
-            #web_domain_input,
+            web_domain_input,
             #region_words_input
         ]
-        #inputs = [web_domain_input, region_words_input]
-        #concatenated_layer = tf.keras.layers.concatenate(inputs)
-        #input_layer = tf.keras.layers.Dense(self.args.dense_layer_size, activation='relu', input_shape=(self.train_x.shape[-1],)),
-        dense_layer1 = tf.keras.layers.Dense(self.args.dense_layer_size)(office_name_input)
+        concatenated_layer = tf.keras.layers.concatenate(inputs)
+        dense_layer1 = tf.keras.layers.Dense(self.args.dense_layer_size)(concatenated_layer)
         dense_layer2 = tf.keras.layers.Dense(self.args.dense_layer_size)(dense_layer1)
-        target_layer = tf.keras.layers.Dense(self.get_learn_target_count(), name="target")(dense_layer2)
+        target_layer = tf.keras.layers.Dense(self.get_learn_target_count(), name="target", activation="softmax")(dense_layer2)
         model = tf.keras.Model(
             inputs=inputs,
             outputs=target_layer,
@@ -110,7 +93,6 @@ class TPredictionModel(TPredictionModelBase):
                   batch_size=batch_size,
                   validation_split=0.2)
         model.save(self.args.model_folder)
-
 
     def test(self):
         if self.args.learn_target == "region_handmade":
