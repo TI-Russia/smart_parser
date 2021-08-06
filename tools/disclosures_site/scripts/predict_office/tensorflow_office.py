@@ -29,9 +29,9 @@ class TPredictionModel:
         assert len(self.test_pool.pool) > 0
 
     def get_office_name_bigram_feature(self, case: TPredictionCase):
-        bigrams_one_hot = np.zeros(len(self.office_index.office_name_bigrams))
+        bigrams_one_hot = np.zeros(self.office_index.get_bigrams_count())
         for b in TOfficeIndex.get_bigrams(case.text):
-            bigram_id = self.office_index.office_name_bigrams.get(b)
+            bigram_id = self.office_index.get_bigram_id(b)
             if bigram_id is not None:
                 bigrams_one_hot[bigram_id] = 1
         return bigrams_one_hot
@@ -73,7 +73,7 @@ class TPredictionModel:
         return features, labels
 
     def init_model(self):
-        office_bigrams_count = len(self.office_index.office_name_bigrams)
+        office_bigrams_count = len(self.office_index.office_name_bigrams_to_id)
         office_name_input = tf.keras.Input(shape=(office_bigrams_count,), name="office_name_feat")
 
         web_domain_count = len(self.office_index.web_domains)

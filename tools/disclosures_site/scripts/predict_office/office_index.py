@@ -47,6 +47,26 @@ def build_web_site_to_offices():
     return website_to_offices
 
 
+class TBigram:
+    def __init__(self, bigram_id=None):
+        self.bigram_id = bigram_id
+        self.offices = list()
+
+    def to_json(self):
+        rec =  {
+            "id": self.bigram_id,
+            "offices": self.offices
+        }
+        return rec
+
+    @staticmethod
+    def from_json(js):
+        b = TBigram()
+        b.id = js['id']
+        b.offices = js['offices']
+        return b
+
+
 class TOfficeIndex:
 
     def __init__(self, args):
@@ -56,6 +76,21 @@ class TOfficeIndex:
         self.web_domains = None
         self.deterministic_web_domains = None
         self.region_words = None
+
+    def get_bigrams_count(self):
+        return len(self.office_name_bigrams)
+
+    def get_bigram_id(self, bigram):
+        b = self.office_name_bigrams.get(bigram)
+        if b is None:
+            return None
+        return b.bigram_id
+
+    def get_offices_by_bigram(self, bigram):
+        b = self.office_name_bigrams.get(bigram)
+        if b is None:
+            return list()
+        return b.offices
 
     @staticmethod
     def get_word_stems(text):
@@ -88,18 +123,18 @@ class TOfficeIndex:
     def read(self):
         with open(self.args.bigrams_path) as inp:
             js = json.load(inp)
-            self.office_name_bigrams = js['bigrams']
+            self.office_name_bigrams = dict((k, TBigram.from_json(v)) for k, v in js['bigrams'].items())
             self.offices = js['offices']
             self.web_domains = js['web_domains']
             self.deterministic_web_domains = js['deterministic_web_domains']
             self.region_words = js['region_words']
-        self.args.logger.info("bigrams count = {}".format(len(self.office_name_bigrams)))
+        self.args.logger.info("bigrams count = {}".format(self.get_bigrams_count()))
 
     def write(self):
         self.args.logger.info("write to {}".format(self.args.bigrams_path))
         with open(self.args.bigrams_path, "w") as outp:
             rec = {
-                'bigrams': self.office_name_bigrams,
+                'bigrams': dict((k, v.to_json()) for k, v in self.office_name_bigrams.items()),
                 'offices': self.offices,
                 'web_domains': self.web_domains,
                 'deterministic_web_domains': self.deterministic_web_domains,
@@ -116,7 +151,7 @@ class TOfficeIndex:
     def build_bigrams(self):
         self.args.logger.info("build bigrams")
         regions = TRussianRegions()
-        office_bigrams = set()
+        office_bigrams = defaultdict(set)
         region_words = set()
         self.offices = dict()
         sql = "select id, name, region_id from declarations_office"
@@ -132,15 +167,21 @@ class TOfficeIndex:
                 if name.lower().startswith("сведения о"):
                     continue
                 for b in self.get_bigrams(name):
-                    office_bigrams.add(b)
+                    office_bigrams[b].add(office_id)
                 region = regions.get_region_by_id(region_id)
                 for w in TOfficeIndex.get_word_stems(region.name):
                     region_words.add(w)
                 for w in TOfficeIndex.get_word_stems(region.short_name):
                     region_words.add(w)
-        self.office_name_bigrams = dict((k, i) for (i, k) in enumerate(office_bigrams))
+
+        self.office_name_bigrams = dict()
+        for i, b in enumerate(office_bigrams.keys()):
+            bigram_info = TBigram(bigram_id=i)
+            bigram_info.offices = list(office_bigrams[b])
+            self.office_name_bigrams[b] = bigram_info
+
         self.region_words = dict((k, i) for (i, k) in enumerate(region_words))
-        self.args.logger.info("bigrams count = {}".format(len(self.office_name_bigrams)))
+        self.args.logger.info("bigrams count = {}".format(self.get_bigrams_count()))
 
     def build_web_domains(self):
         self.args.logger.info("build web domains")

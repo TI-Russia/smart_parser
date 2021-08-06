@@ -1,5 +1,7 @@
+import sys
+
 from common.logging_wrapper import setup_logging
-from scripts.predict_office.office_index import TOfficeIndex
+from scripts.predict_office.office_index import TOfficeIndex, TBigram
 from scripts.predict_office.office_pool import TOfficePool, TPredictionCase
 from common.russian_regions import TRussianRegions
 from web_site_db.web_sites import TDeclarationWebSiteList
@@ -9,7 +11,7 @@ from catboost import CatBoostClassifier, Pool
 import numpy as np
 import argparse
 import operator
-
+from collections import defaultdict
 
 class TPredictionModel:
     def __init__(self, args):
@@ -33,9 +35,9 @@ class TPredictionModel:
         assert len(self.test_pool.pool) > 0
 
     def get_office_name_bigram_feature(self, case: TPredictionCase):
-        bigrams_one_hot = np.zeros(len(self.office_index.office_name_bigrams))
+        bigrams_one_hot = np.zeros(len(self.office_index.get_bigrams_count()))
         for b in TOfficeIndex.get_bigrams(case.text):
-            bigram_id = self.office_index.office_name_bigrams.get(b)
+            bigram_id = self.office_index.get_bigram_id(b)
             if bigram_id is not None:
                 bigrams_one_hot[bigram_id] = 1
         return bigrams_one_hot
@@ -62,10 +64,10 @@ class TPredictionModel:
             assert self.learn_target_is_region
             return 111
 
-    def build_features(self, case: TPredictionCase):
+    def build_features_region(self, case: TPredictionCase):
         web_domain_index = self.office_index.web_domains.get(case.web_domain, 0)
         site_info = self.web_sites.get_web_site(case.web_domain)
-        if site_info is not None and site_info.title is not None:
+        if site_info is not None and site_info.title is not None    :
             region_id_from_site_title = self.regions.get_region_all_forms(site_info.title, 0)
         else:
             region_id_from_site_title = 0
@@ -74,13 +76,12 @@ class TPredictionModel:
         region_id_from_text = self.regions.get_region_all_forms(case.text, 0)
         features = np.array(list([web_domain_index, region_id_from_text, region_id_from_site_title]))
         self.logger.debug(features)
-        return  features
+        return features
 
-    def to_ml_input(self, cases, name):
-        self.args.logger.info("build features for {} pool of {} cases".format(name, len(cases)))
+    def to_ml_input_region(self, cases, name):
         features = list()
         for case in cases:
-            features.append(self.build_features(case))
+            features.append(self.build_features_region(case))
         labels = np.array(list(c.get_learn_target() for c in cases))
 
         #feature_names = ["web_domain_feat", "title_feat"]
@@ -94,13 +95,78 @@ class TPredictionModel:
                                   )
         return catboost_test_pool
 
-    def train_catboost(self, iter_count=100):
-        self.logger.info("train_catboost iterations count={}".format(iter_count))
+    def max_title_bigrams_office(self, title):
+        offices = defaultdict(int)
+        for bigram in TOfficeIndex.get_bigrams(title):
+            for office_id in  self.office_index.get_offices_by_bigram(bigram):
+                offices[office_id] += 1
+        if len(offices) == 0:
+            return -1
+        max_office_id = max(((v,k) for k, v in offices.items()))[1]
+        return max_office_id
+
+    def build_features_office(self, case: TPredictionCase):
+        web_domain_index = self.office_index.web_domains.get(case.web_domain, 0)
+        site_info = self.web_sites.get_web_site(case.web_domain)
+        if site_info is not None and site_info.title is not None:
+            region_id_from_site_title = self.regions.get_region_all_forms(site_info.title, 0)
+            office_by_bigrams = self.max_title_bigrams_office(site_info.title)
+        else:
+            region_id_from_site_title = 0
+            office_by_bigrams = -1
+        region_id_from_text = self.regions.get_region_all_forms(case.text, 0)
+        features = np.array(list([
+            web_domain_index,
+            region_id_from_text,
+            region_id_from_site_title,
+            office_by_bigrams
+            ]))
+
+        self.logger.debug(features)
+        return features
+
+    def to_ml_input_office(self, cases, name):
+        features = list()
+        cnt = 0
+        for case in cases:
+            if cnt % 100 == 0:
+                sys.stdout.write("{}/{}\r".format(cnt, len(cases)))
+                sys.stdout.flush()
+            cnt += 1
+            features.append(self.build_features_office(case))
+        sys.stdout.write("\n")
+        labels = np.array(list(c.get_learn_target() for c in cases))
+
+        feature_names = ["web_domain_feat",
+                         "region_id_from_text_feat",
+                         "region_id_from_html_title",
+                         "office_by_bigrams"
+                         ]
+        self.logger.info("features={}".format(feature_names))
+        cat_features = ["web_domain_feat", "region_id_from_text_feat", "region_id_from_html_title", "office_by_bigrams"]
+        cat_features = []
+
+        catboost_test_pool = Pool(features, labels, feature_names=feature_names,
+                                      cat_features=cat_features,
+                                  )
+        return catboost_test_pool
+
+    def to_ml_input(self, cases, name):
+        self.args.logger.info("build features for {} pool of {} cases".format(name, len(cases)))
+        if self.learn_target_is_office:
+            return self.to_ml_input_office(cases, name)
+        else:
+            return self.to_ml_input_region(cases, name)
+
+    def train_catboost(self):
         catboost_pool = self.to_ml_input(self.train_pool.pool, "train")
+        self.logger.info("train_catboost iterations count={}".format(self.args.iter_count))
         model = CatBoostClassifier(iterations=self.args.iter_count,
                                    depth=4,
+                                   logging_level="Debug",
                                    loss_function='MultiClass',
-                                   verbose=True)
+                                   #verbose=True
+                                   )
         model.fit(catboost_pool)
         model.save_model(self.args.model_path)
 
