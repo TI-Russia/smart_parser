@@ -77,7 +77,7 @@ class TDeclarationWebSiteList:
     def __init__(self, logger, file_name=None):
         self.web_sites = dict()
         self.web_domains_redirects = None
-        self.build_web_domains_redirects()
+        self.web_domain_to_web_site = dict()
         self.logger = logger
         if file_name is None:
             self.file_name = TDeclarationWebSiteList.default_input_task_list_path
@@ -89,6 +89,7 @@ class TDeclarationWebSiteList:
             for k, v in json.load(inp).items():
                 self.web_sites[k] = TDeclarationWebSite().read_from_json(v)
         self.build_web_domains_redirects()
+        self.web_domain_to_web_site = dict((urlsplit_pro(k).hostname, v) for k, v in self.web_sites.items())
         return self
 
     def build_web_domains_redirects(self):
@@ -101,8 +102,18 @@ class TDeclarationWebSiteList:
                     self.web_domains_redirects[d1].add(d2)
                     self.web_domains_redirects[d2].add(d1)
 
-    def get_mirrors(self, d):
+    def get_mirrors(self, d: str):
         return self.web_domains_redirects.get(d, set())
+
+    def get_site_by_web_domain(self, web_domain: str) -> TDeclarationWebSite:
+        assert '/' not in web_domain
+        return self.web_domain_to_web_site.get(web_domain)
+
+    def get_title_by_web_domain(self, web_domain: str) -> str:
+        info = self.get_site_by_web_domain(web_domain)
+        if info is None or info.title is None:
+            return ""
+        return info.title
 
     def add_web_site(self, site_url: str, office_id):
         # russian domain must be in utf8

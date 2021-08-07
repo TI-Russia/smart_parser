@@ -6,6 +6,7 @@ import re
 import json
 import pymysql
 from collections import defaultdict
+import numpy as np
 
 
 class TDisclosuresConnection:
@@ -90,6 +91,9 @@ class TOfficeIndex:
     def get_ml_office_id(self, office_id: int):
         return self.office_id_2_ml_office_id.get(office_id)
 
+    def get_office_id_by_ml_office_id(self, ml_office_id: int):
+        return self.ml_office_id_2_office_id.get(ml_office_id)
+
     def get_bigram_id(self, bigram):
         b = self.office_name_bigrams.get(bigram)
         if b is None:
@@ -134,7 +138,7 @@ class TOfficeIndex:
         with open(self.args.bigrams_path) as inp:
             js = json.load(inp)
             self.office_name_bigrams = dict((k, TBigram.from_json(v)) for k, v in js['bigrams'].items())
-            self.offices = js['offices']
+            self.offices = dict((int(k), v) for k, v in js['offices'].items())
             self.web_domains = js['web_domains']
             self.deterministic_web_domains = js['deterministic_web_domains']
             self.region_words = js['region_words']
@@ -159,8 +163,8 @@ class TOfficeIndex:
     def get_office_name(self, office_id: int):
         return self.offices[office_id]['name']
 
-    def get_office_region(self, id):
-        return self.offices[str(id)]['region']
+    def get_office_region(self, office_id: int):
+        return self.offices[office_id]['region']
 
     def build_bigrams(self):
         self.logger.info("build bigrams")
@@ -247,3 +251,19 @@ class TOfficeIndex:
             return self.max_title_bigrams_office(site_info.title)
         else:
             return -1
+
+    def get_bigram_feature(self, text: str):
+        bigrams_one_hot = np.zeros(self.get_bigrams_count())
+        for b in TOfficeIndex.get_bigrams(text):
+            bigram_id = self.get_bigram_id(b)
+            if bigram_id is not None:
+                bigrams_one_hot[bigram_id] = 1
+        return bigrams_one_hot
+
+    def get_web_site_title_bigram_feature(self, web_domain: str):
+        title = self.web_sites.get_title_by_web_domain(web_domain)
+        return self.get_bigram_feature(title)
+
+    def get_bigram_feature_plus(self, text: str, web_domain: str):
+        text += " " + self.web_sites.get_title_by_web_domain(web_domain)
+        return self.get_bigram_feature(text)

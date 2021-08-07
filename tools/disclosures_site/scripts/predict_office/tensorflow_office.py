@@ -11,14 +11,6 @@ import operator
 
 class TPredictionModel(TPredictionModelBase):
 
-    def get_office_name_bigram_feature(self, case: TPredictionCase):
-        bigrams_one_hot = np.zeros(self.office_index.get_bigrams_count())
-        for b in TOfficeIndex.get_bigrams(case.text):
-            bigram_id = self.office_index.get_bigram_id(b)
-            if bigram_id is not None:
-                bigrams_one_hot[bigram_id] = 1
-        return bigrams_one_hot
-
     def get_region_words_feature(self, case: TPredictionCase):
         one_hot = np.zeros(len(self.office_index.region_words))
         for b in TOfficeIndex.get_word_stems(case.text):
@@ -36,12 +28,16 @@ class TPredictionModel(TPredictionModelBase):
 
     def to_ml_input(self, cases, name):
         self.args.logger.info("build features for {} pool of {} cases".format(name, len(cases)))
-        bigrams = np.array(list(self.get_office_name_bigram_feature(c) for c in cases))
+        #bigrams = list(self.office_index.get_bigram_feature(c.text) for c in cases)
+        bigrams = list(self.office_index.get_bigram_feature_plus(c.text, c.web_domain) for c in cases)
 
-        web_domains = np.array(list(self.get_web_domain_feature(c) for c in cases))
+        #bigrams = list(self.office_index.get_web_site_title_bigram_feature(c.web_domain) for c in cases)
+        #bigrams = list(self.office_index.get_bigram_feature('') for c in cases)
+        web_domains = list(self.get_web_domain_feature(c) for c in cases)
+
         features = {
-            "office_name_feat": bigrams,
-            "web_domain_feat": web_domains,
+            "office_name_feat": np.array(bigrams),
+            "web_domain_feat": np.array(web_domains),
             "region_name_feat": np.array(list(self.get_region_words_feature(c) for c in cases))
         }
 

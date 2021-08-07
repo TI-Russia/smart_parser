@@ -12,6 +12,7 @@ class TPredictionModelBase:
         self.learn_target_is_office = self.args.learn_target == "office"
         self.learn_target_is_region = self.args.learn_target.startswith("region")
         self.train_pool = None
+        self.test_pool = None
 
     def read_train(self):
         self.train_pool = TOfficePool(self, self.args.train_pool, row_count=self.args.row_count)
