@@ -1,26 +1,26 @@
-from scripts.predict_office.office_index import TOfficeIndex
-from scripts.predict_office.office_pool import TOfficePool, TPredictionCase
+from common.urllib_parse_pro import urlsplit_pro
+from predict_office.office_index import TOfficePredictIndex
+from predict_office.office_pool import TOfficePool
+from predict_office.prediction_case import TPredictionCase
 from sklearn.metrics import accuracy_score
 
 
 class TPredictionModelBase:
-    def __init__(self, args):
-        self.args = args
-        self.logger = args.logger
-        self.office_index = TOfficeIndex(args)
+    def __init__(self, logger, office_index_path, model_path,  row_count=None, train_pool=None,
+                 test_pool=None):
+        self.logger = logger
+        self.model_path = model_path
+        self.office_index = TOfficePredictIndex(logger, office_index_path)
         self.office_index.read()
-        self.learn_target_is_office = self.args.learn_target == "office"
-        self.learn_target_is_region = self.args.learn_target.startswith("region")
-        self.train_pool = None
-        self.test_pool = None
+        if train_pool is not None:
+            self.train_pool = TOfficePool(self, train_pool, row_count=row_count)
+        if test_pool is not None:
+            self.test_pool = TOfficePool(self, test_pool, row_count=row_count)
 
-    def read_train(self):
-        self.train_pool = TOfficePool(self, self.args.train_pool, row_count=self.args.row_count)
-        assert len(self.train_pool.pool) > 0
-
-    def read_test(self):
-        self.test_pool = TOfficePool(self, self.args.test_pool, row_count=self.args.row_count)
-        assert len(self.test_pool.pool) > 0
+    def get_office_id_by_deterministic_web_domain(self, web_domain: str):
+        assert '/' not in web_domain
+        office_id = self.office_index.deterministic_web_domains.get(web_domain)
+        return office_id
 
     def build_handmade_regions(self, pool: TOfficePool):
         regions = TRussianRegions()
@@ -39,8 +39,4 @@ class TPredictionModelBase:
         return y_pred_proba
 
     def get_learn_target_count(self):
-        if self.learn_target_is_office:
-            return len(self.office_index.ml_office_id_2_office_id)
-        else:
-            assert self.learn_target_is_region
-            return 111
+        return len(self.office_index.ml_office_id_2_office_id)

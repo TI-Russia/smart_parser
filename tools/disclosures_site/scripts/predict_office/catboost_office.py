@@ -1,10 +1,11 @@
 import sys
 
 from common.logging_wrapper import setup_logging
-from scripts.predict_office.office_index import TOfficeIndex, TBigram
-from scripts.predict_office.office_pool import TOfficePool, TPredictionCase
+from predict_office.office_index import TOfficePredictIndex
+from predict_office.office_pool import TOfficePool
+from predict_office.prediction_case import TPredictionCase
 from scripts.predict_office.predict_office_model import TPredictionModelBase
-
+from collections import defaultdict
 
 from catboost import CatBoostClassifier, Pool
 import numpy as np
@@ -14,37 +15,21 @@ import operator
 
 class TPredictionModel(TPredictionModelBase):
 
-    def build_features_region(self, case: TPredictionCase):
-        web_domain_index = self.office_index.web_domains.get(case.web_domain, 0)
-        region_id_from_site_title = self.office_index.get_region_from_web_site_title(case.web_domain)
-        #text = " ".join(TOfficeIndex.get_word_stems(case.text[0:200]))
-        #return np.array(list([web_domain_index, text]))
-        region_id_from_text = self.office_index.regions.get_region_all_forms(case.text, 0)
-        features = np.array(list([web_domain_index, region_id_from_text, region_id_from_site_title]))
-        self.logger.debug(features)
-        return features
-
-    def to_ml_input_region(self, cases, name):
-        features = list()
-        for case in cases:
-            features.append(self.build_features_region(case))
-        labels = np.array(list(c.get_learn_target() for c in cases))
-
-        #feature_names = ["web_domain_feat", "title_feat"]
-        #text_features = ["title_feat"]
-
-        feature_names = ["web_domain_feat", "region_id_from_text_feat", "region_id_from_html_title"]
-        cat_features = ["web_domain_feat", "region_id_from_text_feat", "region_id_from_html_title"]
-        catboost_test_pool = Pool(features, labels, feature_names=feature_names,
-                                      cat_features=cat_features,
-                                  #text_features=text_features
-                                  )
-        return catboost_test_pool
+    def build_office_by_max_bigrams(self, case: TPredictionCase):
+        title = self.office_index.web_sites.get_title_by_web_domain(case.web_domain)
+        offices = defaultdict(int)
+        for bigram in TOfficePredictIndex.get_bigrams(title):
+            for office_id in self.office_index.get_offices_by_bigram(bigram):
+                offices[office_id] += 1
+        if len(offices) == 0:
+            return -1
+        max_office_id = max(((v, k) for k, v in offices.items()))[1]
+        return max_office_id
 
     def build_features_office(self, case: TPredictionCase):
         web_domain_index = self.office_index.web_domains.get(case.web_domain, 0)
         region_id_from_site_title = self.office_index.get_region_from_web_site_title(case.web_domain)
-        office_by_bigrams = self.office_index.get_office_from_web_site_title(case.web_domain)
+        office_by_bigrams = self.build_office_by_max_bigrams(case)
         region_id_from_text = self.office_index.regions.get_region_all_forms(case.text, 0)
         features = np.array(list([
             web_domain_index,
@@ -84,10 +69,7 @@ class TPredictionModel(TPredictionModelBase):
 
     def to_ml_input(self, cases, name):
         self.args.logger.info("build features for {} pool of {} cases".format(name, len(cases)))
-        if self.learn_target_is_office:
-            return self.to_ml_input_office(cases, name)
-        else:
-            return self.to_ml_input_region(cases, name)
+        return self.to_ml_input_office(cases, name)
 
     def train_catboost(self):
         catboost_pool = self.to_ml_input(self.train_pool.pool, "train")
@@ -122,45 +104,37 @@ class TPredictionModel(TPredictionModelBase):
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--action", dest='action', required=True, help="can be bigrams, train, test, toloka")
+    parser.add_argument("--action", dest='action', required=True, help="can be train, test, toloka")
     parser.add_argument("--bigrams-path", dest='bigrams_path', required=False, default="office_ngrams.txt")
     parser.add_argument("--all-pool", dest='all_pool')
     parser.add_argument("--train-pool", dest='train_pool')
     parser.add_argument("--test-pool", dest='test_pool')
     parser.add_argument("--model-path", dest='model_path', required=False)
     parser.add_argument("--iter-count", dest='iter_count', required=False, type=int, default=10)
-    parser.add_argument("--learn-target", dest='learn_target', required=False, default="office",
-                        help="can be office, region, region_handmade",)
     parser.add_argument("--row-count", dest='row_count', required=False, type=int)
     parser.add_argument("--toloka-pool", dest='toloka_pool', required=False)
     args = parser.parse_args()
-    args.logger = setup_logging(log_file_name="predict_office.log")
     return args
 
 
 def main():
     args = parse_args()
-    if args.action == "bigrams":
-        index = TOfficeIndex(args)
-        index.build()
-        index.write()
+    logger = setup_logging(log_file_name="predict_office.log")
+    model = TPredictionModel(logger, args.bigrams_path,  args.row_count, args.train_pool,
+                             args.test_pool)
+    if args.action == "split":
+        assert args.all_pool is not None
+        TOfficePool(model, args.all_pool).split(args.train_pool, args.test_pool)
+    elif args.action == "train":
+        model.train_catboost()
+    elif args.action == "test":
+        model.test()
+    elif args.action == "toloka":
+        model.read_test()
+        assert args.toloka_pool is not None
+        model.toloka()
     else:
-        model = TPredictionModel(args)
-        if args.action == "split":
-            args.all_pool is not None
-            TOfficePool(model, args.all_pool).split(args.train_pool, args.test_pool)
-        elif args.action == "train":
-            model.read_train()
-            model.train_catboost()
-        elif args.action == "test":
-            model.read_test()
-            model.test()
-        elif args.action == "toloka":
-            model.read_test()
-            assert args.toloka_pool is not None
-            model.toloka()
-        else:
-            raise Exception("unknown action")
+        raise Exception("unknown action")
 
 
 if __name__ == '__main__':

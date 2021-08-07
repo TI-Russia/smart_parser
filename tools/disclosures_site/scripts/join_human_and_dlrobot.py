@@ -4,7 +4,12 @@ from web_site_db.robot_project import TRobotProject
 from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
 from common.logging_wrapper import setup_logging
 from common.export_files import TExportFile
+from predict_office.prediction_case import  TPredictionCase
+from predict_office.tensor_flow_office import TTensorFlowOfficeModel
+from common.urllib_parse_pro import urlsplit_pro
+from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 
+from collections import defaultdict
 import os
 import sys
 import re
@@ -22,6 +27,8 @@ class TJoiner:
         parser.add_argument("--input-dlrobot-folder", dest='input_dlrobot_folder', required=True)
         parser.add_argument("--human-json", dest='human_json', required=True)
         parser.add_argument("--old-dlrobot-human-json", dest='old_dlrobot_human_json', required=False)
+        parser.add_argument("--office-model-path", dest='office_model_path', required=False)
+
 
         # output args
         parser.add_argument("--output-json", dest='output_json', default="dlrobot_human.json")
@@ -39,6 +46,11 @@ class TJoiner:
         self.web_sites = TDeclarationWebSiteList(self.logger)
         self.web_sites.load_from_disk()
         self.old_files_with_office_count = 0
+        bigrams_path = os.path.join(args.office_model_path, "office_ngrams.txt")
+        ml_model_path = os.path.join(args.office_model_path, "model")
+        self.office_ml_model = TTensorFlowOfficeModel(self.logger, bigrams_path, ml_model_path)
+        sp_args = TSmartParserCacheClient.parse_args([])
+        self.smart_parser_server_client = TSmartParserCacheClient(sp_args, self.logger)
 
     def add_dlrobot_file(self, sha256, file_extension, web_refs=[], decl_refs=[]):
         src_doc = self.output_dlrobot_human.document_collection.get(sha256)
@@ -114,24 +126,45 @@ class TJoiner:
             self.add_dlrobot_file(sha256, src_doc.file_extension, decl_refs=src_doc.decl_references)
         self.logger.info("Database Document Count: {}".format(self.output_dlrobot_human.get_documents_count()))
 
-    def calc_office_id(self):
-        for sha256, src_doc in self.output_dlrobot_human.document_collection.items():
-            office_id = None
-            for r in src_doc.decl_references:
-                office_id = r.office_id
-                break
+    def predict_office_deterministic_web_domain(self, src_doc: TSourceDocument):
+        web_ref: TWebReference
+        for web_ref in src_doc.web_references:
+            web_domain = urlsplit_pro(web_ref._site_url).hostname
+            det_office_id = self.office_ml_model.get_office_id_by_deterministic_web_domain(web_domain)
+            if det_office_id is not None:
+                src_doc.calculated_office_id = det_office_id
+                self.logger.debug("set file {} office_id={} (deterministic web domain \"{}\")".format(sha256,
+                                                                                                      det_office_id,
+                                                                                                      web_domain))
+                return True
+        return False
 
-            if office_id is None:
+    def calc_office_id(self):
+        predict_cases = list()
+        src_doc: TSourceDocument
+        for sha256, src_doc in self.output_dlrobot_human.document_collection.items():
+            if len(src_doc.decl_references) > 0:
+                src_doc.calculated_office_id = src_doc.decl_references[0].office_id
+                self.logger.debug("set file {} office_id={} (from declarator)".format(sha256,
+                                                                                      src_doc.calculated_office_id))
+            elif self.predict_office_deterministic_web_domain(src_doc):
+                pass
+            else:
                 web_ref: TWebReference
                 for web_ref in src_doc.web_references:
-                    web_site = self.web_sites.get_web_site(web_ref._site_url)
-                    if web_site is not None:
-                        office_id = web_site.calculated_office_id
-                        break
-
-            if office_id is not None:
-                self.logger.debug("set file {} calculated_office_id={}".format(sha256, office_id))
-                src_doc.calculated_office_id = office_id
+                    web_domain = urlsplit_pro(web_ref._site_url).hostname
+                    if src_doc.office_strings is None:
+                        src_doc.office_strings = self.smart_parser_server_client.get_office_strings(sha256)
+                    case = TPredictionCase(self.office_ml_model, sha256, web_domain,-1, src_doc.office_strings)
+                    predict_cases.append(case)
+        predicted_office_ids = self.office_ml_model.predict(predict_cases)
+        max_weights = defaultdict(float)
+        for case, (office_id, weight) in zip(predict_cases, predicted_office_ids):
+            if max_weights[case.sha256] > weight:
+                max_weights[case.sha256] = weight
+                self.output_dlrobot_human.document_collection[case.sha256].calculated_office_id = office_id
+                self.logger.debug("set file {} office_id={} (tensorflow)".format(sha256,
+                                                                                      src_doc.calculated_office_id))
 
     def main(self):
         if not self.args.only_rebuild_office_to_domain:

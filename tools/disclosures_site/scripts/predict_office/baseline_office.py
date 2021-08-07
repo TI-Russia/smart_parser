@@ -1,5 +1,5 @@
 from common.logging_wrapper import setup_logging
-from scripts.predict_office.office_pool import  TPredictionCase
+from predict_office.prediction_case import TPredictionCase
 from scripts.predict_office.predict_office_model import TPredictionModelBase
 
 import argparse
@@ -30,9 +30,6 @@ def parse_args():
     parser.add_argument("--bigrams-path", dest='bigrams_path', required=False, default="office_ngrams.txt")
     parser.add_argument("--test-pool", dest='test_pool')
     parser.add_argument("--row-count", dest='row_count', required=False, type=int)
-    parser.add_argument("--learn-target", dest='learn_target', required=False, default="office",
-                        help="can be office, region, region_handmade",)
-
     args = parser.parse_args()
     args.logger = setup_logging(log_file_name="predict_office.log")
     return args

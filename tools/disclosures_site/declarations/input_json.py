@@ -81,15 +81,20 @@ class TWebReference (TReferenceBase):
 
 class TSourceDocument:
 
-    def __init__(self, from_json=dict()):
-        self.file_extension = from_json.get('file_ext')
-        self.calculated_office_id = from_json.get('office_id')
+    def __init__(self):
+        self.file_extension = None
+        self.calculated_office_id = None
         self.web_references = list()
         self.decl_references = list()
-        for ref in from_json.get('d_refs', []):
-            self.decl_references.append(TDeclaratorReference(from_json=ref))
-        for ref in from_json.get('w_refs', []):
-            self.web_references.append(TWebReference(from_json=ref))
+        self.office_strings = None
+
+    def from_json(self, js):
+        self.file_extension = js.get('file_ext')
+        self.calculated_office_id = js.get('office_id')
+        self.web_references = list(TWebReference(from_json=r) for r in js.get('w_refs', []))
+        self.decl_references = list(TDeclaratorReference(from_json=r) for r in js.get('d_refs', []))
+        self.office_strings = js.get('office_strings')
+        return self
 
     def build_intersection_status(self):
         if len(self.web_references) > 0 and len(self.decl_references) > 0:
@@ -137,6 +142,8 @@ class TSourceDocument:
             res['w_refs'] = list(x.write_to_json() for x in self.web_references)
         if len(self.decl_references) > 0:
             res['d_refs'] = list(x.write_to_json() for x in self.decl_references)
+        if self.office_strings is not None:
+            res['office_strings'] = self.office_strings
         return res
 
     def convert_refs_to_utf8(self):
@@ -156,7 +163,7 @@ class TDlrobotHumanFile:
                 from_json = json.load(inp)
             self.document_folder = from_json.get('document_folder')
             self.document_collection = dict(
-                (k, TSourceDocument(from_json=v)) for k, v in from_json.get('documents', dict()).items())
+                (k, TSourceDocument().from_json(v)) for k, v in from_json.get('documents', dict()).items())
         else:
             self.document_folder = document_folder
             self.document_collection = dict()

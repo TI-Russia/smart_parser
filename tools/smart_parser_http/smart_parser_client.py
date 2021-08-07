@@ -142,8 +142,9 @@ class TSmartParserCacheClient(object):
                 return default_value
             return normalize_whitespace(props[0].get('sheet_title', default_value))
 
-    @staticmethod
-    def get_office_strings(js):
+    def get_office_strings(self, sha256):
+        js = self.retrieve_json_by_sha256(sha256)
+
         rec = {
             'title': "",
             'roles': [],
@@ -184,8 +185,7 @@ class TSmartParserCacheClient(object):
                     title = TSmartParserCacheClient.get_title_from_smart_parser_json(js)
                     print (title)
                 elif self.args.action == "office_strings":
-                    js = self.retrieve_json_by_sha256(f)
-                    of_strings = TSmartParserCacheClient.get_office_strings(js)
+                    of_strings = self.get_office_strings(f)
                     print(json.dumps(of_strings, ensure_ascii=False))
                 elif self.args.action == "get":
                     js = self.retrieve_json_by_source_file(f)
