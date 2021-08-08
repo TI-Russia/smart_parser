@@ -1,3 +1,4 @@
+from declarations.tests.smart_parser_for_testing import SmartParserServerForTesting
 import declarations.models as models
 from disclosures_site.scripts.join_human_and_dlrobot import TJoiner
 
@@ -146,8 +147,11 @@ class JoinDLrobotAndHuman(TestCase):
                 '--old-dlrobot-human-json', 'old/dlrobot_human.json',
                 '--output-json', self.dlrobot_human_path
                 ]
-        joiner = TJoiner(TJoiner.parse_args(args))
-        joiner.main()
+        sp_workdir = os.path.join(os.path.dirname(__file__), "smart_parser_server")
+        doc_folder = os.path.join(os.path.dirname(__file__), "processed_projects")
+        with SmartParserServerForTesting(sp_workdir, doc_folder):
+            joiner = TJoiner(TJoiner.parse_args(args))
+            joiner.main()
         stats = joiner.output_dlrobot_human.get_stats()
         self.assertDictEqual(CANON_STATS,  stats)
         with open(self.dlrobot_human_path) as inp:

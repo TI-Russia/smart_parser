@@ -4,8 +4,8 @@ from web_site_db.robot_project import TRobotProject
 from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
 from common.logging_wrapper import setup_logging
 from common.export_files import TExportFile
-from predict_office.prediction_case import  TPredictionCase
-from predict_office.tensor_flow_office import TTensorFlowOfficeModel
+from disclosures_site.predict_office.prediction_case import TPredictionCase
+from disclosures_site.predict_office.tensor_flow_office import TTensorFlowOfficeModel
 from common.urllib_parse_pro import urlsplit_pro
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 
@@ -14,12 +14,13 @@ import os
 import sys
 import re
 import argparse
-
+import json
 
 class TJoiner:
 
     @staticmethod
     def parse_args(arg_list):
+        default_ml_model_path = os.path.join(os.path.dirname(__file__), "../predict_office/model")
         parser = argparse.ArgumentParser()
         # input args
         parser.add_argument("--max-ctime", dest='max_ctime', required=True, type=int,
@@ -27,8 +28,8 @@ class TJoiner:
         parser.add_argument("--input-dlrobot-folder", dest='input_dlrobot_folder', required=True)
         parser.add_argument("--human-json", dest='human_json', required=True)
         parser.add_argument("--old-dlrobot-human-json", dest='old_dlrobot_human_json', required=False)
-        parser.add_argument("--office-model-path", dest='office_model_path', required=False)
-
+        parser.add_argument("--office-model-path", dest='office_model_path', required=False,
+                            default=default_ml_model_path)
 
         # output args
         parser.add_argument("--output-json", dest='output_json', default="dlrobot_human.json")
@@ -126,7 +127,7 @@ class TJoiner:
             self.add_dlrobot_file(sha256, src_doc.file_extension, decl_refs=src_doc.decl_references)
         self.logger.info("Database Document Count: {}".format(self.output_dlrobot_human.get_documents_count()))
 
-    def predict_office_deterministic_web_domain(self, src_doc: TSourceDocument):
+    def predict_office_deterministic_web_domain(self, sha256, src_doc: TSourceDocument):
         web_ref: TWebReference
         for web_ref in src_doc.web_references:
             web_domain = urlsplit_pro(web_ref._site_url).hostname
@@ -147,20 +148,21 @@ class TJoiner:
                 src_doc.calculated_office_id = src_doc.decl_references[0].office_id
                 self.logger.debug("set file {} office_id={} (from declarator)".format(sha256,
                                                                                       src_doc.calculated_office_id))
-            elif self.predict_office_deterministic_web_domain(src_doc):
+            elif self.predict_office_deterministic_web_domain(sha256, src_doc):
                 pass
             else:
                 web_ref: TWebReference
                 for web_ref in src_doc.web_references:
                     web_domain = urlsplit_pro(web_ref._site_url).hostname
                     if src_doc.office_strings is None:
-                        src_doc.office_strings = self.smart_parser_server_client.get_office_strings(sha256)
-                    case = TPredictionCase(self.office_ml_model, sha256, web_domain,-1, src_doc.office_strings)
+                        src_doc.office_strings = json.dumps(self.smart_parser_server_client.get_office_strings(sha256), ensure_ascii=False)
+                    case = TPredictionCase(self.office_ml_model, sha256, web_domain,
+                                           office_strings=src_doc.office_strings)
                     predict_cases.append(case)
         predicted_office_ids = self.office_ml_model.predict(predict_cases)
         max_weights = defaultdict(float)
         for case, (office_id, weight) in zip(predict_cases, predicted_office_ids):
-            if max_weights[case.sha256] > weight:
+            if max_weights[case.sha256] < weight:
                 max_weights[case.sha256] = weight
                 self.output_dlrobot_human.document_collection[case.sha256].calculated_office_id = office_id
                 self.logger.debug("set file {} office_id={} (tensorflow)".format(sha256,

@@ -1,7 +1,7 @@
-from common.urllib_parse_pro import urlsplit_pro
-from predict_office.office_index import TOfficePredictIndex
-from predict_office.office_pool import TOfficePool
-from predict_office.prediction_case import TPredictionCase
+from disclosures_site.predict_office.office_index import TOfficePredictIndex
+from disclosures_site.predict_office.office_pool import TOfficePool
+from disclosures_site.predict_office.prediction_case import TPredictionCase
+
 from sklearn.metrics import accuracy_score
 
 

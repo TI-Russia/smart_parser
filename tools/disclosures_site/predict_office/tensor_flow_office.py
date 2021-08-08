@@ -1,10 +1,9 @@
-import operator
+from disclosures_site.predict_office.prediction_case import TPredictionCase
+from scripts.predict_office.predict_office_model import TPredictionModelBase
 
+import operator
 import numpy as np
 import tensorflow as tf
-
-from predict_office.prediction_case import TPredictionCase
-from scripts.predict_office.predict_office_model import TPredictionModelBase
 
 
 class TTensorFlowOfficeModel(TPredictionModelBase):
@@ -15,18 +14,18 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         web_domain_one_hot[web_domain_index] = 1
         return web_domain_one_hot
 
-    def to_ml_input(self, cases, name):
-        self.logger.info("build features for {} pool of {} cases".format(name, len(cases)))
+    def to_ml_input_features(self, cases):
         bigrams = list(self.office_index.get_bigram_feature_plus(c.text, c.web_domain) for c in cases)
         web_domains = list(self.get_web_domain_feature(c) for c in cases)
-
-        features = {
+        return  {
             "office_name_feat": np.array(bigrams),
             "web_domain_feat": np.array(web_domains),
         }
 
+    def to_ml_input(self, cases, name):
+        self.logger.info("build features for {} pool of {} cases".format(name, len(cases)))
         labels = np.array(list(c.get_learn_target() for c in cases))
-        return features, labels
+        return self.to_ml_input_features(cases), labels
 
     def init_model_before_train(self, dense_layer_size):
         office_name_input = tf.keras.Input(shape=(self.office_index.get_bigrams_count(),), name="office_name_feat")
@@ -83,16 +82,18 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         debug = model.predict(test_x)
 
     def predict(self, cases):
+        if len(cases) == 0:
+            return list()   
         model = self.load_model()
-        test_x, test_y = self.to_ml_input(cases, "some_pool")
-        return model.predict(test_x)
-
-
-    def toloka(self, toloka_pool_path: str):
-        model = self.load_model()
-        test_x, test_y = self.to_ml_input(self.test_pool.pool, "test")
+        test_x = self.to_ml_input_features(cases)
         test_y_pred = model.predict(test_x)
         test_y_max = list()
         for pred_proba_y in test_y_pred:
-            test_y_max.append( max(enumerate(pred_proba_y), key=operator.itemgetter(1)) )
+            learn_target, weight = max(enumerate(pred_proba_y), key=operator.itemgetter(1))
+            office_id = self.office_index.get_office_id_by_ml_office_id(learn_target)
+            test_y_max.append((office_id, weight))
+        return test_y_max
+
+    def toloka(self, toloka_pool_path: str):
+        test_y_max = self.predict(self.test_pool.pool)
         self.test_pool.build_toloka_pool(test_y_max, toloka_pool_path)

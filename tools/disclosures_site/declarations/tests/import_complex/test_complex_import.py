@@ -19,13 +19,13 @@ class ComplexImportTestCase(TestCase):
         logger = setup_logging(log_file_name="test_complex_import.log")
         TPermalinksManager(logger, {'directory': permalinks_folder}).create_empty_dbs()
 
-        domains_folder = os.path.join(os.path.dirname(__file__), "domains")
+        doc_folder = os.path.join(os.path.dirname(__file__), "domains")
         sp_workdir = os.path.join(os.path.dirname(__file__), "smart_parser_server")
 
         importer = ImportJsonCommand(None, None)
         os.chdir(os.path.dirname(__file__))
 
-        with SmartParserServerForTesting(sp_workdir, domains_folder):
+        with SmartParserServerForTesting(sp_workdir, doc_folder):
             importer.handle(None, dlrobot_human="dlrobot_human.json", smart_parser_human_json="human_jsons",
                             permalinks_folder=permalinks_folder)
 
@@ -44,7 +44,7 @@ class ComplexImportTestCase(TestCase):
         permalinks_db.create_sql_sequences()
         models.Section.objects.all().delete()
         models.Source_Document.objects.all().delete()
-        with SmartParserServerForTesting(sp_workdir, domains_folder):
+        with SmartParserServerForTesting(sp_workdir, doc_folder):
             importer.handle(None, dlrobot_human="dlrobot_human.json", smart_parser_human_json="human_jsons",
                             permalinks_folder=permalinks_folder)
 
