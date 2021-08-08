@@ -25,9 +25,13 @@ source $COMMON_SCRIPT
     echo "export OLD_DLROBOT_FOLDER=$OLD_DLROBOT_FOLDER" >> .profile
     source .profile
 
-    cp $DLROBOT_CENTRAL_FOLDER/dlrobot_central.log $YANDEX_DISK_FOLDER/dlrobot_updates
+#2.  инициализация базы disclosures
+    python3 $TOOLS/disclosures_site/manage.py create_database --settings disclosures.settings.dev --skip-checks --username db_creator --password root
+    python3 $TOOLS/disclosures_site/manage.py makemigrations --settings disclosures.settings.dev
+    python3 $TOOLS/disclosures_site/manage.py migrate --settings disclosures.settings.dev
+    python3 $TOOLS/disclosures_site/manage.py test declarations/tests/ --settings disclosures.settings.dev
 
-#2  слияние по файлам dlrobot, declarator  и старого disclosures, получение dlrobot_human.json
+#3  слияние по файлам dlrobot, declarator  и старого disclosures, получение dlrobot_human.json
     python3 $TOOLS/disclosures_site/scripts/join_human_and_dlrobot.py \
         --max-ctime $CRAWL_EPOCH \
         --input-dlrobot-folder  "$DLROBOT_CENTRAL_FOLDER/processed_projects" \
@@ -36,7 +40,7 @@ source $COMMON_SCRIPT
         --output-json dlrobot_human.json
 
 
-#3  получение статистики по dlrobot_human.json, сравнение с предыдущим обходом
+#4  получение статистики по dlrobot_human.json, сравнение с предыдущим обходом
     python3 $TOOLS/disclosures_site/scripts/dlrobot_human.py --action stats --input-file dlrobot_human.json > dlrobot_human.json.stats
     new_size=$(stat -c%s "dlrobot_human.json")
     old_size=$(stat -c%s "$OLD_DLROBOT_FOLDER/dlrobot_human.json")
@@ -45,13 +49,8 @@ source $COMMON_SCRIPT
         exit 1
     endif
 
-#4  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод (1 час)
+#5  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод (1 час)
    python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.prod --directory $DLROBOT_FOLDER
-
-#5.  инициализация базы disclosures
-    python3 $TOOLS/disclosures_site/manage.py create_database --settings disclosures.settings.dev --skip-checks --username db_creator --password root
-    python3 $TOOLS/disclosures_site/manage.py makemigrations --settings disclosures.settings.dev
-    python3 $TOOLS/disclosures_site/manage.py migrate --settings disclosures.settings.dev
 
 #9 (надо включить в import_json?)
     cd $DLROBOT_FOLDER # im portant
@@ -178,5 +177,7 @@ echo $DEDUPE_HOSTS | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/sc
 #21  посылаем данные dlrobot в каталог, который синхронизирутеся с облаком, очищаем dlrobot_central (без возврата)
     cd $DLROBOT_FOLDER
     python3 $TOOLS/disclosures_site/scripts/send_dlrobot_projects_to_cloud.py  --max-ctime $CRAWL_EPOCH \
-        --input-dlrobot-folder $DLROBOT_CENTRAL_FOLDER"/processed_projects" --output-cloud-folder $YANDEX_DISK_FOLDER/dlrobot_updates
+        --processed-projects-folder $DLROBOT_CENTRAL_FOLDER"/processed_projects" \
+        --update-folder $DLROBOT_FOLDER \
+        --output-cloud-folder $YANDEX_DISK_FOLDER/dlrobot_updates
 

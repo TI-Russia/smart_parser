@@ -36,3 +36,4 @@ ultimate-sitemap-parser
 pyahocorasick
 pydot
 python-magic
+tensorflow
