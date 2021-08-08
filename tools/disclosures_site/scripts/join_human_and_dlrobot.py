@@ -168,7 +168,7 @@ class TJoiner:
                 src_doc = self.output_dlrobot_human.document_collection[case.sha256]
                 old_office_id = src_doc.calculated_office_id
                 src_doc.calculated_office_id = office_id
-                if old_office_id is None or old_office_id == office_id
+                if old_office_id is None or old_office_id == office_id:
                     self.logger.debug("set file {} office_id={} (tensorflow)".format(sha256,
                                                                                       src_doc.calculated_office_id))
                 else:
