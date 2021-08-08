@@ -1,10 +1,11 @@
+# this model is not in the production (tensorflow is better)
 import sys
 
 from common.logging_wrapper import setup_logging
 from predict_office.office_index import TOfficePredictIndex
 from predict_office.office_pool import TOfficePool
 from predict_office.prediction_case import TPredictionCase
-from scripts.predict_office.predict_office_model import TPredictionModelBase
+from predict_office.base_ml_model import TPredictionModelBase
 from collections import defaultdict
 
 from catboost import CatBoostClassifier, Pool
@@ -120,8 +121,10 @@ def parse_args():
 def main():
     args = parse_args()
     logger = setup_logging(log_file_name="predict_office.log")
-    model = TPredictionModel(logger, args.bigrams_path,  args.row_count, args.train_pool,
-                             args.test_pool)
+    model = TPredictionModel(logger, args.bigrams_path,  model_path=args.model_path,
+                             row_count=args.row_count,
+                             train_pool=args.train_pool,
+                             test_pool=args.test_pool)
     if args.action == "split":
         assert args.all_pool is not None
         TOfficePool(model, args.all_pool).split(args.train_pool, args.test_pool)

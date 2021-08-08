@@ -1,6 +1,6 @@
 from common.logging_wrapper import setup_logging
 from predict_office.prediction_case import TPredictionCase
-from scripts.predict_office.predict_office_model import TPredictionModelBase
+from predict_office.base_ml_model import TPredictionModelBase
 
 import argparse
 from sklearn.metrics import accuracy_score
@@ -31,15 +31,15 @@ def parse_args():
     parser.add_argument("--test-pool", dest='test_pool')
     parser.add_argument("--row-count", dest='row_count', required=False, type=int)
     args = parser.parse_args()
-    args.logger = setup_logging(log_file_name="predict_office.log")
+
     return args
 
 
 def main():
     args = parse_args()
-    model = TPredictionModel(args)
+    logger = setup_logging(log_file_name="predict_office.log")
+    model = TPredictionModel(logger, args.bigrams_path, args.model_folder, test_poolargs.test_pool)
     if args.action == "test":
-        model.read_test()
         model.test()
     else:
         raise Exception("unknown action")

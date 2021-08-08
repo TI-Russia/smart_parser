@@ -164,9 +164,17 @@ class TJoiner:
         for case, (office_id, weight) in zip(predict_cases, predicted_office_ids):
             if max_weights[case.sha256] < weight:
                 max_weights[case.sha256] = weight
-                self.output_dlrobot_human.document_collection[case.sha256].calculated_office_id = office_id
-                self.logger.debug("set file {} office_id={} (tensorflow)".format(sha256,
+                src_doc: TSourceDocument
+                src_doc = self.output_dlrobot_human.document_collection[case.sha256]
+                old_office_id = src_doc.calculated_office_id
+                src_doc.calculated_office_id = office_id
+                if old_office_id is None or old_office_id == office_id
+                    self.logger.debug("set file {} office_id={} (tensorflow)".format(sha256,
                                                                                       src_doc.calculated_office_id))
+                else:
+                    self.logger.info("change office_id from {} to {} for file {}, check it manually "
+                                     "(sections from this file can change their section_ids)".format(
+                        old_office_id, office_id, sha256))
 
     def main(self):
         if not self.args.only_rebuild_office_to_domain:

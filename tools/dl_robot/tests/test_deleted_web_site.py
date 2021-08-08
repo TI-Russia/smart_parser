@@ -2,6 +2,7 @@ from dl_robot.dlrobot import TDlrobot
 from web_site_db.web_site_status import TWebSiteReachStatus
 from web_site_db.robot_project import TRobotProject
 from common.download import TDownloadEnv
+from common.http_request import THttpRequester
 
 import os
 import shutil
@@ -25,7 +26,10 @@ class TestDeletedWebSite(TestCase):
         self.project_path = os.path.join(self.data_folder, "project.txt")
         TRobotProject.create_project("http://unknown_site.org", self.project_path)
         dlrobot = TDlrobot(TDlrobot.parse_args(['--clear-cache-folder',  '--project', self.project_path]))
-        project = dlrobot.open_project()
+        try:
+            project = dlrobot.open_project()
+        except THttpRequester.RobotHttpException as exp:
+            pass
         self.assertEqual(project.web_site_snapshots[0].reach_status, TWebSiteReachStatus.abandoned)
         TDownloadEnv.CONVERSION_CLIENT.stop_conversion_thread()
         TDownloadEnv.CONVERSION_CLIENT = None

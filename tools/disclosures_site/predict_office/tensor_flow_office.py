@@ -1,5 +1,5 @@
 from disclosures_site.predict_office.prediction_case import TPredictionCase
-from scripts.predict_office.predict_office_model import TPredictionModelBase
+from disclosures_site.predict_office.base_ml_model import TPredictionModelBase
 
 import operator
 import numpy as np
@@ -83,7 +83,7 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
 
     def predict(self, cases):
         if len(cases) == 0:
-            return list()   
+            return list()
         model = self.load_model()
         test_x = self.to_ml_input_features(cases)
         test_y_pred = model.predict(test_x)
