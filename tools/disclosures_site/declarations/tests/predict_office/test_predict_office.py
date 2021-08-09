@@ -30,4 +30,5 @@ class TestPredictOffice(TestCase):
         self.check(predicter, "e53861810867c308eba4ac4991f34c0bd10a25f49d675d069d426779a6f4a5f0", 5963)
         self.check(predicter, "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865", 4)
         self.check(predicter, "f0b5c2c2211c8d67ed15e75e656c7862d086e9245420892a7de62cd9ec582a06", 3913)
+        self.check(predicter, "unknownsha256308eba4ac4991f34c0bd10a25f49d675d069d426779a6f4a5f0", 5963)
 

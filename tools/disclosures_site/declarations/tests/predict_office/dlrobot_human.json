@@ -25,6 +25,17 @@
                 }
             ]
         },
+        "unknownsha256308eba4ac4991f34c0bd10a25f49d675d069d426779a6f4a5f0": {
+            "file_ext": ".xlsx",
+            "w_refs": [
+                {
+                    "crawl_epoch": 5602811863,
+                    "declaration_year": 2014,
+                    "url": "http://mos.ru/some_link1.xlsx",
+                    "web_domain": "mos.ru/donm"
+                }
+            ]
+        },
         "f0b5c2c2211c8d67ed15e75e656c7862d086e9245420892a7de62cd9ec582a06": {
             "file_ext": ".xlsx",
             "w_refs": [

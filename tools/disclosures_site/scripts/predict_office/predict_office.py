@@ -4,6 +4,7 @@ from common.urllib_parse_pro import urlsplit_pro
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from disclosures_site.predict_office.prediction_case import TPredictionCase
 from common.logging_wrapper import setup_logging
+from web_site_db.web_sites import TDeclarationWebSiteList
 
 import sys
 import argparse
@@ -34,6 +35,8 @@ class TOfficePredicter:
         bigrams_path = os.path.join(args.office_model_path, "office_ngrams.txt")
         ml_model_path = os.path.join(args.office_model_path, "model")
         self.office_ml_model = TTensorFlowOfficeModel(self.logger, bigrams_path, ml_model_path)
+        self.web_sites = TDeclarationWebSiteList(self.logger)
+        self.web_sites.load_from_disk()
 
     def predict_office_deterministic_web_domain(self, sha256, src_doc: TSourceDocument):
         web_ref: TWebReference
@@ -59,14 +62,25 @@ class TOfficePredicter:
             elif self.predict_office_deterministic_web_domain(sha256, src_doc):
                 pass
             else:
-                web_ref: TWebReference
-                for web_ref in src_doc.web_references:
-                    web_domain = urlsplit_pro(web_ref._site_url).hostname
-                    if src_doc.office_strings is None:
-                        src_doc.office_strings = json.dumps(self.smart_parser_server_client.get_office_strings(sha256), ensure_ascii=False)
-                    case = TPredictionCase(self.office_ml_model, sha256, web_domain,
-                                           office_strings=src_doc.office_strings)
-                    predict_cases.append(case)
+                if src_doc.office_strings is None:
+                    src_doc.office_strings = json.dumps(self.smart_parser_server_client.get_office_strings(sha256),
+                                                        ensure_ascii=False)
+                if TSmartParserCacheClient.are_empty_office_strings(src_doc.office_strings):
+                    web_ref: TWebReference
+                    for web_ref in src_doc.web_references:
+                        web_site = self.web_sites.get_web_site(web_ref._site_url)
+                        if web_site is not None:
+                            src_doc.calculated_office_id = web_site.calculated_office_id
+                            self.logger.debug("set file {} office_id={} (max freq heuristics)".format(
+                                sha256, src_doc.calculated_office_id))
+                            break
+                else:
+                    web_ref: TWebReference
+                    for web_ref in src_doc.web_references:
+                        web_domain = urlsplit_pro(web_ref._site_url).hostname
+                        case = TPredictionCase(self.office_ml_model, sha256, web_domain,
+                                               office_strings=src_doc.office_strings)
+                        predict_cases.append(case)
 
         if intermediate_save:
             self.write()
@@ -89,7 +103,7 @@ class TOfficePredicter:
                 old_office_id = src_doc.calculated_office_id
                 src_doc.calculated_office_id = office_id
                 if old_office_id is None or old_office_id == office_id:
-                    self.logger.debug("set file {} office_id={} (tensorflow)".format(sha256,
+                    self.logger.debug("set file {} office_id={} (tensorflow)".format(case.sha256,
                                                                                      src_doc.calculated_office_id))
                 else:
                     self.logger.info("change office_id from {} to {} for file {}, check it manually "
