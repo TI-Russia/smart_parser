@@ -75,7 +75,7 @@ def main(args):
     shutil.move(tar_file, output_folder)
 
     logger.info("all done")
-    
+
 
 if __name__ == '__main__':
     args = parse_args()

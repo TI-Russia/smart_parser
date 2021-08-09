@@ -1,4 +1,3 @@
-from declarations.tests.smart_parser_for_testing import SmartParserServerForTesting
 import declarations.models as models
 from disclosures_site.scripts.join_human_and_dlrobot import TJoiner
 
@@ -26,7 +25,7 @@ CANON_HUMAN_DLROBOT = {
     "documents": {
         "1121cfccd5913f0a63fec40a6ffd44ea64f9dc135c66634ba001d10bcf4302a2": {
             "file_ext": ".xlsx",
-            "office_id": 3913,
+            "office_id": None,
             "w_refs": [
                 {
                     "crawl_epoch": 5602811863,
@@ -52,7 +51,7 @@ CANON_HUMAN_DLROBOT = {
                 }
             ],
             "file_ext": ".xlsx",
-            "office_id": 4,
+            "office_id": None,
             "w_refs": [
                 {
                     "crawl_epoch": 5602811863,
@@ -64,7 +63,7 @@ CANON_HUMAN_DLROBOT = {
         },
         "53c234e5e8472b6ac51c1ae1cab3fe06fad053beb8ebfd8977b010655bfdd3c3": {
             "file_ext": ".xlsx",
-            "office_id": 3913,
+            "office_id": None,
             "w_refs": [
                 {
                     "crawl_epoch": 5602811863,
@@ -90,7 +89,7 @@ CANON_HUMAN_DLROBOT = {
                 }
             ],
             "file_ext": ".xlsx",
-            "office_id": 4
+            "office_id": None
         },
         "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855": {
             "d_refs": [
@@ -104,11 +103,11 @@ CANON_HUMAN_DLROBOT = {
                 }
             ],
             "file_ext": ".xlsx",
-            "office_id": 4
+            "office_id": None
         },
         "f0b5c2c2211c8d67ed15e75e656c7862d086e9245420892a7de62cd9ec582a06": {
             "file_ext": ".xlsx",
-            "office_id": 3913,
+            "office_id": None,
             "w_refs": [
                 {
                     "crawl_epoch": 0,
@@ -119,7 +118,7 @@ CANON_HUMAN_DLROBOT = {
         },
         "fa8bd40933bf21520b3b664b0d7507919426cbd7a86a84238c400b93b3bf4d00": {
             "file_ext": ".xlsx",
-            "office_id": 3913,
+            "office_id": None,
             "w_refs": [
                 {
                     "crawl_epoch": 5602811863,
@@ -147,11 +146,8 @@ class JoinDLrobotAndHuman(TestCase):
                 '--old-dlrobot-human-json', 'old/dlrobot_human.json',
                 '--output-json', self.dlrobot_human_path
                 ]
-        sp_workdir = os.path.join(os.path.dirname(__file__), "smart_parser_server")
-        doc_folder = os.path.join(os.path.dirname(__file__), "processed_projects")
-        with SmartParserServerForTesting(sp_workdir, doc_folder):
-            joiner = TJoiner(TJoiner.parse_args(args))
-            joiner.main()
+        joiner = TJoiner(TJoiner.parse_args(args))
+        joiner.main()
         stats = joiner.output_dlrobot_human.get_stats()
         self.assertDictEqual(CANON_STATS,  stats)
         with open(self.dlrobot_human_path) as inp:

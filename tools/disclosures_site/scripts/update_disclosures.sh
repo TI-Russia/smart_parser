@@ -39,8 +39,12 @@ source $COMMON_SCRIPT
         --old-dlrobot-human-json $OLD_DLROBOT_FOLDER/dlrobot_human.json \
         --output-json dlrobot_human.json
 
+#3  предсказание office_id
+    cd $DLROBOT_FOLDER
+    python3 $TOOLS/disclosures_site/scripts/predict_office/predict_office.py \
+        --dlrobot-human-path dlrobot_human.json
 
-#4  получение статистики по dlrobot_human.json, сравнение с предыдущим обходом
+#5  получение статистики по dlrobot_human.json, сравнение с предыдущим обходом
     python3 $TOOLS/disclosures_site/scripts/dlrobot_human.py --action stats --input-file dlrobot_human.json > dlrobot_human.json.stats
     new_size=$(stat -c%s "dlrobot_human.json")
     old_size=$(stat -c%s "$OLD_DLROBOT_FOLDER/dlrobot_human.json")
@@ -49,7 +53,7 @@ source $COMMON_SCRIPT
         exit 1
     endif
 
-#5  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод (1 час)
+#6  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод (1 час)
    python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.prod --directory $DLROBOT_FOLDER
 
 #9 (надо включить в import_json?)
