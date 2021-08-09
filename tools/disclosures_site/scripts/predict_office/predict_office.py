@@ -10,6 +10,8 @@ import argparse
 import os
 import json
 from collections import defaultdict
+import gc
+
 
 
 class TOfficePredicter:
@@ -46,7 +48,7 @@ class TOfficePredicter:
                 return True
         return False
 
-    def predict_office(self):
+    def predict_office(self, intermediate_save=False):
         predict_cases = list()
         src_doc: TSourceDocument
         for sha256, src_doc in self.dlrobot_human.document_collection.items():
@@ -65,7 +67,19 @@ class TOfficePredicter:
                     case = TPredictionCase(self.office_ml_model, sha256, web_domain,
                                            office_strings=src_doc.office_strings)
                     predict_cases.append(case)
-        predicted_office_ids = self.office_ml_model.predict(predict_cases)
+
+        if intermediate_save:
+            self.write()
+            self.logger.info("unload dlrobot_human to get more memory")
+            del self.dlrobot_human
+            gc.collect()
+
+        self.office_ml_model.load_model()
+        predicted_office_ids = self.office_ml_model.predict_by_portions(predict_cases)
+
+        if intermediate_save:
+            self.dlrobot_human = TDlrobotHumanFile(args.dlrobot_human_path)
+
         max_weights = defaultdict(float)
         for case, (office_id, weight) in zip(predict_cases, predicted_office_ids):
             if max_weights[case.sha256] < weight:
@@ -104,7 +118,7 @@ class TOfficePredicter:
 if __name__ == '__main__':
     args = TOfficePredicter.parse_args(sys.argv[1:])
     predicter = TOfficePredicter(args)
-    predicter.predict_office()
+    predicter.predict_office(intermediate_save=True)
     predicter.check()
     predicter.write()
 

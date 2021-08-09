@@ -71,6 +71,7 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         model.save(self.model_path)
 
     def load_model(self):
+        self.logger.info("load tensorflow model from {}".format(self.model_path))
         model = tf.keras.models.load_model(self.model_path)
         return model
 
@@ -81,10 +82,10 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         self.logger.info(res)
         debug = model.predict(test_x)
 
-    def predict(self, cases):
+    def predict(self, model, cases):
         if len(cases) == 0:
             return list()
-        model = self.load_model()
+
         test_x = self.to_ml_input_features(cases)
         test_y_pred = model.predict(test_x)
         test_y_max = list()
@@ -94,6 +95,18 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
             test_y_max.append((office_id, weight))
         return test_y_max
 
+    def predict_by_portions(self, cases, portion_size=500):
+        model = self.load_model()
+        result = list()
+        for start in range(0, len(cases), portion_size):
+            portion = cases[start:start+portion_size]
+            portion_result = self.predict(model, portion)
+            result.extend(portion_result)
+
+        assert (len(result) == len(cases))
+        return result
+
     def toloka(self, toloka_pool_path: str):
-        test_y_max = self.predict(self.test_pool.pool)
+        model = self.load_model()
+        test_y_max = self.predict(model, self.test_pool.pool)
         self.test_pool.build_toloka_pool(test_y_max, toloka_pool_path)

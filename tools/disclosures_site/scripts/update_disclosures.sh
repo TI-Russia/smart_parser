@@ -39,7 +39,7 @@ source $COMMON_SCRIPT
         --old-dlrobot-human-json $OLD_DLROBOT_FOLDER/dlrobot_human.json \
         --output-json dlrobot_human.json
 
-#3  предсказание office_id
+#4  предсказание office_id
     cd $DLROBOT_FOLDER
     python3 $TOOLS/disclosures_site/scripts/predict_office/predict_office.py \
         --dlrobot-human-path dlrobot_human.json
