@@ -73,9 +73,9 @@ class TOfficePool:
 
         with open(output_path, "w") as outp:
             case: TPredictionCase
-            for case, (pred_target, pred_proba) in zip(self.pool, test_y_pred):
+            for case, (office_id, pred_proba) in zip(self.pool, test_y_pred):
                 rec = {
-                    "status": ("positive" if case.get_learn_target() == pred_target else "negative"),
+                    "status": ("positive" if case.true_office_id == office_id else "negative"),
                     "true_office_id": case.true_office_id,
                     "true_office_name": self.ml_model.office_index.get_office_name(case.true_office_id),
                     "true_region_id": case.true_region_id,
@@ -84,7 +84,6 @@ class TOfficePool:
                     "web_domain": case.web_domain,
                     "pred_proba": float(pred_proba)
                 }
-                office_id = self.ml_model.office_index.get_office_id_by_ml_office_id(pred_target)
                 rec['pred_office_name'] = self.ml_model.office_index.get_office_name(office_id)
                 rec['pred_office_id'] = office_id
                 outp.write("{}\n".format(json.dumps(rec, ensure_ascii=False)))

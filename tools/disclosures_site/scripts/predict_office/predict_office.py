@@ -1,5 +1,6 @@
 from declarations.input_json import TSourceDocument, TDlrobotHumanFile, TWebReference
 from disclosures_site.predict_office.tensor_flow_office import TTensorFlowOfficeModel
+from disclosures_site.predict_office.office_pool import TOfficePool
 from common.urllib_parse_pro import urlsplit_pro
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from disclosures_site.predict_office.prediction_case import TPredictionCase
@@ -38,16 +39,23 @@ class TOfficePredicter:
         self.web_sites = TDeclarationWebSiteList(self.logger)
         self.web_sites.load_from_disk()
 
+    def set_office_id(self, sha256, src_doc: TSourceDocument, office_id, method_name: str):
+        old_office_id = src_doc.calculated_office_id
+        if old_office_id is None or office_id == old_office_id:
+            self.logger.debug("set file {} office_id={} ({} )".format(
+                sha256, office_id, method_name))
+        else:
+            self.logger.info("change office_id from {} to {} for file {} , ({})".format( \
+                old_office_id, office_id, sha256, method_name))
+        src_doc.calculated_office_id = office_id
+
     def predict_office_deterministic_web_domain(self, sha256, src_doc: TSourceDocument):
         web_ref: TWebReference
         for web_ref in src_doc.web_references:
             web_domain = urlsplit_pro(web_ref._site_url).hostname
-            det_office_id = self.office_ml_model.get_office_id_by_deterministic_web_domain(web_domain)
-            if det_office_id is not None:
-                src_doc.calculated_office_id = det_office_id
-                self.logger.debug("set file {} office_id={} (deterministic web domain \"{}\")".format(sha256,
-                                                                                                      det_office_id,
-                                                                                                      web_domain))
+            office_id = self.office_ml_model.get_office_id_by_deterministic_web_domain(web_domain)
+            if office_id is not None:
+                self.set_office_id(sha256, src_doc, office_id, "deterministic web domain {}".format(web_domain))
                 return True
         return False
 
@@ -56,9 +64,7 @@ class TOfficePredicter:
         src_doc: TSourceDocument
         for sha256, src_doc in self.dlrobot_human.document_collection.items():
             if len(src_doc.decl_references) > 0:
-                src_doc.calculated_office_id = src_doc.decl_references[0].office_id
-                self.logger.debug("set file {} office_id={} (from declarator)".format(sha256,
-                                                                                      src_doc.calculated_office_id))
+                self.set_office_id(sha256,src_doc, src_doc.decl_references[0].office_id, "declarator")
             elif self.predict_office_deterministic_web_domain(sha256, src_doc):
                 pass
             else:
@@ -70,9 +76,7 @@ class TOfficePredicter:
                     for web_ref in src_doc.web_references:
                         web_site = self.web_sites.get_web_site(web_ref._site_url)
                         if web_site is not None:
-                            src_doc.calculated_office_id = web_site.calculated_office_id
-                            self.logger.debug("set file {} office_id={} (max freq heuristics)".format(
-                                sha256, src_doc.calculated_office_id))
+                            self.set_office_id(sha256, src_doc, web_site.calculated_office_id, "max freq heuristics")
                             break
                 else:
                     web_ref: TWebReference
@@ -90,7 +94,7 @@ class TOfficePredicter:
 
         self.office_ml_model.load_model()
         predicted_office_ids = self.office_ml_model.predict_by_portions(predict_cases)
-
+        TOfficePool.write_pool(predict_cases, "cases_to_predict_dump.txt")
         if intermediate_save:
             self.dlrobot_human = TDlrobotHumanFile(args.dlrobot_human_path)
 
@@ -98,17 +102,8 @@ class TOfficePredicter:
         for case, (office_id, weight) in zip(predict_cases, predicted_office_ids):
             if max_weights[case.sha256] < weight:
                 max_weights[case.sha256] = weight
-                src_doc: TSourceDocument
                 src_doc = self.dlrobot_human.document_collection[case.sha256]
-                old_office_id = src_doc.calculated_office_id
-                src_doc.calculated_office_id = office_id
-                if old_office_id is None or old_office_id == office_id:
-                    self.logger.debug("set file {} office_id={} (tensorflow)".format(case.sha256,
-                                                                                     src_doc.calculated_office_id))
-                else:
-                    self.logger.info("change office_id from {} to {} for file {}, weight={} check it manually "
-                                     "(sections from this file can change their section_ids)".format(\
-                        old_office_id, office_id, case.sha256, weight))
+                self.set_office_id(case.sha256, src_doc, office_id, "(tensorflow weight={})".format(weight))
 
     def check(self):
         files_without_office_id = 0
