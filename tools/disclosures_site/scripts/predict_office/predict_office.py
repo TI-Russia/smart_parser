@@ -106,9 +106,9 @@ class TOfficePredicter:
                     self.logger.debug("set file {} office_id={} (tensorflow)".format(case.sha256,
                                                                                      src_doc.calculated_office_id))
                 else:
-                    self.logger.info("change office_id from {} to {} for file {}, check it manually "
+                    self.logger.info("change office_id from {} to {} for file {}, weight={} check it manually "
                                      "(sections from this file can change their section_ids)".format(\
-                        old_office_id, office_id, sha256))
+                        old_office_id, office_id, case.sha256, weight))
 
     def check(self):
         files_without_office_id = 0
