@@ -5,12 +5,6 @@ import random
 from sklearn.model_selection import train_test_split
 
 
-#select d.sha256, f.web_domain, d.office_id from declarations_declarator_file_reference f join declarations_source_document d on d.id = f.source_document_id  into  outfile "/tmp/docs.txt";
-#mv "/tmp/docs.txt" ~/tmp/docs_and_titles
-#cd ~/tmp/docs_and_titles
-#cut -f 1  docs.txt >docs.txt.id
-#python3 ~/smart_parser/tools/smart_parser_http/smart_parser_client.py --action office_strings --sha256-list docs.txt.id > docs_office_strings.txt
-#paste docs.txt docs_office_strings.txt >office_declarator_pool.txt
 class TOfficePool:
     def __init__(self, ml_model, file_name: str, row_count=None):
         self.pool = list()
@@ -75,15 +69,19 @@ class TOfficePool:
             case: TPredictionCase
             for case, (office_id, pred_proba) in zip(self.pool, test_y_pred):
                 rec = {
-                    "status": ("positive" if case.true_office_id == office_id else "negative"),
-                    "true_office_id": case.true_office_id,
-                    "true_office_name": self.ml_model.office_index.get_office_name(case.true_office_id),
-                    "true_region_id": case.true_region_id,
-                    "doc_title": case.text,
                     "sha256": case.sha256,
-                    "web_domain": case.web_domain,
-                    "pred_proba": float(pred_proba)
+                    "input": {"web_domain": case.web_domain},
+                    "pred_proba": float(pred_proba),
+                    'pred_office_name': self.ml_model.office_index.get_office_name(office_id),
+                    'pred_office_id': office_id
                 }
-                rec['pred_office_name'] = self.ml_model.office_index.get_office_name(office_id)
-                rec['pred_office_id'] = office_id
+                if case.true_office_id is not None:
+                    rec["true_office_id"] = case.true_office_id
+                    rec["status"] = ("positive" if case.true_office_id == office_id else "negative")
+                    rec["true_office_name"] = self.ml_model.office_index.get_office_name(case.true_office_id)
+                    rec["true_region_id"] = case.true_region_id
+
+                office_strings = json.loads(case.office_strings)
+                rec['input'].update(office_strings)
+
                 outp.write("{}\n".format(json.dumps(rec, ensure_ascii=False)))

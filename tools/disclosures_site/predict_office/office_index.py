@@ -108,24 +108,23 @@ class TOfficePredictIndex:
         return b.offices
 
     @staticmethod
-    def get_word_stems(text):
+    def get_word_stems(text, stem_size=3):
         yield "^"
         for w in re.split("[\s,\.;:_\"* ()]", text.lower()):
             if len(w) > 0:
+                #ignore year
                 if w.startswith("20") and len(w) == 4:
                     continue
-                # if len(w) <= 2:
-                #    continue
-                if len(w) <= 3:
+                if len(w) <= stem_size:
                     yield w
                 else:
-                    yield w[0:3]
+                    yield w[0:stem_size]
         yield "$"
 
     @staticmethod
     def get_bigrams(text):
         words = list(TOfficePredictIndex.get_word_stems(text))
-        for w1, w2 in zip(words[:-1], words[1:]) :
+        for w1, w2 in zip(words[:-1], words[1:]):
             yield "_".join((w1, w2))
 
     @staticmethod

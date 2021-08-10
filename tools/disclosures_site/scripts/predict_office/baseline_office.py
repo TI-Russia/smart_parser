@@ -1,6 +1,6 @@
 from common.logging_wrapper import setup_logging
-from predict_office.prediction_case import TPredictionCase
-from predict_office.base_ml_model import TPredictionModelBase
+from declarations.management.commands.predict_office import TPredictionCase
+from declarations.management.commands.predict_office import TPredictionModelBase
 
 import argparse
 from sklearn.metrics import accuracy_score

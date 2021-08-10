@@ -1,6 +1,6 @@
 from common.logging_wrapper import setup_logging
 from disclosures_site.predict_office.office_pool import TOfficePool
-from disclosures_site.predict_office.tensor_flow_office import TTensorFlowOfficeModel
+from disclosures_site.predict_office.tensor_flow_model import TTensorFlowOfficeModel
 
 import argparse
 

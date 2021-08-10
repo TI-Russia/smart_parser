@@ -24,7 +24,7 @@ def read_real_estates(section_json):
         own_type_str = None
         for key in [ "own_type",                # this line is to be deleted (it is not in JSON specification, I do know where it is used)
                      "own_type_by_column",  # from column heading  
-                     "own_type_raw",   #some string from an additional column or from the text
+                     "own_type_raw",   #some string f   rom an additional column or from the text
                      "owntype_raw"   #owntype_raw is a synonym of own_type_raw, that is used by declarator export json, better rename it in future
                    ]:
             own_type_str = i.get(key)
@@ -90,7 +90,7 @@ class TSmartParserSectionJson:
     def init_rubric(self):
         # json_reader.section.rubric_id = source_document_in_db.office.rubric_id does not work
         # may be we should call source_document_in_db.refresh_from_db
-        self.section.rubric_id = OFFICES.offices[self.section.source_document.office.id]['rubric_id']
+        self.section.rubric_id = OFFICES.offices[self.section.source_document.office.id].rubric_id
 
         if self.section.rubric_id == TOfficeRubrics.Municipality and \
                 convert_municipality_to_education(self.section.position):

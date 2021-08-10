@@ -1,4 +1,5 @@
 #obsolete script, it is cheapier and better to create a new toloka pool than to import old pools
+import declarations.offices_in_memory
 from common.russian_fio import TRussianFio
 import declarations.models as models
 from declarations.serializers import TSmartParserSectionJson
@@ -54,7 +55,8 @@ class TDbSqueeze:
 
     def build_squeeze(self, logger):
         logger.info("build office hierarchy")
-        self.office_hierarchy = models.TOfficeTableInMemory()
+        self.office_hierarchy = declarations.offices_in_memory.TOfficeTableInMemory()
+        self.office_hierarchy.read_from_table(models.Office.objects.all())
 
         logger.info("build all passports")
         self.stable_key_to_sections = self.get_all_passports_dict()

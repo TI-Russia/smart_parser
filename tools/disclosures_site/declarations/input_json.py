@@ -87,6 +87,7 @@ class TSourceDocument:
         self.web_references = list()
         self.decl_references = list()
         self.office_strings = None
+        self.region_id = None
 
     def from_json(self, js):
         self.file_extension = js.get('file_ext')
@@ -94,6 +95,7 @@ class TSourceDocument:
         self.web_references = list(TWebReference(from_json=r) for r in js.get('w_refs', []))
         self.decl_references = list(TDeclaratorReference(from_json=r) for r in js.get('d_refs', []))
         self.office_strings = js.get('office_strings')
+        self.region_id = js.get('region_id')
         return self
 
     def build_intersection_status(self):
@@ -144,6 +146,8 @@ class TSourceDocument:
             res['d_refs'] = list(x.write_to_json() for x in self.decl_references)
         if self.office_strings is not None:
             res['office_strings'] = self.office_strings
+        if self.region_id is not None:
+            res['region_id'] = self.region_id
         return res
 
     def convert_refs_to_utf8(self):

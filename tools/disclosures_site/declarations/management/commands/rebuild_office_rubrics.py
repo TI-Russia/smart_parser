@@ -1,3 +1,4 @@
+import declarations.offices_in_memory
 from declarations.rubrics import build_office_rubric, get_russian_rubric_str
 from django.core.management import BaseCommand
 from common.logging_wrapper import setup_logging
@@ -21,7 +22,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         logger = setup_logging(log_file_name="build_rubric.log")
-        office_hierarchy = models.TOfficeTableInMemory(use_office_types=False)
+        office_hierarchy = declarations.offices_in_memory.TOfficeTableInMemory(use_office_types=False)
+        office_hierarchy.read_from_table(models.Office.objects.all())
         for office in models.Office.objects.all():
             rubric_id = build_office_rubric(logger, office_hierarchy, office.id)
             if rubric_id is not None and rubric_id != office.rubric_id:

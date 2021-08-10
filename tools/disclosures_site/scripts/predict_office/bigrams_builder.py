@@ -1,4 +1,4 @@
-from predict_office.office_index import TOfficePredictIndex
+from declarations.management.commands.predict_office import TOfficePredictIndex
 from common.logging_wrapper import setup_logging
 
 import argparse

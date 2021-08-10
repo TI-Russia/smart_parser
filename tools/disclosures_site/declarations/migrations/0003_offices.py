@@ -1,5 +1,7 @@
 from django.db import migrations
 import json
+
+import declarations.offices_in_memory
 from declarations.rubrics import build_office_rubric
 import declarations.models as models
 import os
@@ -12,7 +14,8 @@ def add_offices(apps, schema_editor):
     filepath = os.path.join(os.path.dirname(__file__), "../../data/offices.txt")
     with open(filepath) as inp:
         offices = json.load(inp)
-    office_hierarchy = models.TOfficeTableInMemory(use_office_types=False, init_from_json=offices)
+    office_hierarchy = declarations.offices_in_memory.TOfficeTableInMemory(use_office_types=False)
+    office_hierarchy.read_from_json(offices)
     Office = apps.get_model('declarations', 'Office')
     for office in offices:
         c = Office(id=office['id'],

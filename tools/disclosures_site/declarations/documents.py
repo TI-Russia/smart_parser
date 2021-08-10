@@ -1,4 +1,5 @@
-from declarations.models import Section, Person, Office, Source_Document, TOfficeTableInMemory
+from declarations.models import Section, Person, Office, Source_Document
+from .offices_in_memory import TOfficeTableInMemory
 from .rubrics import get_russian_rubric_str
 
 from django_elasticsearch_dsl import Document, IntegerField, TextField, ByteField, KeywordField
@@ -137,5 +138,6 @@ stop_elastic_indexing()
 
 try:
      OFFICES = TOfficeTableInMemory()
+     OFFICES.read_from_table(Office.objects.all())
 except DatabaseError as exp:
     pass
