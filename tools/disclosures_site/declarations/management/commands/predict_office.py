@@ -41,6 +41,7 @@ class TOfficePredictor:
         for o in OFFICES.offices.values():
             if o.rubric_id == TOfficeRubrics.Tax:
                 tax_offices[o.region_id] = o.id
+        assert len(tax_offices) > 0
         return tax_offices
 
     def set_office_id(self, sha256, src_doc: TSourceDocument, office_id, method_name: str):
@@ -67,19 +68,22 @@ class TOfficePredictor:
         web_ref: TWebReference
         for web_ref in src_doc.web_references:
             if web_ref._site_url.endswith("service.nalog.ru"):
-                smart_parser_json = self.smart_parser_server_client.retrieve_json_by_sha256(sha256)
-                if smart_parser_json is None:
-                    return False
-                props = smart_parser_json.get('document_sheet_props')
-                if props is None or len(props) == 0:
-                    return False
-                url = props[0]['url']
-                region_str = url[:url.find('.')]
-                if region_str.isdigit():
-                    office_id = self.regional_tax_offices.get(int(region_str))
-                    if office_id is not None:
-                        self.set_office_id(sha256, src_doc, office_id, "regional tax office")
-                        src_doc.region_id = int(region_str)
+                if src_doc.region_id is None:
+                    smart_parser_json = self.smart_parser_server_client.retrieve_json_by_sha256(sha256)
+                    if smart_parser_json is None:
+                        return False
+                    props = smart_parser_json.get('document_sheet_props')
+                    if props is None or len(props) == 0 or 'url' not in props[0]:
+                        return False
+                    url = props[0]['url']
+                    region_str = url[:url.find('.')]
+                    if not region_str.isdigit():
+                        return False
+                    src_doc.region_id = int(region_str)
+
+                office_id = self.regional_tax_offices.get(src_doc.region_id)
+                if office_id is not None:
+                    self.set_office_id(sha256, src_doc, office_id, "regional tax office")
                     return True
         return False
 
@@ -101,7 +105,7 @@ class TOfficePredictor:
             if max_weights[case.sha256] < weight:
                 max_weights[case.sha256] = weight
                 src_doc = self.dlrobot_human.document_collection[case.sha256]
-                self.set_office_id(case.sha256, src_doc, office_id, "(tensorflow weight={})".format(weight))
+                self.set_office_id(case.sha256, src_doc, office_id, "tensorflow weight={}".format(weight))
 
     def predict_office(self, intermediate_save=False):
         cases_for_ml_predict = list()
