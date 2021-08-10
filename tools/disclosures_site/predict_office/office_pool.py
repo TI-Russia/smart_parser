@@ -11,7 +11,8 @@ class TOfficePool:
         self.ml_model = ml_model
         self.logger = ml_model.logger
         self.read_cases(file_name, row_count)
-        self.delete_deterministic_web_domains()
+        if self.ml_model.office_index is not None:
+            self.delete_deterministic_web_domains()
         self.logger.info("read from {} {} cases".format(file_name, len(self.pool)))
 
     def read_cases(self, file_name: str, row_count=None):

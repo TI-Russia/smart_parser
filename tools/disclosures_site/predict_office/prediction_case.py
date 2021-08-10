@@ -10,7 +10,7 @@ class TPredictionCase:
         self.text = self.get_text_from_office_strings()
 
         self.true_office_id = true_office_id
-        if self.true_office_id is not None:
+        if self.true_office_id is not None and ml_model.office_index is not None:
             self.true_region_id = ml_model.office_index.get_office_region(self.true_office_id)
         else:
             self.true_region_id = None

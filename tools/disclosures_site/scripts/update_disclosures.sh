@@ -41,7 +41,7 @@ source $COMMON_SCRIPT
 
 #4  предсказание office_id
     cd $DLROBOT_FOLDER
-    python3 $TOOLS/disclosures_site/manage.py predict_office --dlrobot-human-path dlrobot_human.json
+    python3 $TOOLS/disclosures_site/manage.py predict_office --dlrobot-human-path dlrobot_human.json --disable-ml
 
 #5  получение статистики по dlrobot_human.json, сравнение с предыдущим обходом
     python3 $TOOLS/disclosures_site/scripts/dlrobot_human.py --action stats --input-file dlrobot_human.json > dlrobot_human.json.stats
