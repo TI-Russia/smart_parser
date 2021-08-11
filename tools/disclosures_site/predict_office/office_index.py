@@ -7,6 +7,8 @@ import json
 import pymysql
 from collections import defaultdict
 import numpy as np
+import tensorflow as tf
+
 
 
 class TDisclosuresConnection:
@@ -248,4 +250,22 @@ class TOfficePredictIndex:
 
     def get_bigram_feature_plus(self, text: str, web_domain: str):
         text += " " + self.web_sites.get_title_by_web_domain(web_domain)
-        return self.get_bigram_feature(text)
+        bigrams = set()
+        for b in TOfficePredictIndex.get_bigrams(text):
+            bigram_id = self.get_bigram_id(b)
+            if bigram_id is not None:
+                bigrams.add(bigram_id)
+        shape = [1, self.get_bigrams_count()]
+        if len(bigrams) == 0:
+            return tf.SparseTensor(indices=[[0, 0]],
+                                   values=[0],
+                                   dense_shape=shape)
+        else:
+            bigrams = list((0, i) for i in sorted(list(bigrams)))
+            return tf.SparseTensor(indices=bigrams,
+                           values=[1]*len(bigrams),
+                           dense_shape=shape)
+
+        #return self.get_bigram_feature(text)
+
+        #return tf.constant(self.get_bigram_feature(text))

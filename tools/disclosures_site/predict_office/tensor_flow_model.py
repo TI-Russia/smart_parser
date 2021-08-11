@@ -15,10 +15,13 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         return web_domain_one_hot
 
     def to_ml_input_features(self, cases):
-        bigrams = list(self.office_index.get_bigram_feature_plus(c.text, c.web_domain) for c in cases)
+        bigrams_l = list(self.office_index.get_bigram_feature_plus(c.text, c.web_domain) for c in cases)
+        bigrams = tf.sparse.concat(0, bigrams_l)
+        #bigrams = np.array(bigrams_l)
+        print ("bigrams.shape={}".format(bigrams.shape))
         web_domains = list(self.get_web_domain_feature(c) for c in cases)
         return  {
-            "office_name_feat": np.array(bigrams),
+            "office_name_feat": bigrams,
             "web_domain_feat": np.array(web_domains),
         }
 
@@ -67,7 +70,8 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
                   epochs=epoch_count,
                   workers=3,
                   batch_size=batch_size,
-                  validation_split=0.2)
+                  #validation_split=0.2  not supported by sparse tensors
+                  )
         model.save(self.model_path)
 
     def load_model(self):
@@ -81,6 +85,7 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         res = model.evaluate(test_x, test_y)
         self.logger.info(res)
         debug = model.predict(test_x)
+        pass
 
     def predict(self, model, cases):
         if len(cases) == 0:
