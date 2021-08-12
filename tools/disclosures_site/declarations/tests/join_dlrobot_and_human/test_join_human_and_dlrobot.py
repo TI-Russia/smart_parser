@@ -1,5 +1,6 @@
 import declarations.models as models
 from disclosures_site.scripts.join_human_and_dlrobot import TJoiner
+from declarations.input_json import TDlrobotHumanFileDBM
 
 from django.test import TestCase
 import os
@@ -133,7 +134,7 @@ CANON_HUMAN_DLROBOT = {
 class JoinDLrobotAndHuman(TestCase):
     def setUp(self):
         os.chdir(os.path.dirname(__file__))
-        self.dlrobot_human_path = "dlrobot_human.json"
+        self.dlrobot_human_path = "dlrobot_human.dbm"
         if os.path.exists(self.dlrobot_human_path):
             os.unlink(self.dlrobot_human_path)
 
@@ -147,10 +148,14 @@ class JoinDLrobotAndHuman(TestCase):
                 ]
         joiner = TJoiner(TJoiner.parse_args(args))
         joiner.main()
-        stats = joiner.output_dlrobot_human.get_stats()
+
+
+        dlrobot_human = TDlrobotHumanFileDBM(self.dlrobot_human_path)
+        dlrobot_human.open_db_read_only()
+        stats = dlrobot_human.get_stats()
         self.assertDictEqual(CANON_STATS,  stats)
-        with open(self.dlrobot_human_path) as inp:
-            result_json = json.load(inp)
-            self.maxDiff = None
-            self.assertDictEqual(CANON_HUMAN_DLROBOT, result_json)
+
+        result_json = dlrobot_human.to_json()
+        self.maxDiff = None
+        self.assertDictEqual(CANON_HUMAN_DLROBOT, result_json)
 

@@ -1,4 +1,4 @@
-from declarations.input_json import TSourceDocument, TDlrobotHumanFile, TWebReference
+from declarations.input_json import TSourceDocument, TDlrobotHumanFileDBM, TWebReference
 from disclosures_site.predict_office.tensor_flow_model import TTensorFlowOfficeModel
 from disclosures_site.predict_office.office_pool import TOfficePool
 from common.urllib_parse_pro import urlsplit_pro
@@ -23,11 +23,12 @@ class TOfficePredictor:
     def __init__(self, options):
         self.logger = setup_logging(log_file_name="predict_office.log")
         self.dlrobot_human_path = options['dlrobot_human_path']
-        self.dlrobot_human = TDlrobotHumanFile(self.dlrobot_human_path)
+        self.dlrobot_human = TDlrobotHumanFileDBM(self.dlrobot_human_path)
+        self.dlrobot_human.open_write_mode()
         self.enable_ml = options.get('enable_ml', True)
         sp_args = TSmartParserCacheClient.parse_args([])
         self.smart_parser_server_client = TSmartParserCacheClient(sp_args, self.logger)
-        model_path = options.get('office_model_path', TOfficePredictor.default_ml_model_path)
+        model_path = options.get('office_m  odel_path', TOfficePredictor.default_ml_model_path)
         bigrams_path = os.path.join(model_path, "office_ngrams.txt")
         ml_model_path = os.path.join(model_path, "model")
         self.office_ml_model = TTensorFlowOfficeModel(self.logger, bigrams_path, ml_model_path)
@@ -53,6 +54,7 @@ class TOfficePredictor:
             self.logger.info("change office_id from {} to {} for file {} , ({})".format( \
                 old_office_id, office_id, sha256, method_name))
         src_doc.calculated_office_id = office_id
+        self.dlrobot_human.update_source_document(sha256, src_doc)
 
     def predict_office_deterministic_web_domain(self, sha256, src_doc: TSourceDocument):
         web_ref: TWebReference
@@ -87,19 +89,9 @@ class TOfficePredictor:
                     return True
         return False
 
-    def predict_offices_by_ml(self, intermediate_save, cases):
+    def predict_offices_by_ml(self,  cases):
         TOfficePool.write_pool(cases, "cases_to_predict_dump.txt")
-        if intermediate_save:
-            self.write()
-            self.logger.info("unload dlrobot_human to get more memory")
-            del self.dlrobot_human
-            gc.collect()
-
         predicted_office_ids = self.office_ml_model.predict_by_portions(cases)
-
-        if intermediate_save:
-            self.dlrobot_human = TDlrobotHumanFile(self.dlrobot_human_path)
-
         max_weights = defaultdict(float)
         for case, (office_id, weight) in zip(cases, predicted_office_ids):
             if max_weights[case.sha256] < weight:
@@ -121,6 +113,7 @@ class TOfficePredictor:
                 if not self.enable_ml or src_doc.office_strings is None:
                     src_doc.office_strings = json.dumps(self.smart_parser_server_client.get_office_strings(sha256),
                                                         ensure_ascii=False)
+                    self.dlrobot_human.update_source_document(sha256, src_doc)
                 if not self.enable_ml or TSmartParserCacheClient.are_empty_office_strings(src_doc.office_strings):
                     web_ref: TWebReference
                     for web_ref in src_doc.web_references:
@@ -136,7 +129,7 @@ class TOfficePredictor:
                                                office_strings=src_doc.office_strings)
                         cases_for_ml_predict.append(case)
         if len(cases_for_ml_predict) > 0:
-            self.predict_offices_by_ml(intermediate_save, cases_for_ml_predict)
+            self.predict_offices_by_ml(cases_for_ml_predict)
 
     def check(self):
         files_without_office_id = 0
@@ -154,7 +147,7 @@ class TOfficePredictor:
             raise Exception(error)
 
     def write(self):
-        self.dlrobot_human.write()
+        self.dlrobot_human.close_db()
 
 
 class Command(BaseCommand):
@@ -170,7 +163,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         predictor = TOfficePredictor(options)
-        predictor.predict_office(intermediate_save=True)
+        predictor.predict_office()
         predictor.check()
         predictor.write()
 

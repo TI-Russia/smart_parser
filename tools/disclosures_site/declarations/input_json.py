@@ -3,6 +3,7 @@ from common.urllib_parse_pro import TUrlUtf8Encode
 import os
 import json
 from collections import defaultdict
+import dbm.gnu
 
 
 class TIntersectionStatus:
@@ -158,42 +159,86 @@ class TSourceDocument:
             ref.convert_to_utf8()
 
 
-class TDlrobotHumanFile:
-    def __init__(self, db_file_path, read_db=True):
-        self.db_file_path = db_file_path
-        if read_db:
-            with open(self.db_file_path, "r") as inp:
-                from_json = json.load(inp)
-            self.document_collection = dict(
-                (k, TSourceDocument().from_json(v)) for k, v in from_json.get('documents', dict()).items())
-        else:
-            self.document_collection = dict()
+class TDlrobotHumanFileDBM:
 
-    def add_source_document(self, sha256, src_doc: TSourceDocument):
-        self.document_collection[sha256] = src_doc
+    def __init__(self, db_file_path):
+        self.db_file_path = db_file_path
+        self.access_mode = None
+        self.db = None
+
+    def sync_db(self):
+        self.db.sync()
+
+    def close_db(self):
+        self.sync_db()
+        self.db.close()
+        self.db = None
+
+    def _open(self, access_mode):
+        self.access_mode = access_mode
+        file_path, file_ext = os.path.splitext(self.db_file_path)
+        if file_ext == ".json":
+            json_path = self.db_file_path
+            self.db_file_path = file_path + ".dbm"
+            self.create_db()
+            self.convert_from_json_fle(json_path)
+            self.close_db()
+        _, file_ext = os.path.splitext(self.db_file_path)
+        assert file_ext == ".dbm"
+        self.db = dbm.gnu.open(self.db_file_path, self.access_mode)
+
+    def open_db_read_only(self):
+        self._open("r")
+        return self
+
+    def open_write_mode(self):
+        self._open("w")
+        return self
+
+    def create_db(self):
+        if os.path.exists(self.db_file_path):
+            os.unlink(self.db_file_path)
+        self.access_mode = "cf"
+        self.db = dbm.gnu.open(self.db_file_path, self.access_mode)
+        return self
+
+    def update_source_document(self, sha256, src_doc: TSourceDocument):
+        assert self.access_mode != 'r'
+        self.db[sha256] = json.dumps(src_doc.write_to_json(), ensure_ascii=False)
 
     def get_all_documents(self):
-        for sha256, src_doc in self.document_collection.items():
-            yield sha256, src_doc
+        k = self.db.firstkey()
+        while k is not None:
+            js = json.loads(self.db[k])
+            sha256 = k.decode('latin')
+            yield sha256, TSourceDocument().from_json(js)
+            k = self.db.nextkey(k)
 
     def get_documents_count(self):
-        return len(self.document_collection.items())
+        return len(self.db)
 
     def get_document(self, sha256):
-        return self.document_collection[sha256]
+        return TSourceDocument().from_json(json.loads(self.db[sha256]))
 
     def get_document_maybe(self, sha256):
-        return self.document_collection.get(sha256)
+        s = self.db.get(sha256)
+        if s is None:
+            return s
+        return TSourceDocument().from_json(json.loads(s))
 
-    def write(self):
-        with open(self.db_file_path, "w", encoding="utf8") as out:
-            output_json = {
-                'documents': dict((k, v.write_to_json()) for k,v in self.document_collection.items())
-            }
-            json.dump(output_json, out,  indent=4, sort_keys=True, ensure_ascii=False)
+    def convert_from_json_fle(self, json_path: str):
+        with open(json_path) as inp:
+            js = json.load(inp)
+        for k, v in js['documents'].items():
+            self.update_source_document(k, TSourceDocument().from_json(v))
 
-    def get_documents_count(self):
-        return len(self.document_collection)
+    def to_json(self):
+        documents = dict()
+        for sha256, src_doc in self.get_all_documents():
+            documents[sha256] = src_doc.write_to_json()
+        return {
+            "documents": documents
+        }
 
     def get_stats(self):
         websites = set()

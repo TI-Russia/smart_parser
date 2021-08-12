@@ -1,6 +1,7 @@
 from disclosures_site.scripts.export_human_files import TExportHumanFiles
 from disclosures_site.declarations.tests.source_doc_for_testing import SourceDocServerForTesting
 from declarations.tests.smart_parser_for_testing import SmartParserServerForTesting
+from declarations.input_json import TDlrobotHumanFileDBM
 
 from django.test import TestCase
 import os
@@ -55,9 +56,9 @@ class ExportHuman(TestCase):
         self.assertEqual(exit_value,  0)
 
     def common_test(self, document_file_id, canon_json):
-        output_json = "human_files.json"
+        output_db = "human_files.dbm"
         arg_list = ['--document-file-id', str(document_file_id), '--table', 'declarations_documentfile',
-                    '--dlrobot-human-json', output_json, '--start-from-an-empty-file']
+                    '--dlrobot-human-json', output_db, '--start-from-an-empty-file']
         source_doc_workdir = os.path.join(os.path.dirname(__file__), "source_doc")
         smart_parser_workdir = os.path.join(os.path.dirname(__file__), "smart_parser_workdir")
         with SourceDocServerForTesting(source_doc_workdir) as source_doc_wrapper:
@@ -68,9 +69,10 @@ class ExportHuman(TestCase):
                     smart_parser_server.server.task_queue.join()
                 self.assertEqual(source_doc_wrapper.server.get_stats()['source_doc_count'], 1)
                 json.dumps(canon_json, indent=4, ensure_ascii=False)
-                with open (output_json) as inp:
-                    result_json = json.load(inp)
-                    self.assertDictEqual(canon_json, result_json)
+                f = TDlrobotHumanFileDBM(output_db)
+                f.open_db_read_only()
+                self.assertDictEqual(canon_json, f.to_json())
+                f.close_db()
                 time.sleep(2)
                 self.assertEqual(smart_parser_server.server.get_stats()['session_write_count'], 1)
 

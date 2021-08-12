@@ -1,4 +1,4 @@
-from declarations.input_json import TSourceDocument, TDlrobotHumanFile, TWebReference
+from declarations.input_json import TSourceDocument, TDlrobotHumanFileDBM, TWebReference
 from web_site_db.robot_project import TRobotProject
 from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
 from common.logging_wrapper import setup_logging
@@ -33,18 +33,20 @@ class TJoiner:
     def __init__(self, args):
         self.args = args
         self.logger = setup_logging(log_file_name="join_human_and_dlrobot.log", append_mode=True)
-        self.output_dlrobot_human = TDlrobotHumanFile(args.output_json, read_db=False)
+        self.output_dlrobot_human = TDlrobotHumanFileDBM(args.output_json)
+        self.output_dlrobot_human.create_db()
         self.old_files_with_office_count = 0
 
     def add_dlrobot_file(self, sha256, file_extension, web_refs=[], decl_refs=[]):
         src_doc = self.output_dlrobot_human.get_document_maybe(sha256)
         if src_doc is None:
             src_doc = TSourceDocument(file_extension)
-            self.output_dlrobot_human.add_source_document(sha256, src_doc)
+            self.output_dlrobot_human.update_source_document(sha256, src_doc)
         for web_ref in web_refs:
             src_doc.add_web_reference(web_ref)
         for decl_ref in decl_refs:
             src_doc.add_decl_reference(decl_ref)
+        self.output_dlrobot_human.update_source_document(sha256, src_doc)
 
     def add_files_of_one_project(self, dlrobot_project):
         self.logger.debug("process {}".format(dlrobot_project))
@@ -91,7 +93,8 @@ class TJoiner:
 
     def add_old_dlrobot_files(self):
         self.logger.info("read {}".format(self.args.old_dlrobot_human_json))
-        old_json = TDlrobotHumanFile(self.args.old_dlrobot_human_json)
+        old_json = TDlrobotHumanFileDBM(self.args.old_dlrobot_human_json)
+        old_json.open_db_read_only()
         self.logger.info("copy old files ...")
         self.old_files_with_office_count = 0
         for sha256, src_doc in old_json.get_all_documents():
@@ -103,7 +106,8 @@ class TJoiner:
 
     def add_human_files(self):
         self.logger.info("read {}".format(self.args.human_json))
-        human_files = TDlrobotHumanFile(self.args.human_json)
+        human_files = TDlrobotHumanFileDBM(self.args.human_json)
+        human_files.open_db_read_only()
         self.logger.info("add human files ...")
         for sha256, src_doc in human_files.get_all_documents():
             self.add_dlrobot_file(sha256, src_doc.file_extension, decl_refs=src_doc.decl_references)
@@ -114,7 +118,7 @@ class TJoiner:
         if self.args.old_dlrobot_human_json is not None:
             self.add_old_dlrobot_files()
         self.add_human_files()
-        self.output_dlrobot_human.write()
+        self.output_dlrobot_human.close_db()
 
 
 if __name__ == '__main__':

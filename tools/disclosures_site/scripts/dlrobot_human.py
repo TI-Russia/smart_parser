@@ -1,4 +1,4 @@
-from declarations.input_json import TSourceDocument, TDlrobotHumanFile
+from declarations.input_json import TSourceDocument, TDlrobotHumanFileDBM
 from predict_office.office_pool import TOfficePool
 from predict_office.prediction_case import TPredictionCase
 from common.logging_wrapper import setup_logging
@@ -11,7 +11,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--action", dest='action', help="can be stats, select, "
                                                         "print_sha256, print_web_sites, "
-                                                        "delete, to_utf8, titles, check_office")
+                                                        "delete, to_utf8, titles, check_office, to_json")
     parser.add_argument("--input-file", dest='input_file')
     parser.add_argument("--output-file", dest='output_file', required=False)
     parser.add_argument("--sha256-list-file", dest='sha256_list_file', required=False)
@@ -39,22 +39,28 @@ def read_sha256_list(args):
 
 
 def select_or_delete_by_sha256(dlrobot_human, sha256_list, output_file, select=True):
-    new_dlrobot_human = TDlrobotHumanFile(output_file, read_db=False)
+    new_dlrobot_human = TDlrobotHumanFileDBM(output_file)
+    new_dlrobot_human.create_db()
 
     for sha256, src_doc in dlrobot_human.get_all_documents():
         if (sha256 in sha256_list) == select:
-            new_dlrobot_human.add_source_document(sha256, src_doc)
+            new_dlrobot_human.update_source_document(sha256, src_doc)
 
-    new_dlrobot_human.write()
+    new_dlrobot_human.close_db()
 
 
 def to_utf8(dlrobot_human, output_file):
-    new_dlrobot_human = TDlrobotHumanFile(output_file, read_db=False)
+    new_dlrobot_human = TDlrobotHumanFileDBM(output_file)
+    new_dlrobot_human.create_db()
     src_doc: TSourceDocument
     for key, src_doc in dlrobot_human.get_all_documents():
         src_doc.convert_refs_to_utf8()
-        new_dlrobot_human.add_source_document(key, src_doc)
-    new_dlrobot_human.write()
+        new_dlrobot_human.update_source_document(key, src_doc)
+    new_dlrobot_human.close_db()
+
+
+def to_json(dlrobot_human: TDlrobotHumanFileDBM):
+    print(json.dumps(dlrobot_human.to_json(), indent=4, ensure_ascii=False))
 
 
 class TDummyMlModel:
@@ -92,7 +98,8 @@ def check_office(logger, dlrobot_human, pool_path):
 def main():
     args = parse_args()
     logger = setup_logging(logger_name="dlrobot_human")
-    dlrobot_human = TDlrobotHumanFile(args.input_file)
+    dlrobot_human = TDlrobotHumanFileDBM(args.input_file)
+    dlrobot_human.open_db_read_only()
     if args.action == "print_web_sites":
         print_web_sites(dlrobot_human)
     elif args.action == "stats":
@@ -100,11 +107,13 @@ def main():
     elif args.action == "check_office":
         check_office(logger, dlrobot_human, args.predict_test_pool)
     elif args.action == "select" or args.action == "delete":
-        sha_list = read_sha256_list(args.sha256_list_file)
+        sha_list = read_sha256_list(args)
         assert args.output_file is not None
         select_or_delete_by_sha256(dlrobot_human, sha_list, args.output_file, args.action == "select")
     elif args.action == "to_utf8":
         to_utf8(dlrobot_human, args.output_file)
+    elif args.action == "to_json":
+        to_json(dlrobot_human)
     else:
         raise Exception("unknown action")
 

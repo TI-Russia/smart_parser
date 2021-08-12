@@ -1,4 +1,4 @@
-from declarations.input_json import TSourceDocument, TDeclaratorReference,  TDlrobotHumanFile, TIntersectionStatus
+from declarations.input_json import TSourceDocument, TDeclaratorReference,  TDlrobotHumanFileDBM
 from common.archives import TDearchiver
 from source_doc_http.source_doc_client import TSourceDocClient
 from ConvStorage.conversion_client import TDocConversionClient
@@ -144,7 +144,11 @@ class TExportHumanFiles:
             os.unlink(os.path.join(self.args.tmp_folder, f))
 
     def export_files(self):
-        human_files_db = TDlrobotHumanFile(self.args.dlrobot_human_json, read_db=not self.args.start_from_empty)
+        human_files_db = TDlrobotHumanFileDBM(self.args.dlrobot_human_json)
+        if self.args.start_from_empty:
+            human_files_db.create_db()
+        else:
+            human_files_db.open_write_mode()
         document_file_ids = set()
         for sha256, doc in human_files_db.get_all_documents():
             for ref in doc.decl_references:
@@ -173,8 +177,7 @@ class TExportHumanFiles:
                                                                                                     document_file_id):
                 sha256 = build_dislosures_sha256(local_file_path)
                 self.logger.debug("add {}, sha256={}".format(local_file_path, sha256))
-                source_document = TSourceDocument()
-                _, source_document.file_extension = os.path.splitext(local_file_path)
+                source_document = TSourceDocument(os.path.splitext(local_file_path)[1])
                 ref = TDeclaratorReference()
                 ref.document_id = document_id
                 ref.document_file_id = document_file_id
@@ -183,10 +186,10 @@ class TExportHumanFiles:
                 ref.income_year = income_year
                 ref.document_file_url = declarator_url
                 source_document.add_decl_reference(ref)
-                human_files_db.add_source_document(sha256, source_document)
+                human_files_db.update_source_document(sha256, source_document)
                 files_count += 1
         self.logger.debug('added files count: {}'.format(files_count))
-        human_files_db.write()
+        human_files_db.close_db()
         self.send_new_pdfs_to_smart_parser()
 
     def send_new_pdfs_to_smart_parser(self):

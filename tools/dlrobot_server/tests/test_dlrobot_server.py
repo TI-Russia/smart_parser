@@ -10,7 +10,7 @@ from common.primitives import build_dislosures_sha256, is_local_http_port_free
 from common.archives import TDearchiver
 from unittest import TestCase
 from disclosures_site.scripts.join_human_and_dlrobot import TJoiner
-from declarations.input_json import TSourceDocument, TDlrobotHumanFile
+from declarations.input_json import TSourceDocument, TDlrobotHumanFileDBM
 
 import os
 import threading
@@ -358,12 +358,12 @@ class DlrobotWithSmartParserAndSourceDocServer(TestCase):
 
     def test_dlrobot_with_smart_parser_and_source_doc_server(self):
         self.env.worker_thread.join(200)
-        self.assertEqual(self.env.count_projects_results(), 1)
+        self.assertEqual(1, self.env.count_projects_results())
         time.sleep(5) # give time for smart parser to process documents
-        self.assertEqual(self.env.smart_parser_server.get_stats()['session_write_count'], 1)
+        self.assertEqual(1, self.env.smart_parser_server.get_stats()['session_write_count'])
 
         stats = self.env.source_doc_server.get_stats()
-        self.assertEqual(stats['source_doc_count'], 1)
+        self.assertEqual(1, stats['source_doc_count'])
 
 
 class TestUnzipArchive(TestCase):
@@ -520,12 +520,12 @@ class DlrobotIncomeYearInAnchorText(TestCase):
 
     def test_year_in_anchor_text(self):
         self.env.worker_thread.join(200)
-        self.assertEqual(self.env.count_projects_results(), 1)
+        self.assertEqual(1, self.env.count_projects_results())
         time.sleep(5)  # give time for smart parser to process documents
-        self.assertEqual(self.env.smart_parser_server.get_stats()['session_write_count'], 1)
-        dlrobot_human_json_path = os.path.join(self.env.data_folder, "dlrobot_human.json")
-        human_json_path = os.path.join(self.env.data_folder, "human.json")
-        TDlrobotHumanFile(human_json_path, read_db=False).write()
+        self.assertEqual(1, self.env.smart_parser_server.get_stats()['session_write_count'])
+        dlrobot_human_json_path = os.path.join(self.env.data_folder, "dlrobot_human.dbm")
+        human_json_path = os.path.join(self.env.data_folder, "human.dbm")
+        TDlrobotHumanFileDBM(human_json_path).create_db().close_db()
 
         args = ['--max-ctime', '5602811863', #the far future
                 '--input-dlrobot-folder', self.env.result_folder,
@@ -534,7 +534,8 @@ class DlrobotIncomeYearInAnchorText(TestCase):
                 ]
         joiner = TJoiner(TJoiner.parse_args(args))
         joiner.main()
-        dlrobot_human = TDlrobotHumanFile(dlrobot_human_json_path)
+        dlrobot_human = TDlrobotHumanFileDBM(dlrobot_human_json_path)
+        dlrobot_human.open_db_read_only()
         self.assertEqual(1,  dlrobot_human.get_documents_count())
         src_doc: TSourceDocument
         src_doc = list(dlrobot_human.get_all_documents())[0][1]
@@ -559,12 +560,12 @@ class WebSiteWithSubdirectory(TestCase):
 
     def test_site_with_subdirectory(self):
         self.env.worker_thread.join(200)
-        self.assertEqual(self.env.count_projects_results(), 1)
+        self.assertEqual(1, self.env.count_projects_results())
         time.sleep(5)  # give time for smart parser to process documents
-        self.assertEqual(self.env.smart_parser_server.get_stats()['session_write_count'], 1)
-        dlrobot_human_json_path = os.path.join(self.env.data_folder, "dlrobot_human.json")
-        human_json_path = os.path.join(self.env.data_folder, "human.json")
-        TDlrobotHumanFile(human_json_path, read_db=False).write()
+        self.assertEqual(1, self.env.smart_parser_server.get_stats()['session_write_count'])
+        dlrobot_human_json_path = os.path.join(self.env.data_folder, "dlrobot_human.dbm")
+        human_json_path = os.path.join(self.env.data_folder, "human.dbm")
+        TDlrobotHumanFileDBM(human_json_path).create_db().close_db()
 
         args = ['--max-ctime', '5602811863', #the far future
                 '--input-dlrobot-folder', self.env.result_folder,
@@ -573,7 +574,8 @@ class WebSiteWithSubdirectory(TestCase):
                 ]
         joiner = TJoiner(TJoiner.parse_args(args))
         joiner.main()
-        dlrobot_human = TDlrobotHumanFile(dlrobot_human_json_path)
+        dlrobot_human = TDlrobotHumanFileDBM(dlrobot_human_json_path)
+        dlrobot_human.open_db_read_only()
         self.assertEqual(1,  dlrobot_human.get_documents_count())
         src_doc: TSourceDocument
         src_doc = list(dlrobot_human.get_all_documents())[0][1]

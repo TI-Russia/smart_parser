@@ -2,7 +2,7 @@ import declarations.models as models
 from declarations.serializers import TSmartParserSectionJson
 from declarations.permalinks import TPermaLinksSection, TPermaLinksSourceDocument
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
-from declarations.input_json import TDlrobotHumanFile, TSourceDocument, TDeclaratorReference, TWebReference
+from declarations.input_json import TDlrobotHumanFileDBM, TSourceDocument, TDeclaratorReference, TWebReference
 from common.logging_wrapper import setup_logging
 
 from multiprocessing import Pool
@@ -40,7 +40,8 @@ class TImporter:
 
     def __init__(self, args):
         self.args = args
-        self.dlrobot_human = TDlrobotHumanFile(args['dlrobot_human'])
+        self.dlrobot_human = TDlrobotHumanFileDBM(args['dlrobot_human'])
+        self.dlrobot_human.open_db_read_only()
         self.all_section_passports = set()
         if models.Section.objects.count() > 0:
             raise Exception("implement all section passports reading from db if you want to import to non-empty db! ")

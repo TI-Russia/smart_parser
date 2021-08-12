@@ -90,6 +90,7 @@ class TSeleniumDriver:
         options.add_experimental_option('useAutomationExtension', False)
         prefs = {
             'download.default_directory': self.download_folder,
+             'plugins.always_open_pdf_externally': True
 
              # it does not work, use environment variable LANG as it stated at https://bugs.chromium.org/p/chromium/issues/detail?id=755338
              #'intl.accept_languages': 'ru,ru_RU'  # to do: it for Firefox
