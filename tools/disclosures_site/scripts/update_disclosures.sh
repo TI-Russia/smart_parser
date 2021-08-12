@@ -36,19 +36,19 @@ source $COMMON_SCRIPT
         --max-ctime $CRAWL_EPOCH \
         --input-dlrobot-folder  "$DLROBOT_CENTRAL_FOLDER/processed_projects" \
         --human-json $HUMAN_FILES_JSON \
-        --old-dlrobot-human-json $OLD_DLROBOT_FOLDER/dlrobot_human.json \
-        --output-json dlrobot_human.json
+        --old-dlrobot-human-json $OLD_DLROBOT_FOLDER/dlrobot_human.dbm \
+        --output-json dlrobot_human.dbm
 
 #4  предсказание office_id
     cd $DLROBOT_FOLDER
-    python3 $TOOLS/disclosures_site/manage.py predict_office --dlrobot-human-path dlrobot_human.json --disable-ml
+    python3 $TOOLS/disclosures_site/manage.py predict_office --dlrobot-human-path dlrobot_human.dbm --disable-ml
 
-#5  получение статистики по dlrobot_human.json, сравнение с предыдущим обходом
-    python3 $TOOLS/disclosures_site/scripts/dlrobot_human.py --action stats --input-file dlrobot_human.json > dlrobot_human.json.stats
-    new_size=$(stat -c%s "dlrobot_human.json")
-    old_size=$(stat -c%s "$OLD_DLROBOT_FOLDER/dlrobot_human.json")
+#5  получение статистики по dlrobot_human.dbm, сравнение с предыдущим обходом
+    python3 $TOOLS/disclosures_site/scripts/dlrobot_human.py --action stats --input-file dlrobot_human.dbm > dlrobot_human.json.stats
+    new_size=$(stat -c%s "dlrobot_human.dbm")
+    old_size=$(stat -c%s "$OLD_DLROBOT_FOLDER/dlrobot_human.dbm")
     if (( $old_size > $new_size )); then
-        echo "the size of dlrobot_human.json is less than the size of older one, check dlrobot_human.json.stats"
+        echo "the size of dlrobot_human.dbm is less than the size of older one, check dlrobot_human.dbm.stats"
         exit 1
     endif
 
@@ -64,7 +64,7 @@ source $COMMON_SCRIPT
      python3 $TOOLS/disclosures_site/manage.py import_json \
                  --settings disclosures.settings.dev \
                  --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER \
-                 --dlrobot-human dlrobot_human.json   \
+                 --dlrobot-human dlrobot_human.dbm   \
                  --process-count 2  \
                  --permalinks-folder $DLROBOT_FOLDER
 

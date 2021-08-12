@@ -5,7 +5,7 @@ export TOOLS=/home/sokirko/smart_parser/tools
 export DLROBOT_CENTRAL_FOLDER=~/declarator_hdd/declarator/dlrobot_central
 export DLROBOT_UPDATES_FOLDER=~/declarator_hdd/declarator/dlrobot_updates
 export YANDEX_DISK_FOLDER=~/declarator_hdd/Yandex.Disk/declarator
-export HUMAN_FILES_JSON=$YANDEX_DISK_FOLDER/human_files.json
+export HUMAN_FILES_JSON=$YANDEX_DISK_FOLDER/human_files.dbm
 export HUMAN_JSONS_FOLDER=~/declarator_hdd/declarator/human_jsons
 export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
 

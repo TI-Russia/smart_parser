@@ -53,6 +53,7 @@ class TImporter:
     def delete_before_fork(self):
         from django import db
         db.connections.close_all()
+        self.dlrobot_human.close_db()
 
     def init_non_pickable(self):
         self.smart_parser_cache_client = TSmartParserCacheClient(TSmartParserCacheClient.parse_args([]), TImporter.logger)
@@ -61,6 +62,8 @@ class TImporter:
         self.permalinks_db_section.open_db_read_only()
         self.permalinks_db_source_document = TPermaLinksSourceDocument(self.args['permalinks_folder'])
         self.permalinks_db_source_document.open_db_read_only()
+
+        self.dlrobot_human.open_db_read_only()
 
     def init_after_fork(self):
         from django.db import connection
