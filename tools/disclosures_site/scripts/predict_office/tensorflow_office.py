@@ -15,7 +15,7 @@ def parse_args():
     parser.add_argument("--model-folder", dest='model_folder', required=False)
     parser.add_argument("--epoch-count", dest='epoch_count', required=False, type=int, default=10)
     parser.add_argument("--row-count", dest='row_count', required=False, type=int)
-    parser.add_argument("--dense-layer-size", dest='dense_layer_size', required=False, type=int, default=256)
+    parser.add_argument("--dense-layer-size", dest='dense_layer_size', required=False, type=int, default=128)
     parser.add_argument("--toloka-pool", dest='toloka_pool', required=False)
     args = parser.parse_args()
     return args

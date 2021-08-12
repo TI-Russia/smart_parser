@@ -10,7 +10,6 @@ import numpy as np
 import tensorflow as tf
 
 
-
 class TDisclosuresConnection:
     def __init__(self, sql):
         self.connection = None
@@ -52,24 +51,21 @@ def build_web_domain_to_offices():
     return web_domain_to_offices
 
 
-class TBigram:
-    def __init__(self, bigram_id=None):
-        self.bigram_id = bigram_id
-        self.offices = list()
+class TOfficeNgram:
+    def __init__(self, ngram_id=None, offices=None):
+        self.ngram_id = ngram_id
+        self.offices = offices
 
     def to_json(self):
         rec =  {
-            "id": self.bigram_id,
+            "id": self.ngram_id,
             "offices": self.offices
         }
         return rec
 
     @staticmethod
     def from_json(js):
-        b = TBigram()
-        b.bigram_id = js['id']
-        b.offices = js['offices']
-        return b
+        return TOfficeNgram(js['id'], js['offices'])
 
 
 class TOfficePredictIndex:
@@ -78,6 +74,7 @@ class TOfficePredictIndex:
         self.index_file_path = file_path
         self.logger = logger
         self.office_name_bigrams = None
+        self.office_name_unigrams = None
         self.offices = None
         self.web_domains = None
         self.deterministic_web_domains = None
@@ -91,6 +88,9 @@ class TOfficePredictIndex:
     def get_bigrams_count(self):
         return len(self.office_name_bigrams)
 
+    def get_unigrams_count(self):
+        return len(self.office_name_unigrams)
+
     def get_ml_office_id(self, office_id: int):
         return self.office_id_2_ml_office_id.get(office_id)
 
@@ -101,7 +101,13 @@ class TOfficePredictIndex:
         b = self.office_name_bigrams.get(bigram)
         if b is None:
             return None
-        return b.bigram_id
+        return b.ngram_id
+
+    def get_unigram_id(self, unigram):
+        b = self.office_name_unigrams.get(unigram)
+        if b is None:
+            return None
+        return b.ngram_id
 
     def get_offices_by_bigram(self, bigram):
         b = self.office_name_bigrams.get(bigram)
@@ -110,8 +116,9 @@ class TOfficePredictIndex:
         return b.offices
 
     @staticmethod
-    def get_word_stems(text, stem_size=3):
-        yield "^"
+    def get_word_stems(text, stem_size=3, add_starter_and_enders=True):
+        if add_starter_and_enders:
+            yield "^"
         for w in re.split("[\s,\.;:_\"* ()]", text.lower()):
             if len(w) > 0:
                 #ignore year
@@ -121,7 +128,8 @@ class TOfficePredictIndex:
                     yield w
                 else:
                     yield w[0:stem_size]
-        yield "$"
+        if add_starter_and_enders:
+            yield "$"
 
     @staticmethod
     def get_bigrams(text):
@@ -139,13 +147,14 @@ class TOfficePredictIndex:
     def read(self):
         with open(self.index_file_path) as inp:
             js = json.load(inp)
-            self.office_name_bigrams = dict((k, TBigram.from_json(v)) for k, v in js['bigrams'].items())
+            self.office_name_bigrams = dict((k, TOfficeNgram.from_json(v)) for k, v in js['bigrams'].items())
             self.offices = dict((int(k), v) for k, v in js['offices'].items())
             self.web_domains = js['web_domains']
             self.deterministic_web_domains = js['deterministic_web_domains']
             self.region_words = js['region_words']
             self.office_id_2_ml_office_id = dict((int(k), v) for k,v in js['office_id_2_ml_office_id'].items())
             self.ml_office_id_2_office_id = dict((int(k), v) for k,v in js['ml_office_id_2_office_id'].items())
+            self.office_name_unigrams = dict((k, TOfficeNgram.from_json(v)) for k, v in js['unigrams'].items())
         self.logger.info("bigrams count = {}".format(self.get_bigrams_count()))
 
     def write(self):
@@ -153,6 +162,7 @@ class TOfficePredictIndex:
         with open(self.index_file_path, "w") as outp:
             rec = {
                 'bigrams': dict((k, v.to_json()) for k, v in self.office_name_bigrams.items()),
+                'unigrams': dict((k, v.to_json()) for k, v in self.office_name_unigrams.items()),
                 'offices': self.offices,
                 'web_domains': self.web_domains,
                 'deterministic_web_domains': self.deterministic_web_domains,
@@ -168,10 +178,18 @@ class TOfficePredictIndex:
     def get_office_region(self, office_id: int):
         return self.offices[office_id]['region']
 
-    def build_bigrams(self):
+    def ngrams_from_default_dict(self, ngrams):
+        result = dict()
+        for i, b in enumerate(ngrams.keys()):
+            ngram_info = TOfficeNgram(i, list(ngrams[b]))
+            result[b] = ngram_info
+        return result
+
+    def build_ngrams(self):
         self.logger.info("build bigrams")
         regions = TRussianRegions()
         office_bigrams = defaultdict(set)
+        office_stems = defaultdict(set)
         region_words = set()
         self.offices = dict()
         sql = "select id, name, region_id from declarations_office"
@@ -193,15 +211,16 @@ class TOfficePredictIndex:
                     region_words.add(w)
                 for w in TOfficePredictIndex.get_word_stems(region.short_name):
                     region_words.add(w)
+                for w in TOfficePredictIndex.get_word_stems(name, add_starter_and_enders=False):
+                    office_stems[w].add(office_id)
 
-        self.office_name_bigrams = dict()
-        for i, b in enumerate(office_bigrams.keys()):
-            bigram_info = TBigram(bigram_id=i)
-            bigram_info.offices = list(office_bigrams[b])
-            self.office_name_bigrams[b] = bigram_info
+        self.office_name_bigrams = self.ngrams_from_default_dict(office_bigrams)
+        self.logger.info("bigrams count = {}".format(self.get_bigrams_count()))
+
+        self.office_name_unigrams = self.ngrams_from_default_dict(office_stems)
+        self.logger.info("unigrams count = {}".format(self.get_unigrams_count()))
 
         self.region_words = dict((k, i) for (i, k) in enumerate(region_words))
-        self.logger.info("bigrams count = {}".format(self.get_bigrams_count()))
 
     def build_web_domains(self):
         self.logger.info("build web domains")
@@ -226,7 +245,7 @@ class TOfficePredictIndex:
         self.logger.info("target office count = {}".format(len(self.office_id_2_ml_office_id)))
 
     def build(self):
-        self.build_bigrams()
+        self.build_ngrams()
         self.build_web_domains()
 
     def get_region_from_web_site_title(self, site_url: str):
@@ -248,24 +267,4 @@ class TOfficePredictIndex:
         title = self.web_sites.get_title_by_web_domain(web_domain)
         return self.get_bigram_feature(title)
 
-    def get_bigram_feature_plus(self, text: str, web_domain: str):
-        text += " " + self.web_sites.get_title_by_web_domain(web_domain)
-        bigrams = set()
-        for b in TOfficePredictIndex.get_bigrams(text):
-            bigram_id = self.get_bigram_id(b)
-            if bigram_id is not None:
-                bigrams.add(bigram_id)
-        shape = [1, self.get_bigrams_count()]
-        if len(bigrams) == 0:
-            return tf.SparseTensor(indices=[[0, 0]],
-                                   values=[0],
-                                   dense_shape=shape)
-        else:
-            bigrams = list((0, i) for i in sorted(list(bigrams)))
-            return tf.SparseTensor(indices=bigrams,
-                           values=[1]*len(bigrams),
-                           dense_shape=shape)
 
-        #return self.get_bigram_feature(text)
-
-        #return tf.constant(self.get_bigram_feature(text))

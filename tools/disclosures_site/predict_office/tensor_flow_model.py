@@ -1,6 +1,6 @@
 from disclosures_site.predict_office.prediction_case import TPredictionCase
 from disclosures_site.predict_office.base_ml_model import TPredictionModelBase
-
+from disclosures_site.predict_office.office_index import TOfficePredictIndex
 import operator
 import numpy as np
 import tensorflow as tf
@@ -10,19 +10,50 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
 
     def get_web_domain_feature(self, case: TPredictionCase):
         web_domain_index = self.office_index.web_domains.get(case.web_domain, 0)
-        web_domain_one_hot = np.zeros(len(self.office_index.web_domains))
-        web_domain_one_hot[web_domain_index] = 1
-        return web_domain_one_hot
+        shape = [1, len(self.office_index.web_domains)]
+        return tf.SparseTensor(indices=[(0, web_domain_index)], values=[1], dense_shape=shape)
+
+    def convert_to_sparse_tensor(self, ngrams, shape):
+        if len(ngrams) == 0:
+            return tf.SparseTensor(indices=[[0, 0]],
+                                   values=[0],
+                                   dense_shape=shape)
+        else:
+            ngrams = list((0, i) for i in sorted(list(ngrams)))
+            return tf.SparseTensor(indices=ngrams,
+                           values=[1]*len(ngrams),
+                           dense_shape=shape)
+
+    def get_bigram_feature(self, case: TPredictionCase):
+        site_title = self.office_index.web_sites.get_title_by_web_domain(case.web_domain)
+        bigrams = set()
+        for b in TOfficePredictIndex.get_bigrams(case.text + " " + site_title):
+            bigram_id = self.office_index.get_bigram_id(b)
+            if bigram_id is not None:
+                bigrams.add(bigram_id)
+        shape = [1, self.office_index.get_bigrams_count()]
+        return self.convert_to_sparse_tensor(bigrams, shape)
+
+    # не жжет
+    def get_unigram_feature(self, case: TPredictionCase):
+        site_title = self.office_index.web_sites.get_title_by_web_domain(case.web_domain)
+        ngrams = set()
+        for b in TOfficePredictIndex.get_word_stems(case.text + " " + site_title, add_starter_and_enders=False):
+            unigram_id = self.office_index.get_unigram_id(b)
+            if unigram_id is not None:
+                ngrams.add(unigram_id)
+        shape = [1, self.office_index.get_unigrams_count()]
+        return self.convert_to_sparse_tensor(ngrams, shape)
 
     def to_ml_input_features(self, cases):
-        bigrams_l = list(self.office_index.get_bigram_feature_plus(c.text, c.web_domain) for c in cases)
-        bigrams = tf.sparse.concat(0, bigrams_l)
-        #bigrams = np.array(bigrams_l)
-        print ("bigrams.shape={}".format(bigrams.shape))
-        web_domains = list(self.get_web_domain_feature(c) for c in cases)
-        return  {
-            "office_name_feat": bigrams,
-            "web_domain_feat": np.array(web_domains),
+        bigrams_l = list(self.get_bigram_feature(c) for c in cases)
+        web_domains_l = list(self.get_web_domain_feature(c) for c in cases)
+        #unigrams_l = list(self.get_unigram_feature(c) for c in cases)
+
+        return {
+            "bigrams_feat": tf.sparse.concat    (0, bigrams_l),
+            #"unigrams_feat": tf.sparse.concat(0, unigrams_l),
+            "web_domain_feat": tf.sparse.concat(0, web_domains_l),
         }
 
     def to_ml_input(self, cases, name):
@@ -31,14 +62,10 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         return self.to_ml_input_features(cases), labels
 
     def init_model_before_train(self, dense_layer_size):
-        office_name_input = tf.keras.Input(shape=(self.office_index.get_bigrams_count(),), name="office_name_feat")
-
-        web_domain_count = len(self.office_index.web_domains)
-        web_domain_input = tf.keras.Input(shape=(web_domain_count,), name="web_domain_feat")
-
         inputs = [
-            office_name_input,
-            web_domain_input,
+            tf.keras.Input(shape=(self.office_index.get_bigrams_count(),), name="bigrams_feat"),
+            #tf.keras.Input(shape=(self.office_index.get_unigrams_count(),), name="unigrams_feat"),
+            tf.keras.Input(shape=(len(self.office_index.web_domains),), name="web_domain_feat")
         ]
         concatenated_layer = tf.keras.layers.concatenate(inputs)
         dense_layer1 = tf.keras.layers.Dense(dense_layer_size)(concatenated_layer)

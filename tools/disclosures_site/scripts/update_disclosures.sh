@@ -60,12 +60,12 @@ source $COMMON_SCRIPT
     python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev --directory $DLROBOT_FOLDER
 
 
-#10  Импорт json в dislosures_db (32 hours)
+#10  Импорт json в dislosures_db (36 hours)
      python3 $TOOLS/disclosures_site/manage.py import_json \
                  --settings disclosures.settings.dev \
                  --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER \
                  --dlrobot-human dlrobot_human.json   \
-                 --process-count 3  \
+                 --process-count 2  \
                  --permalinks-folder $DLROBOT_FOLDER
 
      python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric source_document_count  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
