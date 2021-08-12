@@ -11,7 +11,7 @@ class TestPredictOffice(TestCase):
         os.chdir(os.path.dirname(__file__))
 
     def check(self, predictor: TOfficePredictor, sha256, office_id):
-        pred_office_id = predictor.dlrobot_human.document_collection[sha256].calculated_office_id
+        pred_office_id = predictor.dlrobot_human.get_document(sha256).calculated_office_id
         self.assertEqual(office_id, pred_office_id)
 
     def test_predict_office(self):
@@ -27,10 +27,12 @@ class TestPredictOffice(TestCase):
             predictor.predict_office()
             predictor.check()
 
-        self.check(predictor, "e53861810867c308eba4ac4991f34c0bd10a25f49d675d069d426779a6f4a5f0", 5963)
+        #uncomment it if predict_office component goes to prod
+        #self.check(predictor, "e53861810867c308eba4ac4991f34c0bd10a25f49d675d069d426779a6f4a5f0", 5963)
+
         self.check(predictor, "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865", 4)
         self.check(predictor, "f0b5c2c2211c8d67ed15e75e656c7862d086e9245420892a7de62cd9ec582a06", 3913)
         self.check(predictor, "unknownsha256308eba4ac4991f34c0bd10a25f49d675d069d426779a6f4a5f0", 5963)
         self.check(predictor, "87d086bde914d81f55316a970e4bfff3d117293ba3e15b4a856534b4ec137846", 1305)
-        src_doc = predictor.dlrobot_human.document_collection["87d086bde914d81f55316a970e4bfff3d117293ba3e15b4a856534b4ec137846"]
+        src_doc = predictor.dlrobot_human.get_document("87d086bde914d81f55316a970e4bfff3d117293ba3e15b4a856534b4ec137846")
         self.assertEqual(1, src_doc.region_id)

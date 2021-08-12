@@ -104,13 +104,13 @@ class TOfficePredictor:
         for case, (office_id, weight) in zip(cases, predicted_office_ids):
             if max_weights[case.sha256] < weight:
                 max_weights[case.sha256] = weight
-                src_doc = self.dlrobot_human.document_collection[case.sha256]
+                src_doc = self.dlrobot_human.get_document(case.sha256)
                 self.set_office_id(case.sha256, src_doc, office_id, "tensorflow weight={}".format(weight))
 
     def predict_office(self, intermediate_save=False):
         cases_for_ml_predict = list()
         src_doc: TSourceDocument
-        for sha256, src_doc in self.dlrobot_human.document_collection.items():
+        for sha256, src_doc in self.dlrobot_human.get_all_documents():
             if len(src_doc.decl_references) > 0:
                 self.set_office_id(sha256,src_doc, src_doc.decl_references[0].office_id, "declarator")
             elif self.predict_office_deterministic_web_domain(sha256, src_doc):
@@ -141,13 +141,13 @@ class TOfficePredictor:
     def check(self):
         files_without_office_id = 0
 
-        for sha256, src_doc in self.dlrobot_human.document_collection.items():
+        for sha256, src_doc in self.dlrobot_human.get_all_documents():
             if src_doc.calculated_office_id is None:
                 self.logger.error("website: {}, file {} has no office".format(src_doc.get_web_site(), sha256))
                 files_without_office_id += 1
 
         self.logger.info("all files count = {}, files_without_office_id = {}".format(
-                len(self.dlrobot_human.document_collection), files_without_office_id))
+                self.dlrobot_human.get_documents_count(), files_without_office_id))
         if files_without_office_id > 100:
             error = "too many files without offices"
             self.logger.error(error)

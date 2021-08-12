@@ -8,7 +8,6 @@ import json
 import time
 
 canon_json_4915 = {
-    "document_folder": None,
     "documents": {
         "7b7995e792823a1daa65008a8045677c052338eb7052dac09029f19ce2fd7a00": {
             "d_refs": [
@@ -28,7 +27,6 @@ canon_json_4915 = {
 }
 
 canon_json_10282 = {
-    "document_folder": None,
     "documents": {
         "0edf0040508a60f28042d9c4e19e436825bc9e4248b70a36bb27da4481f27c0c": {
             "d_refs": [

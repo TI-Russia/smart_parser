@@ -37,11 +37,10 @@ class TJoiner:
         self.old_files_with_office_count = 0
 
     def add_dlrobot_file(self, sha256, file_extension, web_refs=[], decl_refs=[]):
-        src_doc = self.output_dlrobot_human.document_collection.get(sha256)
+        src_doc = self.output_dlrobot_human.get_document_maybe(sha256)
         if src_doc is None:
-            src_doc = TSourceDocument()
-            src_doc.file_extension = file_extension
-            self.output_dlrobot_human.document_collection[sha256] = src_doc
+            src_doc = TSourceDocument(file_extension)
+            self.output_dlrobot_human.add_source_document(sha256, src_doc)
         for web_ref in web_refs:
             src_doc.add_web_reference(web_ref)
         for decl_ref in decl_refs:
@@ -95,7 +94,7 @@ class TJoiner:
         old_json = TDlrobotHumanFile(self.args.old_dlrobot_human_json)
         self.logger.info("copy old files ...")
         self.old_files_with_office_count = 0
-        for sha256, src_doc in old_json.document_collection.items():
+        for sha256, src_doc in old_json.get_all_documents():
             if src_doc.calculated_office_id is not None:
                 self.old_files_with_office_count += 1
             self.add_dlrobot_file(sha256, src_doc.file_extension,
@@ -106,7 +105,7 @@ class TJoiner:
         self.logger.info("read {}".format(self.args.human_json))
         human_files = TDlrobotHumanFile(self.args.human_json)
         self.logger.info("add human files ...")
-        for sha256, src_doc in human_files.document_collection.items():
+        for sha256, src_doc in human_files.get_all_documents():
             self.add_dlrobot_file(sha256, src_doc.file_extension, decl_refs=src_doc.decl_references)
         self.logger.info("Database Document Count: {}".format(self.output_dlrobot_human.get_documents_count()))
 

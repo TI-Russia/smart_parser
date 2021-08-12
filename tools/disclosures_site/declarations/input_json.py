@@ -81,8 +81,8 @@ class TWebReference (TReferenceBase):
 
 class TSourceDocument:
 
-    def __init__(self):
-        self.file_extension = None
+    def __init__(self, fiie_extension=None):
+        self.file_extension = fiie_extension
         self.calculated_office_id = None
         self.web_references = list()
         self.decl_references = list()
@@ -159,29 +159,35 @@ class TSourceDocument:
 
 
 class TDlrobotHumanFile:
-    def __init__(self, db_file_path, read_db=True, document_folder=None):
+    def __init__(self, db_file_path, read_db=True):
         self.db_file_path = db_file_path
-        self.db_file_dirname = os.path.dirname(db_file_path)
         if read_db:
             with open(self.db_file_path, "r") as inp:
                 from_json = json.load(inp)
-            self.document_folder = from_json.get('document_folder')
             self.document_collection = dict(
                 (k, TSourceDocument().from_json(v)) for k, v in from_json.get('documents', dict()).items())
         else:
-            self.document_folder = document_folder
             self.document_collection = dict()
-            if document_folder is not None:
-                if not os.path.exists(document_folder):
-                    os.mkdir(document_folder)
 
     def add_source_document(self, sha256, src_doc: TSourceDocument):
         self.document_collection[sha256] = src_doc
 
+    def get_all_documents(self):
+        for sha256, src_doc in self.document_collection.items():
+            yield sha256, src_doc
+
+    def get_documents_count(self):
+        return len(self.document_collection.items())
+
+    def get_document(self, sha256):
+        return self.document_collection[sha256]
+
+    def get_document_maybe(self, sha256):
+        return self.document_collection.get(sha256)
+
     def write(self):
         with open(self.db_file_path, "w", encoding="utf8") as out:
             output_json = {
-                'document_folder': self.document_folder,
                 'documents': dict((k, v.write_to_json()) for k,v in self.document_collection.items())
             }
             json.dump(output_json, out,  indent=4, sort_keys=True, ensure_ascii=False)
@@ -198,7 +204,7 @@ class TDlrobotHumanFile:
         extensions = defaultdict(int)
         crawl_epochs = defaultdict(int)
 
-        for src_doc in self.document_collection.values():
+        for _, src_doc in self.get_all_documents():
             websites.add(src_doc.get_web_site())
             files_count += 1
             intersection_status = src_doc.build_intersection_status()

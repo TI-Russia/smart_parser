@@ -27,7 +27,7 @@ class TImporter:
             len(db_offices),
             models.Office.objects.model._meta.db_table))
         office_to_source_documents = defaultdict(list)
-        for sha256, src_doc in self.dlrobot_human.document_collection.items():
+        for sha256, src_doc in self.dlrobot_human.get_all_documents():
             office_id = src_doc.calculated_office_id
             if office_id is None:
                 continue
@@ -204,7 +204,7 @@ class TImporter:
         ordered_documents.sort()
 
         for _, sha256 in ordered_documents:
-            src_doc = self.dlrobot_human.document_collection[sha256]
+            src_doc = self.dlrobot_human.get_document(sha256)
             assert src_doc.calculated_office_id == office_id
             smart_parser_json = self.get_smart_parser_json(all_imported_human_jsons, sha256, src_doc)
             doc_file_in_db = self.register_document_in_database(sha256, src_doc)

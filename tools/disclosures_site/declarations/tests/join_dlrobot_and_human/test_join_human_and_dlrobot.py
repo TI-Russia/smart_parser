@@ -21,7 +21,6 @@ CANON_STATS = {
 }
 
 CANON_HUMAN_DLROBOT = {
-    "document_folder": None,
     "documents": {
         "1121cfccd5913f0a63fec40a6ffd44ea64f9dc135c66634ba001d10bcf4302a2": {
             "file_ext": ".xlsx",

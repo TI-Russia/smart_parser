@@ -22,7 +22,7 @@ def parse_args():
 
 def print_web_sites(dlrobot_human):
     value: TSourceDocument
-    for key, value in dlrobot_human.document_collection.items():
+    for key, value in dlrobot_human.get_all_documents():
         print("{}\t{}".format(key, value.get_web_site()))
 
 
@@ -39,19 +39,19 @@ def read_sha256_list(args):
 
 
 def select_or_delete_by_sha256(dlrobot_human, sha256_list, output_file, select=True):
-    new_dlrobot_human = TDlrobotHumanFile(output_file, read_db=False, document_folder=dlrobot_human.document_folder)
+    new_dlrobot_human = TDlrobotHumanFile(output_file, read_db=False)
 
-    for sha256, src_doc in dlrobot_human.document_collection.items():
-        if (sha256 in sha256_list) == (select):
+    for sha256, src_doc in dlrobot_human.get_all_documents():
+        if (sha256 in sha256_list) == select:
             new_dlrobot_human.add_source_document(sha256, src_doc)
 
     new_dlrobot_human.write()
 
 
 def to_utf8(dlrobot_human, output_file):
-    new_dlrobot_human = TDlrobotHumanFile(output_file, read_db=False, document_folder=dlrobot_human.document_folder)
+    new_dlrobot_human = TDlrobotHumanFile(output_file, read_db=False)
     src_doc: TSourceDocument
-    for key, src_doc in dlrobot_human.document_collection.items():
+    for key, src_doc in dlrobot_human.get_all_documents():
         src_doc.convert_refs_to_utf8()
         new_dlrobot_human.add_source_document(key, src_doc)
     new_dlrobot_human.write()
@@ -71,7 +71,7 @@ def check_office(logger, dlrobot_human, pool_path):
     case: TPredictionCase
     for case in pool.pool:
         src_doc: TSourceDocument
-        src_doc = dlrobot_human.document_collection[case.sha256]
+        src_doc = dlrobot_human.get_document(case.sha256)
         if case.true_office_id == src_doc.calculated_office_id:
             logger.debug("positive case {} office_id={}".format(case.sha256, case.true_office_id))
             positive += 1

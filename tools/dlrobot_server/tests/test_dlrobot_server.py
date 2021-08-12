@@ -537,7 +537,7 @@ class DlrobotIncomeYearInAnchorText(TestCase):
         dlrobot_human = TDlrobotHumanFile(dlrobot_human_json_path)
         self.assertEqual(1,  dlrobot_human.get_documents_count())
         src_doc: TSourceDocument
-        src_doc = list(dlrobot_human.document_collection.values())[0]
+        src_doc = list(dlrobot_human.get_all_documents())[0][1]
         self.assertEqual(2020, src_doc.get_external_income_year_from_dlrobot())
 
 
@@ -576,6 +576,6 @@ class WebSiteWithSubdirectory(TestCase):
         dlrobot_human = TDlrobotHumanFile(dlrobot_human_json_path)
         self.assertEqual(1,  dlrobot_human.get_documents_count())
         src_doc: TSourceDocument
-        src_doc = list(dlrobot_human.document_collection.values())[0]
+        src_doc = list(dlrobot_human.get_all_documents())[0][1]
         site_url = src_doc.get_web_site()
         self.assertEqual(self.site_url, site_url)

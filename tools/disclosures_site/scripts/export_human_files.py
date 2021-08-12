@@ -146,7 +146,7 @@ class TExportHumanFiles:
     def export_files(self):
         human_files_db = TDlrobotHumanFile(self.args.dlrobot_human_json, read_db=not self.args.start_from_empty)
         document_file_ids = set()
-        for (sha256, doc) in human_files_db.document_collection.items():
+        for sha256, doc in human_files_db.get_all_documents():
             for ref in doc.decl_references:
                 if ref.document_file_id is not None:
                     document_file_ids.add(ref.document_file_id)

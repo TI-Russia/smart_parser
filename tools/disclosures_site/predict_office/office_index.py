@@ -74,7 +74,7 @@ class TOfficePredictIndex:
         self.index_file_path = file_path
         self.logger = logger
         self.office_name_bigrams = None
-        self.office_name_unigrams = None
+        #self.office_name_unigrams = None
         self.offices = None
         self.web_domains = None
         self.deterministic_web_domains = None
@@ -154,7 +154,7 @@ class TOfficePredictIndex:
             self.region_words = js['region_words']
             self.office_id_2_ml_office_id = dict((int(k), v) for k,v in js['office_id_2_ml_office_id'].items())
             self.ml_office_id_2_office_id = dict((int(k), v) for k,v in js['ml_office_id_2_office_id'].items())
-            self.office_name_unigrams = dict((k, TOfficeNgram.from_json(v)) for k, v in js['unigrams'].items())
+            #self.office_name_unigrams = dict((k, TOfficeNgram.from_json(v)) for k, v in js['unigrams'].items())
         self.logger.info("bigrams count = {}".format(self.get_bigrams_count()))
 
     def write(self):
@@ -162,7 +162,7 @@ class TOfficePredictIndex:
         with open(self.index_file_path, "w") as outp:
             rec = {
                 'bigrams': dict((k, v.to_json()) for k, v in self.office_name_bigrams.items()),
-                'unigrams': dict((k, v.to_json()) for k, v in self.office_name_unigrams.items()),
+                #'unigrams': dict((k, v.to_json()) for k, v in self.office_name_unigrams.items()),
                 'offices': self.offices,
                 'web_domains': self.web_domains,
                 'deterministic_web_domains': self.deterministic_web_domains,
@@ -217,7 +217,7 @@ class TOfficePredictIndex:
         self.office_name_bigrams = self.ngrams_from_default_dict(office_bigrams)
         self.logger.info("bigrams count = {}".format(self.get_bigrams_count()))
 
-        self.office_name_unigrams = self.ngrams_from_default_dict(office_stems)
+        #self.office_name_unigrams = self.ngrams_from_default_dict(office_stems)
         self.logger.info("unigrams count = {}".format(self.get_unigrams_count()))
 
         self.region_words = dict((k, i) for (i, k) in enumerate(region_words))
