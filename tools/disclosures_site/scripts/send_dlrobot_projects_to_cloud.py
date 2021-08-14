@@ -60,9 +60,9 @@ def main(args):
     os.mkdir(output_folder)
 
     os.chdir(args.update_folder)
-    logger.info("copy dlrobot_human.json to {}".format(output_folder))
-    os.system("cat dlrobot_human.json | gzip -c >dlrobot_human.json.gz")
-    shutil.move("dlrobot_human.json.gz", output_folder)
+    logger.info("copy dlrobot_human.dbm to {}".format(output_folder))
+    os.system("cat dlrobot_human.dbm | gzip -c >dlrobot_human.dbm.gz")
+    shutil.move("dlrobot_human.dbm.gz", output_folder)
 
     central_log_base_name = "dlrobot_central.log"
     central_log = os.path.join(args.processed_projects_folder, "..", central_log_base_name)

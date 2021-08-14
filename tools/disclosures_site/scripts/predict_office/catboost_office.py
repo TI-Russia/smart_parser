@@ -28,7 +28,7 @@ class TPredictionModel(TPredictionModelBase):
         return max_office_id
 
     def build_features_office(self, case: TPredictionCase):
-        web_domain_index = self.office_index.web_domains.get(case.web_domain, 0)
+        web_domain_index = self.office_index.get_web_domain_index(case.web_domain)
         region_id_from_site_title = self.office_index.get_region_from_web_site_title(case.web_domain)
         office_by_bigrams = self.build_office_by_max_bigrams(case)
         region_id_from_text = self.office_index.regions.get_region_all_forms(case.text, 0)

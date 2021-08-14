@@ -9,7 +9,7 @@ import tensorflow as tf
 class TTensorFlowOfficeModel(TPredictionModelBase):
 
     def get_web_domain_feature(self, case: TPredictionCase):
-        web_domain_index = self.office_index.web_domains.get(case.web_domain, 0)
+        web_domain_index = self.office_index.get_web_domain_index(case.web_domain)
         shape = [1, len(self.office_index.web_domains)]
         return tf.SparseTensor(indices=[(0, web_domain_index)], values=[1], dense_shape=shape)
 

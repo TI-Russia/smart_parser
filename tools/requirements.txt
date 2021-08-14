@@ -37,3 +37,4 @@ pyahocorasick
 pydot
 python-magic
 tensorflow
+fsspec

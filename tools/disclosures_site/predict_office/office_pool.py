@@ -3,6 +3,7 @@ from disclosures_site.predict_office.prediction_case import TPredictionCase
 import json
 import random
 from sklearn.model_selection import train_test_split
+import csv
 
 
 class TOfficePool:
@@ -11,8 +12,6 @@ class TOfficePool:
         self.ml_model = ml_model
         self.logger = ml_model.logger
         self.read_cases(file_name, row_count)
-        if self.ml_model.office_index is not None:
-            self.delete_deterministic_web_domains()
         self.logger.info("read from {} {} cases".format(file_name, len(self.pool)))
 
     def read_cases(self, file_name: str, row_count=None):
@@ -51,38 +50,58 @@ class TOfficePool:
         self.write_pool(test, test_pool_path)
         self.ml_model.logger.info("train size = {}, test size = {}".format(len(train), len(test)))
 
-    def delete_deterministic_web_domains(self):
-        new_pool = list()
-        c: TPredictionCase
-        for c in self.pool:
-            if c.web_domain in self.ml_model.office_index.deterministic_web_domains:
-                continue
-            if self.ml_model.office_index.get_ml_office_id(c.true_office_id) is None:
-                continue
-            new_pool.append(c)
-        self.pool = new_pool
-        self.logger.info("leave only {} after deterministic web domain filtering".format(len(self.pool)))
-
-    def build_toloka_pool(self, test_y_pred, output_path):
+    def build_toloka_pool(self, test_y_pred, output_path, write_tsv=True):
         assert len(self.pool) == len(test_y_pred)
 
         with open(output_path, "w") as outp:
             case: TPredictionCase
+            cnt = 0
+            if write_tsv:
+                tsv_writer = csv.writer(outp, delimiter="\t")
             for case, (office_id, pred_proba) in zip(self.pool, test_y_pred):
-                rec = {
-                    "sha256": case.sha256,
-                    "input": {"web_domain": case.web_domain},
-                    "pred_proba": float(pred_proba),
-                    'pred_office_name': self.ml_model.office_index.get_office_name(office_id),
-                    'pred_office_id': office_id
-                }
+                if case.true_office_id == office_id:
+                    continue
+
+                office_hypots = list()
+                hypots = set([office_id])
+                office_hypots.append({
+                    'hypot_office_id': office_id,
+                    'hypot_office_name': self.ml_model.office_index.get_office_name(office_id),
+                    "weight": round(float(pred_proba), 4),
+                    }
+                )
+
                 if case.true_office_id is not None:
-                    rec["true_office_id"] = case.true_office_id
-                    rec["status"] = ("positive" if case.true_office_id == office_id else "negative")
-                    rec["true_office_name"] = self.ml_model.office_index.get_office_name(case.true_office_id)
-                    rec["true_region_id"] = case.true_region_id
+                    hypots.add(case.true_office_id)
+                    office_hypots.append( {
+                        "hypot_office_id":  case.true_office_id,
+                        "hypot_office_name": self.ml_model.office_index.get_office_name(case.true_office_id),
+                        "weight": 1,
+                        }
+                    )
+
+                for o in self.ml_model.office_index.get_offices_by_web_domain(case.web_domain):
+                    if o not in hypots:
+                        office_hypots.append({
+                            "hypot_office_id": o,
+                            "hypot_office_name": self.ml_model.office_index.get_office_name(o),
+                            "weight": 0,
+                        })
 
                 office_strings = json.loads(case.office_strings)
-                rec['input'].update(office_strings)
-
-                outp.write("{}\n".format(json.dumps(rec, ensure_ascii=False)))
+                rec = {
+                    "INPUT:sha256":  case.sha256,
+                    "INPUT:web_domain": case.web_domain,
+                    "INPUT:web_domain_title": self.ml_model.office_index.web_sites.get_title_by_web_domain(case.web_domain),
+                    'INPUT:doc_title': office_strings.get('title', ''),
+                    'INPUT:doc_roles': ";".join(office_strings.get('roles', [])),
+                    'INPUT:doc_departments': ";".join(office_strings.get('departments', [])),
+                    'INPUT:office_hypots': json.dumps(  office_hypots, ensure_ascii=False)
+                }
+                if not write_tsv:
+                    outp.write("{}\n".format(json.dumps(rec, ensure_ascii=False)))
+                else:
+                    if cnt == 0:
+                        tsv_writer.writerow(list(rec.keys()))
+                    tsv_writer.writerow(list(rec.values()))
+                    cnt +=1
