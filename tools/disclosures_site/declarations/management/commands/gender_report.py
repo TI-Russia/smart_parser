@@ -10,6 +10,7 @@ from django.db import connection
 from statistics import median
 import re
 
+
 class Command(BaseCommand):
 
     def __init__(self, *args, **kwargs):

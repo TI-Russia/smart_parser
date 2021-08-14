@@ -1,7 +1,7 @@
 
 class TOfficeInMemory:
     def __init__(self, office_id=None, name=None, parent_id=None, type_id=None, rubric_id=None, region_id=None):
-        self.id = office_id
+        self.office_id = office_id
         self.name = name
         self.parent_id = parent_id
         self.type_id = type_id
@@ -9,7 +9,7 @@ class TOfficeInMemory:
         self.region_id = region_id
 
     def from_json(self, js):
-        self.id = js['id']
+        self.office_id = js['id']
         self.name = js['name']
         self.parent_id = js['parent_id']
         self.type_id = js['type_id']
@@ -34,7 +34,7 @@ class TOfficeTableInMemory:
             if self.use_office_types:
                 if parent.type_id in TOfficeTableInMemory.group_types:
                     return office_id
-            office_id = parent.id
+            office_id = parent.office_id
         return office_id
 
     def get_top_parent_office_id(self, office_id):
@@ -54,6 +54,9 @@ class TOfficeTableInMemory:
         for office_id in self.offices:
             self.transitive_top[office_id] = self.go_to_the_top(office_id)
 
+    def get_office_id_to_ml_office_id(self):
+        return list((i, o) for i, o in enumerate(self.offices))
+
     def read_from_json(self, js):
         # without rubrics
         for o in js:
@@ -62,7 +65,7 @@ class TOfficeTableInMemory:
 
     def read_from_table(self, table):
         for o in table:
-            self.offices[o.id] = TOfficeInMemory(
+            self.offices[o. id] = TOfficeInMemory(
                  office_id=o.id,
                  name=o.name,
                  parent_id=o.parent_id,

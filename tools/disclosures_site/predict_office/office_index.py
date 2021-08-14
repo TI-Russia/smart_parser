@@ -1,29 +1,14 @@
 from common.urllib_parse_pro import TUrlUtf8Encode, urlsplit_pro
 from common.russian_regions import TRussianRegions
 from web_site_db.web_sites import TDeclarationWebSiteList
+from declarations.documents import OFFICES
+
 
 import re
 import json
-import pymysql
+from django.db import connection
 from collections import defaultdict
 import numpy as np
-
-
-class TDisclosuresConnection:
-    def __init__(self, sql):
-        self.connection = None
-        self.sql = sql
-        self.cursor = None
-
-    def __enter__(self):
-        self.connection = pymysql.connect(db="disclosures_db", user="disclosures", password="disclosures")
-        self.cursor = self.connection.cursor()
-        self.cursor.execute(self.sql)
-        return self
-
-    def __exit__(self, exc_type, exc_val, exc_tb):
-        self.cursor.close()
-        self.connection.close()
 
 
 def build_web_domain_to_offices():
@@ -39,10 +24,10 @@ def build_web_domain_to_offices():
             join declarations_declarator_file_reference r on r.source_document_id = d.id
         )
     """
-
-    with TDisclosuresConnection(sql) as conn:
+    with connection.cursor() as cursor:
+        cursor.execute(sql)
         web_domain_to_offices = defaultdict(set)
-        for office_id, site_url in conn.cursor:
+        for office_id, site_url in cursor:
             if TUrlUtf8Encode.is_idna_string(site_url):
                 site_url = TUrlUtf8Encode.convert_url_from_idna(site_url)
             web_domain = urlsplit_pro(site_url).hostname
@@ -84,6 +69,7 @@ class TOfficeWebDomain:
         return TOfficeWebDomain(js['id'], js['offices'])
 
 
+
 class TOfficePredictIndex:
 
     def __init__(self, logger, file_path):
@@ -117,7 +103,7 @@ class TOfficePredictIndex:
         s = self.web_domains.get(web_domain)
         if s is None:
             return list()
-        return s.offices
+        return s.web_domain_id
 
     def get_ml_office_id(self, office_id: int):
         return self.office_id_2_ml_office_id.get(office_id)
@@ -222,8 +208,9 @@ class TOfficePredictIndex:
         self.offices = dict()
         sql = "select id, name, region_id from declarations_office"
         self.logger.info(sql)
-        with TDisclosuresConnection(sql) as conn:
-            for office_id, name, region_id in conn.cursor:
+        with connection.cursor() as cursor:
+            cursor.execute(sql)
+            for office_id, name, region_id in cursor:
                 if region_id is None:
                     region_id = 0
                 self.offices[office_id] = {
@@ -257,16 +244,8 @@ class TOfficePredictIndex:
         self.web_domains = dict()
         for web_domain, office_ids in web_domains.items():
             self.web_domains[web_domain] = TOfficeWebDomain(len(self.web_domains), list(office_ids))
-        self.office_id_2_ml_office_id = dict()
-        self.ml_office_id_2_office_id = dict()
-        office_to_web_domains = self.web_sites.build_office_to_main_website(add_http_scheme=False, only_web_domain=True)
-        for office_id, office_info in self.offices.items():
-            for u in office_to_web_domains[office_id]:
-                if u in self.web_domains:
-                    ml_office_id = len(self.office_id_2_ml_office_id)
-                    self.office_id_2_ml_office_id[office_id] = ml_office_id
-                    self.ml_office_id_2_office_id[ml_office_id] = office_id
-                    break
+        self.ml_office_id_2_office_id = dict((i, k) for i,k in enumerate(OFFICES.offices.keys()))
+        self.office_id_2_ml_office_id = dict((k, i) for i,k in enumerate(OFFICES.offices.keys()))
         self.logger.info("target office count = {}".format(len(self.office_id_2_ml_office_id)))
 
     def build(self):

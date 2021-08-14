@@ -14,10 +14,10 @@ scp office_declarator_pool.txt dev_machine:$FOLDER
 
 #on dev machine
 cd $FOLDER
-SRC_FOLDER=~/smart_parser/tools/disclosures_site/scripts/predict_office
-python3 $SRC_FOLDER/bigrams_builder.py
-python3 $SRC_FOLDER/tensorflow_office.py --action split --all-pool office_declarator_pool.txt --train-pool train_pool.txt --test-pool test_pool.txt
-python3 $SRC_FOLDER/tensorflow_office.py --action train --model-folder model --train-pool train_pool.txt  --epoch-count  20
-python3 $SRC_FOLDER/tensorflow_office.py --action test --model-folder model --test-pool test_pool.txt
-python3 $SRC_FOLDER/tensorflow_office.py --action toloka --model-folder model --test-pool test_pool.txt --toloka-pool toloka.txt
+manage=~/smart_parser/tools/disclosures_site/manage.py
+python3 $manage office_index --settings disclosures.settings.prod
+python3 $manage tensorflow_office --action split --all-pool office_declarator_pool.txt --train-pool train_pool.txt --test-pool test_pool.txt
+python3 $manage tensorflow_office --action train --model-folder model  --train-pool train_pool.txt    --epoch-count  20
+python3 $manage tensorflow_office --action test --model-folder model --test-pool test_pool.txt
+python3 $manage tensorflow_office --action toloka --model-folder model --test-pool test_pool.txt --toloka-pool toloka.txt
 

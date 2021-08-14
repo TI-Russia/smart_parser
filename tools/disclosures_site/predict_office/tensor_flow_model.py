@@ -4,6 +4,7 @@ from disclosures_site.predict_office.office_index import TOfficePredictIndex
 import operator
 import numpy as np
 import tensorflow as tf
+from sklearn.metrics import precision_score, accuracy_score, recall_score, f1_score, fbeta_score
 
 
 class TTensorFlowOfficeModel(TPredictionModelBase):
@@ -106,13 +107,33 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         model = tf.keras.models.load_model(self.model_path)
         return model
 
-    def test(self):
+    def test(self, threshold=0.0):
         model = self.load_model()
         test_x, test_y = self.to_ml_input(self.test_pool.pool, "test")
-        res = model.evaluate(test_x, test_y)
-        self.logger.info(res)
-        debug = model.predict(test_x)
-        pass
+        test_y_pred = model.predict(test_x)
+        true_positive = 0
+        false_positive = 0
+        true_negative = 0
+        false_negative = 0
+        for true_ml_office_id, pred_proba_y in zip(test_y, test_y_pred):
+            ml_office_id, weight = max(enumerate(pred_proba_y), key=operator.itemgetter(1))
+            if weight > threshold:
+                if true_ml_office_id == ml_office_id:
+                    true_positive += 1
+                else:
+                    false_positive += 1
+            else:
+                if true_ml_office_id == ml_office_id:
+                    false_negative += 1
+                else:
+                    true_negative += 1
+        precision = true_positive / (true_positive + false_positive)
+        recall = true_positive / (true_positive + false_negative)
+        f1 = 2 * precision * recall /(precision + recall)
+        self.logger.info("tp={}, fp={}, tn={}, fn={} "
+                         .format(true_positive, false_positive, true_negative, false_negative))
+        self.logger.info("threshold={}, precision={:.4f}, recall={:.4f}, f1={:.4f}, "
+                         .format(threshold, precision, recall, f1))
 
     def predict(self, model, cases):
         if len(cases) == 0:

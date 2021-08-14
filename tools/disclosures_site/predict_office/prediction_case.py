@@ -51,5 +51,7 @@ class TPredictionCase:
 
     def get_learn_target(self):
         target = self.ml_model.office_index.get_ml_office_id(self.true_office_id)
-        assert target is not None
+        if target is None:
+            raise Exception("sha256 = {} , cannot get ml office id by office_id = {}".format(
+                self.sha256, self.true_office_id    ))
         return target

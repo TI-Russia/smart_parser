@@ -7,6 +7,8 @@ import csv
 
 
 class TOfficePool:
+    UNKNOWN_OFFICE_ID = 1234567890
+
     def __init__(self, ml_model, file_name: str, row_count=None):
         self.pool = list()
         self.ml_model = ml_model
@@ -20,6 +22,10 @@ class TOfficePool:
             for line in inp:
                 try:
                     sha256, web_domain, office_id, office_strings = line.strip().split("\t")
+                    if int(office_id) == self.UNKNOWN_OFFICE_ID:
+                        self.logger.debug("skip {} (unknown office id)".format(sha256))
+                        continue
+
                     case = TPredictionCase(self.ml_model, sha256, web_domain, int(office_id), office_strings)
                     if len(case.text) == 0:
                         self.logger.debug("skip {} (empty text)".format(sha256))
@@ -27,6 +33,7 @@ class TOfficePool:
                     if len(case.web_domain) == 0:
                         self.logger.debug("skip {} (empty web domain)".format(sha256))
                         continue
+
                     self.pool.append(case)
                     cnt += 1
                     if row_count is not None and cnt >= row_count:
@@ -104,4 +111,4 @@ class TOfficePool:
                     if cnt == 0:
                         tsv_writer.writerow(list(rec.keys()))
                     tsv_writer.writerow(list(rec.values()))
-                    cnt +=1
+                    cnt += 1
