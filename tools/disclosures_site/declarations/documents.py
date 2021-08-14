@@ -84,6 +84,7 @@ class ElasticOfficeDocument(Document):
     default_field_name = "name"
     parent_id = IntegerField()
     source_document_count = IntegerField()
+    region_id = IntegerField()
 
     class Django:
         model = Office

@@ -1,3 +1,5 @@
+import operator
+
 from disclosures_site.predict_office.prediction_case import TPredictionCase
 
 import json
@@ -57,44 +59,38 @@ class TOfficePool:
         self.write_pool(test, test_pool_path)
         self.ml_model.logger.info("train size = {}, test size = {}".format(len(train), len(test)))
 
-    def build_toloka_pool(self, test_y_pred, output_path, write_tsv=True):
+    def build_toloka_pool(self, test_y_pred, output_path):
         assert len(self.pool) == len(test_y_pred)
 
         with open(output_path, "w") as outp:
             case: TPredictionCase
             cnt = 0
-            if write_tsv:
-                tsv_writer = csv.writer(outp, delimiter="\t")
-            for case, (office_id, pred_proba) in zip(self.pool, test_y_pred):
-                if case.true_office_id == office_id:
-                    continue
-
-                office_hypots = list()
-                hypots = set([office_id])
-                office_hypots.append({
-                    'hypot_office_id': office_id,
-                    'hypot_office_name': self.ml_model.office_index.get_office_name(office_id),
-                    "weight": round(float(pred_proba), 4),
-                    }
-                )
-
+            tsv_writer = csv.writer(outp, delimiter="\t")
+            for case, pred_proba_y in zip(self.pool, test_y_pred):
+                hypots = dict()
                 if case.true_office_id is not None:
-                    hypots.add(case.true_office_id)
-                    office_hypots.append( {
-                        "hypot_office_id":  case.true_office_id,
-                        "hypot_office_name": self.ml_model.office_index.get_office_name(case.true_office_id),
-                        "weight": 1,
+                    hypots[case.true_office_id] = 1
+
+                learn_target, weight = max(enumerate(pred_proba_y), key=operator.itemgetter(1))
+                max_office_id = self.ml_model.office_index.get_office_id_by_ml_office_id(learn_target)
+                hypots[max_office_id] = float(weight)
+
+                if case.true_office_id != max_office_id:
+                    for o in self.ml_model.office_index.get_offices_by_web_domain(case.web_domain):
+                        hypots[o] = 0
+                    for ml_office_id, weight in enumerate(pred_proba_y):
+                        if weight > 0.8:
+                            office_id = self.ml_model.office_index.get_office_id_by_ml_office_id(ml_office_id)
+                            hypots[office_id] = weight
+
+                office_infos = list()
+                for office_id, weight in sorted(hypots.items(), key=operator.itemgetter(1), reverse=True):
+                    office_infos.append({
+                        'hypot_office_id': int(office_id),
+                        'hypot_office_name': self.ml_model.office_index.get_office_name(office_id),
+                        "weight": round(float(weight), 4),
                         }
                     )
-
-                for o in self.ml_model.office_index.get_offices_by_web_domain(case.web_domain):
-                    if o not in hypots:
-                        office_hypots.append({
-                            "hypot_office_id": o,
-                            "hypot_office_name": self.ml_model.office_index.get_office_name(o),
-                            "weight": 0,
-                        })
-
                 office_strings = json.loads(case.office_strings)
                 rec = {
                     "INPUT:sha256":  case.sha256,
@@ -103,12 +99,9 @@ class TOfficePool:
                     'INPUT:doc_title': office_strings.get('title', ''),
                     'INPUT:doc_roles': ";".join(office_strings.get('roles', [])),
                     'INPUT:doc_departments': ";".join(office_strings.get('departments', [])),
-                    'INPUT:office_hypots': json.dumps(  office_hypots, ensure_ascii=False)
+                    'INPUT:office_hypots': json.dumps(office_infos, ensure_ascii=False)
                 }
-                if not write_tsv:
-                    outp.write("{}\n".format(json.dumps(rec, ensure_ascii=False)))
-                else:
-                    if cnt == 0:
-                        tsv_writer.writerow(list(rec.keys()))
-                    tsv_writer.writerow(list(rec.values()))
-                    cnt += 1
+                if cnt == 0:
+                    tsv_writer.writerow(list(rec.keys()))
+                tsv_writer.writerow(list(rec.values()))
+                cnt += 1

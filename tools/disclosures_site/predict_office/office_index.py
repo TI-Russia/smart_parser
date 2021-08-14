@@ -103,7 +103,7 @@ class TOfficePredictIndex:
         s = self.web_domains.get(web_domain)
         if s is None:
             return list()
-        return s.web_domain_id
+        return s.offices
 
     def get_ml_office_id(self, office_id: int):
         return self.office_id_2_ml_office_id.get(office_id)

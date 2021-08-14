@@ -1,6 +1,7 @@
 FOLDER=~/tmp/predict_office/tf.00
 mkdir -p $FOLDER
 
+# create train and test from declarator data
 #on migalka (where smart_parser_server is available)
 echo "select d.sha256, f.web_domain, d.office_id from declarations_declarator_file_reference f join declarations_source_document d on d.id = f.source_document_id  into  outfile \"/tmp/docs.txt\"" | mysql -D disclosures_db -u disclosures -pdisclosures
 sudo chmod a+rw "/tmp/docs.txt"
@@ -12,6 +13,13 @@ python3 ~/smart_parser/tools/smart_parser_http/smart_parser_client.py --action o
 paste docs.txt docs_office_strings.txt >office_declarator_pool.txt
 scp office_declarator_pool.txt dev_machine:$FOLDER
 
+
+# create a pool for toloka
+cat dlrobot_human.json | jq -rc '.documents | to_entries[] | [.key, .value.office_id] | @tsv' | sort >a.new
+shuf cases_to_predict_dump.txt  | grep -v 'service.nalog.ru' | grep -v '{"title": "", "roles": [], "departments": []' | head -n 200 |  sort | join -t $'\t' -  a.new  | awk -F "\t" -v  OFS="\t" '{print $1,$2,$5,$4}' >pool200.txt
+python3 ~/smart_parser/tools/disclosures_site/manage.py tensorflow_office --action toloka --model-folder model --test-pool pool200.txt --toloka-pool toloka.txt
+
+
 #on dev machine
 cd $FOLDER
 manage=~/smart_parser/tools/disclosures_site/manage.py
@@ -19,5 +27,5 @@ python3 $manage office_index --settings disclosures.settings.prod
 python3 $manage tensorflow_office --action split --all-pool office_declarator_pool.txt --train-pool train_pool.txt --test-pool test_pool.txt
 python3 $manage tensorflow_office --action train --model-folder model  --train-pool train_pool.txt    --epoch-count  20
 python3 $manage tensorflow_office --action test --model-folder model --test-pool test_pool.txt
-python3 $manage tensorflow_office --action toloka --model-folder model --test-pool test_pool.txt --toloka-pool toloka.txt
+
 

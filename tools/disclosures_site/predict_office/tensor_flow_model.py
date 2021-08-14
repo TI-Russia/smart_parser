@@ -161,5 +161,6 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
 
     def toloka(self, toloka_pool_path: str):
         model = self.load_model()
-        test_y_max = self.predict(model, self.test_pool.pool)
-        self.test_pool.build_toloka_pool(test_y_max, toloka_pool_path)
+        test_x = self.to_ml_input_features(self.test_pool.pool)
+        test_y_pred = model.predict(test_x)
+        self.test_pool.build_toloka_pool(test_y_pred, toloka_pool_path)

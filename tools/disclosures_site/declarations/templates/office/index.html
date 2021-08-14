@@ -5,8 +5,18 @@
 {% block content %}
 
 <form action="{% url 'office_search' %}" method="get">
-    {{form.name.label_tag}} {{ form.name }}
-    <input type="submit" value="Поиск">
+    <div class="desktop">
+        {{form.name.label_tag}} {{ form.name }} &#32;&#32;&#32;
+        {{form.region_id.label_tag}} {{form.region_id}}  &#32;&#32;&#32;
+        {{form.rubric_id.label_tag}}{{form.rubric_id}} &#32;&#32;&#32;
+        <input type="submit" value="Поиск">
+    </div>
+    <div class="mobile" style="line-height:2">
+        {{form.name.label_tag}} {{ form.name }} <br/>
+        {{form.region_id.label_tag}} {{form.region_id}}  <br/>
+        {{form.rubric_id.label_tag}}{{form.rubric_id}}
+        <input style="float: right" type="submit" value="Поиск">
+    </div>
     <br/>
 </form>
 
