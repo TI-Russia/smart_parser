@@ -1,3 +1,5 @@
+import operator
+
 from . import models
 from .documents import ElasticSectionDocument, ElasticPersonDocument, ElasticOfficeDocument, ElasticFileDocument
 from common.russian_fio import TRussianFio, TRussianFioRecognizer
@@ -100,6 +102,7 @@ def fill_combo_box_with_regions():
             if len(name) > 33:
                 name = name[:33]
             CACHED_REGIONS.append((r.id, name))
+        CACHED_REGIONS.sort(key=operator.itemgetter(1))
     return CACHED_REGIONS
 
 
@@ -433,11 +436,13 @@ class OfficeSearchView(CommonSearchView):
     max_document_count = 500
 
     def get_queryset(self):
-        if self.get_initial().get('name') is None and self.get_initial().get('parent_id') is None:
+        initial = self.get_initial()
+        if initial.get('name') is None and initial.get('parent_id') is None and  initial.get("rubric_id") is None and \
+            initial.get('region_id') is None:
             try:
                 search = self.elastic_search_document.search()
                 query_dict = {
-                        "query": { "range": {"source_document_count":{"gte": 1}} },
+                        "query": {"range": {"source_document_count": {"gte": 1}}},
                         "sort": [{"source_document_count": {"order": "desc"}}]
                 }
                 search_results = search.update_from_dict(query_dict)
