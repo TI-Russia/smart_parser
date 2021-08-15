@@ -63,15 +63,9 @@ def to_json(dlrobot_human: TDlrobotHumanFileDBM):
     print(json.dumps(dlrobot_human.to_json(), indent=4, ensure_ascii=False))
 
 
-class TDummyMlModel:
-    def __init__(self, logger):
-        self.logger = logger
-        self.office_index = None
-
-
 def check_office(logger, dlrobot_human, pool_path):
-    ml_model = TDummyMlModel(logger)
-    pool = TOfficePool(ml_model, file_name=pool_path)
+    pool = TOfficePool(logger)
+    pool.read_cases(pool_path)
     positive = 0
     negative = 0
     case: TPredictionCase

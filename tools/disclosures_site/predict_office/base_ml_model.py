@@ -13,9 +13,12 @@ class TPredictionModelBase:
         self.office_index = TOfficePredictIndex(logger, office_index_path)
         self.office_index.read()
         if train_pool is not None:
-            self.train_pool = TOfficePool(self, train_pool, row_count=row_count)
+            self.train_pool = TOfficePool(self.logger, office_index=self.office_index)
+            self.train_pool.read_cases(train_pool, row_count=row_count)
+
         if test_pool is not None:
-            self.test_pool = TOfficePool(self, test_pool, row_count=row_count)
+            self.test_pool = TOfficePool(self.logger, office_index=self.office_index)
+            self.test_pool.read_cases(test_pool)
 
     def get_office_id_by_deterministic_web_domain(self, web_domain: str):
         assert '/' not in web_domain

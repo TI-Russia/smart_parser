@@ -4,7 +4,7 @@ from disclosures_site.predict_office.office_index import TOfficePredictIndex
 import operator
 import numpy as np
 import tensorflow as tf
-from sklearn.metrics import precision_score, accuracy_score, recall_score, f1_score, fbeta_score
+
 
 
 class TTensorFlowOfficeModel(TPredictionModelBase):
@@ -80,11 +80,9 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         tf.keras.utils.plot_model(model, "predict_office.png", show_shapes=True)
         return model
 
-    def train_tensorflow(self, dense_layer_size, epoch_count):
+    def train_tensorflow(self, dense_layer_size, epoch_count, batch_size=256):
         assert self.model_path is not None
-        #batch_size = 64
-        batch_size = 256
-        self.logger.info("train_tensorflow layer_size={}".format(dense_layer_size))
+        self.logger.info("train_tensorflow layer_size={} batch_size={}".format(dense_layer_size, batch_size))
         train_x, train_y = self.to_ml_input(self.train_pool.pool, "train")
 
         model = self.init_model_before_train(dense_layer_size)
@@ -163,4 +161,4 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         model = self.load_model()
         test_x = self.to_ml_input_features(self.test_pool.pool)
         test_y_pred = model.predict(test_x)
-        self.test_pool.build_toloka_pool(test_y_pred, toloka_pool_path)
+        self.test_pool.build_toloka_pool(self.office_index, test_y_pred, toloka_pool_path)

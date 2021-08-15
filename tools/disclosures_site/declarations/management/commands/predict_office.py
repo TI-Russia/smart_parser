@@ -125,7 +125,7 @@ class TOfficePredictor:
                     web_ref: TWebReference
                     for web_ref in src_doc.web_references:
                         web_domain = urlsplit_pro(web_ref._site_url).hostname
-                        case = TPredictionCase(self.office_ml_model, sha256, web_domain,
+                        case = TPredictionCase(self.office_ml_model.office_index, sha256, web_domain,
                                                office_strings=src_doc.office_strings)
                         cases_for_ml_predict.append(case)
         if len(cases_for_ml_predict) > 0:

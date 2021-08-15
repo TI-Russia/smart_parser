@@ -3,7 +3,6 @@ import sys
 
 from common.logging_wrapper import setup_logging
 from declarations.management.commands.predict_office import TOfficePredictIndex
-from declarations.management.commands.predict_office import TOfficePool
 from declarations.management.commands.predict_office import TPredictionCase
 from declarations.management.commands.predict_office import TPredictionModelBase
 from collections import defaultdict
@@ -125,9 +124,6 @@ def main():
                              row_count=args.row_count,
                              train_pool=args.train_pool,
                              test_pool=args.test_pool)
-    if args.action == "split":
-        assert args.all_pool is not None
-        TOfficePool(model, args.all_pool).split(args.train_pool, args.test_pool)
     elif args.action == "train":
         model.train_catboost()
     elif args.action == "test":

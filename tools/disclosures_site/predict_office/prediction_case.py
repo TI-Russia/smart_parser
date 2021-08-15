@@ -2,16 +2,16 @@ import json
 
 
 class TPredictionCase:
-    def __init__(self, ml_model=None, sha256=None, web_domain=None, true_office_id=None, office_strings=None):
-        self.ml_model = ml_model
+    def __init__(self, office_index=None, sha256=None, web_domain=None, true_office_id=None, office_strings=None):
+        self.office_index = office_index
         self.sha256 = sha256
         self.office_strings = office_strings
         self.web_domain = web_domain
         self.text = self.get_text_from_office_strings()
 
         self.true_office_id = true_office_id
-        if self.true_office_id is not None and ml_model.office_index is not None:
-            self.true_region_id = ml_model.office_index.get_office_region(self.true_office_id)
+        if self.true_office_id is not None and office_index is not None:
+            self.true_region_id = office_index.get_office_region(self.true_office_id)
         else:
             self.true_region_id = None
 
@@ -37,7 +37,7 @@ class TPredictionCase:
         self.web_domain = js['web_domain']
         self.true_office_id = js['true_office_id']
         self.office_strings = js['office_strings']
-        self.true_region_id = self.ml_model.office_index.get_office_region(self.true_office_id)
+        self.true_region_id = self.office_index.get_office_region(self.true_office_id)
         self.text = self.get_text_from_office_strings()
 
     def to_json(self, js):
@@ -50,7 +50,7 @@ class TPredictionCase:
         return json.dumps(js, ensure_ascii=False)
 
     def get_learn_target(self):
-        target = self.ml_model.office_index.get_ml_office_id(self.true_office_id)
+        target = self.office_index.get_ml_office_id(self.true_office_id)
         if target is None:
             raise Exception("sha256 = {} , cannot get ml office id by office_id = {}".format(
                 self.sha256, self.true_office_id    ))

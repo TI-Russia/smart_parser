@@ -130,7 +130,7 @@ class TOfficePredictIndex:
         return b.offices
 
     @staticmethod
-    def get_word_stems(text, stem_size=3, add_starter_and_enders=True):
+    def get_word_stems(text, stem_size=4, add_starter_and_enders=True):
         if add_starter_and_enders:
             yield "^"
         for w in re.split("[\s,\.;:_\"* ()]", text.lower()):
