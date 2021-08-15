@@ -1,7 +1,11 @@
 from common.logging_wrapper import setup_logging
 from disclosures_site.predict_office.tensor_flow_model import TTensorFlowOfficeModel
+import argparse
 
-from django.core.management import BaseCommand
+try:
+    from django.core.management import BaseCommand
+except Exception as exp:
+    from common.django_base_command_monkey import BaseCommand
 
 
 class Command(BaseCommand):
@@ -16,11 +20,21 @@ class Command(BaseCommand):
         parser.add_argument("--row-count", dest='row_count', required=False, type=int)
         parser.add_argument("--dense-layer-size", dest='dense_layer_size', required=False, type=int, default=128)
         parser.add_argument("--batch-size", dest='batch_size', required=False, type=int, default=256)
+        parser.add_argument("--worker-count", dest='worker_count', required=False, type=int, default=3)
 
     def handle(self, *args, **options):
         logger = setup_logging(log_file_name="predict_office_train.log")
         model = TTensorFlowOfficeModel(logger, options['bigrams_path'], options['model_folder'], options['row_count'],
                                        options['train_pool'])
         model.train_tensorflow(options['dense_layer_size'],
-                                   epoch_count=options['epoch_count'], batch_size=options['batch_size'])
+                                   epoch_count=options['epoch_count'],
+                                   batch_size=options['batch_size'],
+                                   workers_count=options['worker_count'])
 
+
+if __name__ == "__main__":
+    command = Command()
+    parser = argparse.ArgumentParser()
+    command.add_arguments(parser)
+    args = parser.parse_args()
+    command.handle(None, **args.__dict__)

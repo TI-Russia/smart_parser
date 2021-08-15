@@ -1,8 +1,14 @@
 from disclosures_site.predict_office.office_pool import TOfficePool
 from common.logging_wrapper import setup_logging
 
-from django.core.management import BaseCommand
+try:
+    from django.core.management import BaseCommand
+except Exception as exp:
+    from common.django_base_command_monkey import BaseCommand
+    import argparse
+
 import random
+
 
 class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
@@ -32,3 +38,10 @@ class Command(BaseCommand):
                 pool.pool.extend(real_pool.pool)
             random.shuffle(pool.pool)
         pool.split(options['train_pool'], options['test_pool'], test_size=options['test_ratio'])
+
+if __name__ == "__main__":
+    command = Command()
+    parser = argparse.ArgumentParser()
+    command.add_arguments(parser)
+    args = parser.parse_args()
+    command.handle(None, **args.__dict__)

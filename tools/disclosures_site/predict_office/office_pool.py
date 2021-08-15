@@ -1,4 +1,3 @@
-import operator
 
 from disclosures_site.predict_office.prediction_case import TPredictionCase
 
@@ -6,6 +5,7 @@ import json
 import random
 from sklearn.model_selection import train_test_split
 import csv
+import operator
 
 
 class TOfficePool:

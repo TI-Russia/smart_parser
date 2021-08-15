@@ -6,7 +6,6 @@ import numpy as np
 import tensorflow as tf
 
 
-
 class TTensorFlowOfficeModel(TPredictionModelBase):
 
     def get_web_domain_feature(self, case: TPredictionCase):
@@ -80,9 +79,11 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         tf.keras.utils.plot_model(model, "predict_office.png", show_shapes=True)
         return model
 
-    def train_tensorflow(self, dense_layer_size, epoch_count, batch_size=256):
+    def train_tensorflow(self, dense_layer_size, epoch_count, batch_size=256, workers_count=3):
         assert self.model_path is not None
-        self.logger.info("train_tensorflow layer_size={} batch_size={}".format(dense_layer_size, batch_size))
+        self.logger.info("train_tensorflow layer_size={} batch_size={} workers_count={} epoch_count={}".format(
+            dense_layer_size, batch_size, workers_count, epoch_count))
+
         train_x, train_y = self.to_ml_input(self.train_pool.pool, "train")
 
         model = self.init_model_before_train(dense_layer_size)
@@ -94,7 +95,7 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         model.fit(train_x,
                   train_y,
                   epochs=epoch_count,
-                  workers=3,
+                  workers=workers_count,
                   batch_size=batch_size,
                   #validation_split=0.2  not supported by sparse tensors
                   )

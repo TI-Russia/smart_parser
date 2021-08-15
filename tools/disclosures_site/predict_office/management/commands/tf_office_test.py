@@ -1,7 +1,10 @@
 from common.logging_wrapper import setup_logging
 from disclosures_site.predict_office.tensor_flow_model import TTensorFlowOfficeModel
-
-from django.core.management import BaseCommand
+import argparse
+try:
+    from django.core.management import BaseCommand
+except Exception as exp:
+    from common.django_base_command_monkey import BaseCommand
 
 
 class Command(BaseCommand):
@@ -20,3 +23,10 @@ class Command(BaseCommand):
                                        test_pool=options['test_pool'])
         model.test(options['threshold'])
 
+
+if __name__ == "__main__":
+    command = Command()
+    parser = argparse.ArgumentParser()
+    command.add_arguments(parser)
+    args = parser.parse_args()
+    command.handle(None, **args.__dict__)
