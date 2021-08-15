@@ -1,3 +1,5 @@
+import sys
+
 from disclosures_site.predict_office.prediction_case import TPredictionCase
 from disclosures_site.predict_office.base_ml_model import TPredictionModelBase
 from disclosures_site.predict_office.office_index import TOfficePredictIndex
@@ -45,21 +47,28 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         shape = [1, self.office_index.get_unigrams_count()]
         return self.convert_to_sparse_tensor(ngrams, shape)
 
-    def to_ml_input_features(self, cases):
-        bigrams_l = list(self.get_bigram_feature(c) for c in cases)
+    def to_ml_input_features(self, cases, verbose=False):
+        bigrams_l = list()
+        cnt = 0
+        for c in cases:
+            bigrams_l.append(self.get_bigram_feature(c))
+            if verbose:
+                if cnt % 1000 == 0:
+                    sys.stdout.write("{}/{}\r".format(cnt, len(cases)))
+                    sys.stdout.flush()
+                cnt += 1
+        sys.stdout.write("{}/{}\r".format(cnt, len(cases)))
         web_domains_l = list(self.get_web_domain_feature(c) for c in cases)
-        #unigrams_l = list(self.get_unigram_feature(c) for c in cases)
 
         return {
-            "bigrams_feat": tf.sparse.concat    (0, bigrams_l),
-            #"unigrams_feat": tf.sparse.concat(0, unigrams_l),
+            "bigrams_feat": tf.sparse.concat(0, bigrams_l),
             "web_domain_feat": tf.sparse.concat(0, web_domains_l),
         }
 
     def to_ml_input(self, cases, name):
         self.logger.info("build features for {} pool of {} cases".format(name, len(cases)))
         labels = np.array(list(c.get_learn_target() for c in cases))
-        return self.to_ml_input_features(cases), labels
+        return self.to_ml_input_features(cases, verbose=True), labels
 
     def init_model_before_train(self, dense_layer_size):
         inputs = [
@@ -101,6 +110,7 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
                   epochs=epoch_count,
                   workers=workers_count,
                   batch_size=batch_size,
+                  steps_per_epoch=800,
                   #validation_split=0.2  not supported by sparse tensors
                   )
         self.logger.info("save to {}".format(self.model_path))
