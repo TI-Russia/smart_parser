@@ -86,12 +86,16 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
 
         train_x, train_y = self.to_ml_input(self.train_pool.pool, "train")
 
+        self.logger.info("init_model_before_train")
         model = self.init_model_before_train(dense_layer_size)
-        print(model.summary())
+        self.logger.info(model.summary())
+
+        self.logger.info("compile model...")
         model.compile(optimizer='adam',
                       loss=tf.keras.losses.SparseCategoricalCrossentropy(),
                       metrics=['accuracy'])
 
+        self.logger.info("training...")
         model.fit(train_x,
                   train_y,
                   epochs=epoch_count,
@@ -99,6 +103,7 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
                   batch_size=batch_size,
                   #validation_split=0.2  not supported by sparse tensors
                   )
+        self.logger.info("save to {}".format(self.model_path))
         model.save(self.model_path)
 
     def load_model(self):
