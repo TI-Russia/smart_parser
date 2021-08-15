@@ -88,10 +88,11 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         tf.keras.utils.plot_model(model, "predict_office.png", show_shapes=True)
         return model
 
-    def train_tensorflow(self, dense_layer_size, epoch_count, batch_size=256, workers_count=3):
+    def train_tensorflow(self, dense_layer_size, epoch_count, batch_size=256, workers_count=3, steps_per_epoch=None):
         assert self.model_path is not None
-        self.logger.info("train_tensorflow layer_size={} batch_size={} workers_count={} epoch_count={}".format(
-            dense_layer_size, batch_size, workers_count, epoch_count))
+        self.logger.info("train_tensorflow layer_size={} batch_size={} workers_count={} epoch_count={} "
+                         "steps_per_epoch={}".format(dense_layer_size, batch_size, workers_count, epoch_count,
+                                                     steps_per_epoch))
 
         train_x, train_y = self.to_ml_input(self.train_pool.pool, "train")
 
@@ -110,7 +111,7 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
                   epochs=epoch_count,
                   workers=workers_count,
                   batch_size=batch_size,
-                  steps_per_epoch=800,
+                  steps_per_epoch=steps_per_epoch,
                   #validation_split=0.2  not supported by sparse tensors
                   )
         self.logger.info("save to {}".format(self.model_path))

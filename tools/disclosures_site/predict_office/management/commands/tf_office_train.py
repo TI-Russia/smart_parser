@@ -21,6 +21,8 @@ class Command(BaseCommand):
         parser.add_argument("--dense-layer-size", dest='dense_layer_size', required=False, type=int, default=128)
         parser.add_argument("--batch-size", dest='batch_size', required=False, type=int, default=256)
         parser.add_argument("--worker-count", dest='worker_count', required=False, type=int, default=3)
+        parser.add_argument("--steps-per-epoch", dest='steps_per_epoch', required=False, type=int, default=None)
+
 
     def handle(self, *args, **options):
         logger = setup_logging(log_file_name="predict_office_train.log")
@@ -29,7 +31,9 @@ class Command(BaseCommand):
         model.train_tensorflow(options['dense_layer_size'],
                                    epoch_count=options['epoch_count'],
                                    batch_size=options['batch_size'],
-                                   workers_count=options['worker_count'])
+                                   workers_count=options['worker_count'],
+                                   steps_per_epoch=options['steps_per_epoch']
+                               )
 
 
 if __name__ == "__main__":
