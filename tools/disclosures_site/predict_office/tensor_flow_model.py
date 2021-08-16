@@ -158,7 +158,7 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         tf.keras.utils.plot_model(model, "predict_office.png", show_shapes=True)
         return model
 
-    def train_tensorflow(self, dense_layer_size, epoch_coun=t, batch_size=256, workers_count=3, steps_per_epoch=None,
+    def train_tensorflow(self, dense_layer_size, epoch_count, batch_size=256, workers_count=3, steps_per_epoch=None,
                          device_name="/cpu:0"):
         assert self.model_path is not None
         self.logger.info("train_tensorflow layer_size={} batch_size={} workers_count={} epoch_count={} "
