@@ -23,7 +23,6 @@ class Command(BaseCommand):
         parser.add_argument("--worker-count", dest='worker_count', required=False, type=int, default=3)
         parser.add_argument("--steps-per-epoch", dest='steps_per_epoch', required=False, type=int, default=None)
 
-
     def handle(self, *args, **options):
         logger = setup_logging(log_file_name="predict_office_train.log")
         model = TTensorFlowOfficeModel(logger, options['bigrams_path'], options['model_folder'], options['row_count'],

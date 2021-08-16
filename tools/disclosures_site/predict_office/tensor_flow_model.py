@@ -7,6 +7,29 @@ import operator
 import numpy as np
 import tensorflow as tf
 
+#https://github.com/tensorflow/tensorflow/issues/23748
+# https://medium.com/dailymotion/how-to-design-deep-learning-models-with-sparse-inputs-in-tensorflow-keras-fd5e754abec1
+class DenseLayerForSparse(tf.keras.layers.Layer):
+    def __init__(self, vocabulary_size, units, activation, **kwargs):
+        super(DenseLayerForSparse, self).__init__()
+        self.vocabulary_size = vocabulary_size
+        self.units = units
+        self.activation = tf.keras.activations.get(activation)
+
+    def build(self, input_shape):
+        self.kernel = self.add_variable(
+            "kernel", shape=[self.vocabulary_size, self.units]
+        )
+        self.bias = self.add_variable("bias", shape=[self.units])
+
+    def call(self, inputs, **kwargs):
+        outputs = tf.add(tf.sparse.sparse_dense_matmul(inputs, self.kernel), self.bias)
+        return self.activation(outputs)
+
+    def compute_output_shape(self, input_shape):
+        input_shape = input_shape.get_shape().as_list()
+        return input_shape[0], self.units
+
 
 class TTensorFlowOfficeModel(TPredictionModelBase):
 
@@ -15,15 +38,15 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         shape = [1, len(self.office_index.web_domains)]
         return tf.SparseTensor(indices=[(0, web_domain_index)], values=[1], dense_shape=shape)
 
-    def convert_to_sparse_tensor(self, ngrams, shape):
-        if len(ngrams) == 0:
+    def convert_to_sparse_tensor(self, indices_to_be_set, shape):
+        if len(indices_to_be_set) == 0:
             return tf.SparseTensor(indices=[[0, 0]],
                                    values=[0],
                                    dense_shape=shape)
         else:
-            ngrams = list((0, i) for i in sorted(list(ngrams)))
-            return tf.SparseTensor(indices=ngrams,
-                           values=[1]*len(ngrams),
+            indices_to_be_set = list((0, i) for i in sorted(list(indices_to_be_set)))
+            return tf.SparseTensor(indices=indices_to_be_set,
+                           values=[1]*len(indices_to_be_set),
                            dense_shape=shape)
 
     def get_bigram_feature(self, case: TPredictionCase):
@@ -33,36 +56,65 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
             bigram_id = self.office_index.get_bigram_id(b)
             if bigram_id is not None:
                 bigrams.add(bigram_id)
-        shape = [1, self.office_index.get_bigrams_count()]
-        return self.convert_to_sparse_tensor(bigrams, shape)
-
-    # не жжет
-    def get_unigram_feature(self, case: TPredictionCase):
-        site_title = self.office_index.web_sites.get_title_by_web_domain(case.web_domain)
-        ngrams = set()
-        for b in TOfficePredictIndex.get_word_stems(case.text + " " + site_title, add_starter_and_enders=False):
-            unigram_id = self.office_index.get_unigram_id(b)
-            if unigram_id is not None:
-                ngrams.add(unigram_id)
-        shape = [1, self.office_index.get_unigrams_count()]
-        return self.convert_to_sparse_tensor(ngrams, shape)
+        return sorted(list(bigrams))
+        #shape = [self.office_index.get_bigrams_count(), 1]
+        #return self.convert_to_sparse_tensor(bigrams, shape)
 
     def to_ml_input_features(self, cases, verbose=False):
-        bigrams_l = list()
-        cnt = 0
-        for c in cases:
-            bigrams_l.append(self.get_bigram_feature(c))
-            if verbose:
-                if cnt % 1000 == 0:
-                    sys.stdout.write("{}/{}\r".format(cnt, len(cases)))
-                    sys.stdout.flush()
-                cnt += 1
-        sys.stdout.write("{}/{}\r".format(cnt, len(cases)))
-        web_domains_l = list(self.get_web_domain_feature(c) for c in cases)
+        def get_bigram_feature_gen():
+            for index, case in enumerate(cases):
+                for bigram_id in self.get_bigram_feature(case):
+                    yield index, bigram_id
+
+        def get_web_domain_feature_gen():
+            for index, case in enumerate(cases):
+                web_domain_index = self.office_index.get_web_domain_index(case.web_domain)
+                yield index, web_domain_index
+
+        indices = list(get_bigram_feature_gen())
+        values = [1.0] * len(indices)
+        bigrams = tf.SparseTensor(indices=indices,
+                               values=values,
+                               dense_shape=(len(cases), self.office_index.get_bigrams_count())
+                    )
+
+        indices = list(get_web_domain_feature_gen())
+        values = [1.0] * len(indices)
+        web_domains = tf.SparseTensor(indices=indices,
+                                  values=values,
+                                  dense_shape=(len(cases), len(self.office_index.web_domains))
+                                  )
+
+# signature = tf.SparseTensorSpec (
+        #     shape=(self.office_index.get_bigrams_count(), 1), dtype="int32"
+        # )
+        # dataset1 = tf.data.Dataset.from_generator(
+        #     get_bigram_feature_gen,
+        #     output_signature=signature
+        # )
+        # bigrams = tf.SparseTensor(
+        #     dense_shape=(self.office_index.get_bigrams_count(), len(cases))
+        # )
+        # bigrams_l = list()
+        # cnt = 0
+        # for c in cases:
+        #     bigrams_l.append(self.get_bigram_feature(c))
+        #     if verbose:
+        #         if cnt % 1000 == 0:
+        #             sys.stdout.write("{}/{}\r".format(cnt, len(cases)))
+        #             sys.stdout.flush()
+        #         cnt += 1
+        # sys.stdout.write("{}/{}\r".format(cnt, len(cases)))
+        #web_domains_l = list(self.get_web_domain_feature(c) for c in cases)
+
+        # return {
+        #     "bigrams_feat": tf.sparse.concat(0, bigrams_l),
+        #     "web_domain_feat": tf.sparse.concat(0, web_domains_l),
+        # }
 
         return {
-            "bigrams_feat": tf.sparse.concat(0, bigrams_l),
-            "web_domain_feat": tf.sparse.concat(0, web_domains_l),
+            "bigrams_feat": bigrams,
+            "web_domain_feat": web_domains,
         }
 
     def to_ml_input(self, cases, name):
@@ -70,14 +122,24 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         labels = np.array(list(c.get_learn_target() for c in cases))
         return self.to_ml_input_features(cases, verbose=True), labels
 
-    def init_model_before_train(self, dense_layer_size):
+    def init_model_before_train(self, dense_layer_size, input_data):
+        inputs = list()
+        # concate_len = 0
+        # for i in input_data:
+        #     inputs.append(tf.keras.Input(name=i, tensor=input_data[i]))
+        #     concate_len += input_data[i].shape[1]
+        # print(inputs[0])
+        bigr_count = self.office_index.get_bigrams_count()
+        dom_count = len(self.office_index.web_domains)
         inputs = [
-            tf.keras.Input(shape=(self.office_index.get_bigrams_count(),), name="bigrams_feat"),
-            #tf.keras.Input(shape=(self.office_index.get_unigrams_count(),), name="unigrams_feat"),
-            tf.keras.Input(shape=(len(self.office_index.web_domains),), name="web_domain_feat")
+           tf.keras.Input(shape=(bigr_count), name="bigrams_feat", sparse=True),
+           tf.keras.Input(shape=(dom_count), name="web_domain_feat", sparse=True)
         ]
+        concate_len = bigr_count + dom_count
         concatenated_layer = tf.keras.layers.concatenate(inputs)
-        dense_layer1 = tf.keras.layers.Dense(dense_layer_size)(concatenated_layer)
+        #dense_layer1 = tf.keras.layers.Dense(dense_layer_size)(concatenated_layer)
+        #dense_layer1 = tf.keras.layers.Dense(dense_layer_size)(inputs)
+        dense_layer1 = DenseLayerForSparse(concate_len, dense_layer_size, activation=None)(concatenated_layer)
         dense_layer2 = tf.keras.layers.Dense(dense_layer_size)(dense_layer1)
         target_layer = tf.keras.layers.Dense(self.get_learn_target_count(), name="target",
                                              activation="softmax")(dense_layer2)
@@ -97,7 +159,7 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         train_x, train_y = self.to_ml_input(self.train_pool.pool, "train")
 
         self.logger.info("init_model_before_train")
-        model = self.init_model_before_train(dense_layer_size)
+        model = self.init_model_before_train(dense_layer_size, train_x)
         self.logger.info(model.summary())
 
         self.logger.info("compile model...")
@@ -116,6 +178,8 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
                   )
         self.logger.info("save to {}".format(self.model_path))
         model.save(self.model_path)
+        #model = tf.keras.models.load_model(self.model_path)
+
 
     def load_model(self):
         self.logger.info("load tensorflow model from {}".format(self.model_path))
