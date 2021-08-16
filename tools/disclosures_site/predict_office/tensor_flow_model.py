@@ -10,11 +10,11 @@ import tensorflow as tf
 #https://github.com/tensorflow/tensorflow/issues/23748
 # https://medium.com/dailymotion/how-to-design-deep-learning-models-with-sparse-inputs-in-tensorflow-keras-fd5e754abec1
 class DenseLayerForSparse(tf.keras.layers.Layer):
-    def __init__(self, vocabulary_size, units, activation, **kwargs):
+    def __init__(self, vocabulary_size, units, **kwargs):
         super(DenseLayerForSparse, self).__init__()
         self.vocabulary_size = vocabulary_size
         self.units = units
-        self.activation = tf.keras.activations.get(activation)
+        self.activation = tf.keras.activations.get(None)
 
     def build(self, input_shape):
         self.kernel = self.add_variable(
@@ -29,6 +29,14 @@ class DenseLayerForSparse(tf.keras.layers.Layer):
     def compute_output_shape(self, input_shape):
         input_shape = input_shape.get_shape().as_list()
         return input_shape[0], self.units
+
+    def get_config(self):
+        config = super().get_config().copy()
+        config.update({
+            'vocab_size': self.vocabulary_size,
+            'units': self.units,
+        })
+        return config
 
 
 class TTensorFlowOfficeModel(TPredictionModelBase):
@@ -139,7 +147,7 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         concatenated_layer = tf.keras.layers.concatenate(inputs)
         #dense_layer1 = tf.keras.layers.Dense(dense_layer_size)(concatenated_layer)
         #dense_layer1 = tf.keras.layers.Dense(dense_layer_size)(inputs)
-        dense_layer1 = DenseLayerForSparse(concate_len, dense_layer_size, activation=None)(concatenated_layer)
+        dense_layer1 = DenseLayerForSparse(concate_len, dense_layer_size)(concatenated_layer)
         dense_layer2 = tf.keras.layers.Dense(dense_layer_size)(dense_layer1)
         target_layer = tf.keras.layers.Dense(self.get_learn_target_count(), name="target",
                                              activation="softmax")(dense_layer2)
