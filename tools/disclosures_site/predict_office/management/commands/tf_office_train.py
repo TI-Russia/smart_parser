@@ -22,6 +22,7 @@ class Command(BaseCommand):
         parser.add_argument("--batch-size", dest='batch_size', required=False, type=int, default=256)
         parser.add_argument("--worker-count", dest='worker_count', required=False, type=int, default=3)
         parser.add_argument("--steps-per-epoch", dest='steps_per_epoch', required=False, type=int, default=None)
+        parser.add_argument("--device", dest='device', required=False,  default="/cpu:0", help="can be /cpu:0 or /gpu:0")
 
     def handle(self, *args, **options):
         logger = setup_logging(log_file_name="predict_office_train.log")
@@ -31,7 +32,8 @@ class Command(BaseCommand):
                                    epoch_count=options['epoch_count'],
                                    batch_size=options['batch_size'],
                                    workers_count=options['worker_count'],
-                                   steps_per_epoch=options['steps_per_epoch']
+                                   steps_per_epoch=options['steps_per_epoch'],
+                                   device_name=options['device']
                                )
 
 

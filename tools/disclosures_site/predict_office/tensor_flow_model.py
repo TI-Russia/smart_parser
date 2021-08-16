@@ -158,7 +158,8 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         tf.keras.utils.plot_model(model, "predict_office.png", show_shapes=True)
         return model
 
-    def train_tensorflow(self, dense_layer_size, epoch_count, batch_size=256, workers_count=3, steps_per_epoch=None):
+    def train_tensorflow(self, dense_layer_size, epoch_coun=t, batch_size=256, workers_count=3, steps_per_epoch=None,
+                         device_name="/cpu:0"):
         assert self.model_path is not None
         self.logger.info("train_tensorflow layer_size={} batch_size={} workers_count={} epoch_count={} "
                          "steps_per_epoch={}".format(dense_layer_size, batch_size, workers_count, epoch_count,
@@ -175,15 +176,16 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
                       loss=tf.keras.losses.SparseCategoricalCrossentropy(),
                       metrics=['accuracy'])
 
-        self.logger.info("training...")
-        model.fit(train_x,
-                  train_y,
-                  epochs=epoch_count,
-                  workers=workers_count,
-                  batch_size=batch_size,
-                  steps_per_epoch=steps_per_epoch,
-                  #validation_split=0.2  not supported by sparse tensors
-                  )
+        self.logger.info("training on device {}...".format(device_name))
+        with tf.device(device_name):
+            model.fit(train_x,
+                      train_y,
+                      epochs=epoch_count,
+                      workers=workers_count,
+                      batch_size=batch_size,
+                      steps_per_epoch=steps_per_epoch,
+                      #validation_split=0.2  not supported by sparse tensors
+                      )
         self.logger.info("save to {}".format(self.model_path))
         model.save(self.model_path)
         #model = tf.keras.models.load_model(self.model_path)
