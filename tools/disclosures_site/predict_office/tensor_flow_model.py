@@ -93,32 +93,6 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
                                   dense_shape=(len(cases), len(self.office_index.web_domains))
                                   )
 
-# signature = tf.SparseTensorSpec (
-        #     shape=(self.office_index.get_bigrams_count(), 1), dtype="int32"
-        # )
-        # dataset1 = tf.data.Dataset.from_generator(
-        #     get_bigram_feature_gen,
-        #     output_signature=signature
-        # )
-        # bigrams = tf.SparseTensor(
-        #     dense_shape=(self.office_index.get_bigrams_count(), len(cases))
-        # )
-        # bigrams_l = list()
-        # cnt = 0
-        # for c in cases:
-        #     bigrams_l.append(self.get_bigram_feature(c))
-        #     if verbose:
-        #         if cnt % 1000 == 0:
-        #             sys.stdout.write("{}/{}\r".format(cnt, len(cases)))
-        #             sys.stdout.flush()
-        #         cnt += 1
-        # sys.stdout.write("{}/{}\r".format(cnt, len(cases)))
-        #web_domains_l = list(self.get_web_domain_feature(c) for c in cases)
-
-        # return {
-        #     "bigrams_feat": tf.sparse.concat(0, bigrams_l),
-        #     "web_domain_feat": tf.sparse.concat(0, web_domains_l),
-        # }
 
         return {
             "bigrams_feat": bigrams,
@@ -148,6 +122,8 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         #dense_layer1 = tf.keras.layers.Dense(dense_layer_size)(concatenated_layer)
         #dense_layer1 = tf.keras.layers.Dense(dense_layer_size)(inputs)
         dense_layer1 = DenseLayerForSparse(concate_len, dense_layer_size)(concatenated_layer)
+
+
         dense_layer2 = tf.keras.layers.Dense(dense_layer_size)(dense_layer1)
         target_layer = tf.keras.layers.Dense(self.get_learn_target_count(), name="target",
                                              activation="softmax")(dense_layer2)
@@ -196,10 +172,7 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         model = tf.keras.models.load_model(self.model_path)
         return model
 
-    def test(self, threshold=0.0):
-        model = self.load_model()
-        test_x, test_y = self.to_ml_input(self.test_pool.pool, "test")
-        test_y_pred = model.predict(test_x)
+    def calc_on_threshold(self, test_y, test_y_pred, threshold):
         true_positive = 0
         false_positive = 0
         true_negative = 0
@@ -219,10 +192,16 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         precision = true_positive / (true_positive + false_positive)
         recall = true_positive / (true_positive + false_negative)
         f1 = 2 * precision * recall /(precision + recall)
-        self.logger.info("tp={}, fp={}, tn={}, fn={} "
-                         .format(true_positive, false_positive, true_negative, false_negative))
-        self.logger.info("threshold={}, precision={:.4f}, recall={:.4f}, f1={:.4f}, "
-                         .format(threshold, precision, recall, f1))
+        self.logger.info("threshold={}, prec={:.4f}, recall={:.4f}, f1={:.4f}, tp={}, fp={}, tn={}, fn={} "
+                         .format(threshold, precision, recall, f1,
+                                 true_positive, false_positive, true_negative, false_negative))
+
+    def test(self, thresholds=[0.6]):
+        model = self.load_model()
+        test_x, test_y = self.to_ml_input(self.test_pool.pool, "test")
+        test_y_pred = model.predict(test_x)
+        for threshold in thresholds:
+            self.calc_on_threshold(test_y, test_y_pred, threshold)
 
     def predict(self, model, cases):
         if len(cases) == 0:
