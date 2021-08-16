@@ -85,23 +85,27 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
 
     def init_model_before_train(self, dense_layer_size, input_data):
         inputs = list()
+        dense_after_input  = list()
         len_sum = 0
         for i in input_data:
             len = input_data[i].shape[1]
-            inputs.append(tf.keras.Input(name=i, shape=(len,), sparse=True))
+            input_layer = tf.keras.Input(name=i, shape=(len,), sparse=True)
+            inputs.append(input_layer)
+            dense_layer = DenseLayerForSparse(len, dense_layer_size)(input_layer)
+            dense_after_input.append(dense_layer)
             len_sum += len
 
-        concatenated_layer = tf.keras.layers.concatenate(inputs)
+        concatenated_layer = tf.keras.layers.concatenate(dense_after_input)
 
         #ValueError: The last dimension of the inputs to `Dense` should be defined. Found `None`
-        #dense_layer1 = tf.keras.layers.Dense(dense_layer_size)(concatenated_layer)
+        dense_layer1 = tf.keras.layers.Dense(dense_layer_size)(concatenated_layer)
 
-        dense_layer1 = DenseLayerForSparse(len_sum, dense_layer_size)(concatenated_layer)
+        #dense_layer1 = DenseLayerForSparse(len_sum, dense_layer_size)(concatenated_layer)
 
 
-        dense_layer2 = tf.keras.layers.Dense(dense_layer_size)(dense_layer1)
+        #dense_layer2 = tf.keras.layers.Dense(dense_layer_size)(dense_layer1)
         target_layer = tf.keras.layers.Dense(self.get_learn_target_count(), name="target",
-                                             activation="softmax")(dense_layer2)
+                                             activation="softmax")(dense_layer1)
         model = tf.keras.Model(
             inputs=inputs,
             outputs=target_layer,
