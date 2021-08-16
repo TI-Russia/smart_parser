@@ -49,7 +49,7 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
                 bigrams.add(bigram_id)
         return sorted(list(bigrams))
 
-    def to_ml_input_features(self, cases, verbose=False):
+    def to_ml_input_features(self, cases):
         def get_bigram_feature_gen():
             for index, case in enumerate(cases):
                 for bigram_id in self.get_bigram_feature(case):
@@ -81,7 +81,7 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
     def to_ml_input(self, cases, name):
         self.logger.info("build features for {} pool of {} cases".format(name, len(cases)))
         labels = np.array(list(c.get_learn_target() for c in cases))
-        return self.to_ml_input_features(cases, verbose=True), labels
+        return self.to_ml_input_features(cases), labels
 
     def init_model_before_train(self, dense_layer_size, input_data):
         inputs = list()
