@@ -148,23 +148,35 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         model = tf.keras.models.load_model(self.model_path)
         return model
 
-    def calc_on_threshold(self, test_y, test_y_pred, threshold):
+    def calc_on_threshold(self, cases, test_y, test_y_pred, threshold, verbose=True):
         true_positive = 0
         false_positive = 0
         true_negative = 0
         false_negative = 0
-        for true_ml_office_id, pred_proba_y in zip(test_y, test_y_pred):
+        for case, true_ml_office_id, pred_proba_y in zip(cases, test_y, test_y_pred):
+            if verbose:
+                for ml_office_id, weight in enumerate(pred_proba_y):
+                    if weight > threshold or ml_office_id == true_ml_office_id:
+                        self.logger.debug("pred_office_id = {} weight = {} sha256 = {}".format(
+                             self.office_index.get_office_id_by_ml_office_id(ml_office_id), weight, case.sha256 ))
             ml_office_id, weight = max(enumerate(pred_proba_y), key=operator.itemgetter(1))
             if weight > threshold:
                 if true_ml_office_id == ml_office_id:
                     true_positive += 1
+                    status = "true_positive"
                 else:
                     false_positive += 1
+                    status = "false_positive"
             else:
                 if true_ml_office_id == ml_office_id:
                     false_negative += 1
+                    status = "false_negative"
                 else:
                     true_negative += 1
+                    status = "true_negative"
+            self.logger.debug("{} true_office_id = {} pred_office_id = {} weight = {} sha256 = {}".format(
+                status, self.office_index.get_office_id_by_ml_office_id(true_ml_office_id),
+                self.office_index.get_office_id_by_ml_office_id(ml_office_id), weight, case.sha256))
         precision = true_positive / (true_positive + false_positive)
         recall = true_positive / (true_positive + false_negative)
         f1 = 2 * precision * recall /(precision + recall)
@@ -172,12 +184,12 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
                          .format(threshold, precision, recall, f1,
                                  true_positive, false_positive, true_negative, false_negative))
 
-    def test(self, thresholds=[0.6]):
+    def test_model(self, thresholds=[0.6]):
         model = self.load_model()
         test_x, test_y = self.to_ml_input(self.test_pool.pool, "test")
         test_y_pred = model.predict(test_x)
         for threshold in thresholds:
-            self.calc_on_threshold(test_y, test_y_pred, threshold)
+            self.calc_on_threshold(self.test_pool.pool, test_y, test_y_pred, threshold)
 
     def predict(self, model, cases):
         if len(cases) == 0:
@@ -207,4 +219,4 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         model = self.load_model()
         test_x = self.to_ml_input_features(self.test_pool.pool)
         test_y_pred = model.predict(test_x)
-        self.test_pool.build_toloka_pool(self.office_index, test_y_pred, toloka_pool_path)
+        self.test_pool.build_toloka_pool(test_y_pred, toloka_pool_path)

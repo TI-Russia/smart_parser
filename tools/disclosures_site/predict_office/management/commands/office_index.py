@@ -102,6 +102,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         logger = setup_logging(log_file_name="build_office_bigrams.log")
-        index = TOfficePredictIndex(logger, options['bigrams_path'])
+        index = TOfficePredictIndexBuilder(logger, options['bigrams_path'])
         index.build()
         index.write()

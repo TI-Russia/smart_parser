@@ -21,7 +21,7 @@ class Command(BaseCommand):
         logger = setup_logging(log_file_name="predict_office_test.log")
         model = TTensorFlowOfficeModel(logger, options['bigrams_path'], options['model_folder'],
                                        test_pool=options['test_pool'])
-        model.test(thresholds=options['threshold'])
+        model.test_model(thresholds=options['threshold'])
 
 
 if __name__ == "__main__":

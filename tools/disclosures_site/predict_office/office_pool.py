@@ -101,6 +101,8 @@ class TOfficePool:
                     }
                     if len(hypots) == 1:
                         rec['status'] = "true_positive"
+                    if office_id == case.true_office_id:
+                        rec['true_office_id'] = 1
                     office_infos.append(rec)
                 office_strings = json.loads(case.office_strings)
                 rec = {

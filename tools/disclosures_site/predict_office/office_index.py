@@ -93,7 +93,7 @@ class TOfficePredictIndex:
     def get_word_stems(text, stem_size=4, add_starter_and_enders=True):
         if add_starter_and_enders:
             yield "^"
-        for w in re.split("[\s,\.;:_\"* ()]", text.lower()):
+        for w in re.split("[\s,\.;:_\"* ()-]", text.lower()):
             if len(w) > 0:
                 #ignore year
                 if w.startswith("20") and len(w) == 4:

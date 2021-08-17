@@ -20,6 +20,10 @@ import tempfile
 
 DECLARATOR_DOMAIN = 'https://declarator.org'
 
+FIX_LIST = {
+    '3d13c78c98e8a63e094e53d25e71abe61c4319ac930fe827faacecb17245a6bf': 6461
+}
+
 
 class TExportHumanFiles:
 
@@ -143,6 +147,13 @@ class TExportHumanFiles:
         for f in os.listdir(self.args.tmp_folder):
             os.unlink(os.path.join(self.args.tmp_folder, f))
 
+    def fix_list(self, sha256, office_id):
+        fixed_office_id = FIX_LIST.get(sha256)
+        if fixed_office_id is not None:
+            return fixed_office_id
+        else:
+            return office_id
+
     def export_files(self):
         human_files_db = TDlrobotHumanFileDBM(self.args.dlrobot_human_json)
         if self.args.start_from_empty:
@@ -182,7 +193,7 @@ class TExportHumanFiles:
                 ref.document_id = document_id
                 ref.document_file_id = document_file_id
                 ref._site_url = web_site
-                ref.office_id = office_id
+                ref.office_id = self.fix_list(sha256, office_id)
                 ref.income_year = income_year
                 ref.document_file_url = declarator_url
                 source_document.add_decl_reference(ref)
