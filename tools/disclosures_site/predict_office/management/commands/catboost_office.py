@@ -2,9 +2,9 @@
 import sys
 
 from common.logging_wrapper import setup_logging
-from declarations.management.commands.predict_office import TOfficePredictIndex
-from declarations.management.commands.predict_office import TPredictionCase
-from declarations.management.commands.predict_office import TPredictionModelBase
+from predict_office.management.commands.predict_office import TOfficePredictIndex
+from predict_office.management.commands.predict_office import TPredictionCase
+from predict_office.management.commands.predict_office import TPredictionModelBase
 from collections import defaultdict
 
 from catboost import CatBoostClassifier, Pool

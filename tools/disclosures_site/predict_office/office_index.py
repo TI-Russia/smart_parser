@@ -1,5 +1,6 @@
 from common.russian_regions import TRussianRegions
 from web_site_db.web_sites import TDeclarationWebSiteList
+from common.urllib_parse_pro import urlsplit_pro
 
 import re
 import json
@@ -65,6 +66,17 @@ class TOfficePredictIndex:
             return 0
         return s.web_domain_id
 
+    def get_web_domain_by_url(self, document_url, site_url):
+        # first take web domain from which the document was dowloaded
+        web_domain = urlsplit_pro(document_url).hostname
+        if self.web_sites.get_site_by_web_domain(web_domain) is not None:
+            return web_domain
+        # if this web domain is unknown, take web domain from site_url
+        web_domain = urlsplit_pro(site_url).hostname
+        if self.web_sites.get_site_by_web_domain(web_domain) is None:
+            self.logger.error("web domain {} is missing in web_sites.json".format(site_url))
+        return web_domain
+
     def get_offices_by_web_domain(self, web_domain):
         s = self.web_domains.get(web_domain)
         if s is None:
@@ -93,7 +105,7 @@ class TOfficePredictIndex:
     def get_word_stems(text, stem_size=4, add_starter_and_enders=True):
         if add_starter_and_enders:
             yield "^"
-        for w in re.split("[\s,\.;:_\"* ()-]", text.lower()):
+        for w in re.split("[\s,\.;:_\"* ()«»-]", text.lower()):
             if len(w) > 0:
                 #ignore year
                 if w.startswith("20") and len(w) == 4:

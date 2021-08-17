@@ -1,7 +1,0 @@
-{
-    "sites": [
-        {
-            "morda_url": "mos.ru/donm"
-        }
-    ]
-}

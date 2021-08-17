@@ -109,6 +109,9 @@ class TSourceDocument:
         else:
             assert False
 
+    def can_be_used_for_declarator_train(self):
+        return self.build_intersection_status() == TIntersectionStatus.both_found
+
     def get_web_site(self):
         for r in self.decl_references:
             return r.get_site_url()
@@ -174,17 +177,21 @@ class TDlrobotHumanFileDBM:
         self.db.close()
         self.db = None
 
+    def convert_json_to_dbm(self):
+        file_path, file_ext = os.path.splitext(self.db_file_path)
+        json_path = self.db_file_path
+        self.db_file_path = file_path + ".dbm"
+        self.create_db()
+        self.convert_from_json_fle(json_path)
+        self.close_db()
+
     def _open(self, access_mode):
-        self.access_mode = access_mode
         file_path, file_ext = os.path.splitext(self.db_file_path)
         if file_ext == ".json":
-            json_path = self.db_file_path
-            self.db_file_path = file_path + ".dbm"
-            self.create_db()
-            self.convert_from_json_fle(json_path)
-            self.close_db()
+            self.convert_json_to_dbm()
         _, file_ext = os.path.splitext(self.db_file_path)
         assert file_ext == ".dbm"
+        self.access_mode = access_mode
         self.db = dbm.gnu.open(self.db_file_path, self.access_mode)
 
     def open_db_read_only(self):

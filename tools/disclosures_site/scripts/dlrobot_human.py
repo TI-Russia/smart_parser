@@ -1,7 +1,9 @@
-from declarations.input_json import TSourceDocument, TDlrobotHumanFileDBM
+from declarations.input_json import TSourceDocument, TDlrobotHumanFileDBM, TWebReference
 from predict_office.office_pool import TOfficePool
 from predict_office.prediction_case import TPredictionCase
 from common.logging_wrapper import setup_logging
+from smart_parser_http.smart_parser_client import TSmartParserCacheClient
+from predict_office.office_index import TOfficePredictIndex
 
 import argparse
 import json
@@ -11,12 +13,12 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--action", dest='action', help="can be stats, select, "
                                                         "print_sha256, print_web_sites, "
-                                                        "delete, to_utf8, titles, check_office, to_json")
+                                                        "delete, to_utf8, titles, check_office, to_json, build_office_train_set")
     parser.add_argument("--input-file", dest='input_file')
     parser.add_argument("--output-file", dest='output_file', required=False)
     parser.add_argument("--sha256-list-file", dest='sha256_list_file', required=False)
     parser.add_argument("--sha256", dest='sha256', required=False)
-    parser.add_argument("--predict-test-pool", dest='predict_test_pool', required=False)
+    parser.add_argument("--predict-office-pool", dest='predict_office_pool_path', required=False)
     return parser.parse_args()
 
 
@@ -86,8 +88,32 @@ def check_office(logger, dlrobot_human, pool_path):
     }
     logger.info(json.dumps(rec))
 
-# print sha256 and office id
-#cat dlrobot_human.json | jq -rc '.documents | to_entries[] | [.key, .value.office_id] | @tsv'
+
+def build_declarator_office_train_set(logger, dlrobot_human, output_pool_path):
+    cases = list()
+    office_index = TOfficePredictIndex(logger, None)
+    src_doc: TSourceDocument
+    for sha256, src_doc in dlrobot_human.get_all_documents():
+        if not src_doc.can_be_used_for_declarator_train() or \
+                TSmartParserCacheClient.are_empty_office_strings(src_doc.office_strings):
+            continue
+        web_ref: TWebReference
+        found_web_domains = set()
+        for web_ref in src_doc.web_references:
+            web_domain = office_index.get_web_domain_by_url(web_ref.url, web_ref._site_url),
+            if web_domain in found_web_domains:
+                continue
+            found_web_domains.add(web_domain)
+            case = TPredictionCase(
+                office_index,
+                sha256=sha256,
+                web_domain=web_domain,
+                true_office_id=src_doc.calculated_office_id, # it is from declarator
+                office_strings=src_doc.office_strings
+            )
+            cases.append(case)
+    TOfficePool.write_pool(cases, output_pool_path)
+
 
 def main():
     args = parse_args()
@@ -99,7 +125,7 @@ def main():
     elif args.action == "stats":
         print(json.dumps(dlrobot_human.get_stats(), indent=4))
     elif args.action == "check_office":
-        check_office(logger, dlrobot_human, args.predict_test_pool)
+        check_office(logger, dlrobot_human, args.predict_office_pool_path)
     elif args.action == "select" or args.action == "delete":
         sha_list = read_sha256_list(args)
         assert args.output_file is not None
@@ -108,6 +134,9 @@ def main():
         to_utf8(dlrobot_human, args.output_file)
     elif args.action == "to_json":
         to_json(dlrobot_human)
+    elif args.action == "build_office_train_set":
+        build_declarator_office_train_set(dlrobot_human, args.predict_office_pool_path)
+
     else:
         raise Exception("unknown action")
 
