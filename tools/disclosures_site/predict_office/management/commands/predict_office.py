@@ -127,7 +127,7 @@ class TOfficePredictor:
                 else:
                     web_ref: TWebReference
                     for web_ref in src_doc.web_references:
-                        web_domain = self.office_ml_model.office_index.get_web_domain_by_url(web_ref._site_url, web_ref._site_url)
+                        web_domain = self.office_ml_model.office_index.get_web_domain_by_url(web_ref.url, web_ref._site_url)
                         case = TPredictionCase(self.office_ml_model.office_index, sha256, web_domain,
                                                office_strings=src_doc.office_strings)
                         cases_for_ml_predict.append(case)

@@ -1,3 +1,5 @@
+import os
+
 from declarations.input_json import TSourceDocument, TDlrobotHumanFileDBM, TWebReference
 from predict_office.office_pool import TOfficePool
 from predict_office.prediction_case import TPredictionCase
@@ -91,16 +93,21 @@ def check_office(logger, dlrobot_human, pool_path):
 
 def build_declarator_office_train_set(logger, dlrobot_human, output_pool_path):
     cases = list()
-    office_index = TOfficePredictIndex(logger, None)
+    default_path = os.path.join(os.path.dirname(__file__), "../predict_office/model/office_ngrams.txt")
+    office_index = TOfficePredictIndex(logger, default_path)
+    office_index.read()
     src_doc: TSourceDocument
     for sha256, src_doc in dlrobot_human.get_all_documents():
         if not src_doc.can_be_used_for_declarator_train() or \
                 TSmartParserCacheClient.are_empty_office_strings(src_doc.office_strings):
             continue
+        if src_doc.calculated_office_id is None:
+            logger.error("skip {}, no office information".format(sha256))
+        #print (sha256)
         web_ref: TWebReference
         found_web_domains = set()
         for web_ref in src_doc.web_references:
-            web_domain = office_index.get_web_domain_by_url(web_ref.url, web_ref._site_url),
+            web_domain = office_index.get_web_domain_by_url(web_ref.url, web_ref._site_url)
             if web_domain in found_web_domains:
                 continue
             found_web_domains.add(web_domain)
@@ -135,7 +142,7 @@ def main():
     elif args.action == "to_json":
         to_json(dlrobot_human)
     elif args.action == "build_office_train_set":
-        build_declarator_office_train_set(dlrobot_human, args.predict_office_pool_path)
+        build_declarator_office_train_set(logger, dlrobot_human, args.predict_office_pool_path)
 
     else:
         raise Exception("unknown action")
