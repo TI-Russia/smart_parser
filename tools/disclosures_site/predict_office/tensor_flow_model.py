@@ -49,11 +49,25 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
                 bigrams.add(bigram_id)
         return sorted(list(bigrams))
 
+    def get_unigram_feature(self, case: TPredictionCase):
+        site_title = self.office_index.web_sites.get_title_by_web_domain(case.web_domain)
+        unigrams = set()
+        for b in TOfficePredictIndex.get_word_stems(case.text + " " + site_title):
+            ngram_id = self.office_index.get_unigram_id(b)
+            if ngram_id is not None:
+                unigrams.add(ngram_id)
+        return sorted(list(unigrams))
+
     def to_ml_input_features(self, cases):
         def get_bigram_feature_gen():
             for index, case in enumerate(cases):
-                for bigram_id in self.get_bigram_feature(case):
-                    yield index, bigram_id
+                for ngram_id in self.get_bigram_feature(case):
+                    yield index, ngram_id
+
+        def get_unigram_feature_gen():
+            for index, case in enumerate(cases):
+                for ngram_id in self.get_unigram_feature(case):
+                    yield index, ngram_id
 
         def get_web_domain_feature_gen():
             for index, case in enumerate(cases):
@@ -67,6 +81,13 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
                                dense_shape=(len(cases), self.office_index.get_bigrams_count())
                     )
 
+        indices = list(get_unigram_feature_gen())
+        values = [1.0] * len(indices)
+        unigrams = tf.SparseTensor(indices=indices,
+                               values=values,
+                               dense_shape=(len(cases), self.office_index.get_unigrams_count())
+                    )
+
         indices = list(get_web_domain_feature_gen())
         values = [1.0] * len(indices)
         web_domains = tf.SparseTensor(indices=indices,
@@ -76,6 +97,7 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         return {
             "bigrams_feat": bigrams,
             "web_domain_feat": web_domains,
+            "unigrams_feat": unigrams,
         }
 
     def to_ml_input(self, cases, name):

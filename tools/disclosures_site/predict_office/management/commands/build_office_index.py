@@ -36,11 +36,13 @@ class TOfficePredictIndexBuilder(TOfficePredictIndex):
     def __init(self, logger, file_path):
         super().__init__(logger, file_path)
 
-    def ngrams_from_default_dict(self, ngrams):
+    def ngrams_from_default_dict(self, ngrams, max_count=-1):
         result = dict()
-        for i, b in enumerate(ngrams.keys()):
-            ngram_info = TOfficeNgram(i, list(ngrams[b]))
-            result[b] = ngram_info
+        for b in ngrams.keys():
+            if max_count == -1 or len(ngrams[b]) <= max_count:
+                ngram_id = len(result)
+                ngram_info = TOfficeNgram(ngram_id, list(ngrams[b]))
+                result[b] = ngram_info
         return result
 
     def build_name_ngrams(self):
@@ -74,6 +76,9 @@ class TOfficePredictIndexBuilder(TOfficePredictIndex):
 
         self.office_name_bigrams = self.ngrams_from_default_dict(office_bigrams)
         self.logger.info("bigrams count = {}".format(self.get_bigrams_count()))
+
+        self.office_name_unigrams = self.ngrams_from_default_dict(office_stems, 3)
+        self.logger.info("unigrams count = {}".format(self.get_unigrams_count()))
 
         self.region_words = dict((k, i) for (i, k) in enumerate(region_words))
 

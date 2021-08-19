@@ -4,7 +4,6 @@ from common.urllib_parse_pro import urlsplit_pro
 
 import re
 import json
-import numpy as np
 
 
 class TOfficeNgram:
@@ -47,6 +46,7 @@ class TOfficePredictIndex:
         self.index_file_path = file_path
         self.logger = logger
         self.office_name_bigrams = None
+        self.office_name_unigrams = None
         self.offices = None
         self.web_domains = None
         self.deterministic_web_domains = None
@@ -59,6 +59,9 @@ class TOfficePredictIndex:
 
     def get_bigrams_count(self):
         return len(self.office_name_bigrams)
+
+    def get_unigrams_count(self):
+        return len(self.office_name_unigrams)
 
     def get_web_domain_index(self, web_domain):
         s = self.web_domains.get(web_domain)
@@ -91,6 +94,12 @@ class TOfficePredictIndex:
 
     def get_bigram_id(self, bigram):
         b = self.office_name_bigrams.get(bigram)
+        if b is None:
+            return None
+        return b.ngram_id
+
+    def get_unigram_id(self, gram):
+        b = self.office_name_unigrams.get(gram)
         if b is None:
             return None
         return b.ngram_id
@@ -134,6 +143,7 @@ class TOfficePredictIndex:
         with open(self.index_file_path) as inp:
             js = json.load(inp)
             self.office_name_bigrams = dict((k, TOfficeNgram.from_json(v)) for k, v in js['bigrams'].items())
+            self.office_name_unigrams = dict((k, TOfficeNgram.from_json(v)) for k, v in js['unigrams'].items())
             self.offices = dict((int(k), v) for k, v in js['offices'].items())
             self.web_domains = dict((k, TOfficeWebDomain.from_json(v)) for k, v in js['web_domains'].items())
             self.deterministic_web_domains = js['deterministic_web_domains']
@@ -147,6 +157,7 @@ class TOfficePredictIndex:
         with open(self.index_file_path, "w") as outp:
             rec = {
                 'bigrams': dict((k, v.to_json()) for k, v in self.office_name_bigrams.items()),
+                'unigrams': dict((k, v.to_json()) for k, v in self.office_name_unigrams.items()),
                 'offices': self.offices,
                 'web_domains': dict((k, v.to_json()) for k, v in self.web_domains.items()),
                 'deterministic_web_domains': self.deterministic_web_domains,
@@ -169,16 +180,6 @@ class TOfficePredictIndex:
         else:
             return 0
 
-    def get_bigram_feature(self, text: str):
-        bigrams_one_hot = np.zeros(self.get_bigrams_count())
-        for b in TOfficePredictIndex.get_bigrams(text):
-            bigram_id = self.get_bigram_id(b)
-            if bigram_id is not None:
-                bigrams_one_hot[bigram_id] = 1
-        return bigrams_one_hot
 
-    def get_web_site_title_bigram_feature(self, web_domain: str):
-        title = self.web_sites.get_title_by_web_domain(web_domain)
-        return self.get_bigram_feature(title)
 
 
