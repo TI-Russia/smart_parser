@@ -362,7 +362,7 @@ def get_distinct_relative_types(records):
 #https://ru.wikipedia.org/wiki/%D0%94%D0%B5%D1%81%D1%8F%D1%82%D0%B8%D1%87%D0%BD%D1%8B%D0%B9_%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%D0%B8%D1%82%D0%B5%D0%BB%D1%8C
 def format_income_in_html(income):
     if income is None:
-        return income
+        return 'null'
     s = "{:_.0f}".format(income).replace('_', '&nbsp;')
     s += " " + russian_numeral_group(income, "рубль", "рубля", "рублeй")
     return s
