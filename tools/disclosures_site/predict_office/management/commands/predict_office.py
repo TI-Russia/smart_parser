@@ -89,16 +89,16 @@ class TOfficePredictor:
     def predict_offices_by_ml(self,  cases, min_ml_weight=0.99):
         TOfficePool.write_pool(cases, "cases_to_predict_dump.txt")
         predicted_office_ids = self.office_ml_model.predict_by_portions(cases)
-        cases_filtered = ( (weight, office_id, case) \
+        cases_filtered = ( (weight, office_id, case.sha256, case) \
                           for case, (office_id, weight) in zip(cases, predicted_office_ids) \
                           if weight >= min_ml_weight)
         already = set()
-        for weight, office_id, case in sorted(cases_filtered, reverse=True):
-            if case.sha256 in already:
+        for weight, office_id, sha256, case in sorted(cases_filtered, reverse=True):
+            if sha256 in already:
                 continue
-            already.add(case.sha256)
-            src_doc = self.dlrobot_human.get_document(case.sha256)
-            self.set_office_id(case.sha256, src_doc, office_id, "tensorflow weight={}".format(weight))
+            already.add(sha256)
+            src_doc = self.dlrobot_human.get_document(sha256)
+            self.set_office_id(sha256, src_doc, office_id, "tensorflow weight={}".format(weight))
 
         for case in cases:
             if case.sha256 not in already:
