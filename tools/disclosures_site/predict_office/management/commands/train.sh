@@ -7,11 +7,11 @@ scp office_declarator_pool.txt dev_machine:$FOLDER
 
 
 # create a pool for toloka
-shuf cases_to_predict_dump.txt  | grep -v 'service.nalog.ru' | grep -v '{"title": "", "roles": [], "departments": []' | head -n 200 |  sort >pool200a.txt.s
-cut -f 1  pool200a.txt.s >a.1
+cat cases_to_predict_dump.txt  | grep -v 'service.nalog.ru' | grep -v '{"title": "", "roles": [], "departments": []' | head -n 200 |  sort >pool.mos.ru.txt
+cut -f 1  pool.mos.ru.txt >a.1
 python3 ~/smart_parser/tools/disclosures_site/scripts/dlrobot_human.py --action select --sha256-list-file a.1  --input-file dlrobot_human.dbm --output-file a.dbm
 python3 ~/smart_parser/tools/disclosures_site/scripts/dlrobot_human.py --action to_json  --input-file a.dbm --output-file a.dbm | jq -rc '.documents | to_entries[] | [.key, .value.office_id] | @tsv' | sort >a.sha_office
-join -t $'\t' pool200a.txt.s  a.sha_office  | awk -F "\t" -v  OFS="\t" '{print $1,$2,$5,$4}' >pool200a.txt
+join -t $'\t' pool.mos.ru.txt  a.sha_office  | awk -F "\t" -v  OFS="\t" '{print $1,$2,$5,$4}' >pool.mos.ru.txt.with_office_id
 python3 ~/smart_parser/tools/disclosures_site/manage.py tf_office_toloka --model-folder model --test-pool pool200a.txt --toloka-output-pool toloka.txt
 # go to toloka, add a new pool, access it, download results
 cat ~/Downloads/assignments_from_pool_962392__20-08-2021.tsv | cut -f 1,8 | grep -v 'INPUT:sha256' | sort  >a
