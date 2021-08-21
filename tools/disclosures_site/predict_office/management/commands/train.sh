@@ -23,8 +23,8 @@ cp p.txt ~/smart_parser/tools/disclosures_site/predict_office/pools/pool200a.txt
 cd $FOLDER
 python3 ~/smart_parser/tools/disclosures_site/manage.py build_office_index --settings disclosures.settings.prod
 python3 ~/smart_parser/tools/disclosures_site/manage.py prepare_office_pool --declarator-pool ../office_declarator_pool.txt \
-   --real-pool  ~/smart_parser/tools/disclosures_site/predict_office/pools/pool400.txt --real-pool-add-count  6 \
+   --real-pool  ~/smart_parser/tools/disclosures_site/predict_office/pools/pool.add_to_train.txt --real-pool-add-count  6 \
     --train-pool train_pool.txt
 python3 ~/smart_parser/tools/disclosures_site/manage.py tf_office_train --model-folder model  --train-pool train_pool.txt --epoch-count  17
-python3 ~/smart_parser/tools/disclosures_site/manage.py tf_office_test --test-pool ~/smart_parser/tools/disclosures_site/predict_office/pools/pool100.txt  --bigrams-path office_ngrams.txt  --model-folder model --threshold 0.95 0.99
+python3 ~/smart_parser/tools/disclosures_site/manage.py tf_office_test --test-pool ~/smart_parser/tools/disclosures_site/predict_office/pools/pool.test.txt  --bigrams-path office_ngrams.txt  --model-folder model --threshold 0.95 0.99
 
