@@ -10,6 +10,7 @@ import re
 import urllib
 from collections import defaultdict
 import tarfile
+import datetime
 
 
 def build_rare_people(limit=200000):
@@ -66,6 +67,13 @@ class Command(BaseCommand):
             default="/home/sokirko/declarator_hdd/Yandex.Disk/declarator/nginx_logs/")
 
         parser.add_argument(
+            "--max-access-log-date",
+            dest='max_access_log_date',
+            default=None,
+            help="for example 2021-08-05"
+        )
+
+        parser.add_argument(
             "--tar-path",
             dest='tar_path'
             )
@@ -120,11 +128,17 @@ class Command(BaseCommand):
         self.write_sitemap(url_paths, sitemap_path, priority=0.8)
         return 'static/{}/sitemap.xml'.format(subfolder)
 
-    def build_popular_site_pages_sitemap(self, access_log_folder, sitemap_path):
+    def build_popular_site_pages_sitemap(self, access_log_folder, sitemap_path, max_access_log_date=None):
         requests = defaultdict(int)
         for x in os.listdir(access_log_folder):
             if x.startswith('access'):
                 path = os.path.join(access_log_folder, x)
+                if max_access_log_date is not None:
+                    (_, date_str, _) = x.split('.')
+                    dt = datetime.datetime.strptime(date_str, '%Y-%m-%d')
+                    if dt > datetime.datetime.strptime(max_access_log_date, '%Y-%m-%d'):
+                        self.logger.info("skip {}, it is newer than {}".format(x, max_access_log_date))
+                        continue
                 for r in get_human_requests(path):
                     if re.match('^/(section|person)/[0-9]+/?$', r):
                         r = r.rstrip('/')
@@ -170,11 +184,13 @@ class Command(BaseCommand):
         popular_site_pages_path = os.path.join(os.path.dirname(__file__), "../../../disclosures/static/sitemap-popular-site-pages.xml")
 
         self.delete_rare_people_xml(options['rare_people_file_pattern'])
-        rare_people_sitemaps = self.build_rare_people_sitemaps(options['rare_people_file_pattern'])
+        rare_people_sitemaps = self.build_rare_people_sitemaps(options['rare_people_file_pattern']
+                                                               )
 
         region_sitemap = self.build_report_sitemap(options["region_report_folder"])
         office_sitemap = self.build_report_sitemap(options["office_report_folder"])
-        self.build_popular_site_pages_sitemap(options['access_log_folder'], popular_site_pages_path)
+        self.build_popular_site_pages_sitemap(options['access_log_folder'], popular_site_pages_path,
+                                              options.get('max_access_log_date'))
 
         main_sitemap = self.build_main_sitemap()
 

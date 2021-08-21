@@ -2,6 +2,8 @@
 
 {% block title %}Найденные декларации {% endblock title %}
 
+{% block meta_robots %}<meta name="robots" content="noindex">{% endblock meta_robots %}
+
 {% block content %}
 
 <form action="{% url 'section_search' %}" method="get" style="width:100%">

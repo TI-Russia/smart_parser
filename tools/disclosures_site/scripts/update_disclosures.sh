@@ -144,6 +144,7 @@ echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/
     python3 manage.py generate_sitemaps --settings disclosures.settings.prod --output-file disclosures/static/sitemap.xml \
       --access-log-folder $ACCESS_LOG_ARCHIVE --tar-path sitemap.tar
     scp sitemap.tar $FRONTEND:/tmp/sitemap.tar
+    cp sitemap.tar $DLROBOT_FOLDER
 
 #19 make binary archives and copy to frontend
     sudo systemctl stop mysql

@@ -199,9 +199,9 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
             self.logger.debug("{} true_office_id = {} pred_office_id = {} weight = {} sha256 = {}".format(
                 status, self.office_index.get_office_id_by_ml_office_id(true_ml_office_id),
                 self.office_index.get_office_id_by_ml_office_id(ml_office_id), weight, case.sha256))
-        precision = true_positive / (true_positive + false_positive)
-        recall = true_positive / (true_positive + false_negative)
-        f1 = 2 * precision * recall /(precision + recall)
+        precision = true_positive / (true_positive + false_positive + 0.000000000000000000001)
+        recall = true_positive / (true_positive + false_negative + 0.000000000000000000001)
+        f1 = 2 * precision * recall /(precision + recall + 0.000000000000000000001)
         self.logger.info("threshold={}, prec={:.4f}, recall={:.4f}, f1={:.4f}, tp={}, fp={}, tn={}, fn={} "
                          .format(threshold, precision, recall, f1,
                                  true_positive, false_positive, true_negative, false_negative))
