@@ -89,11 +89,11 @@ class TOfficePredictor:
     def predict_offices_by_ml(self,  cases, min_ml_weight=0.99):
         TOfficePool.write_pool(cases, "cases_to_predict_dump.txt")
         predicted_office_ids = self.office_ml_model.predict_by_portions(cases)
-        cases_filtered = ( (weight, office_id, case.sha256, case) \
+        cases_filtered = ( (weight, office_id, case.sha256) \
                           for case, (office_id, weight) in zip(cases, predicted_office_ids) \
                           if weight >= min_ml_weight)
         already = set()
-        for weight, office_id, sha256, case in sorted(cases_filtered, reverse=True):
+        for weight, office_id, sha256 in sorted(cases_filtered, reverse=True):
             if sha256 in already:
                 continue
             already.add(sha256)
@@ -105,6 +105,7 @@ class TOfficePredictor:
                 # set by the old method
                 src_doc = self.dlrobot_human.get_document(case.sha256)
                 self.get_office_using_max_freq_heuristics(case.sha256, src_doc)
+                already.add(case.sha256)
 
     def update_office_string(self, sha256, src_doc):
         src_doc.office_strings = json.dumps(self.smart_parser_server_client.get_office_strings(sha256),
