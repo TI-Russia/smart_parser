@@ -7,12 +7,24 @@
                     "document_file_id": 1,
                     "document_id": 1,
                     "income_year": 2009,
-                    "media_url": "https://declarator.org/media/documents/1.doc",
+                       "media_url": "https://declarator.org/media/documents/1.doc",
                     "office_id": 4,
                     "web_domain": "05.fsin.su"
                 }
             ],
             "file_ext": ".xlsx"
+        },
+        "0d52c7e5583d92e397179cf2dc6c95d46bd4e5a01ae533af7751cc61bd268a9c": {
+            "file_ext": ".doc",
+            "office_id": 230,
+            "w_refs": [
+                {
+                    "url": "http://orel-region.ru/sendfile.php?id=23530",
+                    "crawl_epoch": 1627886209,
+                    "web_domain": "orel-region.ru"
+                }
+            ],
+            "office_strings": "{\"title\": \"Сведения о доходах, расходах, об имуществе и обязательствах имущественного характера заместителя начальника Управления - начальника отдела реализации проектов информационного общества и повышения качества государственных услуг Управления информационных технологий Орловской области и членов его семьи за период с 1 января по 31 декабря 2017 года\", \"roles\": [], \"departments\": []}"
         },
         "e53861810867c308eba4ac4991f34c0bd10a25f49d675d069d426779a6f4a5f0": {
             "file_ext": ".xlsx",
