@@ -44461,7 +44461,13 @@
     "rkursk.ru": {
         "calc_office_id": 179,
         "http_protocol": "http",
-        "title": "Главная страница | Официальный сервер органов власти Курской области"
+        "title": "Главная страница | Официальный сервер органов власти Курской области",
+        "redirect_to": "kursk.ru"
+    },
+    "kursk.ru": {
+        "calc_office_id": 179,
+        "http_protocol": "https",
+        "title": "Официальный сайт Администрации Курской области"
     },
     "artamonovguber.ru": {
         "calc_office_id": 215,

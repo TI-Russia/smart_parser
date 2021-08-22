@@ -11,7 +11,6 @@ from disclosures_site.declarations.rubrics import TOfficeRubrics
 
 import os
 import json
-from collections import defaultdict
 from django.core.management import BaseCommand
 
 
