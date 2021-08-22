@@ -15,7 +15,8 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--action", dest='action', help="can be stats, select, "
                                                         "print_sha256, print_web_sites, "
-                                                        "delete, to_utf8, titles, check_office, to_json, build_office_train_set")
+                                                        "delete, to_utf8, titles, check_office, to_json,"
+                                                        " build_office_train_set, print_office_id")
     parser.add_argument("--input-file", dest='input_file')
     parser.add_argument("--output-file", dest='output_file', required=False)
     parser.add_argument("--sha256-list-file", dest='sha256_list_file', required=False)
@@ -122,6 +123,11 @@ def build_declarator_office_train_set(logger, dlrobot_human, output_pool_path):
     TOfficePool.write_pool(cases, output_pool_path)
 
 
+def print_office_id(dlrobot_human: TDlrobotHumanFileDBM):
+    for key, src_doc in dlrobot_human.get_all_documents():
+        print("{}\t{}".format(key, src_doc.calculated_office_id))
+
+
 def main():
     args = parse_args()
     logger = setup_logging(logger_name="dlrobot_human")
@@ -143,7 +149,8 @@ def main():
         to_json(dlrobot_human)
     elif args.action == "build_office_train_set":
         build_declarator_office_train_set(logger, dlrobot_human, args.predict_office_pool_path)
-
+    elif args.action == "print_office_id":
+        print_office_id(dlrobot_human)
     else:
         raise Exception("unknown action")
 
