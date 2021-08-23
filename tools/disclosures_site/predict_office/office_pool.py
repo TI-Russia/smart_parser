@@ -29,11 +29,15 @@ class TOfficePool:
                         already.add(hash(line))
 
                     sha256, web_domain, office_id, office_strings = line.strip().split("\t")
-                    if int(office_id) == self.UNKNOWN_OFFICE_ID:
-                        self.logger.debug("skip {} (unknown office id)".format(sha256))
-                        continue
+                    if office_id == 'None':
+                        office_id = None
+                    else:
+                        if int(office_id) == self.UNKNOWN_OFFICE_ID:
+                            self.logger.debug("skip {} (unknown office id)".format(sha256))
+                            continue
+                        office_id = int(office_id)
 
-                    case = TPredictionCase(self.office_index, sha256, web_domain, int(office_id), office_strings)
+                    case = TPredictionCase(self.office_index, sha256, web_domain, office_id, office_strings)
                     if len(case.text) == 0:
                         self.logger.debug("skip {} (empty text)".format(sha256))
                         continue
@@ -77,14 +81,23 @@ class TOfficePool:
             tsv_writer = csv.writer(outp, delimiter="\t")
             for case, pred_proba_y in zip(self.pool, test_y_pred):
                 hypots = dict()
-                if case.true_office_id is not None:
-                    hypots[case.true_office_id] = 1
+                calculated_office_id = case.true_office_id
+                if calculated_office_id is None:
+                    site_info = self.office_index.web_sites.get_site_by_web_domain(case.web_domain)
+                    if site_info is not None:
+                        calculated_office_id = site_info.calculated_office_id
+                    else:
+                        self.logger.error("cannot find web domain {} in web_sites.json, please, update"
+                                          " web_sites.json".format(case.web_domain))
+
+                if calculated_office_id is not None:
+                    hypots[calculated_office_id] = 1
 
                 learn_target, weight = max(enumerate(pred_proba_y), key=operator.itemgetter(1))
                 max_office_id = self.office_index.get_office_id_by_ml_office_id(learn_target)
                 hypots[max_office_id] = float(weight)
 
-                if case.true_office_id != max_office_id:
+                if calculated_office_id != max_office_id:
                     for o in self.office_index.get_offices_by_web_domain(case.web_domain):
                         hypots[o] = 0
                     for ml_office_id, weight in enumerate(pred_proba_y):
@@ -94,15 +107,22 @@ class TOfficePool:
 
                 office_infos = list()
                 for office_id, weight in sorted(hypots.items(), key=operator.itemgetter(1), reverse=True):
+                    region_id = self.office_index.get_office_region(office_id)
+                    if region_id is not None:
+                        region_str = self.office_index.regions.get_region_by_id(region_id).name
+                    else:
+                        region_str = "none"
+
                     rec =  {
                         'hypot_office_id': int(office_id),
                         'hypot_office_name': self.office_index.get_office_name(office_id),
+                        'hypot_region': region_str,
                         "weight": round(float(weight), 4),
                     }
                     if len(hypots) == 1:
                         rec['status'] = "true_positive"
-                    if office_id == case.true_office_id:
-                        rec['true_office_id'] = 1
+                    if office_id == calculated_office_id:
+                        rec['calculated_office_id'] = 1
                     office_infos.append(rec)
                 office_strings = json.loads(case.office_strings)
                 rec = {

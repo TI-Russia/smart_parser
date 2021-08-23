@@ -66020,7 +66020,8 @@
         "status": "abandoned",
         "dlrobot_max_time_coeff": 2.0,
         "http_protocol": "https",
-        "redirect_to": "minfin.gov.ru/ru"
+        "comments": "слэш в конце обязателен",
+        "redirect_to": "minfin.gov.ru/ru/"
     },
     "mintrans.gov.ru": {
         "calc_office_id": 605,
