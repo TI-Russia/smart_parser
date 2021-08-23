@@ -1085,8 +1085,11 @@ class TRegion:
 class TRussianRegions:
     def __init__(self):
         self.regions = list()
+        self.max_region_id = 0
         for region in RUSSIAN_REGIONS:
-            self.regions.append(TRegion().from_json(region))
+            r = TRegion().from_json(region)
+            self.regions.append(r)
+            self.max_region_id = max(self.max_region_id, r.id)
         self.region_name_to_region = dict()
         self.region_id_to_region = dict()
         for r in self.regions:
@@ -1130,7 +1133,7 @@ class TRussianRegions:
             return self.region_id_to_region[108]
         elif russian_name.find('алания') != -1:
             return self.region_id_to_region[17]
-        elif russian_name.find(' тыва') != -1:
+        elif russian_name.find(' тыв') != -1:
             return self.region_id_to_region[85]
         elif russian_name.find('карачаево-') != -1:
             return self.region_id_to_region[11]

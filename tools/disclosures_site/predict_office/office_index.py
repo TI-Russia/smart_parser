@@ -52,7 +52,6 @@ class TOfficePredictIndex:
         self.deterministic_web_domains = None
         self.office_id_2_ml_office_id = None
         self.ml_office_id_2_office_id = None
-        self.region_words = None
         self.web_sites = TDeclarationWebSiteList(self.logger)
         self.web_sites.load_from_disk()
         self.regions = TRussianRegions()
@@ -62,6 +61,9 @@ class TOfficePredictIndex:
 
     def get_unigrams_count(self):
         return len(self.office_name_unigrams)
+
+    def get_max_region_id(self):
+        return self.regions.max_region_id
 
     def get_web_domain_index(self, web_domain):
         s = self.web_domains.get(web_domain)
@@ -114,15 +116,22 @@ class TOfficePredictIndex:
     def get_word_stems(text, stem_size=4, add_starter_and_enders=True):
         if add_starter_and_enders:
             yield "^"
-        for w in re.split("[\s,\.;:_\"* ()«»-]", text.lower()):
-            if len(w) > 0:
-                #ignore year
-                if w.startswith("20") and len(w) == 4:
-                    continue
-                if len(w) <= stem_size:
-                    yield w
+        for word in re.split("[\s,\.;:_\"* ()«»]", text.lower()):
+            if len(word) == 0:
+                continue
+            #ignore year
+            if word.startswith("20") and len(word) == 4:
+                continue
+            hyphen_index = word.find('-')
+            if hyphen_index > 0:
+                if  word[hyphen_index-1] == 'о': #"ямало-ненецкий" не надо разбивать
+                    yield word[:stem_size * 2]
                 else:
-                    yield w[0:stem_size]
+                    w1,w2 = word.split('-', 1)
+                    yield w1[:stem_size]  #  split каменск-уральский
+                    yield w2[:stem_size]
+            else:
+                yield word[:stem_size]
         if add_starter_and_enders:
             yield "$"
 
@@ -147,7 +156,6 @@ class TOfficePredictIndex:
             self.offices = dict((int(k), v) for k, v in js['offices'].items())
             self.web_domains = dict((k, TOfficeWebDomain.from_json(v)) for k, v in js['web_domains'].items())
             self.deterministic_web_domains = js['deterministic_web_domains']
-            self.region_words = js['region_words']
             self.office_id_2_ml_office_id = dict((int(k), v) for k,v in js['office_id_2_ml_office_id'].items())
             self.ml_office_id_2_office_id = dict((int(k), v) for k,v in js['ml_office_id_2_office_id'].items())
         self.logger.info("bigrams count = {}".format(self.get_bigrams_count()))
@@ -161,7 +169,6 @@ class TOfficePredictIndex:
                 'offices': self.offices,
                 'web_domains': dict((k, v.to_json()) for k, v in self.web_domains.items()),
                 'deterministic_web_domains': self.deterministic_web_domains,
-                'region_words': self.region_words,
                 'office_id_2_ml_office_id': self.office_id_2_ml_office_id,
                 'ml_office_id_2_office_id': self.ml_office_id_2_office_id,
             }

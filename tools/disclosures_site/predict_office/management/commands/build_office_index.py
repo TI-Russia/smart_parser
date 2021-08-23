@@ -1,7 +1,6 @@
 from common.urllib_parse_pro import TUrlUtf8Encode, urlsplit_pro
 from disclosures_site.predict_office.office_index import TOfficePredictIndex, TOfficeNgram, TOfficeWebDomain
 from common.logging_wrapper import setup_logging
-
 from django.core.management import BaseCommand
 from declarations.documents import OFFICES
 from collections import defaultdict
@@ -49,7 +48,6 @@ class TOfficePredictIndexBuilder(TOfficePredictIndex):
         self.logger.info("build bigrams")
         office_bigrams = defaultdict(set)
         office_stems = defaultdict(set)
-        region_words = set()
         self.offices = dict()
         sql = "select id, name, region_id from declarations_office"
         self.logger.info(sql)
@@ -66,11 +64,6 @@ class TOfficePredictIndexBuilder(TOfficePredictIndex):
                     continue
                 for b in self.get_bigrams(name):
                     office_bigrams[b].add(office_id)
-                region = self.regions.get_region_by_id(region_id)
-                for w in TOfficePredictIndex.get_word_stems(region.name):
-                    region_words.add(w)
-                for w in TOfficePredictIndex.get_word_stems(region.short_name):
-                    region_words.add(w)
                 for w in TOfficePredictIndex.get_word_stems(name, add_starter_and_enders=False):
                     office_stems[w].add(office_id)
 
@@ -79,8 +72,6 @@ class TOfficePredictIndexBuilder(TOfficePredictIndex):
 
         self.office_name_unigrams = self.ngrams_from_default_dict(office_stems, 3)
         self.logger.info("unigrams count = {}".format(self.get_unigrams_count()))
-
-        self.region_words = dict((k, i) for (i, k) in enumerate(region_words))
 
     def build_web_domains(self):
         self.logger.info("build web domains")

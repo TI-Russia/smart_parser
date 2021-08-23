@@ -40,16 +40,17 @@ class DenseLayerForSparse(tf.keras.layers.Layer):
 
 class TTensorFlowOfficeModel(TPredictionModelBase):
 
-    def get_bigram_feature(self, case: TPredictionCase):
+    def get_name_bigram_feature(self, case: TPredictionCase):
         site_title = self.office_index.web_sites.get_title_by_web_domain(case.web_domain)
         bigrams = set()
         for b in TOfficePredictIndex.get_bigrams(case.text + " " + site_title):
             bigram_id = self.office_index.get_bigram_id(b)
             if bigram_id is not None:
+                #print(b)
                 bigrams.add(bigram_id)
         return sorted(list(bigrams))
 
-    def get_unigram_feature(self, case: TPredictionCase):
+    def get_name_unigram_feature(self, case: TPredictionCase):
         site_title = self.office_index.web_sites.get_title_by_web_domain(case.web_domain)
         unigrams = set()
         for b in TOfficePredictIndex.get_word_stems(case.text + " " + site_title):
@@ -58,15 +59,20 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
                 unigrams.add(ngram_id)
         return sorted(list(unigrams))
 
+    def get_region_feature(self, case: TPredictionCase):
+        site_title = self.office_index.web_sites.get_title_by_web_domain(case.web_domain)
+        txt = case.text + " " + site_title
+        return self.office_index.regions.get_region_all_forms(txt, unknown_region=0)
+
     def to_ml_input_features(self, cases):
-        def get_bigram_feature_gen():
+        def get_name_bigram_feature_gen():
             for index, case in enumerate(cases):
-                for ngram_id in self.get_bigram_feature(case):
+                for ngram_id in self.get_name_bigram_feature(case):
                     yield index, ngram_id
 
-        def get_unigram_feature_gen():
+        def get_name_unigram_feature_gen():
             for index, case in enumerate(cases):
-                for ngram_id in self.get_unigram_feature(case):
+                for ngram_id in self.get_name_unigram_feature(case):
                     yield index, ngram_id
 
         def get_web_domain_feature_gen():
@@ -74,14 +80,19 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
                 web_domain_index = self.office_index.get_web_domain_index(case.web_domain)
                 yield index, web_domain_index
 
-        indices = list(get_bigram_feature_gen())
+        def get_region_feature_gen():
+            for index, case in enumerate(cases):
+                region_id = self.get_region_feature(case)
+                yield index, region_id
+
+        indices = list(get_name_bigram_feature_gen())
         values = [1.0] * len(indices)
         bigrams = tf.SparseTensor(indices=indices,
                                values=values,
                                dense_shape=(len(cases), self.office_index.get_bigrams_count())
                     )
 
-        indices = list(get_unigram_feature_gen())
+        indices = list(get_name_unigram_feature_gen())
         values = [1.0] * len(indices)
         unigrams = tf.SparseTensor(indices=indices,
                                values=values,
@@ -94,10 +105,19 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
                                   values=values,
                                   dense_shape=(len(cases), len(self.office_index.web_domains))
                                   )
+
+        indices = list(get_region_feature_gen())
+        values = [1.0] * len(indices)
+        region_words = tf.SparseTensor(indices=indices,
+                               values=values,
+                               dense_shape=(len(cases), self.office_index.get_max_region_id() + 1)
+                    )
+
         return {
             "bigrams_feat": bigrams,
             "web_domain_feat": web_domains,
             "unigrams_feat": unigrams,
+            "region_words": region_words
         }
 
     def to_ml_input(self, cases, name):
