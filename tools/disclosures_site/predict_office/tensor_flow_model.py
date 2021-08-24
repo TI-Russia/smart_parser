@@ -103,7 +103,7 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         values = [1.0] * len(indices)
         web_domains = tf.SparseTensor(indices=indices,
                                   values=values,
-                                  dense_shape=(len(cases), len(self.office_index.web_domains))
+                                  dense_shape=(len(cases), self.office_index.get_web_domains_count())
                                   )
 
         indices = list(get_region_feature_gen())

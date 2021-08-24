@@ -98,10 +98,8 @@ class TOfficePool:
                 hypots[max_office_id] = float(weight)
 
                 if calculated_office_id != max_office_id:
-                    for o in self.office_index.get_offices_by_web_domain(case.web_domain):
-                        hypots[o] = 0
                     for ml_office_id, weight in enumerate(pred_proba_y):
-                        if weight > 0.8:
+                        if weight > 0.1:
                             office_id = self.office_index.get_office_id_by_ml_office_id(ml_office_id)
                             hypots[office_id] = weight
 

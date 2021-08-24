@@ -52,16 +52,6 @@ class TOfficePredictor:
         src_doc.calculated_office_id = office_id
         self.dlrobot_human.update_source_document(sha256, src_doc)
 
-    def predict_office_deterministic_web_domain(self, sha256, src_doc: TSourceDocument):
-        web_ref: TWebReference
-        for web_ref in src_doc.web_references:
-            web_domain = urlsplit_pro(web_ref._site_url).hostname
-            office_id = self.office_ml_model.get_office_id_by_deterministic_web_domain(web_domain)
-            if office_id is not None:
-                self.set_office_id(sha256, src_doc, office_id, "deterministic web domain {}".format(web_domain))
-                return True
-        return False
-
     def predict_tax_office(self, sha256, src_doc: TSourceDocument):
         web_ref: TWebReference
         for web_ref in src_doc.web_references:

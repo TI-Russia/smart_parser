@@ -20,11 +20,6 @@ class TPredictionModelBase:
             self.test_pool = TOfficePool(self.logger, office_index=self.office_index)
             self.test_pool.read_cases(test_pool)
 
-    def get_office_id_by_deterministic_web_domain(self, web_domain: str):
-        assert '/' not in web_domain
-        office_id = self.office_index.deterministic_web_domains.get(web_domain)
-        return office_id
-
     def build_handmade_regions(self, pool: TOfficePool):
         regions = TRussianRegions()
         y_true = list()

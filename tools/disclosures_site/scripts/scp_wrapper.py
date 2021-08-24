@@ -20,8 +20,11 @@ def parse_args():
 class TCopier:
     def __init__(self, args):
         self.args = args
-        assert (os.environ.get("password_remote_host") is not None)
-        self.remote_password = os.environ["password_remote_host"]
+        if os.environ.get("password_remote_host") is not None:
+            self.remote_password = os.environ["password_remote_host"]
+        else:
+            with open(os.path.expanduser('~/.password_remote_host')) as inp:
+                self.remote_password = inp.read().strip()
 
     def get_files(self):
         for l in self.args.basename_files:

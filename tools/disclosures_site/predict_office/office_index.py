@@ -24,20 +24,18 @@ class TOfficeNgram:
 
 
 class TOfficeWebDomain:
-    def __init__(self, web_domain_id, offices=None):
+    def __init__(self, web_domain_id):
         self.web_domain_id = web_domain_id
-        self.offices = offices
 
     def to_json(self):
         rec =  {
             "id": self.web_domain_id,
-            "offices": self.offices
         }
         return rec
 
     @staticmethod
     def from_json(js):
-        return TOfficeWebDomain(js['id'], js['offices'])
+        return TOfficeWebDomain(js['id'])
 
 
 class TOfficePredictIndex:
@@ -49,7 +47,6 @@ class TOfficePredictIndex:
         self.office_name_unigrams = None
         self.offices = None
         self.web_domains = None
-        self.deterministic_web_domains = None
         self.office_id_2_ml_office_id = None
         self.ml_office_id_2_office_id = None
         self.web_sites = TDeclarationWebSiteList(self.logger)
@@ -71,6 +68,9 @@ class TOfficePredictIndex:
             return 0
         return s.web_domain_id
 
+    def get_web_domains_count(self):
+        return len(self.web_domains)
+
     def get_web_domain_by_url(self, document_url, site_url):
         # first take web domain from which the document was dowloaded
         web_domain = urlsplit_pro(document_url).hostname
@@ -81,12 +81,6 @@ class TOfficePredictIndex:
         if self.web_sites.get_site_by_web_domain(web_domain) is None:
             self.logger.error("web domain {} is missing in web_sites.json".format(site_url))
         return web_domain
-
-    def get_offices_by_web_domain(self, web_domain):
-        s = self.web_domains.get(web_domain)
-        if s is None:
-            return list()
-        return s.offices
 
     def get_ml_office_id(self, office_id: int):
         return self.office_id_2_ml_office_id.get(office_id)
@@ -116,7 +110,8 @@ class TOfficePredictIndex:
     def get_word_stems(text, stem_size=4, add_starter_and_enders=True):
         if add_starter_and_enders:
             yield "^"
-        for word in re.split("[\s,\.;:_\"* ()«»]", text.lower()):
+        text = text.lower().replace('ё', 'е')
+        for word in re.split("[\s,\.;:_\"* ()«»]", text):
             if len(word) == 0:
                 continue
             #ignore year
@@ -155,7 +150,6 @@ class TOfficePredictIndex:
             self.office_name_unigrams = dict((k, TOfficeNgram.from_json(v)) for k, v in js['unigrams'].items())
             self.offices = dict((int(k), v) for k, v in js['offices'].items())
             self.web_domains = dict((k, TOfficeWebDomain.from_json(v)) for k, v in js['web_domains'].items())
-            self.deterministic_web_domains = js['deterministic_web_domains']
             self.office_id_2_ml_office_id = dict((int(k), v) for k,v in js['office_id_2_ml_office_id'].items())
             self.ml_office_id_2_office_id = dict((int(k), v) for k,v in js['ml_office_id_2_office_id'].items())
         self.logger.info("bigrams count = {}".format(self.get_bigrams_count()))
@@ -168,7 +162,6 @@ class TOfficePredictIndex:
                 'unigrams': dict((k, v.to_json()) for k, v in self.office_name_unigrams.items()),
                 'offices': self.offices,
                 'web_domains': dict((k, v.to_json()) for k, v in self.web_domains.items()),
-                'deterministic_web_domains': self.deterministic_web_domains,
                 'office_id_2_ml_office_id': self.office_id_2_ml_office_id,
                 'ml_office_id_2_office_id': self.ml_office_id_2_office_id,
             }
