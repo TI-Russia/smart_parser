@@ -68,6 +68,15 @@ class TOfficePredictIndex:
             return 0
         return s.web_domain_id
 
+    def is_office_child(self, child_id, parent_id):
+        return child_id is not None and self.offices[child_id]['parent_id'] == parent_id
+
+    def is_office_child_or_grandchild(self, child_id, parent_id):
+        if self.is_office_child(child_id, parent_id):
+            return True
+        p = self.offices[child_id]['parent_id']
+        return self.is_office_child(p, parent_id)
+
     def get_web_domains_count(self):
         return len(self.web_domains)
 
@@ -142,6 +151,11 @@ class TOfficePredictIndex:
 
         for w1, w2, w3 in zip(words[:-2], words[1:-1], words[2:]):
             yield "_".join((w1, w2, w3))
+
+    @staticmethod
+    def split_web_domain(web_domain):
+        for x in web_domain.split('.'):
+            yield x
 
     def read(self):
         with open(self.index_file_path) as inp:

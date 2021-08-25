@@ -15,14 +15,35 @@ class TPredictionCase:
         else:
             self.true_region_id = None
 
+    @staticmethod
+    def truncate_title(title):
+        normal_title_len = 500
+        context_size = 50
+        if title is None or len(title) <= normal_title_len:
+            return False, title
+
+        lower_title = title.lower()
+        title_start = lower_title.find('сведения')
+        if title_start == -1:
+            title_start = lower_title.find('c в е д')
+        if title_start != -1:
+            title_start = max(0, title_start - context_size)
+            title_end = lower_title.find('фамилия', title_start)
+            if title_end < 300:
+                title_end = title_start + normal_title_len + 2 * context_size
+            title = title[title_start: title_end]
+            return True, title
+        return False, title
+
     def get_text_from_office_strings(self):
         if self.office_strings is None or len(self.office_strings) == 0:
             return ""
         office_strings = json.loads(self.office_strings)
         text = ""
-        title = office_strings['title']
+        _, title = TPredictionCase.truncate_title(office_strings['title'])
+
         if title is not None and len(title) > 0:
-             text += office_strings['title'] + " "
+             text += title + " "
         for t in office_strings['roles']:
             if len(t) > 0:
                 text += t + " "
@@ -53,5 +74,5 @@ class TPredictionCase:
         target = self.office_index.get_ml_office_id(self.true_office_id)
         if target is None:
             raise Exception("sha256 = {} , cannot get ml office id by office_id = {}".format(
-                self.sha256, self.true_office_id    ))
+                self.sha256, self.true_office_id))
         return target

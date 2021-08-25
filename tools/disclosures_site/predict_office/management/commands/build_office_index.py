@@ -32,6 +32,7 @@ class TOfficePredictIndexBuilder(TOfficePredictIndex):
             self.offices[office.office_id] = {
                 'name': office.name,
                 'region': region_id,
+                'parent_id': office.parent_id
             }
             for b in self.get_bigrams(office.name):
                 office_bigrams[b].add(office.office_id)
@@ -47,7 +48,10 @@ class TOfficePredictIndexBuilder(TOfficePredictIndex):
     def build_web_domains(self):
         self.web_domains = dict()
         for web_domain in self.web_sites.web_domain_to_web_site.keys():
-            self.web_domains[web_domain] = TOfficeWebDomain(len(self.web_domains))
+            if  web_domain  is not None:
+                for w in TOfficePredictIndex.split_web_domain(web_domain):
+                    if w not in self.web_domains:
+                        self.web_domains[w] = TOfficeWebDomain(len(self.web_domains))
         self.logger.info("built {} web domains".format(len(self.web_domains)))
 
     def build_ml_office_indices(self):

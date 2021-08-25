@@ -10,6 +10,7 @@ import os
 import json
 import sys
 import argparse
+from disclosures_site.predict_office.prediction_case import TPredictionCase
 
 
 class TSmartParserCacheClient(object):
@@ -161,6 +162,7 @@ class TSmartParserCacheClient(object):
         props = js.get('document_sheet_props', [])
         if len(props) > 0 and props[0].get('sheet_title') is not None:
             rec['title'] = normalize_whitespace(props[0]['sheet_title'])
+        _, rec['title'] = TPredictionCase.truncate_title(rec['title'])
         roles = set()
         departments = set()
         for p in js.get('persons', []):

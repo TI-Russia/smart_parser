@@ -77,8 +77,10 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
 
         def get_web_domain_feature_gen():
             for index, case in enumerate(cases):
-                web_domain_index = self.office_index.get_web_domain_index(case.web_domain)
-                yield index, web_domain_index
+                sorted_ids = sorted(set(self.office_index.get_web_domain_index(w)
+                             for w in TOfficePredictIndex.split_web_domain(case.web_domain)))
+                for id in sorted_ids:
+                    yield index, id
 
         def get_region_feature_gen():
             for index, case in enumerate(cases):
@@ -216,9 +218,13 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
                 else:
                     true_negative += 1
                     status = "true_negative"
+            true_office_id = self.office_index.get_office_id_by_ml_office_id(true_ml_office_id)
+            pred_office_id = self.office_index.get_office_id_by_ml_office_id(ml_office_id)
+            if self.office_index.is_office_child_or_grandchild(true_office_id, pred_office_id):
+                status += "(pred_parent_office)"
             self.logger.debug("{} true_office_id = {} pred_office_id = {} weight = {} sha256 = {}".format(
-                status, self.office_index.get_office_id_by_ml_office_id(true_ml_office_id),
-                self.office_index.get_office_id_by_ml_office_id(ml_office_id), weight, case.sha256))
+                status, true_office_id,
+                pred_office_id, weight, case.sha256))
         precision = true_positive / (true_positive + false_positive + 0.000000000000000000001)
         recall = true_positive / (true_positive + false_negative + 0.000000000000000000001)
         f1 = 2 * precision * recall /(precision + recall + 0.000000000000000000001)
