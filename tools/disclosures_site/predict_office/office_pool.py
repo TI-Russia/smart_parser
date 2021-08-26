@@ -127,7 +127,7 @@ class TOfficePool:
                     "INPUT:sha256":  case.sha256,
                     "INPUT:web_domain": case.web_domain,
                     "INPUT:web_domain_title": self.office_index.web_sites.get_title_by_web_domain(case.web_domain),
-                    'INPUT:doc_title': TPredictionCase.truncate_title(office_strings.get('title', ''))[1],
+                    'INPUT:doc_title': office_strings.get('title', ''),
                     'INPUT:doc_roles': ";".join(office_strings.get('roles', [])),
                     'INPUT:doc_departments': ";".join(office_strings.get('departments', [])),
                     'INPUT:office_hypots': json.dumps(office_infos, ensure_ascii=False)

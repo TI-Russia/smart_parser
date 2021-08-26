@@ -109,22 +109,10 @@ class TOfficePredictor:
                 self.set_office_id(sha256, src_doc, web_site.calculated_office_id, "max freq heuristics")
                 return
 
-    def truncate_title(self, sha256, src_doc):
-        js = json.loads(src_doc.office_strings)
-        truncated, title = TPredictionCase.truncate_title(js['title'])
-        if truncated:
-            js['title'] = title
-            src_doc.office_strings = json.dumps(js, ensure_ascii=False)
-            self.dlrobot_human.update_source_document(sha256, src_doc)
-
     def predict_office(self):
         cases_for_ml_predict = list()
         src_doc: TSourceDocument
         for sha256, src_doc in self.dlrobot_human.get_all_documents():
-
-            if src_doc.office_strings is not None:
-                self.truncate_title(sha256, src_doc)
-
             if len(src_doc.decl_references) > 0:
                 self.set_office_id(sha256,src_doc, src_doc.decl_references[0].office_id, "declarator")
                 if src_doc.office_strings is None:

@@ -43,7 +43,11 @@ class TDlrobotHumanManager:
         for key, value in self.dlrobot_human.get_all_documents():
             print("{}\t{}".format(key, value.get_web_site()))
 
-    def read_sha256_list(self):
+    def has_sha256_filters(self):
+        return self.args.sha256_list_file is not None or self.args.sha256 is not None
+
+    def build_sha256_list(self):
+        assert self.has_sha256_filters()
         if self.args.sha256_list_file is not None:
             sha_set = set()
             with open(self.args.sha256_list_file) as inp:
@@ -51,24 +55,36 @@ class TDlrobotHumanManager:
                     sha_set.add(x.strip())
             return sha_set
         else:
-            assert self.args.sha256 is not None
             return {self.args.sha256}
 
-    def select_or_delete_by_sha256(self, output_file, select=True):
-        sha256_list = self.read_sha256_list()
+    def select_by_sha256(self):
+        sha256_list = self.build_sha256_list()
+        assert self.args.output_file is not None
+
+        new_dlrobot_human = TDlrobotHumanFileDBM(self.args.output_file)
+        new_dlrobot_human.create_db()
+
+        for sha256 in sha256_list:
+            src_doc = self.dlrobot_human.get_document(sha256)
+            new_dlrobot_human.update_source_document(sha256, src_doc)
+
+        new_dlrobot_human.close_db()
+
+    def delete_by_sha256(self, output_file, select=True):
+        sha256_list = self.build_sha256_list()
         assert self.args.output_file is not None
 
         new_dlrobot_human = TDlrobotHumanFileDBM(output_file)
         new_dlrobot_human.create_db()
 
         for sha256, src_doc in self.dlrobot_human.get_all_documents():
-            if (sha256 in sha256_list) == select:
+            if sha256 not in sha256_list:
                 new_dlrobot_human.update_source_document(sha256, src_doc)
 
         new_dlrobot_human.close_db()
 
-    def to_utf8(self, output_file):
-        new_dlrobot_human = TDlrobotHumanFileDBM(output_file)
+    def to_utf8(self):
+        new_dlrobot_human = TDlrobotHumanFileDBM(self.args.output_file)
         new_dlrobot_human.create_db()
         src_doc: TSourceDocument
         for key, src_doc in self.dlrobot_human.get_all_documents():
@@ -77,7 +93,18 @@ class TDlrobotHumanManager:
         new_dlrobot_human.close_db()
 
     def to_json(self):
-        print(json.dumps(self.dlrobot_human.to_json(), indent=4, ensure_ascii=False))
+        if self.has_sha256_filters():
+            self.args.output_file = "tmp.dbm"
+            self.select_by_sha256()
+            tmp_db = TDlrobotHumanFileDBM(self.args.output_file)
+            tmp_db.open_db_read_only()
+            js = tmp_db.to_json()
+            tmp_db.close_db()
+            os.unlink(self.args.output_file)
+        else:
+            js = self.dlrobot_human.to_json()
+
+        print(json.dumps(js, indent=4, ensure_ascii=False))
 
     def check_office(self):
         pool = TOfficePool(self.logger)
@@ -109,12 +136,14 @@ class TDlrobotHumanManager:
                     src_doc.calculated_office_id is not None:
                 yield sha256, src_doc, src_doc.calculated_office_id
 
-    def get_generator_by_ml_pool(self):
+    def get_generator_by_source_ml_pool(self):
         pool = TOfficePool(self.logger)
         pool.read_cases(self.args.input_predict_office_pool_path)
-        for case in pool.pool:
-            src_doc = self.dlrobot_human.get_document(case.sha256)
-            yield case.sha256, src_doc, case.true_office_id
+        with open(self.args.input_predict_office_pool_path) as inp:
+            for line in inp:
+                sha256, office_id = line.strip().split("\t")
+                src_doc = self.dlrobot_human.get_document(sha256)
+                yield sha256, src_doc, int(office_id)
 
     def build_predict_office_ml_pool(self, entries_generator):
         cases = list()
@@ -150,11 +179,13 @@ class TDlrobotHumanManager:
         elif action == "build_office_train_set":
             self.build_predict_office_ml_pool(self.get_predict_train_entries)
         elif action == "rebuild_ml_pool":
-            self.build_predict_office_ml_pool(self.get_generator_by_ml_pool)
-        elif action == "select" or action == "delete":
-            self.select_or_delete_by_sha256(self.args.output_file, action == "select")
+            self.build_predict_office_ml_pool(self.get_generator_by_source_ml_pool)
+        elif action == "select":
+            self.select_by_sha256()
+        elif action == "delete":
+            self.delete_by_sha256()
         elif action == "to_utf8":
-            self.to_utf8(self.args.output_file)
+            self.to_utf8()
         elif action == "to_json":
             self.to_json()
         elif action == "print_office_id":

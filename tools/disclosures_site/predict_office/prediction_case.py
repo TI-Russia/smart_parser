@@ -20,7 +20,7 @@ class TPredictionCase:
     @staticmethod
     def truncate_title(title):
         normal_title_len = 500
-        context_size = 50
+        context_size = 60
         if title is None or len(title) <= normal_title_len:
             return False, title
 
@@ -42,7 +42,7 @@ class TPredictionCase:
             return ""
         office_strings = json.loads(self.office_strings)
         text = ""
-        _, title = TPredictionCase.truncate_title(office_strings['title'])
+        title = office_strings['title']
 
         if title is not None and len(title) > 0:
              text += title + " "
