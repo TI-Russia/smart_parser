@@ -130,7 +130,7 @@ class TOfficePredictor:
                     web_ref: TWebReference
                     for web_ref in src_doc.web_references:
                         case = TPredictionCase.build_from_web_reference(self.office_ml_model.office_index,sha256,
-                                                                 src_doc, web_ref)
+                                                                 src_doc, web_ref, true_office_id=None)
                         cases_for_ml_predict.append(case)
         if len(cases_for_ml_predict) > 0:
             self.predict_offices_by_ml(cases_for_ml_predict)
