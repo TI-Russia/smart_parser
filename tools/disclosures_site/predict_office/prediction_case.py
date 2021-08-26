@@ -1,3 +1,5 @@
+from declarations.input_json import TSourceDocument, TWebReference
+
 import json
 
 
@@ -76,3 +78,15 @@ class TPredictionCase:
             raise Exception("sha256 = {} , cannot get ml office id by office_id = {}".format(
                 self.sha256, self.true_office_id))
         return target
+
+    @staticmethod
+    def build_from_web_reference(office_index, sha256, src_doc: TSourceDocument, web_ref: TWebReference,
+                                 true_office_id):
+        web_domain = office_index.get_web_domain_by_url(web_ref.url, web_ref._site_url)
+        return TPredictionCase(
+            office_index,
+            sha256=sha256,
+            web_domain=web_domain,
+            true_office_id=true_office_id,
+            office_strings=src_doc.office_strings
+        )

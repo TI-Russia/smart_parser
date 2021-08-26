@@ -224,7 +224,7 @@ class TDlrobotHumanFileDBM:
     def get_documents_count(self):
         return len(self.db)
 
-    def get_document(self, sha256):
+    def get_document(self, sha256) -> TSourceDocument:
         return TSourceDocument().from_json(json.loads(self.db[sha256]))
 
     def get_document_maybe(self, sha256):
