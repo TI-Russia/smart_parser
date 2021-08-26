@@ -221,6 +221,12 @@ class TDlrobotHumanFileDBM:
             yield sha256, TSourceDocument().from_json(js)
             k = self.db.nextkey(k)
 
+    def get_all_keys(self):
+        k = self.db.firstkey()
+        while k is not None:
+            yield k.decode('latin')
+            k = self.db.nextkey(k)
+
     def get_documents_count(self):
         return len(self.db)
 

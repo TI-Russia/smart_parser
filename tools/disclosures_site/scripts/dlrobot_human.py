@@ -20,8 +20,8 @@ def parse_args():
     parser.add_argument("--output-file", dest='output_file', required=False)
     parser.add_argument("--sha256-list-file", dest='sha256_list_file', required=False)
     parser.add_argument("--sha256", dest='sha256', required=False)
-    parser.add_argument("--output-predict-office-pool", dest='output_predict_office_pool_path', required=False)
     parser.add_argument("--input-predict-office-pool", dest='input_predict_office_pool_path', required=False)
+    parser.add_argument("--output-predict-office-pool", dest='output_predict_office_pool_path', required=False)
     return parser.parse_args()
 
 
@@ -116,7 +116,7 @@ class TDlrobotHumanManager:
             src_doc = self.dlrobot_human.get_document(case.sha256)
             yield case.sha256, src_doc, case.true_office_id
 
-    def build_predict_office_ml_pool(self, entries_generator, output_pool_path):
+    def build_predict_office_ml_pool(self, entries_generator):
         cases = list()
         src_doc: TSourceDocument
         for sha256, src_doc, true_office_id in entries_generator():
@@ -128,12 +128,16 @@ class TDlrobotHumanManager:
                 if case.web_domain not in found_web_domains:
                     found_web_domains.add(case.web_domain)
                     cases.append(case)
-        self.logger.info("write to {}".format(output_pool_path))
-        TOfficePool.write_pool(cases, output_pool_path)
+        self.logger.info("write to {}".format(self.args.output_predict_office_pool_path))
+        TOfficePool.write_pool(cases, self.args.output_predict_office_pool_path)
 
     def print_office_id(self):
         for key, src_doc in self.dlrobot_human.get_all_documents():
             print("{}\t{}".format(key, src_doc.calculated_office_id))
+
+    def print_sha256(self):
+        for key in self.dlrobot_human.get_all_keys():
+            print(key)
 
     def main(self):
         action = self.args.action
@@ -147,14 +151,16 @@ class TDlrobotHumanManager:
             self.build_predict_office_ml_pool(self.get_predict_train_entries)
         elif action == "rebuild_ml_pool":
             self.build_predict_office_ml_pool(self.get_generator_by_ml_pool)
-        elif action == "select" or args.action == "delete":
-            self.select_or_delete_by_sha256(self.args.output_file, self.args.action == "select")
+        elif action == "select" or action == "delete":
+            self.select_or_delete_by_sha256(self.args.output_file, action == "select")
         elif action == "to_utf8":
             self.to_utf8(self.args.output_file)
         elif action == "to_json":
             self.to_json()
         elif action == "print_office_id":
             self.print_office_id()
+        elif action == "print_sha256":
+            self.print_sha256()
         else:
             raise Exception("unknown action")
 
