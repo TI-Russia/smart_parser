@@ -50,3 +50,4 @@ def get_human_requests(input_access_log_path):
                     continue
                 requests.append(path)
         return requests
+

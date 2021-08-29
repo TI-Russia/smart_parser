@@ -1,16 +1,13 @@
 from django.core.management import BaseCommand
 from common.logging_wrapper import setup_logging
 import declarations.models as models
-from common.access_log import get_human_requests
+from declarations.management.commands.access_log_squeeze import is_missing_record
 
 import urllib.parse
 from django.db import connection
 import os
-import re
 import urllib
-from collections import defaultdict
 import tarfile
-import datetime
 
 
 def build_rare_people(limit=200000):
@@ -59,37 +56,24 @@ class Command(BaseCommand):
             default=rare_people_path
         )
 
-        popular_site_pages_pattern = os.path.join(os.path.dirname(__file__),
+        popular_site_pages_sitemap_pattern = os.path.join(os.path.dirname(__file__),
                                                   "../../../disclosures/static/sitemap-popular-site-pages.xml")
         parser.add_argument(
             '--popular-site-pages-pattern',
-            dest='popular_site_pages_pattern',
-            help='output sitemap  file, default is {}'.format(popular_site_pages_pattern),
-            default=popular_site_pages_pattern
+            dest='popular_site_pages_sitemap_pattern',
+            help='output sitemap  file, default is {}'.format(popular_site_pages_sitemap_pattern),
+            default=popular_site_pages_sitemap_pattern
+        )
+        parser.add_argument(
+            '--access-log-squeeze',
+            dest='access_log_squeeze',
+            help='output of command access_log_squeeze.py'
         )
 
         parser.add_argument(
             '--output-file',
             dest='output_file',
             default=os.path.join(os.path.dirname(__file__), "../../../disclosures/static/sitemap.xml")
-        )
-        parser.add_argument(
-            "--access-log-folder",
-            dest='access_log_folder',
-            default="/home/sokirko/declarator_hdd/Yandex.Disk/declarator/nginx_logs/")
-
-        parser.add_argument(
-            "--max-access-log-date",
-            dest='max_access_log_date',
-            default=None,
-            help="for example 2021-08-05"
-        )
-
-        parser.add_argument(
-            "--min-request-freq",
-            dest='min_request_freq',
-            default=3,
-            help="min freq in access logs"
         )
 
         parser.add_argument(
@@ -142,40 +126,36 @@ class Command(BaseCommand):
             file_index += 1
 
     def build_rare_people_sitemaps(self, file_pattern):
+        self.logger.info("build_rare_people_sitemaps")
         persons = list(build_rare_people())
         self.logger.info("found {} people".format(len(persons)))
         self.write_sitemaps_by_chunks(file_pattern, persons)
 
     def build_report_sitemap(self, report_folder):
+        self.logger.info("build_report_sitemap for {}".format(report_folder))
         subfolder = os.path.basename(report_folder)
         sitemap_path = os.path.join(report_folder, "sitemap.xml")
         url_paths = list("static/{}/{}".format(subfolder, f) for f in os.listdir(report_folder) if f.endswith('.html'))
         self.write_sitemap(url_paths, sitemap_path, priority=0.8)
         self.sitemaps.append('static/{}/sitemap.xml'.format(subfolder))
 
-    def build_popular_site_pages_sitemap(self, access_log_folder, sitemap_path, max_access_log_date, min_request_freq):
-        requests = defaultdict(int)
-        for x in os.listdir(access_log_folder):
-            if x.startswith('access'):
-                path = os.path.join(access_log_folder, x)
-                if max_access_log_date is not None:
-                    (_, date_str, _) = x.split('.')
-                    dt = datetime.datetime.strptime(date_str, '%Y-%m-%d')
-                    if dt > datetime.datetime.strptime(max_access_log_date, '%Y-%m-%d'):
-                        self.logger.info("skip {}, it is newer than {}".format(x, max_access_log_date))
-                        continue
-                for r in get_human_requests(path):
-                    if re.match('^/(section|person)/[0-9]+/?$', r):
-                        r = r.rstrip('/')
-                        requests[r] += 1
-        popular = list(request for request, freq in requests.items() if freq >= min_request_freq)
-        self.logger.info("filtered requests by min freq={} (input count = {}, left requests count = {})".format(
-            min_request_freq, len(requests.items()), len(popular)))
+    def build_popular_site_pages_sitemap(self, input_popular_site_pages_path, sitemap_path):
+        popular = list()
+        missing_count = 0
+        with open(input_popular_site_pages_path) as inp:
+            for line in inp:
+                request, freq = line.strip().split("\t")
+                if is_missing_record(request):
+                    missing_count += 1
+                    self.logger.error("access log url {} (freq={}) is missing in the db, users are angry!".format(
+                        request, freq))
+                else:
+                    popular.append(request)
+        self.logger.info("missing_count={}".format(missing_count))
 
         popular_filtered = list(self.filter_by_already_written(popular))
         self.logger.info("filter requests by already written urls ({} -> {})".format(len(popular),
                                                                                      len(popular_filtered)))
-
         self.write_sitemaps_by_chunks(sitemap_path, popular_filtered)
 
     def build_main_sitemap(self):
@@ -218,10 +198,8 @@ class Command(BaseCommand):
         self.build_rare_people_sitemaps(options['rare_people_file_pattern'])
         self.build_report_sitemap(options["region_report_folder"])
         self.build_report_sitemap(options["office_report_folder"])
-        self.build_popular_site_pages_sitemap(options['access_log_folder'],
-                                              options['popular_site_pages_pattern'],
-                                              options.get('max_access_log_date'),
-                                              options['min_request_freq'])
+        self.build_popular_site_pages_sitemap(options['access_log_squeeze'],
+                                              options['popular_site_pages_sitemap_pattern'])
         self.build_main_sitemap()
         self.build_sitemap_index()
         self.tar.close()

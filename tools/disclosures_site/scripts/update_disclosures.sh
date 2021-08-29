@@ -41,7 +41,7 @@ source $COMMON_SCRIPT
 
 #4  предсказание office_id
     cd $DLROBOT_FOLDER
-    python3 $TOOLS/disclosures_site/manage.py predict_office --dlrobot-human-path dlrobot_human.dbm --disable-ml
+    python3 $TOOLS/disclosures_site/manage.py predict_office --dlrobot-human-path dlrobot_human.dbm
 
 #5  получение статистики по dlrobot_human.dbm, сравнение с предыдущим обходом
     python3 $TOOLS/disclosures_site/scripts/dlrobot_human.py --action stats --input-file dlrobot_human.dbm > dlrobot_human.json.stats
@@ -132,7 +132,12 @@ echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/
     mysqldump -u disclosures -pdisclosures disclosures_db_dev  |  gzip -c > $DLROBOT_FOLDER/disclosures.sql.gz
 
 
-#17 switch dev to  prod in backend (migalka)
+#17.1 save already missing from access logs
+    cd $DLROBOT_FOLDER
+    python3 $TOOLS/disclosures_site/manage.py access_log_squeeze  --settings disclosures.settings.prod \
+              --access-log-folder $ACCESS_LOG_ARCHIVE --output-path access_log_squeeze.txt
+
+#17.2  switch dev to  prod in backend (migalka)
     mysqladmin drop  disclosures_db -u disclosures -pdisclosures -f
     cd $TOOLS/disclosures_site
     bash scripts/rename_db.sh disclosures_db_dev disclosures_db
@@ -140,11 +145,10 @@ echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/
     python3 manage.py build_elastic_index --settings disclosures.settings.prod
 
 #18 sitemaps
-    cd $TOOLS/disclosures_site
-    python3 manage.py generate_sitemaps --settings disclosures.settings.prod --output-file disclosures/static/sitemap.xml \
-      --access-log-folder $ACCESS_LOG_ARCHIVE --tar-path sitemap.tar
+    cd $DLROBOT_FOLDER
+    python3 $TOOLS/disclosures_site/manage.py generate_sitemaps --settings disclosures.settings.prod --output-file disclosures/static/sitemap.xml \
+       --access-log-squeeze access_log_squeeze.txt --tar-path sitemap.tar
     scp sitemap.tar $FRONTEND:/tmp/sitemap.tar
-    cp sitemap.tar $DLROBOT_FOLDER
 
 #19 make binary archives and copy to frontend
     sudo systemctl stop mysql
@@ -178,7 +182,7 @@ echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/
     ssh $FRONTEND bash -x /home/sokirko/smart_parser/tools/disclosures_site/scripts/switch_prod.sh /tmp/mysql.tar.gz /tmp/elastic.tar.gz /tmp/sitemap.tar
     ssh $PROD_SOURCE_DOC_SERVER sudo systemctl restart source_declaration_doc
 
-#21  посылаем данные dlrobot в каталог, который синхронизирутеся с облаком, очищаем dlrobot_central (без возврата)
+#21  посылаем данные dlrobot в каталог, который синхронизируется с облаком, очищаем dlrobot_central (без возврата)
     cd $DLROBOT_FOLDER
     python3 $TOOLS/disclosures_site/scripts/send_dlrobot_projects_to_cloud.py  --max-ctime $CRAWL_EPOCH \
         --processed-projects-folder $DLROBOT_CENTRAL_FOLDER"/processed_projects" \
