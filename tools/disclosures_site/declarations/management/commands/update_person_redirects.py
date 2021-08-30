@@ -140,7 +140,7 @@ class Command(BaseCommand):
                         request['record_id'] = new_person_id
                         yield json.dumps(request)
                     else:
-                        self.logger.error("cannot create redirect for {}".format(line.strip()))
+                        self.logger.error("cannot create redirect for {}, users are angry!".format(line.strip()))
 
     def filter_access_log_squeeze(self):
         with open(self.options['output_access_log_squeeze'], "w") as outp:

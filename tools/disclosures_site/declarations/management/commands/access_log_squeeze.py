@@ -23,10 +23,10 @@ def get_id_and_sql_table(url_path):
 
 
 class TAccessLogReader:
-    def __init__(self, logger, access_log_folder, max_access_log_date, min_request_freq):
+    def __init__(self, logger, access_log_folder, start_access_log_date, min_request_freq):
         self.logger = logger
         self.access_log_folder = access_log_folder
-        self.max_access_log_date = max_access_log_date
+        self.start_access_log_date = start_access_log_date
         self.min_request_freq = min_request_freq
 
     def build_popular_site_pages(self, output_path):
@@ -35,11 +35,11 @@ class TAccessLogReader:
         for x in os.listdir(self.access_log_folder):
             if x.startswith('access'):
                 path = os.path.join(self.access_log_folder, x)
-                if self.max_access_log_date is not None:
+                if self.start_access_log_date is not None:
                     (_, date_str, _) = x.split('.')
                     dt = datetime.datetime.strptime(date_str, '%Y-%m-%d')
-                    if dt > datetime.datetime.strptime(max_access_log_date, '%Y-%m-%d'):
-                        self.logger.info("skip {}, it is newer than {}".format(x, self.max_access_log_date))
+                    if dt > datetime.datetime.strptime(start_access_log_date, '%Y-%m-%d'):
+                        self.logger.info("skip {}, it is newer than {}".format(x, self.start_access_log_date))
                         continue
                 for r in get_human_requests(path):
                     if re.match('^/(section|person)/[0-9]+/?$', r):
@@ -75,8 +75,8 @@ class Command(BaseCommand):
             default="/home/sokirko/declarator_hdd/Yandex.Disk/declarator/nginx_logs/")
 
         parser.add_argument(
-            "--max-access-log-date",
-            dest='max_access_log_date',
+            "--start-access-log-date",
+            dest='start_access_log_date',
             default=None,
             help="for example 2021-08-05"
         )
@@ -95,7 +95,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         logger = setup_logging(log_file_name="access_log_reader.log")
-        reader = TAccessLogReader(logger, options['access_log_folder'], options['max_access_log_date'],
+        reader = TAccessLogReader(logger, options['access_log_folder'], options['start_access_log_date'],
                                   options['min_request_freq'])
         reader.build_popular_site_pages(options['output_path'])
 
