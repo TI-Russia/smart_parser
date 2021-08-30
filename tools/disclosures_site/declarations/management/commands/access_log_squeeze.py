@@ -9,6 +9,7 @@ import re
 import json
 import datetime
 
+
 def get_id_and_sql_table(url_path):
     url_path = url_path.strip('/')
     if url_path.startswith('section/'):
@@ -38,7 +39,7 @@ class TAccessLogReader:
                 if self.start_access_log_date is not None:
                     (_, date_str, _) = x.split('.')
                     dt = datetime.datetime.strptime(date_str, '%Y-%m-%d')
-                    if dt > datetime.datetime.strptime(start_access_log_date, '%Y-%m-%d'):
+                    if dt > datetime.datetime.strptime(self.start_access_log_date, '%Y-%m-%d'):
                         self.logger.info("skip {}, it is newer than {}".format(x, self.start_access_log_date))
                         continue
                 for r in get_human_requests(path):
