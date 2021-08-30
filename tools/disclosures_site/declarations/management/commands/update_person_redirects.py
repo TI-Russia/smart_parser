@@ -87,9 +87,9 @@ class Command(BaseCommand):
         cursor = db.cursor()
         cursor.execute(query)
         self.redirects.clear()
+        models.PersonRedirect.objects.all().delete()
         for old_person_id, new_person_id in cursor:
             self.redirects[old_person_id] = new_person_id
-
             models.PersonRedirect(id=old_person_id, new_person_id=new_person_id).save()
         cursor.close()
         db.close()
