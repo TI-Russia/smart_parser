@@ -109,7 +109,7 @@ class Command(BaseCommand):
             else:
                 # it was redirected to X in the old db, but x is missing in the new db, try to calc a new target
                 person_id = already_redirect
-        assert person_id in self.old_person_to_sections
+
         max_persons = defaultdict(int)
         for section_id in self.old_person_to_sections.get(person_id, list()):
             new_person_id = self.new_section_to_person.get(section_id)
