@@ -60,7 +60,7 @@ class TAccessLogReader:
                     'record_type': ('section' if model_type == models.Section else "person"),
                     'req_freq': freq
                 }
-                 outp.write("{}\n".format(json.dumps(record, ensure_ascii=False))
+                outp.write("{}\n".format(json.dumps(record, ensure_ascii=False)))
         self.logger.info("filtered_by_min_freq({}) = {}".format(self.min_request_freq, filtered_by_min_freq))
 
 
@@ -98,3 +98,5 @@ class Command(BaseCommand):
         reader = TAccessLogReader(logger, options['access_log_folder'], options['max_access_log_date'],
                                   options['min_request_freq'])
         reader.build_popular_site_pages(options['output_path'])
+
+AccessLogSqueezer=Command
