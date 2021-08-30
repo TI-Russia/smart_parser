@@ -25,12 +25,12 @@ class TAccessLogReader:
 
         if self.start_access_log_date is not None:
             if dt < datetime.datetime.strptime(self.start_access_log_date, '%Y-%m-%d'):
-                self.logger.info("skip {}, it is older than {}".format(filename, self.start_access_log_date))
+                self.logger.debug("skip {}, it is older than {}".format(filename, self.start_access_log_date))
                 return False
 
         if self.last_access_log_date is not None:
             if dt > datetime.datetime.strptime(self.last_access_log_date, '%Y-%m-%d'):
-                self.logger.info("skip {}, it is older than {}".format(filename, self.last_access_log_date))
+                self.logger.debug("skip {}, it is newer than {}".format(filename, self.last_access_log_date))
                 return False
         return True
 
@@ -44,7 +44,8 @@ class TAccessLogReader:
             if not self.check_date(x):
                 continue
             processed_files_count += 1
-            for r in get_human_requests(os.path.join(self.access_log_folder, x)):
+            full_path = os.path.join(self.access_log_folder, x)
+            for r in get_human_requests(full_path, http_status=200):
                 match = re.match('^/(section|person)/([0-9]+)/?$', r)
                 if match:
                     rec = (match[1].lower(), int(match[2]))
