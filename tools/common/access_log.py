@@ -33,7 +33,7 @@ def is_bot_request(request):
     return False
 
 
-def get_human_requests(input_access_log_path):
+def get_human_requests(input_access_log_path, http_status=None):
     requests = list()
 
     with gzip.open(input_access_log_path) as inp:
@@ -44,6 +44,11 @@ def get_human_requests(input_access_log_path):
                 continue
             if is_bot_request(request):
                 continue
+            if http_status is not None:
+                if not request['status'].isdigit():
+                    continue
+                if http_status != int(request['status']):
+                    continue
             if request['request'].startswith("GET "):
                 path = request['request'].split()[1]
                 if path.startswith('/static/dlrobot/'):
