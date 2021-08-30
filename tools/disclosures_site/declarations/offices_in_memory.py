@@ -1,5 +1,7 @@
 
 class TOfficeInMemory:
+
+
     def __init__(self, office_id=None, name=None, parent_id=None, type_id=None, rubric_id=None, region_id=None):
         self.office_id = office_id
         self.name = name
@@ -19,6 +21,7 @@ class TOfficeInMemory:
 
 
 class TOfficeTableInMemory:
+    SELECTED_OFFICES_FOR_TESTS = None
     group_types = set([10, 12, 16, 17]) # these offices do not exist like all Moscow courts
 
     def go_to_the_top(self, office_id):

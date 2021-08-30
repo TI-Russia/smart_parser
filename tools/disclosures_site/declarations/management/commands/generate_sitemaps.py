@@ -1,11 +1,11 @@
 from django.core.management import BaseCommand
 from common.logging_wrapper import setup_logging
 import declarations.models as models
-from declarations.management.commands.access_log_squeeze import is_missing_record
 
 import urllib.parse
 from django.db import connection
 import os
+import json
 import urllib
 import tarfile
 
@@ -141,17 +141,10 @@ class Command(BaseCommand):
 
     def build_popular_site_pages_sitemap(self, input_popular_site_pages_path, sitemap_path):
         popular = list()
-        missing_count = 0
         with open(input_popular_site_pages_path) as inp:
             for line in inp:
-                request, freq = line.strip().split("\t")
-                if is_missing_record(request):
-                    missing_count += 1
-                    self.logger.error("access log url {} (freq={}) is missing in the db, users are angry!".format(
-                        request, freq))
-                else:
-                    popular.append(request)
-        self.logger.info("missing_count={}".format(missing_count))
+                request = json.loads(line.strip())
+                popular.append("/{}/{}".format(request['record_type'], request['record_id']))
 
         popular_filtered = list(self.filter_by_already_written(popular))
         self.logger.info("filter requests by already written urls ({} -> {})".format(len(popular),
@@ -204,3 +197,4 @@ class Command(BaseCommand):
         self.build_sitemap_index()
         self.tar.close()
         self.logger.info("all urls count in all sitemaps: {}".format(len(self.all_written_urls)))
+

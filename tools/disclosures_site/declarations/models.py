@@ -321,6 +321,11 @@ class Person(models.Model):
         return s
 
 
+class PersonRedirect(models.Model):
+    id = models.IntegerField(primary_key=True)     # old person id, not existing in the database
+    new_person_id = models.IntegerField()
+
+
 class RealEstate(models.Model):
     section = models.ForeignKey('declarations.Section', on_delete=models.CASCADE)
     type = models.TextField(verbose_name='real_estate')

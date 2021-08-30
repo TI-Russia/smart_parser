@@ -6,21 +6,20 @@ from django.core.management import BaseCommand
 from collections import defaultdict
 import os
 import re
+import json
 
 
-def is_missing_record(url_path):
+def get_id_and_sql_table(url_path):
     url_path = url_path.strip('/')
     if url_path.startswith('section/'):
         section_id = url_path[len('section/'):]
         if section_id.isdigit():
-            if not models.Section.objects.filter(id=int(section_id)).exists():
-                return True
+            return int(section_id), models.Section
     elif url_path.startswith('person/'):
         person_id = url_path[len('person/'):]
         if person_id.isdigit():
-            if not models.Person.objects.filter(id=int(person_id)).exists():
-                return True
-    return False
+            return int(person_id), models.Person
+    return None, None
 
 
 class TAccessLogReader:
@@ -47,21 +46,21 @@ class TAccessLogReader:
                         r = r.rstrip('/')
                         requests[r] += 1
 
-        missing_count = 0
         filtered_by_min_freq = 0
         self.logger.info("write squeeze to {}".format(output_path))
         with open(output_path, "w") as outp:
             for request, freq in requests.items():
-                if freq >= self.min_request_freq:
-                    if is_missing_record(request):
-                        self.logger.debug("{} is missing, though it is in access logs, freq={}".format(request,
-                                                                                                       freq))
-                        missing_count += 1
-                    else:
-                        outp.write("{}\t{}\n".format(request, freq))
-                else:
+                if freq < self.min_request_freq:
                     filtered_by_min_freq += 1
-        self.logger.info("missing_count = {}".format(missing_count))
+                    continue
+                id, model_type = get_id_and_sql_table(request)
+                assert id is not None
+                record = {
+                    'record_id': id,
+                    'record_type': ('section' if model_type == models.Section else "person"),
+                    'req_freq': freq
+                }
+                 outp.write("{}\n".format(json.dumps(record, ensure_ascii=False))
         self.logger.info("filtered_by_min_freq({}) = {}".format(self.min_request_freq, filtered_by_min_freq))
 
 

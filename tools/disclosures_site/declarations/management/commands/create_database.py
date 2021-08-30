@@ -1,7 +1,11 @@
+import os
+
+from django.core import management
 from django.core.management import BaseCommand
 from django.conf import settings
 import pymysql
 import sys
+from django.db import connection as django_connection
 
 
 class Command(BaseCommand):
@@ -19,15 +23,20 @@ class Command(BaseCommand):
                 '--username',
             dest='username',
             required=False,
-            default="root",
-            help="mysql user name that can create db, default  root",
+            default="db_creator",
+            help="mysql user name that can create db, default  db_creator",
+        )
+        parser.add_argument(
+                '--database-name',
+            dest='database_name',
+            default=settings.DATABASES['default']['NAME']
         )
         parser.add_argument(
                 '--password',
             dest='password',
             required=False,
-            help="mysql root password",
-            default="root"
+            help="mysql root password, default read from environment variable DB_CREATOR_PASSWORD",
+            default=os.environ.get('DB_CREATOR_PASSWORD')
         )
 
     def run_sql(self, cursor, cmd):
@@ -46,7 +55,7 @@ class Command(BaseCommand):
         if db_connection is None:
             sys.stdout.write("cannot make local connection to the database\n")
         else:
-            database_name = settings.DATABASES['default']['NAME']
+            database_name = options['database_name']
             disclosures_user = settings.DATABASES['default']['USER']
             disclosures_password = settings.DATABASES['default']['PASSWORD']
             with db_connection.cursor() as cursor:
@@ -63,12 +72,17 @@ class Command(BaseCommand):
                 self.run_sql(cursor,
                     "GRANT ALL PRIVILEGES ON {}.* TO '{}'@".format(database_name, disclosures_user))
                 db_connection.close()
-            sys.stdout.write("check_connection ...\n")
-            db_connection = pymysql.connect(
-                user=disclosures_user,
-                password=disclosures_password,
-                unix_socket="/var/run/mysqld/mysqld.sock")
-            if db_connection is None:
-                sys.stdout.write("cannot connect using username={}, password={}\n".format(disclosures_user, disclosures_password))
-            else:
-                sys.stdout.write("connected\n")
+
+                save_db_name = settings.DATABASES['default']['NAME']
+
+                settings.DATABASES['default']['NAME'] = database_name
+                django_connection.connect()
+
+                management.call_command('makemigrations')
+                management.call_command('migrate')
+
+                settings.DATABASES['default']['NAME'] = save_db_name
+                django_connection.connect()
+                #connection = save_connection
+
+CreateDatabase=Command

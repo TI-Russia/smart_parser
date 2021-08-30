@@ -1,0 +1,1 @@
+{"record_id": 1, "record_type": "person", "req_freq": 1}

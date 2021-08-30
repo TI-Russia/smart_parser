@@ -20,7 +20,8 @@ from django.http import HttpResponse
 import os
 import urllib
 from django.shortcuts import render
-
+from django.http import Http404
+from django.shortcuts import redirect
 
 class SectionView(generic.DetailView):
     model = models.Section
@@ -30,6 +31,19 @@ class SectionView(generic.DetailView):
 class PersonView(generic.DetailView):
     model = models.Person
     template_name = 'person/detail.html'
+
+    def get(self, request, *args, **kwargs):
+        try:
+            self.object = self.get_object()
+        except Http404:
+            person_id = self.kwargs.get(self.pk_url_kwarg)
+            rec = models.PersonRedirect.objects.get(id=person_id)
+            if rec is None:
+                raise
+            else:
+                return redirect('/person/{}'.format(rec.new_person.id))
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
 
 
 class FileView(generic.DetailView):

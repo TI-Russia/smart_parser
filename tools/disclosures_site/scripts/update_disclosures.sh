@@ -26,9 +26,7 @@ source $COMMON_SCRIPT
     source .profile
 
 #2.  инициализация базы disclosures
-    python3 $TOOLS/disclosures_site/manage.py create_database --settings disclosures.settings.dev --skip-checks --username db_creator --password root
-    python3 $TOOLS/disclosures_site/manage.py makemigrations --settings disclosures.settings.dev
-    python3 $TOOLS/disclosures_site/manage.py migrate --settings disclosures.settings.dev
+    python3 $TOOLS/disclosures_site/manage.py create_database --settings disclosures.settings.dev --skip-checks
     python3 $TOOLS/disclosures_site/manage.py test declarations/tests/ --settings disclosures.settings.dev
 
 #3  слияние по файлам dlrobot, declarator  и старого disclosures, получение dlrobot_human.json
@@ -120,37 +118,39 @@ echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/
    cd $DLROBOT_FOLDER
     python3 $TOOLS/disclosures_site/manage.py build_genders --settings disclosures.settings.dev
 
-
 #15 создание рейтингов
     python3 $TOOLS/disclosures_site/manage.py build_ratings --settings disclosures.settings.dev
 
-#15.1 построение дополнительных параметров ведомств (calculated_params)
+#16 построение дополнительных параметров ведомств (calculated_params)
     python3 $TOOLS/disclosures_site/manage.py build_office_calculated_params --settings disclosures.settings.dev
 
-#16 создание дампа базы (для debug)
+#17.1 build access logs squeeze
+    cd $DLROBOT_FOLDER
+    python3 $TOOLS/disclosures_site/manage.py access_log_squeeze  \
+              --access-log-folder $ACCESS_LOG_ARCHIVE --output-path access_log_squeeze.txt
+
+#17.2 update person redirects and filter access logs
+    python3 $TOOLS/disclosures_site/manage.py update_person_redirects  --settings disclosures.settings.dev \
+              --input-access-log-squeeze  access_log_squeeze.txt --output-access-log-squeeze access_log_squeeze_flt.txt
+
+#17.3 sitemaps
+    python3 $TOOLS/disclosures_site/manage.py generate_sitemaps --settings disclosures.settings.prod --output-file disclosures/static/sitemap.xml \
+       --access-log-squeeze access_log_squeeze_flt.txt --tar-path sitemap.tar
+
+#18 создание дампа базы
     cd $DLROBOT_FOLDER
     mysqldump -u disclosures -pdisclosures disclosures_db_dev  |  gzip -c > $DLROBOT_FOLDER/disclosures.sql.gz
 
 
-#17.1 save already missing from access logs
-    cd $DLROBOT_FOLDER
-    python3 $TOOLS/disclosures_site/manage.py access_log_squeeze  --settings disclosures.settings.prod \
-              --access-log-folder $ACCESS_LOG_ARCHIVE --output-path access_log_squeeze.txt
-
-#17.2  switch dev to  prod in backend (migalka)
+#19  switch dev to  prod in backend (migalka)
     mysqladmin drop  disclosures_db -u disclosures -pdisclosures -f
     cd $TOOLS/disclosures_site
     bash scripts/rename_db.sh disclosures_db_dev disclosures_db
     sudo systemctl start elasticsearch
     python3 manage.py build_elastic_index --settings disclosures.settings.prod
 
-#18 sitemaps
-    cd $DLROBOT_FOLDER
-    python3 $TOOLS/disclosures_site/manage.py generate_sitemaps --settings disclosures.settings.prod --output-file disclosures/static/sitemap.xml \
-       --access-log-squeeze access_log_squeeze.txt --tar-path sitemap.tar
-    scp sitemap.tar $FRONTEND:/tmp/sitemap.tar
 
-#19 make binary archives and copy to frontend
+#20 make binary archives and copy to frontend
     sudo systemctl stop mysql
     sudo chmod a+rwx /var/lib/mysql
     cd /var/lib/mysql
@@ -164,7 +164,9 @@ echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/
     scp $DLROBOT_FOLDER/elastic.tar.gz $FRONTEND:/tmp
     sudo systemctl start elasticsearch
 
-#20 обновление prod
+    scp $DLROBOT_FOLDER/sitemap.tar $FRONTEND:/tmp/sitemap.tar
+
+#21 обновление prod
     elastic_search_version_prod=`ssh $FRONTEND sudo /usr/share/elasticsearch/bin/elasticsearch --version`
     elastic_search_version_central=`sudo /usr/share/elasticsearch/bin/elasticsearch --version`
     if [ "$elastic_search_version_prod" != "$elastic_search_version_central" ]; then
@@ -182,7 +184,7 @@ echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/
     ssh $FRONTEND bash -x /home/sokirko/smart_parser/tools/disclosures_site/scripts/switch_prod.sh /tmp/mysql.tar.gz /tmp/elastic.tar.gz /tmp/sitemap.tar
     ssh $PROD_SOURCE_DOC_SERVER sudo systemctl restart source_declaration_doc
 
-#21  посылаем данные dlrobot в каталог, который синхронизируется с облаком, очищаем dlrobot_central (без возврата)
+#22  посылаем данные dlrobot в каталог, который синхронизируется с облаком, очищаем dlrobot_central (без возврата)
     cd $DLROBOT_FOLDER
     python3 $TOOLS/disclosures_site/scripts/send_dlrobot_projects_to_cloud.py  --max-ctime $CRAWL_EPOCH \
         --processed-projects-folder $DLROBOT_CENTRAL_FOLDER"/processed_projects" \
