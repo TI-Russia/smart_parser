@@ -39,7 +39,7 @@ fi
 set -e
 
 export DISCLOSURES_DATABASE_NAME=$NEW_DB
-python3 $(dirname $0)/../manage.py create_database --settings disclosures.settings.prod --skip-checks --username db_creator --password root
+python3 $(dirname $0)/../manage.py create_database --settings disclosures.settings.prod --skip-checks
 
 for table in `$MYSQL -u disclosures -pdisclosures -s -N -e "use $OLD_DB;show tables from $OLD_DB;"`;  do
     $MYSQL -s -N -e "use $OLD_DB;rename table $OLD_DB.$table to $NEW_DB.$table;";

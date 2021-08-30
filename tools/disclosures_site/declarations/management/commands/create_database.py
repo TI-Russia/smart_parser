@@ -38,6 +38,13 @@ class Command(BaseCommand):
             help="mysql root password, default read from environment variable DB_CREATOR_PASSWORD",
             default=os.environ.get('DB_CREATOR_PASSWORD')
         )
+        parser.add_argument(
+            '--skip-migrate',
+            dest='enable_migrate',
+            required=False,
+            action="store_false",
+            default=True
+        )
 
     def run_sql(self, cursor, cmd):
         sys.stdout.write(cmd + "\n")
@@ -73,16 +80,16 @@ class Command(BaseCommand):
                     "GRANT ALL PRIVILEGES ON {}.* TO '{}'@".format(database_name, disclosures_user))
                 db_connection.close()
 
-                save_db_name = settings.DATABASES['default']['NAME']
+                if options.get('enable_migrate', True):
+                    save_db_name = settings.DATABASES['default']['NAME']
 
-                settings.DATABASES['default']['NAME'] = database_name
-                django_connection.connect()
+                    settings.DATABASES['default']['NAME'] = database_name
+                    django_connection.connect()
 
-                management.call_command('makemigrations')
-                management.call_command('migrate')
+                    management.call_command('makemigrations')
+                    management.call_command('migrate')
 
-                settings.DATABASES['default']['NAME'] = save_db_name
-                django_connection.connect()
-                #connection = save_connection
+                    settings.DATABASES['default']['NAME'] = save_db_name
+                    django_connection.connect()
 
 CreateDatabase=Command
