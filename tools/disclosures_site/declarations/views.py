@@ -37,11 +37,11 @@ class PersonView(generic.DetailView):
             self.object = self.get_object()
         except Http404:
             person_id = self.kwargs.get(self.pk_url_kwarg)
-            rec = models.PersonRedirect.objects.get(id=person_id)
+            rec = models.PersonRedirect.objects.filter(id=person_id).first()
             if rec is None:
                 raise
             else:
-                return redirect('/person/{}'.format(rec.new_person.id))
+                return redirect('/person/{}'.format(rec.new_person_id))
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
 
