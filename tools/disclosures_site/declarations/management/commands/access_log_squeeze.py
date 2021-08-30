@@ -33,20 +33,23 @@ class TAccessLogReader:
     def build_popular_site_pages(self, output_path):
         self.logger.info("build_popular_site_pages")
         requests = defaultdict(int)
+        processed_files_count = 0
         for x in os.listdir(self.access_log_folder):
-            if x.startswith('access'):
-                path = os.path.join(self.access_log_folder, x)
-                if self.start_access_log_date is not None:
-                    (_, date_str, _) = x.split('.')
-                    dt = datetime.datetime.strptime(date_str, '%Y-%m-%d')
-                    if dt > datetime.datetime.strptime(self.start_access_log_date, '%Y-%m-%d'):
-                        self.logger.info("skip {}, it is newer than {}".format(x, self.start_access_log_date))
-                        continue
-                for r in get_human_requests(path):
-                    if re.match('^/(section|person)/[0-9]+/?$', r):
-                        r = r.rstrip('/')
-                        requests[r] += 1
-
+            if not x.startswith('access'):
+                continue
+            path = os.path.join(self.access_log_folder, x)
+            if self.start_access_log_date is not None:
+                (_, date_str, _) = x.split('.')
+                dt = datetime.datetime.strptime(date_str, '%Y-%m-%d')
+                if dt > datetime.datetime.strptime(self.start_access_log_date, '%Y-%m-%d'):
+                    self.logger.info("skip {}, it is newer than {}".format(x, self.start_access_log_date))
+                    continue
+            processed_files_count += 1
+            for r in get_human_requests(path):
+                if re.match('^/(section|person)/[0-9]+/?$', r):
+                    r = r.rstrip('/')
+                    requests[r] += 1
+        self.logger.info("processed {} access log files".format(processed_files_count))
         filtered_by_min_freq = 0
         self.logger.info("write squeeze to {}".format(output_path))
         with open(output_path, "w") as outp:
