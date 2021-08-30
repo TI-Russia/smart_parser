@@ -10,58 +10,57 @@ import json
 import datetime
 
 
-def get_id_and_sql_table(url_path):
-    url_path = url_path.strip('/')
-    if url_path.startswith('section/'):
-        section_id = url_path[len('section/'):]
-        if section_id.isdigit():
-            return int(section_id), models.Section
-    elif url_path.startswith('person/'):
-        person_id = url_path[len('person/'):]
-        if person_id.isdigit():
-            return int(person_id), models.Person
-    return None, None
-
-
 class TAccessLogReader:
-    def __init__(self, logger, access_log_folder, start_access_log_date, min_request_freq):
+    def __init__(self, logger, options):
         self.logger = logger
-        self.access_log_folder = access_log_folder
-        self.start_access_log_date = start_access_log_date
-        self.min_request_freq = min_request_freq
+        self.options = options
+        self.start_access_log_date = self.options.get('start_access_log_date')
+        self.last_access_log_date = self.options.get('last_access_log_date')
+        self.access_log_folder = self.options.get('access_log_folder')
+        self.min_request_freq = self.options.get('self.min_request_freq', 3)
 
-    def build_popular_site_pages(self, output_path):
+    def check_date(self, filename):
+        (_, date_str, _) = filename.split('.')
+        dt = datetime.datetime.strptime(date_str, '%Y-%m-%d')
+
+        if self.start_access_log_date is not None:
+            if dt < datetime.datetime.strptime(self.start_access_log_date, '%Y-%m-%d'):
+                self.logger.info("skip {}, it is older than {}".format(filename, self.start_access_log_date))
+                return False
+
+        if self.last_access_log_date is not None:
+            if dt > datetime.datetime.strptime(self.last_access_log_date, '%Y-%m-%d'):
+                self.logger.info("skip {}, it is older than {}".format(filename, self.last_access_log_date))
+                return False
+        return True
+
+    def build_popular_site_pages(self):
         self.logger.info("build_popular_site_pages")
         requests = defaultdict(int)
         processed_files_count = 0
         for x in os.listdir(self.access_log_folder):
             if not x.startswith('access'):
                 continue
-            path = os.path.join(self.access_log_folder, x)
-            if self.start_access_log_date is not None:
-                (_, date_str, _) = x.split('.')
-                dt = datetime.datetime.strptime(date_str, '%Y-%m-%d')
-                if dt > datetime.datetime.strptime(self.start_access_log_date, '%Y-%m-%d'):
-                    self.logger.info("skip {}, it is newer than {}".format(x, self.start_access_log_date))
-                    continue
+            if not self.check_date(x):
+                continue
             processed_files_count += 1
-            for r in get_human_requests(path):
-                if re.match('^/(section|person)/[0-9]+/?$', r):
-                    r = r.rstrip('/')
-                    requests[r] += 1
+            for r in get_human_requests(os.path.join(self.access_log_folder, x)):
+                match = re.match('^/(section|person)/([0-9]+)/?$', r)
+                if match:
+                    rec = (match[1].lower(), int(match[2]))
+                    requests[rec] += 1
         self.logger.info("processed {} access log files".format(processed_files_count))
         filtered_by_min_freq = 0
+        output_path = self.options['output_path']
         self.logger.info("write squeeze to {}".format(output_path))
         with open(output_path, "w") as outp:
-            for request, freq in requests.items():
+            for (record_type, record_id), freq in requests.items():
                 if freq < self.min_request_freq:
                     filtered_by_min_freq += 1
                     continue
-                id, model_type = get_id_and_sql_table(request)
-                assert id is not None
                 record = {
-                    'record_id': id,
-                    'record_type': ('section' if model_type == models.Section else "person"),
+                    'record_id': record_id,
+                    'record_type': record_type,
                     'req_freq': freq
                 }
                 outp.write("{}\n".format(json.dumps(record, ensure_ascii=False)))
@@ -71,6 +70,7 @@ class TAccessLogReader:
 class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
+        self.options = None
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -81,6 +81,13 @@ class Command(BaseCommand):
         parser.add_argument(
             "--start-access-log-date",
             dest='start_access_log_date',
+            default=None,
+            help="for example 2021-08-05"
+        )
+
+        parser.add_argument(
+            "--last-access-log-date",
+            dest='last_access_log_date',
             default=None,
             help="for example 2021-08-05"
         )
@@ -99,8 +106,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         logger = setup_logging(log_file_name="access_log_reader.log")
-        reader = TAccessLogReader(logger, options['access_log_folder'], options['start_access_log_date'],
-                                  options['min_request_freq'])
-        reader.build_popular_site_pages(options['output_path'])
+        reader = TAccessLogReader(logger, options)
+        reader.build_popular_site_pages()
 
 AccessLogSqueezer=Command
