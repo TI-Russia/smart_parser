@@ -375,10 +375,10 @@ class CommonSearchView(FormView, generic.ListView):
 
     def filter_search_results(self, search_results):
         person_name_query = self.get_person_name_field()
-        max_count = min(search_results.count(), self.max_document_count)
+        max_doc_count_to_process = min(search_results.count(), self.max_document_count)
         normal_documents = list()
         doubtful_documents = list()
-        for search_doc in search_results[:max_count]:
+        for search_doc in search_results[:max_doc_count_to_process]:
             if person_name_query is None:
                 normal_documents.append(search_doc)
             else:
@@ -391,7 +391,13 @@ class CommonSearchView(FormView, generic.ListView):
             self.fuzzy_search = True
         else:
             self.fuzzy_search = False
-        self.hits_count = search_results.count()
+
+        if search_results.count() < self.max_document_count:
+            self.hits_count = len(normal_documents)
+        else:
+            # we apply compare_Russian_fio(filter after elasticsearch) only to the first 1000 document and we do not know how
+            # many "normal" documents in the main collection, so we return the upper bound (unfiltered document count)
+            self.hits_count = search_results.count()
 
         return normal_documents
 
