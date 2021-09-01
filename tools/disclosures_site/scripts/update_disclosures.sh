@@ -27,7 +27,7 @@ source $COMMON_SCRIPT
 
 #2.  инициализация базы disclosures
     python3 $TOOLS/disclosures_site/manage.py create_database --settings disclosures.settings.dev --skip-checks
-    python3 $TOOLS/disclosures_site/manage.py test declarations/tests/ --settings disclosures.settings.dev
+    python3 $TOOLS/disclosures_site/manage.py test $TOOLS/disclosures_site/declarations/tests/ --settings disclosures.settings.dev
 
 #3  слияние по файлам dlrobot, declarator  и старого disclosures, получение dlrobot_human.json
     python3 $TOOLS/disclosures_site/scripts/join_human_and_dlrobot.py \
