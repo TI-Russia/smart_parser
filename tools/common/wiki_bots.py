@@ -36,8 +36,12 @@ def send_sparql_request(sparql):
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/35.0.1916.47 Safari/537.36'
         }
     )
+
     with urllib.request.urlopen(req, context=context, timeout=60.0) as request:
-        return json.loads(request.read().decode('utf-8'))
+        data = request.read().decode('utf-8')
+        with open("sparql_raw_response.txt", "w") as outp:
+            outp.write(data)
+        return json.loads(data)
 
 
 def get_title_from_wiki_link(logger, url, normalize=False):

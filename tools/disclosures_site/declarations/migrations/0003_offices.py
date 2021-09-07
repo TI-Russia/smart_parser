@@ -1,35 +1,24 @@
-from django.db import migrations
-import json
-
-from declarations.offices_in_memory import TOfficeTableInMemory
+from declarations.offices_in_memory import TOfficeTableInMemory, TOfficeInMemory
 from declarations.rubrics import build_office_rubric
 
-import os
+from django.db import migrations
 
-
-#echo  "select *  from declarations_office" |  mysqlsh --sql --result-format=json/array --uri=declarator@localhost -pdeclarator -D declarator data/offices.txt
-#echo  "select * from declarator.declarations_office  where id not in (select id from disclosures_db.declarations_office)" |  mysqlsh --sql --result-format=json/array --uri=declarator@localhost -pdeclarator -D declarator > offices.txt
 
 def add_offices(apps, schema_editor):
     clear_offices(apps, schema_editor)
-    filepath = os.path.join(os.path.dirname(__file__), "../../data/offices.txt")
-    with open(filepath) as inp:
-        offices = json.load(inp)
-    office_hierarchy = TOfficeTableInMemory(use_office_types=False)
-    office_hierarchy.read_from_json(offices)
+    offices = TOfficeTableInMemory(use_office_types=False)
+    offices.read_from_local_file()
     Office = apps.get_model('declarations', 'Office')
-    for office in offices:
-        if TOfficeTableInMemory.SELECTED_OFFICES_FOR_TESTS is not None:
-            if office['id'] not in TOfficeTableInMemory.SELECTED_OFFICES_FOR_TESTS:
-                continue
-
-        c = Office(id=office['id'],
-                   name=office['name'],
-                   type_id=office['type_id'],
-                   parent_id=office['parent_id'],
-                   region_id=office['region_id'],
-                   rubric_id=build_office_rubric(None, office_hierarchy, office['id'])
+    office: TOfficeInMemory
+    for office in offices.offices.values():
+        c = Office(id=office.office_id,
+                   name=office.name,
+                   type_id=office.type_id,
+                   parent_id=office.parent_id,
+                   region_id=office.region_id
                    )
+        if TOfficeTableInMemory.SELECTED_OFFICES_FOR_TESTS is None:
+            c.rubric_id=build_office_rubric(None, offices, office.office_id)
         c.save()
 
 

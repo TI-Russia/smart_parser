@@ -3,6 +3,7 @@ from web_site_db.robot_project import TRobotProject
 from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
 from common.logging_wrapper import setup_logging
 from common.export_files import TExportFile
+from declarations.offices_in_memory import TOfficeTableInMemory
 
 import os
 import sys
@@ -36,6 +37,9 @@ class TJoiner:
         self.output_dlrobot_human = TDlrobotHumanFileDBM(args.output_json)
         self.output_dlrobot_human.create_db()
         self.old_files_with_office_count = 0
+        self.offices = TOfficeTableInMemory()
+        self.offices.read_from_local_file()
+
 
     def add_dlrobot_file(self, sha256, file_extension, web_refs=[], decl_refs=[]):
         src_doc = self.output_dlrobot_human.get_document_maybe(sha256)
@@ -104,13 +108,27 @@ class TJoiner:
                                   web_refs=src_doc.web_references, decl_refs=src_doc.decl_references)
         self.logger.info("Database Document Count: {}".format(self.output_dlrobot_human.get_documents_count()))
 
+    def is_new_fns_document_from_declarator(self, src_doc: TSourceDocument):
+        for ref in src_doc.decl_references:
+            if 9542 <= ref.office_id <= 10611:
+                # this document is already imported from fns but with a different sha256
+                return True
+        return False
+
+    def check_declaration_office(self, sha256, src_doc: TSourceDocument):
+        for ref in src_doc.decl_references:
+            if ref.office_id is not None and ref.office_id not in self.offices.offices:
+                raise Exception("document sha256={} office {} is not registered in disclosures".format(sha256, ref.office_id))
+
     def add_human_files(self):
         self.logger.info("read {}".format(self.args.human_json))
         human_files = TDlrobotHumanFileDBM(self.args.human_json)
         human_files.open_db_read_only()
         self.logger.info("add human files ...")
         for sha256, src_doc in human_files.get_all_documents():
-            self.add_dlrobot_file(sha256, src_doc.file_extension, decl_refs=src_doc.decl_references)
+            if not self.is_new_fns_document_from_declarator(src_doc):
+                self.check_declaration_office(sha256, src_doc)
+                self.add_dlrobot_file(sha256, src_doc.file_extension, decl_refs=src_doc.decl_references)
         self.logger.info("Database Document Count: {}".format(self.output_dlrobot_human.get_documents_count()))
 
     def main(self):

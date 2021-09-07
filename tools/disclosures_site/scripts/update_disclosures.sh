@@ -145,7 +145,7 @@ echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/
 #19  switch dev to  prod in backend (migalka)
     mysqladmin drop  disclosures_db -u disclosures -pdisclosures -f
     cd $TOOLS/disclosures_site
-    bash cd $TOOLS/disclosures_site/scripts/rename_db.sh disclosures_db_dev disclosures_db
+    bash $TOOLS/disclosures_site/scripts/rename_db.sh disclosures_db_dev disclosures_db
     sudo systemctl start elasticsearch
     python3 $TOOLS/disclosures_site/manage.py build_elastic_index --settings disclosures.settings.prod
 

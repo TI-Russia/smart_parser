@@ -73,6 +73,7 @@ def main(args):
     tar_file = create_tar_file(logger, args.processed_projects_folder, args.max_ctime)
     logger.info("move {} to {}".format(tar_file, output_folder))
     shutil.move(tar_file, output_folder)
+    os.system("tar -C {} --list --file {} > processed_projects_file_list.txt".format(output_folder, tar_file))
 
     logger.info("all done")
 

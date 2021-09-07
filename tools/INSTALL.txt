@@ -71,11 +71,12 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
 #      sudo tar xfz geckodriver-v0.26.0-linux64.tar.gz
 
 2.9 Install google-chrome and chromedriver 90 (be careful to update it, run all tests to check that dl_robot works
-
+    sudo apt-get install google-chrome-stable=93.0.4577.63-1
     wget -O /tmp/chrome.deb https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_90.0.4430.212-1_amd64.deb
     sudo apt install -y   --allow-downgrades /tmp/chrome.deb
 
     wget https://chromedriver.storage.googleapis.com/90.0.4430.24/chromedriver_linux64.zip
+    wget https://chromedriver.storage.googleapis.com/93.0.4577.15/chromedriver_linux64.zip
     unzip chromedriver_linux64.zip
     sudo cp chromedriver /usr/bin
 
