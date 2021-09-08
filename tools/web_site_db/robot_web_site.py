@@ -18,7 +18,6 @@ import urllib.parse
 
 
 class TWebSiteCrawlSnapshot:
-    SINGLE_DECLARATION_TIMEOUT = 60 * 30 # half an hour in seconds,
     DEFAULT_CRAWLING_TIMEOUT = 60 * 60 * 3 # 3 hours
     CRAWLING_TIMEOUT = DEFAULT_CRAWLING_TIMEOUT
 
@@ -175,12 +174,22 @@ class TWebSiteCrawlSnapshot:
 
     def check_crawling_timeouts(self, enough_crawled_urls):
         current_time = time.time()
-        if enough_crawled_urls and current_time - self.export_env.last_found_declaration_time > TWebSiteCrawlSnapshot.SINGLE_DECLARATION_TIMEOUT:
-            self.logger.error("timeout stop crawling: TWebSiteCrawlSnapshot.SINGLE_DECLARATION_TIMEOUT")
+        crawl_time = current_time - self.start_crawling_time
+        if crawl_time > TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT:
+            self.logger.error("timeout stop crawling: TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT={}".format(TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT))
             self.stopped_by_timeout = True
             return False
-        if current_time - self.start_crawling_time > TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT:
-            self.logger.error("timeout stop crawling: TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT")
+
+        if crawl_time < 1 * 60 * 60:
+            last_declaration_timeout = 1 * 60 * 60  # 1 hour
+        elif crawl_time < 5 * 60 * 60:
+            last_declaration_timeout = 30 * 60  # 30 minutes
+        else:
+            last_declaration_timeout = 15 * 60  # 15 minutes
+        if (enough_crawled_urls or crawl_time > 60 * 60 * 3) and \
+                (current_time - self.export_env.last_found_declaration_time > last_declaration_timeout):
+            self.logger.error("timeout stop crawling: last_declaration_timeout={}".format(
+                last_declaration_timeout))
             self.stopped_by_timeout = True
             return False
         return True

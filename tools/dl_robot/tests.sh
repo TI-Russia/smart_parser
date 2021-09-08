@@ -5,7 +5,7 @@ fi
 mkdir $TMP_FOLDER
 
 cd tests
-ls test_*.py | xargs --verbose -I {} -n 1 -P 10 bash -c "python3 -m unittest  -v {}  2>../$TMP_FOLDER/{}.err_log"
+ls test_*.py | xargs --verbose -I {} -n 1 -P 8 bash -c "python3 -m unittest  -v {}  2>../$TMP_FOLDER/{}.err_log"
 failed=$?
 cd -
 

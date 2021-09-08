@@ -69,13 +69,13 @@ class TDlrobot:
         parser.add_argument("--max-step-urls", dest='max_step_url_count', default=1000, type=int)
         parser.add_argument("--only-click-paths", dest='only_click_paths', default=False, action="store_true")
         parser.add_argument("--crawling-timeout", dest='crawling_timeout',
-                                default="3h",
+                                default="14h",
                                 help="crawling timeout in seconds (there is also conversion step after crawling)")
         parser.add_argument("--last-conversion-timeout", dest='last_conversion_timeout',
                                 default="30m",
                                 help="pdf conversion timeout after crawling")
         parser.add_argument("--total-timeout", dest='total_timeout',
-                            default="4h",
+                            default="15h",
                             help="dlrobot must finish its work in this time otherwise it would be killed externally")
         parser.add_argument("--pdf-quota-conversion", dest='pdf_quota_conversion',
                                 default=20 * 2**20,
@@ -94,8 +94,6 @@ class TDlrobot:
         if args.logfile is None:
             args.logfile = args.project + ".log"
         TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT = convert_timeout_to_seconds(args.crawling_timeout)
-        if TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT > TWebSiteCrawlSnapshot.DEFAULT_CRAWLING_TIMEOUT:
-            TWebSiteCrawlSnapshot.SINGLE_DECLARATION_TIMEOUT = 60 * 60
         TDownloadEnv.LAST_CONVERSION_TIMEOUT = convert_timeout_to_seconds(args.last_conversion_timeout)
         TDownloadEnv.PDF_QUOTA_CONVERSION = args.pdf_quota_conversion
         return args

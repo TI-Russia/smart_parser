@@ -5,6 +5,7 @@ import argparse
 import os
 import time
 
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--history-file", dest='history_file', default=None)
