@@ -35,7 +35,7 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
 2.1 sudo apt update
    sudo apt install -y  curl p7zip-full unrar libcurl4-openssl-dev libssl-dev libreoffice \
         python3-wheel calibre  catdoc xlsx2csv default-libmysqlclient-dev libgdiplus python3-pip python3.8-dev \
-        firefox git  sshfs libcurl4  libxss1 libappindicator1 libindicator7
+        firefox git  sshfs libcurl4  libxss1 libappindicator1 libindicator7 pdfcrack qpdf abiword
 
 2.2 git clone https://github.com/TI-Russia/smart_parser.git ~/smart_parser
 
@@ -72,13 +72,11 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
 
 2.9 Install google-chrome and chromedriver 90 (be careful to update it, run all tests to check that dl_robot works
     sudo apt-get install google-chrome-stable=93.0.4577.63-1
-    wget -O /tmp/chrome.deb https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_90.0.4430.212-1_amd64.deb
-    sudo apt install -y   --allow-downgrades /tmp/chrome.deb
 
-    wget https://chromedriver.storage.googleapis.com/90.0.4430.24/chromedriver_linux64.zip
+    rm -rf chromedriver_linux64.zip
     wget https://chromedriver.storage.googleapis.com/93.0.4577.15/chromedriver_linux64.zip
     unzip chromedriver_linux64.zip
-    sudo cp chromedriver /usr/bin
+    sudo mv chromedriver /usr/bin
 
 2.11 Test dlrobot
     cd ~/smart_parser/tools/dl_robot/tests
