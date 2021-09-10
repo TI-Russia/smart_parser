@@ -77,7 +77,7 @@
       {% for file in object_list %}
         <tr>
             <td> <a href="/file/{{ file.id }}"> {{ file.id }} </a> </td>
-            <td> {{ file.web_domains }} </td>
+            <td> {{ file.web_domains|join:", " }} </td>
             <td> {{ file.intersection_status }} </td>
             <td> {{ file.min_income_year }} </td>
             <td> {{ file.max_income_year }} </td>

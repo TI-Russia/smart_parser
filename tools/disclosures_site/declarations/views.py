@@ -1,7 +1,7 @@
 import operator
 
 from . import models
-from .documents import ElasticSectionDocument, ElasticPersonDocument, ElasticOfficeDocument, ElasticFileDocument
+from declarations.documents import ElasticSectionDocument, ElasticPersonDocument, ElasticOfficeDocument, ElasticFileDocument
 from common.russian_fio import TRussianFio, TRussianFioRecognizer
 from disclosures_site.declarations.statistics import TDisclosuresStatisticsHistory
 from declarations.rubrics import fill_combo_box_with_rubrics
@@ -331,7 +331,7 @@ class CommonSearchView(FormView, generic.ListView):
             add_should_item("car_brands", "term", str, should_items)
             add_should_item("income_year", "term", int, should_items)
             add_should_item("position_and_department", self.get_initial().get("match_operator"), str, should_items)
-            add_should_item("web_domains", "match", str, should_items)
+            add_should_item("web_domains", "term", str, should_items)
             add_should_item("source_document_id", "term", int, should_items)
             add_should_item("office_id", "term", int, should_items)
             add_should_item("person_id", "term", int, should_items)
@@ -500,7 +500,7 @@ class FileSearchView(CommonSearchView):
     model = models.Source_Document
     template_name = 'file/index.html'
     elastic_search_document = ElasticFileDocument
-    default_sort_field = ("web_domains", "asc")
+    default_sort_field = ("min_income_year", "desc")
     max_document_count = 300
 
     def get_queryset(self):

@@ -68,21 +68,8 @@
 
 20. Be careful, set correct time to your workstation, tests can fail if time is wrong
 
-21. Install as a service
-  pip3 install servicemanager
-  pip3 install pywin32
-  copy C:\Python37\Lib\site-packages\pywin32_system32\*.dll c:\windows\system32
-  #adjust SERVER_ADDRESS and WORKING_DIR in ConvStorage\convert_pdf_service.py
-  python3 C:\tmp\smart_parser\smart_parser\tools\ConvStorage\DisclosuresPdfConvService.py install
-  #adjust login as sokirko in windows services GUI
-  net start DisclosuresPdfConvService
+23. optional add copy_to_converter2.sh to windows task sheduler
 
 
-22.  Add a firewall rule for C:\Python37\Lib\site-packages\win32\pythonservice.exe
-   Remember that in esset nod by default firewall rules are "DENY" rules not "ALLOW"
-
-23. optional add copy_to_converter2.sh to windows task sheduler 
-
-
-24.
-    to
+24. Eset node антивирус отключен
+25. Сервер запускается руками, поскольку не получается  запустить под правильным пользователем, чтобы запускался офмс.

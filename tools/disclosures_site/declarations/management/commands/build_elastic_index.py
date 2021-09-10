@@ -3,6 +3,7 @@ from elasticsearch import helpers
 from declarations.car_brands import CAR_BRANDS
 from common.russian_fio import TRussianFioRecognizer
 from common.logging_wrapper import setup_logging
+from declarations.documents import ElasticSectionDocument, ElasticPersonDocument, ElasticOfficeDocument, ElasticFileDocument
 
 from itertools import groupby
 from operator import itemgetter
@@ -29,6 +30,7 @@ class TOfficeElasticIndexator:
         self.logger = logger
         self.index_name = settings.ELASTICSEARCH_INDEX_NAMES['office_index_name']
         self.index = Index(self.index_name, es)
+        self.index.document(ElasticOfficeDocument)
         self.logger.debug("index web_site_snapshots")
 
     def gen_documents(self):
@@ -136,6 +138,7 @@ class TSectionElasticIndexator:
         self.logger = logger
         self.index_name = settings.ELASTICSEARCH_INDEX_NAMES['section_index_name']
         self.index = Index(self.index_name, es)
+        self.index.document(ElasticSectionDocument)
         self.logger.debug("index sections")
 
     def gen_document_portion(self, begin, end):
@@ -199,6 +202,7 @@ class TPersonElasticIndexator:
         self.logger = logger
         self.index_name = settings.ELASTICSEARCH_INDEX_NAMES['person_index_name']
         self.index = Index(self.index_name, es)
+        self.index.document(ElasticPersonDocument)
         self.logger.debug("index persons")
 
     def gen_document_portion(self, begin, end):
@@ -308,6 +312,7 @@ class TSourceDocumentElasticIndexator:
         self.logger = logger
         self.index_name = settings.ELASTICSEARCH_INDEX_NAMES['file_index_name']
         self.index = Index(self.index_name, es)
+        self.index.document(ElasticFileDocument)
         self.logger.debug("index source documents")
 
     def gen_documents(self):
@@ -336,7 +341,7 @@ class TSourceDocumentElasticIndexator:
                         'section_count': section_count,
                         'sha256': sha256,
                         'first_crawl_epoch': first_crawl_epoch,
-                        'web_domains': " ".join(web_domains),
+                        'web_domains': list(web_domains),
                     }
                 }
         self.logger.debug("number of sent documents: {}".format(cnt))

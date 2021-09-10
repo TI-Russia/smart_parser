@@ -114,7 +114,7 @@ file_search_index.settings(
 class ElasticFileDocument(Document):
     office_id = IntegerField()
     first_crawl_epoch = IntegerField()
-    web_domains = TextField()
+    web_domains = KeywordField()
 
     class Django:
         model = Source_Document
