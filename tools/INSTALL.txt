@@ -75,6 +75,7 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
 
     rm -rf chromedriver_linux64.zip
     wget https://chromedriver.storage.googleapis.com/93.0.4577.15/chromedriver_linux64.zip
+    rm -rf chromedriver
     unzip chromedriver_linux64.zip
     sudo mv chromedriver /usr/bin
 

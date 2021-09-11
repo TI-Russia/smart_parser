@@ -1,5 +1,6 @@
 from .tomsk import tomsk_gov_ru
 from .gossov_tatarstan_ru import gossov_tatarstan_ru
+from .tgl_ru import tgl_ru
 
 
 def process_adhoc(project):
@@ -9,5 +10,8 @@ def process_adhoc(project):
         return True
     elif domain_name == "gossov.tatarstan.ru":
         gossov_tatarstan_ru(project.web_site_snapshots[0])
+        return True
+    elif domain_name == "tgl.ru":
+        tgl_ru(project.web_site_snapshots[0])
         return True
     return False
