@@ -7,6 +7,7 @@ import os
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--web-site", dest='web_site')
+    parser.add_argument("--exact", dest='exact', action="store_true", default=False, help="exact match web domain")
     parser.add_argument("--only-last", dest='only_last', action="store_true", default=False)
     parser.add_argument('--archive-folder', dest='archive_folder', default='/home/sokirko/declarator_hdd/Yandex.Disk/declarator/dlrobot_updates')
     return parser.parse_args()
@@ -27,12 +28,16 @@ class TDlrobotArchive:
         self.logger.info('process {} archives from {}'.format(len(self.archive_paths), self.args.archive_folder))
 
     def find_archives(self):
+        substring = self.args.web_site
+        if self.args.exact:
+            substring = "/" + substring + "."
+
         for a in self.archive_paths:
             file_list = os.path.join(a, 'processed_projects_file_list.txt')
             artefacts = list()
             with open (file_list) as inp:
                 for l in inp:
-                    if l.find(self.args.web_site) != -1:
+                    if l.find(substring) != -1:
                         artefacts.append(l.strip())
             if len(artefacts) > 0:
                 yield os.path.join(a, 'processed_projects.tar.gz'), artefacts

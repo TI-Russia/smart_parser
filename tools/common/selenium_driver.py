@@ -86,6 +86,7 @@ class TSeleniumDriver:
         options.headless = self.headless
         user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
         options.add_argument("user-agent={}".format(user_agent))
+        options.add_argument("--disable-dev-shm-usage")
         options.add_experimental_option("excludeSwitches", ["enable-automation"])
         options.add_experimental_option('useAutomationExtension', False)
         prefs = {
