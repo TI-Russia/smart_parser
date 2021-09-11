@@ -294,9 +294,12 @@ class TRobotStep:
                 return False
             if not check_link_func(self, link_info):
                 return False
+            else:
+                self.logger.debug("link {} passed {}".format(link_info.anchor_text, check_link_func.__name__))
             if link_info.target_url is not None:
                 file_extension = get_file_extension_only_by_headers(link_info.target_url)
                 if is_video_or_audio_file_extension(file_extension):
+                    self.logger.debug("link {} looks like a media file, skipped".format(link_info.target_url))
                     return False
             return True
         except UnicodeEncodeError as exp:
