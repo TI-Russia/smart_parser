@@ -14,7 +14,7 @@ import os
 import sys
 import argparse
 import traceback
-
+from datetime import datetime
 
 ROBOT_STEPS = [
     {
@@ -34,13 +34,13 @@ ROBOT_STEPS = [
         },
     },
     {
-        'max_links_from_one_page' : 1000,
+        'max_links_from_one_page': 1000,
         'step_name': "declarations",
         'check_link_func': TRobotStep.looks_like_a_declaration_link,
         'include_sources': "copy_if_empty",
         'do_not_copy_urls_from_steps': [None, 'sitemap'],  # None is for morda_url
         'search_engine': {
-            'request': '"сведения о доходах"',
+            'request': '"сведения о доходах {}"'.format(datetime.now().year - 1),
             'policy': "run_always_before"
         },
         'sitemap_xml_processor': {
