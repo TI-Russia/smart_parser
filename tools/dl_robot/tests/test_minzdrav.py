@@ -13,9 +13,9 @@ class TestMinzdrav(TestDeclarationLinkSelenium):
 
     #    commented, because 2021-08-22 I've got httpcode 500
     # def test_minzdrav(self):
-    #     # кажется, тест не очень стабилен, попробую так изменить THttpRequester.HTTP_TIMEOUT
+    #     # кажется, тест не очень стабилен, попробую так изменить THttpRequester.DEFAULT_HTTP_TIMEOUT
     #     # пользуется ли browser head запросами?
-    #     #THttpRequester.HTTP_TIMEOUT = 60
+    #     #THttpRequester.DEFAULT_HTTP_TIMEOUT = 60
     #
     #     url = 'https://minzdrav.gov.ru/ministry/61/0/materialy-po-deyatelnosti-departamenta/combating_corruption/6/svedeniya-o-dohodah-rashodah-ob-imuschestve-i-obyazatelstvah-imuschestvennogo-haraktera-predstavlennye-federalnymi-gosudarstvennymi-grazhdanskimi-sluzhaschimi-ministerstva-zdravoohraneniya-rossiyskoy-federatsii-za-otchetnyy-period-s-1-yanvarya-2016-goda-po-31-dekabrya-2016-goda'
     #

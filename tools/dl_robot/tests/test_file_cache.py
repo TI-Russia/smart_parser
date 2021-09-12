@@ -29,7 +29,7 @@ class THttpServerHandler(http.server.BaseHTTPRequestHandler):
             self.build_headers()
             self.wfile.write("<html> aaaaaaa </html>".encode("latin"))
         elif self.path == "/very_long":
-            time.sleep(THttpRequester.HTTP_TIMEOUT + 10)   # more than HTTP_TIMEOUT
+            time.sleep(THttpRequester.DEFAULT_HTTP_TIMEOUT + 10)   # more than DEFAULT_HTTP_TIMEOUT
             self.build_headers()
             self.wfile.write("<html> bbbb </html>".encode("latin"))
         else:

@@ -84,6 +84,6 @@ class TestContentType(TestCase):
         self.assertEqual(HTTP_HEAD_REQUESTS_COUNT, 1)
 
     def test_redirects(self):
-        dummy1, dummy2, data = THttpRequester.make_http_request_urllib(self.build_url("redirect1"), "GET")
+        dummy1, dummy2, data = THttpRequester.make_http_request_urllib(self.build_url("redirect1"), "GET", 10)
         self.assertEqual(data.decode('utf8').startswith("<html>"), True)
 
