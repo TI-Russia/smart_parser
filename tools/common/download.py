@@ -157,31 +157,44 @@ class TDownloadedFile:
         self.data_file_path = get_local_file_name_by_url(self.original_url)
         self.data = ""
         self.file_extension = None
+        self.redirected_url = None
+        self.timeout = THttpRequester.DEFAULT_HTTP_TIMEOUT
         if os.path.exists(self.data_file_path):
-            with open(self.data_file_path, "rb") as f:
-                self.data = f.read()
-            with open(self.get_page_info_file_name(), "r", encoding="utf8") as f:
-                self.page_info = json.loads(f.read())
-            self.redirected_url = self.page_info.get('redirected_url', self.original_url)
-            self.file_extension = self.page_info.get('file_extension')
+            self.load_from_cached_file()
         else:
-            redirected_url, headers, data = self._http_get_request_with_simple_js_redirect()
-            self.redirected_url = redirected_url
-            self.data = data
-            if hasattr(headers, "_headers"):
-                self.page_info['headers'] = dict(headers._headers)
-            else:
-                assert type(headers) == dict
-                self.page_info['headers'] = headers
-            self.page_info['charset'] = get_content_charset(headers)
-            self.page_info['redirected_url'] = redirected_url
-            self.page_info['original_url'] = original_url
-            if len(self.data) > 0:
-                self.file_extension = self.calc_file_extension_by_data_and_headers()
-                self.page_info['file_extension'] = self.file_extension
-                self.write_file_to_cache()
-                sha256 = hashlib.sha256(data).hexdigest()
-                TDownloadEnv.send_pdf_to_conversion(self.data_file_path, self.file_extension, sha256)
+            self.download_from_remote_server()
+
+    def load_from_cached_file(self):
+        with open(self.data_file_path, "rb") as f:
+            self.data = f.read()
+        with open(self.get_page_info_file_name(), "r", encoding="utf8") as f:
+            self.page_info = json.loads(f.read())
+        self.redirected_url = self.page_info.get('redirected_url', self.original_url)
+        self.file_extension = self.page_info.get('file_extension')
+
+    def download_from_remote_server(self):
+        ext = get_file_extension_only_by_headers(self.original_url)
+        if ext != DEFAULT_HTML_EXTENSION:
+            self.timeout = 120
+            self.logger.debug("use http timeout {}".format(self.timeout))
+
+        redirected_url, headers, data = self._http_get_request_with_simple_js_redirect()
+        self.redirected_url = redirected_url
+        self.data = data
+        if hasattr(headers, "_headers"):
+            self.page_info['headers'] = dict(headers._headers)
+        else:
+            assert type(headers) == dict
+            self.page_info['headers'] = headers
+        self.page_info['charset'] = get_content_charset(headers)
+        self.page_info['redirected_url'] = redirected_url
+        self.page_info['original_url'] = self.original_url
+        if len(self.data) > 0:
+            self.file_extension = self.calc_file_extension_by_data_and_headers()
+            self.page_info['file_extension'] = self.file_extension
+            self.write_file_to_cache()
+            sha256 = hashlib.sha256(data).hexdigest()
+            TDownloadEnv.send_pdf_to_conversion(self.data_file_path, self.file_extension, sha256)
 
     @staticmethod
     def get_simple_js_redirect(main_url, data_utf8):
@@ -198,7 +211,7 @@ class TDownloadedFile:
         return None
 
     def _http_get_request_with_simple_js_redirect(self):
-        redirected_url, headers, data = THttpRequester.make_http_request(self.original_url, "GET")
+        redirected_url, headers, data = THttpRequester.make_http_request(self.original_url, "GET", self.timeout)
 
         try:
             if THttpRequester.get_content_type_from_headers(headers).lower().startswith('text'):
@@ -206,7 +219,7 @@ class TDownloadedFile:
                     data_utf8 = convert_html_to_utf8_using_content_charset(get_content_charset(headers), data)
                     redirect_url = self.get_simple_js_redirect(self.original_url, data_utf8)
                     if redirect_url is not None:
-                        return THttpRequester.make_http_request(redirect_url, "GET")
+                        return THttpRequester.make_http_request(redirect_url, "GET", self.timeout)
                 except (THttpRequester.RobotHttpException, ValueError) as err:
                     pass
         except AttributeError:

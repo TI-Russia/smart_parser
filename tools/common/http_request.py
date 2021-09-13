@@ -110,7 +110,7 @@ class TCurlResponse:
 
 
 class THttpRequester:
-    HTTP_TIMEOUT = 30  # in seconds
+    DEFAULT_HTTP_TIMEOUT = 30  # in seconds
     ENABLE = True
     SECONDS_BETWEEN_HEAD_REQUESTS = 1.0
     REQUEST_RATE_1_MIN = 50
@@ -135,7 +135,7 @@ class THttpRequester:
         THttpRequester.SSL_CONTEXT.set_ciphers(DLROBOT_CIPHERS_LIST)
         if os.environ.get("DLROBOT_HTTP_TIMEOUT"):
             THttpRequester.logger.info("set http timeout to {}".format(os.environ.get("DLROBOT_HTTP_TIMEOUT")))
-            THttpRequester.HTTP_TIMEOUT = int(os.environ.get("DLROBOT_HTTP_TIMEOUT"))
+            THttpRequester.DEFAULT_HTTP_TIMEOUT = int(os.environ.get("DLROBOT_HTTP_TIMEOUT"))
 
     # decrement HTTP_503_ERRORS_COUNT on successful http_request
     @staticmethod
@@ -242,7 +242,7 @@ class THttpRequester:
         return content_type_to_file_extension(content_type)
 
     @staticmethod
-    def make_http_request_urllib(url, method):
+    def make_http_request_urllib(url, method, timeout):
         assert THttpRequester.logger is not None
         assert method in {"GET", "HEAD"}
 
@@ -259,7 +259,7 @@ class THttpRequester:
                 method=method
             )
 
-            with urllib.request.urlopen(req, context=THttpRequester.SSL_CONTEXT, timeout=THttpRequester.HTTP_TIMEOUT) as request:
+            with urllib.request.urlopen(req, context=THttpRequester.SSL_CONTEXT, timeout=timeout) as request:
                 headers = request.info()
                 data = ''
                 if method == 'GET':
@@ -292,12 +292,12 @@ class THttpRequester:
             if e.code == 503:
                 THttpRequester.deal_with_http_code_503()
             if e.code == 405 and method == "HEAD":
-                return THttpRequester.make_http_request_urllib(url, "GET")
+                return THttpRequester.make_http_request_urllib(url, "GET", timeout)
             raise THttpRequester.RobotHttpException("{} extype:{}".format(str(e), type(e)), url, e.code, method)
 
 
     @staticmethod
-    def make_http_request_urllib3(url, method):
+    def make_http_request_urllib3(url, method, timeout):
         assert THttpRequester.logger is not None
         assert method in {"GET", "HEAD"}
 
@@ -313,7 +313,7 @@ class THttpRequester:
             req = http_pool.request(method,
                          url,
                          headers={'User-Agent': get_user_agent()},
-                         timeout=THttpRequester.HTTP_TIMEOUT
+                         timeout=timeout
                          )
             if req.status >= 400:
                 raise THttpRequester.RobotHttpException('get http code={}, while requesting {}, method={}',
@@ -344,11 +344,11 @@ class THttpRequester:
             if code == 503:
                 THttpRequester.deal_with_http_code_503()
             if code == 405 and method == "HEAD":
-                return THttpRequester.make_http_request_urllib(url, "GET")
+                return THttpRequester.make_http_request_urllib(url, "GET", timeout)
             raise THttpRequester.RobotHttpException("{} extype:{}".format(str(exp), type(exp)), url, code, method) #
 
     @staticmethod
-    def make_http_request_curl(url, method):
+    def make_http_request_curl(url, method, timeout):
         if not url.lower().startswith('http'):
             raise THttpRequester.RobotHttpException('unknown protocol, can be http or https', url, 400, method)
         url = THttpRequester._prepare_url_before_http_request(url, method)
@@ -363,9 +363,9 @@ class THttpRequester:
             curl.setopt(curl.NOBODY, True)
         curl.setopt(curl.FOLLOWLOCATION, True)
         curl.setopt(pycurl.SSL_VERIFYPEER, False)
-        assert THttpRequester.HTTP_TIMEOUT > 20
+        assert timeout > 20
         curl.setopt(curl.CONNECTTIMEOUT, 20)
-        curl.setopt(curl.TIMEOUT, THttpRequester.HTTP_TIMEOUT)
+        curl.setopt(curl.TIMEOUT, timeout)
 
         curl.setopt(curl.CAINFO, certifi.where())
         curl.setopt(curl.SSL_CIPHER_LIST, DLROBOT_CIPHERS_LIST)
@@ -381,7 +381,7 @@ class THttpRequester:
                 if http_code == 503:
                     THttpRequester.deal_with_http_code_503()
                 if http_code == 405 and method == "HEAD":
-                    return THttpRequester.make_http_request_curl(url, "GET")
+                    return THttpRequester.make_http_request_curl(url, "GET", timeout)
                 raise THttpRequester.RobotHttpException("curl failed", url, http_code, method)
             THttpRequester.register_successful_request()
             return curl_response.get_redirected_url(), curl_response.headers, curl_response.data
@@ -430,17 +430,18 @@ class THttpRequester:
         return True
 
     @staticmethod
-    def make_http_request(url, method):
+    def make_http_request(url, method, timeout=None):
+        if timeout is None:
+            timeout = THttpRequester.DEFAULT_HTTP_TIMEOUT
         start_time = time.time()
         THttpRequester.logger.debug("make_http_request start ({}) method={}".format(url, method))
         try:
             if THttpRequester.HTTP_LIB == "urllib":
-                return THttpRequester.make_http_request_urllib(url, method)
+                return THttpRequester.make_http_request_urllib(url, method, timeout)
             elif THttpRequester.HTTP_LIB == "curl":
-                return THttpRequester.make_http_request_curl(url, method)
-                #return THttpRequester.make_http_request_urllib(url, method)
+                return THttpRequester.make_http_request_curl(url, method, timeout)
             elif THttpRequester.HTTP_LIB == "urllib3":
-                return THttpRequester.make_http_request_urllib3(url, method)
+                return THttpRequester.make_http_request_urllib3(url, method, timeout)
             else:
                 raise Exception("unknown http_lib=\"{}\", can be urllib, curl or urllib3".format(THttpRequester.HTTP_LIB))
         except UnicodeError as exp:

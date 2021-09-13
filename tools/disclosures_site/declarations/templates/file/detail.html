@@ -31,8 +31,8 @@
 {% endfor %}
 
 
-{% for decl_info in source_document.declarator_file_reference.all %}
-    <a href="{{decl_info.declarator_document_file_url}}"> Ссылка на документ в Деклараторе </a>
+{% for decl_info in source_document.declarator_file_reference_set.all %}
+    <b>Сайт:</b> {{decl_info.web_domain}}  <a href="{{decl_info.declarator_document_file_url}}"> Ссылка на документ в Деклараторе </a>
     <br><br/>
 {% endfor %}
 

@@ -14,11 +14,20 @@ def tgl_ru(web_site: TWebSiteCrawlSnapshot):
     page_no = 1
 
     while True:
+        hrefs = list()
         for c in driver.the_driver.find_elements_by_class_name("dl"):
-             href = c.get_attribute("href")
-             robot_step.logger.info("download {}".format(href))
-             link_info = TLinkInfo(TClickEngine.manual, sved_url, href)
-             robot_step.add_link_wrapper(link_info)
+            try:
+                href = c.get_attribute("href")
+                if href is not None:
+                    hrefs.append(hrefs)
+            except Exception as exp:
+                robot_step.logger.error("skip {}, exception {}".format(c))
+
+        for href in hrefs:
+            robot_step.logger.info("download {}".format(href))
+            link_info = TLinkInfo(TClickEngine.manual, sved_url, href)
+            robot_step.add_link_wrapper(link_info)
+
         page_no += 1
         next_page = driver.the_driver.find_element_by_partial_link_text("{}".format(page_no))
         if next_page is None:
