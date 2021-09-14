@@ -1,10 +1,12 @@
-import re
 from DeclDocRecognizer.document_types import SOME_OTHER_DOCUMENTS
 from common.download import get_file_extension_only_by_headers
 from common.primitives import normalize_and_russify_anchor_text
-from common.http_request import THttpRequester
 from common.link_info import TLinkInfo, check_sub_page_or_iframe
 from common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
+from common.russian_declarant_position import is_public_servant_role
+from common.russian_office_word import has_office_word_in_beginning
+
+import re
 
 
 NEGATIVE_WORDS = [
@@ -16,9 +18,9 @@ NEGATIVE_WORDS = [
     'схема',    'концепция',    'доктрина',
     'технические',    '^федеральный',    '^историческ',
     '^закон',    'новости', "^формы", "обратная", "обращения",
-    "^перечень", "прочие", "слабовидящих", "выступление", "вступительное"
+    "^перечень", "прочие", "слабовидящих", "выступление", "вступительное", "предупреждает"
 ] + ['^.{{0,10}}{}'.format(t) for t in SOME_OTHER_DOCUMENTS]
-# document type (SOME_OTHER_DOCUMENTS)  (указ, утверждена) can be inside the title, for example:
+# document type (SOME_OTHER_DOCUMENTS)  (указ, утверждена) can be inside the html_title, for example:
 #сведения о доходах, об имуществе и обязательствах имущественного характера, представленные руководителями федеральных государственных учреждений, находящихся в ведении министерства здравоохранения российской федерации за отчетный период с 1 января 2012 года по 31 декабря 2012 года, подлежащих размещению на официальном сайте министерства здравоохранения российской федерации в соответствии порядком размещения указанных сведений на официальных сайтах федеральных государственных органов, утвержденным указом президента российской федерации от 8 июля 2013 г. № 613
 # but not in the beginning (first 10 chars)
 
@@ -28,23 +30,6 @@ NEGATIVE_REGEXP = re.compile("|".join(list("({})".format(x) for x in NEGATIVE_WO
 def has_negative_words(anchor_text):
     global NEGATIVE_REGEXP
     return NEGATIVE_REGEXP.search(anchor_text) is not None
-
-ROLE_FIRST_WORDS = [
-    "администратор", "ведущий", "врио", "генеральный", "глава", "главный",
-    "государственная", "государственный", "директор", "должность", "доцент",
-    "заведующая", "заведующий", "зам", "заместитель", "инспектор", "исполняющий", "консультант",
-    "контролер", "начальник", "первый", "полномочный", "помощник",
-    "поректор", "председатель", "представитель", "проректор",
-    "ректор", "референт", "руководитель", "секретарь", "советник",
-    "специалист", "специальный", "старший", "статс", "судья",
-    "технический", "уполномоченный", "управляющий", "финансовый",
-    "член", "экономист", "юрисконсульт"
-]
-ROLE_FIRST_WORDS_REGEXP = "|".join(("(^{})".format(x) for x in ROLE_FIRST_WORDS))
-
-
-def is_public_servant_role(s):
-    return re.search(ROLE_FIRST_WORDS_REGEXP, s, re.IGNORECASE)
 
 
 def looks_like_a_document_link(logger, link_info: TLinkInfo):
@@ -121,6 +106,7 @@ def looks_like_a_declaration_link_without_cache(logger, link_info: TLinkInfo):
     source_page_title_has_income_word = re.search(income_regexp, link_info.source_page_title) is not None
     income_anchor = re.search(income_regexp, anchor_text_russified) is not None
     role_anchor = is_public_servant_role(anchor_text_russified)
+    office_word = has_office_word_in_beginning(anchor_text_russified)
     document_url = None
     sub_page = check_sub_page_or_iframe(logger, link_info)
     income_url, svedenija_url, corrupt_url = url_features(link_info.target_url)
@@ -160,6 +146,10 @@ def looks_like_a_declaration_link_without_cache(logger, link_info: TLinkInfo):
         if source_page_title_has_income_word and income_url:
             positive_case = "case 4"
 
+    if positive_case is None:
+        if office_word:
+            positive_case = "case 5"
+
     if positive_case is not None:
         weight = TLinkInfo.MINIMAL_LINK_WEIGHT
         if anchor_best_match:
@@ -178,6 +168,9 @@ def looks_like_a_declaration_link_without_cache(logger, link_info: TLinkInfo):
             weight += TLinkInfo.LINK_WEIGHT_FOR_INCREMENTING
         if corrupt_url and weight > 0:
             weight += TLinkInfo.LINK_WEIGHT_FOR_INCREMENTING
+        if office_word:
+            weight += TLinkInfo.LINK_WEIGHT_FOR_INCREMENTING
+
         all_features = (("income_page", income_page),
                         ("income_url", income_url),
                         ('income_anchor', income_anchor),
@@ -188,7 +181,9 @@ def looks_like_a_declaration_link_without_cache(logger, link_info: TLinkInfo):
                         ("year_anchor", year_anchor),
                         ("corrupt_url", corrupt_url),
                         ('role_anchor', role_anchor),
-                        ('anchor_best_match', anchor_best_match))
+                        ('anchor_best_match', anchor_best_match),
+                        ('office_word', office_word)
+                        )
 
         all_features_str = ";".join(k for k, v in all_features if v)
         logger.debug("{}, weight={}, features: {}".format(positive_case, weight, all_features_str))
