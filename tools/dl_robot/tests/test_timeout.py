@@ -17,17 +17,20 @@ class THttpServerHandler(http.server.BaseHTTPRequestHandler):
 
     def build_headers(self):
         self.send_response(200)
-        self.send_header("Content-type", "application/octet-stream")
-        self.send_header("Content-Disposition", 'attachment;filename = "wrong_name.doc"')
+        self.send_header("Content-type", "text/html")
         self.end_headers()
 
     def do_GET(self):
         global HTTP_GET_REQUESTS_COUNT
         HTTP_GET_REQUESTS_COUNT += 1
         THttpRequester.logger.debug("GET {}".format(self.path))
-        if self.path == "/somepath":
+        if self.path == "/very_long":
+            time.sleep(THttpRequester.DEFAULT_HTTP_TIMEOUT + 10)   # more than DEFAULT_HTTP_TIMEOUT
             self.build_headers()
-            self.wfile.write("<html> aaaaaaa </html>".encode("latin"))
+            try:
+                self.wfile.write("<html> bbbb </html>".encode("latin"))
+            except Exception as exp:
+                pass
         else:
             http.server.SimpleHTTPRequestHandler.send_error(self, 404, "not found")
 
@@ -49,7 +52,7 @@ class TestHTTPServer(http.server.HTTPServer):
 
 
 class TestFileCache(TestCase):
-    web_site_port = 8198
+    web_site_port = 8189
 
     def build_url(self, path):
         return 'http://127.0.0.1:{}{}'.format(self.web_site_port, path)
@@ -59,7 +62,7 @@ class TestFileCache(TestCase):
         self.web_server = TestHTTPServer(self.web_site_port)
         threading.Thread(target=start_server, args=(self.web_server,)).start()
         time.sleep(1)
-        self.data_folder = os.path.join(os.path.dirname(__file__), "data.file_cache")
+        self.data_folder = os.path.join(os.path.dirname(__file__), "data.timeout")
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
         os.mkdir(self.data_folder)
@@ -75,26 +78,13 @@ class TestFileCache(TestCase):
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
 
-    def test_request_the_same(self):
-        url = self.build_url('/somepath')
-        TDownloadedFile(url)
-        self.assertEqual(HTTP_GET_REQUESTS_COUNT, 1)
-        TDownloadedFile(url)
-        self.assertEqual(HTTP_GET_REQUESTS_COUNT, 1)
-
-    # cannot test it with other tests because
-    def test_request_too_many_404(self):
-        THttpRequester.ENABLE = True
-        url = self.build_url('/request_too_many_404')
-        codes = list()
-        for i in range(4):
-            try:
-                x = TDownloadedFile(url)
-            except THttpRequester.RobotHttpException as exp:
-                codes.append(exp.http_code)
-
-        canon_result = [404, 404, 404, 429]
-        if codes != canon_result:
-            print("test_request_too_many_404 is going to fail")
-            print("THttpRequester.ALL_HTTP_REQUEST={}".format(str(THttpRequester.ALL_HTTP_REQUEST)))
-        self.assertSequenceEqual(canon_result, codes)
+    def test_request_timed_out(self):
+        url = self.build_url('/very_long')
+        got_timeout_exception = False
+        try:
+            TDownloadedFile(url)
+        except THttpRequester.RobotHttpException as exp:
+            got_timeout_exception = True
+        except Exception as exp:
+            assert False
+        self.assertTrue(got_timeout_exception)

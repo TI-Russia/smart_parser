@@ -19,7 +19,7 @@ def tgl_ru(web_site: TWebSiteCrawlSnapshot):
             try:
                 href = c.get_attribute("href")
                 if href is not None:
-                    hrefs.append(hrefs)
+                    hrefs.append(href)
             except Exception as exp:
                 robot_step.logger.error("skip {}, exception {}".format(c))
 
