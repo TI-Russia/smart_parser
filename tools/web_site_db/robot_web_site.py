@@ -210,7 +210,7 @@ class TWebSiteCrawlSnapshot:
                 step = self.parent_project.robot_step_passports[i]
                 self.robot_steps.append(TRobotStep(self, **step, is_last_step=(i == len(steps) - 1)))
         for url, info in init_json.get('url_nodes', dict()).items():
-            self.url_nodes[url] = TUrlInfo(init_json=info)
+            self.url_nodes[url] = TUrlInfo().from_json(info)
         return self
 
     def to_json(self):
@@ -236,7 +236,7 @@ class TWebSiteCrawlSnapshot:
     def get_title(self, url):
         info: TUrlInfo
         info = self.url_nodes[url]
-        return info.title
+        return info.html_title
 
     def get_path_to_root_recursive(self, path, all_paths):
         assert len(path) >= 1
@@ -262,7 +262,7 @@ class TWebSiteCrawlSnapshot:
                 record = {
                     'source:url': parent_url,
                     'source:step': parent_url_info.step_name,
-                    'source:title': parent_url_info.title,
+                    'source:title': parent_url_info.html_title,
                     'target:anchor_text': link_info['text'],
                     'target:engine': engine
                 }
