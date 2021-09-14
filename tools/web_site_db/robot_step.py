@@ -10,6 +10,7 @@ from common.serp_parser import SearchEngine, SearchEngineEnum, SerpException
 from common.primitives import normalize_and_russify_anchor_text
 from dl_robot.declaration_link import looks_like_a_declaration_link_without_cache
 from common.content_types import is_video_or_audio_file_extension
+from web_site_db.url_info import TUrlInfo
 
 from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
 from collections import defaultdict
@@ -19,7 +20,7 @@ import hashlib
 import re
 from usp.tree import sitemap_tree_for_homepage
 import urllib.parse
-
+from operator import itemgetter
 
 #disable logging for usp.tree
 import logging
@@ -43,41 +44,6 @@ class TUrlMirror:
                 url = url[len(prefix):]
                 self.www_prefix = prefix
         self.normalized_url = url
-
-
-class TUrlInfo:
-    def __init__(self, title=None, step_name=None, init_json=None):
-        if init_json is not None:
-            self.step_name = init_json['step']
-            self.title = init_json['title']
-            self.parent_nodes = set(init_json.get('parents', list()))
-            self.linked_nodes = init_json.get('links', dict())
-            self.downloaded_files = list()
-            for rec in init_json.get('downloaded_files', list()):
-                self.downloaded_files.append(TLinkInfo(None, None, None).from_json(rec))
-        else:
-            self.step_name = step_name
-            self.title = title
-            self.parent_nodes = set()
-            self.linked_nodes = dict()
-            self.downloaded_files = list()
-
-    def to_json(self):
-        record = {
-            'step': self.step_name,
-            'title': self.title,
-            'parents': list(self.parent_nodes),
-            'links': self.linked_nodes,
-        }
-        if len(self.downloaded_files) > 0:
-            record['downloaded_files'] = list(x.to_json() for x in self.downloaded_files)
-        return record
-
-    def add_downloaded_file(self, link_info: TLinkInfo):
-        self.downloaded_files.append(link_info)
-
-    def add_child_link(self, href, record):
-        self.linked_nodes[href] = record
 
 
 def check_common_domain(web_domain1, web_domain2):
@@ -246,7 +212,8 @@ class TRobotStep:
 
     def check_link_sitemap(self, link_info: TLinkInfo):
         text = normalize_and_russify_anchor_text(link_info.anchor_text)
-        return text.startswith('карта сайта')
+        return text.startswith('карта сайта') or \
+                text.startswith('структура') # https://voronezh-city.ru/administration/structure/
 
     def check_anticorr_link_text(self, link_info: TLinkInfo):
         text = link_info.anchor_text.strip().lower()
@@ -317,15 +284,19 @@ class TRobotStep:
         href = link_info.target_url
 
         self.website.url_nodes[link_info.source_url].add_child_link(href, link_info.to_json())
-        link_info.weight = max(link_info.weight, self.step_urls.get(href, 0.0))
+        depth = self.website.url_nodes[link_info.source_url].depth + 1
+
+        link_info.weight = max(link_info.weight, self.step_urls.get(href, 0.0)) + (1.0 / (depth + 1.0))
         self.step_urls[href] = link_info.weight
 
         if href not in self.website.url_nodes:
             if link_info.target_title is None and downloaded_file.file_extension == DEFAULT_HTML_EXTENSION:
                 link_info.target_title = get_html_title(downloaded_file.data)
-            self.website.url_nodes[href] = TUrlInfo(title=link_info.target_title, step_name=self.step_name)
-
-        self.website.url_nodes[href].parent_nodes.add(link_info.source_url)
+            self.website.url_nodes[href] = TUrlInfo(title=link_info.target_title, step_name=self.step_name, depth=depth,
+                                                    parent_node=link_info.source_url)
+        else:
+            self.website.url_nodes[href].add_parent_node(link_info.source_url)
+            self.website.url_nodes[href].update_depth(depth)
 
         if self.is_last_step:
             self.website.export_env.export_file_if_relevant(downloaded_file, link_info)
@@ -415,14 +386,7 @@ class TRobotStep:
         enough_crawled_urls = url_index > 200 or (url_index > 100 and max(self.last_processed_url_weights[-10:]) < TLinkInfo.NORMAL_LINK_WEIGHT)
         if not self.website.check_crawling_timeouts(enough_crawled_urls):
             return None
-        max_weight = TLinkInfo.MINIMAL_LINK_WEIGHT - 1.0
-        best_url = None
-        for url, weight in self.pages_to_process.items():
-            if weight >= max_weight or best_url is None:
-                max_weight = weight
-                best_url = url
-        if best_url is None:
-            return None
+        best_url, max_weight = max(self.pages_to_process.items(), key=itemgetter(1))
         self.processed_pages.add(best_url)
         del self.pages_to_process[best_url]
         self.last_processed_url_weights.append(max_weight)
