@@ -86,13 +86,17 @@ def url_features(url):
     return income_url, svedenija_url, corrupt_url
 
 
+def best_declaration_regex_match(str):
+    return re.search('^((сведения)|(справк[аи])) о доходах', str) is not None
+
+
 def looks_like_a_declaration_link_without_cache(logger, link_info: TLinkInfo):
     # here is a place for ML
     anchor_text_russified = normalize_and_russify_anchor_text(link_info.anchor_text)
     page_html = normalize_and_russify_anchor_text(link_info.page_html)
     positive_case = None
     anchor_best_match = False
-    if re.search('^((сведения)|(справк[аи])) о доходах', anchor_text_russified):
+    if best_declaration_regex_match(anchor_text_russified):
         anchor_best_match = True
         positive_case = "case 0"
     elif has_negative_words(anchor_text_russified):

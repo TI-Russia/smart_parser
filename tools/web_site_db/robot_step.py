@@ -8,7 +8,7 @@ from common.http_request import THttpRequester
 from common.popular_sites import is_super_popular_domain
 from common.serp_parser import SearchEngine, SearchEngineEnum, SerpException
 from common.primitives import normalize_and_russify_anchor_text
-from dl_robot.declaration_link import looks_like_a_declaration_link_without_cache
+from dl_robot.declaration_link import looks_like_a_declaration_link_without_cache, best_declaration_regex_match
 from common.content_types import is_video_or_audio_file_extension
 from web_site_db.url_info import TUrlInfo
 from common.languages import is_human_language
@@ -289,6 +289,10 @@ class TRobotStep:
         depth = self.website.url_nodes[link_info.source_url].depth + 1
 
         link_info.weight = max(link_info.weight, self.step_urls.get(href, 0.0)) + (1.0 / (depth + 1.0))
+        if downloaded_file.file_extension == DEFAULT_HTML_EXTENSION:
+            if best_declaration_regex_match(downloaded_file.convert_html_to_utf8().lower()):
+                self.logger.debug("add weight {} using best_declaration_regex_match".format(TLinkInfo.BEST_LINK_WEIGHT))
+                link_info.weight += TLinkInfo.BEST_LINK_WEIGHT
         self.step_urls[href] = link_info.weight
 
         if href not in self.website.url_nodes:
@@ -472,6 +476,17 @@ class TRobotStep:
         else:
             self.add_link_wrapper(link_info)
 
+    def find_languages_links(self, elements, processed_elements):
+        language_links = list()
+        for element_index, element, in enumerate(elements):
+            if is_human_language(element['anchor']):
+                language_links.append(element_index)
+                processed_elements.add(element['id'])
+        # a link between a language links is also a language link
+        for s,e in zip(language_links, language_links[1:]):
+            for i in range(s + 1, e):
+                processed_elements.add(elements[i]['id'])
+
     def click_all_selenium(self, main_url, check_link_func):
         self.logger.debug("find_links_with_selenium url={} ".format(main_url))
         THttpRequester.consider_request_policy(main_url, "GET_selenium")
@@ -485,10 +500,12 @@ class TRobotStep:
             return
         self.logger.debug("html_size={}, elements_count={}".format(len(page_html), len(elements)))
         processed_elements = set()
+
+        self.find_languages_links(elements, processed_elements)
+
         for element_index, element, in enumerate(elements):
             processed_elements.add(element['id'])
             self.process_element(main_url, page_html, element_index, element, check_link_func)
-
         # получаем еще раз ссылки, может быть, что-то новое отрисовал javascript, хотя,
         # может быть, надо брать ссылки не после, а до скролдауна и сравнивать их по href, а не по id,
         # т.е. до того как javaскрипт начал скрывать их (поближе  к чистой странице, как будто мы ее скачали curl)
