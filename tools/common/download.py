@@ -21,7 +21,6 @@ class TDownloadEnv:
     CONVERSION_CLIENT: TDocConversionClient = None
     LAST_CONVERSION_TIMEOUT = 30*60  # in seconds
     PDF_QUOTA_CONVERSION = 20 * 2**20 # in bytes
-    logger = None
 
     @staticmethod
     def get_download_folder():
@@ -40,7 +39,6 @@ class TDownloadEnv:
 
     @staticmethod
     def init_conversion(logger):
-        TDownloadEnv.logger = logger
         TDownloadEnv.CONVERSION_CLIENT = TDocConversionClient(TDocConversionClient.parse_args([]), logger=logger)
         TDownloadEnv.CONVERSION_CLIENT.start_conversion_thread()
 
@@ -105,11 +103,11 @@ def save_downloaded_file(filename):
     if file_extension == '':
         file_extension = file_extension_by_file_contents(filename)
     saved_filename = os.path.join(download_folder, sha256 + file_extension)
-    if TDownloadEnv.logger is not None:
-        TDownloadEnv.logger.debug("save file {} as {}".format(filename, saved_filename))
+    if THttpRequester.logger is not None:
+        THttpRequester.logger.debug("save file {} as {}".format(filename, saved_filename))
     if os.path.exists(saved_filename):
-        if TDownloadEnv.logger is not None:
-            TDownloadEnv.logger.debug("replace existing {0}".format(saved_filename))
+        if THttpRequester.logger is not None:
+            THttpRequester.logger.debug("replace existing {0}".format(saved_filename))
         os.remove(saved_filename)
     os.rename(filename, saved_filename)
     TDownloadEnv.send_pdf_to_conversion(saved_filename, file_extension, sha256)
@@ -151,7 +149,7 @@ class TDownloadedFile:
         return self.data_file_path + ".page_info"
 
     def __init__(self, original_url):
-        self.logger = TDownloadEnv.logger
+        self.logger = THttpRequester.logger
         self.original_url = original_url
         self.page_info = dict()
         self.data_file_path = get_local_file_name_by_url(self.original_url)
