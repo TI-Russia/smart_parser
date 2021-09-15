@@ -447,9 +447,9 @@ class TRobotStep:
             return
         link_text = element['anchor'].strip('\n\r\t ') if element['anchor'] is not None else ""
 
-        href = element['href']
         link_info = TLinkInfo(TClickEngine.selenium,
-                              main_url, href,
+                              source_url=main_url,
+                              target_url=element['href'],
                               source_html=page_html,
                               anchor_text=link_text,
                               tag_name=element['id'].tag_name,
@@ -464,7 +464,7 @@ class TRobotStep:
                 self.click_selenium_if_no_href(main_url, element['id'], element_index, check_link_func)
             except WebDriverException as exp:
                 self.logger.debug("exception: {}".format(exp))
-                if href is not None:  # see gorsovet-podolsk in tests
+                if link_info.target_url is not None:  # see gorsovet-podolsk in tests
                     if self.normalize_and_check_link(link_info, check_link_func):
                         self.add_link_wrapper(link_info)
         else:

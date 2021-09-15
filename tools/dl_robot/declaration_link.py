@@ -5,7 +5,7 @@ from common.link_info import TLinkInfo, check_sub_page_or_iframe
 from common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
 from common.russian_declarant_position import is_public_servant_role
 from common.russian_office_word import has_office_word_in_beginning
-
+from common.russian_geo_word import has_geo_leaf_word_in_beginning
 import re
 
 
@@ -107,6 +107,7 @@ def looks_like_a_declaration_link_without_cache(logger, link_info: TLinkInfo):
     income_anchor = re.search(income_regexp, anchor_text_russified) is not None
     role_anchor = is_public_servant_role(anchor_text_russified)
     office_word = has_office_word_in_beginning(anchor_text_russified)
+    geo_leaf_word = has_geo_leaf_word_in_beginning(anchor_text_russified)
     document_url = None
     sub_page = check_sub_page_or_iframe(logger, link_info)
     income_url, svedenija_url, corrupt_url = url_features(link_info.target_url)
@@ -150,6 +151,10 @@ def looks_like_a_declaration_link_without_cache(logger, link_info: TLinkInfo):
         if office_word:
             positive_case = "case 5"
 
+    if positive_case is None:
+        if geo_leaf_word:
+            positive_case = "case 6"
+
     if positive_case is not None:
         weight = TLinkInfo.MINIMAL_LINK_WEIGHT
         if anchor_best_match:
@@ -170,6 +175,8 @@ def looks_like_a_declaration_link_without_cache(logger, link_info: TLinkInfo):
             weight += TLinkInfo.LINK_WEIGHT_FOR_INCREMENTING
         if office_word:
             weight += TLinkInfo.LINK_WEIGHT_FOR_INCREMENTING
+        if geo_leaf_word:
+            weight += TLinkInfo.LINK_WEIGHT_FOR_INCREMENTING
 
         all_features = (("income_page", income_page),
                         ("income_url", income_url),
@@ -182,7 +189,8 @@ def looks_like_a_declaration_link_without_cache(logger, link_info: TLinkInfo):
                         ("corrupt_url", corrupt_url),
                         ('role_anchor', role_anchor),
                         ('anchor_best_match', anchor_best_match),
-                        ('office_word', office_word)
+                        ('office_word', office_word),
+                        ('geo_leaf_word', geo_leaf_word)
                         )
 
         all_features_str = ";".join(k for k, v in all_features if v)
