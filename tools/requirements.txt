@@ -38,3 +38,4 @@ pydot
 python-magic
 tensorflow
 fsspec
+iso-639

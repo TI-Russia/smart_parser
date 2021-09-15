@@ -11,6 +11,7 @@ from common.primitives import normalize_and_russify_anchor_text
 from dl_robot.declaration_link import looks_like_a_declaration_link_without_cache
 from common.content_types import is_video_or_audio_file_extension
 from web_site_db.url_info import TUrlInfo
+from common.languages import is_human_language
 
 from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
 from collections import defaultdict
@@ -257,7 +258,8 @@ class TRobotStep:
                 prepare_for_logging(link_info.anchor_text)))
         try:
             #language codes
-            if link_info.anchor_text.lower() in ['en', 'de', 'fr', 'es', 'pt', '中文', 'عربية']:
+            if is_human_language(link_info.anchor_text):
+                self.logger.debug("skip language link {}".format(link_info.anchor_text))
                 return False
             if not check_link_func(self, link_info):
                 return False
