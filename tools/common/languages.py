@@ -36,7 +36,8 @@ popular_languages_in_russian = {
     'гаитянский креольский', 'голландский', 'греческий',
     'датский',
     'испанский', 'итальянский', 'иврит', 'индонезийский',
-    'кантонский (традиционное письмо)', 'каталанский', 'керетарский отоми', 'китайский традиционный',
+    'кантонский (традиционное письмо)',
+    'каталанский', 'керетарский отоми', 'китайский традиционный',
     'китайский упрощенный', 'клингонский', 'корейский', 'керетарский отоми',
     'латышский', 'литовский',
     'малайский', 'мальтийский',
@@ -227,6 +228,7 @@ popular_languages_in_native = {
 "ትግርኛ",
 "བོད་ཡིག",
 "türkmen",
+"türk"
 "түркмен",
 "wikang tagalog",
 "setswana",
@@ -251,13 +253,15 @@ popular_languages_in_native = {
 "ייִדיש",
 "yorùbá",
 "saɯ cueŋƅ",
-"isizulu"
+"isizulu",
+"日本の",
+"українська мова",
 }
 
 def is_human_language(l):
     if l is None:
         return False
-    l = l.lower()
+    l = l.lower().strip()
     if l in united_nations_style_languages:
         return True
     if l in popular_languages_in_russian:

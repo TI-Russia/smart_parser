@@ -504,8 +504,10 @@ class TRobotStep:
         self.find_languages_links(elements, processed_elements)
 
         for element_index, element, in enumerate(elements):
-            processed_elements.add(element['id'])
-            self.process_element(main_url, page_html, element_index, element, check_link_func)
+            if element['id'] not in processed_elements:
+                processed_elements.add(element['id'])
+                self.process_element(main_url, page_html, element_index, element, check_link_func)
+
         # получаем еще раз ссылки, может быть, что-то новое отрисовал javascript, хотя,
         # может быть, надо брать ссылки не после, а до скролдауна и сравнивать их по href, а не по id,
         # т.е. до того как javaскрипт начал скрывать их (поближе  к чистой странице, как будто мы ее скачали curl)
