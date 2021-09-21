@@ -1,4 +1,4 @@
-from common.serp_parser import SearchEngine
+from common.serp_parser import SearchEngine, SearchEngineEnum
 from common.selenium_driver import TSeleniumDriver
 
 import random
@@ -38,13 +38,13 @@ class TestSimple(TestCase):
         self.assertGreater(len(urls), 0)
 
     def test_yandex(self):
-        self.check_search_engine(0)
+        self.check_search_engine(SearchEngineEnum.YANDEX)
 
     def test_google(self):
-        self.check_search_engine(1)
+        self.check_search_engine(SearchEngineEnum.GOOGLE)
 
     def test_bing(self):
-        self.check_search_engine(2)
+        self.check_search_engine(SearchEngineEnum.BING)
 
     def test_simple_navigate(self):
         #assert selenium is working after google search
