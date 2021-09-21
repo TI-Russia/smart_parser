@@ -290,7 +290,8 @@ class TRobotStep:
 
         link_info.weight = max(link_info.weight, self.step_urls.get(href, 0.0)) + (1.0 / (depth + 1.0))
         if downloaded_file.file_extension == DEFAULT_HTML_EXTENSION:
-            if best_declaration_regex_match(downloaded_file.convert_html_to_utf8().lower()):
+            html = downloaded_file.convert_html_to_utf8().lower()
+            if best_declaration_regex_match(html, from_start=False):
                 self.logger.debug("add weight {} using best_declaration_regex_match".format(TLinkInfo.BEST_LINK_WEIGHT))
                 link_info.weight += TLinkInfo.BEST_LINK_WEIGHT
         self.step_urls[href] = link_info.weight

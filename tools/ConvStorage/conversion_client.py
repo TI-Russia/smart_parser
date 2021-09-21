@@ -301,20 +301,29 @@ class TDocConversionClient(object):
                 return 1
         return 0
 
+    def _assert_declarator_conv_alive(self):
+        url = "http://" + TDocConversionClient.DECLARATOR_CONV_URL+"/ping"
+        if self.logger is not None:
+            self.logger.debug("try to ping pdf conversion server {}".format(url))
+        with urllib.request.urlopen(url, timeout=300) as response:
+            answer = response.read()
+            if answer == b"yes":
+                return True
+            return False
+
     def assert_declarator_conv_alive(self):
-        try:
-            url = "http://" + TDocConversionClient.DECLARATOR_CONV_URL+"/ping"
-            if self.logger is not None:
-                self.logger.debug ("try to ping pdf conversion server {}".format(url))
-            with urllib.request.urlopen(url, timeout=300) as response:
-                answer = response.read()
-                if answer == b"yes":
-                    return True
-                return False
-        except Exception as exp:
-            m = "cannot connect to {} (declarator conversion server)".format(TDocConversionClient.DECLARATOR_CONV_URL)
-            if self.logger is None:
-                print (m)
-            else:
-                self.logger.error(m)
-            raise
+        try_count = 3
+        for try_index in range(try_count):
+            try:
+                self._assert_declarator_conv_alive()
+            except Exception as exp:
+                m = "cannot connect to {} (declarator conversion server) try_index={}".format(
+                    TDocConversionClient.DECLARATOR_CONV_URL, try_index)
+                if self.logger is None:
+                    print(m)
+                else:
+                    self.logger.error(m)
+                if try_index + 1 == try_count:
+                    raise
+                else:
+                    time.sleep(3)
