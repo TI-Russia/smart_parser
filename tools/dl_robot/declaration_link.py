@@ -86,8 +86,11 @@ def url_features(url):
     return income_url, svedenija_url, corrupt_url
 
 
-def best_declaration_regex_match(str):
-    return re.search('^((сведения)|(справк[аи])) о доходах', str) is not None
+def best_declaration_regex_match(str, from_start=True):
+    regexp = '((сведения)|(справк[аи])) о доходах'
+    if from_start:
+        regexp = "^" + regexp
+    return re.search(regexp, str) is not None
 
 
 def looks_like_a_declaration_link_without_cache(logger, link_info: TLinkInfo):
