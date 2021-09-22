@@ -123,7 +123,7 @@ class TRobotStep:
         self.website = website
         self.logger = website.logger
         self.step_name = step_name
-        self.step_urls = dict() if step_urls is None else step_urls
+        self.url_to_weight = dict() if step_urls is None else step_urls
         self.transitive = transitive
         self.check_link_func = check_link_func
         self.check_link_func_2 = check_link_func_2
@@ -154,7 +154,7 @@ class TRobotStep:
     def need_search_engine_after(self):
         return self.website.parent_project.enable_search_engine and \
                self.search_engine.get('policy') == "run_after_if_no_results" and \
-               len(self.step_urls) == 0
+               len(self.url_to_weight) == 0
 
     def need_search_engine_before(self):
         return self.website.parent_project.enable_search_engine and  \
@@ -162,15 +162,15 @@ class TRobotStep:
 
     def delete_url_mirrors_by_www_and_protocol_prefix(self):
         mirrors = defaultdict(list)
-        for u in self.step_urls:
+        for u in self.url_to_weight:
             m = TUrlMirror(u)
             mirrors[m.normalized_url].append(m)
         new_step_urls = dict()
         for urls in mirrors.values():
             urls = sorted(urls, key=(lambda x: len(x.input_url)))
-            max_weight = max(self.step_urls.get(u.input_url, 0.0) for u in urls)
+            max_weight = max(self.url_to_weight.get(u.input_url, 0.0) for u in urls)
             new_step_urls[urls[-1].input_url] = max_weight  # get the longest url and max weight
-        self.step_urls = new_step_urls
+        self.url_to_weight = new_step_urls
 
     def can_follow_this_link(self, source_url, target_url):
         if not check_href_elementary(target_url):
@@ -207,7 +207,7 @@ class TRobotStep:
     def to_json(self):
         return {
             'step_name': self.step_name,
-            'step_urls': self.step_urls,
+            'step_urls': self.url_to_weight,
             'profiler': self.profiler
         }
 
@@ -288,13 +288,15 @@ class TRobotStep:
         self.website.url_nodes[link_info.source_url].add_child_link(href, link_info.to_json())
         depth = self.website.url_nodes[link_info.source_url].depth + 1
 
-        link_info.weight = max(link_info.weight, self.step_urls.get(href, 0.0)) + (1.0 / (depth + 1.0))
         if downloaded_file.file_extension == DEFAULT_HTML_EXTENSION:
             html = downloaded_file.convert_html_to_utf8().lower()
             if best_declaration_regex_match(html, from_start=False):
                 self.logger.debug("add weight {} using best_declaration_regex_match".format(TLinkInfo.BEST_LINK_WEIGHT))
-                link_info.weight += TLinkInfo.BEST_LINK_WEIGHT
-        self.step_urls[href] = link_info.weight
+                link_info.weight = max(link_info.weight, TLinkInfo.BEST_LINK_WEIGHT)
+        link_info.weight += (1.0 / (depth + 1.0))
+
+        link_info.weight = max(link_info.weight, self.url_to_weight.get(href, 0.0))
+        self.url_to_weight[href] = link_info.weight
 
         if href not in self.website.url_nodes:
             if link_info.target_title is None and downloaded_file.file_extension == DEFAULT_HTML_EXTENSION:
@@ -603,7 +605,7 @@ class TRobotStep:
     def make_one_step(self, start_pages, regional_main_pages):
         self.logger.info("=== step {0} =========".format(self.step_name))
         self.logger.info(self.website.main_page_url)
-        self.step_urls = dict()
+        self.url_to_weight = dict()
         start_time = time.time()
         if self.is_last_step:
             self.website.create_export_folder()
@@ -613,11 +615,11 @@ class TRobotStep:
 
         if self.include_sources == "always":
             assert not self.is_last_step  # todo: should we export it?
-            self.step_urls.update(self.pages_to_process)
+            self.url_to_weight.update(self.pages_to_process)
 
         if self.need_search_engine_before():
             self.use_search_engine(self.website.main_page_url)
-            self.pages_to_process.update(self.step_urls)
+            self.pages_to_process.update(self.url_to_weight)
 
         if self.sitemap_xml_processor:
             self.add_links_from_sitemap_xml(self.sitemap_xml_processor.get('check_url_func'))
@@ -626,7 +628,7 @@ class TRobotStep:
 
         self.apply_function_to_links(self.check_link_func)
 
-        if len(self.step_urls) == 0:
+        if len(self.url_to_weight) == 0:
             if self.check_link_func_2:
                 self.logger.debug("second pass with {}".format(self.check_link_func_2.__name__))
                 self.pages_to_process = save_input_urls
@@ -638,11 +640,11 @@ class TRobotStep:
         if self.step_name == "sitemap":
             self.add_regional_main_pages(regional_main_pages)
 
-        if self.include_sources == "copy_if_empty" and len(self.step_urls) == 0:
+        if self.include_sources == "copy_if_empty" and len(self.url_to_weight) == 0:
             for url, weight in start_pages.items():
                 step_name = self.website.url_nodes[url].step_name
                 if step_name not in self.do_not_copy_urls_from_steps:
-                    self.step_urls[url] = weight
+                    self.url_to_weight[url] = weight
 
         self.profiler = {
             "elapsed_time":  time.time() - start_time,
@@ -651,4 +653,4 @@ class TRobotStep:
         }
         self.logger.debug("{}".format(str(self.profiler)))
         self.delete_url_mirrors_by_www_and_protocol_prefix()
-        self.logger.info('{0} source_url links -> {1} target links'.format(len(start_pages), len(self.step_urls)))
+        self.logger.info('{0} source_url links -> {1} target links'.format(len(start_pages), len(self.url_to_weight)))
