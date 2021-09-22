@@ -23,6 +23,7 @@ class THttpServerHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         self.build_headers()
         local_file = os.path.join(self.server.web_site_folder, self.path[1:])
+        #print("do_GET {}".format(local_file))
         if os.path.exists(local_file) and Path(local_file).is_file():
             with open(local_file, "r", encoding="utf8") as inp:
                 self.wfile.write(inp.read().encode('utf8'))
@@ -48,6 +49,7 @@ class TestHTTPServer(http.server.HTTPServer):
         super().__init__(('127.0.0.1', int(port)), THttpServerHandler)
 
     def set_web_site_folder(self, folder):
+        print ("set_web_site_folder to {}".format(folder))
         self.web_site_folder = folder
 
 
@@ -79,7 +81,7 @@ class TestDeclarationLinkBase(TestCase):
             step_info.processed_pages = set()
             step_info.apply_function_to_links(TRobotStep.looks_like_a_declaration_link)
             links = dict()
-            for url, weight in step_info.step_urls.items():
+            for url, weight in step_info.url_to_weight.items():
                 u = list(urllib.parse.urlparse(url))
                 u[1] = "dummy"
                 links[urllib.parse.urlunparse(u)] = weight
