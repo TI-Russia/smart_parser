@@ -40,7 +40,7 @@ class TestDeclarationLinkSelenium(TestCase):
             step_info.processed_pages = set()
             step_info.apply_function_to_links(TRobotStep.looks_like_a_declaration_link)
             links = dict()
-            for url, weight in step_info.step_urls.items():
+            for url, weight in step_info.url_to_weight.items():
                 u = list(urllib.parse.urlparse(url))
                 u[1] = "dummy"
                 links[urllib.parse.urlunparse(u)] = weight

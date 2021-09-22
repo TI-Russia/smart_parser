@@ -10,7 +10,8 @@ class TestAkrvo2(TestDeclarationLinkBase):
     def tearDown(self):
         super().tearDown()
 
-    def test_akrvo2(self):
+    def test_2_akrvo(self):
         links = self.process_one_page("web_sites/arkvo2/parent.html")
+        self.assertIn('http://dummy/25023.html', links)
         self.assertGreater(links['http://dummy/25023.html'], 50)
 
