@@ -1,17 +1,17 @@
-http://dummy/sved.html
-http://dummy/sved.html?version=normal
-http://dummy/sved.html#assist_hint
-http://dummy/sved.html#close
-http://dummy/events/Novosti/?list_date_filter_datestart=10.05.2021
-http://dummy/Svedeniya-o-dohodah
-http://dummy/Komissii/Komissiya-po-koordinicii-raby-po-protivodejstviyu-korrupcii/
-http://dummy/Komissii/Komissiya-po-soblyudeniyu-licami-zameschayuschimi-municipalnye-dolzhnosti-trebovanij-ustanovlennyh-zakonodatelstvom-Rossijskoj-Federacii-o-protivodejstvii-korrupcii/
-http://dummy/?menu=getfile&id=294
-http://dummy/?menu=getfile&id=247
-http://dummy/?menu=getfile&id=166
-http://dummy/?menu=getfile&id=148
-http://dummy/?menu=getfile&id=147
-http://dummy/?menu=getfile&id=146
-http://dummy/?menu=getfile&id=145
-http://dummy/?menu=getfile&files=294,247,166,148,147,146,145&mode=group&key=e0f17977d1bb2d1623c6a2df0621248d
-https://dummy/files/Mineconom_version4.pdf
+{"url": "http://dummy/sved.html", "weight": 50.5, "anchor": ""}
+{"url": "http://dummy/sved.html?version=normal", "weight": 0.5, "anchor": "Обычная версия сайта"}
+{"url": "http://dummy/sved.html#assist_hint", "weight": 50.5, "anchor": "?"}
+{"url": "http://dummy/sved.html#close", "weight": 50.5, "anchor": "Закрыть ×"}
+{"url": "http://dummy/events/Novosti/?list_date_filter_datestart=10.05.2021", "weight": 6.5, "anchor": "10 мая 2021"}
+{"url": "http://dummy/Svedeniya-o-dohodah", "weight": 171.5, "anchor": "Сведения о доходах"}
+{"url": "http://dummy/Komissii/Komissiya-po-koordinicii-raby-po-protivodejstviyu-korrupcii/", "weight": 53.5, "anchor": "Комиссия по координиции работы по противодействию коррупции"}
+{"url": "http://dummy/Komissii/Komissiya-po-soblyudeniyu-licami-zameschayuschimi-municipalnye-dolzhnosti-trebovanij-ustanovlennyh-zakonodatelstvom-Rossijskoj-Federacii-o-protivodejstvii-korrupcii/", "weight": 53.5, "anchor": "Комиссия по соблюдению лицами, замещающими муниципальные должности, требований, установленных законодательством Российской Федерации о противодействии коррупции"}
+{"url": "http://dummy/?menu=getfile&id=294", "weight": 6.5, "anchor": "PDF 598KB 29.04.2021, 14:00"}
+{"url": "http://dummy/?menu=getfile&id=247", "weight": 6.5, "anchor": "PDF 475KB 30.04.2020, 09:35"}
+{"url": "http://dummy/?menu=getfile&id=166", "weight": 6.5, "anchor": "PDF 491KB 04.03.2019, 15:05"}
+{"url": "http://dummy/?menu=getfile&id=148", "weight": 6.5, "anchor": "PDF 35KB 04.12.2018, 10:36"}
+{"url": "http://dummy/?menu=getfile&id=147", "weight": 6.5, "anchor": "PDF 23KB 04.12.2018, 10:35"}
+{"url": "http://dummy/?menu=getfile&id=146", "weight": 6.5, "anchor": "PDF 22KB 04.12.2018, 10:34"}
+{"url": "http://dummy/?menu=getfile&id=145", "weight": 6.5, "anchor": "PDF 30KB 04.12.2018, 10:25"}
+{"url": "http://dummy/?menu=getfile&files=294,247,166,148,147,146,145&mode=group&key=e0f17977d1bb2d1623c6a2df0621248d", "weight": 0.5, "anchor": "Скачать все одним архивом"}
+{"url": "https://dummy/files/Mineconom_version4.pdf", "weight": 0.5, "anchor": "Стопкоронавирус\n\nПлан преодоления экономических последствий новой коронавирусной инфекции"}
