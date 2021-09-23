@@ -12,6 +12,7 @@ import urllib
 import threading
 import shutil
 from pathlib import Path
+import json
 
 
 class THttpServerHandler(http.server.BaseHTTPRequestHandler):
@@ -80,11 +81,12 @@ class TestDeclarationLinkBase(TestCase):
             step_info.pages_to_process[start_url] = 0
             step_info.processed_pages = set()
             step_info.apply_function_to_links(TRobotStep.looks_like_a_declaration_link)
-            links = dict()
+            links = list()
             for url, weight in step_info.url_to_weight.items():
                 u = list(urllib.parse.urlparse(url))
                 u[1] = "dummy"
-                links[urllib.parse.urlunparse(u)] = weight
+                anchor = office_info.url_nodes[start_url].linked_nodes[url]['text']
+                links.append({'url': urllib.parse.urlunparse(u), 'weight': weight, 'anchor': anchor})
             return links
 
     def setUp(self, port, name):
@@ -121,22 +123,12 @@ class TestDeclarationLinkBase(TestCase):
     def compare_to_file(self, links, file_name):
         self.maxDiff = None
         with open(os.path.join(os.path.dirname(__file__), file_name)) as inp:
-            canon_links = list(l.strip() for l in inp)
+            canon_links = list(json.loads(l) for l in inp)
             if canon_links != links:
-                with open(os.path.join(os.path.dirname(__file__), file_name + ".new"), "w") as outp:
-                    for l in links:
-                        outp.write(l + "\n")
+                self.canonize_links(links, file_name + ".new")
             self.assertSequenceEqual(canon_links, links)
 
     def canonize_links(self, links, file_name):
         with open(os.path.join(os.path.dirname(__file__), file_name), "w") as outp:
             for l in links:
-                outp.write(l + "\n")
-
-    def canonize_links(self, links, file_name):
-        with open(os.path.join(os.path.dirname(__file__), file_name), "w") as outp:
-            for l in links:
-                outp.write(l + "\n")
-
-    def process_one_page_wrapper(self, test_file):
-        return list(self.process_one_page(test_file).keys())
+                outp.write(json.dumps(l, ensure_ascii=False) + "\n")

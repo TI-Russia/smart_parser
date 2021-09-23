@@ -11,7 +11,7 @@ class TestAdmKrsk(TestDeclarationLinkBase):
         super().tearDown()
 
     def test_admkrsk(self):
-        links = self.process_one_page_wrapper("web_sites/admkrsk/sved.html")
+        links = self.process_one_page("web_sites/admkrsk/sved.html")
         #self.canonize_links(links, 'web_sites/admkrsk/found_links')
         self.compare_to_file(links, 'web_sites/admkrsk/found_links')
 
