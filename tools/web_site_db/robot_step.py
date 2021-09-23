@@ -290,8 +290,12 @@ class TRobotStep:
                 self.logger.debug("add weight {} to {} using best_declaration_regex_match".format(
                     add_weight, link_info.weight))
                 link_info.weight += add_weight
-
-        link_info.weight += (1.0 / (depth + 1.0))
+        if depth < 15:
+            link_info.weight -= 0.1 * depth
+        elif depth < 30:
+            link_info.weight -= 0.5 * depth
+        else:
+            link_info.weight -= 6.0 * depth
 
         link_info.weight = max(link_info.weight, self.url_to_weight.get(href, 0.0))
         self.url_to_weight[href] = link_info.weight
