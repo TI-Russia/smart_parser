@@ -303,7 +303,7 @@ class TWebSiteCrawlSnapshot:
         if step_index == 0:
             previous_step_urls = {self.main_page_url: 0}
         else:
-            previous_step_urls = self.robot_steps[step_index - 1].step_urls
+            previous_step_urls = self.robot_steps[step_index - 1].url_to_weight
 
         self.robot_steps[step_index].make_one_step(previous_step_urls, self.regional_main_pages)
 

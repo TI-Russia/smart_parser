@@ -25,11 +25,10 @@ ROBOT_STEPS = [
     {
         'step_name': "anticorruption_div",
         'check_link_func': TRobotStep.check_anticorr_link_text,
-        'check_link_func_2': TRobotStep.check_anticorr_link_text_2,  # use it if check_link_func yields no results
-        'include_sources': "copy_if_empty",
+        'include_sources': "always",
         'search_engine': {
             'request': "противодействие коррупции",
-            'policy': "run_after_if_no_results",
+            'policy': "run_always_before",
             'max_serp_results': 1
         },
     },
@@ -38,7 +37,7 @@ ROBOT_STEPS = [
         'step_name': "declarations",
         'check_link_func': TRobotStep.looks_like_a_declaration_link,
         'include_sources': "copy_if_empty",
-        'do_not_copy_urls_from_steps': [None, 'sitemap'],  # None is for morda_url
+        #'do_not_copy_urls_from_steps': [None, 'sitemap'],  # None is for morda_url
         'search_engine': {
             'request': '"сведения о доходах {}"'.format(datetime.now().year - 1),
             'policy': "run_always_before"

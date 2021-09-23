@@ -246,9 +246,13 @@ class TDocConversionClient(object):
             self.conversion_thread.join(timeout)
             self.conversion_thread = None
 
-    def wait_all_tasks_to_be_sent(self):
+    def wait_all_tasks_to_be_sent(self, timeout=60):
         self.logger.debug("wait all conversion tasks to be sent to the server")
-        self._input_tasks.join()
+
+        #self._input_tasks.join has no timeout
+        stop = time.time() + timeout
+        while self._input_tasks.unfinished_tasks and time() < stop:
+            time.sleep(1)
 
     def wait_doc_conversion_finished(self, timeout_in_seconds):
         try:
@@ -316,9 +320,9 @@ class TDocConversionClient(object):
         for try_index in range(try_count):
             try:
                 self._assert_declarator_conv_alive()
-            except Exception as exp:
-                m = "cannot connect to {} (declarator conversion server) try_index={}".format(
-                    TDocConversionClient.DECLARATOR_CONV_URL, try_index)
+            except OSError as exp:
+                m = "cannot connect to {} (declarator conversion server) exp={} try_index={}".format(
+                    TDocConversionClient.DECLARATOR_CONV_URL, exp, try_index)
                 if self.logger is None:
                     print(m)
                 else:
@@ -326,4 +330,4 @@ class TDocConversionClient(object):
                 if try_index + 1 == try_count:
                     raise
                 else:
-                    time.sleep(3)
+                    time.sleep(5 * (try_index + 1))

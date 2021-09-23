@@ -13,6 +13,7 @@ import threading
 import shutil
 from pathlib import Path
 
+
 class THttpServerHandler(http.server.BaseHTTPRequestHandler):
 
     def build_headers(self, content_type="text/html; charset=utf-8"):
@@ -49,7 +50,6 @@ class TestHTTPServer(http.server.HTTPServer):
         super().__init__(('127.0.0.1', int(port)), THttpServerHandler)
 
     def set_web_site_folder(self, folder):
-        print ("set_web_site_folder to {}".format(folder))
         self.web_site_folder = folder
 
 
