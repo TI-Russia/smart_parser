@@ -321,8 +321,8 @@ class TDocConversionClient(object):
             try:
                 self._assert_declarator_conv_alive()
             except OSError as exp:
-                m = "cannot connect to {} (declarator conversion server) try_index={}".format(
-                    TDocConversionClient.DECLARATOR_CONV_URL, try_index)
+                m = "cannot connect to {} (declarator conversion server) exp={} try_index={}".format(
+                    TDocConversionClient.DECLARATOR_CONV_URL, exp, try_index)
                 if self.logger is None:
                     print(m)
                 else:
@@ -330,4 +330,4 @@ class TDocConversionClient(object):
                 if try_index + 1 == try_count:
                     raise
                 else:
-                    time.sleep(5)
+                    time.sleep(5 * (try_index + 1))

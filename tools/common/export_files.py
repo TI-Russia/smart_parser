@@ -1,4 +1,4 @@
-from common.primitives import build_dislosures_sha256
+from common.primitives import build_dislosures_sha256, build_dislosures_sha256_by_html
 from common.archives import TDearchiver
 from common.download import ACCEPTED_DECLARATION_FILE_EXTENSIONS, TDownloadEnv, TDownloadedFile
 from common.content_types import DEFAULT_HTML_EXTENSION, DEFAULT_PDF_EXTENSION, file_extension_by_file_contents
@@ -105,6 +105,10 @@ class TExportEnvironment:
         if rec is not None:
             self.exported_files = list(TExportFile(init_json=x) for x in rec)
 
+    def html_is_exported(self, html_data):
+        sha256 = build_dislosures_sha256_by_html(html_data)
+        return sha256 in self.export_files_by_sha256
+
     # todo: do not save file copies
     def export_one_file_or_send_to_conversion(self, url, cached_file, extension, link_info):
         if extension not in ACCEPTED_DECLARATION_FILE_EXTENSIONS:
@@ -129,6 +133,7 @@ class TExportEnvironment:
             shutil.copyfile(cached_file, export_path)
             new_files.append(TExportFile(link_info, url, cached_file, export_path))
 
+        new_file: TExportFile
         for new_file in new_files:
             found_file = self.export_files_by_sha256.get(new_file.sha256)
             if found_file is None:

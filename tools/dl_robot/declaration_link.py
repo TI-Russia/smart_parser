@@ -90,7 +90,7 @@ def best_declaration_regex_match(str, from_start=True):
     regexp = '((сведения)|(справк[аи])) о доходах'
     if from_start:
         regexp = "^" + regexp
-    return re.search(regexp, str) is not None
+    return len(re.findall(regexp, str))
 
 
 def looks_like_a_declaration_link_without_cache(logger, link_info: TLinkInfo):

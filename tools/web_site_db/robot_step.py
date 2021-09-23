@@ -151,11 +151,6 @@ class TRobotStep:
     def get_selenium_driver(self):
         return self.website.parent_project.selenium_driver
 
-    def need_search_engine_after(self):
-        return self.website.parent_project.enable_search_engine and \
-               self.search_engine.get('policy') == "run_after_if_no_results" and \
-               len(self.url_to_weight) == 0
-
     def need_search_engine_before(self):
         return self.website.parent_project.enable_search_engine and  \
                 self.search_engine.get('policy') == "run_always_before"
@@ -214,21 +209,20 @@ class TRobotStep:
     def check_link_sitemap(self, link_info: TLinkInfo):
         text = normalize_and_russify_anchor_text(link_info.anchor_text)
         return text.startswith('карта сайта') or \
-                text.startswith('структура') # https://voronezh-city.ru/administration/structure/
+                text.startswith('структура') or  \
+                text.startswith('органы администрации')
 
     def check_anticorr_link_text(self, link_info: TLinkInfo):
         text = link_info.anchor_text.strip().lower()
         if text.find('антикоррупционная комиссия') != -1:
-            link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
+            link_info.weight = TLinkInfo.BEST_LINK_WEIGHT
             return True
 
         if text.startswith(u'противодействие') or text.startswith(u'борьба') or text.startswith(u'нет'):
             if text.find("коррупц") != -1:
-                link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
+                link_info.weight = TLinkInfo.BEST_LINK_WEIGHT
                 return True
-        return False
 
-    def check_anticorr_link_text_2(self, link_info: TLinkInfo):
         text = link_info.anchor_text.strip().lower()
         if text.find("отчеты") != -1:
             link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
@@ -264,7 +258,7 @@ class TRobotStep:
             if not check_link_func(self, link_info):
                 return False
             else:
-                self.logger.debug("link {} passed {}".format(link_info.anchor_text, check_link_func.__name__))
+                self.logger.debug("link {} passed {}".format(prepare_for_logging(link_info.anchor_text), check_link_func.__name__))
             if link_info.target_url is not None:
                 file_extension = get_file_extension_only_by_headers(link_info.target_url)
                 if is_video_or_audio_file_extension(file_extension):
@@ -290,9 +284,13 @@ class TRobotStep:
 
         if downloaded_file.file_extension == DEFAULT_HTML_EXTENSION:
             html = downloaded_file.convert_html_to_utf8().lower()
-            if best_declaration_regex_match(html, from_start=False):
-                self.logger.debug("add weight {} using best_declaration_regex_match".format(TLinkInfo.BEST_LINK_WEIGHT))
-                link_info.weight = max(link_info.weight, TLinkInfo.BEST_LINK_WEIGHT)
+            best_match_count = best_declaration_regex_match(html, from_start=False)
+            if best_match_count > 0:
+                add_weight = best_match_count * TLinkInfo.NORMAL_LINK_WEIGHT
+                self.logger.debug("add weight {} to {} using best_declaration_regex_match".format(
+                    add_weight, link_info.weight))
+                link_info.weight += add_weight
+
         link_info.weight += (1.0 / (depth + 1.0))
 
         link_info.weight = max(link_info.weight, self.url_to_weight.get(href, 0.0))
@@ -310,13 +308,18 @@ class TRobotStep:
         if self.is_last_step:
             self.website.export_env.export_file_if_relevant(downloaded_file, link_info)
 
+        if downloaded_file.file_extension == DEFAULT_HTML_EXTENSION:
+            if self.website.export_env.html_is_exported(downloaded_file.data):
+                link_info.weight = TLinkInfo.MINIMAL_LINK_WEIGHT
+                self.logger.debug("set weight {} to an html declaration".format(link_info.weight))
+
         if self.transitive:
             if href not in self.processed_pages:
                 if downloaded_file.file_extension == DEFAULT_HTML_EXTENSION:
                     self.pages_to_process[href] = link_info.weight
 
-        if href in self.pages_to_process and self.pages_to_process[href] < link_info.weight:
-            self.pages_to_process[href] = link_info.weight
+        if href in self.pages_to_process:
+            self.pages_to_process[href] = max(self.pages_to_process[href], link_info.weight)
 
         self.logger.debug("add link {} weight={}".format(href, link_info.weight))
 
@@ -624,18 +627,7 @@ class TRobotStep:
         if self.sitemap_xml_processor:
             self.add_links_from_sitemap_xml(self.sitemap_xml_processor.get('check_url_func'))
 
-        save_input_urls = dict(self.pages_to_process.items())
-
         self.apply_function_to_links(self.check_link_func)
-
-        if len(self.url_to_weight) == 0:
-            if self.check_link_func_2:
-                self.logger.debug("second pass with {}".format(self.check_link_func_2.__name__))
-                self.pages_to_process = save_input_urls
-                self.apply_function_to_links(self.check_link_func_2)
-
-        if self.need_search_engine_after():
-            self.use_search_engine(self.website.main_page_url)
 
         if self.step_name == "sitemap":
             self.add_regional_main_pages(regional_main_pages)
