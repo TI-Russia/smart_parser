@@ -2,17 +2,23 @@ from common.logging_wrapper import setup_logging
 import shutil
 import os
 import argparse
+from datetime import datetime
+from pathlib import Path
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--action", dest='action', default="all", help="can be all or publish_sql_link")
-    parser.add_argument("--max-ctime", dest='max_ctime', required=True, type=int, help="max ctime of an input folder")
+    parser.add_argument("--action", dest='action', default="last_actions", help="can be all, publish_sql_link or move_mysql_dump")
+    parser.add_argument("--max-ctime", dest='max_ctime', required=False, type=int,
+                        default=int(os.environ.get("CRAWL_EPOCH")),
+                        help="max ctime of an input folder")
     parser.add_argument("--processed-projects-folder", dest='processed_projects_folder', required=True)
     parser.add_argument("--update-folder", dest='update_folder', required=True)
     parser.add_argument("--output-cloud-folder", dest='output_cloud_folder', required=True)
     parser.add_argument("--mysql-dump-tar", dest='mysql_dump_tar', required=False, default="mysql.tar.gz")
-    return parser.parse_args()
+    args = parser.parse_args()
+    assert self.args.max_ctime is not None
+    return args
 
 
 class TBackupper:
@@ -21,9 +27,9 @@ class TBackupper:
         self.logger = setup_logging(log_file_name="backuper.log")
         assert (os.path.exists(args.output_cloud_folder))
         self.output_folder = os.path.join(args.output_cloud_folder, str(args.max_ctime))
-        if self.args.action == "all":
-                self.logger.info("create folder {}".format(self.output_folder))
-                os.mkdir(self.output_folder)
+        if not os.path.exists(self.output_folder):
+            self.logger.info("create folder {}".format(self.output_folder))
+            os.mkdir(self.output_folder)
 
         self.logger.info("cd {}".format(args.update_folder))
         os.chdir(args.update_folder)
@@ -83,22 +89,27 @@ class TBackupper:
         with open(tmp_file) as inp:
             url = inp.read().strip()
         django_sub_template = "full_sql_dump.html"
+        date = datetime.fromtimestamp(self.args.max_ctime).strftime("%Y-%m-%d")
         with open(django_sub_template, "w") as outp:
-            outp.write("Полный sql-дамп: <a href=\"{}\">скачать c Яндекс-диска</a>".format(url))
+            outp.write("Полный sql-дамп: <a href=\"{}\">скачать c Яндекс-диска</a> (date={}, size={})".format(
+                url, date, Path(output_file).stat().st_size))
         self.log_and_system("scp {} $FRONTEND:$FRONTEND_WEB_SITE/declarations/templates/statistics".format(django_sub_template))
 
     def main(self):
+        self.logger.info("max_ctime = {}".format(self.args.max_ctime))
         if self.args.action == "all":
             self.copy_dlrobot_human()
             self.copy_dlrobot_central_log()
             self.move_processed_projects()
+            self.logger.info("all done")
+        elif self.args.action == "move_mysql_dump":
             self.move_mysql_dump()
             self.publish_sql_link()
-            self.logger.info("all done")
         elif self.args.action == "publish_sql_link":
             self.publish_sql_link()
         else:
             raise Exception("unknown action {}".format(self.args.action))
+
 
 if __name__ == '__main__':
     TBackupper(parse_args()).main()
