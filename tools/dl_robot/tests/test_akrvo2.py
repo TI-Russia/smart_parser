@@ -12,6 +12,6 @@ class TestAkrvo2(TestDeclarationLinkBase):
 
     def test_2_akrvo(self):
         links = self.process_one_page("web_sites/arkvo2/parent.html")
-        self.assertEqual(1, len(links))
-        self.assertGreater(links[0]['weight'], 40)
+        self.assertEqual(2, len(links))
+        self.assertGreater(links[0]['weight'], 30)
 

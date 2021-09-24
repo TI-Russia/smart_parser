@@ -119,7 +119,7 @@ class TRobotStep:
     def __init__(self, website, step_name=None, step_urls=None, max_links_from_one_page=1000000,
                  transitive=False, enable_selenium=True, is_last_step=False,
                  check_link_func=None, include_sources=None, check_link_func_2=None, search_engine=None,
-                 do_not_copy_urls_from_steps=None, sitemap_xml_processor=None, profiler=None):
+                 sitemap_xml_processor=None, profiler=None):
         self.website = website
         self.logger = website.logger
         self.step_name = step_name
@@ -128,7 +128,6 @@ class TRobotStep:
         self.check_link_func = check_link_func
         self.check_link_func_2 = check_link_func_2
         self.search_engine = dict() if search_engine is None else search_engine
-        self.do_not_copy_urls_from_steps = list() if do_not_copy_urls_from_steps is None else do_not_copy_urls_from_steps
         self.include_sources = include_sources
         self.sitemap_xml_processor = sitemap_xml_processor
         self.enable_selenium = enable_selenium and self.website.parent_project.enable_selenium
@@ -638,9 +637,7 @@ class TRobotStep:
 
         if self.include_sources == "copy_if_empty" and len(self.url_to_weight) == 0:
             for url, weight in start_pages.items():
-                step_name = self.website.url_nodes[url].step_name
-                if step_name not in self.do_not_copy_urls_from_steps:
-                    self.url_to_weight[url] = weight
+                self.url_to_weight[url] = weight
 
         self.profiler = {
             "elapsed_time":  time.time() - start_time,

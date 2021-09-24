@@ -251,7 +251,7 @@ class TDocConversionClient(object):
 
         #self._input_tasks.join has no timeout
         stop = time.time() + timeout
-        while self._input_tasks.unfinished_tasks and time() < stop:
+        while self._input_tasks.unfinished_tasks > 0 and time.time() < stop:
             time.sleep(1)
 
     def wait_doc_conversion_finished(self, timeout_in_seconds):
@@ -319,7 +319,8 @@ class TDocConversionClient(object):
         try_count = 3
         for try_index in range(try_count):
             try:
-                self._assert_declarator_conv_alive()
+                if self._assert_declarator_conv_alive():
+                    return
             except OSError as exp:
                 m = "cannot connect to {} (declarator conversion server) exp={} try_index={}".format(
                     TDocConversionClient.DECLARATOR_CONV_URL, exp, try_index)
