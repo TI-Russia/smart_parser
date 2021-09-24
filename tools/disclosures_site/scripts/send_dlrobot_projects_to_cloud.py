@@ -1,83 +1,104 @@
+from common.logging_wrapper import setup_logging
 import shutil
 import os
 import argparse
-import logging
-
-
-def setup_logging(logfilename):
-    logger = logging.getLogger("backuper")
-    logger.setLevel(logging.DEBUG)
-
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-    fh = logging.FileHandler(logfilename, "a+", encoding="utf8")
-    fh.setLevel(logging.DEBUG)
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    # create console handler with a higher log level
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
-    logger.addHandler(ch)
-    return logger
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--action", dest='action', default="all", help="can be all or publish_sql_link")
     parser.add_argument("--max-ctime", dest='max_ctime', required=True, type=int, help="max ctime of an input folder")
     parser.add_argument("--processed-projects-folder", dest='processed_projects_folder', required=True)
     parser.add_argument("--update-folder", dest='update_folder', required=True)
     parser.add_argument("--output-cloud-folder", dest='output_cloud_folder', required=True)
+    parser.add_argument("--mysql-dump-tar", dest='mysql_dump_tar', required=False, default="mysql.tar.gz")
     return parser.parse_args()
 
 
-def create_tar_file(logger, processed_projects_folder, max_ctime):
-    tmp_folder = "dlrobot.{}".format(max_ctime)
-    os.mkdir(tmp_folder)
-    with os.scandir(processed_projects_folder) as it:
-        for entry in it:
-            if entry.is_dir() and entry.stat().st_ctime < max_ctime:
-                result_folder = os.path.join(processed_projects_folder, entry.name, "result")
-                logger.info("rm folder {} ".format(result_folder))
-                shutil.rmtree(result_folder, ignore_errors=True)
+class TBackupper:
+    def __init__(self, args):
+        self.args = args
+        self.logger = setup_logging(log_file_name="backuper.log")
+        assert (os.path.exists(args.output_cloud_folder))
+        self.output_folder = os.path.join(args.output_cloud_folder, str(args.max_ctime))
+        if self.args.action == "all":
+                self.logger.info("create folder {}".format(self.output_folder))
+                os.mkdir(self.output_folder)
 
-                logger.info("move {} {}".format(entry.name, tmp_folder))
-                shutil.move(os.path.join(processed_projects_folder, entry.name), tmp_folder)
-    tar_file = "processed_projects.tar.gz"
-    cmd = "tar cfz {} {}".format(tar_file, tmp_folder)
-    logger.info(cmd)
-    os.system(cmd)
+        self.logger.info("cd {}".format(args.update_folder))
+        os.chdir(args.update_folder)
 
-    logger.info("remove {}".format(tmp_folder))
-    shutil.rmtree(tmp_folder, ignore_errors=True)
-    return tar_file
+    def log_and_system(self, cmd):
+        self.logger.info(cmd)
+        exitcode = os.system(cmd)
+        if exitcode != 0:
+            raise Exception("Error, {} returned {}".format(cmd, exitcode))
 
+    def create_tar_file(self, processed_projects_folder, max_ctime):
+        tmp_folder = "dlrobot.{}".format(max_ctime)
+        os.mkdir(tmp_folder)
+        with os.scandir(processed_projects_folder) as it:
+            for entry in it:
+                if entry.is_dir() and entry.stat().st_ctime < max_ctime:
+                    result_folder = os.path.join(processed_projects_folder, entry.name, "result")
+                    self.logger.info("rm folder {} ".format(result_folder))
+                    shutil.rmtree(result_folder, ignore_errors=True)
 
-def main(args):
-    logger = setup_logging("backuper.log")
-    assert (os.path.exists(args.output_cloud_folder))
-    output_folder = os.path.join(args.output_cloud_folder, str(args.max_ctime))
-    logger.info("create folder {}".format(output_folder))
-    os.mkdir(output_folder)
+                    self.logger.info("move {} {}".format(entry.name, tmp_folder))
+                    shutil.move(os.path.join(processed_projects_folder, entry.name), tmp_folder)
+        tar_file = "processed_projects.tar.gz"
+        self.log_and_system("tar cfz {} {}".format(tar_file, tmp_folder))
 
-    os.chdir(args.update_folder)
-    logger.info("copy dlrobot_human.dbm to {}".format(output_folder))
-    os.system("cat dlrobot_human.dbm | gzip -c >dlrobot_human.dbm.gz")
-    shutil.move("dlrobot_human.dbm.gz", output_folder)
+        self.logger.info("remove {}".format(tmp_folder))
+        shutil.rmtree(tmp_folder, ignore_errors=True)
+        return tar_file
 
-    central_log_base_name = "dlrobot_central.log"
-    central_log = os.path.join(args.processed_projects_folder, "..", central_log_base_name)
-    logger.info("copy {} to {}".format(central_log, output_folder))
-    shutil.copy2(central_log, output_folder)
-    os.system("gzip {}".format(os.path.join(output_folder, central_log_base_name)))
+    def copy_dlrobot_human(self):
+        self.logger.info("copy dlrobot_human.dbm to {}".format(self.output_folder))
+        self.log_and_system("cat dlrobot_human.dbm | gzip -c >dlrobot_human.dbm.gz")
+        shutil.move("dlrobot_human.dbm.gz", self.output_folder)
 
-    tar_file = create_tar_file(logger, args.processed_projects_folder, args.max_ctime)
-    logger.info("move {} to {}".format(tar_file, output_folder))
-    shutil.move(tar_file, output_folder)
-    os.system("tar -C {} --list --file {} > processed_projects_file_list.txt".format(output_folder, tar_file))
+    def copy_dlrobot_central_log(self):
+        central_log_base_name = "dlrobot_central.log"
+        central_log = os.path.join(args.processed_projects_folder, "..", central_log_base_name)
+        self.logger.info("copy {} to {}".format(central_log, self.output_folder))
+        shutil.copy2(central_log, self.output_folder)
+        self.log_and_system("gzip {}".format(os.path.join(self.output_folder, central_log_base_name)))
 
-    logger.info("all done")
+    def move_processed_projects(self):
+        tar_file = self.create_tar_file(self.args.processed_projects_folder, self.args.max_ctime)
+        self.logger.info("move {} to {}".format(tar_file, self.output_folder))
+        shutil.move(tar_file, self.output_folder)
+        self.log_and_system("tar -C {} --list --file {} > processed_projects_file_list.txt".format(self.output_folder, tar_file))
 
+    def move_mysql_dump(self):
+        self.logger.info("move {} to {}".format(self.args.mysql_dump_tar, self.output_folder))
+        shutil.move(self.args.mysql_dump_tar, self.output_folder)
+        self.log_and_system("yandex-disk sync")
+
+    def publish_sql_link(self):
+        output_file = os.path.join(self.output_folder, self.args.mysql_dump_tar)
+        tmp_file = "ya_disk.url"
+        self.log_and_system("yandex-disk start; yandex-disk publish {} > {}; yandex-disk stop".format(output_file, tmp_file))
+        with open(tmp_file) as inp:
+            url = inp.read().strip()
+        django_sub_template = "full_sql_dump.html"
+        with open(django_sub_template, "w") as outp:
+            outp.write("Полный sql-дамп: <a href=\"{}\">скачать c Яндекс-диска</a>".format(url))
+        self.log_and_system("scp {} $FRONTEND:$FRONTEND_WEB_SITE/declarations/templates/statistics".format(django_sub_template))
+
+    def main(self):
+        if self.args.action == "all":
+            self.copy_dlrobot_human()
+            self.copy_dlrobot_central_log()
+            self.move_processed_projects()
+            self.move_mysql_dump()
+            self.publish_sql_link()
+            self.logger.info("all done")
+        elif self.args.action == "publish_sql_link":
+            self.publish_sql_link()
+        else:
+            raise Exception("unknown action {}".format(self.args.action))
 
 if __name__ == '__main__':
-    args = parse_args()
-    main(args)
+    TBackupper(parse_args()).main()

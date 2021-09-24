@@ -635,9 +635,10 @@ class TRobotStep:
         if self.step_name == "sitemap":
             self.add_regional_main_pages(regional_main_pages)
 
-        if self.include_sources == "copy_if_empty" and len(self.url_to_weight) == 0:
-            for url, weight in start_pages.items():
-                self.url_to_weight[url] = weight
+
+        #if self.include_sources == "copy_if_empty" and len(self.url_to_weight) == 0:
+        #    for url, weight in start_pages.items():
+        #        self.url_to_weight[url] = weight
 
         self.profiler = {
             "elapsed_time":  time.time() - start_time,

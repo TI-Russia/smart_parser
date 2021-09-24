@@ -179,8 +179,8 @@ echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/
       exit 1
     fi
 
-    ssh $FRONTEND git -C ~/smart_parser pull
-    ssh $FRONTEND bash -x /home/sokirko/smart_parser/tools/disclosures_site/scripts/switch_prod.sh /tmp/mysql.tar.gz /tmp/elastic.tar.gz /tmp/sitemap.tar
+    ssh $FRONTEND git -C $FRONTEND_SRC pull
+    ssh $FRONTEND bash -x $FRONTEND_WEB_SITE/scripts/switch_prod.sh /tmp/mysql.tar.gz /tmp/elastic.tar.gz /tmp/sitemap.tar
     ssh $PROD_SOURCE_DOC_SERVER sudo systemctl restart source_declaration_doc
 
 #22  посылаем данные dlrobot в каталог, который синхронизируется с облаком, очищаем dlrobot_central (без возврата)

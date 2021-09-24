@@ -4,6 +4,7 @@ from common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_H
 
 from ConvStorage.conversion_client import TDocConversionClient
 from common.primitives import build_dislosures_sha256
+from common.html_parser import THtmlParser
 
 import json
 import re
@@ -66,12 +67,14 @@ class TDownloadEnv:
 def convert_html_to_utf8_using_content_charset(content_charset, html_data):
     if content_charset is not None:
         encoding = content_charset
-    else: # todo: use BeautifulSoup here
+    else:
         match = re.search('charset\s*=\s*"?([^"\'>]+)', html_data.decode('latin', errors="ignore"))
         if match:
             encoding = match.group(1).strip()
         else:
-            raise ValueError('unable to find encoding')
+            # the slowest method
+            parser = THtmlParser(html_data)
+            return str(parser.soup)
     if encoding.lower().startswith('cp-'):
         encoding = 'cp' + encoding[3:]
     try:
@@ -148,7 +151,7 @@ class TDownloadedFile:
     def get_page_info_file_name(self):
         return self.data_file_path + ".page_info"
 
-    def __init__(self, original_url):
+    def __init__(self, original_url, use_cache=True):
         self.logger = THttpRequester.logger
         self.original_url = original_url
         self.page_info = dict()
@@ -157,7 +160,7 @@ class TDownloadedFile:
         self.file_extension = None
         self.redirected_url = None
         self.timeout = THttpRequester.DEFAULT_HTTP_TIMEOUT
-        if os.path.exists(self.data_file_path):
+        if use_cache and os.path.exists(self.data_file_path):
             self.load_from_cached_file()
         else:
             self.download_from_remote_server()

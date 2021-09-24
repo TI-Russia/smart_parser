@@ -20,7 +20,9 @@ export SOURCE_DOC_SERVER_ADDRESS=$CENTRAL_HOST_NAME:8090
 export DECLARATOR_CONV_URL=c.disclosures.ru:8091
 
 export FRONTEND=sel-disclosures
-export FRONTEND_DLROBOT_MONITORING_FOLDER=/home/sokirko/smart_parser/tools/disclosures_site/disclosures/static/dlrobot
+export FRONTEND_SRC=/home/sokirko/smart_parser
+export FRONTEND_WEB_SITE=/home/sokirko/smart_parser/tools/disclosures_site
+export FRONTEND_DLROBOT_MONITORING_FOLDER=$FRONTEND_WEB_SITE/disclosures/static/dlrobot
 
 export ACCESS_LOG_ARCHIVE=$YANDEX_DISK_FOLDER/nginx_logs
 export PROD_SOURCE_DOC_SERVER=195.70.213.239

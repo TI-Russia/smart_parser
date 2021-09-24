@@ -36,7 +36,7 @@ ROBOT_STEPS = [
         'max_links_from_one_page': 1000,
         'step_name': "declarations",
         'check_link_func': TRobotStep.looks_like_a_declaration_link,
-        'include_sources': "copy_if_empty",
+        #'include_sources': "copy_if_empty",
         'search_engine': {
             'request': '"сведения о доходах {}"'.format(datetime.now().year - 1),
             'policy': "run_always_before"
