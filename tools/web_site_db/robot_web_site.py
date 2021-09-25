@@ -238,13 +238,15 @@ class TWebSiteCrawlSnapshot:
         info = self.url_nodes[url]
         return info.html_title
 
-    def get_path_to_root_recursive(self, path, all_paths):
+    def get_path_to_root_recursive(self, path, all_paths, max_path_len=40):
         assert len(path) >= 1
         assert type(all_paths) is list
         top_node = path[-1]
         top_url = top_node['source:url']
         if top_url == self.main_page_url:
             all_paths.append(list(path))
+            return
+        if len(path) > max_path_len:
             return
         start = datetime.datetime.now()
         for parent_url in self.get_parents(top_url):
@@ -280,6 +282,8 @@ class TWebSiteCrawlSnapshot:
         self.get_path_to_root_recursive(path, all_paths)
         if len(all_paths) == 0:
             return [{"exception": "graph is too large, timeout is set to 2 seconds"}]
+        if len(all_paths) > 5000:
+            return [{"exception": "graph is too large, too many paths (>5000)"}]
         all_paths = sorted(all_paths, key=get_joined_path)
         path_lens = list(len(p) for p in all_paths)
         min_path = all_paths[path_lens.index(min(path_lens))]

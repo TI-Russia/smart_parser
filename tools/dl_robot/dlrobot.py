@@ -33,7 +33,7 @@ ROBOT_STEPS = [
         },
     },
     {
-        'max_links_from_one_page': 1000,
+        'max_links_from_one_page': 1500, #sosnogorsk.org
         'step_name': "declarations",
         'check_link_func': TRobotStep.looks_like_a_declaration_link,
         #'include_sources': "copy_if_empty",
