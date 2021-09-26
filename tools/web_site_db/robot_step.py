@@ -1,5 +1,5 @@
 from common.download import TDownloadedFile, DEFAULT_HTML_EXTENSION, have_the_same_content_length, \
-            get_file_extension_only_by_headers, have_the_same_html
+            get_file_extension_only_by_headers, TDownloadEnv
 from common.primitives import prepare_for_logging
 from common.urllib_parse_pro import get_site_domain_wo_www, urlsplit_pro
 from common.html_parser import THtmlParser, get_html_title
@@ -143,6 +143,8 @@ class TRobotStep:
         self.pages_to_process = dict()
         self.last_processed_url_weights = list()
         self.urllib_html_cache = dict()
+        self.intermediate_pdf_conversion_time_stamp = time.time()
+        self.last_not_empty_links = set()
 
     def use_http_library(self):
         return self.website.enable_urllib
@@ -166,7 +168,11 @@ class TRobotStep:
             new_step_urls[urls[-1].input_url] = max_weight  # get the longest url and max weight
         self.url_to_weight = new_step_urls
 
-    def can_follow_this_link(self, source_url, target_url):
+    def can_follow_this_link(self, link_info: TLinkInfo):
+        source_url = link_info.source_url
+        target_url = link_info.target_url
+        if target_url is None:
+            return True
         if not check_href_elementary(target_url):
             return False
         if source_url.strip('/') == target_url.strip('/'):
@@ -240,10 +246,6 @@ class TRobotStep:
         return result
 
     def normalize_and_check_link(self, link_info: TLinkInfo, check_link_func):
-        if link_info.target_url is not None:
-            if not self.can_follow_this_link(link_info.source_url, link_info.target_url):
-                return False
-
         self.logger.debug(
             "check element {}, url={} text={}".format(
                 link_info.element_index,
@@ -254,16 +256,16 @@ class TRobotStep:
             if is_human_language(link_info.anchor_text):
                 self.logger.debug("skip language link {}".format(link_info.anchor_text))
                 return False
-            if not check_link_func(self, link_info):
-                return False
-            else:
-                self.logger.debug("link {} passed {}".format(prepare_for_logging(link_info.anchor_text), check_link_func.__name__))
             if link_info.target_url is not None:
                 file_extension = get_file_extension_only_by_headers(link_info.target_url)
                 if is_video_or_audio_file_extension(file_extension):
                     self.logger.debug("link {} looks like a media file, skipped".format(link_info.target_url))
                     return False
-            return True
+            if not check_link_func(self, link_info):
+                return False
+            else:
+                self.logger.debug("link {} passed {}".format(prepare_for_logging(link_info.anchor_text), check_link_func.__name__))
+                return True
         except UnicodeEncodeError as exp:
             self.logger.debug(exp)
             return False
@@ -312,7 +314,7 @@ class TRobotStep:
             self.website.export_env.export_file_if_relevant(downloaded_file, link_info)
 
         if downloaded_file.file_extension == DEFAULT_HTML_EXTENSION:
-            if self.website.export_env.html_is_exported(downloaded_file.data):
+            if self.website.export_env.sha256_is_exported(downloaded_file.get_sha256()):
                 link_info.weight = TLinkInfo.MINIMAL_LINK_WEIGHT
                 self.logger.debug("set weight {} to an html declaration".format(link_info.weight))
 
@@ -422,8 +424,9 @@ class TRobotStep:
                                       tag_name=html_link.name,
                                       element_index=element_index, element_class=html_link.attrs.get('class'),
                                       source_page_title=html_parser.page_title)
-                if self.normalize_and_check_link(link_info, check_link_func):
-                    self.add_link_wrapper(link_info)
+                if self.can_follow_this_link(link_info):
+                    if self.normalize_and_check_link(link_info, check_link_func):
+                        self.add_link_wrapper(link_info)
 
         for frame in html_parser.soup.findAll('iframe')[:self.max_links_from_one_page]:
             href = frame.attrs.get('src')
@@ -432,8 +435,9 @@ class TRobotStep:
                 link_info = TLinkInfo(TClickEngine.urllib, main_url, html_parser.make_link_soup(href),
                                       source_html=html_parser.html_with_markup, anchor_text=frame.text, tag_name=frame.name,
                                       element_index=element_index, source_page_title=html_parser.page_title)
-                if self.normalize_and_check_link(link_info, check_link_func):
-                    self.add_link_wrapper(link_info)
+                if self.can_follow_this_link(link_info):
+                    if self.normalize_and_check_link(link_info, check_link_func):
+                        self.add_link_wrapper(link_info)
 
     def click_selenium_if_no_href(self, main_url, element, element_index, check_link_func):
         tag_name = element.tag_name
@@ -457,12 +461,10 @@ class TRobotStep:
     def link_must_be_clicked(self, link_info: TLinkInfo):
         return re.search('скачать', link_info.anchor_text, re.IGNORECASE) is not None
 
-    def process_element(self, main_url, page_html, element_index, element, check_link_func):
-        if element_index >= self.max_links_from_one_page:
-            return
+    def build_link_info(self, main_url, page_html, element_index, element, html_title):
         link_text = element['anchor'].strip('\n\r\t ') if element['anchor'] is not None else ""
 
-        link_info = TLinkInfo(TClickEngine.selenium,
+        return TLinkInfo(TClickEngine.selenium,
                               source_url=main_url,
                               target_url=element['href'],
                               source_html=page_html,
@@ -470,13 +472,17 @@ class TRobotStep:
                               tag_name=element['id'].tag_name,
                               element_index=element_index,
                               element_class=[element.get('class')],
-                              source_page_title=self.get_selenium_driver().the_driver.title)
+                              source_page_title=html_title)
+
+    def process_selenium_element(self, link_info: TLinkInfo, element, check_link_func):
+        if link_info.element_index >= self.max_links_from_one_page:
+            return
         if not self.normalize_and_check_link(link_info, check_link_func):
             return
         if link_info.target_url is None or self.link_must_be_clicked(link_info):
             try:
-                self.logger.debug("click element {}".format(element_index))
-                self.click_selenium_if_no_href(main_url, element['id'], element_index, check_link_func)
+                self.logger.debug("click element {}".format(link_info.element_index))
+                self.click_selenium_if_no_href(link_info.source_url, element['id'], link_info.element_index, check_link_func)
             except WebDriverException as exp:
                 self.logger.debug("exception: {}".format(exp))
                 if link_info.target_url is not None:  # see gorsovet-podolsk in tests
@@ -492,7 +498,7 @@ class TRobotStep:
                 language_links.append(element_index)
                 processed_elements.add(element['id'])
         # a link between a language links is also a language link
-        for s,e in zip(language_links, language_links[1:]):
+        for s, e in zip(language_links, language_links[1:]):
             for i in range(s + 1, e):
                 processed_elements.add(elements[i]['id'])
 
@@ -511,11 +517,28 @@ class TRobotStep:
         processed_elements = set()
 
         self.find_languages_links(elements, processed_elements)
+        html_title = self.get_selenium_driver().the_driver.title
+        link_infos = dict()
+        not_empty_links = list()
+        for element_index, element, in enumerate(elements):
+            link_info = self.build_link_info(main_url, page_html, element_index, element, html_title)
+            link_infos[element['id']] = link_info
+            if not self.can_follow_this_link(link_info):
+                processed_elements.add(element['id'])
+            else:
+                if link_info.target_url is not None:
+                    not_empty_links.append(link_info.target_url)
+        not_empty_links_str = " ".join(not_empty_links)
+        if len(not_empty_links) > 30 and not_empty_links_str in self.last_not_empty_links:
+            self.logger.debug("skip page, since its links are similar to the previous page (speed optimization)")
+            return
+        else:
+            self.last_not_empty_links.add(not_empty_links_str)
 
         for element_index, element, in enumerate(elements):
             if element['id'] not in processed_elements:
                 processed_elements.add(element['id'])
-                self.process_element(main_url, page_html, element_index, element, check_link_func)
+                self.process_selenium_element(link_infos[element['id']], element, check_link_func)
 
         # получаем еще раз ссылки, может быть, что-то новое отрисовал javascript, хотя,
         # может быть, надо брать ссылки не после, а до скролдауна и сравнивать их по href, а не по id,
@@ -527,7 +550,25 @@ class TRobotStep:
             return
         for element_index, element, in enumerate(elements):
             if element['id'] not in processed_elements:
-                self.process_element(main_url, page_html, element_index, element, check_link_func)
+                link_info = self.build_link_info(main_url, page_html, element_index, element, html_title)
+                if self.can_follow_this_link(link_info):
+                    self.process_selenium_element(link_info, element, check_link_func)
+
+    def intermediate_check_pdf_conversion(self):
+        if TDownloadEnv.CONVERSION_CLIENT is None:
+            return
+        cur_time = time.time()
+        if cur_time < self.intermediate_pdf_conversion_time_stamp + 60*15:   # 15 minutes
+            # do not ddos conversion server
+            return
+        self.intermediate_pdf_conversion_time_stamp = cur_time
+        completed = TDownloadEnv.CONVERSION_CLIENT.get_completed_tasks()
+        for sha256 in completed:
+            file_set = self.website.export_env.export_files_by_sha256.get(sha256)
+            if file_set is None:
+                self.logger.error('file {} cannot be found in export list')
+                continue
+            self.website.export_env.run_dl_recognizer_wrapper(file_set)
 
     def apply_function_to_links(self, check_link_func):
         assert len(self.pages_to_process) > 0
@@ -536,7 +577,7 @@ class TRobotStep:
             url = self.pop_url_with_max_weight(url_index)
             if url is None:
                 break
-
+            self.intermediate_check_pdf_conversion()
             try:
                 signal.signal(signal.SIGALRM, signal_alarm_handler)
                 signal.alarm(THttpRequester.WEB_PAGE_LINKS_PROCESSING_MAX_TIME)
@@ -634,11 +675,6 @@ class TRobotStep:
 
         if self.step_name == "sitemap":
             self.add_regional_main_pages(regional_main_pages)
-
-
-        #if self.include_sources == "copy_if_empty" and len(self.url_to_weight) == 0:
-        #    for url, weight in start_pages.items():
-        #        self.url_to_weight[url] = weight
 
         self.profiler = {
             "elapsed_time":  time.time() - start_time,

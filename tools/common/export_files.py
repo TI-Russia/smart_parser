@@ -1,4 +1,4 @@
-from common.primitives import build_dislosures_sha256, build_dislosures_sha256_by_html
+from common.primitives import build_dislosures_sha256
 from common.archives import TDearchiver
 from common.download import ACCEPTED_DECLARATION_FILE_EXTENSIONS, TDownloadEnv, TDownloadedFile
 from common.content_types import DEFAULT_HTML_EXTENSION, DEFAULT_PDF_EXTENSION, file_extension_by_file_contents
@@ -15,7 +15,7 @@ import shutil
 
 class TExportFile:
     def __init__(self, link_info: TLinkInfo = None, url=None, cached_file=None, export_path=None,
-                 archive_index: int = -1, name_in_archive:str=None, init_json=None):
+                 archive_index: int = -1, name_in_archive: str = None, init_json=None):
         self.last_link_info = link_info
         self.url = url
         self.cached_file = cached_file
@@ -63,13 +63,6 @@ class TExportFileSet:
         self.dl_recognizer_result = DL_RECOGNIZER_ENUM.UNKNOWN
         self.waiting_conversion = False
 
-    def run_dl_recognizer_wrapper(self, logger):
-        try:
-            self.dl_recognizer_result = DL_RECOGNIZER_ENUM.UNKNOWN
-            logger.debug("run_dl_recognizer for {}".format(self.file_copies[0].export_path))
-            self.dl_recognizer_result = run_dl_recognizer(self.file_copies[0].export_path).verdict
-        except Exception as exp:
-            logger.error(exp)
 
 
 def check_html_can_be_declaration_preliminary(downloaded_file):
@@ -105,9 +98,21 @@ class TExportEnvironment:
         if rec is not None:
             self.exported_files = list(TExportFile(init_json=x) for x in rec)
 
-    def html_is_exported(self, html_data):
-        sha256 = build_dislosures_sha256_by_html(html_data)
+    def sha256_is_exported(self, sha256):
         return sha256 in self.export_files_by_sha256
+
+    def run_dl_recognizer_wrapper(self, file_set: TExportFileSet):
+        try:
+            file_set.dl_recognizer_result = DL_RECOGNIZER_ENUM.UNKNOWN
+            self.logger.debug("run_dl_recognizer for {}".format(file_set.file_copies[0].export_path))
+            file_set.dl_recognizer_result = run_dl_recognizer(file_set.file_copies[0].export_path).verdict
+            if file_set.dl_recognizer_result == DL_RECOGNIZER_ENUM.POSITIVE:
+                self.last_found_declaration_time = time.time()
+                self.logger.debug("found a declaration")
+                self.found_declarations_count += 1
+            file_set.waiting_conversion = False
+        except Exception as exp:
+            self.logger.error(exp)
 
     # todo: do not save file copies
     def export_one_file_or_send_to_conversion(self, url, cached_file, extension, link_info):
@@ -144,11 +149,7 @@ class TExportEnvironment:
                     and not TDownloadEnv.CONVERSION_CLIENT.check_file_was_converted(new_file.sha256):
                     file_set.waiting_conversion = True
                 else:
-                    file_set.run_dl_recognizer_wrapper(self.logger)
-                    if file_set.dl_recognizer_result == DL_RECOGNIZER_ENUM.POSITIVE:
-                        self.last_found_declaration_time = time.time()
-                        self.logger.debug("found a declaration")
-                        self.found_declarations_count += 1
+                    self.run_dl_recognizer_wrapper(file_set)
                 self.export_files_by_sha256[new_file.sha256] = file_set
             else:
                 found_file.file_copies.append(new_file)
@@ -196,8 +197,7 @@ class TExportEnvironment:
                 self.logger.error("stop running dl_recognizer, because there is no time")
                 break
             if file_set.waiting_conversion:
-                file_set.run_dl_recognizer_wrapper(self.logger)
-                file_set.waiting_conversion = False
+                self.run_dl_recognizer_wrapper(file_set)
 
     def reorder_export_files_and_delete_non_declarations(self):
         self.run_postponed_dl_recognizers()

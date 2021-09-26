@@ -2,6 +2,8 @@ from web_site_db.robot_step import TRobotStep
 from common.download import TDownloadEnv
 from common.logging_wrapper import setup_logging
 from web_site_db.robot_project import TRobotProject
+from common.link_info import TLinkInfo, TClickEngine
+
 
 import os
 import shutil
@@ -29,7 +31,8 @@ class TestProhibitedLinks(TestCase):
             src = 'http://' + src
         if not trg.startswith('http'):
             trg = 'http://' + trg
-        can_follow = self.robot_step.can_follow_this_link(src, trg)
+        link_info = TLinkInfo(TClickEngine.selenium, src, trg)
+        can_follow = self.robot_step.can_follow_this_link(link_info)
         self.assertEqual(canon, can_follow, msg="{} -> {}".format(src, trg))
 
     def test_prohibit_popular_sites(self):

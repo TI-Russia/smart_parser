@@ -3,7 +3,7 @@ from common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_H
     file_extension_by_file_contents
 
 from ConvStorage.conversion_client import TDocConversionClient
-from common.primitives import build_dislosures_sha256
+from common.primitives import build_dislosures_sha256, build_dislosures_sha256_by_file_data
 from common.html_parser import THtmlParser
 
 import json
@@ -64,24 +64,31 @@ class TDownloadEnv:
                 TDownloadEnv.PDF_QUOTA_CONVERSION))
 
 
-def convert_html_to_utf8_using_content_charset(content_charset, html_data):
+def get_original_encoding(content_charset, html_data):
     if content_charset is not None:
         encoding = content_charset
+        if encoding.lower().startswith('cp-'):
+            encoding = 'cp' + encoding[3:]
+        return encoding
     else:
-        match = re.search('charset\s*=\s*"?([^"\'>]+)', html_data.decode('latin', errors="ignore"))
+        latin_encoded = html_data.decode('latin', errors="ignore").lower()
+        match = re.search('charset\s*=\s*"?([^"\'>]+)', latin_encoded)
         if match:
             encoding = match.group(1).strip()
+            if encoding.lower().startswith('cp-'):
+                encoding = 'cp' + encoding[3:]
+            return encoding
         else:
-            # the slowest method
-            parser = THtmlParser(html_data)
-            return str(parser.soup)
-    if encoding.lower().startswith('cp-'):
-        encoding = 'cp' + encoding[3:]
-    try:
-        encoded_data = html_data.decode(encoding, errors="ignore")
-        return encoded_data
-    except Exception as exp:
-        raise ValueError('unable to find encoding')
+            if latin_encoded[0:500].find('utf') != -1:
+                return "utf8"
+            elif latin_encoded[0:500].find('windows-1251') != -1:
+                return "windows-1251"
+            elif latin_encoded[0:500].find('koi8-r') != -1:
+                return "koi8-r"
+            else:
+                # very slow
+                parser = THtmlParser(html_data)
+                return parser.soup.original_encoding
 
 
 def get_content_charset(headers):
@@ -95,7 +102,7 @@ def get_content_charset(headers):
         return params.get('charset')
 
 
-# save from selenium
+# save from selenium download folder (via javascript, unknown target_url)
 def save_downloaded_file(filename):
     download_folder = TDownloadEnv.get_download_folder()
     if not os.path.exists(download_folder):
@@ -179,53 +186,27 @@ class TDownloadedFile:
             self.timeout = 120
             self.logger.debug("use http timeout {}".format(self.timeout))
 
-        redirected_url, headers, data = self._http_get_request_with_simple_js_redirect()
-        self.redirected_url = redirected_url
-        self.data = data
+        self.redirected_url, headers, self.data = THttpRequester.make_http_request(self.original_url, "GET", self.timeout)
+
         if hasattr(headers, "_headers"):
             self.page_info['headers'] = dict(headers._headers)
         else:
             assert type(headers) == dict
             self.page_info['headers'] = headers
-        self.page_info['charset'] = get_content_charset(headers)
-        self.page_info['redirected_url'] = redirected_url
+        self.page_info['charset_by_headers'] = get_content_charset(headers)
+        self.page_info['redirected_url'] = self.redirected_url
         self.page_info['original_url'] = self.original_url
         if len(self.data) > 0:
             self.file_extension = self.calc_file_extension_by_data_and_headers()
             self.page_info['file_extension'] = self.file_extension
+            self.page_info['sha256'] = build_dislosures_sha256_by_file_data(self.data, self.file_extension)
+            if self.file_extension == DEFAULT_HTML_EXTENSION:
+                self.page_info['original_encoding'] = get_original_encoding(self.page_info.get('charset_by_headers'), self.data)
             self.write_file_to_cache()
-            sha256 = hashlib.sha256(data).hexdigest()
-            TDownloadEnv.send_pdf_to_conversion(self.data_file_path, self.file_extension, sha256)
+            TDownloadEnv.send_pdf_to_conversion(self.data_file_path, self.file_extension, self.page_info['sha256'])
 
-    @staticmethod
-    def get_simple_js_redirect(main_url, data_utf8):
-        match = re.search('\n[^=]*((window|document).location(.href)?\s*=\s*[\'"]?)([^"\'\s]+)([\'"]?\s*;)', data_utf8)
-        if match:
-            redirect_url = match.group(4)
-            if redirect_url.startswith('http'):
-                return redirect_url
-
-            # the "else" is too dangerous (see "window.location = a.href;" in http://батайск-официальный.рф)
-            #else:
-            #    return urllib.parse.urljoin(main_url, redirect_url)
-
-        return None
-
-    def _http_get_request_with_simple_js_redirect(self):
-        redirected_url, headers, data = THttpRequester.make_http_request(self.original_url, "GET", self.timeout)
-
-        try:
-            if THttpRequester.get_content_type_from_headers(headers).lower().startswith('text'):
-                try:
-                    data_utf8 = convert_html_to_utf8_using_content_charset(get_content_charset(headers), data)
-                    redirect_url = self.get_simple_js_redirect(self.original_url, data_utf8)
-                    if redirect_url is not None:
-                        return THttpRequester.make_http_request(redirect_url, "GET", self.timeout)
-                except (THttpRequester.RobotHttpException, ValueError) as err:
-                    pass
-        except AttributeError:
-            pass
-        return redirected_url, headers, data
+    def get_sha256(self):
+        return self.page_info['sha256']
 
     def write_file_to_cache(self):
         with open(self.data_file_path, "wb") as f:
@@ -234,7 +215,10 @@ class TDownloadedFile:
             f.write(json.dumps(self.page_info, indent=4, ensure_ascii=False))
 
     def convert_html_to_utf8(self):
-        return convert_html_to_utf8_using_content_charset(self.page_info.get('charset'), self.data)
+        try:
+            return self.data.decode(self.page_info['original_encoding'], errors="ignore")
+        except Exception as exp:
+            raise ValueError('unable to find encoding')
 
     def get_http_headers(self):
         return self.page_info.get('headers', dict())

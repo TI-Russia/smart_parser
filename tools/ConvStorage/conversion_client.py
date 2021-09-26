@@ -144,6 +144,18 @@ class TDocConversionClient(object):
         if self._register_task(file_extension, file_contents, hashcode, rebuild):
             self.all_pdf_size_sent_to_conversion += Path(filename).stat().st_size
 
+    def get_completed_tasks(self):
+        completed = list()
+        not_completed = list()
+        for sha256 in list(self._sent_tasks):
+            if self.check_file_was_converted(sha256):
+                completed.append(sha256)
+                self.logger.debug("{} was converted".format(sha256))
+            else:
+                not_completed.append(sha256)
+        self._sent_tasks = not_completed
+        return completed
+
     def _wait_conversion_tasks(self, timeout_in_seconds):
         self.logger.debug("wait the conversion server convert all files for {} seconds".format(timeout_in_seconds))
         end_time = time.time() + timeout_in_seconds

@@ -1,6 +1,6 @@
 from unittest import TestCase
 from common.html_parser import THtmlParser, get_html_title
-from common.download import convert_html_to_utf8_using_content_charset
+from common.download import get_original_encoding
 
 LONG_HTML =  """
 <!DOCTYPE html>
@@ -202,9 +202,12 @@ class TestHtmlParser(TestCase):
         title = get_html_title(html)
         self.assertEqual("test", title)
 
-
-    def test_html_data_in_utf(self):
+    def test_html_data_in_ascii(self):
         html = b'<html><head><meta http-equiv="Refresh" content="0; URL=http://sosnogorsk.org/administration_mr_sosnogorsk/structure/?attempt=1"></head><body></body></html>'
-        converted = convert_html_to_utf8_using_content_charset(None, html)
-        # no Exception
-        self.assertEqual(converted[:10], html.decode('utf8')[:10])
+        encoding = get_original_encoding(None, html)
+        self.assertEqual("ascii", encoding)
+
+    def test_html_data_in_utf8(self):
+        html = b'<html lang="ru"><head><meta charset="UTF-8"></html>'
+        encoding = get_original_encoding(None, html)
+        self.assertEqual("utf-8", encoding)
