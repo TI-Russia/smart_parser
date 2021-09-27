@@ -172,24 +172,26 @@ class TWebSiteCrawlSnapshot:
 
         return False
 
-    def check_crawling_timeouts(self, enough_crawled_urls):
+    def check_crawling_timeouts(self, robot_speed, crawled_web_pages_count):
         current_time = time.time()
-        crawl_time = current_time - self.start_crawling_time
-        if crawl_time > TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT:
+        crawl_time_all_steps = current_time - self.start_crawling_time
+        if crawl_time_all_steps > TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT:
             self.logger.error("timeout stop crawling: TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT={}".format(TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT))
             self.stopped_by_timeout = True
             return False
 
-        if crawl_time < 1 * 60 * 60:
-            last_declaration_timeout = 1 * 60 * 60  # 1 hour
-        elif crawl_time < 5 * 60 * 60:
-            last_declaration_timeout = 30 * 60  # 30 minutes
+        if crawl_time_all_steps < 1 * 60 * 60:
+            max_next_declaration_timeout = 1 * 60 * 60  # 1 hour
+        elif crawl_time_all_steps < 5 * 60 * 60:
+            max_next_declaration_timeout = 30 * 60  # 30 minutes
         else:
-            last_declaration_timeout = 15 * 60  # 15 minutes
-        if (enough_crawled_urls or crawl_time > 60 * 60 * 3) and \
-                (current_time - self.export_env.last_found_declaration_time > last_declaration_timeout):
-            self.logger.error("timeout stop crawling: last_declaration_timeout={}".format(
-                last_declaration_timeout))
+            max_next_declaration_timeout = 15 * 60  # 15 minutes
+        is_low_robot_speed = (robot_speed < 1.0 and crawled_web_pages_count > 100)
+        too_much_time_for_one_site = crawl_time_all_steps > 60 * 60 * 3
+        last_declaration_was_long_ago = (current_time - self.export_env.last_found_declaration_time > max_next_declaration_timeout)
+        if (is_low_robot_speed or too_much_time_for_one_site) and last_declaration_was_long_ago:
+            self.logger.error("timeout stop crawling: last_declaration_timeout={} robot_speed={}".format(
+                max_next_declaration_timeout, robot_speed))
             self.stopped_by_timeout = True
             return False
         return True

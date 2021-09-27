@@ -402,6 +402,8 @@ class THttpRequester:
     def request_url_headers_with_global_cache(url):
         if url in THttpRequester.HEADER_MEMORY_CACHE:
             return THttpRequester.HEADER_MEMORY_CACHE[url]
+        if not THttpRequester.ENABLE_HEAD_REQUESTS:
+            raise THttpRequester.RobotHttpException("disabled", url, 404, "HEAD")
         # do not ddos sites
         elapsed_time = datetime.datetime.now() - THttpRequester.LAST_HEAD_REQUEST_TIME
         if elapsed_time.total_seconds() < THttpRequester.SECONDS_BETWEEN_HEAD_REQUESTS:
@@ -431,6 +433,9 @@ class THttpRequester:
 
     @staticmethod
     def make_http_request(url, method, timeout=None):
+        if method == "HEAD" and not THttpRequester.ENABLE_HEAD_REQUESTS:
+            raise THttpRequester.RobotHttpException("disabled", url, 404, method)
+
         if timeout is None:
             timeout = THttpRequester.DEFAULT_HTTP_TIMEOUT
         start_time = time.time()

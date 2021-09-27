@@ -9,7 +9,7 @@ source $COMMON_SCRIPT
 
 
 #1 создание нового каталога и файла настройки .profile
-    cd $DLROBOT_UPDATES_FOLDER/
+    cd $DLROBOT_UPDATES_FOLDER
     export OLD_DLROBOT_FOLDER=`find -mindepth 1 -maxdepth 1 -xtype d  | sort | tail -n 1 | xargs -n 1 realpath`
     # all projects that older than 5 hours in order not to get a race condition
     export CRAWL_EPOCH=`python3 -c "import time; print (int(time.time() - 60 * 5))"`

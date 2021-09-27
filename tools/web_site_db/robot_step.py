@@ -144,7 +144,9 @@ class TRobotStep:
         self.last_processed_url_weights = list()
         self.urllib_html_cache = dict()
         self.intermediate_pdf_conversion_time_stamp = time.time()
-        self.last_not_empty_links = set()
+        self.unique_hrefs = set()
+        self.crawled_web_pages_count = 0
+        self.start_time = time.time()
 
     def use_http_library(self):
         return self.website.enable_urllib
@@ -400,8 +402,10 @@ class TRobotStep:
     def pop_url_with_max_weight(self, url_index):
         if len(self.pages_to_process) == 0:
             return None
-        enough_crawled_urls = url_index > 200 or (url_index > 100 and max(self.last_processed_url_weights[-10:]) < TLinkInfo.NORMAL_LINK_WEIGHT)
-        if not self.website.check_crawling_timeouts(enough_crawled_urls):
+        robot_speed = 60.0 * self.website.export_env.found_declarations_count / (time.time() - self.start_time)
+        #significiant_crawled_urls = self.crawled_web_pages_count > 200 or \
+        #                      (self.crawled_web_pages_count > 100 and max(self.last_processed_url_weights[-10:]) < TLinkInfo.NORMAL_LINK_WEIGHT)
+        if not self.website.check_crawling_timeouts(robot_speed, self.crawled_web_pages_count):
             return None
         best_url, max_weight = max(self.pages_to_process.items(), key=itemgetter(1))
         self.processed_pages.add(best_url)
@@ -519,7 +523,7 @@ class TRobotStep:
         self.find_languages_links(elements, processed_elements)
         html_title = self.get_selenium_driver().the_driver.title
         link_infos = dict()
-        not_empty_links = list()
+        not_empty_links = set()
         for element_index, element, in enumerate(elements):
             link_info = self.build_link_info(main_url, page_html, element_index, element, html_title)
             link_infos[element['id']] = link_info
@@ -527,14 +531,19 @@ class TRobotStep:
                 processed_elements.add(element['id'])
             else:
                 if link_info.target_url is not None:
-                    not_empty_links.append(link_info.target_url)
-        not_empty_links_str = " ".join(not_empty_links)
-        if len(not_empty_links) > 30 and not_empty_links_str in self.last_not_empty_links:
+                    not_empty_links.add(link_info.target_url)
+
+        if len(not_empty_links) > 30 and not_empty_links.issubset(self.unique_hrefs):
             self.logger.debug("skip page, since its links are similar to the previous page (speed optimization)")
             return
         else:
-            self.last_not_empty_links.add(not_empty_links_str)
+            for x in not_empty_links:
+                if x not in self.unique_hrefs:
+                    pass
+            self.unique_hrefs.update(not_empty_links)
+            self.unique_hrefs.add(main_url)
 
+        self.crawled_web_pages_count += 1
         for element_index, element, in enumerate(elements):
             if element['id'] not in processed_elements:
                 processed_elements.add(element['id'])
@@ -653,7 +662,7 @@ class TRobotStep:
         self.logger.info("=== step {0} =========".format(self.step_name))
         self.logger.info(self.website.main_page_url)
         self.url_to_weight = dict()
-        start_time = time.time()
+        self.start_time = time.time()
         if self.is_last_step:
             self.website.create_export_folder()
 
@@ -677,8 +686,8 @@ class TRobotStep:
             self.add_regional_main_pages(regional_main_pages)
 
         self.profiler = {
-            "elapsed_time":  time.time() - start_time,
-            "step_request_rate": THttpRequester.get_request_rate(start_time),
+            "elapsed_time":  time.time() - self.start_time,
+            "step_request_rate": THttpRequester.get_request_rate(self.start_time),
             "site_request_rate": THttpRequester.get_request_rate()
         }
         self.logger.debug("{}".format(str(self.profiler)))
