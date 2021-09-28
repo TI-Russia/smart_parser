@@ -40,15 +40,6 @@ source $COMMON_SCRIPT
     cd $DLROBOT_FOLDER
     python3 $TOOLS/disclosures_site/manage.py predict_office --dlrobot-human-path dlrobot_human.dbm
 
-#5  получение статистики по dlrobot_human.dbm, сравнение с предыдущим обходом
-    python3 $TOOLS/disclosures_site/scripts/dlrobot_human.py --action stats --input-file dlrobot_human.dbm > dlrobot_human.json.stats
-    new_size=$(stat -c%s "dlrobot_human.dbm")
-    old_size=$(stat -c%s "$OLD_DLROBOT_FOLDER/dlrobot_human.dbm")
-    if (( $old_size > $new_size )); then
-        echo "the size of dlrobot_human.dbm is less than the size of older one, check dlrobot_human.dbm.stats"
-        exit 1
-    endif
-
 #6  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод (1 час)
    python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.prod --directory $DLROBOT_FOLDER
 
@@ -62,7 +53,7 @@ source $COMMON_SCRIPT
                  --settings disclosures.settings.dev \
                  --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER \
                  --dlrobot-human dlrobot_human.dbm   \
-                 --process-count 2  \
+                   --process-count 2  \
                  --permalinks-folder $DLROBOT_FOLDER
 
      python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric source_document_count  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
