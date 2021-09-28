@@ -131,28 +131,39 @@ class TExportEnvironment:
             dearchiver = TDearchiver(self.logger, office_folder)
             for archive_index, name_in_archive, export_filename in dearchiver.dearchive_one_archive(extension, cached_file, index):
                 self.logger.debug("export temporal file {}, archive_index: {} to {}".format(cached_file, archive_index, export_filename))
-                new_files.append(TExportFile(link_info, url, cached_file, export_filename, archive_index, name_in_archive))
+                export_file = TExportFile(link_info, url, cached_file, export_filename, archive_index, name_in_archive)
+                new_files.append(export_file)
 
         else:
             self.logger.debug("export temporal file {} to {}".format(cached_file, export_path))
             shutil.copyfile(cached_file, export_path)
-            new_files.append(TExportFile(link_info, url, cached_file, export_path))
+            export_file = TExportFile(link_info, url, cached_file, export_path)
+            new_files.append(export_file)
 
         new_file: TExportFile
+        processed_by_dl_recognizer_count = 0
+        positive_count = 0
         for new_file in new_files:
             found_file = self.export_files_by_sha256.get(new_file.sha256)
-            if found_file is None:
-                file_set = TExportFileSet(new_file)
-                self.logger.debug("run_dl_recognizer for {}".format(new_file.export_path))
-                if new_file.file_extension == DEFAULT_PDF_EXTENSION  \
-                    and TDownloadEnv.CONVERSION_CLIENT is not None \
-                    and not TDownloadEnv.CONVERSION_CLIENT.check_file_was_converted(new_file.sha256):
-                    file_set.waiting_conversion = True
-                else:
-                    self.run_dl_recognizer_wrapper(file_set)
-                self.export_files_by_sha256[new_file.sha256] = file_set
-            else:
+            if found_file is not None:
                 found_file.file_copies.append(new_file)
+                continue
+            file_set = TExportFileSet(new_file)
+            if new_file.file_extension == DEFAULT_PDF_EXTENSION  \
+                and TDownloadEnv.CONVERSION_CLIENT is not None \
+                and not TDownloadEnv.CONVERSION_CLIENT.check_file_was_converted(new_file.sha256):
+                file_set.waiting_conversion = True
+            else:
+                self.logger.debug("run_dl_recognizer for {}".format(new_file.export_path))
+                self.run_dl_recognizer_wrapper(file_set)
+                if file_set.dl_recognizer_result == DL_RECOGNIZER_ENUM.POSITIVE:
+                    positive_count += 1
+                processed_by_dl_recognizer_count += 1
+                if processed_by_dl_recognizer_count > 8 and positive_count == 0:
+                    # large archives with >100 files can slow down the crawling
+                    self.logger.debug("stop analyzing archive, since no declaration found in the beginning")
+                    break
+            self.export_files_by_sha256[new_file.sha256] = file_set
 
     def export_file_if_relevant(self, downloaded_file: TDownloadedFile, link_info: TLinkInfo):
         url = downloaded_file.original_url
