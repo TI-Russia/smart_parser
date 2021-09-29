@@ -18,7 +18,7 @@ import os
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--action", dest='action', help="can be ban, to_utf8, move, mark_large_sites, check_alive, "
-                                                        "print_urls, check, redirect_subdomain")
+                                                        "print_urls, check, redirect_subdomain, regional_to_main")
     parser.add_argument("--input-file", dest='input_file', required=True)
     parser.add_argument("--output-file", dest='output_file', required=True)
     parser.add_argument("--url-list", dest='url_list', required=False)
@@ -221,6 +221,18 @@ class TWebSitesManager:
                 continue
             self.check_alive_one_site(web_domain)
 
+    def regional_to_main(self):
+        self.out_web_sites.web_sites = self.in_web_sites.web_sites
+
+        for web_domain in self.get_url_list(start_selenium=True):
+            site_info = self.in_web_sites.get_web_site(web_domain)
+            for u in site_info.regional_main_pages:
+                assert self.in_web_sites.get_web_site(u) is None
+            for site_url, reg_props in site_info.regional_main_pages.items():
+                new_web_site = TDeclarationWebSite()
+                new_web_site.calculated_office_id = reg_props['calc_office_id']
+                self.out_web_sites.web_sites[site_url] = new_web_site
+
     def main(self):
         if self.args.action == "ban":
             self.ban_sites()
@@ -238,6 +250,8 @@ class TWebSitesManager:
             self.check()
         elif self.args.action == "redirect_subdomain":
             self.redirect_subdomain()
+        elif self.args.action == "regional_to_main":
+            self.regional_to_main()
         else:
             raise Exception("unknown action")
         self.out_web_sites.save_to_disk()

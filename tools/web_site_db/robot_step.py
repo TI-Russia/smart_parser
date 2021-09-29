@@ -604,10 +604,8 @@ class TRobotStep:
             self.logger.error("this is the last url (max={}) but we have time to crawl further".format(
                 TRobotStep.max_step_url_count))
 
-    def add_regional_main_pages(self, regional_main_pages):
-        for url in regional_main_pages:
-            if not url.startswith('http'):
-                url = self.protocol + "://" + url
+    def add_regional_main_pages(self):
+        for url in self.website.get_regional_pages():
             link_info = TLinkInfo(TClickEngine.manual, self.website.main_page_url, url)
             link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
             self.add_link_wrapper(link_info)
@@ -658,7 +656,7 @@ class TRobotStep:
                 break  # one  link found
         self.logger.info('found {} links using search engine id={}'.format(links_count, search_engine))
 
-    def make_one_step(self, start_pages, regional_main_pages):
+    def make_one_step(self, start_pages):
         self.logger.info("=== step {0} =========".format(self.step_name))
         self.logger.info(self.website.main_page_url)
         self.url_to_weight = dict()
@@ -683,7 +681,7 @@ class TRobotStep:
         self.apply_function_to_links(self.check_link_func)
 
         if self.step_name == "sitemap":
-            self.add_regional_main_pages(regional_main_pages)
+            self.add_regional_main_pages()
 
         self.profiler = {
             "elapsed_time":  time.time() - self.start_time,

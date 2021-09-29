@@ -3953,323 +3953,7 @@
     },
     "genproc.gov.ru": {
         "calc_office_id": 831,
-        "regional": {
-            "epp.genproc.gov.ru/web/gprf": {
-                "calc_office_id": 831
-            },
-            "epp.genproc.gov.ru/web/proc_cfo": {
-                "calc_office_id": 831
-            },
-            "epp.genproc.gov.ru/web/proc_urfo": {
-                "calc_office_id": 831
-            },
-            "epp.genproc.gov.ru/web/proc_dvfo": {
-                "calc_office_id": 831
-            },
-            "epp.genproc.gov.ru/web/proc_szfo": {
-                "calc_office_id": 831
-            },
-            "epp.genproc.gov.ru/web/proc_pvfo": {
-                "calc_office_id": 831
-            },
-            "epp.genproc.gov.ru/web/proc_glskfoyufo": {
-                "calc_office_id": 831
-            },
-            "epp.genproc.gov.ru/web/proc_sibfo": {
-                "calc_office_id": 831
-            },
-            "epp.genproc.gov.ru/web/mmtp": {
-                "calc_office_id": 831
-            },
-            "epp.genproc.gov.ru/web/ptp": {
-                "calc_office_id": 831
-            },
-            "epp.genproc.gov.ru/web/sztp": {
-                "calc_office_id": 831
-            },
-            "epp.genproc.gov.ru/web/abpp": {
-                "calc_office_id": 831
-            },
-            "epp.genproc.gov.ru/web/dvtp": {
-                "calc_office_id": 831
-            },
-            "epp.genproc.gov.ru/web/vmtp": {
-                "calc_office_id": 831
-            },
-            "epp.genproc.gov.ru/web/zstp": {
-                "calc_office_id": 831
-            },
-            "epp.genproc.gov.ru/web/vstp": {
-                "calc_office_id": 831
-            },
-            "epp.genproc.gov.ru/web/urtp": {
-                "calc_office_id": 831
-            },
-            "epp.genproc.gov.ru/web/utp": {
-                "calc_office_id": 831
-            },
-            "epp.genproc.gov.ru/web/bmtp": {
-                "calc_office_id": 831
-            },
-            "epp.genproc.gov.ru/web/proc_22": {
-                "calc_office_id": 20
-            },
-            "epp.genproc.gov.ru/web/proc_28": {
-                "calc_office_id": 21
-            },
-            "epp.genproc.gov.ru/web/proc_29": {
-                "calc_office_id": 22
-            },
-            "epp.genproc.gov.ru/web/proc_30": {
-                "calc_office_id": 23
-            },
-            "epp.genproc.gov.ru/web/proc_31": {
-                "calc_office_id": 83
-            },
-            "epp.genproc.gov.ru/web/proc_32": {
-                "calc_office_id": 18
-            },
-            "epp.genproc.gov.ru/web/proc_33": {
-                "calc_office_id": 19
-            },
-            "epp.genproc.gov.ru/web/proc_34": {
-                "calc_office_id": 26
-            },
-            "epp.genproc.gov.ru/web/proc_35": {
-                "calc_office_id": 27
-            },
-            "epp.genproc.gov.ru/web/proc_36": {
-                "calc_office_id": 28
-            },
-            "epp.genproc.gov.ru/web/proc_77": {
-                "calc_office_id": 49
-            },
-            "epp.genproc.gov.ru/web/proc_78": {
-                "calc_office_id": 65
-            },
-            "epp.genproc.gov.ru/web/proc_92": {
-                "calc_office_id": 6540
-            },
-            "epp.genproc.gov.ru/web/proc_79": {
-                "calc_office_id": 80
-            },
-            "epp.genproc.gov.ru/web/proc_75": {
-                "calc_office_id": 29
-            },
-            "epp.genproc.gov.ru/web/proc_37": {
-                "calc_office_id": 86
-            },
-            "epp.genproc.gov.ru/web/proc_38": {
-                "calc_office_id": 30
-            },
-            "epp.genproc.gov.ru/web/proc_07": {
-                "calc_office_id": 270
-            },
-            "epp.genproc.gov.ru/web/proc_39": {
-                "calc_office_id": 31
-            },
-            "epp.genproc.gov.ru/web/proc_40": {
-                "calc_office_id": 84
-            },
-            "epp.genproc.gov.ru/web/proc_41": {
-                "calc_office_id": 33
-            },
-            "epp.genproc.gov.ru/web/proc_09": {
-                "calc_office_id": 35
-            },
-            "epp.genproc.gov.ru/web/proc_42": {
-                "calc_office_id": 36
-            },
-            "epp.genproc.gov.ru/web/proc_43": {
-                "calc_office_id": 37
-            },
-            "epp.genproc.gov.ru/web/proc_44": {
-                "calc_office_id": 39
-            },
-            "epp.genproc.gov.ru/web/proc_23": {
-                "calc_office_id": 46
-            },
-            "epp.genproc.gov.ru/web/proc_24": {
-                "calc_office_id": 40
-            },
-            "epp.genproc.gov.ru/web/proc_45": {
-                "calc_office_id": 85
-            },
-            "epp.genproc.gov.ru/web/proc_46": {
-                "calc_office_id": 41
-            },
-            "epp.genproc.gov.ru/web/proc_47": {
-                "calc_office_id": 42
-            },
-            "epp.genproc.gov.ru/web/proc_48": {
-                "calc_office_id": 43
-            },
-            "epp.genproc.gov.ru/web/proc_49": {
-                "calc_office_id": 44
-            },
-            "epp.genproc.gov.ru/web/proc_50": {
-                "calc_office_id": 50
-            },
-            "epp.genproc.gov.ru/web/proc_51": {
-                "calc_office_id": 51
-            },
-            "epp.genproc.gov.ru/web/proc_83": {
-                "calc_office_id": 279
-            },
-            "epp.genproc.gov.ru/web/proc_52": {
-                "calc_office_id": 52
-            },
-            "epp.genproc.gov.ru/web/proc_53": {
-                "calc_office_id": 53
-            },
-            "epp.genproc.gov.ru/web/proc_54": {
-                "calc_office_id": 54
-            },
-            "epp.genproc.gov.ru/web/proc_55": {
-                "calc_office_id": 55
-            },
-            "epp.genproc.gov.ru/web/proc_56": {
-                "calc_office_id": 275
-            },
-            "epp.genproc.gov.ru/web/proc_57": {
-                "calc_office_id": 56
-            },
-            "epp.genproc.gov.ru/web/proc_58": {
-                "calc_office_id": 57
-            },
-            "epp.genproc.gov.ru/web/proc_59": {
-                "calc_office_id": 60
-            },
-            "epp.genproc.gov.ru/web/proc_25": {
-                "calc_office_id": 61
-            },
-            "epp.genproc.gov.ru/web/proc_60": {
-                "calc_office_id": 62
-            },
-            "epp.genproc.gov.ru/web/proc_01": {
-                "calc_office_id": 115
-            },
-            "epp.genproc.gov.ru/web/proc_04": {
-                "calc_office_id": 10
-            },
-            "epp.genproc.gov.ru/web/proc_02": {
-                "calc_office_id": 24
-            },
-            "epp.genproc.gov.ru/web/proc_03": {
-                "calc_office_id": 25
-            },
-            "epp.genproc.gov.ru/web/proc_05": {
-                "calc_office_id": 45
-            },
-            "epp.genproc.gov.ru/web/proc_06": {
-                "calc_office_id": 269
-            },
-            "epp.genproc.gov.ru/web/proc_08": {
-                "calc_office_id": 32
-            },
-            "epp.genproc.gov.ru/web/proc_10": {
-                "calc_office_id": 271
-            },
-            "epp.genproc.gov.ru/web/proc_11": {
-                "calc_office_id": 38
-            },
-            "epp.genproc.gov.ru/web/proc_91": {
-                "calc_office_id": 6359
-            },
-            "epp.genproc.gov.ru/web/proc_12": {
-                "calc_office_id": 47
-            },
-            "epp.genproc.gov.ru/web/proc_13": {
-                "calc_office_id": 48
-            },
-            "epp.genproc.gov.ru/web/proc_14": {
-                "calc_office_id": 79
-            },
-            "epp.genproc.gov.ru/web/proc_15": {
-                "calc_office_id": 272
-            },
-            "epp.genproc.gov.ru/web/proc_16": {
-                "calc_office_id": 70
-            },
-            "epp.genproc.gov.ru/web/proc_17": {
-                "calc_office_id": 72
-            },
-            "epp.genproc.gov.ru/web/proc_19": {
-                "calc_office_id": 273
-            },
-            "epp.genproc.gov.ru/web/proc_61": {
-                "calc_office_id": 63
-            },
-            "epp.genproc.gov.ru/web/proc_62": {
-                "calc_office_id": 276
-            },
-            "epp.genproc.gov.ru/web/proc_63": {
-                "calc_office_id": 64
-            },
-            "epp.genproc.gov.ru/web/proc_64": {
-                "calc_office_id": 66
-            },
-            "epp.genproc.gov.ru/web/proc_65": {
-                "calc_office_id": 81
-            },
-            "epp.genproc.gov.ru/web/proc_66": {
-                "calc_office_id": 67
-            },
-            "epp.genproc.gov.ru/web/proc_67": {
-                "calc_office_id": 87
-            },
-            "epp.genproc.gov.ru/web/proc_26": {
-                "calc_office_id": 68
-            },
-            "epp.genproc.gov.ru/web/proc_68": {
-                "calc_office_id": 69
-            },
-            "epp.genproc.gov.ru/web/proc_69": {
-                "calc_office_id": 88
-            },
-            "epp.genproc.gov.ru/web/proc_70": {
-                "calc_office_id": 277
-            },
-            "epp.genproc.gov.ru/web/proc_71": {
-                "calc_office_id": 71
-            },
-            "epp.genproc.gov.ru/web/proc_72": {
-                "calc_office_id": 73
-            },
-            "epp.genproc.gov.ru/web/proc_18": {
-                "calc_office_id": 74
-            },
-            "epp.genproc.gov.ru/web/proc_73": {
-                "calc_office_id": 75
-            },
-            "epp.genproc.gov.ru/web/proc_27": {
-                "calc_office_id": 274
-            },
-            "epp.genproc.gov.ru/web/proc_86": {
-                "calc_office_id": 280
-            },
-            "epp.genproc.gov.ru/web/proc_74": {
-                "calc_office_id": 76
-            },
-            "epp.genproc.gov.ru/web/proc_20": {
-                "calc_office_id": 77
-            },
-            "epp.genproc.gov.ru/web/proc_21": {
-                "calc_office_id": 78
-            },
-            "epp.genproc.gov.ru/web/proc_87": {
-                "calc_office_id": 82
-            },
-            "epp.genproc.gov.ru/web/proc_89": {
-                "calc_office_id": 281
-            },
-            "epp.genproc.gov.ru/web/proc_76": {
-                "calc_office_id": 278
-            }
-        },
-        "disable_selenium": true,
-        "dlrobot_max_time_coeff": 2.0,
-        "http_protocol": "http",
+        "http_protocol": "https",
         "title": "Генеральная прокуратура Российской Федерации"
     },
     "fsin.su": {
@@ -9918,8 +9602,8 @@
     },
     "shimanovskadm.ru": {
         "calc_office_id": 3026,
-        "http_protocol": "https",
         "status": "abandoned",
+        "http_protocol": "https",
         "title": "Туризм - Автобусные туры. Активный отдых. Архитектура. Круизы. Отдых с детьми"
     },
     "admdubrovka.ru": {
@@ -41797,12 +41481,6 @@
         "calc_office_id": 27,
         "status": "abandoned"
     },
-    "epp.genproc.gov.ru": {
-        "calc_office_id": 49,
-        "status": "abandoned",
-        "http_protocol": "https",
-        "redirect_to": "epp.genproc.gov.ru/web/gprf"
-    },
     "procuratura.nnov.ru": {
         "calc_office_id": 52,
         "status": "abandoned"
@@ -44460,9 +44138,10 @@
     },
     "rkursk.ru": {
         "calc_office_id": 179,
+        "status": "abandoned",
         "http_protocol": "http",
-        "title": "Главная страница | Официальный сервер органов власти Курской области",
-        "redirect_to": "kursk.ru"
+        "redirect_to": "kursk.ru",
+        "title": "Главная страница | Официальный сервер органов власти Курской области"
     },
     "kursk.ru": {
         "calc_office_id": 179,
@@ -54389,8 +54068,8 @@
     },
     "gafury.ru": {
         "calc_office_id": 2660,
-        "http_protocol": "http",
         "status": "abandoned",
+        "http_protocol": "http",
         "title": ""
     },
     "mderbet-rmo.ru": {
@@ -71586,11 +71265,6 @@
         "http_protocol": "http",
         "title": "Официальный сайт муниципального округа Аэропорт - Главная"
     },
-    "epp.genproc.gov.ru/web/gprf": {
-        "calc_office_id": 49,
-        "http_protocol": "https",
-        "title": "Генеральная прокуратура Российской Федерации - Генеральная прокуратура Российской Федерации"
-    },
     "zakupki.krskstate.ru/defaultkrs.aspx": {
         "calc_office_id": 7839,
         "http_protocol": "http",
@@ -71876,5 +71550,525 @@
         "calc_office_id": 20340,
         "http_protocol": "http",
         "title": "Главная - Окрестности Санкт-Петербурга"
+    },
+    "epp.genproc.gov.ru/web/gprf": {
+        "calc_office_id": 831,
+        "http_protocol": "https",
+        "title": "Генеральная прокуратура Российской Федерации - Генеральная прокуратура Российской Федерации"
+    },
+    "epp.genproc.gov.ru/web/proc_cfo": {
+        "calc_office_id": 831,
+        "http_protocol": "https",
+        "title": "Управление Генеральной прокуратуры Российской Федерации в федеральном округе Российской Федерации - Управление Генеральной прокуратуры Российской Федерации по Центральному федеральному округу"
+    },
+    "epp.genproc.gov.ru/web/proc_urfo": {
+        "calc_office_id": 831,
+        "http_protocol": "https",
+        "title": "Управление Генеральной прокуратуры Российской Федерации в федеральном округе Российской Федерации - Управление Генеральной прокуратуры Российской Федерации по Уральскому федеральному округу"
+    },
+    "epp.genproc.gov.ru/web/proc_dvfo": {
+        "calc_office_id": 831,
+        "http_protocol": "https",
+        "title": "Управление Генеральной прокуратуры Российской Федерации в федеральном округе Российской Федерации - Управление Генеральной прокуратуры Российской Федерации по Дальневосточному федеральному округу"
+    },
+    "epp.genproc.gov.ru/web/proc_szfo": {
+        "calc_office_id": 831,
+        "http_protocol": "https",
+        "title": "Управление Генеральной прокуратуры Российской Федерации в федеральном округе Российской Федерации - Управление Генеральной прокуратуры Российской Федерации по Северо-Западному федеральному округу"
+    },
+    "epp.genproc.gov.ru/web/proc_pvfo": {
+        "calc_office_id": 831,
+        "http_protocol": "https",
+        "title": "Управление Генеральной прокуратуры Российской Федерации в федеральном округе Российской Федерации - Управление Генеральной прокуратуры Российской Федерации по Приволжскому федеральному округу"
+    },
+    "epp.genproc.gov.ru/web/proc_glskfoyufo": {
+        "calc_office_id": 831,
+        "http_protocol": "https",
+        "title": "Управление Генеральной прокуратуры Российской Федерации в федеральном округе Российской Федерации - Главное управление Генеральной прокуратуры Российской Федерации по Северо-Кавказскому и Южному федеральным округам"
+    },
+    "epp.genproc.gov.ru/web/proc_sibfo": {
+        "calc_office_id": 831,
+        "http_protocol": "https",
+        "title": "Управление Генеральной прокуратуры Российской Федерации в федеральном округе Российской Федерации - Управление Генеральной прокуратуры Российской Федерации по Сибирскому федеральному округу"
+    },
+    "epp.genproc.gov.ru/web/mmtp": {
+        "calc_office_id": 831,
+        "http_protocol": "https",
+        "title": "Специализированная прокуратура Российской Федерации - Московская межрегиональная транспортная прокуратура"
+    },
+    "epp.genproc.gov.ru/web/ptp": {
+        "calc_office_id": 831,
+        "http_protocol": "https",
+        "title": "Специализированная прокуратура Российской Федерации - Приволжская транспортная прокуратура"
+    },
+    "epp.genproc.gov.ru/web/sztp": {
+        "calc_office_id": 831,
+        "http_protocol": "https",
+        "title": "Специализированная прокуратура Российской Федерации - Северо-Западная транспортная прокуратура"
+    },
+    "epp.genproc.gov.ru/web/abpp": {
+        "calc_office_id": 831,
+        "http_protocol": "https",
+        "title": "Специализированная прокуратура Российской Федерации - Амурская бассейновая природоохранная прокуратура"
+    },
+    "epp.genproc.gov.ru/web/dvtp": {
+        "calc_office_id": 831,
+        "http_protocol": "https",
+        "title": "Специализированная прокуратура Российской Федерации - Дальневосточная транспортная прокуратура"
+    },
+    "epp.genproc.gov.ru/web/vmtp": {
+        "calc_office_id": 831,
+        "http_protocol": "https",
+        "title": "Специализированная прокуратура Российской Федерации - Волжская межрегиональная природоохранная прокуратура"
+    },
+    "epp.genproc.gov.ru/web/zstp": {
+        "calc_office_id": 831,
+        "http_protocol": "https",
+        "title": "Специализированная прокуратура Российской Федерации - Западно-Сибирская транспортная прокуратура"
+    },
+    "epp.genproc.gov.ru/web/vstp": {
+        "calc_office_id": 831,
+        "http_protocol": "https",
+        "title": "Специализированная прокуратура Российской Федерации - Восточно-Сибирская транспортная прокуратура"
+    },
+    "epp.genproc.gov.ru/web/urtp": {
+        "calc_office_id": 831,
+        "http_protocol": "https",
+        "title": "Специализированная прокуратура Российской Федерации - Уральская транспортная прокуратура"
+    },
+    "epp.genproc.gov.ru/web/utp": {
+        "calc_office_id": 831,
+        "http_protocol": "https",
+        "title": "Специализированная прокуратура Российской Федерации - Южная транспортная прокуратура"
+    },
+    "epp.genproc.gov.ru/web/bmtp": {
+        "calc_office_id": 831,
+        "http_protocol": "https",
+        "title": "Специализированная прокуратура Российской Федерации - Байкальская межрегиональная природоохранная прокуратура"
+    },
+    "epp.genproc.gov.ru/web/proc_22": {
+        "calc_office_id": 20,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Алтайского края"
+    },
+    "epp.genproc.gov.ru/web/proc_28": {
+        "calc_office_id": 21,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Амурской области"
+    },
+    "epp.genproc.gov.ru/web/proc_29": {
+        "calc_office_id": 22,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Архангельской области"
+    },
+    "epp.genproc.gov.ru/web/proc_30": {
+        "calc_office_id": 23,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Астраханской области"
+    },
+    "epp.genproc.gov.ru/web/proc_31": {
+        "calc_office_id": 83,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Белгородской области"
+    },
+    "epp.genproc.gov.ru/web/proc_32": {
+        "calc_office_id": 18,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Брянской области"
+    },
+    "epp.genproc.gov.ru/web/proc_33": {
+        "calc_office_id": 19,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Владимирской области"
+    },
+    "epp.genproc.gov.ru/web/proc_34": {
+        "calc_office_id": 26,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Волгоградской области"
+    },
+    "epp.genproc.gov.ru/web/proc_35": {
+        "calc_office_id": 27,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Вологодской области"
+    },
+    "epp.genproc.gov.ru/web/proc_36": {
+        "calc_office_id": 28,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Воронежской области"
+    },
+    "epp.genproc.gov.ru/web/proc_77": {
+        "calc_office_id": 49,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура города Москвы"
+    },
+    "epp.genproc.gov.ru/web/proc_78": {
+        "calc_office_id": 65,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура г. Санкт-Петербург"
+    },
+    "epp.genproc.gov.ru/web/proc_92": {
+        "calc_office_id": 6540,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура города Севастополя"
+    },
+    "epp.genproc.gov.ru/web/proc_79": {
+        "calc_office_id": 80,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Еврейской автономной области"
+    },
+    "epp.genproc.gov.ru/web/proc_75": {
+        "calc_office_id": 29,
+        "http_protocol": "https",
+        "title": "Прокуратура Забайкальского края - Прокуратура Забайкальского края"
+    },
+    "epp.genproc.gov.ru/web/proc_37": {
+        "calc_office_id": 86,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Ивановской области"
+    },
+    "epp.genproc.gov.ru/web/proc_38": {
+        "calc_office_id": 30,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Иркутской области"
+    },
+    "epp.genproc.gov.ru/web/proc_07": {
+        "calc_office_id": 270,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Кабардино-Балкарской Республики"
+    },
+    "epp.genproc.gov.ru/web/proc_39": {
+        "calc_office_id": 31,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Калининградской области"
+    },
+    "epp.genproc.gov.ru/web/proc_40": {
+        "calc_office_id": 84,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Калужской области"
+    },
+    "epp.genproc.gov.ru/web/proc_41": {
+        "calc_office_id": 33,
+        "http_protocol": "https",
+        "title": "Прокуратура Камчатского края - Прокуратура Камчатского края"
+    },
+    "epp.genproc.gov.ru/web/proc_09": {
+        "calc_office_id": 35,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Карачаево-Черкесской Республики"
+    },
+    "epp.genproc.gov.ru/web/proc_42": {
+        "calc_office_id": 36,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Кемеровской области"
+    },
+    "epp.genproc.gov.ru/web/proc_43": {
+        "calc_office_id": 37,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Кировской области"
+    },
+    "epp.genproc.gov.ru/web/proc_44": {
+        "calc_office_id": 39,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Костромской области"
+    },
+    "epp.genproc.gov.ru/web/proc_23": {
+        "calc_office_id": 46,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Краснодарского края"
+    },
+    "epp.genproc.gov.ru/web/proc_24": {
+        "calc_office_id": 40,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Красноярского края"
+    },
+    "epp.genproc.gov.ru/web/proc_45": {
+        "calc_office_id": 85,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Курганской области"
+    },
+    "epp.genproc.gov.ru/web/proc_46": {
+        "calc_office_id": 41,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Курской области"
+    },
+    "epp.genproc.gov.ru/web/proc_47": {
+        "calc_office_id": 42,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Ленинградской области"
+    },
+    "epp.genproc.gov.ru/web/proc_48": {
+        "calc_office_id": 43,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Липецкой области"
+    },
+    "epp.genproc.gov.ru/web/proc_49": {
+        "calc_office_id": 44,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Магаданской области"
+    },
+    "epp.genproc.gov.ru/web/proc_50": {
+        "calc_office_id": 50,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Московской области"
+    },
+    "epp.genproc.gov.ru/web/proc_51": {
+        "calc_office_id": 51,
+        "http_protocol": "https",
+        "title": "Прокуратура Мурманской области - Прокуратура Мурманской области"
+    },
+    "epp.genproc.gov.ru/web/proc_83": {
+        "calc_office_id": 279,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Ненецкого автономного округа"
+    },
+    "epp.genproc.gov.ru/web/proc_52": {
+        "calc_office_id": 52,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Нижегородской области"
+    },
+    "epp.genproc.gov.ru/web/proc_53": {
+        "calc_office_id": 53,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Новгородской области"
+    },
+    "epp.genproc.gov.ru/web/proc_54": {
+        "calc_office_id": 54,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Новосибирской области"
+    },
+    "epp.genproc.gov.ru/web/proc_55": {
+        "calc_office_id": 55,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Омской области"
+    },
+    "epp.genproc.gov.ru/web/proc_56": {
+        "calc_office_id": 275,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Оренбургской области"
+    },
+    "epp.genproc.gov.ru/web/proc_57": {
+        "calc_office_id": 56,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Орловской области"
+    },
+    "epp.genproc.gov.ru/web/proc_58": {
+        "calc_office_id": 57,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Пензенской области"
+    },
+    "epp.genproc.gov.ru/web/proc_59": {
+        "calc_office_id": 60,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Пермского края"
+    },
+    "epp.genproc.gov.ru/web/proc_25": {
+        "calc_office_id": 61,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Приморского края"
+    },
+    "epp.genproc.gov.ru/web/proc_60": {
+        "calc_office_id": 62,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Псковской области"
+    },
+    "epp.genproc.gov.ru/web/proc_01": {
+        "calc_office_id": 115,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Республики Адыгея"
+    },
+    "epp.genproc.gov.ru/web/proc_04": {
+        "calc_office_id": 10,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Республики Алтай"
+    },
+    "epp.genproc.gov.ru/web/proc_02": {
+        "calc_office_id": 24,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Республики Башкортостан"
+    },
+    "epp.genproc.gov.ru/web/proc_03": {
+        "calc_office_id": 25,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Республики Бурятия"
+    },
+    "epp.genproc.gov.ru/web/proc_05": {
+        "calc_office_id": 45,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Республики Дагестан"
+    },
+    "epp.genproc.gov.ru/web/proc_06": {
+        "calc_office_id": 269,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Республики Ингушетия"
+    },
+    "epp.genproc.gov.ru/web/proc_08": {
+        "calc_office_id": 32,
+        "http_protocol": "https",
+        "title": "Прокуратура Республики Калмыкия - Прокуратура Республики Калмыкия"
+    },
+    "epp.genproc.gov.ru/web/proc_10": {
+        "calc_office_id": 271,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Республики Карелия"
+    },
+    "epp.genproc.gov.ru/web/proc_11": {
+        "calc_office_id": 38,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Республики Коми"
+    },
+    "epp.genproc.gov.ru/web/proc_91": {
+        "calc_office_id": 6359,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Республики Крым"
+    },
+    "epp.genproc.gov.ru/web/proc_12": {
+        "calc_office_id": 47,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Республики Марий Эл"
+    },
+    "epp.genproc.gov.ru/web/proc_13": {
+        "calc_office_id": 48,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Республики Мордовия"
+    },
+    "epp.genproc.gov.ru/web/proc_14": {
+        "calc_office_id": 79,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Республики Саха (Якутия)"
+    },
+    "epp.genproc.gov.ru/web/proc_15": {
+        "calc_office_id": 272,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Республики Северная Осетия - Алания"
+    },
+    "epp.genproc.gov.ru/web/proc_16": {
+        "calc_office_id": 70,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Республики Татарстан"
+    },
+    "epp.genproc.gov.ru/web/proc_17": {
+        "calc_office_id": 72,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Республики Тыва"
+    },
+    "epp.genproc.gov.ru/web/proc_19": {
+        "calc_office_id": 273,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Республики Хакасия"
+    },
+    "epp.genproc.gov.ru/web/proc_61": {
+        "calc_office_id": 63,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Ростовской области"
+    },
+    "epp.genproc.gov.ru/web/proc_62": {
+        "calc_office_id": 276,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Рязанской области"
+    },
+    "epp.genproc.gov.ru/web/proc_63": {
+        "calc_office_id": 64,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Самарской области"
+    },
+    "epp.genproc.gov.ru/web/proc_64": {
+        "calc_office_id": 66,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Саратовской области"
+    },
+    "epp.genproc.gov.ru/web/proc_65": {
+        "calc_office_id": 81,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Сахалинской области"
+    },
+    "epp.genproc.gov.ru/web/proc_66": {
+        "calc_office_id": 67,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Свердловской области"
+    },
+    "epp.genproc.gov.ru/web/proc_67": {
+        "calc_office_id": 87,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Смоленской области"
+    },
+    "epp.genproc.gov.ru/web/proc_26": {
+        "calc_office_id": 68,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Ставропольского края"
+    },
+    "epp.genproc.gov.ru/web/proc_68": {
+        "calc_office_id": 69,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Тамбовской области"
+    },
+    "epp.genproc.gov.ru/web/proc_69": {
+        "calc_office_id": 88,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Тверской области"
+    },
+    "epp.genproc.gov.ru/web/proc_70": {
+        "calc_office_id": 277,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Томской области"
+    },
+    "epp.genproc.gov.ru/web/proc_71": {
+        "calc_office_id": 71,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Тульской области"
+    },
+    "epp.genproc.gov.ru/web/proc_72": {
+        "calc_office_id": 73,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Тюменской области"
+    },
+    "epp.genproc.gov.ru/web/proc_18": {
+        "calc_office_id": 74,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Удмуртской Республики"
+    },
+    "epp.genproc.gov.ru/web/proc_73": {
+        "calc_office_id": 75,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Ульяновской области"
+    },
+    "epp.genproc.gov.ru/web/proc_27": {
+        "calc_office_id": 274,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Хабаровского края"
+    },
+    "epp.genproc.gov.ru/web/proc_86": {
+        "calc_office_id": 280,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Ханты-Мансийского автономного округа - Югры"
+    },
+    "epp.genproc.gov.ru/web/proc_74": {
+        "calc_office_id": 76,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Челябинской области"
+    },
+    "epp.genproc.gov.ru/web/proc_20": {
+        "calc_office_id": 77,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Чеченской Республики"
+    },
+    "epp.genproc.gov.ru/web/proc_21": {
+        "calc_office_id": 78,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Чувашской Республики"
+    },
+    "epp.genproc.gov.ru/web/proc_87": {
+        "calc_office_id": 82,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Чукотского автономного округа"
+    },
+    "epp.genproc.gov.ru/web/proc_89": {
+        "calc_office_id": 281,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Ямало-Ненецкого автономного округа"
+    },
+    "epp.genproc.gov.ru/web/proc_76": {
+        "calc_office_id": 278,
+        "http_protocol": "https",
+        "title": "Прокуратура субъекта Российской Федерации - Прокуратура Ярославской области"
     }
 }

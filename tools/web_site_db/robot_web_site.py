@@ -228,6 +228,12 @@ class TWebSiteCrawlSnapshot:
             'exported_files': self.export_env.to_json(),
         }
 
+    def get_regional_pages(self):
+        for url in self.regional_main_pages:
+            if not url.startswith('http'):
+                url = self.get_main_url_protocol() + "://" + url
+            yield url
+
     def get_parents(self, url):
         parents = self.url_nodes[url].parent_nodes
         if len(parents) == 0:
@@ -311,6 +317,6 @@ class TWebSiteCrawlSnapshot:
         else:
             previous_step_urls = self.robot_steps[step_index - 1].url_to_weight
 
-        self.robot_steps[step_index].make_one_step(previous_step_urls, self.regional_main_pages)
+        self.robot_steps[step_index].make_one_step(previous_step_urls)
 
 
