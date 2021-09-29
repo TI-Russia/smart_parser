@@ -8274,256 +8274,6 @@
     },
     "pfr.gov.ru": {
         "calc_office_id": 974,
-        "regional": {
-            "pfr.gov.ru/branches/moscow/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/altaikr/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/amur/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/arkhangelsk/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/astrakhan/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/belgorod/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/bryansk/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/vladimir/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/volgograd/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/vologda/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/voronezh/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/habarovsk/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/zabbal/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/ivanovo/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/irkutsk/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/kbr/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/kaliningrad/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/kaluga/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/kamchatka/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/kchr/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/kuzbass/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/kirov/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/kostroma/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/krasnodar/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/krasnoyarsk/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/kurgan/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/kursk/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/spb/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/lipeck/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/magadan/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/murmansk/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/nizhnynovgorod/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/novgorod/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/novosibirsk/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/omsk/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/orenburg/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/orel/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/penza/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/perm/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/primorye/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/pskov/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/adygea/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/altai/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/bashkortostan/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/buryatia/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/dagestan/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/ingush/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/kalmikia/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/karelia/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/komi/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/krim/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/mariel/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/mordovia/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/sakha/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/alania/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/tatarstan/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/tuva/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/khakasia/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/rostov/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/ryazan/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/samara/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/saratov/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/sakhalin/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/sverdlovsk/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/smolensk/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/stavropol/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/tambov/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/tver/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/tomsk/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/tula/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/tyumen/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/udmurtia/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/ulyanovsk/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/hmao/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/chelyabinsk/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/chechnya/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/chuvashia/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/chukotka/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/yanao/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/yaroslavl/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/baikonur/": {
-                "calc_office_id": 974
-            },
-            "pfr.gov.ru/branches/sevastopol/": {
-                "calc_office_id": 974
-            }
-        },
-        "disable_selenium": true,
-        "dlrobot_max_time_coeff": 2.0,
         "http_protocol": "https",
         "title": "Пенсионный фонд РФ"
     },
@@ -72070,5 +71820,825 @@
         "calc_office_id": 278,
         "http_protocol": "https",
         "title": "Прокуратура субъекта Российской Федерации - Прокуратура Ярославской области"
+    },
+    "pfr.gov.ru/branches/moscow/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/moscow"
+    },
+    "pfr.gov.ru/branches/altaikr/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/altaikr"
+    },
+    "pfr.gov.ru/branches/amur/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/amur"
+    },
+    "pfr.gov.ru/branches/arkhangelsk/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/arkhangelsk"
+    },
+    "pfr.gov.ru/branches/astrakhan/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/astrakhan"
+    },
+    "pfr.gov.ru/branches/belgorod/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/belgorod"
+    },
+    "pfr.gov.ru/branches/bryansk/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/bryansk"
+    },
+    "pfr.gov.ru/branches/vladimir/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/vladimir"
+    },
+    "pfr.gov.ru/branches/volgograd/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/volgograd"
+    },
+    "pfr.gov.ru/branches/vologda/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/vologda"
+    },
+    "pfr.gov.ru/branches/voronezh/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/voronezh"
+    },
+    "pfr.gov.ru/branches/habarovsk/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/habarovsk"
+    },
+    "pfr.gov.ru/branches/zabbal/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/zabbal"
+    },
+    "pfr.gov.ru/branches/ivanovo/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/ivanovo"
+    },
+    "pfr.gov.ru/branches/irkutsk/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/irkutsk"
+    },
+    "pfr.gov.ru/branches/kbr/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/kbr"
+    },
+    "pfr.gov.ru/branches/kaliningrad/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/kaliningrad"
+    },
+    "pfr.gov.ru/branches/kaluga/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/kaluga"
+    },
+    "pfr.gov.ru/branches/kamchatka/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/kamchatka"
+    },
+    "pfr.gov.ru/branches/kchr/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/kchr"
+    },
+    "pfr.gov.ru/branches/kuzbass/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/kuzbass"
+    },
+    "pfr.gov.ru/branches/kirov/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/kirov"
+    },
+    "pfr.gov.ru/branches/kostroma/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/kostroma"
+    },
+    "pfr.gov.ru/branches/krasnodar/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/krasnodar"
+    },
+    "pfr.gov.ru/branches/krasnoyarsk/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/krasnoyarsk"
+    },
+    "pfr.gov.ru/branches/kurgan/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/kurgan"
+    },
+    "pfr.gov.ru/branches/kursk/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/kursk"
+    },
+    "pfr.gov.ru/branches/spb/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/spb"
+    },
+    "pfr.gov.ru/branches/lipeck/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/lipeck"
+    },
+    "pfr.gov.ru/branches/magadan/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/magadan"
+    },
+    "pfr.gov.ru/branches/murmansk/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/murmansk"
+    },
+    "pfr.gov.ru/branches/nizhnynovgorod/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/nizhnynovgorod"
+    },
+    "pfr.gov.ru/branches/novgorod/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/novgorod"
+    },
+    "pfr.gov.ru/branches/novosibirsk/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/novosibirsk"
+    },
+    "pfr.gov.ru/branches/omsk/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/omsk"
+    },
+    "pfr.gov.ru/branches/orenburg/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/orenburg"
+    },
+    "pfr.gov.ru/branches/orel/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/orel"
+    },
+    "pfr.gov.ru/branches/penza/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/penza"
+    },
+    "pfr.gov.ru/branches/perm/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/perm"
+    },
+    "pfr.gov.ru/branches/primorye/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/primorye"
+    },
+    "pfr.gov.ru/branches/pskov/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/pskov"
+    },
+    "pfr.gov.ru/branches/adygea/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/adygea"
+    },
+    "pfr.gov.ru/branches/altai/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/altai"
+    },
+    "pfr.gov.ru/branches/bashkortostan/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/bashkortostan"
+    },
+    "pfr.gov.ru/branches/buryatia/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/buryatia"
+    },
+    "pfr.gov.ru/branches/dagestan/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/dagestan"
+    },
+    "pfr.gov.ru/branches/ingush/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/ingush"
+    },
+    "pfr.gov.ru/branches/kalmikia/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/kalmikia"
+    },
+    "pfr.gov.ru/branches/karelia/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/karelia"
+    },
+    "pfr.gov.ru/branches/komi/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/komi"
+    },
+    "pfr.gov.ru/branches/krim/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/krim"
+    },
+    "pfr.gov.ru/branches/mariel/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/mariel"
+    },
+    "pfr.gov.ru/branches/mordovia/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/mordovia"
+    },
+    "pfr.gov.ru/branches/sakha/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/sakha"
+    },
+    "pfr.gov.ru/branches/alania/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/alania"
+    },
+    "pfr.gov.ru/branches/tatarstan/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/tatarstan"
+    },
+    "pfr.gov.ru/branches/tuva/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/tuva"
+    },
+    "pfr.gov.ru/branches/khakasia/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/khakasia"
+    },
+    "pfr.gov.ru/branches/rostov/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/rostov"
+    },
+    "pfr.gov.ru/branches/ryazan/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/ryazan"
+    },
+    "pfr.gov.ru/branches/samara/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/samara"
+    },
+    "pfr.gov.ru/branches/saratov/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/saratov"
+    },
+    "pfr.gov.ru/branches/sakhalin/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/sakhalin"
+    },
+    "pfr.gov.ru/branches/sverdlovsk/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/sverdlovsk"
+    },
+    "pfr.gov.ru/branches/smolensk/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/smolensk"
+    },
+    "pfr.gov.ru/branches/stavropol/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/stavropol"
+    },
+    "pfr.gov.ru/branches/tambov/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/tambov"
+    },
+    "pfr.gov.ru/branches/tver/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/tver"
+    },
+    "pfr.gov.ru/branches/tomsk/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/tomsk"
+    },
+    "pfr.gov.ru/branches/tula/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/tula"
+    },
+    "pfr.gov.ru/branches/tyumen/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/tyumen"
+    },
+    "pfr.gov.ru/branches/udmurtia/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/udmurtia"
+    },
+    "pfr.gov.ru/branches/ulyanovsk/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/ulyanovsk"
+    },
+    "pfr.gov.ru/branches/hmao/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/hmao"
+    },
+    "pfr.gov.ru/branches/chelyabinsk/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/chelyabinsk"
+    },
+    "pfr.gov.ru/branches/chechnya/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/chechnya"
+    },
+    "pfr.gov.ru/branches/chuvashia/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/chuvashia"
+    },
+    "pfr.gov.ru/branches/chukotka/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/chukotka"
+    },
+    "pfr.gov.ru/branches/yanao/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/yanao"
+    },
+    "pfr.gov.ru/branches/yaroslavl/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/yaroslavl"
+    },
+    "pfr.gov.ru/branches/baikonur/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/baikonur"
+    },
+    "pfr.gov.ru/branches/sevastopol/": {
+        "calc_office_id": 974,
+        "status": "abandoned",
+        "redirect_to": "pfr.gov.ru/branches/sevastopol"
+    },
+    "pfr.gov.ru/branches/moscow": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по г. Москве и Московской области"
+    },
+    "pfr.gov.ru/branches/altaikr": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Алтайскому краю"
+    },
+    "pfr.gov.ru/branches/amur": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Амурской области"
+    },
+    "pfr.gov.ru/branches/arkhangelsk": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Архангельской области и НАО"
+    },
+    "pfr.gov.ru/branches/astrakhan": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Астраханской области"
+    },
+    "pfr.gov.ru/branches/belgorod": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Белгородской области"
+    },
+    "pfr.gov.ru/branches/bryansk": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Брянской области"
+    },
+    "pfr.gov.ru/branches/vladimir": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Владимирской области"
+    },
+    "pfr.gov.ru/branches/volgograd": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Волгоградской области"
+    },
+    "pfr.gov.ru/branches/vologda": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Вологодской области"
+    },
+    "pfr.gov.ru/branches/voronezh": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Воронежской области"
+    },
+    "pfr.gov.ru/branches/habarovsk": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Хабаровскому краю и ЕАО"
+    },
+    "pfr.gov.ru/branches/zabbal": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Забайкальскому краю"
+    },
+    "pfr.gov.ru/branches/ivanovo": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Ивановской области"
+    },
+    "pfr.gov.ru/branches/irkutsk": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Иркутской области"
+    },
+    "pfr.gov.ru/branches/kbr": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Кабардино-Балкарской Республике"
+    },
+    "pfr.gov.ru/branches/kaliningrad": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Калининградской области"
+    },
+    "pfr.gov.ru/branches/kaluga": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Калужской области"
+    },
+    "pfr.gov.ru/branches/kamchatka": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Камчатскому краю"
+    },
+    "pfr.gov.ru/branches/kchr": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Карачаево-Черкесской Республике"
+    },
+    "pfr.gov.ru/branches/kuzbass": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Кемеровской области – Кузбассу"
+    },
+    "pfr.gov.ru/branches/kirov": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Кировской области"
+    },
+    "pfr.gov.ru/branches/kostroma": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Костромской области"
+    },
+    "pfr.gov.ru/branches/krasnodar": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Краснодарскому краю"
+    },
+    "pfr.gov.ru/branches/krasnoyarsk": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Красноярскому краю"
+    },
+    "pfr.gov.ru/branches/kurgan": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Курганской области"
+    },
+    "pfr.gov.ru/branches/kursk": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Курской области"
+    },
+    "pfr.gov.ru/branches/spb": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Санкт-Петербургу и Ленинградской области"
+    },
+    "pfr.gov.ru/branches/lipeck": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Липецкой области"
+    },
+    "pfr.gov.ru/branches/magadan": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Магаданской области"
+    },
+    "pfr.gov.ru/branches/murmansk": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Мурманской области"
+    },
+    "pfr.gov.ru/branches/nizhnynovgorod": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Нижегородской области"
+    },
+    "pfr.gov.ru/branches/novgorod": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Новгородской области"
+    },
+    "pfr.gov.ru/branches/novosibirsk": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Новосибирской области"
+    },
+    "pfr.gov.ru/branches/omsk": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Омской области"
+    },
+    "pfr.gov.ru/branches/orenburg": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Оренбургской области"
+    },
+    "pfr.gov.ru/branches/orel": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Орловской области"
+    },
+    "pfr.gov.ru/branches/penza": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Пензенской области"
+    },
+    "pfr.gov.ru/branches/perm": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Пермскому краю"
+    },
+    "pfr.gov.ru/branches/primorye": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Приморскому краю"
+    },
+    "pfr.gov.ru/branches/pskov": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Псковской области"
+    },
+    "pfr.gov.ru/branches/adygea": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Республике Адыгея"
+    },
+    "pfr.gov.ru/branches/altai": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Республике Алтай"
+    },
+    "pfr.gov.ru/branches/bashkortostan": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Республике Башкортостан"
+    },
+    "pfr.gov.ru/branches/buryatia": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Республике Бурятия"
+    },
+    "pfr.gov.ru/branches/dagestan": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Республике Дагестан"
+    },
+    "pfr.gov.ru/branches/ingush": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Республике Ингушетия"
+    },
+    "pfr.gov.ru/branches/kalmikia": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Республике Калмыкия"
+    },
+    "pfr.gov.ru/branches/karelia": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Республике Карелия"
+    },
+    "pfr.gov.ru/branches/komi": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Республике Коми"
+    },
+    "pfr.gov.ru/branches/krim": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Республике Крым"
+    },
+    "pfr.gov.ru/branches/mariel": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Республике Марий Эл"
+    },
+    "pfr.gov.ru/branches/mordovia": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Республике Мордовия"
+    },
+    "pfr.gov.ru/branches/sakha": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Республике Саха (Якутия)"
+    },
+    "pfr.gov.ru/branches/alania": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Республике Северная Осетия - Алания"
+    },
+    "pfr.gov.ru/branches/tatarstan": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Республике Татарстан"
+    },
+    "pfr.gov.ru/branches/tuva": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Республике Тыва"
+    },
+    "pfr.gov.ru/branches/khakasia": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Республике Хакасия"
+    },
+    "pfr.gov.ru/branches/rostov": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Ростовской области"
+    },
+    "pfr.gov.ru/branches/ryazan": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Рязанской области"
+    },
+    "pfr.gov.ru/branches/samara": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Самарской области"
+    },
+    "pfr.gov.ru/branches/saratov": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Саратовской области"
+    },
+    "pfr.gov.ru/branches/sakhalin": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Сахалинской области"
+    },
+    "pfr.gov.ru/branches/sverdlovsk": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Свердловской области"
+    },
+    "pfr.gov.ru/branches/smolensk": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Смоленской области"
+    },
+    "pfr.gov.ru/branches/stavropol": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Ставропольскому краю"
+    },
+    "pfr.gov.ru/branches/tambov": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Тамбовской области"
+    },
+    "pfr.gov.ru/branches/tver": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Тверской области"
+    },
+    "pfr.gov.ru/branches/tomsk": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Томской области"
+    },
+    "pfr.gov.ru/branches/tula": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Тульской области"
+    },
+    "pfr.gov.ru/branches/tyumen": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Тюменской области"
+    },
+    "pfr.gov.ru/branches/udmurtia": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Удмуртской Республике"
+    },
+    "pfr.gov.ru/branches/ulyanovsk": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Ульяновской области"
+    },
+    "pfr.gov.ru/branches/hmao": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Ханты-Мансийскому автономному округу – Югре"
+    },
+    "pfr.gov.ru/branches/chelyabinsk": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Челябинской области"
+    },
+    "pfr.gov.ru/branches/chechnya": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Чеченской Республике"
+    },
+    "pfr.gov.ru/branches/chuvashia": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Чувашской Республике – Чувашии"
+    },
+    "pfr.gov.ru/branches/chukotka": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Чукотскому автономному округу"
+    },
+    "pfr.gov.ru/branches/yanao": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Ямало-Ненецкому автономному округу"
+    },
+    "pfr.gov.ru/branches/yaroslavl": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по Ярославской области"
+    },
+    "pfr.gov.ru/branches/baikonur": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по г. Байконур"
+    },
+    "pfr.gov.ru/branches/sevastopol": {
+        "calc_office_id": 974,
+        "http_protocol": "https",
+        "title": "Отделение по г. Севастополю"
     }
 }
