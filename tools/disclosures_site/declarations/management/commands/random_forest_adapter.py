@@ -110,13 +110,13 @@ class TDeduplicationObject:
             section.get_surname_rank(),
             section.get_name_rank(),
             set(list([section.rubric_id])),
-            set(list([section.source_document.office.id])),
+            set(list([section.office.id])),
             children_real_estate_squares(section),
             section.get_declarant_income_size(),
             set([section.income_year]),
             all_vehicles(section),
             all_positions_words(section),
-            set([section.source_document.office.region_id]),
+            set([section.office.region_id]),
             db_section_person_id=section.person_id
         )
 
@@ -139,12 +139,12 @@ class TDeduplicationObject:
             max_surname_rank = max (s.get_surname_rank(), max_surname_rank)
             max_name_rank = max(s.get_name_rank(), max_name_rank)
             rubrics.add(s.rubric_id)
-            offices.add(s.source_document.office.id)
+            offices.add(s.office.id)
             main_incomes.append(s.get_declarant_income_size())
             years.add(s.income_year)
             vehicles |= all_vehicles(s)
             position_words |= all_positions_words(s)
-            regions.add(s.source_document.office.region_id)
+            regions.add(s.office.region_id)
 
         return self.initialize(
                 TDeduplicationRecordId(person.id, self.PERSON),

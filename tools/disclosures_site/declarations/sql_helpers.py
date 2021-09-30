@@ -28,7 +28,7 @@ def queryset_iterator(queryset, chunksize=1000):
 
 
 def run_sql_script(logger, sql_script_path):
-    cmd = "mysql -u {} -p{} -D {} <  {}".format(
+    cmd = "mysql -u {} -p{} -D {} <  {} 2>err.log".format(
         settings.DATABASES['default']['USER'],
         settings.DATABASES['default']['PASSWORD'],
         settings.DATABASES['default']['NAME'],
@@ -39,4 +39,7 @@ def run_sql_script(logger, sql_script_path):
     if os.system(cmd) != 0:
         msg = "running mysql script {} failed!".format(sql_script_path)
         logger.error(msg)
+        with open("err.log") as inp:
+            for l in inp:
+                logger.error(l)
         raise Exception(msg)

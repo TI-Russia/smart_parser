@@ -65,8 +65,7 @@ class Command(BaseCommand):
         query = """
             select o.id, s.income_year, i.size 
             from declarations_section s 
-            join declarations_source_document d on d.id=s.source_document_id 
-            join declarations_office o on d.office_id=o.id  
+            join declarations_office o on s.office_id=o.id  
             join declarations_income i on i.section_id=s.id  
             where s.income_year >= {} and
                  s.income_year <= {} and  
@@ -95,8 +94,7 @@ class Command(BaseCommand):
         query = """
             select o.id, s.person_id, s.income_year, i.size 
             from declarations_section s 
-            join declarations_source_document d on d.id=s.source_document_id 
-            join declarations_office o on d.office_id=o.id  
+            join declarations_office o on s.office_id=o.id  
             join declarations_income i on i.section_id=s.id  
             where   
                  i.size < {} and 

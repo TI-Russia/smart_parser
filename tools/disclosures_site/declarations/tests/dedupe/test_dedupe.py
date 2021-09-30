@@ -3,29 +3,18 @@ import declarations.models as models
 from declarations.permalinks import TPermaLinksPerson
 from declarations.management.commands.create_permalink_storage import CreatePermalinksStorageCommand
 from common.logging_wrapper import setup_logging
+from declarations.tests.dedupe_base_for_tests import TestDedupeBase
 
 import os
-from django.test import TestCase
 
 
-def create_default_source_document():
-    models.Section.objects.all().delete()
-    models.Source_Document.objects.all().delete()
-    models.Person.objects.all().delete()
-    src_doc = models.Source_Document(id=1)
-    src_doc.office_id = 1
-    src_doc.save()
-    return src_doc
-
-
-class CreateNewPersonId(TestCase):
+class CreateNewPersonId(TestDedupeBase):
 
     def test(self):
-        src_doc = create_default_source_document()
-        models.Person.objects.all().delete()
+        self.initialize()
+        self.create_section(1, "Иванов Иван Иванович")
+        self.create_section(2, "Иванов И. И.")
 
-        models.Section(id=1, source_document=src_doc, person_name="Иванов Иван Иванович").save()
-        models.Section(id=2, source_document=src_doc, person_name="Иванов И. И.").save()
         permalinks_folder = os.path.dirname(__file__)
         TPermaLinksPerson(permalinks_folder).create_and_save_empty_db()
         run_dedupe = RunDedupe(None, None)
@@ -48,11 +37,10 @@ class CreateNewPersonId(TestCase):
         self.assertEqual(sec2.person_id, 1)
 
 
-class UseOldPersonId(TestCase):
+class UseOldPersonId(TestDedupeBase):
 
     def test(self):
-        src_doc = create_default_source_document()
-        models.Person.objects.all().delete()
+        self.initialize()
 
         person_id = 2
         declarator_person_id = 1111
@@ -62,8 +50,8 @@ class UseOldPersonId(TestCase):
             person_name="Иванов Иван Иванович")
         person.save()
 
-        models.Section(id=1, source_document=src_doc, person_name="Иванов Иван Иванович", person=person).save()
-        models.Section(id=2, source_document=src_doc, person_name="Иванов И. И.").save()
+        self.create_section(1, "Иванов Иван Иванович", person)
+        self.create_section(2, "Иванов И. И.")
 
         permalinks_folder = os.path.dirname(__file__)
         db = TPermaLinksPerson(permalinks_folder)
@@ -94,33 +82,17 @@ class UseOldPersonId(TestCase):
         self.assertEqual(sec2.person_id, person.id)
 
 
-class RememberOldPersonId(TestCase):
+class RememberOldPersonId(TestDedupeBase):
 
     def test(self):
-        src_doc = create_default_source_document()
-        models.Section.objects.all().delete()
-        models.Person.objects.all().delete()
+        self.initialize()
 
         person_id = 99
         person = models.Person(id=person_id)
         person.save()
-        section1 = models.Section(id=1,
-                       source_document=src_doc,
-                       person_name="Иванов Иван Иванович",
-                       person=person)
-        section1.save()
-
-        section2 = models.Section(id=2,
-                       source_document=src_doc,
-                       person_name="Иванов И. И.",
-                       person=person)
-        section2.save()
-
-        section3 = models.Section(id=3,
-                                  source_document=src_doc,
-                                  person_name="Петров И. И.",
-                                  person=None)
-        section3.save()
+        section1 = self.create_section(1, "Иванов Иван Иванович", person=person)
+        section2 = self.create_section(2, "Иванов И. И.", person=person)
+        section3 = self.create_section(3, "Петров И. И.")
 
         permalinks_folder = os.path.dirname(__file__)
         db = TPermaLinksPerson(permalinks_folder)
@@ -156,22 +128,16 @@ class RememberOldPersonId(TestCase):
         self.assertEqual(sec3.person_id, person_id)
 
 
-class AddNewSectionsToOldPersonId(TestCase):
+class AddNewSectionsToOldPersonId(TestDedupeBase):
 
     def test(self):
+        self.initialize()
         permalinks_folder = os.path.dirname(__file__)
-        src_doc = create_default_source_document()
-        models.Section.objects.all().delete()
-        models.Person.objects.all().delete()
 
         person_id = 99
         person = models.Person(id=person_id)
         person.save()
-        section1 = models.Section(id=1,
-                       source_document=src_doc,
-                       person_name="Иванов Иван Иванович",
-                       person=person)
-        section1.save()
+        section1 = self.create_section(1, "Иванов Иван Иванович", person=person)
         CreatePermalinksStorageCommand(None, None).handle(None, directory=permalinks_folder)
         TPermaLinksPerson(permalinks_folder).open_db_read_only().recreate_auto_increment_table()
 
@@ -180,16 +146,8 @@ class AddNewSectionsToOldPersonId(TestCase):
 
         person.delete()
 
-        section2 = models.Section(id=2,
-                       source_document=src_doc,
-                       person_name="Иванов И. И.",
-                       )
-        section2.save()
-        section3 = models.Section(id=3,
-                       source_document=src_doc,
-                       person_name="Иванов И. И.",
-                       )
-        section3.save()
+        self.create_section(2, "Иванов И. И.")
+        self.create_section(3, "Иванов И. И.")
 
         run_dedupe = RunDedupe(None, None)
         run_dedupe.handle(None,

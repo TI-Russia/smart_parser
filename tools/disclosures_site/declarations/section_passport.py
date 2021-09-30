@@ -45,14 +45,13 @@ class TSectionPassportItems1:
         # section_id  and all 6 passport components
         # see https://stackoverflow.com/questions/2436284/mysql-sum-for-distinct-rows for arithmetics explanation
         query = """select  s.id, 
-                         d.office_id, 
+                         s.office_id, 
                          sum(i.size) * count(distinct i.id) / count(*),
                          s.person_name, 
                          s.income_year,
                          sum(r.square) * count(distinct r.id) / count(*),
                          count(distinct v.id)
                 from declarations_section s
-                inner join declarations_source_document d on s.source_document_id = d.id
                 left  join declarations_income i on i.section_id = s.id
                 left  join declarations_realestate r on r.section_id = s.id
                 left  join declarations_vehicle v on v.section_id = s.id

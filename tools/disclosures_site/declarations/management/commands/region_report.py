@@ -49,8 +49,7 @@ class Command(BaseCommand):
         query = """
             select o.region_id, i.size 
             from declarations_section s 
-            join declarations_source_document d on d.id=s.source_document_id 
-            join declarations_office o on d.office_id=o.id  
+            join declarations_office o on s.office_id=o.id  
             join declarations_income i on i.section_id=s.id  
             where s.income_year = {} and  
                  i.size < {} and 

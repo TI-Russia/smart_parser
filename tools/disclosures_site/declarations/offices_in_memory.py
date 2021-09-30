@@ -1,6 +1,7 @@
 import json
 import os
 
+
 class TOfficeInMemory:
 
     def __init__(self, office_id=None, name=None, parent_id=None, type_id=None, rubric_id=None, region_id=None):

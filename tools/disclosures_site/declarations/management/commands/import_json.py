@@ -80,10 +80,8 @@ class TImporter:
                     return json.load(inp)
         return None
 
-    def register_document_in_database(self, sha256, src_doc):
-        office = models.Office(id=src_doc.calculated_office_id)
-        source_document_in_db = models.Source_Document(office=office,
-                                                       sha256=sha256,
+    def register_document_in_database(self, sha256, src_doc: TSourceDocument):
+        source_document_in_db = models.Source_Document(sha256=sha256,
                                                        intersection_status=src_doc.build_intersection_status(),
                                                        )
         source_document_in_db.id, new_file = self.permalinks_db_source_document.get_source_doc_id_by_sha256(sha256)
@@ -150,7 +148,10 @@ class TImporter:
             section_income_year = self.calc_income_year(input_json, src_doc,  raw_section, section_index)
             with transaction.atomic():
                 try:
-                    prepared_section = TSmartParserSectionJson(section_income_year, source_document_in_db)
+                    prepared_section = TSmartParserSectionJson(
+                        section_income_year,
+                        src_doc.calculated_office_id,
+                        source_document_in_db)
                     prepared_section.read_raw_json(raw_section)
 
                     if len(prepared_section.vehicles) > TImporter.max_vehicle_count:

@@ -4,6 +4,7 @@ from declarations.car_brands import CAR_BRANDS
 from common.russian_fio import TRussianFioRecognizer
 from common.logging_wrapper import setup_logging
 from declarations.documents import ElasticSectionDocument, ElasticPersonDocument, ElasticOfficeDocument, ElasticFileDocument
+from declarations.sql_helpers import fetch_cursor_by_chunks
 
 from itertools import groupby
 from operator import itemgetter
@@ -12,17 +13,6 @@ from django.conf import settings
 from elasticsearch import Elasticsearch
 from django.db import connection
 from elasticsearch_dsl import Index
-
-
-def fetch_cursor(sql_query):
-    with connection.cursor() as cursor:
-        cursor.execute(sql_query)
-        while True:
-            results = cursor.fetchmany(10000)
-            if not results:
-                break
-            for x in results:
-                yield x
 
 
 class TOfficeElasticIndexator:
@@ -143,19 +133,19 @@ class TSectionElasticIndexator:
 
     def gen_document_portion(self, begin, end):
         query = """
-            select s.id, d.id, d.office_id, s.position, s.department, s.person_id, o.region_id, 
-                  s.income_year, d.office_id, s.person_name, s.rubric_id, s.income_year, s.gender
+            select s.id, d.id, s.office_id, s.position, s.department, s.person_id, o.region_id, 
+                  s.income_year, s.person_name, s.rubric_id, s.income_year, s.gender
             from declarations_section s 
             join declarations_source_document d on d.id=s.source_document_id 
-            join declarations_office o on d.office_id=o.id
+            join declarations_office o on s.office_id=o.id
             where s.id >= {} and s.id < {}
             order by s.id
         """.format(begin, end)
         income_iterator = TIncomeIterator(begin, end)
         vehicle_iterator = TVehicleIterator(begin, end)
-        sections_iterator = fetch_cursor(query)
+        sections_iterator = fetch_cursor_by_chunks(query)
         for section_id, source_document_id, office_id, position, department, \
-            person_id, region_id, income_year, office_id, person_name, rubric_id, income_year,\
+            person_id, region_id, income_year, person_name, rubric_id, income_year,\
             gender_code in sections_iterator:
 
             declarant_income, spouse_income = income_iterator.get_incomes_by_section_id(section_id)
@@ -213,7 +203,7 @@ class TPersonElasticIndexator:
             where p.id >= {} and p.id < {}
             group by(p.id) 
         """.format(begin, end)
-        for person_id, person_name, section_count in fetch_cursor(query):
+        for person_id, person_name, section_count in fetch_cursor_by_chunks(query):
             yield {
                 "_id": person_id,
                 "_index": self.index_name,
@@ -315,26 +305,19 @@ class TSourceDocumentElasticIndexator:
         self.index.document(ElasticFileDocument)
         self.logger.debug("index source documents")
 
-    def gen_documents(self):
-        query = """
-            select id, office_id, intersection_status, min_income_year, max_income_year, section_count, sha256 
-            from declarations_source_document
-            order by id 
-        """
+    def gen_a_document(self):
         web_ref_iter = TWebReferenceIterator()
         declarator_file_ref_iter = TDeclaratorFileReferenceIterator()
-        doc_iterator = fetch_cursor(query)
-        cnt = 0
-        for id, office_id, intersection_status, min_income_year, max_income_year, section_count, sha256 in doc_iterator:
+        doc_iterator = fetch_cursor_by_chunks(query)
+        for id, recs in groupby(doc_iterator, itemgetter(0)):
             first_crawl_epoch, web_domains = web_ref_iter.get_squeeze_by_source_document_id(id)
             web_domains.update(declarator_file_ref_iter.get_squeeze_by_source_document_id(id))
-            cnt += 1
+            _, intersection_status, min_income_year, max_income_year, section_count, sha256, _ = recs[0]
+            offices = set(r[-1] for r in recs)
+            assert len(offices) > 0
             yield {
-                "_id": id,
-                "_index": self.index_name,
-                "_source": {
                         'id': id,
-                        'office_id': office_id,
+                        'office_id': list(offices),
                         'intersection_status': intersection_status,
                         'min_income_year': min_income_year,
                         'max_income_year': max_income_year,
@@ -343,7 +326,23 @@ class TSourceDocumentElasticIndexator:
                         'first_crawl_epoch': first_crawl_epoch,
                         'web_domains': list(web_domains),
                     }
-                }
+
+    def gen_documents(self):
+        query = """
+            select d.id, d.intersection_status, d.min_income_year, d.max_income_year, 
+                  d.section_count, d.sha256, s.office_id 
+            from declarations_source_document d
+            join declarations_section s on d.id=s.source_document_id
+            order by d.id 
+        """
+        cnt = 0
+        for d  in self.gen_a_document():
+            cnt += 1
+            yield {
+                "_id": d['id'],
+                "_index": self.index_name,
+                "_source": d
+            }
         self.logger.debug("number of sent documents: {}".format(cnt))
 
 

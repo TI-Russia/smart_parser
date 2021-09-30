@@ -48,13 +48,15 @@ class PersonRedirectTestCase(TestCase):
         assert models.Office.objects.all().count() > 0
         for d in records.get('source_documents', []):
             d = models.Source_Document(**d)
-            d.office_id = TEST_OFFICE_ID
             d.save()
 
         for d in records.get('persons', []):
             models.Person(**d).save()
 
         for d in records.get('sections', []):
+            if len(models.Office.objects.filter(id=d['office_id'])) == 0:
+                o = models.Office(id=d['office_id'], name="aaa")
+                o.save()
             models.Section(**d).save()
 
         for d in records.get('redirects', []):
@@ -94,7 +96,7 @@ class PersonRedirectTestCase(TestCase):
         old_data = {
             'persons': [{'id': 1}],
             'source_documents': [{'id': 1}],
-            'sections': [{'id': 1, 'person_id': 1, 'source_document_id': 1}]
+            'sections': [{'id': 1, 'person_id': 1, 'source_document_id': 1, 'office_id': 1}]
         }
         self.fill_old_data(old_data)
         self.create_records({})
@@ -106,7 +108,7 @@ class PersonRedirectTestCase(TestCase):
         data = {
             'persons': [{'id': 1}],
             'source_documents': [{'id': 1}],
-            'sections': [{'id': 1, 'person_id': 1, 'source_document_id': 1}],
+            'sections': [{'id': 1, 'person_id': 1, 'source_document_id': 1, 'office_id': 1}],
             'redirects': [{'id': 2, 'new_person_id': 1}]
         }
         self.fill_old_data(data)
@@ -124,14 +126,14 @@ class PersonRedirectTestCase(TestCase):
         data = {
             'persons': [{'id': 1}],
             'source_documents': [{'id': 1}],
-            'sections': [{'id': 1, 'person_id': 1, 'source_document_id': 1}],
+            'sections': [{'id': 1, 'person_id': 1, 'source_document_id': 1, 'office_id': 1}],
         }
         self.fill_old_data(data)
 
         data = {
             'persons': [{'id': 2}],
             'source_documents': [{'id': 1}],
-            'sections': [{'id': 1, 'person_id': 2, 'source_document_id': 1}],
+            'sections': [{'id': 1, 'person_id': 2, 'source_document_id': 1, 'office_id': 1}],
         }
         self.create_records(data)
 
@@ -149,7 +151,7 @@ class PersonRedirectTestCase(TestCase):
         data = {
             'persons': [{'id': 2}],
             'source_documents': [{'id': 1}],
-            'sections': [{'id': 1, 'person_id': 2, 'source_document_id': 1}],
+            'sections': [{'id': 1, 'person_id': 2, 'source_document_id': 1, 'office_id': 1}],
             'redirects': [{'id': 1, 'new_person_id': 2}]
         }
         self.fill_old_data(data)
@@ -157,7 +159,7 @@ class PersonRedirectTestCase(TestCase):
         data = {
             'persons': [{'id': 3}],
             'source_documents': [{'id': 1}],
-            'sections': [{'id': 1, 'person_id': 3, 'source_document_id': 1}],
+            'sections': [{'id': 1, 'person_id': 3, 'source_document_id': 1, 'office_id': 1}],
         }
         self.create_records(data)
 
@@ -178,14 +180,14 @@ class PersonRedirectTestCase(TestCase):
     def test_forget_section(self):
         data = {
             'source_documents': [{'id': 1}],
-            'sections': [{'id': 1, 'source_document_id': 1}],
+            'sections': [{'id': 1, 'source_document_id': 1, 'office_id': 1}],
         }
         self.fill_old_data(data)
 
         data = {
             'persons': [{'id': 3}],
             'source_documents': [{'id': 1}],
-            'sections': [{'id': 2, 'source_document_id': 1}],
+            'sections': [{'id': 2, 'source_document_id': 1, 'office_id': 1}],
         }
         self.create_records(data)
 
@@ -194,12 +196,13 @@ class PersonRedirectTestCase(TestCase):
         self.assertEqual(0, len(output_squeeze))
 
     def test_redirect_to_best_person(self):
+        assert models.Office.objects.get(id=1) is not None
         data = {
             'persons': [{'id': 1}],
             'source_documents': [{'id': 1}],
-            'sections': [{'id': 1, 'person_id': 1, 'source_document_id': 1}],
-            'sections': [{'id': 2, 'person_id': 1, 'source_document_id': 1}],
-            'sections': [{'id': 3, 'person_id': 1, 'source_document_id': 1}],
+            'sections': [{'id': 1, 'person_id': 1, 'source_document_id': 1, 'office_id': 1}],
+            'sections': [{'id': 2, 'person_id': 1, 'source_document_id': 1, 'office_id': 1}],
+            'sections': [{'id': 3, 'person_id': 1, 'source_document_id': 1, 'office_id': 1}],
         }
         self.fill_old_data(data)
 
@@ -207,9 +210,9 @@ class PersonRedirectTestCase(TestCase):
             'persons': [{'id': 2}],
             'persons': [{'id': 3}],
             'source_documents': [{'id': 1}],
-            'sections': [{'id': 1, 'person_id': 2, 'source_document_id': 1}],
-            'sections': [{'id': 2, 'person_id': 3, 'source_document_id': 1}],
-            'sections': [{'id': 3, 'person_id': 3, 'source_document_id': 1}],
+            'sections': [{'id': 1, 'person_id': 2, 'source_document_id': 1, 'office_id': 1}],
+            'sections': [{'id': 2, 'person_id': 3, 'source_document_id': 1, 'office_id': 1}],
+            'sections': [{'id': 3, 'person_id': 3, 'source_document_id': 1, 'office_id': 1}],
         }
         self.create_records(data)
 

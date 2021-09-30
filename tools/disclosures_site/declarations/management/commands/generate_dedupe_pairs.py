@@ -215,7 +215,8 @@ class Command(BaseCommand):
                 o = TDeduplicationObject().from_json(js)
                 if self.options.get('recreate_db'):
                     if o.record_id.source_table == TDeduplicationObject.SECTION:
-                        s = models.Section(id=o.record_id.id)
+                        assert len(o.offices) == 1
+                        s = models.Section(id=o.record_id.id, office_id=list(o.offices)[0])
                         self.section_cache[o.record_id.id] = s
                         s.save()
                     else:

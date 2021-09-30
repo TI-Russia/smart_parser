@@ -32,8 +32,7 @@ class Command(BaseCommand):
         query = """
             select o.id, min(s.income_year), count(s.id) 
             from declarations_office o
-            join declarations_source_document d on d.office_id = o.id
-            join declarations_section s on s.source_document_id = d.id
+            join declarations_section s on s.office_id = o.id
             where s.income_year >= 2009 and s.income_year < {}
             group by o.id, s.income_year
         """.format(datetime.datetime.now().year)

@@ -29,9 +29,8 @@ class Command(BaseCommand):
 
     def build_car_brand_ratings(self):
         query = """
-            select p.id, s.income_year, d.office_id,  v.name 
+            select p.id, s.income_year, s.office_id,  v.name 
             from declarations_section s 
-            join declarations_source_document d on d.id=s.source_document_id 
             join declarations_vehicle v on v.section_id=s.id
             join declarations_person p on p.id=s.person_id  
         """
@@ -68,9 +67,8 @@ class Command(BaseCommand):
 
     def prepare_income_ratings(self):
         query = """
-            select p.id, s.income_year, d.office_id,  i.size, i.relative 
+            select p.id, s.income_year, s.office_id,  i.size, i.relative 
             from declarations_section s 
-            join declarations_source_document d on d.id=s.source_document_id 
             join declarations_income i on i.section_id=s.id
             join declarations_person p on p.id=s.person_id  
         """

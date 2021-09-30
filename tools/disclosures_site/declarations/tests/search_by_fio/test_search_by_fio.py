@@ -19,9 +19,9 @@ class FioSearchTestCase(TestCase):
         self.assertGreater(models.Office.objects.count(), 0)
         models.Section.objects.all().delete()
         models.Source_Document.objects.all().delete()
-        src_doc = models.Source_Document(id=1, office_id=1)
+        src_doc = models.Source_Document(id=1)
         src_doc.save()
-        models.Section(id=1, person_name="Иванов Иван Иванович", source_document=src_doc).save()
+        models.Section(id=1, person_name="Иванов Иван Иванович", source_document=src_doc, office_id=1).save()
         BuildElasticIndex(None, None).handle(None, model="section")
 
         self.assertEqual(self.search_sections_by_fio("Иванов И.И.")[0].id, 1)
@@ -31,11 +31,11 @@ class FioSearchTestCase(TestCase):
     def test_search_section_by_partial_person_name(self):
         models.Section.objects.all().delete()
         models.Source_Document.objects.all().delete()
-        src_doc = models.Source_Document(id=1, office_id=1)
+        src_doc = models.Source_Document(id=1)
         src_doc.save()
-        models.Section(id=1, person_name="Один Иван Ильич", source_document=src_doc).save()
-        models.Section(id=2, person_name="Два Иван Ильич", source_document=src_doc).save()
-        models.Section(id=3, person_name="Иван Ильич", source_document=src_doc).save()
+        models.Section(id=1, person_name="Один Иван Ильич", source_document=src_doc, office_id=1).save()
+        models.Section(id=2, person_name="Два Иван Ильич", source_document=src_doc, office_id=1).save()
+        models.Section(id=3, person_name="Иван Ильич", source_document=src_doc, office_id=1).save()
         BuildElasticIndex(None, None).handle(None, model="section")
 
         res = self.search_sections_by_fio("Один Иван")

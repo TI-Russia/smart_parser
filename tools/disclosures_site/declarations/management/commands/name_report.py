@@ -41,8 +41,7 @@ class Command(BaseCommand):
             select p.id, p.person_name, o.region_id 
             from declarations_person p
             join declarations_section s on s.person_id=p.id
-            join declarations_source_document d on d.id=s.source_document_id 
-            join declarations_office o on d.office_id=o.id
+            join declarations_office o on s.office_id=o.id
             where o.region_id is not null
             limit {}  
         """.format(max_count)

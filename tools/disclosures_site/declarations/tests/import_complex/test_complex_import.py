@@ -12,6 +12,9 @@ class ComplexImportTestCase(TestCase):
 
     def test_complex_import(self):
         self.assertGreater(models.Office.objects.count(), 0)
+        models.Income.objects.all().delete()
+        models.RealEstate.objects.all().delete()
+        models.Vehicle.objects.all().delete()
         models.Section.objects.all().delete()
         models.Source_Document.objects.all().delete()
 
