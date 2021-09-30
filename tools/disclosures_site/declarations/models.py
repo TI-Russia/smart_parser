@@ -66,7 +66,7 @@ class Office(models.Model):
     @property
     def source_document_count(self):
         try:
-            return self.source_document_set.all().count()
+            return self.calculated_params['source_document_count']
         except Exception as exp:
             raise
 

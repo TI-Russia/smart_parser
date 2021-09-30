@@ -308,10 +308,18 @@ class TSourceDocumentElasticIndexator:
     def gen_a_document(self):
         web_ref_iter = TWebReferenceIterator()
         declarator_file_ref_iter = TDeclaratorFileReferenceIterator()
+        query = """
+            select d.id, d.intersection_status, d.min_income_year, d.max_income_year, 
+                  d.section_count, d.sha256, s.office_id 
+            from declarations_source_document d
+            join declarations_section s on d.id=s.source_document_id
+            order by d.id 
+        """
         doc_iterator = fetch_cursor_by_chunks(query)
         for id, recs in groupby(doc_iterator, itemgetter(0)):
             first_crawl_epoch, web_domains = web_ref_iter.get_squeeze_by_source_document_id(id)
             web_domains.update(declarator_file_ref_iter.get_squeeze_by_source_document_id(id))
+            recs = list(recs)
             _, intersection_status, min_income_year, max_income_year, section_count, sha256, _ = recs[0]
             offices = set(r[-1] for r in recs)
             assert len(offices) > 0
@@ -328,13 +336,6 @@ class TSourceDocumentElasticIndexator:
                     }
 
     def gen_documents(self):
-        query = """
-            select d.id, d.intersection_status, d.min_income_year, d.max_income_year, 
-                  d.section_count, d.sha256, s.office_id 
-            from declarations_source_document d
-            join declarations_section s on d.id=s.source_document_id
-            order by d.id 
-        """
         cnt = 0
         for d  in self.gen_a_document():
             cnt += 1

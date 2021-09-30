@@ -3,7 +3,7 @@
 {% block title %}{{ section.person_name }} {% endblock title %}
 
 {% block serp_description %}
-<meta name="description" CONTENT="{{ section.person_name }}, {{section.position}}, {{ section.source_document.office.name }}, доход за {{ section.income_year }} год: {{section.declarant_income_size_in_html|safe}} , остальные декларации... ">
+<meta name="description" CONTENT="{{ section.person_name }}, {{section.position}}, {{ section.office.name }}, доход за {{ section.income_year }} год: {{section.declarant_income_size_in_html|safe}} , остальные декларации... ">
 {% endblock serp_description %}
 
 {% block content %}
@@ -22,7 +22,7 @@
 
 {% include "section/section_table.html" %}
 
-<a href=/office/{{section.source_document.office.id}}>Информация об этом ведомстве (остальные декларации)</a><br/>
+<a href=/office/{{section.office.id}}>Информация об этом ведомстве (остальные декларации)</a><br/>
 
 <br/><br/>
 
