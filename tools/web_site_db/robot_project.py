@@ -14,8 +14,8 @@ import time
 class TRobotProject:
     visited_pages_extension = ".visited_pages"
 
-    def __init__(self, logger, filename, robot_step_passports, export_folder, enable_selenium=True,
-                 enable_search_engine=True):
+    def __init__(self, logger, filename, robot_step_passports, export_folder,
+                 enable_search_engine=True, start_selenium=True):
         self.logger = logger
         self.start_time = time.time()
         self.total_timeout = 0
@@ -29,8 +29,8 @@ class TRobotProject:
         self.robot_step_passports = robot_step_passports
         self.enable_search_engine = enable_search_engine  #switched off in tests, otherwize google shows captcha
         self.export_folder = export_folder
-        self.enable_selenium = enable_selenium
         self.web_sites_db = TDeclarationWebSiteList(self.logger).load_from_disk()
+        self.start_selenium = start_selenium
 
     def have_time_for_last_dl_recognizer(self):
         if self.total_timeout == 0:
@@ -44,21 +44,14 @@ class TRobotProject:
     def get_robot_step_names(self):
         return list(r['step_name'] for r in self.robot_step_passports)
 
-    def reenable_selenium(self):
-        if not self.enable_selenium:
-            self.logger.info("enable selenium")
-            self.enable_selenium = True
-            self.selenium_driver.download_folder = tempfile.mkdtemp()
-            self.selenium_driver.start_executable()
-
     def __enter__(self):
-        if self.enable_selenium:
+        if self.start_selenium:
             self.selenium_driver.download_folder = tempfile.mkdtemp()
             self.selenium_driver.start_executable()
         return self
 
     def __exit__(self, type, value, traceback):
-        if self.enable_selenium:
+        if self.start_selenium:
             self.selenium_driver.stop_executable()
             shutil.rmtree(self.selenium_driver.download_folder)
 
@@ -70,12 +63,10 @@ class TRobotProject:
             }
             if not self.enable_search_engine:
                 output["disable_search_engine"] = True
-            if not self.enable_selenium:
-                output['disable_selenium'] = True
             outf.write(json.dumps(output, ensure_ascii=False, indent=4))
 
     @staticmethod
-    def create_project_str(main_url, regional_main_pages=[], disable_search_engine=False, disable_selenium=False):
+    def create_project_str(main_url, regional_main_pages=[], disable_search_engine=False):
         site = {"morda_url": main_url}
         if len(regional_main_pages) > 0:
             site['regional'] = regional_main_pages
@@ -85,18 +76,15 @@ class TRobotProject:
         }
         if disable_search_engine:
             project_content['disable_search_engine'] = True
-        if disable_selenium:
-            project_content['disable_selenium'] = True
         return json.dumps(project_content, indent=4, ensure_ascii=False)
 
     @staticmethod
-    def create_project(url, file_path, enable_selenium=False):
+    def create_project(url, file_path):
         with open(file_path, "w") as outp:
             outp.write(TRobotProject.create_project_str(
                 url,
                 [],
-                not enable_selenium, #disable_selinium in tests
-                False))
+                disable_search_engine=False))
         if os.path.exists(file_path + TRobotProject.visited_pages_extension):
             os.unlink(file_path + TRobotProject.visited_pages_extension)
 
@@ -118,8 +106,7 @@ class TRobotProject:
 
         robot_project_path = os.path.join(web_domain + ".txt")
         TRobotProject.create_project(web_domain, robot_project_path)
-        with TRobotProject(logger, robot_project_path, [], None, enable_selenium=False,
-                           enable_search_engine=False) as project:
+        with TRobotProject(logger, robot_project_path, [], None, start_selenium=False) as project:
             project.add_web_site(web_domain)
             project.web_site_snapshots[0].reach_status = TWebSiteReachStatus.normal
             export_env = project.web_site_snapshots[0].export_env
@@ -161,10 +148,6 @@ class TRobotProject:
 
             if "disable_search_engine" in json_dict:
                 self.enable_search_engine = False
-
-            if 'disable_selenium' in json_dict:
-                self.logger.debug("disable selenium")
-                self.enable_selenium = False
 
     def fetch_main_pages(self):
         for site in self.web_site_snapshots:

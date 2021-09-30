@@ -3956,6 +3956,12 @@
         "http_protocol": "https",
         "title": "Генеральная прокуратура Российской Федерации"
     },
+    "epp.genproc.gov.ru": {
+        "calc_office_id": 49,
+        "status": "abandoned",
+        "http_protocol": "https",
+        "redirect_to": "epp.genproc.gov.ru/web/gprf"
+    },
     "fsin.su": {
         "calc_office_id": 482,
         "status": "abandoned",

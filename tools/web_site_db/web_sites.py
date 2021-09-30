@@ -12,7 +12,6 @@ class TDeclarationWebSite:
         self.calculated_office_id = None
         self.reach_status = TWebSiteReachStatus.normal
         self.regional_main_pages = None
-        self.disable_selenium = None
         self.dlrobot_max_time_coeff = 1.0
         self.http_protocol = None
         self.comments = None
@@ -23,7 +22,6 @@ class TDeclarationWebSite:
         self.calculated_office_id = js['calc_office_id']
         self.reach_status = js.get('status', TWebSiteReachStatus.normal)
         self.regional_main_pages = js.get('regional')
-        self.disable_selenium = js.get('disable_selenium')
         self.dlrobot_max_time_coeff = js.get('dlrobot_max_time_coeff', 1.0)
         self.http_protocol = js.get('http_protocol')
         self.comments = js.get('comments')
@@ -41,8 +39,6 @@ class TDeclarationWebSite:
             rec['status'] = self.reach_status
         if self.regional_main_pages is not None:
             rec['regional'] = self.regional_main_pages
-        if self.disable_selenium is not None:
-            rec['disable_selenium'] = self.disable_selenium
         if self.dlrobot_max_time_coeff != 1.0:
             rec['dlrobot_max_time_coeff'] = self.dlrobot_max_time_coeff
         if self.http_protocol is not None:

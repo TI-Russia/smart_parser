@@ -14,9 +14,6 @@ import http
 from functools import partial
 
 
-# it looks like mkrf has changed the site structure, so there is no income declaratiosn
-# on https://www.mkrf.ru/activities/reports/index.php
-
 class TestDeclarationLinkSelenium(TestCase):
 
     def collect_links_selenium(self, start_url, link_func=TRobotStep.looks_like_a_declaration_link,
@@ -25,12 +22,11 @@ class TestDeclarationLinkSelenium(TestCase):
         TDownloadEnv.clear_cache_folder()
         robot_steps = [
             {
-                'step_name': "declarations",
-                'enable_selenium': True,
+                'step_name': "declarations"
             }
         ]
         with TRobotProject(self.logger, "project.txt", robot_steps, "result", enable_search_engine=False,
-                           enable_selenium=True) as project:
+                           ) as project:
             project.read_project()
             office_info = project.web_site_snapshots[0]
             office_info.create_export_folder()

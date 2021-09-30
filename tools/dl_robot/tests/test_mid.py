@@ -30,6 +30,6 @@ class TestMid(TestDeclarationLinkSelenium):
             def __init__(self):
                 self.logger = logger
 
-        step_info = TRobotStep(TDummyOffice(), enable_selenium=False)
+        step_info = TRobotStep(TDummyOffice())
         res = step_info.normalize_and_check_link(link_info, TRobotStep.looks_like_a_declaration_link)
         self.assertFalse(res)

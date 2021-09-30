@@ -40,7 +40,7 @@ class TTestEnv:
 
         project = TRobotProject.create_project_str("http://127.0.0.1:{}".format(port),
                                                    regional_main_pages=regional,
-                                                   disable_search_engine=True, disable_selenium=False)
+                                                   disable_search_engine=True)
         with open(self.project_path, "w") as outp:
             outp.write(project)
 

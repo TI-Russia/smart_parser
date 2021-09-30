@@ -417,21 +417,6 @@ class THttpRequester:
         return redirected_url, headers
 
     @staticmethod
-    def check_urllib_access_with_many_head_requests(url):
-        #see  https://minzdrav.gov.ru
-        for i in range(3):
-            start_time = time.time()
-            try:
-                THttpRequester.make_http_request(url, "HEAD")
-            except THttpRequester.RobotHttpException as exp:
-                pass
-
-            if time.time() - start_time > 10:
-                return False
-            time.sleep(2)
-        return True
-
-    @staticmethod
     def make_http_request(url, method, timeout=None):
         if method == "HEAD" and not THttpRequester.ENABLE_HEAD_REQUESTS:
             raise THttpRequester.RobotHttpException("disabled", url, 404, method)

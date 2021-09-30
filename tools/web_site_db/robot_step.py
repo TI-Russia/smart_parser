@@ -117,7 +117,7 @@ class TRobotStep:
     selenium_timeout = 6
 
     def __init__(self, website, step_name=None, step_urls=None, max_links_from_one_page=1000000,
-                 transitive=False, enable_selenium=True, is_last_step=False,
+                 transitive=False, is_last_step=False,
                  check_link_func=None, include_sources=None, check_link_func_2=None, search_engine=None,
                  sitemap_xml_processor=None, profiler=None):
         self.website = website
@@ -130,7 +130,6 @@ class TRobotStep:
         self.search_engine = dict() if search_engine is None else search_engine
         self.include_sources = include_sources
         self.sitemap_xml_processor = sitemap_xml_processor
-        self.enable_selenium = enable_selenium and self.website.parent_project.enable_selenium
         self.is_last_step = is_last_step
         # see https://sutr.ru/about_the_university/svedeniya-ob-ou/education/ with 20000 links
         # see https://www.gov.spb.ru/sitemap/ with 8000 links (and it is normal for great web sites)
@@ -147,9 +146,6 @@ class TRobotStep:
         self.unique_hrefs = set()
         self.crawled_web_pages_count = 0
         self.start_time = time.time()
-
-    def use_http_library(self):
-        return self.website.enable_urllib
 
     def get_selenium_driver(self):
         return self.website.parent_project.selenium_driver
@@ -344,43 +340,6 @@ class TRobotStep:
                               declaration_year=declaration_year)
         self.add_downloaded_file_wrapper(link_info)
 
-    def find_a_web_page_in_urllib_cache(self, url, html_text, check_link_func):
-        if len(html_text) > 1000:
-            html_text = re.sub('[0-9]+', 'd', html_text)
-            hash_code = "{}_{}_{}".format(
-                self.step_name, check_link_func.__name__, hashlib.sha256(html_text.encode("utf8")).hexdigest())
-            already = self.urllib_html_cache.get(hash_code)
-            if already is not None:
-                return already
-            self.urllib_html_cache[hash_code] = url
-        return None
-
-    def add_page_links_http_lib(self, url, check_link_func):
-        try:
-            downloaded_file = TDownloadedFile(url)
-        except THttpRequester.RobotHttpException as err:
-            self.logger.error(err)
-            return
-        if downloaded_file.file_extension != DEFAULT_HTML_EXTENSION:
-            return
-        try:
-            html_parser = THtmlParser(downloaded_file.data, url=url)
-            already_processed_by_urllib = self.find_a_web_page_in_urllib_cache(
-                url, html_parser.html_with_markup, check_link_func)
-        except Exception as e:
-            self.logger.error('cannot parse html url={}, exception = {}'.format(url, e))
-            return
-
-        try:
-            if already_processed_by_urllib is None:
-                self.find_links_in_html_by_text(url, html_parser, check_link_func)
-            else:
-                self.logger.debug(
-                        'skip processing {} in find_links_in_html_by_text, a similar file is already processed on this step: {}'.format(
-                            url, already_processed_by_urllib))
-        except THttpRequester.RobotHttpException as e:
-            self.logger.error('add_page_links_http_lib failed on url={}, exception: {}'.format(url, e))
-
     def add_page_links_selenium(self, url, check_link_func):
         try:
             ext = get_file_extension_only_by_headers(url)
@@ -394,10 +353,7 @@ class TRobotStep:
             self.logger.error('add_page_links_selenium failed on url={}, exception: {}'.format(url, e))
 
     def add_page_links(self, url, check_link_func):
-        if self.use_http_library():
-            self.add_page_links_http_lib(url, check_link_func)
-        if self.enable_selenium:
-            self.add_page_links_selenium(url, check_link_func)
+        self.add_page_links_selenium(url, check_link_func)
 
     def pop_url_with_max_weight(self, url_index):
         if len(self.pages_to_process) == 0:

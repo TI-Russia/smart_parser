@@ -1,6 +1,4 @@
-from common.download import TDownloadedFile
 from common.http_request import THttpRequester
-from common.html_parser import get_html_title
 from common.link_info import TClickEngine
 from web_site_db.robot_step import TRobotStep, TUrlInfo
 from web_site_db.web_site_status import TWebSiteReachStatus
@@ -21,11 +19,6 @@ class TWebSiteCrawlSnapshot:
     DEFAULT_CRAWLING_TIMEOUT = 60 * 60 * 3 # 3 hours
     CRAWLING_TIMEOUT = DEFAULT_CRAWLING_TIMEOUT
 
-    @staticmethod
-    def default_enable_urllib():
-        s = os.environ.get('DLROBOT_ENABLE_URLLIB', "0")
-        return s == "True" or s == "1"
-
     def __init__(self, project, morda_url=""):
         #runtime members (no serialization)
         self.start_crawling_time = time.time()
@@ -36,7 +29,6 @@ class TWebSiteCrawlSnapshot:
 
         #serialized members
         self.url_nodes = dict()
-        self.enable_urllib = self.default_enable_urllib()
         self.main_page_url = None
         self.input_site_url = None
         self.office_name = ""
@@ -93,17 +85,6 @@ class TWebSiteCrawlSnapshot:
                 modified_url = urllib.parse.urlunsplit((protocol, host, o.path, o.query, o.fragment))
                 yield modified_url
 
-    def recognize_protocol_and_www(self):
-        for url in urllib_parse_pro.get_url_modifications(self.input_site_url):
-            try:
-                file = TDownloadedFile(url)
-                title = get_html_title(file.data)
-                self.init_main_page_url_from_redirected_url(file.redirected_url, title)
-                return
-            except THttpRequester.RobotHttpException as exp:
-                self.logger.error("cannot fetch {}  with urllib, sleep 3 sec".format(url))
-                time.sleep(3)
-
     def recognize_protocol_and_www_selenium(self):
         for url in urllib_parse_pro.get_url_modifications(self.input_site_url):
             try:
@@ -136,25 +117,9 @@ class TWebSiteCrawlSnapshot:
         self.input_site_url = morda_url
         self.main_page_url = morda_url
 
-    def check_urllib_access(self):
-        if self.enable_urllib:
-            if not THttpRequester.check_urllib_access_with_many_head_requests(self.main_page_url):
-                self.logger.info("disable urllib, since there are too many timeouts to head requests")
-                self.enable_urllib = False
-                if not self.parent_project.enable_selenium:
-                    self.parent_project.reenable_selenium()
-
     def fetch_the_main_page(self, enable_search_engine=True):
         if len(self.url_nodes) > 0:
             return True
-        if self.enable_urllib:
-            try:
-                self.recognize_protocol_and_www()
-                return True
-            except THttpRequester.RobotHttpException as exp:
-                self.logger.error("disable urllib for this website since we cannot reach the main page with urllib")
-                self.enable_urllib = False
-
         try:
             self.recognize_protocol_and_www_selenium()
             return True
@@ -201,7 +166,6 @@ class TWebSiteCrawlSnapshot:
         self.reach_status = init_json.get('reach_status')
         self.main_page_url = init_json.get('main_page_url', init_json.get('morda_url'))
         self.office_name = init_json.get('name', '')
-        self.enable_urllib = init_json.get('enable_urllib', self.default_enable_urllib())
         self.export_env.from_json(init_json.get('exported_files'))
         self.regional_main_pages = init_json.get('regional', list())
 
@@ -222,13 +186,13 @@ class TWebSiteCrawlSnapshot:
             'morda_url': self.input_site_url,
             'regional': self.regional_main_pages,
             'name': self.office_name,
-            'enable_urllib': self.enable_urllib,
             'steps': [s.to_json() for s in self.robot_steps],
             'url_nodes': dict( (url, info.to_json()) for url,info in self.url_nodes.items()),
             'exported_files': self.export_env.to_json(),
         }
 
     def get_regional_pages(self):
+        # not used now (was used for genproc.gov.ru)
         for url in self.regional_main_pages:
             if not url.startswith('http'):
                 url = self.get_main_url_protocol() + "://" + url

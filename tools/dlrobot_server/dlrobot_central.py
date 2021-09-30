@@ -193,7 +193,6 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         remote_call.worker_host_name = worker_host_name
         remote_call.crawling_timeout = self.args.dlrobot_crawling_timeout
         web_site_passport = self.web_sites_db.get_web_site(site_url)
-        enable_selenium = True
         regional_main_pages = list()
         if web_site_passport is None:
             self.logger.error("{} is not registered in the web site db, no office information is available for the site")
@@ -201,12 +200,10 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
             remote_call.crawling_timeout = int(remote_call.crawling_timeout * web_site_passport.dlrobot_max_time_coeff)
             if web_site_passport.regional_main_pages is not None:
                 regional_main_pages = list(web_site_passport.regional_main_pages.keys())
-            if web_site_passport.disable_selenium:
-                enable_selenium = False
         project_content_str = TRobotProject.create_project_str(site_url,
                                                                regional_main_pages,
-                                                               not self.args.enable_search_engines,
-                                                               not enable_selenium)
+                                                               disable_search_engine=not self.args.enable_search_engines
+                                                               )
         self.worker_2_running_tasks[worker_ip].append(remote_call)
         return remote_call, project_content_str.encode("utf8")
 
