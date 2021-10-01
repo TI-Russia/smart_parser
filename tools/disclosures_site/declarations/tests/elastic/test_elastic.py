@@ -30,12 +30,11 @@ class ElasticTestCase(TestCase):
 
         src_doc = models.Source_Document()
         src_doc.id = 1
-        src_doc.office = ofc
         src_doc.save()
 
-        models.Section(id=1, person_name="Иванов Иван", source_document=src_doc).save()
-        models.Section(id=2, person_name="Петров Петр", source_document=src_doc).save()
-        models.Section(id=3, person_name="Сидоров Федор", source_document=src_doc).save()
+        models.Section(id=1, person_name="Иванов Иван", source_document=src_doc, office=ofc).save()
+        models.Section(id=2, person_name="Петров Петр", source_document=src_doc, office=ofc).save()
+        models.Section(id=3, person_name="Сидоров Федор", source_document=src_doc, office=ofc).save()
 
         #reindex section index
         TSectionElasticIndexator.chunk_size = 2

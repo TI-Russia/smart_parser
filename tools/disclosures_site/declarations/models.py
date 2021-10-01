@@ -66,7 +66,7 @@ class Office(models.Model):
     @property
     def source_document_count(self):
         try:
-            return self.source_document_set.all().count()
+            return self.calculated_params['source_document_count']
         except Exception as exp:
             raise
 
@@ -217,8 +217,7 @@ class Declarator_File_Reference(models.Model):
 
 class Source_Document(models.Model):
     id = models.IntegerField(primary_key=True)
-    office = models.ForeignKey('declarations.Office', verbose_name="office name", on_delete=models.CASCADE)
-    sha256 = models.CharField(max_length=200)
+    sha256 = models.CharField(max_length=64)
     file_extension = models.CharField(max_length=16)
     intersection_status = models.CharField(max_length=16)
 
@@ -394,6 +393,7 @@ class Section(models.Model):
 
     # sometimes Section.rubric_id overrides Office.rubric_id, see function convert_municipality_to_education for example
     rubric_id = models.IntegerField(null=True, default=None)
+    office = models.ForeignKey('declarations.Office', verbose_name="office name", on_delete=models.CASCADE)
 
     @property
     def section_parts(self):
@@ -520,11 +520,11 @@ class Section(models.Model):
 
     @property
     def office_name(self):
-        return self.source_document.office.name
+        return self.office.name
 
     @property
     def position_and_office_str(self):
-        str = self.source_document.office.name
+        str = self.office.name
         position_and_department = self.position_and_department
         if position_and_department != "":
             str += " ({})".format(position_and_department)

@@ -1,5 +1,5 @@
 set -e
-export HUMAN_FILES_JSON=human_files.json
+export HUMAN_FILES=human_files.dbm
 export HUMAN_JSONS_FOLDER=humans_jsons.dummy
 export SMART_PARSER_SERVER_ADDRESS=localhost:8165
 export SOURCE_DOC_SERVER_ADDRESS=localhost:8090
@@ -49,7 +49,7 @@ start_source_doc_server
 sleep 2
 
 python3 $TOOLS/disclosures_site/scripts/export_human_files.py --start-from-an-empty-file \
-  --document-file-id 33594  --table declarations_documentfile  --dlrobot-human-json $HUMAN_FILES_JSON
+  --document-file-id 33594  --table declarations_documentfile  --dlrobot-human-json $HUMAN_FILES
 
 #mkdir -p processed_projects/dogm.mos.ru
 #cd processed_projects/dogm.mos.ru
@@ -62,8 +62,8 @@ sleep 2m
 python3 $TOOLS/disclosures_site/scripts/join_human_and_dlrobot.py \
         --max-ctime $CRAWL_EPOCH \
         --input-dlrobot-folder  processed_projects \
-        --human-json $HUMAN_FILES_JSON \
-        --output-json dlrobot_human.json
+        --human-json $HUMAN_FILES \
+        --output-json dlrobot_human.dbm
 
 
 python3 $TOOLS/disclosures_site/manage.py create_database --settings disclosures.settings.dev --username db_creator --password root --skip-checks
@@ -72,10 +72,12 @@ python3 $TOOLS/disclosures_site/manage.py migrate --settings disclosures.setting
 python3 $TOOLS/disclosures_site/manage.py create_permalink_storage  --settings disclosures.settings.dev
 python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev
 python3 $TOOLS/disclosures_site/manage.py clear_database --settings disclosures.settings.dev
+python3 $TOOLS/disclosures_site/manage.py predict_office --dlrobot-human-path dlrobot_human.dbm
+
 python3 $TOOLS/disclosures_site/manage.py import_json \
                --settings disclosures.settings.dev \
                --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER \
-               --dlrobot-human dlrobot_human.json   \
+               --dlrobot-human dlrobot_human.dbm   \
                --process-count 1  \
                --permalinks-folder .
 
@@ -88,4 +90,5 @@ python3 $TOOLS/disclosures_site/manage.py generate_dedupe_pairs --ml-model-file 
 
 python3 $TOOLS/disclosures_site/manage.py build_genders --settings disclosures.settings.dev
 python3 $TOOLS/disclosures_site/manage.py build_ratings --settings disclosures.settings.dev
+python3 $TOOLS/disclosures_site/manage.py build_office_calculated_params --settings disclosures.settings.dev
 python3 $TOOLS/disclosures_site/manage.py build_elastic_index --settings disclosures.settings.dev

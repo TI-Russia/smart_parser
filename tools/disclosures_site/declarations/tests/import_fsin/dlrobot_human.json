@@ -1,0 +1,17 @@
+{
+    "document_folder": "domains",
+    "documents": {
+        "7e8ac3e6345b2d68d5dac501a377e5042248075a6f3507136430a9794547e5a9": {
+            "file_ext": ".xlsx",
+            "intersection_status": "only_dlrobot",
+            "office_id": 873,
+            "w_refs": [
+                {
+                    "crawl_epoch": 1,
+                    "url": null,
+                    "web_domain": "fsin.gov.ru"
+                }
+            ]
+        }
+    }
+}

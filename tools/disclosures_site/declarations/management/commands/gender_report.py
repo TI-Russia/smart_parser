@@ -75,8 +75,7 @@ class Command(BaseCommand):
             select distinct p.id, s.gender, o.region_id, s.rubric_id 
             from declarations_person p
             join declarations_section s on s.person_id=p.id
-            join declarations_source_document d on d.id=s.source_document_id 
-            join declarations_office o on d.office_id=o.id
+            join declarations_office o on s.office_id=o.id
             where s.gender is not null
             limit {}  
         """.format(max_count)
@@ -228,10 +227,8 @@ class Command(BaseCommand):
             section_with_vehicles = set(section_id for section_id, in cursor)
 
         query = """
-            select distinct s.id, s.gender, d.office_id, s.income_year, s.rubric_id  
-            from declarations_section s
-            left join declarations_person p on s.person_id=p.id
-            join declarations_source_document d on d.id=s.source_document_id
+            select distinct id, gender, office_id, income_year, rubric_id  
+            from declarations_section
             where s.gender is not null
             limit {}  
         """.format(max_count)

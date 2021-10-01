@@ -1,9 +1,10 @@
 from . import models
 from common.primitives import normalize_whitespace
 from declarations.countries import get_country_code
-from declarations.rubrics import convert_municipality_to_education, TOfficeRubrics
+from declarations.rubrics import TOfficeRubrics
 from declarations.documents import OFFICES
 from declarations.section_passport import TSectionPassportItems1,TSectionPassportItems2
+from declarations.offices_in_memory import TOfficeTableInMemory
 import re
 
 
@@ -78,10 +79,11 @@ class TSmartParserSectionJson:
         def __str__(self):
             return repr(self.value)
 
-    def __init__(self, income_year, source_document):
+    def __init__(self, income_year, office_id, source_document):
         self.section = models.Section(
             source_document=source_document,
             income_year=income_year,
+            office_id=office_id
         )
         self.incomes = None
         self.real_estates = None
@@ -90,10 +92,10 @@ class TSmartParserSectionJson:
     def init_rubric(self):
         # json_reader.section.rubric_id = source_document_in_db.office.rubric_id does not work
         # may be we should call source_document_in_db.refresh_from_db
-        self.section.rubric_id = OFFICES.offices[self.section.source_document.office.id].rubric_id
+        self.section.rubric_id = OFFICES.offices[self.section.office.id].rubric_id
 
         if self.section.rubric_id == TOfficeRubrics.Municipality and \
-                convert_municipality_to_education(self.section.position):
+                TOfficeTableInMemory.convert_municipality_to_education(self.section.position):
             self.section.rubric_id = TOfficeRubrics.Education
 
     def read_raw_json(self, section_json):
@@ -125,7 +127,7 @@ class TSmartParserSectionJson:
 
     def get_passport_components1(self):
         return TSectionPassportItems1(
-                    self.section.source_document.office.id,
+                    self.section.office.id,
                     self.section.income_year,
                     self.section.person_name,
                     sum(convert_to_int_with_nones(i.size) for i in self.incomes),
@@ -212,7 +214,7 @@ def get_section_json(section):
 
     section_json['year'] = str(section.income_year)
     section_json['source'] = "disclosures"
-    section_json['office'] = whitespace_remover(section.source_document.office.name)
-    section_json['office_id'] = section.source_document.office.id
+    section_json['office'] = whitespace_remover(section.office.name)
+    section_json['office_id'] = section.office.id
 
     return section_json

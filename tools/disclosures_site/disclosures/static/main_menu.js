@@ -25,7 +25,7 @@ function menuCreateDesktop() {
                 "href":"/file/",
               },
               {
-                "text":"статистика",
+                "text":"отчеты",
                 "href":"/statistics/",
               },
              ]

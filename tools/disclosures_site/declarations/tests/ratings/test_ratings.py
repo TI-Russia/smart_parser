@@ -12,7 +12,6 @@ class RatingTestCase(TestCase):
         models.Source_Document.objects.all().delete()
 
         src_doc = models.Source_Document(id=1)
-        src_doc.office_id = 1
         src_doc.save()
 
         person_id = 99
@@ -23,16 +22,19 @@ class RatingTestCase(TestCase):
                        source_document=src_doc,
                        person_name="i1",
                        income_year=2019,
+                       office_id=1,
                        person=person).save()
         models.Section(id=2,
                        source_document=src_doc,
                        person_name="i2",
                        income_year=2019,
+                       office_id=1,
                        person=person).save()
         models.Section(id=3,
                        source_document=src_doc,
                        person_name="i3",
                        income_year=2019,
+                       office_id=1,
                        person=person).save()
         models.Income(section_id=1, size=1, relative=models.Relative.main_declarant_code).save()
         models.Income(section_id=2, size=2, relative=models.Relative.main_declarant_code).save()

@@ -43,16 +43,15 @@ class CopyPersonIdTestCaseBase(TestCase):
         self.assertGreater(models.Office.objects.count(), 0)
 
         src_doc = models.Source_Document(id=1)
-        src_doc.office_id = 1
         src_doc.save()
 
         models.Declarator_File_Reference(source_document=src_doc,
                                          declarator_document_id=self.declarator_document_id).save()
 
-        section1 = models.Section(id=self.section_id1, source_document=src_doc, person_name=self.fio)
+        section1 = models.Section(id=self.section_id1, source_document=src_doc, person_name=self.fio, office_id=1)
         section1.save()
 
-        section2 = models.Section(id=self.section_id2, source_document=src_doc, person_name=self.fio)
+        section2 = models.Section(id=self.section_id2, source_document=src_doc, person_name=self.fio, office_id=1)
         section2.save()
 
         models.Income(section=section1, size=self.income_main1, relative=models.Relative.main_declarant_code).save()

@@ -1,5 +1,3 @@
-import re
-from declarations.offices_in_memory import TOfficeInMemory
 
 
 class TOfficeRubrics:
@@ -127,56 +125,3 @@ def fill_combo_box_with_rubrics():
 def get_russian_rubric_str(rubric_id):
     return RubricsInRussian[rubric_id]['name']
 
-
-def get_all_rubrics(office_hierarchy, office_id):
-    all_rubrics = set()
-    pattern = TOfficeProps(
-        office_hierarchy.offices[office_id].name,
-        top_parent=office_hierarchy.get_top_parent_office_id(office_id),
-        immediate_parent=office_hierarchy.get_immediate_parent_office_id(office_id))
-
-    for rubric in RubricsInRussian.keys():
-        if pattern.check_rubric(rubric):
-            all_rubrics.add(rubric)
-    return all_rubrics
-
-
-def build_office_rubric(logger, office_hierarchy, office_id):
-    rubrics = get_all_rubrics(office_hierarchy, office_id)
-    office: TOfficeInMemory
-    office = office_hierarchy.offices[office_id]
-    parent_id = office.parent_id
-    if len(rubrics) == 0 and parent_id is not None:
-        rubrics = get_all_rubrics(office_hierarchy, parent_id)
-
-    office_name = office.name
-    if len(rubrics) > 1 and TOfficeRubrics.ExecutivePower in rubrics:
-        rubrics.remove(TOfficeRubrics.ExecutivePower)
-    rubric = None
-    if len(rubrics) == 0:
-        if logger is not None:
-            logger.error("cannot find rubric for {} set Other".format(office_name))
-        rubric = TOfficeRubrics.Other
-    elif len(rubrics) == 1:
-        rubric = list(rubrics)[0]
-        if logger is not None:
-            logger.debug("{} => {}".format(office_name, RubricsInRussian[rubric]['name']))
-    elif TOfficeRubrics.Education in rubrics:
-        rubrics = {TOfficeRubrics.Education}
-        rubric = list(rubrics)[0]
-        if logger is not None:
-            logger.debug("{} => {}".format(office_name, RubricsInRussian[rubric]['name']))
-    else:
-        rubric_strs = list(RubricsInRussian[r]['name'] for r in rubrics)
-        if logger is not None:
-            logger.error("ambiguous office {} rubrics:{} ".format(office_name, ",".join(rubric_strs)))
-    return rubric
-
-
-def convert_municipality_to_education(section_position):
-    if section_position is None:
-        return False
-    heavy_position = re.search('(завуч|учитель|учительница)', section_position, re.IGNORECASE)  is not None
-    light_position = re.search('(директор|заведующая|директора)', section_position, re.IGNORECASE) is not None
-    edu_office = re.search('СОШ|СШ|МКОУ|МБУДО|МАОУ|ГБОУ|МОУ|колледж|ВСОШ|общеобразовательного|образовательным|школы|интерната', section_position) != None
-    return heavy_position or (light_position and edu_office)

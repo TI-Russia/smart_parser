@@ -137,8 +137,9 @@ class Command(BaseCommand):
         else:
             assert section_or_person_id.startswith('section-')
             year = sections[0].get('year', 0)
-            json_file = models.Source_Document(office_id=sections[0].get('office_id', -1))
-            passport_items = TSmartParserSectionJson(year, json_file).read_raw_json(sections[0]).get_passport_components1()
+            office_id = office_id=sections[0].get('office_id', -1)
+            json_file = models.Source_Document()
+            passport_items = TSmartParserSectionJson(year, office_id, json_file).read_raw_json(sections[0]).get_passport_components1()
             section_id, search_results = self.search_by_passports(passport_items)
             if section_id is not None:
                 row[id_index] = str("section-") + str(section_id)

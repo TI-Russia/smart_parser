@@ -311,8 +311,7 @@ class Command(BaseCommand):
                     o.region_id,
                     s.income_year
             from declarations_section s
-            join declarations_source_document d on d.id = s.source_document_id
-            join declarations_office o on o.id = d.office_id
+            join declarations_office o on o.id = s.office_id
             where s.person_id is not null
         """
         genders = dict()

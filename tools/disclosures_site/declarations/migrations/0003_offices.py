@@ -1,5 +1,4 @@
 from declarations.offices_in_memory import TOfficeTableInMemory, TOfficeInMemory
-from declarations.rubrics import build_office_rubric
 
 from django.db import migrations
 
@@ -18,7 +17,7 @@ def add_offices(apps, schema_editor):
                    region_id=office.region_id
                    )
         if TOfficeTableInMemory.SELECTED_OFFICES_FOR_TESTS is None:
-            c.rubric_id=build_office_rubric(None, offices, office.office_id)
+            c.rubric_id=offices.build_office_rubric(None, office.office_id)
         c.save()
 
 

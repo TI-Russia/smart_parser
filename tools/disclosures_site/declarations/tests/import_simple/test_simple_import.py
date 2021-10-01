@@ -17,6 +17,9 @@ class SimpleImportTestCase(TestCase):
         self.assertEqual(normalize_fio_before_db_insert("12. Иванов Иван Иванович "), "Иванов Иван Иванович")
 
     def test_simple_import(self):
+        models.Income.objects.all().delete()
+        models.RealEstate.objects.all().delete()
+        models.Vehicle.objects.all().delete()
         models.Section.objects.all().delete()
         models.Source_Document.objects.all().delete()
         self.assertGreater(models.Office.objects.count(), 0)

@@ -56,8 +56,7 @@ class TDBSqueeze:
         self.office_info.clear()
         sql = """select o.id, o.name, count(s.id) as section_count
                   from declarations_office o 
-                  join declarations_source_document d on d.office_id = o.id 
-                  join declarations_section s on s.source_document_id = d.id 
+                  join declarations_section s on s.office_id = o.id 
                   group by o.id
               """
         self.logger.info("build web_site_snapshots")
@@ -299,7 +298,7 @@ class Command(BaseCommand):
     def check_auto_negative_freq_fio(self, rec1, rec2):
         if isinstance(rec1, models.Section) and isinstance(rec2, models.Section):
             if rec1.surname_rank < 300 and (rec1.name_rank < 200 or rec2.name_rank < 200):
-                if rec1.source_document.office.rubric_id != rec2.source_document.office.rubric_id:
+                if rec1.rubric_id != rec2.rubric_id:
                     self.logger.debug("section {} and secion {} ({}) are filtered out by "
                                       "rule check_auto_negative_freq_fio".format(
                         rec1.id, rec2.id, rec1.person_name))

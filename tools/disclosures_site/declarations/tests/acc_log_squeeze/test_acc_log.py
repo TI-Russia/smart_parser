@@ -1,6 +1,5 @@
 from django.test import TestCase
 from declarations.management.commands.access_log_squeeze import AccessLogSqueezer
-import json
 import os
 import argparse
 
