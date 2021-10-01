@@ -8,7 +8,7 @@ from pathlib import Path
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--action", dest='action', default="last_actions", help="can be all, publish_sql_link or move_mysql_dump")
+    parser.add_argument("--action", dest='action', default="last_actions", help="can be last_actions, publish_sql_link or move_mysql_dump")
     parser.add_argument("--max-ctime", dest='max_ctime', required=False, type=int,
                         default=int(os.environ.get("CRAWL_EPOCH")),
                         help="max ctime of an input folder")
@@ -17,7 +17,7 @@ def parse_args():
     parser.add_argument("--output-cloud-folder", dest='output_cloud_folder', required=True)
     parser.add_argument("--mysql-dump-tar", dest='mysql_dump_tar', required=False, default="mysql.tar.gz")
     args = parser.parse_args()
-    assert self.args.max_ctime is not None
+    assert args.max_ctime is not None
     return args
 
 
@@ -66,7 +66,7 @@ class TBackupper:
 
     def copy_dlrobot_central_log(self):
         central_log_base_name = "dlrobot_central.log"
-        central_log = os.path.join(args.processed_projects_folder, "..", central_log_base_name)
+        central_log = os.path.join(self.args.processed_projects_folder, "..", central_log_base_name)
         self.logger.info("copy {} to {}".format(central_log, self.output_folder))
         shutil.copy2(central_log, self.output_folder)
         self.log_and_system("gzip {}".format(os.path.join(self.output_folder, central_log_base_name)))
@@ -75,7 +75,9 @@ class TBackupper:
         tar_file = self.create_tar_file(self.args.processed_projects_folder, self.args.max_ctime)
         self.logger.info("move {} to {}".format(tar_file, self.output_folder))
         shutil.move(tar_file, self.output_folder)
-        self.log_and_system("tar -C {} --list --file {} > processed_projects_file_list.txt".format(self.output_folder, tar_file))
+        tar_file1 = os.path.join(self.output_folder, tar_file)
+        list_file = os.path.join(self.output_folder, "processed_projects_file_list.txt")
+        self.log_and_system("tar --file {} --list > {}}".format(tar_file1, list_file))
 
     def move_mysql_dump(self):
         self.logger.info("move {} to {}".format(self.args.mysql_dump_tar, self.output_folder))
@@ -97,7 +99,7 @@ class TBackupper:
 
     def main(self):
         self.logger.info("max_ctime = {}".format(self.args.max_ctime))
-        if self.args.action == "all":
+        if self.args.action == "last_actions":
             self.copy_dlrobot_human()
             self.copy_dlrobot_central_log()
             self.move_processed_projects()
