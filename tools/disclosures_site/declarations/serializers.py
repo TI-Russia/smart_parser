@@ -1,9 +1,10 @@
 from . import models
 from common.primitives import normalize_whitespace
 from declarations.countries import get_country_code
-from declarations.rubrics import convert_municipality_to_education, TOfficeRubrics
+from declarations.rubrics import TOfficeRubrics
 from declarations.documents import OFFICES
 from declarations.section_passport import TSectionPassportItems1,TSectionPassportItems2
+from declarations.offices_in_memory import TOfficeTableInMemory
 import re
 
 
@@ -94,7 +95,7 @@ class TSmartParserSectionJson:
         self.section.rubric_id = OFFICES.offices[self.section.office.id].rubric_id
 
         if self.section.rubric_id == TOfficeRubrics.Municipality and \
-                convert_municipality_to_education(self.section.position):
+                TOfficeTableInMemory.convert_municipality_to_education(self.section.position):
             self.section.rubric_id = TOfficeRubrics.Education
 
     def read_raw_json(self, section_json):

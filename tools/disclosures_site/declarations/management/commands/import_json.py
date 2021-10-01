@@ -4,6 +4,9 @@ from declarations.permalinks import TPermaLinksSection, TPermaLinksSourceDocumen
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from declarations.input_json import TDlrobotHumanFileDBM, TSourceDocument, TDeclaratorReference, TWebReference
 from common.logging_wrapper import setup_logging
+from declarations.documents import OFFICES
+from declarations.rubrics import TOfficeRubrics
+from common.russian_regions import TRussianRegions, RUSSIA_REGION_ID
 
 from multiprocessing import Pool
 import os
@@ -49,6 +52,7 @@ class TImporter:
         self.permalinks_db_section = None
         self.permalinks_db_source_document = None
         self.smart_parser_cache_client = None
+        self.regions = TRussianRegions()
 
     def delete_before_fork(self):
         from django import db
@@ -82,7 +86,7 @@ class TImporter:
 
     def register_document_in_database(self, sha256, src_doc: TSourceDocument):
         source_document_in_db = models.Source_Document(sha256=sha256,
-                                                       intersection_status=src_doc.build_intersection_status(),
+                                                         intersection_status=src_doc.build_intersection_status(),
                                                        )
         source_document_in_db.id, new_file = self.permalinks_db_source_document.get_source_doc_id_by_sha256(sha256)
         assert not models.Source_Document.objects.filter(id=source_document_in_db.id).exists()
@@ -137,20 +141,32 @@ class TImporter:
 
         return int(year)
 
+    def get_fsin_office_id(self, section_json, src_doc: TSourceDocument):
+        department = section_json.get('person', dict()).get('department')
+        if department is None or len(department) < 5:
+            return src_doc.calculated_office_id
+        region = self.regions.get_region_all_forms(department, RUSSIA_REGION_ID)
+        return OFFICES.fsin_by_region.get(region, OFFICES.fsin_by_region[RUSSIA_REGION_ID])
+
     def import_one_smart_parser_json(self, source_document_in_db, input_json, src_doc: TSourceDocument):
         imported_section_years = list()
         section_index = 0
         TImporter.logger.debug("try to import {} declarants".format(len(input_json['persons'])))
         incomes = list()
+        is_fsin = OFFICES.offices[src_doc.calculated_office_id].rubric_id == TOfficeRubrics.Gulag
 
         for raw_section in input_json['persons']:
             section_index += 1
             section_income_year = self.calc_income_year(input_json, src_doc,  raw_section, section_index)
+            if is_fsin:
+                office_id = self.get_fsin_office_id(raw_section, src_doc)
+            else:
+                office_id = src_doc.calculated_office_id
             with transaction.atomic():
                 try:
                     prepared_section = TSmartParserSectionJson(
                         section_income_year,
-                        src_doc.calculated_office_id,
+                        office_id,
                         source_document_in_db)
                     prepared_section.read_raw_json(raw_section)
 

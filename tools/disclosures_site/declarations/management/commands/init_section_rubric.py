@@ -1,7 +1,8 @@
 from django.core.management import BaseCommand
 import declarations.models as models
-from declarations.rubrics import TOfficeRubrics, convert_municipality_to_education
+from declarations.rubrics import TOfficeRubrics
 from concurrent.futures import ProcessPoolExecutor
+from declarations.offices_in_memory import TOfficeTableInMemory
 
 from django.db import transaction
 import sys
@@ -24,7 +25,7 @@ def set_rubric(document_id):
 
             section.rubric_id = src_doc.office.rubric_id
             if section.position is not None and section.rubric_id == TOfficeRubrics.Municipality:
-                res = convert_municipality_to_education(section.position)
+                res = TOfficeTableInMemory.convert_municipality_to_education(section.position)
                 if res:
                     sys.stdout.write('{} {}\n'.format(res, section.id, section.position))
                     section.rubric_id = TOfficeRubrics.Education

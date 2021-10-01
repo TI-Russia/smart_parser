@@ -1,5 +1,9 @@
+from declarations.rubrics import TOfficeRubrics, RubricsInRussian, TOfficeProps
+from common.russian_regions import RUSSIA_REGION_ID
 import json
 import os
+import re
+
 
 
 class TOfficeInMemory:
@@ -54,10 +58,18 @@ class TOfficeTableInMemory:
         self.use_office_types = use_office_types
         self.offices = dict()
         self.transitive_top = dict()
+        self.fsin_by_region = dict()
 
-    def _init_transitive(self):
+    def _init_special(self):
         for office_id in self.offices:
             self.transitive_top[office_id] = self.go_to_the_top(office_id)
+
+        office_info: TOfficeInMemory
+        main_fsin_office_id = 482
+        for office_id, office_info in self.offices.items():
+            if office_info.parent_id == main_fsin_office_id:
+                self.fsin_by_region[office_info.region_id] = office_id
+        self.fsin_by_region[RUSSIA_REGION_ID] = main_fsin_office_id
 
     def get_office_id_to_ml_office_id(self):
         return list((i, o) for i, o in enumerate(self.offices))
@@ -77,7 +89,7 @@ class TOfficeTableInMemory:
                         continue
                 self.offices[office_id] = TOfficeInMemory().from_json(o)
         if TOfficeTableInMemory.SELECTED_OFFICES_FOR_TESTS is None:
-            self._init_transitive()
+            self._init_special()
 
     def read_from_table(self, table):
         for o in table:
@@ -89,4 +101,57 @@ class TOfficeTableInMemory:
                  rubric_id=o.rubric_id,
                  region_id=o.region_id
             )
-        self._init_transitive()
+        self._init_special()
+
+    def _get_all_rubrics(self, office_id):
+        all_rubrics = set()
+        pattern = TOfficeProps(
+            self.offices[office_id].name,
+            top_parent=self.get_top_parent_office_id(office_id),
+            immediate_parent=self.get_immediate_parent_office_id(office_id))
+
+        for rubric in RubricsInRussian.keys():
+            if pattern.check_rubric(rubric):
+                all_rubrics.add(rubric)
+        return all_rubrics
+
+    def build_office_rubric(self, logger, office_id):
+        rubrics = self._get_all_rubrics(office_id)
+        office: TOfficeInMemory
+        office = self.offices[office_id]
+        parent_id = office.parent_id
+        if len(rubrics) == 0 and parent_id is not None:
+            rubrics = self._get_all_rubrics(parent_id)
+
+        office_name = office.name
+        if len(rubrics) > 1 and TOfficeRubrics.ExecutivePower in rubrics:
+            rubrics.remove(TOfficeRubrics.ExecutivePower)
+        rubric = None
+        if len(rubrics) == 0:
+            if logger is not None:
+                logger.error("cannot find rubric for {} set Other".format(office_name))
+            rubric = TOfficeRubrics.Other
+        elif len(rubrics) == 1:
+            rubric = list(rubrics)[0]
+            if logger is not None:
+                logger.debug("{} => {}".format(office_name, RubricsInRussian[rubric]['name']))
+        elif TOfficeRubrics.Education in rubrics:
+            rubrics = {TOfficeRubrics.Education}
+            rubric = list(rubrics)[0]
+            if logger is not None:
+                logger.debug("{} => {}".format(office_name, RubricsInRussian[rubric]['name']))
+        else:
+            rubric_strs = list(RubricsInRussian[r]['name'] for r in rubrics)
+            if logger is not None:
+                logger.error("ambiguous office {} rubrics:{} ".format(office_name, ",".join(rubric_strs)))
+        return rubric
+
+    @staticmethod
+    def convert_municipality_to_education(section_position):
+        if section_position is None:
+            return False
+        heavy_position = re.search('(завуч|учитель|учительница)', section_position, re.IGNORECASE)  is not None
+        light_position = re.search('(директор|заведующая|директора)', section_position, re.IGNORECASE) is not None
+        schools = 'СОШ|СШ|МКОУ|МБУДО|МАОУ|ГБОУ|МОУ|колледж|ВСОШ|общеобразовательного|образовательным|школы|интерната'
+        edu_office = re.search(schools, section_position) is not None
+        return heavy_position or (light_position and edu_office)

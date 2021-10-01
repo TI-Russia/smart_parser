@@ -40,7 +40,8 @@ class Migration(migrations.Migration):
                 ('parent_id', models.IntegerField(null=True)),
                 ('region', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='declarations.region',
                                    verbose_name='region', null=True)),
-                ('rubric_id', models.IntegerField(default=None, null=True))
+                ('rubric_id', models.IntegerField(default=None, null=True)),
+                ('calculated_params', models.JSONField(default=None, null=True)),
             ],
         ),
         migrations.CreateModel(
@@ -55,11 +56,9 @@ class Migration(migrations.Migration):
             name='Source_Document',
             fields=[
                 ('id', models.IntegerField(primary_key=True, serialize=False)),
-                ('sha256', models.CharField(max_length=200)),
+                ('sha256', models.CharField(max_length=64)),
                 ('file_extension', models.CharField(max_length=16)),
                 ('intersection_status', models.CharField(max_length=16)),
-                ('office', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='declarations.office',
-                                             verbose_name='office name')),
                 ('max_income_year', models.IntegerField(default=None, null=True)),
                 ('min_income_year', models.IntegerField(default=None, null=True)),
                 ('section_count', models.IntegerField(default=0, null=True)),
@@ -106,6 +105,8 @@ class Migration(migrations.Migration):
                 ('name_rank', models.IntegerField(null=True)),
                 ('rubric_id', models.IntegerField(null=True, default=None)),
                 ('gender', models.PositiveSmallIntegerField(default=None, null=True)),
+                ('office', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='declarations.office',
+                                             verbose_name='office name')),
             ]
 
         ),
@@ -165,6 +166,13 @@ class Migration(migrations.Migration):
                 ('person', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='declarations.person')),
                 ('rating',
                  models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='declarations.person_rating')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='PersonRedirect',
+            fields=[
+                ('id', models.IntegerField(primary_key=True, serialize=False)),
+                ('new_person_id', models.IntegerField()),
             ],
         ),
 
