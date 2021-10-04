@@ -85,6 +85,8 @@ class TPermaLinksDB:
     def create_db(self):
         if os.path.exists(self.filename):
             os.unlink(self.filename)
+        if not os.path.exists(os.path.dirname(self.filename)):
+            os.makedirs(os.path.dirname(self.filename), exist_ok=True)
         self.access_mode = "cf"
         self.db = dbm.gnu.open(self.filename, self.access_mode)
         self.save_max_plus_one_primary_key(0)

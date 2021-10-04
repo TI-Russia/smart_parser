@@ -128,6 +128,7 @@ class Relative:
     spouse_code = "S"
     child_code = "C"
     unknown_code = "?"
+    main_declarant_relative_index_integer = -1
     code_to_info = dict()
     lower_russian_to_code = dict()
 
@@ -141,10 +142,10 @@ class Relative:
     @staticmethod
     def static_initalize():
         Relative.code_to_info = {
-            Relative.main_declarant_code:  {"ru": "", "en": "", "visual_order": 0},  # main public servant
-            Relative.spouse_code: {"ru": "супруг(а)", "en": "spouse", "visual_order": 1},
-            Relative.child_code: {"ru": "ребенок", "en": "child", "visual_order": 2},
-            Relative.unknown_code: {"ru": "иное", "en": "other", "visual_order": 3},
+            Relative.main_declarant_code:  {"ru": "", "en": ""},  # main public servant
+            Relative.spouse_code: {"ru": "супруг(а)", "en": "spouse",},
+            Relative.child_code: {"ru": "ребенок", "en": "child"},
+            Relative.unknown_code: {"ru": "иное", "en": "other"},
         }
         Relative.lower_russian_to_code = dict(((value['ru'].lower(), key) for key, value in Relative.code_to_info.items()))
 
@@ -161,12 +162,6 @@ class Relative:
 
     def __eq__(self, other):
         return self.code == other.code
-
-    @staticmethod
-    def sort_by_visual_order(items):
-        if len(items) == 0:
-            return items
-        return sorted(items, key=(lambda x: Relative.code_to_info[x.code]['visual_order']))
 
 
 Relative.static_initalize()
@@ -304,7 +299,7 @@ class Person(models.Model):
                 rating_info = ""
             else:
                 image_path = os.path.join("/static/images/", r.rating.image_file_path)
-                rating_info = ", {} место, {} {}, число участников:{}".format(
+                rating_info = ", {} место, {} {}, чисrelative_indexло участников:{}".format(
                     r.person_place,
                     r.rating_value,
                     r.rating.rating_unit_name,
@@ -324,6 +319,12 @@ class PersonRedirect(models.Model):
     id = models.IntegerField(primary_key=True)     # old person id, not existing in the database
     new_person_id = models.IntegerField()
 
+
+def get_relative_index_wrapper(record):
+    if recordself.relative_index is None:
+        return Relative.main_declarant_relative_index_integer
+    else:
+        return record.relative_index
 
 class RealEstate(models.Model):
     section = models.ForeignKey('declarations.Section', on_delete=models.CASCADE)
@@ -359,10 +360,6 @@ class Income(models.Model):
     relative_index = models.PositiveSmallIntegerField(null=True, default=None)
 
 
-def get_distinct_relative_types(records):
-    return set(Relative(x.relative) for x in records.all())
-
-
 #https://ru.wikipedia.org/wiki/%D0%94%D0%B5%D1%81%D1%8F%D1%82%D0%B8%D1%87%D0%BD%D1%8B%D0%B9_%D1%80%D0%B0%D0%B7%D0%B4%D0%B5%D0%BB%D0%B8%D1%82%D0%B5%D0%BB%D1%8C
 def format_income_in_html(income):
     if income is None:
@@ -395,15 +392,12 @@ class Section(models.Model):
     rubric_id = models.IntegerField(null=True, default=None)
     office = models.ForeignKey('declarations.Office', verbose_name="office name", on_delete=models.CASCADE)
 
-    @property
-    def section_parts(self):
-        relatives = set()
-        relatives.add(Relative(Relative.main_declarant_code))
-        relatives |= get_distinct_relative_types(self.income_set)
-        relatives |= get_distinct_relative_types(self.realestate_set)
-        relatives |= get_distinct_relative_types(self.vehicle_set)
-        relative_list = Relative.sort_by_visual_order(list(relatives))
-        return relative_list
+    def get_max_relative_index(self):
+        records = (get_relative_index_wrapper(r)  \
+                for records in (self.income_set, self.realestate_set, self.vehicle_set) \
+                    for r in records.all())
+        m = max(records, default=Relative.main_declarant_relative_index_integer)
+        return m
 
     def get_surname_rank(self):
         return self.surname_rank if self.surname_rank is not None else 100
@@ -540,37 +534,44 @@ class Section(models.Model):
 
     @property
     def html_table_data_rows(self):
-        section_parts = self.section_parts
+        max_relative_index = self.get_max_relative_index()
 
         realties = defaultdict(list)
+        relative_index_to_name = dict()
         for r in self.realestate_set.all():
-            realties[r.relative].append(Section.describe_realty(r))
-        for x in section_parts:
-            if len(realties[x.code]) == 0:
-                realties[x.code].append(Section.describe_realty(None))
+            relative_index_to_name[get_relative_index_wrapper(r)] = Relative(r.relative).name
+            realties[get_relative_index_wrapper(r)].append(Section.describe_realty(r))
+
+        for x in range(Relative.main_declarant_relative_index_integer, max_relative_index + 1):
+            if len(realties[x]) == 0:
+                realties[x].append(Section.describe_realty(None))
 
         vehicles = defaultdict(str)
-        for v in self.vehicle_set.all():
-            vehicles[v.relative] += v.name + "<br/>"
+        for r in self.vehicle_set.all():
+            relative_index_to_name[get_relative_index_wrapper(r)] = Relative(r.relative).name
+            vehicles[get_relative_index_wrapper(r)] += r.name + "<br/>"
 
         incomes = defaultdict(str)
-        for i in self.income_set.all():
-            incomes[i.relative] = '<h3>' + format_income_in_html(i.size) + '</h3>'
+        for r in self.income_set.all():
+            relative_index_to_name[get_relative_index_wrapper(r)] = Relative(r.relative).name
+            incomes[get_relative_index_wrapper(r)] = '<h3>' + format_income_in_html(r.size) + '</h3>'
+
         has_vehicles = len(vehicles.keys()) > 0
         table = list(self.get_html_table_header(has_vehicles))
-        for relative in section_parts:
+        for relative_index in range(Relative.main_declarant_relative_index_integer, max_relative_index + 1):
             cnt = 0
-            for (realty_type, realty_square, own_type) in realties[relative.code]:
+            relative_name = relative_index_to_name.get(relative_index, "")
+            for (realty_type, realty_square, own_type) in realties[relative_index]:
                 if cnt == 0:
-                    rowspan = len(realties[relative.code])
-                    if relative.code == Relative.main_declarant_code:
+                    rowspan = len(realties[relative_index])
+                    if relative_index == Relative.main_declarant_relative_index_integer:
                         cells = [(self.person_name, rowspan)]
                     else:
-                        cells = [(relative.name, rowspan)]
+                        cells = [(relative_name, rowspan)]
                     cells.extend([(realty_type, 1), (realty_square, 1), (own_type, 1)])
                     if has_vehicles:
-                        cells.append((vehicles[relative.code], rowspan))
-                    cells.append((incomes[relative.code], rowspan))
+                        cells.append((vehicles[relative_index], rowspan))
+                    cells.append((incomes[relative_index], rowspan))
                 else:
                     cells = [(realty_type, 1), (realty_square, 1), (own_type, 1)]
                 cnt += 1

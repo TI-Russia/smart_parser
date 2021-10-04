@@ -40,8 +40,10 @@ source $COMMON_SCRIPT
     cd $DLROBOT_FOLDER
     python3 $TOOLS/disclosures_site/manage.py predict_office --dlrobot-human-path dlrobot_human.dbm
 
-#6  Создание базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод (1 час)
-   python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.prod --directory $DLROBOT_FOLDER
+#6  Копирование базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод
+   mv $OLD_DLROBOT_FOLDER/new_permalinks .
+   # можно создать их прям сейчас
+   #python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.prod --directory $DLROBOT_FOLDER
 
 #9 (надо включить в import_json?)
     cd $DLROBOT_FOLDER # im portant
@@ -96,6 +98,9 @@ echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/
 
 #12.1 запускаем обратно dlrobot_worker
   echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/scripts/dl_cloud_manager.py --action start --host &
+
+#12.2
+python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.dev --directory $DLROBOT_FOLDER/new_permalinks &
 
 #13  Коммит статистики
    cd $TOOLS/disclosures_site
