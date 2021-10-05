@@ -77,7 +77,7 @@ class TBackupper:
         shutil.move(tar_file, self.output_folder)
         tar_file1 = os.path.join(self.output_folder, tar_file)
         list_file = os.path.join(self.output_folder, "processed_projects_file_list.txt")
-        self.log_and_system("tar --file {} --list > {}}".format(tar_file1, list_file))
+        self.log_and_system("tar --file {} --list > {}".format(tar_file1, list_file))
 
     def move_mysql_dump(self):
         self.logger.info("move {} to {}".format(self.args.mysql_dump_tar, self.output_folder))

@@ -83,11 +83,11 @@ class TOfficePredictIndex:
     def get_web_domain_by_url(self, document_url, site_url):
         # first take web domain from which the document was dowloaded
         web_domain = urlsplit_pro(document_url).hostname
-        if self.web_sites.get_site_by_web_domain(web_domain) is not None:
+        if self.web_sites.get_first_site_by_web_domain(web_domain) is not None:
             return web_domain
         # if this web domain is unknown, take web domain from site_url
         web_domain = urlsplit_pro(site_url).hostname
-        if self.web_sites.get_site_by_web_domain(web_domain) is None:
+        if self.web_sites.get_first_site_by_web_domain(web_domain) is None:
             self.logger.error("web domain {} is missing in web_sites.json".format(site_url))
         return web_domain
 

@@ -83,7 +83,7 @@ class TOfficePool:
                 hypots = dict()
                 calculated_office_id = case.true_office_id
                 if calculated_office_id is None:
-                    site_info = self.office_index.web_sites.get_site_by_web_domain(case.web_domain)
+                    site_info = self.office_index.web_sites.get_first_site_by_web_domain(case.web_domain)
                     if site_info is not None:
                         calculated_office_id = site_info.calculated_office_id
                     else:

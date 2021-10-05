@@ -8,10 +8,10 @@ from web_site_db.web_site_status import TWebSiteReachStatus
 from web_site_db.web_sites import TDeclarationRounds
 from common.primitives import build_dislosures_sha256, is_local_http_port_free
 from common.archives import TDearchiver
-from unittest import TestCase
 from disclosures_site.scripts.join_human_and_dlrobot import TJoiner
 from declarations.input_json import TSourceDocument, TDlrobotHumanFileDBM
 
+from unittest import TestCase
 import os
 import threading
 import shutil

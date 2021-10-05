@@ -53,9 +53,7 @@ def strip_scheme_and_query(url):
 def site_url_to_file_name(site_url: str):
     file_name = strip_scheme_and_query(site_url)
     file_name = re.sub('(:)(?=[0-9])', '_port_delim_', file_name)
-    i = file_name.find('/')
-    if i != -1:
-        file_name = file_name[:i]
+    file_name = file_name.replace('/', '_')
     assert len(file_name) > 0
     assert file_name.find('.') != -1
     return file_name

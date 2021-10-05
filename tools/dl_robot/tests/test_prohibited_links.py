@@ -117,3 +117,13 @@ class TestProhibitedLinksMosRu(TestProhibitedLinksBase):
         self.check_follow("http://mos.ru/findep", "http://mos.ru/kultura111", True) # unknown path
         self.check_follow("http://mos.ru/findep", "http://mos.ru/kultura", False) #other project
         self.check_follow("http://mos.ru/findep", "http://mos.ru/kultura/", False) #other project
+
+
+class TestProhibitedLinksMosRu2(TestProhibitedLinksBase):
+
+    def setUp(self):
+        self.setup_project("https://www.mos.ru/donm/")
+
+    def test_other_projects_links2(self):
+        self.check_follow("https://www.mos.ru/donm/", 'https://www.mos.ru/upload/documents/files/304/GGS.xlsx', True)
+        self.check_follow("https://www.mos.ru/donm/", 'http://mos.ru/kultura/', False)

@@ -457,10 +457,13 @@ class TRobotStep:
             if is_human_language(element['anchor']):
                 language_links.append(element_index)
                 processed_elements.add(element['id'])
+
         # a link between a language links is also a language link
+        # the links must be near to each other otherwize we can take all links on the page if there are two language switchers
         for s, e in zip(language_links, language_links[1:]):
-            for i in range(s + 1, e):
-                processed_elements.add(elements[i]['id'])
+            if e - s < 3:
+                for i in range(s + 1, e):
+                    processed_elements.add(elements[i]['id'])
 
     def click_all_selenium(self, main_url, check_link_func):
         self.logger.debug("find_links_with_selenium url={} ".format(main_url))

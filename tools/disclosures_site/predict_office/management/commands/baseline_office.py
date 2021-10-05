@@ -11,7 +11,7 @@ def test_baseline(model: TPredictionModelBase):
     false_positive = 0
 
     for c in model.test_pool.pool:
-        site_info = model.office_index.web_sites.get_site_by_web_domain(c.web_domain)
+        site_info = model.office_index.web_sites.get_first_site_by_web_domain(c.web_domain)
         if site_info is None:
             raise Exception ("cannot find site info for {}".format(c.web_domain))
         if c.true_office_id == site_info.calculated_office_id:

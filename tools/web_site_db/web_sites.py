@@ -105,11 +105,18 @@ class TDeclarationWebSiteList:
     def get_mirrors(self, d: str):
         return self.web_domains_redirects.get(d, set())
 
-    def get_site_by_web_domain(self, web_domain: str) -> TDeclarationWebSite:
-        assert '/' not in web_domain
+    def get_sites_by_web_domain(self, web_domain: str):
         l = self.web_domain_to_web_site.get(web_domain)
         if l is None:
-            return l
+            if web_domain.startswith('www.'):
+                return self.web_domain_to_web_site[web_domain[4:]]
+        return l
+
+    def get_first_site_by_web_domain(self, web_domain: str) -> TDeclarationWebSite:
+        assert '/' not in web_domain
+        l = self.get_sites_by_web_domain(web_domain)
+        if len(l) == 0:
+            return None
         return l[0]
 
     def get_web_domains(self):
@@ -119,9 +126,9 @@ class TDeclarationWebSiteList:
     def get_other_sites_regexp_on_the_same_web_domain(self, morda_url):
         web_domain = urlsplit_pro(morda_url).hostname
         other_sites = list()
-        for k in self.web_domain_to_web_site.get(web_domain, list()):
+        for k in self.get_sites_by_web_domain(web_domain):
             if morda_url.find(k) == -1:
-                other_sites.append("({}(/|$))".format(k))
+                other_sites.append("((www.)?{}(/|$))".format(k))
         if len(other_sites) == 0:
             return None
         s = "|".join(other_sites)
@@ -129,7 +136,7 @@ class TDeclarationWebSiteList:
         return re.compile(s)
 
     def get_title_by_web_domain(self, web_domain: str) -> str:
-        info = self.get_site_by_web_domain(web_domain)
+        info = self.get_first_site_by_web_domain(web_domain)
         if info is None or info.title is None:
             return ""
         return info.title

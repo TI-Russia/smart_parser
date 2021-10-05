@@ -101,10 +101,11 @@ echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/
 
 #12.2
 python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.dev --directory $DLROBOT_FOLDER/new_permalinks &
+new_permalinks_pid=$!
 
 #13  Коммит статистики
    cd $TOOLS/disclosures_site
-   git pull
+   git pull origin master
    python3 manage.py add_disclosures_statistics --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
    git commit -m "new statistics" data/statistics.json ../web_site_db/data/dlrobot_remote_calls.dat
    git push
@@ -136,6 +137,7 @@ python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings di
     cd $DLROBOT_FOLDER
     mysqldump -u disclosures -pdisclosures disclosures_db_dev  |  gzip -c > $DLROBOT_FOLDER/disclosures.sql.gz
 
+wait $new_permalinks_pid
 
 #19  switch dev to  prod in backend (migalka)
     mysqladmin drop  disclosures_db -u disclosures -pdisclosures -f
