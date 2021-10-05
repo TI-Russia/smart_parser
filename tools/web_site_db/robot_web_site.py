@@ -36,6 +36,7 @@ class TWebSiteCrawlSnapshot:
         self.regional_main_pages = list()
         self.reach_status = None
         self.init_main_page_default(morda_url)
+        self.other_projects_regexp = self.parent_project.web_sites_db.get_other_sites_regexp_on_the_same_web_domain(morda_url)
 
         self.robot_steps = list()
         for i in range(len(project.robot_step_passports)):
@@ -48,6 +49,11 @@ class TWebSiteCrawlSnapshot:
     def get_robot_speed(self):
         elapsed_time_in_seconds = time.time() - self.start_crawling_time + 0.00000001
         return (60.0 * self.export_env.found_declarations_count) / elapsed_time_in_seconds;
+
+    def url_is_not_linked_to_another_project(self, url):
+        if self.other_projects_regexp is None:
+            return True
+        return self.other_projects_regexp.search(url) is None
 
     def init_main_page_url_from_redirected_url(self, url, title):
         o = urllib_parse_pro.urlsplit_pro(url)

@@ -1,3 +1,5 @@
+import re
+
 from common.urllib_parse_pro import strip_scheme_and_query, TUrlUtf8Encode, urlsplit_pro
 from web_site_db.web_site_status import TWebSiteReachStatus
 
@@ -73,7 +75,7 @@ class TDeclarationWebSiteList:
     def __init__(self, logger, file_name=None):
         self.web_sites = dict()
         self.web_domains_redirects = None
-        self.web_domain_to_web_site = dict()
+        self.web_domain_to_web_site = defaultdict(list)
         self.logger = logger
         if file_name is None:
             self.file_name = TDeclarationWebSiteList.default_input_task_list_path
@@ -85,7 +87,9 @@ class TDeclarationWebSiteList:
             for k, v in json.load(inp).items():
                 self.web_sites[k] = TDeclarationWebSite().read_from_json(v)
         self.build_web_domains_redirects()
-        self.web_domain_to_web_site = dict((urlsplit_pro(k).hostname, v) for k, v in self.web_sites.items())
+        self.web_domain_to_web_site.clear()
+        for k, v in self.web_sites.items():
+            self.web_domain_to_web_site[urlsplit_pro(k).hostname].append(k)
         return self
 
     def build_web_domains_redirects(self):
@@ -103,7 +107,26 @@ class TDeclarationWebSiteList:
 
     def get_site_by_web_domain(self, web_domain: str) -> TDeclarationWebSite:
         assert '/' not in web_domain
-        return self.web_domain_to_web_site.get(web_domain)
+        l = self.web_domain_to_web_site.get(web_domain)
+        if l is None:
+            return l
+        return l[0]
+
+    def get_web_domains(self):
+        for k in self.web_domain_to_web_site:
+            yield k
+
+    def get_other_sites_regexp_on_the_same_web_domain(self, morda_url):
+        web_domain = urlsplit_pro(morda_url).hostname
+        other_sites = list()
+        for k in self.web_domain_to_web_site.get(web_domain, list()):
+            if morda_url.find(k) == -1:
+                other_sites.append("({}(/|$))".format(k))
+        if len(other_sites) == 0:
+            return None
+        s = "|".join(other_sites)
+        self.logger.debug("use regexp {} to prohibit crawling other projects".format(s))
+        return re.compile(s)
 
     def get_title_by_web_domain(self, web_domain: str) -> str:
         info = self.get_site_by_web_domain(web_domain)

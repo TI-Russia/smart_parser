@@ -4,17 +4,16 @@ from common.logging_wrapper import setup_logging
 from web_site_db.robot_project import TRobotProject
 from common.link_info import TLinkInfo, TClickEngine
 
-
 import os
 import shutil
 from unittest import TestCase
 
 
-class TestProhibitedLinks(TestCase):
-    def setUp(self):
+class TestProhibitedLinksBase(TestCase):
+    def setup_project(self, morda_url):
         logger = setup_logging('prohibited')
         self.project = TRobotProject(logger, '', [], "result", enable_search_engine=False)
-        web_site = self.project.add_web_site("aot.ru")
+        web_site = self.project.add_web_site(morda_url)
         self.robot_step = TRobotStep(web_site)
 
         d = os.path.join(os.path.dirname(__file__), "data.prohibited")
@@ -34,6 +33,11 @@ class TestProhibitedLinks(TestCase):
         link_info = TLinkInfo(TClickEngine.selenium, src, trg)
         can_follow = self.robot_step.can_follow_this_link(link_info)
         self.assertEqual(canon, can_follow, msg="{} -> {}".format(src, trg))
+
+
+class TestProhibitedLinks(TestProhibitedLinksBase):
+    def setUp(self):
+        self.setup_project("aot.ru")
 
     def test_prohibit_popular_sites(self):
         pairs = [
@@ -96,3 +100,20 @@ class TestProhibitedLinks(TestCase):
         ]
         for source, target in pairs:
             self.check_follow(source, target, False)
+
+
+class TestProhibitedLinksMosRu(TestProhibitedLinksBase):
+
+    def setUp(self):
+        self.setup_project("mos.ru/findep")
+
+    def test_other_projects_links(self):
+
+        self.check_follow("http://mos.ru/findep", "http://mos.ru/findep/aaaa", True)
+        self.check_follow("http://mos.ru/findep", "http://mos.ru/unknown_path", True)
+        self.check_follow("http://mos.ru/findep", "http://mos.ru/upload", True)
+        self.check_follow("http://mos.ru/findep", "http://upload.mos.ru", True)
+
+        self.check_follow("http://mos.ru/findep", "http://mos.ru/kultura111", True) # unknown path
+        self.check_follow("http://mos.ru/findep", "http://mos.ru/kultura", False) #other project
+        self.check_follow("http://mos.ru/findep", "http://mos.ru/kultura/", False) #other project

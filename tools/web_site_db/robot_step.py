@@ -47,27 +47,6 @@ class TUrlMirror:
         self.normalized_url = url
 
 
-def check_common_domain(web_domain1, web_domain2):
-    web_domain1 = web_domain1.lower()
-    web_domain2 = web_domain2.lower()
-    domains1 = list(web_domain1.split("."))
-    domains2 = list(web_domain2.split("."))
-    domains1.reverse()
-    domains2.reverse()
-    pairs = list(zip(domains1, domains2))
-    common_domains_cnt = 0
-    for i1, i2 in pairs:
-        if i1 != i2:
-            break
-        else:
-            common_domains_cnt += 1
-    min_common_domains_count = 2
-    if web_domain1.endswith("gov.ru") or web_domain2.endswith("gov.ru"):
-        min_common_domains_count = 3
-
-    return common_domains_cnt >= min_common_domains_count
-
-
 def check_href_elementary(href):
     if len(href) == 0:
         return False
@@ -166,6 +145,25 @@ class TRobotStep:
             new_step_urls[urls[-1].input_url] = max_weight  # get the longest url and max weight
         self.url_to_weight = new_step_urls
 
+    def check_common_domain(self, web_domain1, web_domain2):
+        web_domain1 = web_domain1.lower()
+        web_domain2 = web_domain2.lower()
+        domains1 = list(web_domain1.split("."))
+        domains2 = list(web_domain2.split("."))
+        domains1.reverse()
+        domains2.reverse()
+        pairs = list(zip(domains1, domains2))
+        common_domains_cnt = 0
+        for i1, i2 in pairs:
+            if i1 != i2:
+                break
+            else:
+                common_domains_cnt += 1
+        min_common_domains_count = 2
+        if web_domain1.endswith("gov.ru") or web_domain2.endswith("gov.ru"):
+            min_common_domains_count = 3
+        return common_domains_cnt >= min_common_domains_count
+
     def can_follow_this_link(self, link_info: TLinkInfo):
         source_url = link_info.source_url
         target_url = link_info.target_url
@@ -185,19 +183,21 @@ class TRobotStep:
         source_domain = get_site_domain_wo_www(source_url)
         if is_super_popular_domain(href_domain):
             return False
+        if not self.website.url_is_not_linked_to_another_project(target_url):
+            return False
         href_domain = re.sub(':[0-9]+$', '', href_domain)  # delete port
         source_domain = re.sub(':[0-9]+$', '', source_domain)  # delete port
         if source_domain == href_domain:
             return True
-        if check_common_domain(source_domain, href_domain):
+        if self.check_common_domain(source_domain, href_domain):
             return True
         if TRobotStep.check_local_address:
             return True
         for redirect in self.website.parent_project.web_sites_db.get_mirrors(source_domain):
-            if check_common_domain(redirect, href_domain):
+            if self.check_common_domain(redirect, href_domain):
                 return True
         for redirect in self.website.parent_project.web_sites_db.get_mirrors(href_domain):
-            if check_common_domain(source_domain, redirect):
+            if self.check_common_domain(source_domain, redirect):
                 return True
 
         return False

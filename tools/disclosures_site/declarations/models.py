@@ -319,7 +319,7 @@ class PersonRedirect(models.Model):
     id = models.IntegerField(primary_key=True)     # old person id, not existing in the database
     new_person_id = models.IntegerField()
 
-    
+
 def get_relative_index_wrapper(record):
     if record.relative_index is None:
         return Relative.main_declarant_relative_index_integer

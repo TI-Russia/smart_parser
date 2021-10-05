@@ -47,7 +47,7 @@ class TOfficePredictIndexBuilder(TOfficePredictIndex):
 
     def build_web_domains(self):
         self.web_domains = dict()
-        for web_domain in self.web_sites.web_domain_to_web_site.keys():
+        for web_domain in self.web_sites.get_web_domains():
             if  web_domain  is not None:
                 for w in TOfficePredictIndex.split_web_domain(web_domain):
                     if w not in self.web_domains:

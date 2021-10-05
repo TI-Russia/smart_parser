@@ -46,7 +46,6 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         for b in TOfficePredictIndex.get_bigrams(case.text + " " + site_title):
             bigram_id = self.office_index.get_bigram_id(b)
             if bigram_id is not None:
-                #print(b)
                 bigrams.add(bigram_id)
         return sorted(list(bigrams))
 
