@@ -110,6 +110,7 @@ class TDeclarationWebSiteList:
         if l is None:
             if web_domain.startswith('www.'):
                 return self.web_domain_to_web_site[web_domain[4:]]
+            return list()
         return l
 
     def get_first_site_by_web_domain(self, web_domain: str) -> TDeclarationWebSite:
