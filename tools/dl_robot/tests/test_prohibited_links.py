@@ -127,3 +127,4 @@ class TestProhibitedLinksMosRu2(TestProhibitedLinksBase):
     def test_other_projects_links2(self):
         self.check_follow("https://www.mos.ru/donm/", 'https://www.mos.ru/upload/documents/files/304/GGS.xlsx', True)
         self.check_follow("https://www.mos.ru/donm/", 'http://mos.ru/kultura/', False)
+        self.check_follow("https://www.mos.ru/donm/", 'https://www.mos.ru/mka/', False)
