@@ -36,7 +36,10 @@ class TWebSiteCrawlSnapshot:
         self.regional_main_pages = list()
         self.reach_status = None
         self.init_main_page_default(morda_url)
-        self.other_projects_regexp = self.parent_project.web_sites_db.get_other_sites_regexp_on_the_same_web_domain(morda_url)
+        self.other_projects_regexp = None
+        if self.main_page_url != "":
+            self.other_projects_regexp = self.parent_project.web_sites_db.get_other_sites_regexp_on_the_same_web_domain(
+                self.main_page_url)
 
         self.robot_steps = list()
         for i in range(len(project.robot_step_passports)):
@@ -183,6 +186,7 @@ class TWebSiteCrawlSnapshot:
                 self.robot_steps.append(TRobotStep(self, **step, is_last_step=(i == len(steps) - 1)))
         for url, info in init_json.get('url_nodes', dict()).items():
             self.url_nodes[url] = TUrlInfo().from_json(info)
+        self.other_projects_regexp = self.parent_project.web_sites_db.get_other_sites_regexp_on_the_same_web_domain(self.main_page_url)
         return self
 
     def to_json(self):

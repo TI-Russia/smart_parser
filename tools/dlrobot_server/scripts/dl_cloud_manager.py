@@ -84,6 +84,7 @@ def get_hosts(args):
         if m['status'] == 'STOPPED':
             TYandexCloud.start_yandex_cloud_worker(cloud_id)
         yield (TYandexCloud.get_worker_ip(m), m['name'])
+
     yield ("avito", "avito")
     #yield ("lena", "lena")
     yield ("samsung", "samsung")

@@ -1,6 +1,7 @@
 import os
 import shutil
 import json
+import sys
 
 
 class DLROBOT_HTTP_CODE:
@@ -90,6 +91,10 @@ class TYandexCloud:
 
     @staticmethod
     def get_worker_ip(one_record):
-        return one_record['network_interfaces'][0]['primary_v4_address']['one_to_one_nat']['address']
+        try:
+            return one_record['network_interfaces'][0]['primary_v4_address']['one_to_one_nat']['address']
+        except KeyError as exp:
+            sys.stderr.write("cannot process {}, Exception={}".format(one_record, exp))
+            raise
 
 
