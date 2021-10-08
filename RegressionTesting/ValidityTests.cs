@@ -940,6 +940,12 @@ namespace RegressionTesting
             TestSmartParser("sov_fed.docx", "prod");
         }
 
+        [TestMethod]
+        [TestCategory("docx")]
+        public void Test_Year_With_Space()
+        {
+            TestSmartParser("year_with_space.docx", "prod");
+        }
         private static void SetupLog4Net()
         {
             log4net.Repository.ILoggerRepository repo = log4net.LogManager.GetRepository(Assembly.GetEntryAssembly());
