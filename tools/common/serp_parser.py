@@ -100,21 +100,6 @@ class SearchEngine:
             return random.choice(YANDEX_SEARCH_URLS)
 
     @staticmethod
-    def _send_request(search_engine, site_url, query, selenium_holder: TSeleniumDriver):
-        if SearchEngine.is_search_engine_ref(query) or SearchEngine.is_search_engine_ref(site_url):
-            selenium_holder.logger.error("Warning! we use keyword 'google' to filter results out, search would yield no results")
-        request_parts = ["site:{}".format(site_url), query]
-        random.shuffle(request_parts)  # more random
-        site_req = " ".join(request_parts)
-        search_engine_url = random.choice(SEARCH_URLS[search_engine])
-        selenium_holder.navigate(search_engine_url)
-        time.sleep(6)
-        element = selenium_holder.the_driver.switch_to.active_element
-        element.send_keys(site_req)
-        time.sleep(1)
-        element.send_keys(Keys.RETURN)
-
-    @staticmethod
     def _parse_serp(selenium_holder: TSeleniumDriver):
         search_results = []
         selenium_holder.logger.debug("start reading serp")
@@ -136,6 +121,19 @@ class SearchEngine:
         return search_results
 
     @staticmethod
+    def send_request(search_engine, search_engine_request, selenium_holder: TSeleniumDriver):
+        search_engine_url = random.choice(SEARCH_URLS[search_engine])
+        selenium_holder.navigate(search_engine_url)
+        time.sleep(6)
+        element = selenium_holder.the_driver.switch_to.active_element
+        element.send_keys(search_engine_request)
+        time.sleep(1)
+        element.send_keys(Keys.RETURN)
+        time.sleep(8)
+        search_results = SearchEngine._parse_serp(selenium_holder)
+        return search_results
+
+    @staticmethod
     def site_search(search_engine, site_url, query, selenium_holder: TSeleniumDriver,
                     enable_cache=True):
 
@@ -144,11 +142,15 @@ class SearchEngine:
             if len(cached_results) > 0:
                 return cached_results['urls']
 
-        SearchEngine._send_request(search_engine, site_url, query, selenium_holder)
+        request_parts = ["site:{}".format(site_url), query]
+        random.shuffle(request_parts)  # more random
+        search_engine_request = " ".join(request_parts)
 
-        time.sleep(8)
+        if SearchEngine.is_search_engine_ref(query) or SearchEngine.is_search_engine_ref(site_url):
+            selenium_holder.logger.error("Warning! we use keyword 'google' to filter results out, search would yield no results")
 
-        search_results = SearchEngine._parse_serp(selenium_holder)
+        search_results = SearchEngine.send_request(search_engine, search_engine_request, selenium_holder)
+
         if len(search_results) == 0:
             html = selenium_holder.the_driver.page_source
             if html.find("ничего не нашлось") == -1 or html.find("ничего не найдено") == -1 \

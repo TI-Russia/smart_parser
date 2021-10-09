@@ -1,3 +1,5 @@
+import random
+
 from web_site_db.web_sites import TDeclarationWebSiteList, TDeclarationWebSite
 from web_site_db.web_site_status import TWebSiteReachStatus
 from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
@@ -6,6 +8,8 @@ from common.urllib_parse_pro import strip_scheme_and_query, TUrlUtf8Encode
 from common.logging_wrapper import setup_logging
 from common.http_request import THttpRequester
 from common.download import TDownloadEnv
+from declarations.offices_in_memory import TOfficeInMemory, TOfficeTableInMemory
+from common.serp_parser import SearchEngine, SearchEngineEnum
 
 from copy import deepcopy
 import argparse
@@ -13,13 +17,14 @@ import pymysql
 from datetime import datetime
 import re
 import os
-
+import time
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--action", dest='action', help="can be ban, to_utf8, move, mark_large_sites, check_alive, "
                                                         "print_urls, check, redirect_subdomain, regional_to_main")
     parser.add_argument("--input-file", dest='input_file', required=True)
+
     parser.add_argument("--output-file", dest='output_file', required=True)
     parser.add_argument("--url-list", dest='url_list', required=False)
     parser.add_argument("--take-all-web-sites", dest='take_all_web_sites', required=False, action="store_true", default=False,
@@ -27,6 +32,8 @@ def parse_args():
     parser.add_argument("--filter-regex", dest='filter_regex', required=False)
     parser.add_argument("--replace-substring", dest='replace_substring', required=False,
                         help="for example, --action move --filter-regex '.mvd.ru$'  --replace-substring .мвд.рф")
+    parser.add_argument("--parent-office-id", dest='parent_office_id', type=int, required=False)
+    parser.add_argument("--query-template", dest='query_template', required=False)
     return parser.parse_args()
 
 
@@ -171,32 +178,34 @@ class TWebSitesManager:
             else:
                 return None
 
+    def check_alive_one_url(self, site_url):
+        site_info: TDeclarationWebSite
+        site_info = self.out_web_sites.get_web_site(site_url)
+        web_site = self.check_alive_one_site(site_url)
+        if web_site is None:
+            self.logger.info("     {} is dead".format(site_url))
+            site_info.ban()
+            complete_bans.append(site_url)
+        else:
+            new_site_url = strip_scheme_and_query(web_site.main_page_url)
+            if new_site_url != site_url:
+                self.logger.info('   {} is alive, but is redirected to {}'.format(
+                    site_url, new_site_url))
+                if not self.out_web_sites.has_web_site(new_site_url):
+                    self.out_web_sites.web_sites[new_site_url] = deepcopy(site_info)
+                site_info.set_redirect(new_site_url)
+                site_info = self.out_web_sites.get_web_site(new_site_url)
+            else:
+                self.logger.info("     {} is alive, main_page_url = {}".format(
+                    site_url, web_site.main_page_url))
+            site_info.set_protocol(web_site.get_main_url_protocol())
+            site_info.set_title(web_site.get_title(web_site.main_page_url))
+
     def check_alive(self):
         self.out_web_sites.web_sites = deepcopy(self.in_web_sites.web_sites)
         complete_bans = list()
         for site_url in self.get_url_list(start_selenium=True):
-            site_info: TDeclarationWebSite
-            site_info = self.out_web_sites.get_web_site(site_url)
-            web_site = self.check_alive_one_site(site_url)
-            if web_site is None:
-                self.logger.info("     {} is dead".format(site_url))
-                site_info.ban()
-                complete_bans.append(site_url)
-            else:
-                new_site_url = strip_scheme_and_query(web_site.main_page_url)
-                if new_site_url != site_url:
-                    self.logger.info('   {} is alive, but is redirected to {}'.format(
-                        site_url, new_site_url))
-                    if not self.out_web_sites.has_web_site(new_site_url):
-                        self.out_web_sites.web_sites[new_site_url] = deepcopy(site_info)
-                    site_info.set_redirect(new_site_url)
-                    site_info = self.out_web_sites.get_web_site(new_site_url)
-                else:
-                    self.logger.info("     {} is alive, main_page_url = {}".format(
-                        site_url, web_site.main_page_url))
-                site_info.set_protocol(web_site.get_main_url_protocol())
-                site_info.set_title(web_site.get_title(web_site.main_page_url))
-
+            self.check_alive_one_url(site_url)
 
         self.logger.info("ban {} web sites".format(len(complete_bans)))
 
@@ -233,6 +242,33 @@ class TWebSitesManager:
                 new_web_site.calculated_office_id = reg_props['calc_office_id']
                 self.out_web_sites.web_sites[site_url] = new_web_site
 
+    def create_departments(self):
+        self.out_web_sites.web_sites = self.in_web_sites.web_sites
+        offices = TOfficeTableInMemory()
+        offices.read_from_local_file()
+        o: TOfficeInMemory
+        TDownloadEnv.clear_cache_folder()
+        project_path = "project.txt"
+        TRobotProject.create_project("dummy.ru", project_path)
+        with TRobotProject(self.logger, project_path, [], "result") as self.temp_dlrobot_project:
+            for o in offices.offices.values():
+                if o.parent_id == self.args.parent_office_id:
+                    self.logger.info("ofiice id = {}, {}".format(o.office_id, o.name))
+                    query = self.args.query_template.format(o.name)
+                    engine = random.choice([SearchEngineEnum.GOOGLE, SearchEngineEnum.YANDEX])
+                    results = SearchEngine.send_request(engine, query, self.temp_dlrobot_project.selenium_driver)
+                    if len(results) == 0:
+                        msg = "cannot find results fo query {}".format(query)
+                        self.logger.error(msg)
+                        #raise Exception(msg)
+                    else:
+                        url = strip_scheme_and_query(results[0])
+                        new_web_site = TDeclarationWebSite()
+                        new_web_site.calculated_office_id = o.office_id
+                        self.out_web_sites.web_sites[url] = new_web_site
+                        self.check_alive_one_url(url)
+                    time.sleep(20)
+
     def main(self):
         if self.args.action == "ban":
             self.ban_sites()
@@ -252,6 +288,8 @@ class TWebSitesManager:
             self.redirect_subdomain()
         elif self.args.action == "regional_to_main":
             self.regional_to_main()
+        elif self.args.action == "create_departments":
+            self.create_departments()
         else:
             raise Exception("unknown action")
         self.out_web_sites.save_to_disk()
