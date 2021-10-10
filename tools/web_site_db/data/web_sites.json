@@ -72646,5 +72646,225 @@
         "calc_office_id": 974,
         "http_protocol": "https",
         "title": "Отделение по г. Севастополю"
+    },
+    "gov.spb.ru/gov/otrasl/archiv_kom": {
+        "calc_office_id": 4203,
+        "http_protocol": "https",
+        "title": "Архивный комитет Санкт‑Петербурга - Официальный сайт Администрации Санкт‑Петербурга"
+    },
+    "gov.spb.ru/gov/otrasl/gilfond": {
+        "calc_office_id": 4204,
+        "http_protocol": "https",
+        "title": "Жилищный комитет - Официальный сайт Администрации Санкт‑Петербурга"
+    },
+    "gov.spb.ru/gov/otrasl/fin_kontrol": {
+        "calc_office_id": 4205,
+        "http_protocol": "https",
+        "title": "Комитет государственного финансового контроля Санкт‑Петербурга - Официальный сайт Администрации Санкт‑Петербурга"
+    },
+    "commim.spb.ru": {
+        "calc_office_id": 4206,
+        "http_protocol": "https",
+        "title": "Контакты - Комитет имущественных отношений Санкт-Петербурга"
+    },
+    "gov.spb.ru/gov/otrasl/blago": {
+        "calc_office_id": 4207,
+        "http_protocol": "https",
+        "title": "Комитет по благоустройству Санкт‑Петербурга - Официальный сайт Администрации Санкт‑Петербурга"
+    },
+    "kvs.gov.spb.ru": {
+        "calc_office_id": 4208,
+        "http_protocol": "https",
+        "title": "Комитет по внешним связям Санкт‑Петербурга"
+    },
+    "gov.spb.ru/gov/otrasl/c_zakonnost": {
+        "calc_office_id": 4209,
+        "http_protocol": "https",
+        "title": "КОМИТЕТ ПО ВОПРОСАМ ЗАКОННОСТИ, ПРАВОПОРЯДКА И БЕЗОПАСНОСТИ, Санкт-Петербург"
+    },
+    "gz-spb.ru": {
+        "calc_office_id": 4210,
+        "http_protocol": "https",
+        "title": "Государственные закупки Санкт-Петербурга | Закупки Петербурга"
+    },
+    "kgiop.gov.spb.ru": {
+        "calc_office_id": 4211,
+        "http_protocol": "https",
+        "title": "Комитет по государственному контролю, использованию и охране памятников истории и культуры"
+    },
+    "kgainfo.spb.ru": {
+        "calc_office_id": 4212,
+        "http_protocol": "https",
+        "title": "Комитет по градостроительству и архитектуре | Комитет по градостроительству и архитектуре"
+    },
+    "kzags.gov.spb.ru": {
+        "calc_office_id": 4213,
+        "http_protocol": "http",
+        "title": "Главная — Комитет по делам записи актов гражданского состояния"
+    },
+    "zdrav.spb.ru/ru": {
+        "calc_office_id": 4214,
+        "http_protocol": "http",
+        "title": "Комитет по здравоохранению Санкт-Петербурга | Главная страница"
+    },
+    "gov.spb.ru/gov/otrasl/invest": {
+        "calc_office_id": 4215,
+        "http_protocol": "https",
+        "title": "Комитет по инвестициям Санкт‑Петербурга - Официальный сайт Администрации Санкт‑Петербурга"
+    },
+    "kis.gov.spb.ru": {
+        "calc_office_id": 4216,
+        "http_protocol": "https",
+        "title": "Комитет по информатизации и связи"
+    },
+    "gov.spb.ru/gov/otrasl/c_culture": {
+        "calc_office_id": 4218,
+        "http_protocol": "https",
+        "title": "КОМИТЕТ ПО КУЛЬТУРЕ САНКТ-ПЕТЕРБУРГА"
+    },
+    "gov.spb.ru/gov/otrasl/kmormp": {
+        "calc_office_id": 4219,
+        "http_protocol": "https",
+        "title": "Комитет по межнациональным отношениям и реализации миграционной политики в Санкт‑Петербурге - Официальный сайт Администрации Санкт‑Петербурга"
+    },
+    "gov.spb.ru/gov/otrasl/kpmp": {
+        "calc_office_id": 4220,
+        "http_protocol": "https",
+        "title": "Комитет по молодежной политике и взаимодействию с общественными организациями - Официальный сайт Администрации Санкт‑Петербурга"
+    },
+    "knvsh.gov.spb.ru": {
+        "calc_office_id": 4221,
+        "http_protocol": "http",
+        "title": "КНВШ"
+    },
+    "k-obr.spb.ru": {
+        "calc_office_id": 4222,
+        "http_protocol": "http",
+        "title": "Комитет по образованию"
+    },
+    "gov.spb.ru/gov/otrasl/press": {
+        "calc_office_id": 4223,
+        "http_protocol": "https",
+        "title": "Комитет по печати и взаимодействию со средствами массовой информации - Официальный сайт Администрации Санкт‑Петербурга"
+    },
+    "gov.spb.ru/gov/otrasl/ecology": {
+        "calc_office_id": 4224,
+        "http_protocol": "https",
+        "title": "Комитет по природопользованию, охране окружающей среды и обеспечению экологической безопасности - Официальный сайт Администрации Санкт‑Петербурга"
+    },
+    "cipit.gov.spb.ru": {
+        "calc_office_id": 4225,
+        "http_protocol": "https",
+        "title": "Комитет по промышленной политике, инновациям и торговле Санкт‑Петербурга"
+    },
+    "cipit.gov.spb.ru/komitet/rukovodstvo-komiteta": {
+        "calc_office_id": 4226,
+        "http_protocol": "https",
+        "title": "Руководство Комитета"
+    },
+    "gov.spb.ru/gov/otrasl/tr_infr_kom": {
+        "calc_office_id": 4227,
+        "http_protocol": "https",
+        "title": "Комитет по развитию транспортной инфраструктуры Санкт‑Петербурга - Официальный сайт Администрации Санкт‑Петербурга"
+    },
+    "gov.spb.ru/gov/otrasl/c_tourism": {
+        "calc_office_id": 4228,
+        "http_protocol": "https",
+        "title": "Комитет по развитию туризма Санкт-Петербурга - piterorg.ru"
+    },
+    "gov.spb.ru/gov/otrasl/trud": {
+        "calc_office_id": 4229,
+        "http_protocol": "https",
+        "title": "Комитет по социальной политике Санкт‑Петербурга - Официальный сайт Администрации Санкт‑Петербурга"
+    },
+    "gov.spb.ru/gov/otrasl/komstroy": {
+        "calc_office_id": 4230,
+        "http_protocol": "https",
+        "title": "Комитет по строительству - Официальный сайт Администрации Санкт‑Петербурга"
+    },
+    "tarifspb.ru": {
+        "calc_office_id": 4231,
+        "http_protocol": "http",
+        "title": "Комитет по тарифам Санкт-Петербурга | Главная"
+    },
+    "gov.spb.ru/gov/otrasl/c_transport": {
+        "calc_office_id": 4232,
+        "http_protocol": "https",
+        "title": "Комитет по транспорту - Официальный сайт Администрации Санкт‑Петербурга"
+    },
+    "gov.spb.ru/gov/otrasl/kom_zan": {
+        "calc_office_id": 4233,
+        "http_protocol": "https",
+        "title": "Комитет по труду и занятости населения Санкт‑Петербурга - Официальный сайт Администрации Санкт‑Петербурга"
+    },
+    "kfis.gov.spb.ru": {
+        "calc_office_id": 4234,
+        "http_protocol": "https",
+        "title": "Комитет по физической культуре и спорту"
+    },
+    "cedipt.gov.spb.ru": {
+        "calc_office_id": 4235,
+        "http_protocol": "https",
+        "title": "Комитет по экономической политике и стратегическому планированию Санкт‑Петербурга"
+    },
+    "gov.spb.ru/gov/otrasl/ingen": {
+        "calc_office_id": 4236,
+        "status": "abandoned",
+        "redirect_to": "rusprofile.ru/id/3029499"
+    },
+    "rusprofile.ru/id/3029499": {
+        "calc_office_id": 4236,
+        "http_protocol": "https",
+        "title": "Комитет по Энергетике и Инженерному Обеспечению Санкт-Петербург (ИНН 7825363978) - телефон и реквизиты"
+    },
+    "gov.spb.ru/gov/otrasl/finance": {
+        "calc_office_id": 4237,
+        "http_protocol": "https",
+        "title": "Комитет финансов Санкт‑Петербурга - Официальный сайт Администрации Санкт‑Петербурга"
+    },
+    "gov.spb.ru/gov/otrasl/veter": {
+        "calc_office_id": 4238,
+        "http_protocol": "https",
+        "title": "Управление ветеринарии Санкт‑Петербурга - Официальный сайт Администрации Санкт‑Петербурга"
+    },
+    "gov.spb.ru/gov/otrasl/sadovod": {
+        "calc_office_id": 4239,
+        "http_protocol": "https",
+        "title": "Управление по развитию садоводства и огородничества Санкт‑Петербурга - Официальный сайт Администрации Санкт‑Петербурга"
+    },
+    "gov.spb.ru/gov/otrasl/socpit": {
+        "calc_office_id": 4240,
+        "http_protocol": "https",
+        "title": "Управление социального питания - Официальный сайт Администрации Санкт‑Петербурга"
+    },
+    "gov.spb.ru/gov/otrasl/inspek": {
+        "calc_office_id": 4241,
+        "http_protocol": "https",
+        "title": "Государственная административно-техническая инспекция - Официальный сайт Администрации Санкт‑Петербурга"
+    },
+    "gov.spb.ru/gov/otrasl/inspekcija": {
+        "calc_office_id": 4242,
+        "http_protocol": "https",
+        "title": "Государственная жилищная инспекция Санкт‑Петербурга - Официальный сайт Администрации Санкт‑Петербурга"
+    },
+    "gov.spb.ru/gov/otrasl/sl_nadzora": {
+        "calc_office_id": 4243,
+        "http_protocol": "https",
+        "title": "Государственная техническая инспекция Санкт‑Петербурга (Гостехнадзор Санкт‑Петербурга) - Официальный сайт Администрации Санкт‑Петербурга"
+    },
+    "gsnspb.ru": {
+        "calc_office_id": 4244,
+        "http_protocol": "https",
+        "title": "Госстройнадзор Санкт-Петербурга"
+    },
+    "gov.spb.ru/gov/otrasl/kki": {
+        "calc_office_id": 6738,
+        "http_protocol": "https",
+        "title": "Комитет по контролю за имуществом г. Санкт-Петербурга в Санкт-Петербурге - адрес, телефон, отзывы"
+    },
+    "gov.spb.ru/gov/otrasl/ktr": {
+        "calc_office_id": 6740,
+        "http_protocol": "https",
+        "title": "Комитет территориального развития Санкт‑Петербурга - Официальный сайт Администрации Санкт‑Петербурга"
     }
 }

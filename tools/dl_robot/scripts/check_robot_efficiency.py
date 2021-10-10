@@ -70,8 +70,6 @@ class TStats:
                 if self.start_time is None:
                     self.start_time = line_time
                 self.end_time = line_time
-                if line.find('find_links_in_html_by_text') != -1:
-                    self.engine_stats.save_start_point(line_time, 'urllib')
                 if line.find('find_links_with_selenium') != -1:
                     self.engine_stats.save_start_point(line_time, 'selenium')
                 #

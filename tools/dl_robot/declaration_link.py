@@ -6,6 +6,8 @@ from common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_H
 from common.russian_declarant_position import is_public_servant_role
 from common.russian_office_word import has_office_word_in_beginning
 from common.russian_geo_word import has_geo_leaf_word_in_beginning
+from common.content_types import is_video_or_audio_file_extension
+
 import re
 
 
@@ -104,6 +106,14 @@ def looks_like_a_declaration_link_without_cache(logger, link_info: TLinkInfo):
         positive_case = "case 0"
     elif has_negative_words(anchor_text_russified):
         return False
+
+    if link_info.target_url is not None:
+        # we make a  http-head request here, that is rather slow
+        file_extension = get_file_extension_only_by_headers(link_info.target_url)
+        if is_video_or_audio_file_extension(file_extension):
+            logger.debug("link {} looks like a media file, skipped".format(link_info.target_url))
+            return False
+
     income_regexp = '(доход((ах)|(е)))|(коррупц)'
     sved_regexp = '(сведения)|(справк[аи])|(sveden)'
     svedenija_anchor = re.search(sved_regexp, anchor_text_russified) is not None or \

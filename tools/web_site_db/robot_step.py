@@ -9,7 +9,6 @@ from common.popular_sites import is_super_popular_domain
 from common.serp_parser import SearchEngine, SearchEngineEnum, SerpException
 from common.primitives import normalize_and_russify_anchor_text
 from dl_robot.declaration_link import looks_like_a_declaration_link_without_cache, best_declaration_regex_match
-from common.content_types import is_video_or_audio_file_extension
 from web_site_db.url_info import TUrlInfo
 from common.languages import is_human_language
 
@@ -125,6 +124,7 @@ class TRobotStep:
         self.unique_hrefs = set()
         self.crawled_web_pages_count = 0
         self.start_time = time.time()
+        self.one_page_timeout_count = 0
 
     def get_selenium_driver(self):
         return self.website.parent_project.selenium_driver
@@ -254,11 +254,7 @@ class TRobotStep:
             if is_human_language(link_info.anchor_text):
                 self.logger.debug("skip language link {}".format(link_info.anchor_text))
                 return False
-            if link_info.target_url is not None:
-                file_extension = get_file_extension_only_by_headers(link_info.target_url)
-                if is_video_or_audio_file_extension(file_extension):
-                    self.logger.debug("link {} looks like a media file, skipped".format(link_info.target_url))
-                    return False
+            # no http head requests in the general wrapper, since they are too slow to process pages with 8000 links like gov.spb sitemap
             if not check_link_func(self, link_info):
                 return False
             else:
@@ -352,9 +348,6 @@ class TRobotStep:
         except (THttpRequester.RobotHttpException, WebDriverException) as e:
             self.logger.error('add_page_links_selenium failed on url={}, exception: {}'.format(url, e))
 
-    def add_page_links(self, url, check_link_func):
-        self.add_page_links_selenium(url, check_link_func)
-
     def pop_url_with_max_weight(self, url_index):
         if len(self.pages_to_process) == 0:
             return None
@@ -370,34 +363,6 @@ class TRobotStep:
         self.logger.debug("choose url {} weight={} index={} left={}".format(
             best_url, max_weight, url_index, len(self.pages_to_process.keys())))
         return best_url
-
-    def find_links_in_html_by_text(self, main_url, html_parser: THtmlParser, check_link_func):
-        element_index = 0
-        links_to_process = list(html_parser.soup.findAll('a'))
-        self.logger.debug("find_links_in_html_by_text url={} links_count={}".format(main_url, len(links_to_process)))
-        for html_link in links_to_process[:self.max_links_from_one_page]:
-            href = html_link.attrs.get('href')
-            if href is not None:
-                element_index += 1
-                link_info = TLinkInfo(TClickEngine.urllib, main_url, html_parser.make_link_soup(href),
-                                      source_html=html_parser.html_with_markup, anchor_text=html_link.text,
-                                      tag_name=html_link.name,
-                                      element_index=element_index, element_class=html_link.attrs.get('class'),
-                                      source_page_title=html_parser.page_title)
-                if self.can_follow_this_link(link_info):
-                    if self.normalize_and_check_link(link_info, check_link_func):
-                        self.add_link_wrapper(link_info)
-
-        for frame in html_parser.soup.findAll('iframe')[:self.max_links_from_one_page]:
-            href = frame.attrs.get('src')
-            if href is not None:
-                element_index += 1
-                link_info = TLinkInfo(TClickEngine.urllib, main_url, html_parser.make_link_soup(href),
-                                      source_html=html_parser.html_with_markup, anchor_text=frame.text, tag_name=frame.name,
-                                      element_index=element_index, source_page_title=html_parser.page_title)
-                if self.can_follow_this_link(link_info):
-                    if self.normalize_and_check_link(link_info, check_link_func):
-                        self.add_link_wrapper(link_info)
 
     def click_selenium_if_no_href(self, main_url, element, element_index, check_link_func):
         tag_name = element.tag_name
@@ -549,11 +514,12 @@ class TRobotStep:
             try:
                 signal.signal(signal.SIGALRM, signal_alarm_handler)
                 signal.alarm(THttpRequester.WEB_PAGE_LINKS_PROCESSING_MAX_TIME)
-                self.add_page_links(url, check_link_func)
+                self.add_page_links_selenium(url, check_link_func)
             except OnePageProcessingTimeoutException as exp:
                 self.logger.error("OnePageProcessingTimeoutException, timeout is {} seconds".format(
                     THttpRequester.WEB_PAGE_LINKS_PROCESSING_MAX_TIME
                 ))
+                self.one_page_timeout_count += 1
             finally:
                 self.logger.debug("disable signal alarm")
                 signal.signal(signal.SIGALRM, signal.SIG_DFL)
@@ -607,6 +573,8 @@ class TRobotStep:
 
         links_count = 0
         for url in serp_urls:
+            if not self.website.url_is_not_linked_to_another_project(url):
+                continue
             link_info = TLinkInfo(TClickEngine.google, morda_url, url, anchor_text=request)
             link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
             self.add_link_wrapper(link_info)

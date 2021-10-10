@@ -2,14 +2,12 @@ from ConvStorage.conversion_client import TDocConversionClient
 from dlrobot_server.common_server_worker import DLROBOT_HTTP_CODE, TTimeouts, TYandexCloud, DLROBOT_HEADER_KEYS, PITSTOP_FILE
 from common.primitives import convert_timeout_to_seconds, check_internet
 from common.urllib_parse_pro import TUrlUtf8Encode
-from common.content_types import ACCEPTED_DOCUMENT_EXTENSIONS
-from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from web_site_db.remote_call import TRemoteDlrobotCall, TRemoteDlrobotCallList
-from source_doc_http.source_doc_client import TSourceDocClient
 from web_site_db.web_site_status import TWebSiteReachStatus
 from web_site_db.web_sites import TDeclarationWebSiteList, TDeclarationRounds
 from web_site_db.robot_project import TRobotProject
 from common.logging_wrapper import setup_logging
+from dlrobot_server.send_docs import TDeclarationSender
 
 import argparse
 import re
@@ -93,14 +91,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         super().__init__((host, int(port)), TDlrobotRequestHandler)
         self.last_service_action_time_stamp = time.time()
         self.service_action_count = 0
-        self.smart_parser_server_client = None
-        if self.args.enable_smart_parser:
-            sp_args = TSmartParserCacheClient.parse_args([])
-            self.smart_parser_server_client = TSmartParserCacheClient(sp_args, self.logger)
-        self.source_doc_client = None
-        if self.args.enable_source_doc_server:
-            sp_args = TSourceDocClient.parse_args([])
-            self.source_doc_client = TSourceDocClient(sp_args, self.logger)
+        self.decl_sender = TDeclarationSender(self.logger, self.args.enable_smart_parser, self.args.enable_source_doc_server)
         self.stop_process = False
         if self.args.enable_ip_checking:
             self.permitted_hosts = set(str(x) for x in ipaddress.ip_network('192.168.100.0/24').hosts())
@@ -225,22 +216,6 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                 return worker_running_tasks.pop(i)
         raise Exception("{} is missing in the worker {} task table".format(project_file, worker_ip))
 
-    def send_declaraion_files_to_other_servers(self, dlrobot_project_folder):
-        doc_folder = os.path.join(dlrobot_project_folder, "result")
-        if os.path.exists(doc_folder):
-            for website in os.listdir(doc_folder):
-                website_folder = os.path.join(doc_folder, website)
-                for doc in os.listdir(website_folder):
-                    _, extension = os.path.splitext(doc)
-                    if extension in ACCEPTED_DOCUMENT_EXTENSIONS:
-                        file_path = os.path.join(website_folder, doc)
-                        if self.smart_parser_server_client is not None:
-                            self.logger.debug("send {} to smart_parser_server".format(doc))
-                            self.smart_parser_server_client.send_file(file_path)
-                        if self.source_doc_client is not None:
-                            self.logger.debug("send {} to source_doc_server".format(doc))
-                            self.source_doc_client.send_file(file_path)
-
     def worker_is_banned(self, worker_ip, host_name):
         return self.worker_2_continuous_failures_count[(worker_ip, host_name)] > \
                         TDlrobotHTTPServer.max_continuous_failures_count
@@ -279,7 +254,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         remote_call.calc_project_stats(self.logger, project_folder)
         if not TWebSiteReachStatus.can_communicate(remote_call.reach_status):
             remote_call.exit_code = -1
-        self.send_declaraion_files_to_other_servers(project_folder)
+        self.decl_sender.send_declaraion_files_to_other_servers(project_folder)
         self.save_dlrobot_remote_call(remote_call)
         self.last_remote_call = remote_call
         self.logger.debug("got exitcode {} for task result {} from worker {} (host_name = {})".format(
