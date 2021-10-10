@@ -18,7 +18,7 @@ namespace Smart.Parser.Lib
     public class ColumnDetector
     {
         public static List<string> AbsenceMarkers = new List<string> { "-", "отсутствует", "?", "не указано", "не имеет"};
-
+        
         public static string CheckDate(Match match)
         {
             // delete all dates except the first ones or the last ones 01.01.2010 and 31.12.2010
@@ -50,10 +50,11 @@ namespace Smart.Parser.Lib
             text = Regex.Replace(text, "8\\s+июля\\s+2013", "");
             text = Regex.Replace(text, @"\d\d?\.\d\d?\.20\d\d", new MatchEvaluator(CheckDate));
 
-            var decemberYearMatches = Regex.Matches(text, @"(31\s+декабря\s+)(20\d\d)(\s+года)");
+            var decemberYearMatches = Regex.Matches(text, @"(31\s+декабря\s+)(20 *\d\d)\s+((года)|(г\.))");
             if (decemberYearMatches.Count > 0)
             {
-                year = int.Parse(decemberYearMatches[0].Groups[2].Value);
+                var year_str = decemberYearMatches[0].Groups[2].Value.RemoveCharacters(' ');
+                year = int.Parse(year_str);
             }
             else
             {

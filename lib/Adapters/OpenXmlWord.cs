@@ -224,16 +224,28 @@ namespace Smart.Parser.Adapters
         public MergedCellValues? VerticallyMerged; 
         public bool HasBottomBorder = true;
         public bool HasTopBorder = true;
+        public bool HasRightBorder = true;
         public bool TableHasInsideHorizontalBorders = false;
-
-        public OpenXmlWordCell(WordDocHolder docHolder, TableWidthInfo tableWidth, TableCell inputCell, int row, int column, TableBorders tblBorders)
+        public OpenXmlWordCell(WordDocHolder docHolder, TableCell[] row, int cellIndexInRow, TableWidthInfo tableWidth,  
+                    int rowIndexInTable, int unmergedColumnIndex, TableBorders tblBorders)
         {
+            TableCell inputCell = row[cellIndexInRow];
             InitTextProperties(docHolder, inputCell);
-            if (inputCell.TableCellProperties != null && inputCell.TableCellProperties.TableCellBorders != null) 
+            if (inputCell?.TableCellProperties?.TableCellBorders != null) 
             {
                 var borders = inputCell.TableCellProperties.TableCellBorders;
                 HasBottomBorder = borders.BottomBorder != null;
                 HasTopBorder = borders.TopBorder != null;
+                HasRightBorder = borders.RightBorder != null;
+                if  (!HasRightBorder && cellIndexInRow + 1 < row.Length)
+                {
+                    HasRightBorder = row[cellIndexInRow + 1].TableCellProperties?.TableCellBorders?.LeftBorder != null;
+                }
+                if (!HasRightBorder && tblBorders?.InsideVerticalBorder != null && (uint)tblBorders.InsideVerticalBorder.Size > 0)
+                {
+                    HasRightBorder = true;
+                }
+
             }
             var vmerge = inputCell.TableCellProperties.GetFirstChild<VerticalMerge>();
             VerticallyMerged = null;
@@ -249,7 +261,7 @@ namespace Smart.Parser.Adapters
                     VerticallyMerged = MergedCellValues.Restart;
                 }
             }
-            if (tblBorders != null && tblBorders.InsideHorizontalBorder != null && (uint)tblBorders.InsideHorizontalBorder.Size > 0)
+            if (tblBorders?.InsideHorizontalBorder != null && (uint)tblBorders.InsideHorizontalBorder.Size > 0)
             {
                 TableHasInsideHorizontalBorders = true;
             }
@@ -260,8 +272,8 @@ namespace Smart.Parser.Adapters
             MergedRowsCount = -1; // init afterwards
 
             MergedColsCount = (gridSpan == null) ? 1 : (int)gridSpan.Val;
-            Row = row;
-            Col = column;
+            Row = rowIndexInTable;
+            Col = unmergedColumnIndex;
             if (inputCell.TableCellProperties != null
                 && inputCell.TableCellProperties.TableCellWidth != null
                 && inputCell.TableCellProperties.TableCellWidth.Type != null
@@ -603,7 +615,7 @@ namespace Smart.Parser.Adapters
             return 0;
         }
 
-        bool HasBottomBorder(int row, int column)
+        bool CheckBottomBorder(int row, int column, ref bool hasText)
         {
             if (row + 1 >= TableRows.Count)
             {
@@ -621,10 +633,14 @@ namespace Smart.Parser.Adapters
                 throw new BadCellAddress(row, column); // change in column count, we hope that there is a border. Why?
             }
             var cellUnder = TableRows[row + 1][cellNo];
-            if (!cellUnder.IsEmpty)
+
+            // test 10639_32.doc and 18261_22.doc 
+            hasText = hasText || !cell.IsEmpty;
+            if (!cellUnder.IsEmpty && hasText)
             {
                 return true;
             }
+
 
             if (cellUnder.VerticallyMerged == MergedCellValues.Continue)
             {
@@ -644,11 +660,12 @@ namespace Smart.Parser.Adapters
 
         int FindCellWithBottomBorder(int startRow, int column)
         {
+            bool hasText = false;
             for (int i = startRow; i < TableRows.Count; ++i)
             {
                 try
                 {
-                    if (HasBottomBorder(i, column))
+                    if (CheckBottomBorder(i, column, ref hasText))
                     {
                         return i;
                     }
@@ -772,16 +789,28 @@ namespace Smart.Parser.Adapters
             {
                 List<OpenXmlWordCell> newRow = new List<OpenXmlWordCell>();
                 int sumspan = 0;
-                var row = rows[r];
-                int rowGridBefore = GetRowGridBefore(row);
+                var tableRow = rows[r];
+                int rowGridBefore = GetRowGridBefore(tableRow);
                 bool isEmpty = true;
-                foreach (var rowCell in row.Elements<TableCell>())
+                var row = tableRow.Elements<TableCell>().ToArray();
+                for (var i = 0; i < row.Length; ++i)
                 {
-                    var c = new OpenXmlWordCell(docHolder, widthInfo, rowCell, TableRows.Count, sumspan, tblBorders);
+                    var c = new OpenXmlWordCell(docHolder, row, i, widthInfo, TableRows.Count, sumspan, tblBorders);
                     if (newRow.Count == 0)
                         c.MergedColsCount += rowGridBefore;
-                    newRow.Add(c);
-                    sumspan += c.MergedColsCount;
+                    if (newRow.Count > 0 && !newRow.Last().HasRightBorder)
+                    {
+                        newRow.Last().Text += c.Text;
+                        newRow.Last().CellWidth += c.CellWidth;
+                        newRow.Last().MergedColsCount += c.MergedColsCount;
+                        newRow.Last().HasRightBorder = c.HasRightBorder;
+                        sumspan += c.MergedColsCount;
+                    }
+                    else
+                    {
+                        newRow.Add(c);
+                        sumspan += c.MergedColsCount;
+                    }
                     isEmpty = isEmpty && c.IsEmpty;
                 }
                 if (isEmpty)
