@@ -29,12 +29,12 @@ source $COMMON_SCRIPT
     python3 $TOOLS/disclosures_site/manage.py create_database --settings disclosures.settings.dev --skip-checks
 
 #3  слияние по файлам dlrobot, declarator  и старого disclosures, получение dlrobot_human.json
-    python3 $TOOLS/disclosures_site/scripts/join_human_and_dlrobot.py \
-        --max-ctime $CRAWL_EPOCH \
-        --input-dlrobot-folder  "$DLROBOT_CENTRAL_FOLDER/processed_projects" \
-        --human-json $HUMAN_FILES_JSON \
-        --old-dlrobot-human-json $OLD_DLROBOT_FOLDER/dlrobot_human.dbm \
-        --output-json dlrobot_human.dbm
+      python3 $TOOLS/disclosures_site/scripts/join_human_and_dlrobot.py \
+          --max-ctime $CRAWL_EPOCH \
+          --input-dlrobot-folder  "$DLROBOT_CENTRAL_FOLDER/processed_projects" \
+          --human-json $HUMAN_FILES_JSON \
+          --old-dlrobot-human-json $OLD_DLROBOT_FOLDER/dlrobot_human.dbm \
+          --output-json dlrobot_human.dbm
 
 #4  предсказание office_id
     cd $DLROBOT_FOLDER
