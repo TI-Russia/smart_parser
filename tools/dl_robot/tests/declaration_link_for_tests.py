@@ -23,6 +23,8 @@ class THttpServerHandler(http.server.BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
+        if self.server.timeout > 0:
+            time.sleep(self.server.timeout)
         self.build_headers()
         local_file = os.path.join(self.server.web_site_folder, self.path[1:])
         #print("do_GET {}".format(local_file))
@@ -33,6 +35,8 @@ class THttpServerHandler(http.server.BaseHTTPRequestHandler):
             self.wfile.write("some text".encode('utf8'))
 
     def do_HEAD(self):
+        if self.server.timeout > 0:
+            time.sleep(self.server.timeout)
         if self.path.endswith('.docx'):
             self.build_headers("application/vnd.openxmlformats-officedocument")
         elif self.path.endswith('.doc'):
@@ -46,8 +50,9 @@ def start_server(server):
 
 
 class TestHTTPServer(http.server.HTTPServer):
-    def __init__(self, port):
+    def __init__(self, port, timeout=0):
         self.web_site_folder = None
+        self.timeout = timeout
         super().__init__(('127.0.0.1', int(port)), THttpServerHandler)
 
     def set_web_site_folder(self, folder):
@@ -60,6 +65,7 @@ class TestDeclarationLinkBase(TestCase):
         return 'http://127.0.0.1:{}{}'.format(self.web_site_port, path)
 
     def process_one_page(self, relative_file_path):
+        self.one_page_timeout_count = 0
         file_path = os.path.join(os.path.dirname(__file__), relative_file_path)
         assert os.path.exists(file_path)
         self.web_server.set_web_site_folder(os.path.dirname(file_path))
@@ -81,6 +87,7 @@ class TestDeclarationLinkBase(TestCase):
             step_info.pages_to_process[start_url] = 0
             step_info.processed_pages = set()
             step_info.apply_function_to_links(TRobotStep.looks_like_a_declaration_link)
+            self.one_page_timeout_count = step_info.one_page_timeout_count
             links = list()
             for url, weight in step_info.url_to_weight.items():
                 u = list(urllib.parse.urlparse(url))
@@ -89,11 +96,11 @@ class TestDeclarationLinkBase(TestCase):
                 links.append({'url': urllib.parse.urlunparse(u), 'weight': weight, 'anchor': anchor})
             return links
 
-    def setUp(self, port, name):
+    def setUp(self, port, name, timeout=0):
         self.web_site_port = port
         TRobotStep.check_local_address = True
         self.server_address = '127.0.0.1:{}'.format(self.web_site_port)
-        self.web_server = TestHTTPServer(self.web_site_port)
+        self.web_server = TestHTTPServer(self.web_site_port, timeout=timeout)
         self.http_server_thread = threading.Thread(target=start_server, args=(self.web_server,))
         self.http_server_thread.start()
         time.sleep(1)
