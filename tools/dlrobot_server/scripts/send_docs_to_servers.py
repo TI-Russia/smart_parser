@@ -2,6 +2,7 @@ from common.logging_wrapper import setup_logging
 from dlrobot_server.send_docs import TDeclarationSender
 
 import argparse
+import os
 
 
 def parse_args():
@@ -17,7 +18,11 @@ def main():
     decl_sender = TDeclarationSender(logger, True, True)
     for d in args.folders:
         logger.info("folder = {}".format(d))
-        decl_sender.send_declaraion_files_to_other_servers(d)
+        result_folder =  os.path.join(d, "result")
+        if not os.path.exists(result_folder):
+            logger.error("no directory {} found".format(result_folder))
+        else:
+            decl_sender.send_declaraion_files_to_other_servers(d)
 
 
 if __name__ == "__main__":

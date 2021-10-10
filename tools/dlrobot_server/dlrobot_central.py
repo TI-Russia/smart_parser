@@ -387,8 +387,7 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
             self.wfile.write(stats.encode('utf8'))
             return True
         if self.path == "/unban-all":
-            self.worker_2_continuous_failures_count.clear()
-            self.server.logger.error(exp)
+            self.server.worker_2_continuous_failures_count.clear()
             self.send_response(200)
             self.end_headers()
             return True
