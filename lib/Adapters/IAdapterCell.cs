@@ -50,18 +50,6 @@ namespace Smart.Parser.Adapters
         {
             return Text;
         }
-        public List<string> GetLinesWithSoftBreaks()
-        {
-            if (FontSize == 0)
-            {
-                return Text.Split('\n').ToList<string>();
-            }
-            else
-            {
-                TStringMeasure.InitDefaultFont(FontName, FontSize);
-                return TStringMeasure.GetLinesBySoftBreaks(Text, CellWidth);
-            }
-        }
         public string[] SplitJoinedLinesByFuzzySeparator(List<int> linesWithNumbers)
         {
             var value = GetText(); // no trim
