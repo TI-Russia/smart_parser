@@ -238,3 +238,11 @@ table.section_by_count {
     border: thin solid;
     padding: 4px;
 }
+
+div.correction_link {
+    display: inline;
+    font-size: 120%;
+    font-weight: bold;
+    background-color: pink;
+    text-color: white;
+}
