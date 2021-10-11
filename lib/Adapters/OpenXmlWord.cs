@@ -634,7 +634,8 @@ namespace Smart.Parser.Adapters
             }
             var cellUnder = TableRows[row + 1][cellNo];
 
-            // test 10639_32.doc and 18261_22.doc 
+            // если убрать это условие, сломаются тесты 10639_32.doc and 18261_22.doc 
+            // и починится тест 65098_5.docx. Что делать, мне не понятно.
             hasText = hasText || !cell.IsEmpty;
             if (!cellUnder.IsEmpty && hasText)
             {

@@ -954,6 +954,14 @@ namespace RegressionTesting
             TestSmartParser("65098_2.docx", "prod");
         }
 
+        [TestMethod]
+        [TestCategory("docx")]
+        public void UnsolvedProblem_01()
+        {
+            // этот файл парсится неправильно, я пока не знаю, что с этим делать
+            TestSmartParser("65098_5.docx", "prod");
+        }
+
         private static void SetupLog4Net()
         {
             log4net.Repository.ILoggerRepository repo = log4net.LogManager.GetRepository(Assembly.GetEntryAssembly());
