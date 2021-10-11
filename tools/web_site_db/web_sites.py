@@ -118,7 +118,7 @@ class TDeclarationWebSiteList:
         l = self.get_sites_by_web_domain(web_domain)
         if len(l) == 0:
             return None
-        return l[0]
+        return self.web_sites.get(l[0])
 
     def get_web_domains(self):
         for k in self.web_domain_to_web_site:
