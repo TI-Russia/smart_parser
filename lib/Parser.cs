@@ -120,7 +120,7 @@ namespace Smart.Parser.Lib
                 {
                     continue;
                 }
-                Logger.Debug(String.Format("currRow {1}: {0}", currRow.DebugString(), row));
+                Logger.Debug(String.Format("currRow {0}, col_count={1}: {2}", row, currRow.Cells.Count, currRow.DebugString()));
 
                 string sectionName;
                 if (IAdapter.IsSectionRow(currRow.Cells, columnOrdering.GetMaxColumnEndIndex(), false, out sectionName))

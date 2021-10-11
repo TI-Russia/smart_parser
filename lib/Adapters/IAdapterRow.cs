@@ -210,7 +210,8 @@ namespace Smart.Parser.Adapters
             {
                 if (!except)
                     return "";
-                throw e; 
+                
+                throw new SmartParserFieldNotFoundException(e.Message + String.Format(" Line = {0}", this.DebugString())); 
             }
 
             if (c == null)

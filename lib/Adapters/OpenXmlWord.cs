@@ -845,27 +845,42 @@ namespace Smart.Parser.Adapters
                 }
             }
         }
-
-        void ProcessWordTableAndUpdateTitle(WordDocHolder docHolder, Table table, int maxRowsToProcess, int tableIndex)
+        bool CanAppendRowsFromTable(Table table, int tableIndex)
         {
-            int debugSaveRowCount = TableRows.Count;
             if (table.Descendants<Table>().ToList().Count > 0)
             {
                 Logger.Debug(String.Format("ignore table {0} with subtables", tableIndex));
+                return false;
             }
             else if (table.InnerText.Length > 0 && !table.InnerText.Any(x => Char.IsUpper(x)))
             {
                 Logger.Debug(String.Format("ignore table {0} that has no uppercase char", tableIndex));
+                return false;
             }
             else if (table.InnerText.Length < 30)
             {
                 Logger.Debug(String.Format("ignore table {0}, it is too short", tableIndex));
+                return false;
             }
-            else
+            else if (table.Descendants<TableRow>().Count() == 1)
             {
+                var rows = table.Descendants<TableRow>().ToArray();
+                if (TableRows.Count > 0 && TableRows.Last().Count() != rows[0].Descendants<TableCell>().Count())
+                {
+                    Logger.Debug(String.Format("ignore table {0}, with one row", tableIndex));
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        void ProcessWordTableAndUpdateTitle(WordDocHolder docHolder, Table table, int maxRowsToProcess, int tableIndex)
+        {
+            if (CanAppendRowsFromTable(table, tableIndex)) { 
                 ProcessWordTable(docHolder, table, maxRowsToProcess);
             }
 
+            int debugSaveRowCount = TableRows.Count;
             if (TableRows.Count > debugSaveRowCount)
             {
                 string tableText = table.InnerText.Length > 30 ? table.InnerText.Substring(0, 30) : table.InnerText;

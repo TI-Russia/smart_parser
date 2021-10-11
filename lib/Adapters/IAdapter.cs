@@ -64,12 +64,13 @@ namespace Smart.Parser.Adapters
             var exactCell = GetCell(row, colSpan.BeginColumn);
             if (exactCell == null)
             {
-                var rowData = GetCells(row);
+                var cells = GetCells(row);
+
                 throw new SmartParserFieldNotFoundException(String.Format("Field {0} not found, row={1}, col={2}. Row.Cells.Count = {3}",
                     field.ToString(),
                     row,
                     colSpan.BeginColumn,
-                    rowData.Count
+                    cells.Count
                     ));
             }
             return exactCell;
