@@ -6,6 +6,7 @@ from declarations.nominal_income import get_average_nominal_incomes, YearIncome
 from declarations.ratings import TPersonRatings
 from declarations.car_brands import CAR_BRANDS
 from common.urllib_parse_pro import urlsplit_pro
+from declarations.corrections import SECTION_CORRECTIONS
 
 from collections import defaultdict
 from operator import attrgetter
@@ -531,6 +532,10 @@ class Section(models.Model):
         tr1.append('<th rowspan="2" width="10%">Доход</th>')
         yield tr1
         yield ['<th>Тип</th>', '<th>Площадь</th>', '<th>Владение</th>']
+
+    @property
+    def corrected_section_id(self):
+        return SECTION_CORRECTIONS.get_corrected_section_id(self.id)
 
     @property
     def html_table_data_rows(self):

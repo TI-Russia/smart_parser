@@ -20,6 +20,11 @@
 <p> <i> {{section.position_and_department}}</i></p>
 <h2> Cведения о доходах за {{ section.income_year }} год <br/> </h2>
 
+{% if section.corrected_section_id %}
+  <div class="correction_link">Нижепредставленные данные были изменены в <a href="/section/{{section.corrected_section_id}}">более поздней уточняющей декларации</a>.</div> <br/><br/>
+{% endif %}
+
+
 {% include "section/section_table.html" %}
 
 <a href=/office/{{section.office.id}}>Информация об этом ведомстве (остальные декларации)</a><br/>

@@ -1,0 +1,69 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Болдинова А.В.",
+        "role": "инспектор"
+      },
+      "year": 2016,
+      "incomes": [
+        {
+          "size": 502613.64,
+          "size_raw": "502613,64",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира",
+          "square": 50.7,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "50,7",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивиду альная"
+        },
+        {
+          "text": "квартира",
+          "square": 45.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "45",
+          "country_raw": "Россия",
+          "type_raw": "квартира",
+          "own_type_raw": "индивиду альная"
+        },
+        {
+          "text": "земельный участок (приусадеб ный)",
+          "square": 1383.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "1383",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок (приусадеб ный)"
+        },
+        {
+          "text": "квартира",
+          "square": 45.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "45",
+          "country_raw": "Россия",
+          "type_raw": "квартира"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "ВАЗ, 21099,\n2001 г.в.",
+          "relative": null
+        }
+      ],
+      "person_index": 4
+    }
+  ],
+  "document": {
+    "sheet_title": "о доходах и расходах, об имуществе и обязательствах имущественного характера лиц, замещающих муниципальные должности и лиц, замещающих должности муниципальной службы за отчетный период с 1 января 2016 года по 31 декабря 2016 года",
+    "year": 2016
+  }
+}

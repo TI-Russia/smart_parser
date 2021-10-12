@@ -41,12 +41,12 @@ source $COMMON_SCRIPT
     python3 $TOOLS/disclosures_site/manage.py predict_office --dlrobot-human-path dlrobot_human.dbm
 
 #6  Копирование базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод
-   mv $OLD_DLROBOT_FOLDER/new_permalinks .
+   mv $OLD_DLROBOT_FOLDER/new_permalinks/* .
    # можно создать их прям сейчас
    #python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.prod --directory $DLROBOT_FOLDER
 
 #9 (надо включить в import_json?)
-    cd $DLROBOT_FOLDER # im portant
+    cd $DLROBOT_FOLDER # important
     python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev --directory $DLROBOT_FOLDER
 
 
