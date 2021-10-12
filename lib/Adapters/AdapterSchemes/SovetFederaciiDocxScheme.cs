@@ -49,7 +49,7 @@ namespace Smart.Parser.Lib.Adapters.AdapterSchemes
             InitializeEP();
 
             ColumnOrdering columnOrdering = new ColumnOrdering();
-            var declaration = parser.InitializeDeclaration(columnOrdering, userDocumentFileId);
+            var declaration = Parser.InitializeDeclaration(parser.Adapter, columnOrdering, userDocumentFileId);
             declaration.Properties.Year = GetYear();
             declaration.Properties.SheetTitle = FindTitleAboveTheTable();
 
