@@ -968,6 +968,13 @@ namespace RegressionTesting
         {
             TestSmartParser("IgnoreTableJunk.docx", "prod");
         }
+
+        [TestMethod]
+        [TestCategory("docx")]
+        public void IgnoreNotMoreThatTenExceptions()
+        {
+            TestSmartParser("20883_1.docx", "prod");
+        }
         private static void SetupLog4Net()
         {
             log4net.Repository.ILoggerRepository repo = log4net.LogManager.GetRepository(Assembly.GetEntryAssembly());
