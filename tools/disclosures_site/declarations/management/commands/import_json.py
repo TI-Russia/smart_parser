@@ -10,7 +10,6 @@ from common.russian_regions import TRussianRegions, RUSSIA_REGION_ID
 
 from multiprocessing import Pool
 import os
-from functools import partial
 import json
 from collections import defaultdict
 from django.core.management import BaseCommand
@@ -53,6 +52,7 @@ class TImporter:
         self.permalinks_db_source_document = None
         self.smart_parser_cache_client = None
         self.regions = TRussianRegions()
+        self.office_buckets = defaultdict(list)
 
     def delete_before_fork(self):
         from django import db
@@ -214,6 +214,10 @@ class TImporter:
             return response
 
     def import_office(self, office_id):
+        if self.args.get('rubric_id') is not None and OFFICES.offices.get(office_id).rubric_id != self.args.get(
+                'rubric_id'):
+            return
+
         all_imported_human_jsons = set()
         max_doc_id = 2**32
         ordered_documents = list()
@@ -223,6 +227,7 @@ class TImporter:
                 doc_id = max_doc_id
             ordered_documents.append((doc_id, sha256))
         ordered_documents.sort()
+        TImporter.logger.debug("import office {} document count = {}".format(office_id, len(ordered_documents)))
 
         for _, sha256 in ordered_documents:
             src_doc = self.dlrobot_human.get_document(sha256)
@@ -239,14 +244,26 @@ class TImporter:
                 except TSmartParserSectionJson.SerializerException as exp:
                     TImporter.logger.error("Error! cannot import smart parser json for file {}: {} ".format(sha256, exp))
 
+    def distribute_offices_to_processes(self, process_count):
+        assert process_count > 1
+        cnt = 0
+        for office_id in self.office_to_source_documents.keys():
+            cnt += 1
+            if OFFICES.offices.get(office_id).rubric_id == TOfficeRubrics.Gulag:
+                #put all fsin offices to the first process
+                bucket_id = 0
+            else:
+                bucket_id = cnt % (process_count - 1) + 1
+            self.office_buckets[bucket_id].append(office_id)
 
-def process_one_file_in_subprocess(importer: TImporter, office_id):
-    importer.init_after_fork()
-    try:
-        importer.import_office(office_id)
-        gc.collect()
-    except TSmartParserSectionJson.SerializerException as exp:
-        TImporter.logger.error("cannot import office {}, exception: {}".format(office_id), exp)
+    def process_one_office_bucket_in_subprocess(self, bucket_id):
+        self.init_after_fork()
+        for office_id in self.office_buckets[bucket_id]:
+            try:
+                self.import_office(office_id)
+                gc.collect()
+            except TSmartParserSectionJson.SerializerException as exp:
+                TImporter.logger.error("cannot import bucket id {}, exception: {}".format(bucket_id), exp)
 
 
 class ImportJsonCommand(BaseCommand):
@@ -292,6 +309,12 @@ class ImportJsonCommand(BaseCommand):
             type=int,
             required=False
         )
+        parser.add_argument(
+            '--rubric-id',
+            dest='rubric_id',
+            type=int,
+            required=False
+        )
 
     def handle(self, *args, **options):
         TImporter.logger = setup_logging(log_file_name="import_json.log")
@@ -303,8 +326,10 @@ class ImportJsonCommand(BaseCommand):
             importer.import_office(options.get('office_id'))
         elif options.get('process_count', 0) > 1:
             importer.delete_before_fork()
-            pool = Pool(processes=options.get('process_count'))
-            pool.map(partial(process_one_file_in_subprocess, importer), importer.office_to_source_documents.keys())
+            process_count = options.get('process_count')
+            importer.distribute_offices_to_processes(process_count)
+            pool = Pool(processes=process_count)
+            pool.map(importer.process_one_office_bucket_in_subprocess, importer.office_buckets.keys())
             importer.init_after_fork()
         else:
             importer.init_non_pickable()

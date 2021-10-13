@@ -2,6 +2,7 @@ from common.logging_wrapper import setup_logging
 
 import sys
 import pymysql
+import argparse
 
 
 def get_sql_cursor(sql):
@@ -53,16 +54,23 @@ def get_prod_count(db_prod):
         return cnt
 
 
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--examples-count", dest='examples_count', type=int, default=1000)
+    parser.add_argument("--prod-db", dest='prod_db_name', default='disclosures_db')
+    parser.add_argument("--dev-db", dest='dev_db_name', default='disclosures_db_dev')
+    return parser.parse_args()
+
+
 def main():
-    prod_db = sys.argv[1]
-    dev_db = sys.argv[2]
+    args = parse_args()
     logger = setup_logging(log_file_name="check_person_id_permanence.log")
-    missed_prod_count = get_missed_count(prod_db, dev_db)
-    all_prod_count = get_prod_count(prod_db)
-    for person_id in get_missed_examples(prod_db, dev_db, 100):
+    missed_prod_count = get_missed_count(args.prod_db_name, args.dev_db_name)
+    all_prod_count = get_prod_count(args.prod_db_name)
+    for person_id in get_missed_examples(args.prod_db_name, args.dev_db_name, args.examples_count):
         logger.debug("missed person example https://disclosures.ru/person/{}".format(person_id))
-    logger.info("person count in {}: {}".format(prod_db, all_prod_count))
-    logger.info("missed person count in {}: {}".format(dev_db, missed_prod_count))
+    logger.info("person count in {}: {}".format(args.prod_db_name, all_prod_count))
+    logger.info("missed person count in {}: {}".format(args.dev_db_name, missed_prod_count))
     min_permanence_level = 0.95
     permanence = (all_prod_count - missed_prod_count) / (all_prod_count + 0.0000001)
     if permanence < min_permanence_level:

@@ -89,12 +89,12 @@ echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/
      exit 1
    fi
    python3 $TOOLS/disclosures_site/manage.py test_real_clustering_on_pool --test-pool $TOOLS/disclosures_site/deduplicate/pools/disclosures_test_m.tsv   --settings disclosures.settings.dev
-   python3 $TOOLS/disclosures_site/manage.py external_link_surname_checker --links-input-file $TOOLS/disclosures_site/data/external_links.json  --settings disclosures.settings.dev
+   python3 $TOOLS/disclosures_site/manage.py external_link_surname_checker --fail-fast --links-input-file $TOOLS/disclosures_site/data/external_links.json  --settings disclosures.settings.dev
    if [ $? != "0" ]; then
      echo "Error! Some linked people are missing in the new db, web-links would be broken if we publish this db"
      exit 1
    fi
-   python3 $TOOLS/disclosures_site/scripts/check_person_id_permanence.py disclosures_db disclosures_db_dev
+     python3 $TOOLS/disclosures_site/scripts/check_person_id_permanence.py --prod-db disclosures_db --dev-db disclosures_db_dev
 
 #12.1 запускаем обратно dlrobot_worker
   echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/scripts/dl_cloud_manager.py --action start --host &
