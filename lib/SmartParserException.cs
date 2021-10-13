@@ -6,15 +6,19 @@ using System.Threading.Tasks;
 
 namespace Parser.Lib
 {
-    public class SmartParserException : Exception
+    public class SmartParserExceptionBase : Exception
+    {
+        public SmartParserExceptionBase(string message) : base(message) { }
+    }
+    public class SmartParserException : SmartParserExceptionBase
     {
         public SmartParserException(string message) : base(message) { }
     }
-    public class SmartParserFieldNotFoundException : Exception
+    public class SmartParserFieldNotFoundException : SmartParserExceptionBase
     {
         public SmartParserFieldNotFoundException(string message) : base(message) { }
     }
-    public class SmartParserRelativeWithoutPersonException : Exception
+    public class SmartParserRelativeWithoutPersonException : SmartParserExceptionBase
     {
         public SmartParserRelativeWithoutPersonException(string message) : base(message) { }
     }

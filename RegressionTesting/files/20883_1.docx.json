@@ -1,0 +1,845 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Соловьёв Олег Николаевич",
+        "role": "первый заместитель главы админи- страции городского округа"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 718013.98,
+          "size_raw": "718013,98",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Жилой дом, индивидуальная собственность",
+          "square": 59.59,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "59,59",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "Квартира, индивидуальная собственность",
+          "square": 49.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "49",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "Земельный участок под индивидуальное жилищное строитель- ство, индивидуальная собственность",
+          "square": 532.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "532",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "Земельный участок под индивидуальное жилищное строитель- ство, индивидуальная собственность",
+          "square": 1163.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1163",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "Земельный участок под индивидуальное жилищное строитель- ство, индивидуальная собственность",
+          "square": 1161.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "1161",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "1.Жилой дом,",
+          "square": 63.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "63",
+          "country_raw": "Россия",
+          "type_raw": "1.Жилой дом,"
+        },
+        {
+          "text": "безвозмездное",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "безвозмездное"
+        },
+        {
+          "text": "пользование",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "пользование"
+        },
+        {
+          "text": "2.Земельный участок",
+          "square": 986.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "986",
+          "country_raw": "Россия",
+          "type_raw": "2.Земельный участок"
+        },
+        {
+          "text": "под жилой дом,",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "под жилой дом,"
+        },
+        {
+          "text": "безвозмездное",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "безвозмездное"
+        },
+        {
+          "text": "пользование",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "пользование"
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "1.Автомобиль",
+          "relative": null
+        },
+        {
+          "text": "легковой",
+          "relative": null
+        },
+        {
+          "text": "УАЗ-31519,",
+          "relative": null
+        },
+        {
+          "text": "индивидуаль-",
+          "relative": null
+        },
+        {
+          "text": "ная собствен-",
+          "relative": null
+        },
+        {
+          "text": "ность",
+          "relative": null
+        }
+      ]
+    },
+    {
+      "person": {
+        "name_raw": "Орлова Наталья Вячеславовна",
+        "role": "заместитель главы администрации городского округа"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 479251.96,
+          "size_raw": "479251,96",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Жилой дом, индивидуальная собственность",
+          "square": 42.2,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "42,2",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "Земельный участок под жилой дом, индивидуальная собственность,",
+          "square": 863.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "863",
+          "country_raw": "Россия"
+        }
+      ],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Веселова Татьяна Владимировна",
+        "role": "управляющая делами главы администрации городского округа"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 432912.18,
+          "size_raw": "432912,18",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Земельный участок, индивидуальная собственность",
+          "square": 600.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "600",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "Квартира, индивидуальная собственность",
+          "square": 75.4,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "75,4",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "Жилой дом, безвозмездное пользование",
+          "square": 51.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "51",
+          "country_raw": "Россия",
+          "type_raw": "Жилой дом, безвозмездное пользование"
+        },
+        {
+          "text": "Земельный участок под жилой дом, безвозмездное пользование",
+          "square": 787.0,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "787",
+          "country_raw": "Россия",
+          "type_raw": "Земельный участок под жилой дом, безвозмездное пользование"
+        }
+      ],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Беляева Татьяна Евгеньевна",
+        "role": "главный специалист отдела по социальной политике секретарь МКДН"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 183294.68,
+          "size_raw": "183294,68",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира, безвозмездное пользование",
+          "square": 70.1,
+          "relative": null,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "70,1",
+          "country_raw": "Россия",
+          "type_raw": "Квартира, безвозмездное пользование"
+        },
+        {
+          "text": "Квартира, безвозмездное пользование",
+          "square": 70.1,
+          "relative": "Ребенок",
+          "relative_index": 1,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "70,1",
+          "country_raw": "Россия",
+          "type_raw": "Квартира, безвозмездное пользование"
+        }
+      ],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Веселова Ирина Николаевна",
+        "role": "начальник отдела архитектуры и градостроитель ства"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 304680.0,
+          "size_raw": "304680",
+          "relative": null
+        },
+        {
+          "size": 180189.0,
+          "size_raw": "180189",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "size": 1080.0,
+          "size_raw": "1080",
+          "relative": "Ребенок",
+          "relative_index": 2
+        },
+        {
+          "size": 332200.0,
+          "size_raw": "332200",
+          "relative": "Супруг(а)",
+          "relative_index": 5
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Земельный участок под жилой дом, общая долевая собственность, доля в праве 1/4",
+          "square": 908.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "908",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "Жилой дом, общая долевая собственность, доля в праве 1/4",
+          "square": 42.5,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "42,5",
+          "country_raw": "Россия"
+        },
+        {
+          "text": "1. Земельный участок",
+          "square": 908.0,
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "own_type_by_column": "В собственности",
+          "square_raw": "908",
+          "country_raw": "Россия",
+          "type_raw": "1. Земельный участок",
+          "own_type_raw": ""
+        },
+        {
+          "text": "под жилой дом,",
+          "square": null,
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "под жилой дом,",
+          "own_type_raw": ""
+        },
+        {
+          "text": "общая долевая",
+          "square": null,
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "общая долевая",
+          "own_type_raw": ""
+        },
+        {
+          "text": "собственность,",
+          "square": null,
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "собственность,",
+          "own_type_raw": ""
+        },
+        {
+          "text": "доля в праве 1/4",
+          "square": null,
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "доля в праве 1/4",
+          "own_type_raw": ""
+        },
+        {
+          "text": "2. Жилой дом, общая долевая собствен",
+          "square": 42.5,
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "own_type_by_column": "В собственности",
+          "square_raw": "42,5",
+          "country_raw": "Россия",
+          "type_raw": "2. Жилой дом, общая долевая собствен",
+          "own_type_raw": ""
+        },
+        {
+          "text": "ность, доля в праве 1/4",
+          "square": null,
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "ность, доля в праве 1/4",
+          "own_type_raw": ""
+        },
+        {
+          "text": "1. Земельный участок",
+          "square": 908.0,
+          "relative": "Ребенок",
+          "relative_index": 2,
+          "own_type_by_column": "В собственности",
+          "square_raw": "908",
+          "country_raw": "Россия",
+          "type_raw": "1. Земельный участок",
+          "own_type_raw": ""
+        },
+        {
+          "text": "под жилой дом, общая долевая собственность, доля в праве 1/4 2. Жилой дом, общая долевая собствен",
+          "square": 42.5,
+          "relative": "Ребенок",
+          "relative_index": 2,
+          "own_type_by_column": "В собственности",
+          "square_raw": "42,5",
+          "country_raw": "Россия",
+          "type_raw": "под жилой дом, общая долевая собственность, доля в праве 1/4 2. Жилой дом, общая долевая собствен",
+          "own_type_raw": ""
+        },
+        {
+          "text": "ность, доля в праве 1/4",
+          "square": null,
+          "relative": "Ребенок",
+          "relative_index": 2,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "ность, доля в праве 1/4",
+          "own_type_raw": ""
+        },
+        {
+          "text": "1. Земельный участок",
+          "square": 908.0,
+          "relative": "Ребенок",
+          "relative_index": 3,
+          "own_type_by_column": "В собственности",
+          "square_raw": "908",
+          "country_raw": "Россия",
+          "type_raw": "1. Земельный участок",
+          "own_type_raw": ""
+        },
+        {
+          "text": "под жилой дом, общая долевая собственность, доля в праве 1/4 2. Жилой дом, общая долевая собственность, доля в праве 1/4",
+          "square": 42.5,
+          "relative": "Ребенок",
+          "relative_index": 3,
+          "own_type_by_column": "В собственности",
+          "square_raw": "42,5",
+          "country_raw": "Россия",
+          "type_raw": "под жилой дом, общая долевая собственность, доля в праве 1/4 2. Жилой дом, общая долевая собственность, доля в праве 1/4",
+          "own_type_raw": ""
+        },
+        {
+          "text": "Квартира, безвозмездное",
+          "square": 75.48,
+          "relative": "Ребенок",
+          "relative_index": 4,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "75,48",
+          "country_raw": "Россия",
+          "type_raw": "Квартира, безвозмездное"
+        },
+        {
+          "text": "пользование",
+          "square": null,
+          "relative": "Ребенок",
+          "relative_index": 4,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "пользование"
+        },
+        {
+          "text": "долевая собственность, доля в праве 1/3 4. Садовый домик,",
+          "square": 20.4,
+          "relative": "Ребенок",
+          "relative_index": 4,
+          "own_type_by_column": "В собственности",
+          "square_raw": "20,4",
+          "country_raw": "Россия",
+          "type_raw": "долевая собственность, доля в праве 1/3 4. Садовый домик,",
+          "own_type_raw": ""
+        },
+        {
+          "text": "индивидуальная собственность",
+          "square": null,
+          "relative": "Ребенок",
+          "relative_index": 4,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "индивидуальная собственность",
+          "own_type_raw": ""
+        },
+        {
+          "text": "1.Квартира, общая",
+          "square": 45.07,
+          "relative": "Супруг(а)",
+          "relative_index": 5,
+          "own_type_by_column": "В собственности",
+          "square_raw": "45,07",
+          "country_raw": "Россия",
+          "type_raw": "1.Квартира, общая",
+          "own_type_raw": ""
+        },
+        {
+          "text": "1. Земельный",
+          "square": 15.0,
+          "relative": "Супруг(а)",
+          "relative_index": 5,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "15",
+          "country_raw": "Россия",
+          "type_raw": "1. Земельный"
+        },
+        {
+          "text": "долевая",
+          "square": null,
+          "relative": "Супруг(а)",
+          "relative_index": 5,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "долевая",
+          "own_type_raw": ""
+        },
+        {
+          "text": "участок под гараж,",
+          "square": null,
+          "relative": "Супруг(а)",
+          "relative_index": 5,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "участок под гараж,"
+        },
+        {
+          "text": "собственность, доля в",
+          "square": 29.76,
+          "relative": "Супруг(а)",
+          "relative_index": 5,
+          "own_type_by_column": "В собственности",
+          "square_raw": "29,76",
+          "country_raw": "Россия",
+          "type_raw": "собственность, доля в",
+          "own_type_raw": ""
+        },
+        {
+          "text": "аренда",
+          "square": null,
+          "relative": "Супруг(а)",
+          "relative_index": 5,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "аренда"
+        },
+        {
+          "text": "праве 1/3",
+          "square": null,
+          "relative": "Супруг(а)",
+          "relative_index": 5,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "праве 1/3",
+          "own_type_raw": ""
+        },
+        {
+          "text": "2.Земельный участок",
+          "square": 15.0,
+          "relative": "Супруг(а)",
+          "relative_index": 5,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "15",
+          "country_raw": "Россия",
+          "type_raw": "2.Земельный участок"
+        },
+        {
+          "text": "2. Квартира, общая",
+          "square": null,
+          "relative": "Супруг(а)",
+          "relative_index": 5,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "2. Квартира, общая",
+          "own_type_raw": ""
+        },
+        {
+          "text": "под гараж, аренда",
+          "square": null,
+          "relative": "Супруг(а)",
+          "relative_index": 5,
+          "own_type_by_column": "В пользовании",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "под гараж, аренда"
+        },
+        {
+          "text": "долевая",
+          "square": null,
+          "relative": "Супруг(а)",
+          "relative_index": 5,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "долевая",
+          "own_type_raw": ""
+        },
+        {
+          "text": "собственность, доля в",
+          "square": null,
+          "relative": "Супруг(а)",
+          "relative_index": 5,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "собственность, доля в",
+          "own_type_raw": ""
+        },
+        {
+          "text": "праве 1/2",
+          "square": null,
+          "relative": "Супруг(а)",
+          "relative_index": 5,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "праве 1/2",
+          "own_type_raw": ""
+        }
+      ],
+      "vehicles": [
+        {
+          "text": "Автомобиль",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "text": "легковой",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "text": "ВАЗ-11173,",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "text": "индивидуаль-",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "text": "ная собствен-",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "text": "ность",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        },
+        {
+          "text": "Автомобиль",
+          "relative": "Супруг(а)",
+          "relative_index": 5
+        },
+        {
+          "text": "легковой",
+          "relative": "Супруг(а)",
+          "relative_index": 5
+        },
+        {
+          "text": "CHEVROLET",
+          "relative": "Супруг(а)",
+          "relative_index": 5
+        },
+        {
+          "text": "LANOS, 2008",
+          "relative": "Супруг(а)",
+          "relative_index": 5
+        },
+        {
+          "text": "год,",
+          "relative": "Супруг(а)",
+          "relative_index": 5
+        },
+        {
+          "text": "индивидуаль-",
+          "relative": "Супруг(а)",
+          "relative_index": 5
+        },
+        {
+          "text": "ная собствен-",
+          "relative": "Супруг(а)",
+          "relative_index": 5
+        },
+        {
+          "text": "ность",
+          "relative": "Супруг(а)",
+          "relative_index": 5
+        }
+      ]
+    },
+    {
+      "person": {
+        "name_raw": "Вахрушева Ирина Федоровна",
+        "role": ""
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1111111.0,
+          "size_raw": "1111111",
+          "relative": null
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Вахрушева Ирина Сидоровна",
+        "role": ""
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1111111.0,
+          "size_raw": "1111111",
+          "relative": null
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Вахрушева Ирина Семеновна",
+        "role": ""
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1111.0,
+          "size_raw": "1111",
+          "relative": null
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Вахрушева Ирина Петровна",
+        "role": ""
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 111111.0,
+          "size_raw": "111111",
+          "relative": null
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Вахрушева Ирина Анатольевна",
+        "role": ""
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 1111111.0,
+          "size_raw": "1111111",
+          "relative": null
+        }
+      ],
+      "real_estates": [],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Александрович",
+        "role": ""
+      },
+      "year": 2014,
+      "incomes": [],
+      "real_estates": [
+        {
+          "text": "собственность, доля в",
+          "square": 75.75,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "75,75",
+          "country_raw": "Россия",
+          "type_raw": "собственность, доля в",
+          "own_type_raw": ""
+        },
+        {
+          "text": "индивидуальная",
+          "square": null,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "",
+          "country_raw": "",
+          "type_raw": "индивидуальная",
+          "own_type_raw": ""
+        }
+      ],
+      "vehicles": []
+    },
+    {
+      "person": {
+        "name_raw": "Сапарбиева Ольга Николаевна",
+        "role": "(директор МУ ШП)"
+      },
+      "year": 2014,
+      "incomes": [
+        {
+          "size": 331134.53,
+          "size_raw": "331134,53",
+          "relative": null
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "Квартира 1/3 часть, общая долевая собственность",
+          "square": 40.0,
+          "relative": null,
+          "own_type_by_column": "В собственности",
+          "square_raw": "40",
+          "country_raw": "Россия",
+          "type_raw": "Квартира 1/3 часть, общая долевая собственность",
+          "own_type_raw": ""
+        }
+      ],
+      "vehicles": []
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения о доходах, имуществе и обязательствах имущественного характера муниципальных служащих администрации городского округа-город Галич Костромской области, супруга (супруги) и несовершеннолетних детей за период с 01 января 2014 года по 31 декабря 2014 года\nФамилия, имя, отчество, должность\nДекларированный годовой доход за 2014 год (руб)\nПеречень объектов недвижимого имущества и транспортных средств, принадлежащих на праве собственности\nПеречень объектов недвижимого имущества, находящихся в пользовании",
+    "year": 2014
+  }
+}
