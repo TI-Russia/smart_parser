@@ -46,6 +46,7 @@ namespace Smart.Parser
         public static bool BuildTrigrams = false;
         public static int? UserDocumentFileId;
         public static ColumnOrdering LastGoodOrdering = null;
+        public static string ColumnTrigramsFileName = null;
 
         static string ParseArgs(string[] args)
         {
@@ -71,6 +72,8 @@ namespace Smart.Parser
             CMDLineParser.Option apiValidationOpt =
                 parser.AddBoolSwitch("-api-validation", "validate JSON output by API call");
             CMDLineParser.Option buildTrigramsOpt = parser.AddBoolSwitch("-build-trigrams", "build trigrams");
+            CMDLineParser.Option externalColumnTrigramsOpt =
+                parser.AddStringParameter("-column-trigrams", "external column_trigrams.txt file", false);
             CMDLineParser.Option checkPredictorOpt =
                 parser.AddBoolSwitch("-check-predictor", "calc predictor precision");
             CMDLineParser.Option docFileIdOpt = parser.AddStringParameter("-docfile-id",
@@ -197,6 +200,10 @@ namespace Smart.Parser
             if (tolokaFileNameOpt.isMatched)
             {
                 TolokaFileName = tolokaFileNameOpt.Value.ToString();
+            }
+            if (externalColumnTrigramsOpt.isMatched)
+            {
+                ColumnTrigramsFileName = externalColumnTrigramsOpt.Value.ToString();
             }
 
             if (useDecimalRawNormalizationOpt.isMatched)
@@ -634,7 +641,7 @@ namespace Smart.Parser
             }
 
 
-            ColumnPredictor.InitializeIfNotAlready();
+            ColumnPredictor.InitializeIfNotAlready(Program.ColumnTrigramsFileName);
 
             string logFile = Path.Combine(Path.GetDirectoryName(inputFile),
                 Path.GetFileName(inputFile) + ".log");

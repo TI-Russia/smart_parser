@@ -138,9 +138,16 @@ namespace TI.Declarator.JsonSerialization
         {
             var jServants = new JArray();
             bool storeSheetNumbersInSections = SmartParserJsonFormat == SmartParserJsonFormatEnum.Disclosures && declaration.NotFirstSheetProperties.Count > 0;
-            foreach (var servant in declaration.PublicServants)
+            foreach (var declarant in declaration.PublicServants)
             {
-                jServants.Add(Serialize(servant, declaration.Properties, storeSheetNumbersInSections));
+                if (declarant.DeclarantHasNoDeclarationInfo())
+                {
+                    Logger.Debug("Empty declarant {0}", declarant.NameRaw);
+                }
+                else
+                {
+                    jServants.Add(Serialize(declarant, declaration.Properties, storeSheetNumbersInSections));
+                }
             }
 
             var jDocumentProp = SerializeDocumentProperties(declaration.Properties);
