@@ -300,7 +300,7 @@ class Person(models.Model):
                 rating_info = ""
             else:
                 image_path = os.path.join("/static/images/", r.rating.image_file_path)
-                rating_info = ", {} место, {} {}, чисrelative_indexло участников:{}".format(
+                rating_info = ", {} место, {} {}, число участников:{}".format(
                     r.person_place,
                     r.rating_value,
                     r.rating.rating_unit_name,
