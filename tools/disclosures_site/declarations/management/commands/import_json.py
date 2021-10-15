@@ -254,11 +254,13 @@ class TImporter:
                 bucket_id = 0
             else:
                 if len(self.office_buckets[0]) > cnt / process_count:
-                    #if bucket 0 contains more offices than other buckets, put to current office to other buckets   
+                    #if bucket 0 contains more offices than other buckets, put to current office to other buckets
                     bucket_id = cnt % (process_count - 1) + 1
                 else:
                     bucket_id = cnt % process_count
             self.office_buckets[bucket_id].append(office_id)
+        for i in self.office_buckets.keys():
+            self.logger.debug("bucket[{}] size = {}".format(i, len(self.office_buckets[i])))
 
     def process_one_office_bucket_in_subprocess(self, bucket_id):
         self.init_after_fork()

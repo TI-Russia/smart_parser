@@ -29,5 +29,10 @@ namespace TI.Declarator.ParserCommon
         List<Relative> relatives = new List<Relative>();
         public override int? PersonIndex { get { return null; } }
         public ColumnOrdering Ordering;
+        public bool DeclarantHasNoDeclarationInfo()
+        {
+            return relatives.Count == 0 && DeclaredYearlyIncome == null && Vehicles.Count == 0 && RealEstateProperties.Count == 0;
+        }
+
     }
 }

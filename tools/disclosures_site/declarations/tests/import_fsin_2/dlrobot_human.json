@@ -1,0 +1,30 @@
+{
+    "document_folder": "domains",
+    "documents": {
+        "53f5e48b4c838829dee70c35d753e2bc923338f03abd893ef79e362c374f8122": {
+            "file_ext": ".xlsx",
+            "intersection_status": "only_dlrobot",
+            "office_id": 873,
+            "w_refs": [
+                {
+                    "crawl_epoch": 1,
+                    "url": null,
+                    "web_domain": "fsin.gov.ru"
+                }
+            ]
+        },
+        "ff34c6cefa7ef870df304b02323e24640f672982e822f05136c0f87995c40c59": {
+            "file_ext": ".docx",
+            "intersection_status": "only_dlrobot",
+            "office_id": 3905,
+            "w_refs": [
+                {
+                    "crawl_epoch": 1,
+                    "url": null,
+                    "web_domain": "fsin.gov.ru"
+                }
+            ]
+        }
+
+    }
+}
