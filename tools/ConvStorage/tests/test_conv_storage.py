@@ -4,6 +4,7 @@ from ConvStorage.conversion_client import TDocConversionClient
 from common.logging_wrapper import close_logger, setup_logging
 from common.primitives import build_dislosures_sha256
 from DeclDocRecognizer.external_convertors import TExternalConverters
+
 import concurrent.futures
 from unittest import TestCase
 import os
@@ -46,6 +47,7 @@ class TTestConvBase(TestCase):
         self.project_file = "converted_file_storage.json"
         self.client = None
         self.server_args = None
+        self.client_count = 0;
 
     def start_server_thread(self):
         self.server = TConvertProcessor(TConvertProcessor.parse_args(self.server_args))
@@ -114,8 +116,10 @@ class TTestConvBase(TestCase):
             client_args.append('--rebuild')
         if skip_receiving:
             client_args.append('--skip-receiving')
+        if self.client_count >= 0 and log_name == "client":
+            log_name = log_name + str(self.client_count)
         logger = setup_logging(logger_name=log_name)
-
+        self.client_count += 1
         self.client = TDocConversionClient(TDocConversionClient.parse_args(client_args), logger=logger)
         self.client.start_conversion_thread()
         self.client.process_files()
@@ -341,7 +345,7 @@ class TestRebuild(TTestConvBase):
 
 class TestRestartOcrAfterFreeze(TTestConvBase):
     def setUp(self):
-        self.setup_server("restart-ocr", ['--ocr-timeout',  '160s', '--disable-winword', '--ocr-restart-time', '180s'])
+        self.setup_server("restart-ocr1", ['--ocr-timeout',  '160s', '--disable-winword', '--ocr-restart-time', '180s'])
 
     def tearDown(self):
         self.tear_down()
