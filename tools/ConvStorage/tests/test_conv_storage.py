@@ -119,12 +119,15 @@ class TTestConvBase(TestCase):
         if self.client_count >= 0 and log_name == "client":
             log_name = log_name + str(self.client_count)
         logger = setup_logging(logger_name=log_name)
-        self.client_count += 1
-        self.client = TDocConversionClient(TDocConversionClient.parse_args(client_args), logger=logger)
-        self.client.start_conversion_thread()
-        self.client.process_files()
-        close_logger(logger)
-        return output_files
+        try:
+            self.client_count += 1
+            self.client = TDocConversionClient(TDocConversionClient.parse_args(client_args), logger=logger)
+            self.client.start_conversion_thread()
+            self.client.process_files()
+            return output_files
+        finally:
+            close_logger(logger)
+
 
     def list2reason(self, exc_list):
         if exc_list and exc_list[-1][0] is self:
@@ -143,12 +146,16 @@ class TTestConvBase(TestCase):
         else:
             self.server_process.terminate()
 
+        os.chdir(os.path.dirname(__file__))
+
         if ok:
-            try:
-                if os.path.exists(self.data_folder):
-                    shutil.rmtree(self.data_folder, ignore_errors=True)
-            finally:
-                os.chdir(os.path.dirname(__file__))
+            for i in range(3):
+                try:
+                    if os.path.exists(self.data_folder):
+                        shutil.rmtree(self.data_folder, ignore_errors=True)
+                except Exception as e:
+                    print("cannot delete {}, exception = {}".format(self.data_folder, str(e)))
+                    time.sleep(10)
 
 
 class TestPing(TTestConvBase):

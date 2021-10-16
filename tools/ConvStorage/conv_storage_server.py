@@ -1,5 +1,6 @@
 from ConvStorage.convert_storage import TConvertStorage
 from common.primitives import build_dislosures_sha256_by_file_data, run_with_timeout
+from common.logging_wrapper import  close_logger
 
 import argparse
 import json
@@ -242,10 +243,7 @@ class TConvertProcessor(http.server.HTTPServer):
                 self.logger.error(exp)
             self.logger.debug("http server was stopped")
             self.convert_storage.close_storage()
-            for i in self.logger.handlers:
-                self.logger.removeHandler(i)
-                i.flush()
-                i.close()
+            close_logger(self.logger)
 
     def save_new_file(self, sha256, file_bytes, file_extension, force, only_winword_conversion=False,
                       only_ocr=False):
