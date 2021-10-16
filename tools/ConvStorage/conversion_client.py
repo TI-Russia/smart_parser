@@ -118,6 +118,9 @@ class TDocConversionClient(object):
             else:
                 self._sent_tasks.append(sha256)
             return True
+        except ConnectionError as exp:
+            self.logger.error("got exception {} in _register_task ".format(str(exp)))
+            return False
         except http.client.HTTPException as exp:
             self.logger.error("got exception {} in _register_task ".format(str(exp)))
             return False
@@ -327,12 +330,12 @@ class TDocConversionClient(object):
                 return True
             return False
 
-    def assert_declarator_conv_alive(self):
+    def assert_declarator_conv_alive(self, raise_exception=True):
         try_count = 3
         for try_index in range(try_count):
             try:
                 if self._assert_declarator_conv_alive():
-                    return
+                    return True
             except OSError as exp:
                 m = "cannot connect to {} (declarator conversion server) exp={} try_index={}".format(
                     TDocConversionClient.DECLARATOR_CONV_URL, exp, try_index)
@@ -341,6 +344,9 @@ class TDocConversionClient(object):
                 else:
                     self.logger.error(m)
                 if try_index + 1 == try_count:
-                    raise
+                    if raise_exception:
+                        raise
+                    else:
+                        return False
                 else:
                     time.sleep(5 * (try_index + 1))

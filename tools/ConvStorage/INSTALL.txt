@@ -1,43 +1,51 @@
-﻿1. Install Windows 10 Pro
+﻿1.0 Install Windows 10 Pro
 
-2 Disable the Windows Update Service
+1.1 Disable the Windows Update Service
     2.1. https://www.cleverfiles.com/howto/disable-update-windows-10.html
     2.2. login as User1 (как в  https://www.thewindowsclub.com/windows-10-update-enables-even-turning-off)
     2.3. В групповой политике отключены автоматические обновления (как в https://www.drivereasy.com/knowledge/how-to-stop-windows-10-update/ )
     2.4. follow https://www.pandasecurity.com/en/mediacenter/tips/how-to-free-up-ram/#:~:text=To%20locate%20your%20computer%20memory,space%20they%20are%20taking%20up.
         Switch off many background apps (leave security)
 
-2.0  Make your network private (not public) and enabe file sharing to let ping go
+1.2  Make your network private (not public) and enabe file sharing to let ping go
 
-2.1 net stop windows search (руками в панели services)
+1.3 net stop windows search (руками в панели services)
 
-3. Install Microsoft Word 2019
+===============
+2.0 Install Microsoft Word 2019
 
-3.1 Install LibreOffice
+2.1 Install LibreOffice
 
-4. Install Cygwin в c:\cygwin64 with
-      g++, gcc, git, p7zip, wget, jq, python3.8, python3-devel, libssl-dev, lynx
+================
+3.1 Install Cygwin в c:\cygwin64 with
+      g++, gcc, git, p7zip, wget, jq,  libssl-dev, lynx, wget, curl
 
-4.0 lynx -source rawgit.com/transcode-open/apt-cyg/master/apt-cyg > apt-cyg
-  install apt-cyg /bin
+3.1 add C:\cygwin64\bin to PATH for all users, but after C:\Users\sokir\AppData\Local\Microsoft\WindowsApps\
 
-4.1 add C:\cygwin64\bin to PATH for all users!
+===============
+4.1 download Visual Studio Community, install all options for C#
 
-4.2  bash
- apt-cyg install wget
+4.2 compile c:/tmp/smart_parser/smart_parser/tools/MicrosoftPdf2Docx in debug mode
 
+================
+4.1  install python 3.10 via Microsoft Store!
 
-5. Get repository
+4.2 check
+ $ where python
+  C:\Users\sokir\AppData\Local\Microsoft\WindowsApps\python.exe                                                                                          c
+  c:\cygwin64\bin\python
+
+4.3  telegram-send --configure
+
+================
+5. Get git repository
    mkdir c:/tmp/smart_parser; cd  c:/tmp/smart_parser
    git clone git@github.com:TI-Russia/smart_parser.git
 
 6. cd /cygdrive/c/tmp/smart_parser/smart_parser/tools/ConvStorage/; python -m pip install -r requirements.txt
 
-6.1 telegram-send --configure
 
-7. download Visual Studio Community, install all options for C#
 
-9. compile c:/tmp/smart_parser/smart_parser/tools/MicrosoftPdf2Docx in debug mode
 
 9. cd c:/tmp/smart_parser/smart_parser/tools/MicrosoftPdf2Docx/tests;
     bash run_tests.sh  (may output one gui message box)
@@ -53,7 +61,7 @@
     $ wget http://www.rarlab.com/rar/unrarsrc-5.1.7.tar.gz
     $ tar -xzvf unrarsrc-5.1.7.tar.gz
     $ cd unrar
-    $ make; make install 
+    $ make; make install
 
 
 13. install FineReader

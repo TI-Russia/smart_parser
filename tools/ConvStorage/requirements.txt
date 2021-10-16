@@ -1,0 +1,7 @@
+﻿xlsx2csv
+telegram-send
+pytest
+setuptools_rust
+python-magic
+python-magic-bin
+bs4
