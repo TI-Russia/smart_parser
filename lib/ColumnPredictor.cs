@@ -11,7 +11,7 @@ using Smart.Parser.Adapters;
 using Smart.Parser.Lib;
 
 
-namespace Parser.Lib
+namespace Smart.Parser.Lib
 {
     using TrigramsDict = Dictionary<DeclarationField, Dictionary<string, int>>;
     public class ColumnPredictor
@@ -22,32 +22,42 @@ namespace Parser.Lib
         static public bool CalcPrecision =  false;
         static public int CorrectCount = 0;
         static public int AllCount = 0;
+        static string ExternalFileName = null;
 
 
-        //static ColumnPredictor() //do not know why static constructor is not called,use Initialize
-        public static void InitializeIfNotAlready()
+        public static void InitializeIfNotAlready(string fileName=null)
         {
             if (SampleLen == 0)
             {
-                ReadData();
+                if (fileName == null)
+                {
+                    ReadDataFromAssembly();
+                }
+                else
+                {
+                    ReadDataFromExternalFile(fileName);
+                }
                 BuildClassFreqs();
             }
         }
 
-        static string GetDataPath()
+        public static void ReadDataFromExternalFile(string fileName)
         {
-            string executableLocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            return Path.Combine(executableLocation, "column_trigrams.txt");
+            ExternalFileName = fileName;
+            using (StreamReader stream = new StreamReader(fileName))
+            {
+                Trigrams = JsonConvert.DeserializeObject<TrigramsDict>(stream.ReadToEnd());
+            }
+            Logger.Info(String.Format("Read trigrams for {0} declaration fields", Trigrams.Count));
         }
-        public static void ReadData()
+        public static void ReadDataFromAssembly()
         {
             var currentAssembly = Assembly.GetExecutingAssembly();
             using (var stream = currentAssembly.GetManifestResourceStream("Smart.Parser.Lib.Resources.column_trigrams.txt"))
             {
                 using (var file = new System.IO.StreamReader(stream))
                 {
-                    string jsonStr = file.ReadToEnd();
-                    Trigrams = JsonConvert.DeserializeObject<TrigramsDict>(jsonStr);
+                    Trigrams = JsonConvert.DeserializeObject<TrigramsDict>(file.ReadToEnd());
                 }
             }
         }
@@ -140,7 +150,11 @@ namespace Parser.Lib
             var negativeFreqs = new Dictionary<DeclarationField, double>();
             foreach (string w in words) {
                 if (DataHelper.IsEmptyValue(w)) continue;
-                var f = PredictByString(w);
+                var f = HeaderHelpers.TryGetField("", w);
+                if (f == DeclarationField.None)
+                {
+                    f = PredictByString(w);
+                }
                 if (negativeFreqs.ContainsKey(f))
                 {
                     negativeFreqs[f] -= 1;
@@ -169,7 +183,8 @@ namespace Parser.Lib
 
         public static void WriteData()
         {
-            using (var file = new System.IO.StreamWriter(GetDataPath()))
+            Logger.Info(String.Format("write trigrams to {0}", ExternalFileName));
+            using (var file = new System.IO.StreamWriter(ExternalFileName))
             {
                 file.WriteLine(JsonConvert.SerializeObject(Trigrams));
             }
@@ -196,6 +211,9 @@ namespace Parser.Lib
         }
         public static void UpdateByRow(ColumnOrdering columnOrdering, DataRow row)
         {
+            // otherwize nowhere to write
+            Debug.Assert(ColumnPredictor.ExternalFileName != null);
+
             foreach (var i in columnOrdering.MergedColumnOrder)
             {
                 try

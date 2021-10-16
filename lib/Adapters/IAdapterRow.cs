@@ -318,7 +318,7 @@ namespace Smart.Parser.Adapters
             return true;
         }
 
-        private static bool CheckPersonName(String s)
+        public static bool CheckPersonName(String s)
         {
             if (s.Contains('.')) {
                 return true;
@@ -333,9 +333,12 @@ namespace Smart.Parser.Adapters
             if (TextHelpers.CanBePatronymic(words[words.Length - 1])) {
                 return true;
             }
-            if (words.Count() != 3 && ColumnPredictor.PredictByString(s) != DeclarationField.NameOrRelativeType)
-            {
-                return false;
+            if (words.Count() != 3) {
+                var predictedField = ColumnPredictor.PredictByString(s);
+                if (!HeaderHelpers.IsNameDeclarationField(predictedField)) 
+                {
+                    return false;
+                }
             }
             return true;
         }

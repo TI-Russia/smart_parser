@@ -534,8 +534,7 @@ namespace Smart.Parser.Lib
                 
                 AddColumn(columnOrdering, field, cell);
                 if (ColumnOrdering.SearchForFioColumnOnly)
-                    if  (field == DeclarationField.NameAndOccupationOrRelativeType ||
-                         field == DeclarationField.NameOrRelativeType)
+                    if  (HeaderHelpers.IsNameDeclarationField(field))
                     {
                         break;
                     }

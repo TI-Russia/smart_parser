@@ -10,6 +10,10 @@ namespace TI.Declarator.ParserCommon
             .ToLowerInvariant()
             .RemoveCharacters('-', ' ')
             .ContainsAny("недвижим");
+        public static bool IsNameDeclarationField(DeclarationField f)
+        {
+            return f == NameAndOccupationOrRelativeType || f == NameOrRelativeType;
+        }
 
         public static DeclarationField TryGetField(string parentColumnTitle, string subColumnTitle)
         {

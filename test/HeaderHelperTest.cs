@@ -57,7 +57,16 @@ namespace test
             string country = "57 кв м";
             Assert.IsTrue(TRealtyCellSpan.CountryAndSquareAreSwapped(square, country));
             Assert.IsFalse(TRealtyCellSpan.CountryAndSquareAreSwapped(country, square));
-        }   
+        }
+
+        [TestMethod]
+        public void TestCanBePersonName()
+        {
+            string s = "Десятов Владимир  Вячеславович,";
+            ColumnPredictor.InitializeIfNotAlready();
+            var r = DataRow.CheckPersonName(s);
+            Assert.IsTrue(r);
+        }
     }
 }
 
