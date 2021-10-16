@@ -13,14 +13,27 @@
 
 3. Install Microsoft Word 2019
 
+3.1 Install LibreOffice
+
 4. Install Cygwin в c:\cygwin64 with
-      g++, git, p7zip, wget, jq, git
+      g++, gcc, git, p7zip, wget, jq, python3.8, python3-devel, libssl-dev, lynx
+
+4.0 lynx -source rawgit.com/transcode-open/apt-cyg/master/apt-cyg > apt-cyg
+  install apt-cyg /bin
 
 4.1 add C:\cygwin64\bin to PATH for all users!
+
+4.2  bash
+ apt-cyg install wget
+
 
 5. Get repository
    mkdir c:/tmp/smart_parser; cd  c:/tmp/smart_parser
    git clone git@github.com:TI-Russia/smart_parser.git
+
+6. cd /cygdrive/c/tmp/smart_parser/smart_parser/tools/ConvStorage/; python -m pip install -r requirements.txt
+
+6.1 telegram-send --configure
 
 7. download Visual Studio Community, install all options for C#
 
@@ -45,8 +58,8 @@
 
 13. install FineReader
 
-14. set in environmet variable
-   PYTHONPATH=C:\tmp\smart_parser\smart_parser\tools;C:\tmp\smart_parser\smart_parser\tools\disclosures_site
+14. edit c:\cygwin64\home\sokirko\.profile, add
+   export PYTHONPATH=/cygdrive/c/tmp/smart_parser/smart_parser/tools
 
 15. go to c:/tmp/smart_parser/smart_parser/tools/ConvStorage/tests
 
@@ -56,15 +69,15 @@
 
 
 17.   run the simple test:
-
-     bash run_tests.sh ping
+     python -m unittest -f -v -k ping
 
 18. import prod.hft to Finereader HotFolder (gui)
-     
+
     must pass
 
 19. run all ConvStorage tests
-    bash run_tests.sh
+     python -m unittest -f -v
+
 
 20. Be careful, set correct time to your workstation, tests can fail if time is wrong
 
@@ -72,4 +85,4 @@
 
 
 24. Eset node антивирус отключен
-25. Сервер запускается руками, поскольку не получается  запустить под правильным пользователем, чтобы запускался офмс.
+25. Сервер запускается руками (start_server.sh), поскольку не получается  запустить под правильным пользователем, чтобы запускался офмс.
