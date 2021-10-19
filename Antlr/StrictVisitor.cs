@@ -1,6 +1,7 @@
-﻿using System;
+﻿//using SmartParser.Lib;
+
+using System;
 using System.Collections.Generic;
-using TI.Declarator.ParserCommon;
 using Antlr4.Runtime;
 
 
@@ -117,7 +118,7 @@ namespace SmartAntlr
             }
             catch (Exception e)
             {
-                Logger.Error("exception: {0}", e.Message);
+                //Logger.Error("exception: {0}", e.Message);
                 return new List<GeneralParserPhrase>();
             }
         }

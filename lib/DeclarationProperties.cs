@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TI.Declarator.ParserCommon
+namespace SmartParser.Lib
 {
     public class DeclarationProperties
     {

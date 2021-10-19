@@ -1,9 +1,10 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Smart.Parser.Adapters;
-//using System.Web.Script.Serialization;
+﻿using SmartParser.Lib;
 
-namespace Smart.Parser.Lib
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+
+namespace SmartParser.Lib
 {
     public class JsonWriter
     {

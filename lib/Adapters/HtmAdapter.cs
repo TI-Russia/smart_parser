@@ -1,17 +1,17 @@
-﻿using Smart.Parser.Adapters;
+﻿using SmartParser.Lib;
+using StringHelpers;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using DocumentFormat.OpenXml;
 using System.IO;
-using TI.Declarator.ParserCommon;
 using AngleSharp;
 using AngleSharp.Dom;
-using Smart.Parser.Lib.Adapters.HtmlSchemes;
 using System.Text.RegularExpressions;
 
-namespace Smart.Parser.Adapters
+namespace SmartParser.Lib
 {
     public class WorksheetInfo
     {

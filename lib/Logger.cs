@@ -4,12 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 
-namespace TI.Declarator.ParserCommon
+namespace SmartParser.Lib
 {
     public class Logger
     {
         static log4net.Repository.ILoggerRepository repo = LogManager.GetRepository(Assembly.GetEntryAssembly());
-        private static void LoadConfig(string resourceName = "ParserCommon.Resources.log4net.config") //"Smart.Parser.Lib.Resources.log4net.config")
+        private static void LoadConfig(string resourceName = "Smart.Parser.Lib.Resources.log4net.config") //"SmartParser.Lib.Resources.log4net.config")
         {
             var debug = Assembly.GetExecutingAssembly().GetManifestResourceNames();
             var currentAssembly = Assembly.GetExecutingAssembly();

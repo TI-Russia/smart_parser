@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Smart.Parser.Adapters;
-using TI.Declarator.ParserCommon;
+using SmartParser.Lib;
+using StringHelpers;
 using System.IO;
-using Smart.Parser.Lib;
+using SmartParser.Lib;
 using System;
 using System.Collections.Generic;
 

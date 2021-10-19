@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
-using Smart.Parser.Lib;
-using TI.Declarator.ParserCommon;
+using SmartParser.Lib;
+using StringHelpers;
 
 
 namespace test

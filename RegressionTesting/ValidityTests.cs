@@ -1,3 +1,6 @@
+using StringHelpers;
+using SmartParser.Lib;
+
 using System;
 using System.IO;
 using System.Linq;
@@ -7,7 +10,6 @@ using System.Reflection;
 using System.Text;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using TI.Declarator.ParserCommon;
 using TI.Declarator.JsonSerialization;
 
 namespace RegressionTesting
@@ -85,8 +87,8 @@ namespace RegressionTesting
         public void TestSmartParserMultipleOut(string adapterName, string filename, params string[] outfiles)
         {
             SetupLog4Net();
-            Smart.Parser.Lib.Parser.InitializeSmartParser();
-            Smart.Parser.Lib.Parser.UseDecimalRawNormalization = true;
+            SmartParser.Lib.Parser.InitializeSmartParser();
+            SmartParser.Lib.Parser.UseDecimalRawNormalization = true;
             Directory.CreateDirectory(Path.GetDirectoryName(filename));
             File.Copy(Path.Join(GetCanonFolder(), filename), filename, true);
             Log(SmartParserLogFile,
@@ -108,8 +110,8 @@ namespace RegressionTesting
             bool skipRelativeOrphan = false, SmartParserJsonFormatEnum jsonFormat = SmartParserJsonFormatEnum.Official)
         {
             SetupLog4Net();
-            Smart.Parser.Lib.Parser.InitializeSmartParser();
-            Smart.Parser.Lib.Parser.UseDecimalRawNormalization = true;
+            SmartParser.Lib.Parser.InitializeSmartParser();
+            SmartParser.Lib.Parser.UseDecimalRawNormalization = true;
             File.Copy(Path.Join(GetCanonFolder(), filename), filename, true);
             Log(SmartParserLogFile,
                 String.Format("run smart_parser on {0} in directory {1}", filename, Directory.GetCurrentDirectory()));

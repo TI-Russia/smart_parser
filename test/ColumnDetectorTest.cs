@@ -1,10 +1,10 @@
-﻿using System;
+﻿using StringHelpers;
+using SmartParser.Lib;
+
+using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Smart.Parser.Adapters;
-using TI.Declarator.ParserCommon;
 using System.IO;
-using Smart.Parser.Lib;
-using Parser.Lib;
+
 
 namespace test
 {

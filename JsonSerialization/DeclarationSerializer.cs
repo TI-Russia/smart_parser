@@ -9,8 +9,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Schema;
 using Newtonsoft.Json.Linq;
 
-using TI.Declarator.ParserCommon;
-using Smart.Parser.Lib;
+using StringHelpers;
+using SmartParser.Lib;
 
 namespace TI.Declarator.JsonSerialization
 {

@@ -1,4 +1,8 @@
-﻿using System;
+﻿using StringHelpers;
+using SmartParser.Lib;
+
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,12 +10,9 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using CsvHelper;
-using TI.Declarator.ParserCommon;
 using Newtonsoft.Json;
-using Parser.Lib;
-using Smart.Parser.Lib.Adapters.DocxSchemes;
 
-namespace Smart.Parser.Adapters
+namespace SmartParser.Lib
 {
     public abstract class IAdapter : TSectionPredicates
     {

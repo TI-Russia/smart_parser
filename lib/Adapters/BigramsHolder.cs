@@ -1,14 +1,15 @@
-﻿using System;
+﻿using StringHelpers;
+//using SmartParser.Lib;
+
+using System;
 using System.Text.RegularExpressions;
 using System.Reflection;
 using System.Collections.Generic;
 using System.IO;
-using Parser.Lib;
-using TI.Declarator.ParserCommon;
 using System.Linq;
-using Smart.Parser.Lib;
 
-namespace Smart.Parser.Adapters
+
+namespace SmartParser.Lib
 {
     public class BigramsHolder
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace TI.Declarator.ParserCommon
+namespace SmartParser.Lib
 {
     public class Vehicle
     {

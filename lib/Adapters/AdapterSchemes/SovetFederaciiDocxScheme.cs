@@ -1,18 +1,17 @@
-﻿using System;
+﻿using StringHelpers;
+using SmartParser.Lib;
+
+using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
-using Parser.Lib;
-using Smart.Parser.Adapters;
-using Smart.Parser.Lib.Adapters.DocxSchemes;
-using TI.Declarator.ParserCommon;
 using Table = DocumentFormat.OpenXml.Wordprocessing.Table;
 using EP.Ner;
 using EP.Ner.Core;
 using EP.Morph;
 
-namespace Smart.Parser.Lib.Adapters.AdapterSchemes
+namespace SmartParser.Lib
 {
     class SovetFederaciiDocxScheme : IAdapterScheme
     {

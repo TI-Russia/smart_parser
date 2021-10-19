@@ -1,9 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Smart.Parser.Adapters;
-using TI.Declarator.ParserCommon;
+﻿using StringHelpers;
+using SmartParser.Lib;
+
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.IO;
-using Smart.Parser.Lib;
-using static Algorithms.LevenshteinDistance;
 using System;
 
 namespace test
@@ -17,7 +16,7 @@ namespace test
         {
             string s1 = "собствен-ности";
             string s2 = "собственности";
-            int result = Calculate(s1, s2);
+            int result = LevenshteinDistance.Calculate(s1, s2);
             Assert.AreEqual(1, result);
         }
 

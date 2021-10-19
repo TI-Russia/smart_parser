@@ -1,16 +1,17 @@
-﻿using Smart.Parser.Adapters;
+﻿using SmartParser.Lib;
+using StringHelpers;
+
 using AngleSharp.Dom;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using TI.Declarator.ParserCommon;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Document = DocumentFormat.OpenXml.Wordprocessing.Document;
 
-namespace Smart.Parser.Lib.Adapters.DocxSchemes
+namespace SmartParser.Lib
 {
     public abstract class IAdapterScheme
     {

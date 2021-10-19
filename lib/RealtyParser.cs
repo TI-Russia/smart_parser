@@ -1,14 +1,14 @@
-﻿using Parser.Lib;
-using Smart.Parser.Adapters;
+﻿using StringHelpers;
+using SmartParser.Lib;
+using SmartAntlr;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
-using TI.Declarator.ParserCommon;
-using SmartAntlr;
 
-namespace Smart.Parser.Lib
+namespace SmartParser.Lib
 {
     public class TRealtyCell
     {

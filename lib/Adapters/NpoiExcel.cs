@@ -1,4 +1,8 @@
-﻿using System;
+﻿using StringHelpers;
+using SmartParser.Lib;
+
+
+using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +14,8 @@ using NPOI.SS.Util;
 using NPOI.XSSF.UserModel;
 
 
-using TI.Declarator.ParserCommon;
-using Parser.Lib;
 
-namespace Smart.Parser.Adapters
+namespace SmartParser.Lib
 {
 
     public class NpoiExcelAdapter : IAdapter

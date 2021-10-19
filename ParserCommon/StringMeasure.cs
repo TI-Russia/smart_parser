@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Drawing.Text;
 using System.IO;
 
-namespace TI.Declarator.ParserCommon
+namespace StringHelpers
 {
     public class TStringMeasure
     {

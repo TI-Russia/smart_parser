@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace TI.Declarator.ParserCommon
+namespace StringHelpers
 {
     public static class TextHelpers
     {
@@ -118,6 +118,9 @@ namespace TI.Declarator.ParserCommon
             "секретарь", "уполномоченный", "председатель", "бухгалтер", "руководител", "глава", "главы", "заведующий",
             "заведующая", "служащий", "служащая"
             };
+
+        public static string OnlyRussianLowercase(this string s) => Regex.Replace(s.ToLowerInvariant(), "[^а-яё]", string.Empty);
+
 
         public static bool MayContainsRole(string s)
         {

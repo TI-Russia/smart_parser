@@ -1,5 +1,6 @@
-﻿using System;
-using Smart.Parser.Adapters;
+﻿using SmartParser.Lib;
+
+using System;
 using System.Diagnostics;
 using System.IO;
 using DocumentFormat.OpenXml;
@@ -33,7 +34,7 @@ namespace Office2Txt
         }
         static void Main(string[] args)
         {
-            Smart.Parser.Adapters.AsposeLicense.SetAsposeLicenseFromEnvironment();
+            SmartParser.Lib.AsposeLicense.SetAsposeLicenseFromEnvironment();
             Debug.Assert(args.Length == 2);            
             string  inputFile = args[0];
             string outFile = args[1];

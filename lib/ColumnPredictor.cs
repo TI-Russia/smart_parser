@@ -1,17 +1,17 @@
-﻿using System;
+﻿using StringHelpers;
+using SmartParser.Lib;
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Reflection;
-using TI.Declarator.ParserCommon;
 using Newtonsoft.Json;
-using Smart.Parser.Adapters;
-using Smart.Parser.Lib;
 
 
-namespace Smart.Parser.Lib
+namespace SmartParser.Lib
 {
     using TrigramsDict = Dictionary<DeclarationField, Dictionary<string, int>>;
     public class ColumnPredictor
@@ -53,6 +53,7 @@ namespace Smart.Parser.Lib
         public static void ReadDataFromAssembly()
         {
             var currentAssembly = Assembly.GetExecutingAssembly();
+            var debug = Assembly.GetExecutingAssembly().GetManifestResourceNames();
             using (var stream = currentAssembly.GetManifestResourceStream("Smart.Parser.Lib.Resources.column_trigrams.txt"))
             {
                 using (var file = new System.IO.StreamReader(stream))

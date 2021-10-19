@@ -1,12 +1,13 @@
-﻿using Parser.Lib;
-using Smart.Parser.Adapters;
+﻿using StringHelpers;
+using SmartParser.Lib;
+
 using System;
 using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
-using TI.Declarator.ParserCommon;
 
-namespace Smart.Parser.Lib
+
+namespace SmartParser.Lib
 {
     
     public class Parser : ParserBase
@@ -23,7 +24,7 @@ namespace Smart.Parser.Lib
         }
         public static void InitializeSmartParser()
         {
-            Smart.Parser.Adapters.AsposeLicense.SetAsposeLicenseFromEnvironment();
+            SmartParser.Lib.AsposeLicense.SetAsposeLicenseFromEnvironment();
 
             var culture = new System.Globalization.CultureInfo("ru-RU");
             Thread.CurrentThread.CurrentCulture = culture;

@@ -1,6 +1,6 @@
 using System;
 
-namespace Algorithms
+namespace StringHelpers
 {
     public static class LevenshteinDistance
     {

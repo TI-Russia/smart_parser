@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace TI.Declarator.ParserCommon
+namespace SmartParser.Lib
 {
     public class Declaration
     {

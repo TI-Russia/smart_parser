@@ -1,13 +1,12 @@
-﻿using Parser.Lib;
-using static Parser.Lib.SmartParserException;
+﻿using StringHelpers;
+using SmartParser.Lib;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Smart.Parser.Lib;
-using TI.Declarator.ParserCommon;
 using System.Text.RegularExpressions;
 
-namespace Smart.Parser.Adapters
+namespace SmartParser.Lib
 {
     public class Cell 
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Smart.Parser.Lib.Adapters.HtmlSchemes
+namespace SmartParser.Lib
 {
     class ArbitrationCourt2 : ArbitrationCourt1
     {

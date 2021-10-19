@@ -1,8 +1,10 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using static TI.Declarator.ParserCommon.DeclarationField;
+﻿using StringHelpers;
+using static SmartParser.Lib.DeclarationField;
 
-namespace TI.Declarator.ParserCommon
+using System;
+using System.Text.RegularExpressions;
+
+namespace SmartParser.Lib
 {
     public static class HeaderHelpers
     {
@@ -174,8 +176,6 @@ namespace TI.Declarator.ParserCommon
         private static bool IsDepartment(this string s) => s.ContainsAny("наименование организации", "ерриториальное управление в субъекте");
 
         private static bool IsMixedRealEstateOwnershipType(this string s) => s.IsMixedColumn() && HasOwnershipTypeString(s);
-
-        public static string OnlyRussianLowercase(this string s) => Regex.Replace(s.ToLowerInvariant(), "[^а-яё]", string.Empty);
 
         private static bool HasRealEstateTypeStr(this string s) => s
             .OnlyRussianLowercase()

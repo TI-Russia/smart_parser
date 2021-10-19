@@ -1,12 +1,12 @@
-﻿using Parser.Lib;
-using Smart.Parser.Adapters;
+﻿using SmartParser.Lib;
+using StringHelpers;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using TI.Declarator.ParserCommon;
 
-namespace Smart.Parser.Lib
+namespace SmartParser.Lib
 {
     public class ColumnDetectorException : Exception
     {

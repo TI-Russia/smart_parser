@@ -6,8 +6,8 @@ using System.Runtime.InteropServices;
 #if WIN64
 using Excel = Microsoft.Office.Interop.Excel;
 
-using TI.Declarator.ParserCommon;
-namespace Smart.Parser.Adapters
+using StringHelpers;
+namespace SmartParser.Lib
 {
     class MSExcelCell : Cell
     {

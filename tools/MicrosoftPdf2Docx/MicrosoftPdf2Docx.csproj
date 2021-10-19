@@ -47,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\Common\CMDLineParser.cs" Link="CMDLineParser.cs"/>
+    <Compile Include="..\..\ParserCommon\CMDLineParser.cs" Link="CMDLineParser.cs"/>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

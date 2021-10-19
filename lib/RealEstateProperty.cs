@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Xml.Linq;
 
-namespace TI.Declarator.ParserCommon
+namespace SmartParser.Lib
 {
     public class RealEstateProperty
     {

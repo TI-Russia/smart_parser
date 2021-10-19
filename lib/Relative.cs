@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Linq;
 
-namespace TI.Declarator.ParserCommon
+namespace SmartParser.Lib
 {
     public class Relative : Person
     {

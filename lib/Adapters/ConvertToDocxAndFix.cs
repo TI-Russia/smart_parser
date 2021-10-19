@@ -1,4 +1,7 @@
-﻿using System.Xml.Linq;
+﻿using StringHelpers;
+using SmartParser.Lib;
+
+using System.Xml.Linq;
 using System.IO.Compression;
 using System.Threading;
 using System.IO;
@@ -8,11 +11,9 @@ using System.Xml;
 using System.Security.Cryptography;
 using System.Text;
 using System.Net;
-using Parser.Lib;
 using System.Runtime.InteropServices;
-using TI.Declarator.ParserCommon;
 
-namespace Smart.Parser.Adapters
+namespace SmartParser.Lib
 {
 
     public class ConversionServerClient : WebClient

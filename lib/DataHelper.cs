@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using TI.Declarator.ParserCommon;
+using StringHelpers;
 using Newtonsoft.Json;
 using System.Reflection;
 using SmartAntlr;
 
-namespace Smart.Parser.Lib
+namespace SmartParser.Lib
 {
     public class DataHelper
     {

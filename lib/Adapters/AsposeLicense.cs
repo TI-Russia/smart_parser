@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Smart.Parser.Adapters
+namespace SmartParser.Lib
 {
     public class AsposeLicense
     {

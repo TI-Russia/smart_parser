@@ -1,8 +1,9 @@
-﻿using System;
+﻿using SmartParser.Lib;
+
+using System;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-using Smart.Parser.Adapters;
 
 namespace test
 {

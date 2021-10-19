@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
-using TI.Declarator.ParserCommon;
+using StringHelpers;
 using AngleSharp;
 using AngleSharp.Dom;
-using Parser.Lib;
 using System.Text.RegularExpressions;
 
-namespace Smart.Parser.Adapters
+namespace SmartParser.Lib
 {
     class HtmlDocHolder
     {

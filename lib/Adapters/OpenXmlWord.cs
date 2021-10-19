@@ -1,10 +1,10 @@
-﻿using DocumentFormat.OpenXml;
+﻿using SmartParser.Lib;
+using StringHelpers;
+
+using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Newtonsoft.Json;
-using Smart.Parser.Lib;
-using Smart.Parser.Lib.Adapters.AdapterSchemes;
-using Smart.Parser.Lib.Adapters.DocxSchemes;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,9 +12,8 @@ using System.Linq;
 using System.Threading;
 using System.Xml;
 using System.Xml.Linq;
-using TI.Declarator.ParserCommon;
 
-namespace Smart.Parser.Adapters
+namespace SmartParser.Lib
 {
     public class TableWidthInfo
     {

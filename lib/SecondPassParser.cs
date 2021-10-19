@@ -1,11 +1,11 @@
-﻿using System;
+﻿using StringHelpers;
+using SmartParser.Lib;
+
+using System;
 using System.Collections.Generic;
-using Parser.Lib;
-using TI.Declarator.ParserCommon;
-using Smart.Parser.Adapters;
 using System.Linq;
 
-namespace Smart.Parser.Lib
+namespace SmartParser.Lib
 {
     class TSecondPassParser : RealtyParser
     {

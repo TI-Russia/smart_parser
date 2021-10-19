@@ -7,9 +7,8 @@ using NPOI.SS.Formula.Functions;
 using System.Text.RegularExpressions;
 
 
-namespace Smart.Parser.Adapters
+namespace SmartParser.Lib
 {
-    //using Smart.Parser.Row;
     public class TSectionPredicates
     {
         static bool CheckSectionLanguageModel(string cellText)

@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using TI.Declarator.JsonSerialization;
-using TI.Declarator.ParserCommon;
+using StringHelpers;
 
 namespace TI.Declarator.DeclaratorApiClient
 {
@@ -31,18 +31,6 @@ namespace TI.Declarator.DeclaratorApiClient
             string basicAuthInfo = Convert.ToBase64String(authBytes);
             HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", basicAuthInfo);
         }
-        public static void ReportUnknownEntry(UnknownEntry ue)
-        {
-            string jsonContents = MiscSerializer.Serialize(ue);
-            var contents = new StringContent(jsonContents, Encoding.UTF8, "application/json");            
-            var httpResponse = HttpClient.PostAsync(ReportUnknownEntryUrl, contents).Result;
-
-            if (!httpResponse.IsSuccessStatusCode)
-            {
-                throw new DeclaratorApiException(httpResponse, "Could not report unknown entry to Declarator API");
-            }
-        }
-
         public static string ValidateParserOutput(string jsonOutput)
         {
             var contents = new StringContent(jsonOutput, Encoding.UTF8, "application/json");

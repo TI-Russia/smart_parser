@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Smart.Parser.Lib.Adapters.HtmlSchemes
+namespace SmartParser.Lib
 {
     public abstract class IHtmlScheme
     {

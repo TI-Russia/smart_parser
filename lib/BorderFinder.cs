@@ -1,20 +1,19 @@
-﻿using TI.Declarator.ParserCommon;
-using Parser.Lib;
-using Smart.Parser.Adapters;
+﻿using StringHelpers;
+using SmartParser.Lib;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 
-namespace Smart.Parser.Lib
+namespace SmartParser.Lib
 {
     class TBorderFinder
     {
         IAdapter Adapter = null;
         DeclarationSection CurrentSection = null;
         PublicServant CurrentDeclarant = null;
-        public TI.Declarator.ParserCommon.Person CurrentPerson = null;
+        public Person CurrentPerson = null;
         Declaration _Declaration;
         bool FailOnRelativeOrphan;
 

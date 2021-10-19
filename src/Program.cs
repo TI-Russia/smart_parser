@@ -1,23 +1,22 @@
+using StringHelpers;
+using SmartParser.Lib;
+using TI.Declarator.DeclaratorApiClient;
+using TI.Declarator.JsonSerialization;
+using CMDLine;
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Smart.Parser.Adapters;
-using Smart.Parser.Lib;
 using System.IO;
-using Parser.Lib;
-using TI.Declarator.DeclaratorApiClient;
-using TI.Declarator.ParserCommon;
-using TI.Declarator.JsonSerialization;
-using CMDLine;
 using System.Security.Cryptography;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Newtonsoft.Json;
 using System.Reflection;
-//using Newtonsoft.Json;
 
 namespace Smart.Parser
-    {
+{
     public class SmartParserVersions
     {
         public List<Version> versions = new List<Version>();
@@ -117,7 +116,7 @@ namespace Smart.Parser
                 }
             }
 
-            Smart.Parser.Lib.Parser.InitializeSmartParser();
+            SmartParser.Lib.Parser.InitializeSmartParser();
             if (maxRowsToProcessOpt.isMatched)
             {
                 MaxRowsToProcess = System.Convert.ToInt32(maxRowsToProcessOpt.Value.ToString());
@@ -208,7 +207,7 @@ namespace Smart.Parser
 
             if (useDecimalRawNormalizationOpt.isMatched)
             {
-                Smart.Parser.Lib.Parser.UseDecimalRawNormalization = true;
+                SmartParser.Lib.Parser.UseDecimalRawNormalization = true;
             }
 
 
@@ -490,7 +489,7 @@ namespace Smart.Parser
         {
             Declaration declaration;
             string inputFileName = Path.GetFileName(inputFile);
-            Smart.Parser.Lib.Parser parser = new Smart.Parser.Lib.Parser(adapter, !SkipRelativeOrphan);
+            SmartParser.Lib.Parser parser = new SmartParser.Lib.Parser(adapter, !SkipRelativeOrphan);
 
             if (adapter.CurrentScheme == default)
             {
@@ -608,7 +607,7 @@ namespace Smart.Parser
                     string inputFileName = Path.GetFileName(inputFile);
                     string errorsFileName = "validation_errors_" +
                                             Path.GetFileNameWithoutExtension(inputFileName) + ".json";
-                    var rep = MiscSerializer.DeserializeValidationReport(validationResult);
+                    MiscSerializer.DeserializeValidationReport(validationResult);
                     File.WriteAllText(errorsFileName, validationResult);
                     Logger.Error("Api validation failed. Errors:" + errorsFileName);
                 }

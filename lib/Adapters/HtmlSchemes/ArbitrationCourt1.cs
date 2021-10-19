@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Smart.Parser.Lib.Adapters.HtmlSchemes
+namespace SmartParser.Lib
 {
     class ArbitrationCourt1 : IHtmlScheme
     {

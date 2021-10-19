@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Globalization;
 
-namespace Smart.Parser.Lib
+namespace SmartParser.Lib
 {
     public class ParserBase
     {
