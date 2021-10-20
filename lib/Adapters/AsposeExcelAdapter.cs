@@ -84,6 +84,11 @@ namespace SmartParser.Lib
             return totalColumns;
         }
 
+        public override List<Cell> GetUnmergedRow(int row)
+        {
+            throw new Exception("unimplemented method");
+        }
+
         public override List<Cell> GetCells(int rowIndex, int maxColEnd = IAdapter.MaxColumnsCount)
         {
             List<Cell> result = new List<Cell>();

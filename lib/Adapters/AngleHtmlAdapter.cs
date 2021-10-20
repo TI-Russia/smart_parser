@@ -363,7 +363,7 @@ namespace SmartParser.Lib
                 else
                 {
                     InsertRowSpanCells(saveRowsCount, TableRows.Count);
-                    if (CheckNameColumnIsEmpty(TableRows, saveRowsCount))
+                    if (CheckNameColumnIsEmpty(saveRowsCount))
                     {
                         TableRows.RemoveRange(saveRowsCount, TableRows.Count - saveRowsCount);
                     }
@@ -411,6 +411,11 @@ namespace SmartParser.Lib
             }
         }
 
+        static List<List<HtmlAdapterCell>> DropDayOfWeekRows(List<List<HtmlAdapterCell>> tableRows)
+        {
+            return tableRows.TakeWhile(x => !x.All(y => TextHelpers.IsRussianDayOfWeek(y.Text))).ToList();
+        }
+
         void CollectRows(HtmlDocHolder docHolder, int maxRowsToProcess)
         {
             var tables = docHolder.HtmlDocument.QuerySelectorAll("*").Where(m => m.LocalName == "table").ToList();
@@ -437,7 +442,7 @@ namespace SmartParser.Lib
 
         public override Cell GetCell(int row, int column)
         {
-            int cellNo = FindMergedCellByColumnNo<HtmlAdapterCell>(TableRows, row, column);
+            int cellNo = FindMergedCellByColumnNo<HtmlAdapterCell>(TableRows[row], column);
             if (cellNo == -1) return null;
             return TableRows[row][cellNo];
         }
@@ -447,9 +452,14 @@ namespace SmartParser.Lib
             return TableRows.Count;
         }
 
+
         public override int GetColsCount()
         {
             return UnmergedColumnsCount;
+        }
+        public override List<Cell> GetUnmergedRow(int row)
+        {
+            return TableRows[row].ConvertAll(x=>(Cell)x);
         }
 
         public override int GetTablesCount()

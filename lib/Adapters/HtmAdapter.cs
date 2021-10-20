@@ -367,6 +367,10 @@ namespace SmartParser.Lib
         {
             return _worksheetIndex;
         }
+        public override List<Cell> GetUnmergedRow(int row)
+        {
+            throw new Exception("unimplemented method");
+        }
         #endregion
     }
 }

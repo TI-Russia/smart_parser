@@ -396,10 +396,18 @@ namespace SmartParser.Lib
         }
     }
 
+    public class OpenXmlTableRow
+    {
+        public List<OpenXmlWordCell> RowCells;
+        public OpenXmlTableRow()
+        {
+            RowCells = new List<OpenXmlWordCell>();
+        }
+    }
 
     public class OpenXmlWordAdapter : IAdapter
     {
-        private List<List<OpenXmlWordCell>> TableRows;
+        private List<OpenXmlTableRow> TableRows;
         private string Title;
         private int UnmergedColumnsCount;
         private static readonly string WordXNamespace = "http://schemas.openxmlformats.org/wordprocessingml/2006/main";
@@ -446,7 +454,7 @@ namespace SmartParser.Lib
             NamespaceManager = new XmlNamespaceManager(new NameTable());
             NamespaceManager.AddNamespace("w", WordXNamespace);
 
-            TableRows = new List<List<OpenXmlWordCell>>();
+            TableRows = new List<OpenXmlTableRow>();
 
             if (fileName.EndsWith(".toloka_json"))
             {
@@ -523,7 +531,7 @@ namespace SmartParser.Lib
             for (int i = 0; i < portion.Count; i++)
             {
                 var r = portion[i];
-                List<OpenXmlWordCell> newRow = new List<OpenXmlWordCell>();
+                OpenXmlTableRow newRow = new OpenXmlTableRow();
 
                 foreach (var c in r)
                 {
@@ -534,7 +542,7 @@ namespace SmartParser.Lib
                         cell.MergedRowsCount = 1;
                     }
                     cell.CellWidth = 10; //  no cell width serialized in html
-                    newRow.Add(cell);
+                    newRow.RowCells.Add(cell);
                 }
                 TableRows.Add(newRow);
             }
@@ -566,12 +574,12 @@ namespace SmartParser.Lib
             {
                 return true;
             }
-            int cellNo = FindMergedCellByColumnNo(TableRows, row, column);
+            int cellNo = FindMergedCellByColumnNo(TableRows[row].RowCells, column);
             if (cellNo == -1)
             {
                 throw new BadCellAddress(row, column);
             }
-            OpenXmlWordCell cell = TableRows[row][cellNo];
+            OpenXmlWordCell cell = TableRows[row].RowCells[cellNo];
             if (cell.VerticallyMerged == MergedCellValues.Continue)
             {
                 return false;
@@ -580,12 +588,12 @@ namespace SmartParser.Lib
             {
                 return true;
             }
-            cellNo = FindMergedCellByColumnNo(TableRows, row - 1, column);
+            cellNo = FindMergedCellByColumnNo(TableRows[row - 1].RowCells, column);
             if (cellNo == -1)
             {
                 throw new BadCellAddress(row, column); // change in column count, we hope that there is a border. Why?
             }
-            var cellAbove = TableRows[row - 1][cellNo];
+            var cellAbove = TableRows[row - 1].RowCells[cellNo];
             if (cellAbove.HasBottomBorder)
             {
                 return true;
@@ -620,18 +628,18 @@ namespace SmartParser.Lib
             {
                 return true;
             }
-            int cellNo = FindMergedCellByColumnNo(TableRows, row, column);
+            int cellNo = FindMergedCellByColumnNo(TableRows[row].RowCells, column);
             if (cellNo == -1)
             {
                 throw new BadCellAddress(row, column);
             }
-            OpenXmlWordCell cell = TableRows[row][cellNo];
-            cellNo = FindMergedCellByColumnNo(TableRows, row + 1, column);
+            OpenXmlWordCell cell = TableRows[row].RowCells[cellNo];
+            cellNo = FindMergedCellByColumnNo(TableRows[row + 1].RowCells, column);
             if (cellNo == -1)
             {
                 throw new BadCellAddress(row, column); // change in column count, we hope that there is a border. Why?
             }
-            var cellUnder = TableRows[row + 1][cellNo];
+            var cellUnder = TableRows[row + 1].RowCells[cellNo];
 
             // если убрать это условие, сломаются тесты 10639_32.doc and 18261_22.doc 
             // и починится тест 65098_5.docx. Что делать, мне не понятно.
@@ -682,7 +690,7 @@ namespace SmartParser.Lib
         {
             foreach (var r in TableRows)
             {
-                foreach (var c in r)
+                foreach (var c in r.RowCells)
                 {
                     try
                     {
@@ -691,11 +699,11 @@ namespace SmartParser.Lib
                         if (c.FirstMergedRow == c.Row) {
                             for (int i = 1; i < c.MergedRowsCount; i++)
                             {
-                                int cellNo = FindMergedCellByColumnNo(TableRows, c.Row + i, c.Col);
+                                int cellNo = FindMergedCellByColumnNo(TableRows[c.Row + i].RowCells, c.Col);
                                 if (cellNo != -1)
                                 {
-                                    c.Text += "\n" + TableRows[c.Row + i][cellNo].Text;
-                                    TableRows[c.Row + i][cellNo].Text = "";
+                                    c.Text += "\n" + TableRows[c.Row + i].RowCells[cellNo].Text;
+                                    TableRows[c.Row + i].RowCells[cellNo].Text = "";
                                 }
 
                             }
@@ -787,7 +795,7 @@ namespace SmartParser.Lib
             TableBorders tblBorders = GetTableBorders(table);
             for (int r = 0; r < rows.Count(); ++r)
             {
-                List<OpenXmlWordCell> newRow = new List<OpenXmlWordCell>();
+                OpenXmlTableRow newRow = new OpenXmlTableRow();
                 int sumspan = 0;
                 var tableRow = rows[r];
                 int rowGridBefore = GetRowGridBefore(tableRow);
@@ -796,19 +804,19 @@ namespace SmartParser.Lib
                 for (var i = 0; i < row.Length; ++i)
                 {
                     var c = new OpenXmlWordCell(docHolder, row, i, widthInfo, TableRows.Count, sumspan, tblBorders);
-                    if (newRow.Count == 0)
+                    if (newRow.RowCells.Count == 0)
                         c.MergedColsCount += rowGridBefore;
-                    if (newRow.Count > 0 && !newRow.Last().HasRightBorder)
+                    if (newRow.RowCells.Count > 0 && !newRow.RowCells.Last().HasRightBorder)
                     {
-                        newRow.Last().Text += c.Text;
-                        newRow.Last().CellWidth += c.CellWidth;
-                        newRow.Last().MergedColsCount += c.MergedColsCount;
-                        newRow.Last().HasRightBorder = c.HasRightBorder;
+                        newRow.RowCells.Last().Text += c.Text;
+                        newRow.RowCells.Last().CellWidth += c.CellWidth;
+                        newRow.RowCells.Last().MergedColsCount += c.MergedColsCount;
+                        newRow.RowCells.Last().HasRightBorder = c.HasRightBorder;
                         sumspan += c.MergedColsCount;
                     }
                     else
                     {
-                        newRow.Add(c);
+                        newRow.RowCells.Add(c);
                         sumspan += c.MergedColsCount;
                     }
                     isEmpty = isEmpty && c.IsEmpty;
@@ -817,13 +825,13 @@ namespace SmartParser.Lib
                 {
                     continue;
                 }
-                maxCellsCount = Math.Max(newRow.Count, maxCellsCount);
+                maxCellsCount = Math.Max(newRow.RowCells.Count, maxCellsCount);
                 if (r == 0 && TableRows.Count > 0 &&
                     BigramsHolder.CheckMergeRow(
-                        TableRows.Last().ConvertAll(x => x.Text),
-                        newRow.ConvertAll(x => x.Text)))
+                        TableRows.Last().RowCells.ConvertAll(x => x.Text),
+                        newRow.RowCells.ConvertAll(x => x.Text)))
                 {
-                    MergeRow(TableRows.Last(), newRow);
+                    MergeRow(TableRows.Last().RowCells, newRow.RowCells);
                 }
                 else
                 {
@@ -837,7 +845,7 @@ namespace SmartParser.Lib
             }
             if ((TableRows.Count > 0) && !ColumnDetector.IsNamePositionAndIncomeTable(GetCells(0)))
             {
-                if (maxCellsCount <= 4 || CheckNameColumnIsEmpty(TableRows, saveRowsCount))
+                if (maxCellsCount <= 4 || CheckNameColumnIsEmpty(saveRowsCount))
                 {
                     //remove this suspicious table 
                     TableRows.RemoveRange(saveRowsCount, TableRows.Count - saveRowsCount);
@@ -864,7 +872,7 @@ namespace SmartParser.Lib
             else if (table.Descendants<TableRow>().Count() == 1)
             {
                 var rows = table.Descendants<TableRow>().ToArray();
-                if (TableRows.Count > 0 && TableRows.Last().Count() != rows[0].Descendants<TableCell>().Count())
+                if (TableRows.Count > 0 && TableRows.Last().RowCells.Count() != rows[0].Descendants<TableCell>().Count())
                 {
                     Logger.Debug(String.Format("ignore table {0}, with one row", tableIndex));
                     return false;
@@ -899,6 +907,11 @@ namespace SmartParser.Lib
                 Title = String.Join("\n", rows);
             }
         }
+        static List<OpenXmlTableRow> DropDayOfWeekRows(List<OpenXmlTableRow> tableRows)
+        {
+            return tableRows.TakeWhile(x => !x.RowCells.All(y => TextHelpers.IsRussianDayOfWeek(y.Text))).ToList();
+        }
+
 
         void CollectRows(WordDocHolder docHolder, int maxRowsToProcess, string extension)
         {
@@ -953,7 +966,7 @@ namespace SmartParser.Lib
         public override List<Cell> GetCells(int row, int maxColEnd = IAdapter.MaxColumnsCount)
         {
             var result = new List<Cell>();
-            foreach (var r in TableRows[row])
+            foreach (var r in TableRows[row].RowCells)
             {
                 result.Add(r);
             }
@@ -962,9 +975,13 @@ namespace SmartParser.Lib
 
         public override Cell GetCell(int row, int column)
         {
-            int cellNo = FindMergedCellByColumnNo(TableRows, row, column);
+            int cellNo = FindMergedCellByColumnNo(TableRows[row].RowCells, column);
             if (cellNo == -1) return null;
-            return TableRows[row][cellNo];
+            return TableRows[row].RowCells[cellNo];
+        }
+        public override List<Cell> GetUnmergedRow(int row)
+        {
+            return TableRows[row].RowCells.ConvertAll(x =>(Cell)x);
         }
 
         public override int GetRowsCount()

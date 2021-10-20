@@ -317,6 +317,10 @@ namespace SmartParser.Lib
             return SheetCount == 1 ? null : (int?)SheetIndex;
         }
 
+        public override List<Cell> GetUnmergedRow(int row)
+        {
+            throw new Exception("unimplemented method");
+        }
 
     }
 }

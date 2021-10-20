@@ -80,6 +80,7 @@ namespace SmartParser.Lib
 
         abstract public int GetRowsCount();
         abstract public int GetColsCount();
+        abstract public List<Cell> GetUnmergedRow(int row);
 
 
         public virtual string GetTitleOutsideTheTable()
@@ -135,35 +136,30 @@ namespace SmartParser.Lib
             return sum;
         }
 
-        public static int FindMergedCellByColumnNo<T>(List<List<T>> tableRows, int row, int column) where T : Cell
+        public static int FindMergedCellByColumnNo<T>(List<T> row, int cellIndex) where T : Cell
         {
-            List<T> r = tableRows[row];
             int sumspan = 0;
-            for (var i = 0; i < r.Count; ++i)
+            for (var i = 0; i < row.Count; ++i)
             {
-                int span = r[i].MergedColsCount;
-                if ((column >= sumspan) && (column < sumspan + span))
+                int span = row[i].MergedColsCount;
+                if ((cellIndex >= sumspan) && (cellIndex < sumspan + span))
                     return i;
                 sumspan += span;
             }
             return -1;
         }
-        protected static List<List<T>> DropDayOfWeekRows<T>(List<List<T>> tableRows) where T : Cell
-        {
-            List<string> daysOfWeek = new List<string> { "пн", "вт", "ср", "чт", "пт", "сб", "вс" };
-            return  tableRows.TakeWhile(x => !x.All(y => daysOfWeek.Contains(y.Text.ToLower().Trim()))).ToList();
-        }
 
-        protected static bool CheckNameColumnIsEmpty<T>(List<List<T>> tableRows, int start) where T : Cell
+        protected bool CheckNameColumnIsEmpty(int startRow)
         {
-            if (tableRows.Count - start < 3)
+            if (GetRowsCount() - startRow < 3)
                 return false; // header only
 
-            var nameInd = tableRows[start].FindIndex(x => x.Text.Length < 100 && x.Text.IsName());
+            var nameInd = GetUnmergedRow(startRow).FindIndex(x => x.Text.Length < 100 && x.Text.IsName());
             if (nameInd == -1) return false;
-            for (int i = start + 1; i < tableRows.Count; ++i)
+            for (int i = startRow + 1; i < GetRowsCount(); ++i)
             {
-                if (nameInd < tableRows[i].Count && !tableRows[i][nameInd].IsEmpty)
+                var row = GetUnmergedRow(i);
+                if (nameInd < row.Count && !row[nameInd].IsEmpty)
                 {
                     return false;
                 }

@@ -156,6 +156,13 @@ namespace StringHelpers
         {
             return String.Join("\n", lines.Skip(start).Take(end - start)).ReplaceEolnWithSpace();
         }
+        
+        static HashSet<string> DaysOfWeek = new HashSet<string> { "пн", "вт", "ср", "чт", "пт", "сб", "вс" };
+
+        public static bool IsRussianDayOfWeek(string s)
+        {
+            return TextHelpers.DaysOfWeek.Contains(s.ToLower().Trim());
+        }
 
 
 
