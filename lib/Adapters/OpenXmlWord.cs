@@ -399,6 +399,7 @@ namespace SmartParser.Lib
     public class OpenXmlTableRow
     {
         public List<OpenXmlWordCell> RowCells;
+        public bool NewPersonBorder = false;
         public OpenXmlTableRow()
         {
             RowCells = new List<OpenXmlWordCell>();
@@ -426,6 +427,20 @@ namespace SmartParser.Lib
             return new Uri("http://broken-link/");
         }
 
+        void FindRowsThatCannotBeMerged()
+        {
+            foreach (var r in TableRows)
+            {
+                foreach (var c in r.RowCells)
+                {
+                    if (c.GetText().ToLower().StartsWith("супруг"))
+                    {
+                        r.NewPersonBorder = true;
+                    }
+                }
+            }
+        }
+
         private void ProcessDoc(string fileName, string extension, int maxRowsToProcess)
         {
             using (var doc = new WordDocHolder(WordprocessingDocument.Open(fileName, false)))
@@ -443,6 +458,7 @@ namespace SmartParser.Lib
                     Title = doc.FindTitleAboveTheTable();
                     CollectRows(doc, maxRowsToProcess, extension);
                     UnmergedColumnsCount = GetUnmergedColumnsCountByFirstRow();
+                    FindRowsThatCannotBeMerged();
                     InitializeVerticallyMerge();
                 }
             };
@@ -646,7 +662,10 @@ namespace SmartParser.Lib
             hasText = hasText || !cell.IsEmpty;
             if (!cellUnder.IsEmpty && hasText)
             {
-                return true;
+                if (TableRows[row + 1].NewPersonBorder || TableRows[row].NewPersonBorder)
+                {
+                    return true;
+                }
             }
 
 

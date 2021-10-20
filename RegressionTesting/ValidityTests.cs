@@ -958,7 +958,7 @@ namespace RegressionTesting
 
         [TestMethod]
         [TestCategory("docx")]
-        public void UnsolvedProblem_01()
+        public void Test65098_5()
         {
             // этот файл парсится неправильно, я пока не знаю, что с этим делать
             TestSmartParser("65098_5.docx", "prod");
