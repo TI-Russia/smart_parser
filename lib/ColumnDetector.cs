@@ -448,7 +448,6 @@ namespace SmartParser.Lib
                             break;
                         }
                     }
-                    //headerEndRow = Math.Max(headerEndRow, cell.Row + cell.MergedRowsCount);
                     
 
                     // иногда в двухярусном заголовке в верхней клетке пусто, а в нижней есть заголовок (TwoRowHeaderEmptyTopCellTest)
@@ -477,7 +476,8 @@ namespace SmartParser.Lib
                     foreach (var underCell in underCells)
                     {
                         var underCells2 = FindSubcellsUnder(adapter, underCell);
-                        if ((underCells2.Count() <= 1) || (maxMergedRows != 3))
+                        //if ((underCells2.Count() <= 1) || (maxMergedRows != 3))
+                        if ((underCells2.Count() <= 1) || (underCells2.Count() > 0 && underCells2[0].Row + underCells2[0].MergedRowsCount > headerEndRow))
                         {
                             underCell.TextAbove = cell.Text.NormSpaces();
                             columnCells.Add(underCell);

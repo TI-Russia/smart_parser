@@ -772,14 +772,15 @@ namespace SmartParser.Lib
                                 int cellNo = FindMergedCellByColumnNo(TableRows[c.Row + i].RowCells, c.Col);
                                 if (cellNo != -1)
                                 {
-                                    var text = TableRows[c.Row + i].RowCells[cellNo].Text;
+                                    var cellToAdd = TableRows[c.Row + i].RowCells[cellNo];
                                     if (c.MergedRowsCount > 1)
                                     {
                                         Logger.Debug(String.Format("Add (merge) cell [{0}, {1}](\"{2}\") to [{3},{4}](\"{5}\")",
-                                            c.Row + i, cellNo, text.ReplaceEolnWithSpace(), c.Row, c.Col, c.Text.ReplaceEolnWithSpace()));
+                                            c.Row + i, cellNo, cellToAdd.Text.ReplaceEolnWithSpace(), c.Row, c.Col, c.Text.ReplaceEolnWithSpace()));
                                     }
-                                    c.Text += "\n" + text;
+                                    c.Text += "\n" + cellToAdd.Text;
                                     TableRows[c.Row + i].RowCells[cellNo].Text = "";
+                                    c.IsEmpty = cellToAdd.IsEmpty && c.IsEmpty;
                                 }
 
                             }
