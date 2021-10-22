@@ -389,7 +389,10 @@ namespace SmartParser.Lib
 
         private static bool IsDeclaredYearlyIncomeThousands(this string s) => s.IsDeclaredYearlyIncome() && s.Contains("тыс.");
 
-        private static bool IsDataSources(this string s) => s.Contains("сведен");
+        private static bool IsDataSources(this string s) {
+            var s1 = s.OnlyRussianLowercase();
+            return s1.Contains("сведен") || s1.Contains("источниках");
+        }
 
         private static bool IsComments(this string s) => s.OnlyRussianLowercase().Contains("примечани");
 

@@ -202,25 +202,14 @@
           "own_type_raw": ""
         },
         {
-          "text": "Квартира",
-          "square": null,
-          "relative": "Супруг(а)",
-          "relative_index": 1,
-          "own_type_by_column": null,
-          "square_raw": "",
-          "country_raw": "",
-          "type_raw": "Квартира",
-          "own_type_raw": ""
-        },
-        {
-          "text": "(безвозмездное пользование, бессрочное)",
+          "text": "Квартира (безвозмездное пользование, бессрочное)",
           "square": 70.0,
           "relative": "Супруг(а)",
           "relative_index": 1,
           "own_type_by_column": null,
           "square_raw": "70",
           "country_raw": "Российская Федерация",
-          "type_raw": "(безвозмездное пользование, бессрочное)",
+          "type_raw": "Квартира (безвозмездное пользование, бессрочное)",
           "own_type_raw": ""
         }
       ],

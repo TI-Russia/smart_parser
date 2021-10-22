@@ -157,7 +157,44 @@ namespace SmartParser.Lib
                 }
             }
         }
+        public static bool BorderIsVisible(BorderType? border)
+        {
+            return border != null && border.Size != null && border.Size > 0;
+        }
 
+        public static int CountInnerVerticalBorders(TableRow row)
+        {
+            int cellIndex = 0;
+            HashSet<int> visibleBorders = new HashSet<int>();
+            var cells = row.Descendants<TableCell>().ToList();
+            foreach (var c in cells)
+            {
+                bool rightBorder = true;
+                bool leftBorder = true;
+                if (c?.TableCellProperties?.TableCellBorders != null)
+                {
+                    var cellBorders = c.TableCellProperties.TableCellBorders;
+                    if (!WordDocHolder.BorderIsVisible(cellBorders.LeftBorder))
+                    {
+                        leftBorder = false;
+                    }
+                    if (!WordDocHolder.BorderIsVisible(cellBorders.RightBorder))
+                    {
+                        rightBorder = false;
+                    }
+                }
+                if (cellIndex > 0 && leftBorder)
+                {
+                    visibleBorders.Add(cellIndex);
+                }
+                if (cellIndex + 1 < cells.Count && rightBorder)
+                {
+                    visibleBorders.Add(cellIndex + 1);
+                }
+                cellIndex += 1;
+            }
+            return visibleBorders.Count;
+        }
         public bool NotEmptyParagraphIsInADeclarationTable(Paragraph p)
         {
             if (p.InnerText == "")
@@ -170,12 +207,12 @@ namespace SmartParser.Lib
                 return false;
             }
             var cell  = p.Parent;
-            if (cell == null || cell.GetType().Name != "TableCell")
+            if (cell == null || cell.GetType() != typeof(TableCell))
             {
                 return false;
             }
             var row = cell.Parent;
-            if (row == null || row.Descendants<TableCell>().Count() < 5)
+            if (row == null || row.GetType() != typeof(TableRow) ||  WordDocHolder.CountInnerVerticalBorders((TableRow)row) < 3)
             {
                 return false;
             }
@@ -225,6 +262,7 @@ namespace SmartParser.Lib
         public bool HasTopBorder = true;
         public bool HasRightBorder = true;
         public bool TableHasInsideHorizontalBorders = false;
+
         public OpenXmlWordCell(WordDocHolder docHolder, TableCell[] row, int cellIndexInRow, TableWidthInfo tableWidth,  
                     int rowIndexInTable, int unmergedColumnIndex, TableBorders tblBorders)
         {
@@ -233,12 +271,12 @@ namespace SmartParser.Lib
             if (inputCell?.TableCellProperties?.TableCellBorders != null) 
             {
                 var borders = inputCell.TableCellProperties.TableCellBorders;
-                HasBottomBorder = borders.BottomBorder != null;
-                HasTopBorder = borders.TopBorder != null;
-                HasRightBorder = borders.RightBorder != null;
-                if  (!HasRightBorder && cellIndexInRow + 1 < row.Length)
+                HasBottomBorder = WordDocHolder.BorderIsVisible(borders.BottomBorder);
+                HasTopBorder = WordDocHolder.BorderIsVisible(borders.TopBorder);
+                HasRightBorder = WordDocHolder.BorderIsVisible(borders.RightBorder);
+                if  (!HasRightBorder && cellIndexInRow + 1 < row.Length && row[cellIndexInRow + 1].TableCellProperties?.TableCellBorders != null)
                 {
-                    HasRightBorder = row[cellIndexInRow + 1].TableCellProperties?.TableCellBorders?.LeftBorder != null;
+                    HasRightBorder = WordDocHolder.BorderIsVisible(row[cellIndexInRow + 1].TableCellProperties?.TableCellBorders?.LeftBorder);
                 }
                 if (!HasRightBorder && tblBorders?.InsideVerticalBorder != null && (uint)tblBorders.InsideVerticalBorder.Size > 0)
                 {
@@ -399,7 +437,8 @@ namespace SmartParser.Lib
     public class OpenXmlTableRow
     {
         public List<OpenXmlWordCell> RowCells;
-        public bool NewPersonBorder = false;
+        public bool HasPersonName = false;
+        public int InnerBorderCount = 0;
         public OpenXmlTableRow()
         {
             RowCells = new List<OpenXmlWordCell>();
@@ -433,9 +472,9 @@ namespace SmartParser.Lib
             {
                 foreach (var c in r.RowCells)
                 {
-                    if (c.GetText().ToLower().StartsWith("супруг"))
+                    if (c.GetText().ToLower().StartsWith("супруг") || TextHelpers.LooksLikeRussianPersonName(c.GetText()))
                     {
-                        r.NewPersonBorder = true;
+                        r.HasPersonName = true;
                     }
                 }
             }
@@ -548,6 +587,7 @@ namespace SmartParser.Lib
             {
                 var r = portion[i];
                 OpenXmlTableRow newRow = new OpenXmlTableRow();
+                newRow.InnerBorderCount = 1; // more than 0
 
                 foreach (var c in r)
                 {
@@ -570,7 +610,7 @@ namespace SmartParser.Lib
             using (StreamReader r = new StreamReader(fileName))
             {
                 jsonStr = r.ReadToEnd();
-            }
+            }   
             TJsonTablePortion portion = JsonConvert.DeserializeObject<TJsonTablePortion>(jsonStr);
             Title = portion.Title;
             DocumentFile = portion.InputFileName;
@@ -657,12 +697,11 @@ namespace SmartParser.Lib
             }
             var cellUnder = TableRows[row + 1].RowCells[cellNo];
 
-            // если убрать это условие, сломаются тесты 10639_32.doc and 18261_22.doc 
-            // и починится тест 65098_5.docx. Что делать, мне не понятно.
+            //  очень сложное место, см тесты 10639_32.doc, 18261_22.doc,  65098_5.docx
             hasText = hasText || !cell.IsEmpty;
             if (!cellUnder.IsEmpty && hasText)
             {
-                if (TableRows[row + 1].NewPersonBorder || TableRows[row].NewPersonBorder)
+                if (TableRows[row + 1].HasPersonName || TableRows[row].HasPersonName)
                 {
                     return true;
                 }
@@ -709,6 +748,18 @@ namespace SmartParser.Lib
         {
             foreach (var r in TableRows)
             {
+                r.InnerBorderCount = 0;
+                foreach (var c in r.RowCells)
+                {
+                    if (c.HasRightBorder && c != r.RowCells.Last())
+                    {
+                        r.InnerBorderCount += 1;
+                    }
+                }
+                if (r.InnerBorderCount == 0)
+                {
+                    continue;
+                }
                 foreach (var c in r.RowCells)
                 {
                     try
@@ -721,7 +772,13 @@ namespace SmartParser.Lib
                                 int cellNo = FindMergedCellByColumnNo(TableRows[c.Row + i].RowCells, c.Col);
                                 if (cellNo != -1)
                                 {
-                                    c.Text += "\n" + TableRows[c.Row + i].RowCells[cellNo].Text;
+                                    var text = TableRows[c.Row + i].RowCells[cellNo].Text;
+                                    if (c.MergedRowsCount > 1)
+                                    {
+                                        Logger.Debug(String.Format("Add (merge) cell [{0}, {1}](\"{2}\") to [{3},{4}](\"{5}\")",
+                                            c.Row + i, cellNo, text.ReplaceEolnWithSpace(), c.Row, c.Col, c.Text.ReplaceEolnWithSpace()));
+                                    }
+                                    c.Text += "\n" + text;
                                     TableRows[c.Row + i].RowCells[cellNo].Text = "";
                                 }
 
@@ -1002,6 +1059,11 @@ namespace SmartParser.Lib
         {
             return TableRows[row].RowCells.ConvertAll(x =>(Cell)x);
         }
+        virtual public bool RowHasPersonName(int row)
+        {
+            return TableRows[row].HasPersonName;
+        }
+
 
         public override int GetRowsCount()
         {
@@ -1018,5 +1080,9 @@ namespace SmartParser.Lib
             return TablesCount;
         }
 
+        public override bool RowHasInnerBorder(int row)
+        {
+            return TableRows[row].InnerBorderCount > 0;
+        }
     }
 }

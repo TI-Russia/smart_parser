@@ -245,7 +245,7 @@ namespace SmartParser.Lib
             {
                 var cells = adapter.GetCells(rowIndex, IAdapter.MaxColumnsCount);
                 string dummy;
-                if (IAdapter.IsSectionRow(cells, adapter.GetColsCount(), false, out dummy))
+                if (adapter.IsSectionRow(rowIndex, cells, adapter.GetColsCount(), false, out dummy))
                 {
                     rowIndex += 1;
                 }

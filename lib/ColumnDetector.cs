@@ -132,7 +132,7 @@ namespace SmartParser.Lib
             {
                 var currRow = adapter.GetCells(row);
                 string section_text;
-                bool isSection = IAdapter.IsSectionRow(currRow,  adapter.GetColsCount(), prevRowIsSection, out section_text);
+                bool isSection = adapter.IsSectionRow(row, currRow,  adapter.GetColsCount(), prevRowIsSection, out section_text);
                 if (isSection)
                 {
                     if (section_text.Length > 20)
@@ -437,7 +437,19 @@ namespace SmartParser.Lib
 
                 if (underCells.Count() <= 1 || !headerCanHaveSecondLevel)
                 {
-                    headerEndRow = Math.Max(headerEndRow, cell.Row + cell.MergedRowsCount);
+                    for (int i = 0; i < cell.MergedRowsCount; ++i)
+                    {
+                        if (i == adapter.GetRowsCount() || !adapter.RowHasPersonName(cell.Row + i + 1))
+                        {
+                            headerEndRow = Math.Max(headerEndRow, cell.Row + i + 1);
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    //headerEndRow = Math.Max(headerEndRow, cell.Row + cell.MergedRowsCount);
+                    
 
                     // иногда в двухярусном заголовке в верхней клетке пусто, а в нижней есть заголовок (TwoRowHeaderEmptyTopCellTest)
                     if (text.Trim() == "" && cell.MergedRowsCount < maxMergedRows && underCells.Count() == 1) 

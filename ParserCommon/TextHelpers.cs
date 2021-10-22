@@ -113,6 +113,29 @@ namespace StringHelpers
             return char.IsUpper(s[0]) && (s.EndsWithAny(PatronymicSuffixStrings) || (s.Length <= 4 && s.EndsWith("."))) /* в., в.п., вяч. */;
         }
 
+        public static bool LooksLikeRussianPersonName(string s)
+        {
+            s = s.Trim();
+            if (s.Length < 5) return false;
+            bool hasSpaces = s.Trim().Any(Char.IsWhiteSpace);
+            if (!hasSpaces) return false;
+            if (!char.IsUpper(s[0])) return false;
+
+            string[] words = Regex.Split(s, @"[\,\s\n]+");
+            if (words.Length == 3)
+            {
+                return CanBePatronymic(words[2]);
+            }
+            else if (words.Length == 2)
+            {
+                // Иванов И.И.
+                return CanBePatronymic(words[1]);
+            }
+            return false;
+
+        }
+
+
         private static readonly string[] RoleStrings = { 
             "заместител", "начальник", "аудитор", "депутат", 
             "секретарь", "уполномоченный", "председатель", "бухгалтер", "руководител", "глава", "главы", "заведующий",

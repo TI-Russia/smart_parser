@@ -9,8 +9,19 @@ using System.Text.RegularExpressions;
 
 namespace SmartParser.Lib
 {
-    public class TSectionPredicates
+    public class TSectionPredicate
     {
+        List<Cell> Cells;
+        int ColsCount;
+        bool PrevRowIsSection;
+        bool HasInnerBorders;
+        public TSectionPredicate(List<Cell> cells, int colsCount, bool prevRowIsSection, bool hasInnerBorders)
+        {
+            Cells = cells;
+            ColsCount = colsCount;
+            PrevRowIsSection = prevRowIsSection;
+            HasInnerBorders = hasInnerBorders;
+        }
         static bool CheckSectionLanguageModel(string cellText)
         {
             if (cellText.Contains("Сведения о"))
@@ -52,12 +63,11 @@ namespace SmartParser.Lib
             return false;
         }
 
-        public static bool IsSectionRow(List<Cell> cells, int colsCount, bool prevRowIsSection, out string text)
+        public string? GetSectionText()
         {
-            text = null;
-            if (cells.Count == 0)
+            if (Cells.Count == 0)
             {
-                return false;
+                return null;
             }
             int maxMergedCols = 0;
             int maxCellWidth = 0;
@@ -65,7 +75,7 @@ namespace SmartParser.Lib
             string cellText = "";
             int cellsWithTextCount = 0;
             int allWidth = 0;
-            foreach (var c in cells)
+            foreach (var c in Cells)
             {
                 string trimmedText = c.Text.Trim(' ', '\n');
                 if (c.MergedColsCount > maxMergedCols)
@@ -86,7 +96,7 @@ namespace SmartParser.Lib
 
             }
             rowText = rowText.Trim(' ', '\n');
-            bool manyColsAreMerged = maxMergedCols > colsCount * 0.45;
+            bool manyColsAreMerged = maxMergedCols > ColsCount * 0.45;
             bool OneColumnIsLarge = maxCellWidth > 1000 || maxCellWidth >= allWidth * 0.3;
             bool langModel = CheckSectionLanguageModel(cellText);
             bool hasEnoughLength = rowText.Length >= 9; // "Референты"; но встречаются ещё "Заместители Министра"
@@ -99,22 +109,25 @@ namespace SmartParser.Lib
             {
                 if (rowText.ToLower() == word) hasStopWord = true;
             }
-            if (hasStopWord) return false;
+            if (hasStopWord) return null;
+            if (!HasInnerBorders)
+            {
+                return rowText;
+            }
             
             // "ННИИПК", "СамГМУ"  
             if (!hasEnoughLength && !halfCapitalLetters)
             {
-                return false;
+                return null;
             }
             if (Regex.Match(rowText, @"период с.*20\d\d\s*г.").Success)
             {
-                text = rowText;
-                return true;
+                return rowText;
             }
             
             if (!OneColumnIsLarge)
             {
-                return false;
+                return null;
             }
 
             if (cellsWithTextCount == 1)
@@ -122,34 +135,30 @@ namespace SmartParser.Lib
                 // possible title, exact number of not empty columns is not yet defined
                 if (maxMergedCols > 5 && langModel)
                 {
-                    text = rowText;
-                    return true;
+                    return rowText;
                 };
                 if (manyColsAreMerged)
                 {
-                    text = rowText;
-                    return true;
+                    return rowText;
                 }
             }
             if (cellsWithTextCount <= 2)
             {
                 if (manyColsAreMerged && langModel)
                 {
-                    text = cellText;
-                    return true;
+                    return cellText;
                 }
             }
 
             // в начале могут быть многострочные заголовки, которые обычно начинаются с маленькой буквы
-            if (prevRowIsSection && hasEnoughLength && cells[0].Row < 10)
+            if (PrevRowIsSection && hasEnoughLength && Cells[0].Row < 10)
             {
                 if (char.IsLower(rowText[0]))
                 {
-                    text = rowText;
-                    return true;
+                    return rowText;
                 }
             }
-            return false;
+            return null;
         }
 
     }

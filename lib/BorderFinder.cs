@@ -325,7 +325,7 @@ namespace SmartParser.Lib
                 Logger.Debug(String.Format("currRow {0}, col_count={1}: {2}", row, currRow.Cells.Count, currRow.DebugString()));
 
                 string sectionName;
-                if (IAdapter.IsSectionRow(currRow.Cells, columnOrdering.GetMaxColumnEndIndex(), false, out sectionName))
+                if (Adapter.IsSectionRow(row, currRow.Cells, columnOrdering.GetMaxColumnEndIndex(), false, out sectionName))
                 {
                     CreateNewSection(row, sectionName);
                     continue;
@@ -335,6 +335,7 @@ namespace SmartParser.Lib
                     if (IsHeaderRow(currRow, out newColumnOrdering))
                     {
                         columnOrdering = newColumnOrdering;
+                        Logger.Debug(String.Format("found a new table header {0}", currRow.DebugString()));
                         row = newColumnOrdering.GetPossibleHeaderEnd() - 1; // row++ in "for" cycle
                         continue;
                     }

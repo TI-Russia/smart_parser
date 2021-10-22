@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 
 namespace SmartParser.Lib
 {
-    public abstract class IAdapter : TSectionPredicates
+    public abstract class IAdapter
     {
         // some excel files contain 32000 columns, most of them are empty
         // we try to found real column number in the header, by default is 1024
@@ -82,7 +82,10 @@ namespace SmartParser.Lib
         abstract public int GetColsCount();
         abstract public List<Cell> GetUnmergedRow(int row);
 
-
+        virtual public bool RowHasPersonName(int row)
+        {
+            return false;
+        }
         public virtual string GetTitleOutsideTheTable()
         {
             throw new NotImplementedException();
@@ -241,6 +244,17 @@ namespace SmartParser.Lib
             res += "</tr>\n";
             return res;
         }
+        public virtual bool RowHasInnerBorder(int row)
+        {
+            return true;
+        }
+
+        public bool IsSectionRow(int rowIndex, List<Cell> cells, int colsCount, bool prevRowIsSection, out string text)
+        {
+            TSectionPredicate p = new TSectionPredicate(cells, colsCount, prevRowIsSection, RowHasInnerBorder(rowIndex));
+            text = p.GetSectionText();
+            return text != null;
+        }
 
         public TJsonTablePortion TablePortionToJson(ColumnOrdering columnOrdering, int body_start, int body_end)
         {
@@ -259,7 +273,7 @@ namespace SmartParser.Lib
                 string dummy;
                 // cannot use prevRowIsSection
                 var row = GetCells(i);
-                if (IsSectionRow(row, columnOrdering.GetMaxColumnEndIndex(), false, out dummy))
+                if (IsSectionRow(i, row, columnOrdering.GetMaxColumnEndIndex(), false, out dummy))
                 {
                     table.Section.Add(GetJsonByRow(row));
                     break;
