@@ -127,7 +127,7 @@ namespace SmartParser.Lib
 
         //  see 8562.pdf.docx  in tests
         //  calc string width using graphics.MeasureString methods
-        bool DivideDeclarantAndRelativesBySoftEolns(ColumnOrdering columnOrdering, DataRow row)
+        bool DivideDeclarantAndRelativesBySoftEolns(TableHeader columnOrdering, DataRow row)
         {
             if (CurrentDeclarant.Relatives.Count() > 0)
             {
@@ -170,7 +170,7 @@ namespace SmartParser.Lib
             Logger.Debug(String.Format("Divide line to {0} parts", borders.Count()));
             return true;
         }
-        public void AddInputRowToCurrentPerson(ColumnOrdering columnOrdering, DataRow row)
+        public void AddInputRowToCurrentPerson(TableHeader columnOrdering, DataRow row)
         {
             if (CurrentPerson != null)
             {
@@ -201,7 +201,7 @@ namespace SmartParser.Lib
             }
 
         }
-        public void TransposeTableByRelatives(ColumnOrdering columnOrdering, DataRow row)
+        public void TransposeTableByRelatives(TableHeader columnOrdering, DataRow row)
         {
             DataRow childRow = null;
             DataRow spouseRow = null;
@@ -282,15 +282,15 @@ namespace SmartParser.Lib
             relative.sheet_index = _Declaration.Properties.SheetNumber;
         }
 
-        bool IsHeaderRow(DataRow row, out ColumnOrdering columnOrdering)
+        bool IsHeaderRow(DataRow row, out TableHeader columnOrdering)
         {
             columnOrdering = null;
-            if (!ColumnDetector.WeakHeaderCheck(Adapter, row.Cells))
+            if (!TableHeaderRecognizer.WeakHeaderCheck(Adapter, row.Cells))
                 return false;
             try
             {
-                columnOrdering = new ColumnOrdering();
-                ColumnDetector.ReadHeader(Adapter, row.GetRowIndex(), columnOrdering);
+                columnOrdering = new TableHeader();
+                TableHeaderRecognizer.ReadHeader(Adapter, row.GetRowIndex(), columnOrdering);
                 return true;
             }
             catch (Exception e)
@@ -300,7 +300,7 @@ namespace SmartParser.Lib
             return false;
         }
 
-        public void FindBordersAndPersonNames(ColumnOrdering columnOrdering, bool updateTrigrams)
+        public void FindBordersAndPersonNames(TableHeader columnOrdering, bool updateTrigrams)
         {
             int rowOffset = columnOrdering.FirstDataRow;
             if (columnOrdering.Section != null)
@@ -331,7 +331,7 @@ namespace SmartParser.Lib
                     continue;
                 }
                 {
-                    ColumnOrdering newColumnOrdering;
+                    TableHeader newColumnOrdering;
                     if (IsHeaderRow(currRow, out newColumnOrdering))
                     {
                         columnOrdering = newColumnOrdering;
@@ -341,7 +341,7 @@ namespace SmartParser.Lib
                     }
                 }
 
-                if (updateTrigrams) ColumnPredictor.UpdateByRow(columnOrdering, currRow);
+                if (updateTrigrams) ColumnByDataPredictor.UpdateByRow(columnOrdering, currRow);
 
                 if (!currRow.InitPersonData(prevPersonName))
                 {
@@ -395,7 +395,7 @@ namespace SmartParser.Lib
                 }
 
             }
-            if (updateTrigrams) ColumnPredictor.WriteData();
+            if (updateTrigrams) ColumnByDataPredictor.WriteData();
 
             Logger.Info("Parsed {0} declarants", _Declaration.PublicServants.Count());
 

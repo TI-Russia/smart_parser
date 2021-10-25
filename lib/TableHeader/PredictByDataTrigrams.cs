@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 namespace SmartParser.Lib
 {
     using TrigramsDict = Dictionary<DeclarationField, Dictionary<string, int>>;
-    public class ColumnPredictor
+    public class ColumnByDataPredictor
     {
         static  TrigramsDict Trigrams = new TrigramsDict();
         static Dictionary<DeclarationField, double> ClassFreq;
@@ -177,7 +177,7 @@ namespace SmartParser.Lib
                 return true;
             }
 
-            var predictedField = ColumnPredictor.PredictByString(text);
+            var predictedField = ColumnByDataPredictor.PredictByString(text);
             return (predictedField & ~DeclarationField.AllOwnTypes) == (field & ~DeclarationField.AllOwnTypes);
         }
 
@@ -210,10 +210,10 @@ namespace SmartParser.Lib
                 }
             }
         }
-        public static void UpdateByRow(ColumnOrdering columnOrdering, DataRow row)
+        public static void UpdateByRow(TableHeader columnOrdering, DataRow row)
         {
             // otherwize nowhere to write
-            Debug.Assert(ColumnPredictor.ExternalFileName != null);
+            Debug.Assert(ColumnByDataPredictor.ExternalFileName != null);
 
             foreach (var i in columnOrdering.MergedColumnOrder)
             {

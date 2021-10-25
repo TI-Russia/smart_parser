@@ -15,7 +15,7 @@ namespace SmartParser.Lib
         }
     }
 
-    public class ColumnDetector
+    public class TableHeaderRecognizer
     {
         public static List<string> AbsenceMarkers = new List<string> { "-", "отсутствует", "?", "не указано", "не имеет"};
         
@@ -119,7 +119,7 @@ namespace SmartParser.Lib
                  && HeaderHelpers.IsDeclaredYearlyIncome(cells[2].Text);
         }
 
-        static int ProcessTitle(IAdapter adapter, ColumnOrdering columnOrdering)
+        static int ProcessTitle(IAdapter adapter, TableHeader columnOrdering)
         {
             int row = 0;
             string title = null;
@@ -205,7 +205,7 @@ namespace SmartParser.Lib
                 d == DeclarationField.DeclaredYearlyOtherIncome;
         }
 
-        static void AddColumn(ColumnOrdering ordering, DeclarationField field, Cell  cell)
+        static void AddColumn(TableHeader ordering, DeclarationField field, Cell  cell)
         {
             TColumnInfo s = new TColumnInfo();
             s.BeginColumn = cell.Col;
@@ -217,7 +217,7 @@ namespace SmartParser.Lib
             {
                 string dummy = "";
                 int? year = null;
-                if (ColumnDetector.GetValuesFromTitle(cell.GetText(), ref dummy, ref year, ref dummy) && year.HasValue)
+                if (TableHeaderRecognizer.GetValuesFromTitle(cell.GetText(), ref dummy, ref year, ref dummy) && year.HasValue)
                 {
                     ordering.YearFromIncome = year.Value;
                 }
@@ -226,7 +226,7 @@ namespace SmartParser.Lib
             ordering.Add(s);
         }
 
-        static void FixMissingSubheadersForVehicle(IAdapter adapter, ColumnOrdering columnOrdering)
+        static void FixMissingSubheadersForVehicle(IAdapter adapter, TableHeader columnOrdering)
         {
             if (!columnOrdering.ContainsField(DeclarationField.Vehicle))
                 return;
@@ -287,7 +287,7 @@ namespace SmartParser.Lib
             return true;
         }
 
-        static void FixMissingSubheadersForMergedColumns(IAdapter adapter, ColumnOrdering columnOrdering,
+        static void FixMissingSubheadersForMergedColumns(IAdapter adapter, TableHeader columnOrdering,
             DeclarationField mergedField, DeclarationField[] subColumns)
         {
             if (!columnOrdering.ContainsField(mergedField))
@@ -309,7 +309,7 @@ namespace SmartParser.Lib
             columnOrdering.Delete(mergedField);
         }
 
-        static void FixMissingSubheadersForMixedRealEstate(IAdapter adapter, ColumnOrdering columnOrdering)
+        static void FixMissingSubheadersForMixedRealEstate(IAdapter adapter, TableHeader columnOrdering)
         {
             //see DepEnergo2010.doc  in tests
             FixMissingSubheadersForMergedColumns(
@@ -323,7 +323,7 @@ namespace SmartParser.Lib
             );
         }
 
-        static void FixMissingSubheadersForOwnedColumn(IAdapter adapter, ColumnOrdering columnOrdering)
+        static void FixMissingSubheadersForOwnedColumn(IAdapter adapter, TableHeader columnOrdering)
         {
             //see niz_kam.docx   in tests
             FixMissingSubheadersForMergedColumns(
@@ -339,7 +339,7 @@ namespace SmartParser.Lib
             );
         }
 
-        static void FixMissingSubheadersForStateColumn(IAdapter adapter, ColumnOrdering columnOrdering)
+        static void FixMissingSubheadersForStateColumn(IAdapter adapter, TableHeader columnOrdering)
         {
             //see niz_kam.docx   in tests
             FixMissingSubheadersForMergedColumns(
@@ -355,7 +355,7 @@ namespace SmartParser.Lib
 
         }
 
-        static void FixBadColumnName01_Template(ColumnOrdering c, DeclarationField naturalText, DeclarationField country, DeclarationField square, DeclarationField type)
+        static void FixBadColumnName01_Template(TableHeader c, DeclarationField naturalText, DeclarationField country, DeclarationField square, DeclarationField type)
         {
             //move MixedColumnWithNaturalText  to MixedRealEstateType
             if (!c.ContainsField(naturalText)) return;
@@ -370,7 +370,7 @@ namespace SmartParser.Lib
             }
         }
 
-        static void FixBadColumnName01(ColumnOrdering c)
+        static void FixBadColumnName01(TableHeader c)
         {
             FixBadColumnName01_Template(c,
                 DeclarationField.MixedColumnWithNaturalText,
@@ -389,7 +389,7 @@ namespace SmartParser.Lib
                 DeclarationField.OwnedRealEstateType);
         }
 
-        static void FixBadColumnName02(ColumnOrdering c)
+        static void FixBadColumnName02(TableHeader c)
         {
             //move NameAndOccupationOrRelativeType  to NameOrRelativeType if Occupation  is present
             if (     c.ContainsField(DeclarationField.NameAndOccupationOrRelativeType)
@@ -404,9 +404,9 @@ namespace SmartParser.Lib
         }
 
 
-        static public ColumnOrdering ExamineTableBeginning(IAdapter adapter)
+        static public TableHeader ExamineTableBeginning(IAdapter adapter)
         {
-            ColumnOrdering columnOrdering = new ColumnOrdering();
+            TableHeader columnOrdering = new TableHeader();
             int headerStartRow = ProcessTitle(adapter, columnOrdering);
             ReadHeader(adapter, headerStartRow, columnOrdering);
             return columnOrdering;
@@ -504,7 +504,7 @@ namespace SmartParser.Lib
         }
 
         
-        static public void MapColumnTitlesToInnerConstants(IAdapter adapter, List<Cell> cells, ColumnOrdering columnOrdering)
+        static public void MapColumnTitlesToInnerConstants(IAdapter adapter, List<Cell> cells, TableHeader columnOrdering)
         {
             foreach (var cell in cells)
             {
@@ -519,14 +519,14 @@ namespace SmartParser.Lib
                 if ((text == "" || clean_text.Length <= 1) && (text != "№"))
                 {
                     // too short title, try to predict by values
-                    field = ColumnPredictor.PredictEmptyColumnTitle(adapter, cell);
+                    field = ColumnByDataPredictor.PredictEmptyColumnTitle(adapter, cell);
                     Logger.Debug("Predict: " + field.ToString());
                 }
                 else {
                     field = HeaderHelpers.TryGetField(cell.TextAbove, text);
                     if ((field == DeclarationField.None) && clean_text.Length <= 4)
                     {
-                        field = ColumnPredictor.PredictEmptyColumnTitle(adapter, cell);
+                        field = ColumnByDataPredictor.PredictEmptyColumnTitle(adapter, cell);
                         Logger.Debug("Predict: " + field.ToString());
                     }
                     if (field == DeclarationField.None) {
@@ -539,13 +539,13 @@ namespace SmartParser.Lib
                 {
                     throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} title:{1}", cell.Row, text));
                 }
-                if (ColumnPredictor.CalcPrecision)
+                if (ColumnByDataPredictor.CalcPrecision)
                 {
-                    ColumnPredictor.PredictForPrecisionCheck(adapter, cell, field);
+                    ColumnByDataPredictor.PredictForPrecisionCheck(adapter, cell, field);
                 }
                 
                 AddColumn(columnOrdering, field, cell);
-                if (ColumnOrdering.SearchForFioColumnOnly)
+                if (TableHeader.SearchForFioColumnOnly)
                     if  (HeaderHelpers.IsNameDeclarationField(field))
                     {
                         break;
@@ -553,7 +553,7 @@ namespace SmartParser.Lib
             }
         }
 
-        static public void ReadHeader(IAdapter adapter, int headerStartRow, ColumnOrdering columnOrdering)
+        static public void ReadHeader(IAdapter adapter, int headerStartRow, TableHeader columnOrdering)
         { 
             int headerEndRow;
             var cells = GetColumnCells(adapter, headerStartRow, out headerEndRow);

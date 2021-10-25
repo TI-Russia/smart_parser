@@ -44,7 +44,7 @@ namespace Smart.Parser
         public static bool IgnoreDirectoryIds = false;
         public static bool BuildTrigrams = false;
         public static int? UserDocumentFileId;
-        public static ColumnOrdering LastGoodOrdering = null;
+        public static SmartParser.Lib.TableHeader LastGoodOrdering = null;
         public static string ColumnTrigramsFileName = null;
 
         static string ParseArgs(string[] args)
@@ -212,10 +212,10 @@ namespace Smart.Parser
 
 
             ColumnsOnly = columnsOnlyOpt.isMatched;
-            ColumnOrdering.SearchForFioColumnOnly = fioOnlyOpt.isMatched;
+            SmartParser.Lib.TableHeader.SearchForFioColumnOnly = fioOnlyOpt.isMatched;
             CheckJson = checkJsonOpt.isMatched;
             BuildTrigrams = buildTrigramsOpt.isMatched;
-            ColumnPredictor.CalcPrecision = checkPredictorOpt.isMatched;
+            ColumnByDataPredictor.CalcPrecision = checkPredictorOpt.isMatched;
             var freeArgs = parser.RemainingArgs();
             return String.Join(" ", freeArgs).Trim(new char[] { '"' });
         }
@@ -369,9 +369,9 @@ namespace Smart.Parser
                 Logger.Info("Output UnknownRealEstate to file {0}", dictfile);
             }
 
-            if (ColumnPredictor.CalcPrecision)
+            if (ColumnByDataPredictor.CalcPrecision)
             {
-                Logger.Info(ColumnPredictor.GetPrecisionStr());
+                Logger.Info(ColumnByDataPredictor.GetPrecisionStr());
             }
 
             return 0;
@@ -432,7 +432,7 @@ namespace Smart.Parser
             return null;
         }
 
-        static void DumpColumn(IAdapter adapter, ColumnOrdering columnOrdering, DeclarationField columnToDump)
+        static void DumpColumn(IAdapter adapter, SmartParser.Lib.TableHeader columnOrdering, DeclarationField columnToDump)
         {
             int rowOffset = columnOrdering.FirstDataRow;
             for (var row = rowOffset; row < adapter.GetRowsCount(); row++)
@@ -462,7 +462,7 @@ namespace Smart.Parser
             return CalculateMD5(filename) + "_" + adapter.GetWorksheetName();
         }
 
-        public static void SaveRandomPortionToToloka(IAdapter adapter, ColumnOrdering columnOrdering,
+        public static void SaveRandomPortionToToloka(IAdapter adapter, SmartParser.Lib.TableHeader columnOrdering,
             Declaration declaration, string inputFileName)
         {
             if (TolokaFileName == "") return;
@@ -493,10 +493,10 @@ namespace Smart.Parser
 
             if (adapter.CurrentScheme == default)
             {
-                ColumnOrdering? columnOrdering = null;
+                SmartParser.Lib.TableHeader? columnOrdering = null;
                 try
                 {
-                    columnOrdering = ColumnDetector.ExamineTableBeginning(adapter);
+                    columnOrdering = TableHeaderRecognizer.ExamineTableBeginning(adapter);
                     LastGoodOrdering = columnOrdering;
                 }
                 catch (Exception ex)
@@ -567,7 +567,7 @@ namespace Smart.Parser
                       columnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncome) ||
                       columnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncomeThousands)))
                 {
-                    if (!ColumnOrdering.SearchForFioColumnOnly)
+                    if (!SmartParser.Lib.TableHeader.SearchForFioColumnOnly)
                     {
                         throw new SmartParserException("Insufficient fields: No any of Declarant Income fields found.");
                     }
@@ -640,7 +640,7 @@ namespace Smart.Parser
             }
 
 
-            ColumnPredictor.InitializeIfNotAlready(Program.ColumnTrigramsFileName);
+            ColumnByDataPredictor.InitializeIfNotAlready(Program.ColumnTrigramsFileName);
 
             string logFile = Path.Combine(Path.GetDirectoryName(inputFile),
                 Path.GetFileName(inputFile) + ".log");
@@ -750,9 +750,9 @@ namespace Smart.Parser
                 Logger.SetOutMain();
             }
 
-            if (ColumnPredictor.CalcPrecision)
+            if (ColumnByDataPredictor.CalcPrecision)
             {
-                Logger.Info(ColumnPredictor.GetPrecisionStr());
+                Logger.Info(ColumnByDataPredictor.GetPrecisionStr());
             }
 
             if (Logger.Errors.Count() > 0)

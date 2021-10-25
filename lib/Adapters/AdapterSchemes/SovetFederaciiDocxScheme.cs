@@ -47,7 +47,7 @@ namespace SmartParser.Lib
         {
             InitializeEP();
 
-            ColumnOrdering columnOrdering = new ColumnOrdering();
+            TableHeader columnOrdering = new TableHeader();
             var declaration = Parser.InitializeDeclaration(parser.Adapter, columnOrdering, userDocumentFileId);
             declaration.Properties.Year = GetYear();
             declaration.Properties.SheetTitle = FindTitleAboveTheTable();
@@ -301,7 +301,7 @@ namespace SmartParser.Lib
             return relative;
         }
 
-        private PublicServant CreatePublicServant(ColumnOrdering columnOrdering)
+        private PublicServant CreatePublicServant(TableHeader columnOrdering)
         {
             var currentDeclarant = new PublicServant();
             currentDeclarant.NameRaw = GetPersonName();

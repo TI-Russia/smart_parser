@@ -62,7 +62,7 @@ namespace test
         public void TestCanBePersonName()
         {
             string s = "Десятов Владимир  Вячеславович,";
-            ColumnPredictor.InitializeIfNotAlready();
+            ColumnByDataPredictor.InitializeIfNotAlready();
             var r = DataRow.CheckPersonName(s);
             Assert.IsTrue(r);
         }

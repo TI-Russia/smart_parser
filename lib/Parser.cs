@@ -35,7 +35,7 @@ namespace SmartParser.Lib
             }
         }
 
-        static public Declaration InitializeDeclaration(IAdapter adapter,  ColumnOrdering columnOrdering, int? user_documentfile_id)
+        static public Declaration InitializeDeclaration(IAdapter adapter,  TableHeader columnOrdering, int? user_documentfile_id)
         {
             // parse filename
             int? documentfile_id;
@@ -71,13 +71,13 @@ namespace SmartParser.Lib
             return declaration;
         }
 
-        public Declaration Parse(ColumnOrdering columnOrdering, bool updateTrigrams, int? documentfile_id)
+        public Declaration Parse(TableHeader columnOrdering, bool updateTrigrams, int? documentfile_id)
         {
             var firstPassStartTime = DateTime.Now;
             Declaration declaration = InitializeDeclaration(Adapter, columnOrdering, documentfile_id);
             TBorderFinder borderFinder = new TBorderFinder(Adapter, declaration, FailOnRelativeOrphan);
             borderFinder.FindBordersAndPersonNames(columnOrdering, updateTrigrams);
-            if (ColumnOrdering.SearchForFioColumnOnly)
+            if (TableHeader.SearchForFioColumnOnly)
                 return declaration;
             TSecondPassParser secondPassParser = new TSecondPassParser(Adapter);
             int declarantCount = secondPassParser.ParseDeclarants(declaration);

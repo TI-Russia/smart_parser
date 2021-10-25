@@ -333,7 +333,7 @@ namespace SmartParser.Lib
             return Worksheet.Table[row];
         }
 
-        public override Cell GetDeclarationFieldWeak(ColumnOrdering columnOrdering, int row, DeclarationField field, out TColumnInfo colSpan)
+        public override Cell GetDeclarationFieldWeak(TableHeader columnOrdering, int row, DeclarationField field, out TColumnInfo colSpan)
         {
             return base.GetDeclarationFieldWeak(columnOrdering, row, field, out colSpan);
         }

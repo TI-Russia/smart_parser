@@ -17,7 +17,7 @@ namespace SmartParser.Lib
         }
     }
 
-    public class ColumnOrdering
+    public class TableHeader
     {
         public Dictionary<DeclarationField, TColumnInfo> ColumnOrder = new Dictionary<DeclarationField, TColumnInfo>();
         public List<TColumnInfo> MergedColumnOrder = new List<TColumnInfo>();

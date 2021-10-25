@@ -21,7 +21,7 @@ namespace SmartParser.Lib
                 MappedHeader = MapByMaxIntersection(ColumnOrdering, Cells);
             }
         }
-        public DataRow(IAdapter adapter, ColumnOrdering columnOrdering, int row)
+        public DataRow(IAdapter adapter, TableHeader columnOrdering, int row)
         {
             this.row = row;
             this.adapter = adapter;
@@ -56,7 +56,7 @@ namespace SmartParser.Lib
             return other;
         }
 
-        static Dictionary<DeclarationField, Cell> MapByOrderAndIntersection(ColumnOrdering columnOrdering, List<Cell> cells)
+        static Dictionary<DeclarationField, Cell> MapByOrderAndIntersection(TableHeader columnOrdering, List<Cell> cells)
         {
             if (columnOrdering.MergedColumnOrder.Count != cells.Count)
             {
@@ -72,12 +72,12 @@ namespace SmartParser.Lib
                 var colInfo = columnOrdering.MergedColumnOrder[i];
                 int s2 = colInfo.ColumnPixelStart;
                 int e2 = colInfo.ColumnPixelStart + colInfo.ColumnPixelWidth;
-                if (ColumnOrdering.PeriodIntersection(s1, e1, s2, e2) == 0)
+                if (TableHeader.PeriodIntersection(s1, e1, s2, e2) == 0)
                 {
                     pixelErrorCount += 1;
                     if (!DataHelper.IsEmptyValue(cells[i].Text)) 
                     {
-                        if (!ColumnPredictor.TestFieldWithoutOwntypes(colInfo.Field, cells[i]))
+                        if (!ColumnByDataPredictor.TestFieldWithoutOwntypes(colInfo.Field, cells[i]))
                         {
                             Logger.Debug(string.Format("cannot map column N={0} text={1}", i, cells[i].Text.Replace("\n", "\\n")));
                             return null;
@@ -102,7 +102,7 @@ namespace SmartParser.Lib
 
         }
 
-        static Dictionary<DeclarationField, Cell> MapByMaxIntersection(ColumnOrdering columnOrdering, List<Cell> cells)
+        static Dictionary<DeclarationField, Cell> MapByMaxIntersection(TableHeader columnOrdering, List<Cell> cells)
         {
             Logger.Debug("MapByMaxIntersection");
             // map two header cells to one data cell
@@ -334,7 +334,7 @@ namespace SmartParser.Lib
                 return true;
             }
             if (words.Count() != 3) {
-                var predictedField = ColumnPredictor.PredictByString(s);
+                var predictedField = ColumnByDataPredictor.PredictByString(s);
                 if (!HeaderHelpers.IsNameDeclarationField(predictedField)) 
                 {
                     return false;
@@ -352,7 +352,7 @@ namespace SmartParser.Lib
             string nameOrRelativeType;
             if (this.ColumnOrdering.ContainsField(DeclarationField.NameAndOccupationOrRelativeType))
             {
-                if (!ColumnOrdering.SearchForFioColumnOnly)
+                if (!TableHeader.SearchForFioColumnOnly)
                 {
                     if (!DivideNameAndOccupation(GetDeclarationField(DeclarationField.NameAndOccupationOrRelativeType)))
                     {
@@ -428,7 +428,7 @@ namespace SmartParser.Lib
 
         public List<Cell> Cells;
         public IAdapter adapter;
-        public ColumnOrdering ColumnOrdering;
+        public TableHeader ColumnOrdering;
         int row;
         private Dictionary<DeclarationField, Cell> MappedHeader = null;
         

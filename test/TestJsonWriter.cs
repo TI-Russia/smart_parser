@@ -13,7 +13,7 @@ namespace test
         [TestMethod]
         public void TestColumnOrderJson()
         {
-            ColumnOrdering co = new ColumnOrdering();
+            TableHeader co = new TableHeader();
             TColumnInfo s = new TColumnInfo();
             s.Field = DeclarationField.NameOrRelativeType;
             co.Add(s);

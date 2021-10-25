@@ -920,7 +920,7 @@ namespace SmartParser.Lib
                     break;
                 }
             }
-            if ((TableRows.Count > 0) && !ColumnDetector.IsNamePositionAndIncomeTable(GetCells(0)))
+            if ((TableRows.Count > 0) && !TableHeaderRecognizer.IsNamePositionAndIncomeTable(GetCells(0)))
             {
                 if (maxCellsCount <= 4 || CheckNameColumnIsEmpty(saveRowsCount))
                 {

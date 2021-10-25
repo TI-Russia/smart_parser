@@ -17,7 +17,7 @@ namespace test
             string xlsxFile = Path.Combine(TestUtil.GetTestDataPath(), "fsin_2016_extract.xlsx");
             IAdapter adapter = AsposeExcelAdapter.CreateAdapter(xlsxFile);
 
-            ColumnOrdering ordering = ColumnDetector.ExamineTableBeginning(adapter);
+            TableHeader ordering = TableHeaderRecognizer.ExamineTableBeginning(adapter);
             Assert.AreEqual(ordering.ColumnOrder.Count, 12);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.NameOrRelativeType].BeginColumn == 0);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.Occupation].BeginColumn == 1);
@@ -38,8 +38,8 @@ namespace test
         {
             string xlsxFile = Path.Combine(TestUtil.GetTestDataPath(), "rabotniki_podved_organizacii_2013.xlsx");
             IAdapter adapter = AsposeExcelAdapter.CreateAdapter(xlsxFile);
-            ColumnPredictor.InitializeIfNotAlready();
-            ColumnOrdering ordering = ColumnDetector.ExamineTableBeginning(adapter);
+            ColumnByDataPredictor.InitializeIfNotAlready();
+            TableHeader ordering = TableHeaderRecognizer.ExamineTableBeginning(adapter);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.Number].BeginColumn == 0);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.NameOrRelativeType].BeginColumn == 1);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.Occupation].BeginColumn == 2);
@@ -67,7 +67,7 @@ namespace test
 
             IAdapter adapter = AsposeExcelAdapter.CreateAdapter(xlsxFile);
 
-            ColumnOrdering ordering = ColumnDetector.ExamineTableBeginning(adapter);
+            TableHeader ordering = TableHeaderRecognizer.ExamineTableBeginning(adapter);
             Assert.AreEqual(ordering.ColumnOrder.Count, 12);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.NameOrRelativeType].BeginColumn == 0);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.Occupation].BeginColumn == 1);
@@ -89,7 +89,7 @@ namespace test
             string docxFile = Path.Combine(TestUtil.GetTestDataPath(), "glav_44_2010.doc");
             IAdapter adapter = OpenXmlWordAdapter.CreateAdapter(docxFile, -1);
 
-            ColumnOrdering ordering = ColumnDetector.ExamineTableBeginning(adapter);
+            TableHeader ordering = TableHeaderRecognizer.ExamineTableBeginning(adapter);
             Assert.AreEqual(ordering.ColumnOrder.Count, 9);
         }
 
@@ -98,9 +98,9 @@ namespace test
         {
             string xlsxFile = Path.Combine(TestUtil.GetTestDataPath(), "17497.xls");
             IAdapter adapter = AsposeExcelAdapter.CreateAdapter(xlsxFile, -1);
-            ColumnPredictor.InitializeIfNotAlready();
+            ColumnByDataPredictor.InitializeIfNotAlready();
 
-            ColumnOrdering ordering = ColumnDetector.ExamineTableBeginning(adapter);
+            TableHeader ordering = TableHeaderRecognizer.ExamineTableBeginning(adapter);
             Assert.AreEqual(15, ordering.ColumnOrder.Count);
             Assert.IsTrue(ordering.ContainsField(DeclarationField.VehicleType));
             Assert.IsTrue(ordering.ContainsField(DeclarationField.VehicleModel));
@@ -114,7 +114,7 @@ namespace test
             string docxFile = Path.Combine(TestUtil.GetTestDataPath(), "18664.docx");
             IAdapter adapter = OpenXmlWordAdapter.CreateAdapter(docxFile, -1);
 
-            ColumnOrdering ordering = ColumnDetector.ExamineTableBeginning(adapter);
+            TableHeader ordering = TableHeaderRecognizer.ExamineTableBeginning(adapter);
             Assert.AreEqual(ordering.ColumnOrder.Count, 13);
             Assert.AreEqual(ordering.ColumnOrder[DeclarationField.AcquiredProperty].BeginColumn, 11);
             Assert.AreEqual(ordering.ColumnOrder[DeclarationField.MoneySources].BeginColumn, 12);
@@ -126,7 +126,7 @@ namespace test
             string docxFile = Path.Combine(TestUtil.GetTestDataPath(), "57715.doc");
             IAdapter adapter = OpenXmlWordAdapter.CreateAdapter(docxFile, -1);
 
-            ColumnOrdering ordering = ColumnDetector.ExamineTableBeginning(adapter);
+            TableHeader ordering = TableHeaderRecognizer.ExamineTableBeginning(adapter);
             Assert.AreEqual(ordering.ColumnOrder.Count, 13);
             Assert.AreEqual(ordering.ColumnOrder[DeclarationField.Vehicle].BeginColumn, 10);
             Assert.AreEqual(ordering.ColumnOrder[DeclarationField.DeclaredYearlyIncome].BeginColumn, 11);
@@ -138,7 +138,7 @@ namespace test
             string docxFile = Path.Combine(TestUtil.GetTestDataPath(), "82442.doc");
             IAdapter adapter = OpenXmlWordAdapter.CreateAdapter(docxFile, -1);
 
-            ColumnOrdering ordering = ColumnDetector.ExamineTableBeginning(adapter);
+            TableHeader ordering = TableHeaderRecognizer.ExamineTableBeginning(adapter);
             Assert.AreEqual(ordering.ColumnOrder[DeclarationField.DeclaredYearlyIncome].BeginColumn, 1);
         }
 
@@ -150,8 +150,8 @@ namespace test
             string xlsxFile = Path.Combine(TestUtil.GetTestDataPath(), "customs-tworow-header.xls");
             IAdapter adapter = AsposeExcelAdapter.CreateAdapter(xlsxFile);
 
-            ColumnPredictor.InitializeIfNotAlready();
-            ColumnOrdering ordering = ColumnDetector.ExamineTableBeginning(adapter);
+            ColumnByDataPredictor.InitializeIfNotAlready();
+            TableHeader ordering = TableHeaderRecognizer.ExamineTableBeginning(adapter);
             Assert.AreEqual(ordering.ColumnOrder.Count, 14);
             Assert.AreEqual(ordering.ColumnOrder[DeclarationField.Occupation].BeginColumn, 2);
         }

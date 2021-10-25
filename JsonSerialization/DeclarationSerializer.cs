@@ -168,7 +168,7 @@ namespace TI.Declarator.JsonSerialization
             else
             {
                 JDeclaration.Add(new JProperty("document", jDocumentProp));
-                if (!ColumnOrdering.SearchForFioColumnOnly)
+                if (!TableHeader.SearchForFioColumnOnly)
                 {
                     Validate(JDeclaration, out comment);
                 }

@@ -43,7 +43,7 @@ namespace SmartParser.Lib
             throw new NotImplementedException();
         }
 
-        public DataRow GetRow(ColumnOrdering columnOrdering, int row)
+        public DataRow GetRow(TableHeader columnOrdering, int row)
         {
             return new DataRow(this, columnOrdering, row);
         }
@@ -55,7 +55,7 @@ namespace SmartParser.Lib
 
         // напрямую используется, пока ColumnOrdering еще не построен
         // во всех остальных случаях надо использовать Row.GetDeclarationField
-        virtual public Cell GetDeclarationFieldWeak(ColumnOrdering columnOrdering, int row, DeclarationField field, out TColumnInfo colSpan)
+        virtual public Cell GetDeclarationFieldWeak(TableHeader columnOrdering, int row, DeclarationField field, out TColumnInfo colSpan)
         {
             if (!columnOrdering.ColumnOrder.TryGetValue(field, out colSpan))
             {
@@ -256,7 +256,7 @@ namespace SmartParser.Lib
             return text != null;
         }
 
-        public TJsonTablePortion TablePortionToJson(ColumnOrdering columnOrdering, int body_start, int body_end)
+        public TJsonTablePortion TablePortionToJson(TableHeader columnOrdering, int body_start, int body_end)
         {
             var table = new TJsonTablePortion();
             table.DataStart = body_start;
