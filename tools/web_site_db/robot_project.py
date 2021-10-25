@@ -89,10 +89,12 @@ class TRobotProject:
             os.unlink(file_path + TRobotProject.visited_pages_extension)
 
     @staticmethod
-    def create_project_from_exported_files(logger, web_domain, file_paths, file_web_domains=None):
+    def create_project_from_exported_files(logger, web_domain, file_paths, file_web_domains=None, move_files=True,
+                                           project_folder=None):
         assert web_domain.find('/') == -1
         assert file_web_domains is None or len(file_web_domains) == len(file_paths)
-        project_folder = web_domain
+        if project_folder is None:
+            project_folder = web_domain
         if os.path.exists(project_folder):
             logger.debug("rm {}".format(project_folder))
             shutil.rmtree(project_folder, ignore_errors=True)
@@ -115,7 +117,13 @@ class TRobotProject:
             for file_name, curr_web_domain in zip(file_paths, file_web_domains):
                 export_path = os.path.join("result", curr_web_domain, os.path.basename(file_name))
                 os.makedirs(os.path.dirname(export_path), exist_ok=True)
-                shutil.move(file_name, export_path)
+                if move_files:
+                    logger.debug("move {} to {}".format(file_name, export_path))
+                    shutil.move(file_name, export_path)
+                else:
+                    logger.debug("copy {} to {}".format(file_name, export_path))
+                    shutil.copy2(file_name, export_path)
+
                 export_file = TExportFile(url=web_domain, export_path=export_path)
                 export_env.exported_files.append(export_file)
             logger.info("write {} files to result folder".format(len(file_paths)))
