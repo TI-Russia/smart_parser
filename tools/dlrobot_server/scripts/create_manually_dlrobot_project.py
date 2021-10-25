@@ -25,7 +25,8 @@ def main():
     if os.path.exists(folder):
         raise Exception("folder {} exists".format(folder))
     os.mkdir(folder)
-    TRobotProject.create_project_from_exported_files(logger, args.website, args.files, project_folder=folder)
+    TRobotProject.create_project_from_exported_files(logger, args.website, args.files, project_folder=folder,
+                                                     move_files=False)
     decl_sender = TDeclarationSender(logger, True, True)
     decl_sender.send_declaraion_files_to_other_servers(folder)
 

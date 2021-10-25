@@ -99,6 +99,7 @@ class TRobotProject:
             logger.debug("rm {}".format(project_folder))
             shutil.rmtree(project_folder, ignore_errors=True)
         os.mkdir(project_folder)
+        abs_file_paths = list(os.path.abspath(x) for x in file_paths)
 
         logger.debug("mkdir {}".format(project_folder))
         save_dir = os.path.abspath(os.curdir)
@@ -113,8 +114,8 @@ class TRobotProject:
             project.web_site_snapshots[0].reach_status = TWebSiteReachStatus.normal
             export_env = project.web_site_snapshots[0].export_env
             if file_web_domains is None:
-                file_web_domains = [web_domain] * len(file_paths)
-            for file_name, curr_web_domain in zip(file_paths, file_web_domains):
+                file_web_domains = [web_domain] * len(abs_file_paths)
+            for file_name, curr_web_domain in zip(abs_file_paths, file_web_domains):
                 export_path = os.path.join("result", curr_web_domain, os.path.basename(file_name))
                 os.makedirs(os.path.dirname(export_path), exist_ok=True)
                 if move_files:
