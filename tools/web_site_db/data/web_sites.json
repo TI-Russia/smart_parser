@@ -1052,6 +1052,13 @@
     "turinsk.midural.ru": {
         "calc_office_id": 1882,
         "http_protocol": "http",
+        "title": "Главная — Официальный сайт Туринского городского округа",
+        "status": "abandoned",
+        "redirect_to": "turinskgo.ru"
+    },
+    "turinskgo.ru": {
+        "calc_office_id": 1882,
+        "http_protocol": "http",
         "title": "Главная — Официальный сайт Туринского городского округа"
     },
     "admbmur.ru": {
@@ -3814,6 +3821,13 @@
         "title": "Новости"
     },
     "gb.adm-kbr.ru": {
+        "calc_office_id": 3560,
+        "http_protocol": "https",
+        "title": "Официальный сайт городского округа Баксан",
+        "redirect_to": "baksan.kbr.ru",
+        "status": "abandoned"
+    },
+    "baksan.kbr.ru": {
         "calc_office_id": 3560,
         "http_protocol": "https",
         "title": "Официальный сайт городского округа Баксан"
@@ -7520,6 +7534,13 @@
         "title": "Северо-Енисейский район"
     },
     "tuhtet-adm.ru": {
+        "calc_office_id": 1777,
+        "http_protocol": "https",
+        "title": "Официальный сайт органов местного самоуправления муниципального образования Тюхтетский муниципальный округ Красноярского края",
+        "status": "abandoned",
+        "redirect_to": "tuhtet.ru"
+    },
+    "tuhtet.ru": {
         "calc_office_id": 1777,
         "http_protocol": "https",
         "title": "Официальный сайт органов местного самоуправления муниципального образования Тюхтетский муниципальный округ Красноярского края"
@@ -15047,7 +15068,14 @@
     },
     "orel-adm.ru": {
         "calc_office_id": 1786,
-        "http_protocol": "https"
+        "http_protocol": "https",
+        "redirect_to": "orel-adm.ru/ru",
+        "status": "abandoned"
+    },
+    "orel-adm.ru/ru": {
+        "calc_office_id": 1786,
+        "http_protocol": "https",
+        "title": "АДМИНИСТРАЦИЯ ГОРОДА ОРЛА"
     },
     "orelgorsovet.ru": {
         "calc_office_id": 1786,
@@ -37636,6 +37664,13 @@
     "mininfra.kbr.ru": {
         "calc_office_id": 7539,
         "http_protocol": "https",
+        "title": "Министерство транспорта и дорожного хозяйства Кабардино-Балкарской Республики",
+        "status": "abandoned",
+        "redirect_to": "mintrans.kbr.ru"
+    },
+    "mintrans.kbr.ru": {
+        "calc_office_id": 7539,
+        "http_protocol": "https",
         "title": "Министерство транспорта и дорожного хозяйства Кабардино-Балкарской Республики"
     },
     "mintrud.kbr.ru": {
@@ -37644,6 +37679,14 @@
         "title": "Министерство труда, занятости и социальной защиты Кабардино-Балкарской Республики"
     },
     "gk.kbr.ru": {
+        "calc_office_id": 7544,
+        "http_protocol": "https",
+        "title": "Государственный комитет Кабардино-Балкарской Республики по тарифам и жилищному надзору",
+        "status": "abandoned",
+        "redirect_to": "tarif.kbr.ru"
+
+    },
+    "tarif.kbr.ru": {
         "calc_office_id": 7544,
         "http_protocol": "https",
         "title": "Государственный комитет Кабардино-Балкарской Республики по тарифам и жилищному надзору"
@@ -50150,7 +50193,13 @@
     "sabsk.ru": {
         "calc_office_id": 20314,
         "http_protocol": "http",
-        "title": ""
+        "redirect_to": "sabsk.ru/page.php",
+        "status": "abandoned"
+    },
+    "sabsk.ru/page.php": {
+        "calc_office_id": 20314,
+        "http_protocol": "http",
+        "title": "Администрация муниципального образования Сабское сельское поселение"
     },
     "sayranovo.ru": {
         "calc_office_id": 20315,
