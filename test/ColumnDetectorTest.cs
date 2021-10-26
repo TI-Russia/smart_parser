@@ -40,7 +40,7 @@ namespace test
             IAdapter adapter = AsposeExcelAdapter.CreateAdapter(xlsxFile);
             ColumnByDataPredictor.InitializeIfNotAlready();
             TableHeader ordering = TableHeaderRecognizer.ExamineTableBeginning(adapter);
-            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.Number].BeginColumn == 0);
+            Assert.IsTrue(ordering.ColumnOrder[DeclarationField.DeclarantIndex].BeginColumn == 0);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.NameOrRelativeType].BeginColumn == 1);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.Occupation].BeginColumn == 2);
             Assert.IsTrue(ordering.ColumnOrder[DeclarationField.OwnedRealEstateType].BeginColumn == 3);

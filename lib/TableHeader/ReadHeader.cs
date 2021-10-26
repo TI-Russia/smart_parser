@@ -94,7 +94,7 @@ namespace SmartParser.Lib
             if (cells.Count < 3) return false;
             foreach (var c in cells)
             {
-                if (colCount == 0 && HeaderHelpers.IsNumber(c.Text)) return true;
+                if (colCount == 0 && HeaderHelpers.IsNumeroSign(c.Text)) return true;
                 if (HeaderHelpers.IsName(c.Text)) return true;
                 if (HeaderHelpers.HasOwnedString(c.Text) || HeaderHelpers.HasStateString(c.Text))
                 {
@@ -586,7 +586,7 @@ namespace SmartParser.Lib
             var cells = GetColumnCells(adapter, headerStartRow, out headerEndRow);
             MapColumnTitlesToInnerConstants(adapter, cells, columnOrdering);
             if (columnOrdering.ColumnOrder.Count == 3 &&
-                columnOrdering.ColumnOrder.ContainsKey(DeclarationField.Number) &&
+                columnOrdering.ColumnOrder.ContainsKey(DeclarationField.DeclarantIndex) &&
                 columnOrdering.ColumnOrder.ContainsKey(DeclarationField.NameOrRelativeType) &&
                 columnOrdering.ColumnOrder.ContainsKey(DeclarationField.Occupation)
                 )

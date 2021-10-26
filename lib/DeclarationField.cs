@@ -29,7 +29,7 @@ namespace SmartParser.Lib
 
         //the first byte
         None = 0,
-        Number = 1 | StartsWithDigitMask,
+        DeclarantIndex = 1 | StartsWithDigitMask,
         RelativeTypeStrict = 2,
         NameOrRelativeType = 3,
         NameAndOccupationOrRelativeType = 4,

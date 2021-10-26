@@ -229,9 +229,9 @@ namespace SmartParser.Lib
         public int? GetPersonIndex()
         {
             int? index = null;
-            if (this.ColumnOrdering.ContainsField(DeclarationField.Number))
+            if (this.ColumnOrdering.ContainsField(DeclarationField.DeclarantIndex))
             {
-                string indexStr = GetDeclarationField(DeclarationField.Number).Text
+                string indexStr = GetDeclarationField(DeclarationField.DeclarantIndex).Text
                     .Replace(".", "").ReplaceEolnWithSpace();
                 int indVal;
                 bool dummyRes = Int32.TryParse(indexStr, out indVal);

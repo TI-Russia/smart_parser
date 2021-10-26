@@ -105,7 +105,7 @@ namespace SmartParser.Lib
         static bool TestFieldRegexpWeak(DeclarationField field, string text)
         {
             if (text.Length == 0) return true;
-            if (text == "п/п" && field == DeclarationField.Number) return true;
+            if (text == "п/п" && field == DeclarationField.DeclarantIndex) return true;
             if (    ((field & DeclarationField.StartsWithDigitMask) > 0)
                  && !Char.IsNumber(text[0]))
             {
@@ -241,6 +241,8 @@ namespace SmartParser.Lib
             List<string> texts = new List<string>();
             int rowIndex = headerCell.Row + headerCell.MergedRowsCount;
             const int maxRowToCollect = 10;
+            int numbers = 0;
+            int not_numbers = 0;
             for (int i = 0; i < maxRowToCollect; i++)
             {
                 var cells = adapter.GetDataCells(rowIndex, IAdapter.MaxColumnsCount);
@@ -258,7 +260,20 @@ namespace SmartParser.Lib
                     var c = adapter.GetCell(rowIndex, headerCell.Col);
                     if (c != null)
                     {
-                        texts.Add(c.GetText(true));
+                        var txt = c.GetText(true);
+                        if (txt.Length > 0)
+                        {
+                            texts.Add(txt);
+                            int d;
+                            if (int.TryParse(txt, out d))
+                            {
+                                numbers += 1;
+                            }
+                            else
+                            {
+                                not_numbers += 1;
+                            }
+                        }
                         rowIndex += c.MergedRowsCount;
                     }
                     else
@@ -273,6 +288,10 @@ namespace SmartParser.Lib
             {
                 // not enough data, if texts.Count == 1
                 field = DeclarationField.NameOrRelativeType;
+            }
+            else if (headerCell.Col == 0 && numbers > not_numbers)
+            {
+                field = DeclarationField.DeclarantIndex;
             }
             else {
                 field = PredictByStrings(texts);

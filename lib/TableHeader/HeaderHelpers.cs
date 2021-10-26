@@ -32,7 +32,7 @@ namespace SmartParser.Lib
             str = NormalizeString(str);
             return str switch
             {
-                _ when str.IsNumber() => Number,
+                _ when str.IsNumeroSign() => DeclarantIndex,
                 _ when IsIncomeYear(str) => IncomeYear,
                 _ when IsNameAndOccupation(str) => NameAndOccupationOrRelativeType,
                 _ when IsOccupationAndRelative(str) => OccupationOrRelativeType,
@@ -124,7 +124,7 @@ namespace SmartParser.Lib
             string.Join(" ", str.ToLowerInvariant().Split(new char[] { ' ', '\n', '\t' }, StringSplitOptions.RemoveEmptyEntries))
             .RemoveStupidTranslit();
 
-        public static bool IsNumber(this string str)
+        public static bool IsNumeroSign(this string str)
         {
             str = str.RemoveCharacters(' ');
             return str.StartsWith("№")

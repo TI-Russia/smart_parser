@@ -24,7 +24,7 @@ namespace test
         public void TryGetFieldTest()
         {
             string s1 = "N№ п/п";
-            Assert.IsTrue(s1.IsNumber());
+            Assert.IsTrue(s1.IsNumeroSign());
         }
 
         public static DeclarationField GetField(string str)

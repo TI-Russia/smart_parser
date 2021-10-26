@@ -992,6 +992,12 @@ namespace RegressionTesting
             TestSmartParser("31832.xls", "prod");
         }
 
+        [TestMethod]
+        [TestCategory("xls")]
+        public void Test31832_1()
+        {
+            TestSmartParser("31832_1.xls", "prod");
+        }
 
         private static void SetupLog4Net()
         {
