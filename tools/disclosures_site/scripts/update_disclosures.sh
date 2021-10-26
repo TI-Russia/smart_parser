@@ -37,7 +37,7 @@ source $COMMON_SCRIPT
           --output-json dlrobot_human.dbm
 
 #4  предсказание office_id
-    cd $DLROBOT_FOLDER
+      cd $DLROBOT_FOLDER
     python3 $TOOLS/disclosures_site/manage.py predict_office --dlrobot-human-path dlrobot_human.dbm
 
 #6  Копирование базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод
@@ -56,7 +56,7 @@ source $COMMON_SCRIPT
                  --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER \
                  --dlrobot-human dlrobot_human.dbm   \
                    --process-count 2  \
-                 --permalinks-folder $DLROBOT_FOLDER
+                   --permalinks-folder $DLROBOT_FOLDER
 
      python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric source_document_count  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
      python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric sections_person_name_income_year_declarant_income_size  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
