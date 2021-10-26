@@ -89,7 +89,7 @@ namespace SmartParser.Lib
             throw new Exception("unimplemented method");
         }
 
-        public override List<Cell> GetCells(int rowIndex, int maxColEnd = IAdapter.MaxColumnsCount)
+        protected override List<Cell> GetCells(int rowIndex, int maxColEnd)
         {
             List<Cell> result = new List<Cell>();
             Aspose.Cells.Row row = worksheet.Cells.Rows[rowIndex];

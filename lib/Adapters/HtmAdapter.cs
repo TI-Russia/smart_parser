@@ -328,11 +328,11 @@ namespace SmartParser.Lib
             return base.GetDocumentPosition(row, col);
         }
 
-        public override List<Cell> GetCells(int row, int maxColEnd = 1024)
+        protected override List<Cell> GetCells(int row, int maxColEnd = 1024)
         {
             return Worksheet.Table[row];
         }
-
+        
         public override Cell GetDeclarationFieldWeak(TableHeader columnOrdering, int row, DeclarationField field, out TColumnInfo colSpan)
         {
             return base.GetDeclarationFieldWeak(columnOrdering, row, field, out colSpan);

@@ -26,7 +26,7 @@ namespace SmartParser.Lib
             this.row = row;
             this.adapter = adapter;
             this.ColumnOrdering = columnOrdering;
-            Cells = adapter.GetCells(row, columnOrdering.GetMaxColumnEndIndex());
+            Cells = adapter.GetDataCells(row, columnOrdering.GetMaxColumnEndIndex());
             if (!this.adapter.IsExcel())
                 MapCells();
             

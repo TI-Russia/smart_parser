@@ -243,7 +243,7 @@ namespace SmartParser.Lib
             const int maxRowToCollect = 10;
             for (int i = 0; i < maxRowToCollect; i++)
             {
-                var cells = adapter.GetCells(rowIndex, IAdapter.MaxColumnsCount);
+                var cells = adapter.GetDataCells(rowIndex, IAdapter.MaxColumnsCount);
                 string dummy;
                 if (adapter.IsSectionRow(rowIndex, cells, adapter.GetColsCount(), false, out dummy))
                 {

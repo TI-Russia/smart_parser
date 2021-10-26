@@ -429,8 +429,7 @@ namespace SmartParser.Lib
             TableRows = DropDayOfWeekRows(TableRows); 
         }
 
-
-        public override List<Cell> GetCells(int row, int maxColEnd = IAdapter.MaxColumnsCount)
+        protected override List<Cell> GetCells(int row, int maxColEnd)
         {
             var result = new List<Cell>();
             foreach (var r in TableRows[row])

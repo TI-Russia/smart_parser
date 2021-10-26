@@ -23,6 +23,9 @@ namespace SmartParser.Lib
         // specific scheme to parse tables
         public IAdapterScheme CurrentScheme = null;
 
+        // row to ignore
+        public HashSet<int> RowIndicesToIgnore = new HashSet<int>();
+
         public static string ConvertedFileStorageUrl = "";
 
         public virtual bool IsExcel() { return false; }
@@ -38,9 +41,42 @@ namespace SmartParser.Lib
 
 
         abstract public Cell GetCell(int row, int column);
-        public virtual List<Cell> GetCells(int row, int maxColEnd=MaxColumnsCount)
+        abstract protected List<Cell> GetCells(int row, int maxColEnd = MaxColumnsCount);
+
+        public virtual List<Cell> GetDataCells(int row, int maxColEnd = MaxColumnsCount)
         {
-            throw new NotImplementedException();
+            if (RowIndicesToIgnore.Contains(row)) {
+                return new List<Cell>();
+            }
+            return GetCells(row, maxColEnd);
+        }
+        public string DebugString(int row)
+        {
+            string s = "";
+            foreach (var c in GetDataCells(row))
+            {
+                s += string.Format("\"{0}\"[{1}], ", c.Text.Replace("\n", "\\n"), c.CellWidth);
+            }
+            return s;
+        }
+        public List<Cell> RightTrim(List<Cell> cells)
+        {
+            if (cells.Count == 0)
+            {
+                return cells;
+            }
+            for (int i = cells.Count - 1; i >= 0; --i)
+            {
+                if (cells[i].IsEmpty)
+                {
+                    cells.RemoveAt(i);
+                }
+                else 
+                {
+                    break;
+                } 
+            }
+            return cells;
         }
 
         public DataRow GetRow(TableHeader columnOrdering, int row)
@@ -65,7 +101,7 @@ namespace SmartParser.Lib
             var exactCell = GetCell(row, colSpan.BeginColumn);
             if (exactCell == null)
             {
-                var cells = GetCells(row);
+                var cells = GetDataCells(row);
 
                 throw new SmartParserFieldNotFoundException(String.Format("Field {0} not found, row={1}, col={2}. Row.Cells.Count = {3}",
                     field.ToString(),
@@ -113,7 +149,7 @@ namespace SmartParser.Lib
         }
         public bool IsEmptyRow(int rowIndex)
         {
-            foreach (var cell in GetCells(rowIndex))
+            foreach (var cell in GetDataCells(rowIndex))
             {
                 if (!cell.IsEmpty) return false;
             }
@@ -132,7 +168,7 @@ namespace SmartParser.Lib
         {
             if (GetRowsCount() == 0) return -1;
             int sum = 0;
-            foreach (var c in GetCells(0))
+            foreach (var c in GetDataCells(0))
             {
                 sum += c.MergedColsCount;
             }
@@ -263,7 +299,7 @@ namespace SmartParser.Lib
             int headerEnd = columnOrdering.GetPossibleHeaderEnd();
             for (int i= columnOrdering.GetPossibleHeaderBegin();  i < columnOrdering.GetPossibleHeaderEnd(); i++)
             {
-                var row = GetJsonByRow(GetCells(i));
+                var row = GetJsonByRow(GetDataCells(i));
                 table.Header.Add(row);
             }
 
@@ -272,7 +308,7 @@ namespace SmartParser.Lib
             {
                 string dummy;
                 // cannot use prevRowIsSection
-                var row = GetCells(i);
+                var row = GetDataCells(i);
                 if (IsSectionRow(i, row, columnOrdering.GetMaxColumnEndIndex(), false, out dummy))
                 {
                     table.Section.Add(GetJsonByRow(row));
@@ -287,7 +323,7 @@ namespace SmartParser.Lib
             {
                 if (!IsEmptyRow(table.DataEnd))
                 {
-                    table.Data.Add(GetJsonByRow(GetCells(table.DataEnd)));
+                    table.Data.Add(GetJsonByRow(GetDataCells(table.DataEnd)));
                     addedRows++;
                 }
                 table.DataEnd++;
@@ -302,7 +338,7 @@ namespace SmartParser.Lib
                 file.WriteLine("<html><table border=1>");
                 for (int i = 0; i < GetRowsCount(); i++)
                 {
-                    file.WriteLine(GetHtmlByRow(GetCells(i), i));
+                    file.WriteLine(GetHtmlByRow(GetDataCells(i), i));
                 }
                 file.WriteLine("</table></html>");
             }

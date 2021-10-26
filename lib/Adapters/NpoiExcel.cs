@@ -92,7 +92,7 @@ namespace SmartParser.Lib
             return GetCell(cellRef.Row, cellRef.Col);
         }
 
-        public override List<Cell> GetCells(int row, int maxColEnd = MaxColumnsCount)
+        protected override List<Cell> GetCells(int row, int maxColEnd = MaxColumnsCount)
         {
             int index = 0;
             List<Cell> result = new List<Cell>();

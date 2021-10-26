@@ -1,0 +1,418 @@
+{
+  "persons": [
+    {
+      "person": {
+        "name_raw": "Кульбачевский Антон Олегович",
+        "role": "руководитель Департамента"
+      },
+      "year": 2012,
+      "incomes": [
+        {
+          "size": 3570400.00,
+          "size_raw": "3570400",
+          "relative": null
+        },
+        {
+          "size": 296449.00,
+          "size_raw": "296449",
+          "relative": "Супруг(а)",
+          "relative_index": 1
+        }
+      ],
+      "real_estates": [
+        {
+          "text": "квартира (индивидуальная)",
+          "square": 64.2,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "64,2",
+          "country_raw": "Россия",
+          "type_raw": "квартира (индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "квартира (индивидуальная)",
+          "square": 165.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "165",
+          "country_raw": "",
+          "type_raw": "квартира (индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "земельный участок для подсобного хозяйства (аренда)",
+          "square": 1500.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "1500",
+          "country_raw": "",
+          "type_raw": "земельный участок для подсобного хозяйства (аренда)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "квартира (безвозмездное пользование)",
+          "square": 60.4,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "60,4",
+          "country_raw": "",
+          "type_raw": "квартира (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "квартира (безвозмездное пользование)",
+          "square": 38.2,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "38,2",
+          "country_raw": "",
+          "type_raw": "квартира (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "жилой дом (безвозмездное пользование)",
+          "square": 323.9,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "323,9",
+          "country_raw": "",
+          "type_raw": "жилой дом (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "земельный участок садовый (безвозмездное пользование)",
+          "square": 600.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "600",
+          "country_raw": "",
+          "type_raw": "земельный участок садовый (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "земельный участок для ИЖС (безвозмездное пользование)",
+          "square": 1200.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "1200",
+          "country_raw": "",
+          "type_raw": "земельный участок для ИЖС (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "земельный участок для ИЖС (безвозмездное пользование)",
+          "square": 300.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "300",
+          "country_raw": "",
+          "type_raw": "земельный участок для ИЖС (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "земельный участок для ИЖС (безвозмездное пользование)",
+          "square": 2825.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "2825",
+          "country_raw": "",
+          "type_raw": "земельный участок для ИЖС (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "земельный участок для ИЖС (безвозмездное пользование)",
+          "square": 1200.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "1200",
+          "country_raw": "",
+          "type_raw": "земельный участок для ИЖС (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "жилой дом (безвозмездное пользование)",
+          "square": 73.0,
+          "relative": null,
+          "own_type_by_column": null,
+          "square_raw": "73",
+          "country_raw": "Республика Черногория",
+          "type_raw": "жилой дом (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "земельный участок садовый (индивидуальная)",
+          "square": 600.0,
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "own_type_by_column": null,
+          "square_raw": "600",
+          "country_raw": "Россия",
+          "type_raw": "земельный участок садовый (индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "земельный участок для ИЖС (индивидуальная)",
+          "square": 1200.0,
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "own_type_by_column": null,
+          "square_raw": "1200",
+          "country_raw": "",
+          "type_raw": "земельный участок для ИЖС (индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "земельный участок для ИЖС (индивидуальная)",
+          "square": 300.0,
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "own_type_by_column": null,
+          "square_raw": "300",
+          "country_raw": "",
+          "type_raw": "земельный участок для ИЖС (индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "земельный участок для ИЖС (индивидуальная)",
+          "square": 1200.0,
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "own_type_by_column": null,
+          "square_raw": "1200",
+          "country_raw": "",
+          "type_raw": "земельный участок для ИЖС (индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "жилой дом (индивидуальная)",
+          "square": 323.9,
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "own_type_by_column": null,
+          "square_raw": "323,9",
+          "country_raw": "",
+          "type_raw": "жилой дом (индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "квартира (индивидуальная)",
+          "square": 60.4,
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "own_type_by_column": null,
+          "square_raw": "60,4",
+          "country_raw": "",
+          "type_raw": "квартира (индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "квартира общая (долевая - 1/2)",
+          "square": 38.2,
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "own_type_by_column": null,
+          "square_raw": "38,2",
+          "country_raw": "",
+          "type_raw": "квартира общая (долевая - 1/2)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "земельный участок для ИЖС (индивидуальная)",
+          "square": 2825.0,
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "own_type_by_column": null,
+          "square_raw": "2825",
+          "country_raw": "",
+          "type_raw": "земельный участок для ИЖС (индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "квартира (безвозмездное пользование)",
+          "square": 64.2,
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "own_type_by_column": null,
+          "square_raw": "64,2",
+          "country_raw": "",
+          "type_raw": "квартира (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "квартира (безвозмездное пользование)",
+          "square": 165.0,
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "own_type_by_column": null,
+          "square_raw": "165",
+          "country_raw": "",
+          "type_raw": "квартира (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "земельный участок для подсобного хозяйства (безвозмездное пользование)",
+          "square": 1500.0,
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "own_type_by_column": null,
+          "square_raw": "1500",
+          "country_raw": "",
+          "type_raw": "земельный участок для подсобного хозяйства (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "жилой дом (индивидуальная)",
+          "square": 73.0,
+          "relative": "Супруг(а)",
+          "relative_index": 1,
+          "own_type_by_column": null,
+          "square_raw": "73",
+          "country_raw": "Республика Черногория",
+          "type_raw": "жилой дом (индивидуальная)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "квартира (безвозмездное пользование)",
+          "square": 60.4,
+          "relative": "Ребенок",
+          "relative_index": 2,
+          "own_type_by_column": null,
+          "square_raw": "60,4",
+          "country_raw": "Россия",
+          "type_raw": "квартира (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "квартира (безвозмездное пользование)",
+          "square": 64.2,
+          "relative": "Ребенок",
+          "relative_index": 2,
+          "own_type_by_column": null,
+          "square_raw": "64,2",
+          "country_raw": "",
+          "type_raw": "квартира (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "квартира (безвозмездное пользование)",
+          "square": 38.2,
+          "relative": "Ребенок",
+          "relative_index": 2,
+          "own_type_by_column": null,
+          "square_raw": "38,2",
+          "country_raw": "",
+          "type_raw": "квартира (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "квартира (безвозмездное пользование)",
+          "square": 165.0,
+          "relative": "Ребенок",
+          "relative_index": 2,
+          "own_type_by_column": null,
+          "square_raw": "165",
+          "country_raw": "",
+          "type_raw": "квартира (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "земельный участок для подсобного хозяйства (безвозмездное пользование)",
+          "square": 1500.0,
+          "relative": "Ребенок",
+          "relative_index": 2,
+          "own_type_by_column": null,
+          "square_raw": "1500",
+          "country_raw": "",
+          "type_raw": "земельный участок для подсобного хозяйства (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "жилой дом (безвозмездное пользование)",
+          "square": 323.9,
+          "relative": "Ребенок",
+          "relative_index": 2,
+          "own_type_by_column": null,
+          "square_raw": "323,9",
+          "country_raw": "",
+          "type_raw": "жилой дом (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "земельный участок садовый (безвозмездное пользование)",
+          "square": 600.0,
+          "relative": "Ребенок",
+          "relative_index": 2,
+          "own_type_by_column": null,
+          "square_raw": "600",
+          "country_raw": "",
+          "type_raw": "земельный участок садовый (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "земельный участок для ИЖС (безвозмездное пользование)",
+          "square": 1200.0,
+          "relative": "Ребенок",
+          "relative_index": 2,
+          "own_type_by_column": null,
+          "square_raw": "1200",
+          "country_raw": "",
+          "type_raw": "земельный участок для ИЖС (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "земельный участок для ИЖС (безвозмездное пользование)",
+          "square": 300.0,
+          "relative": "Ребенок",
+          "relative_index": 2,
+          "own_type_by_column": null,
+          "square_raw": "300",
+          "country_raw": "",
+          "type_raw": "земельный участок для ИЖС (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "земельный участок для ИЖС (безвозмездное пользование)",
+          "square": 2825.0,
+          "relative": "Ребенок",
+          "relative_index": 2,
+          "own_type_by_column": null,
+          "square_raw": "2825",
+          "country_raw": "",
+          "type_raw": "земельный участок для ИЖС (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "земельный участок для ИЖС (безвозмездное пользование)",
+          "square": 1200.0,
+          "relative": "Ребенок",
+          "relative_index": 2,
+          "own_type_by_column": null,
+          "square_raw": "1200",
+          "country_raw": "",
+          "type_raw": "земельный участок для ИЖС (безвозмездное пользование)",
+          "own_type_raw": ""
+        },
+        {
+          "text": "жилой дом (безвозмездное пользование)",
+          "square": 73.0,
+          "relative": "Ребенок",
+          "relative_index": 2,
+          "own_type_by_column": null,
+          "square_raw": "73",
+          "country_raw": "Республика Черногория",
+          "type_raw": "жилой дом (безвозмездное пользование)",
+          "own_type_raw": ""
+        }
+      ],
+      "vehicles": [],
+      "document_position": "R8C2"
+    }
+  ],
+  "document": {
+    "sheet_title": "Сведения о доходах, об имуществе и обязательствах имущественного характера государственных гражданских служащих Департамента природопользования и охраны окружающей среды города Москвы и членов их семей за период с 01.01.2012 по 31.12.2012",
+    "year": 2012,
+    "sheet_number": 0,
+    "documentfile_id": 31832
+  }
+}

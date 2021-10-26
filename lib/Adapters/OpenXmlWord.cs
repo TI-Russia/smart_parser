@@ -920,7 +920,7 @@ namespace SmartParser.Lib
                     break;
                 }
             }
-            if ((TableRows.Count > 0) && !TableHeaderRecognizer.IsNamePositionAndIncomeTable(GetCells(0)))
+            if ((TableRows.Count > 0) && !TableHeaderRecognizer.IsNamePositionAndIncomeTable(GetDataCells(0)))
             {
                 if (maxCellsCount <= 4 || CheckNameColumnIsEmpty(saveRowsCount))
                 {
@@ -1038,9 +1038,7 @@ namespace SmartParser.Lib
             return tables;
         }
 
-
-
-        public override List<Cell> GetCells(int row, int maxColEnd = IAdapter.MaxColumnsCount)
+        protected override List<Cell> GetCells(int row, int maxColEnd)
         {
             var result = new List<Cell>();
             foreach (var r in TableRows[row].RowCells)

@@ -130,7 +130,7 @@ namespace SmartParser.Lib
             bool prevRowIsSection = false;
             while (true)
             {
-                var currRow = adapter.GetCells(row);
+                var currRow = adapter.GetDataCells(row);
                 string section_text;
                 bool isSection = adapter.IsSectionRow(row, currRow,  adapter.GetColsCount(), prevRowIsSection, out section_text);
                 if (isSection)
@@ -186,7 +186,7 @@ namespace SmartParser.Lib
             {
                 return subCells;
             }
-            var undercCells = adapter.GetCells(cell.Row + cell.MergedRowsCount);
+            var undercCells = adapter.GetDataCells(cell.Row + cell.MergedRowsCount);
             foreach (var underCell in undercCells)
             {
                 if (underCell.Col < cell.Col)
@@ -403,21 +403,10 @@ namespace SmartParser.Lib
             }
         }
 
-
-        static public TableHeader ExamineTableBeginning(IAdapter adapter)
-        {
-            TableHeader columnOrdering = new TableHeader();
-            int headerStartRow = ProcessTitle(adapter, columnOrdering);
-            ReadHeader(adapter, headerStartRow, columnOrdering);
-            return columnOrdering;
-          
-        }
-
-
         static public List<Cell> GetColumnCells(IAdapter adapter, int headerStartRow, out int headerEndRow)
         {
             headerEndRow = headerStartRow + 1;
-            var firstRow = adapter.GetCells(headerStartRow);
+            var firstRow = adapter.GetDataCells(headerStartRow);
 
             List<Cell> columnCells =  new List<Cell>();
             bool headerCanHaveSecondLevel = true;
@@ -588,5 +577,51 @@ namespace SmartParser.Lib
             FixMissingSubheadersForStateColumn(adapter, columnOrdering);
             columnOrdering.FinishOrderingBuilding(cells[0].AdditTableIndention);
         }
+
+        // see 31832.xlsx in tests
+        static public int Fix31832(IAdapter adapter, int headerStartRow)
+        {
+            int headerEndRow;
+            TableHeader columnOrdering = new TableHeader();
+            var cells = GetColumnCells(adapter, headerStartRow, out headerEndRow);
+            MapColumnTitlesToInnerConstants(adapter, cells, columnOrdering);
+            if (columnOrdering.ColumnOrder.Count == 3 &&
+                columnOrdering.ColumnOrder.ContainsKey(DeclarationField.Number) &&
+                columnOrdering.ColumnOrder.ContainsKey(DeclarationField.NameOrRelativeType) &&
+                columnOrdering.ColumnOrder.ContainsKey(DeclarationField.Occupation)
+                )
+            {
+                bool foundData = false;
+                for (int row = headerStartRow; row < adapter.GetRowsCount(); ++row)
+                {
+                    List<Cell> c = adapter.RightTrim(adapter.GetDataCells(row));
+                    if (c.Count == 3)
+                    {
+                        Logger.Debug(String.Format("Detete row {0}: {1}", row, adapter.DebugString(row)));
+                        adapter.RowIndicesToIgnore.Add(row);
+                        if (!foundData)
+                        {
+                            headerStartRow += 1;
+                        }
+                    }
+                    else
+                    {
+                        foundData = true;
+                    }
+
+                }
+            }
+            return headerStartRow;
+        }
+
+        static public TableHeader ExamineTableBeginning(IAdapter adapter)
+        {
+            TableHeader columnOrdering = new TableHeader();
+            int headerStartRow = ProcessTitle(adapter, columnOrdering);
+            headerStartRow = Fix31832(adapter, headerStartRow);
+            ReadHeader(adapter, headerStartRow, columnOrdering);
+            return columnOrdering;
+        }
+
     }
 }

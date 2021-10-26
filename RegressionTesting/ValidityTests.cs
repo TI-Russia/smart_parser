@@ -985,6 +985,13 @@ namespace RegressionTesting
             TestSmartParser("38527_5.docx", "prod");
         }
 
+        [TestMethod]
+        [TestCategory("xls")]
+        public void Test31832()
+        {
+            TestSmartParser("31832.xls", "prod");
+        }
+
 
         private static void SetupLog4Net()
         {
