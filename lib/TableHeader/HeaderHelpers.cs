@@ -14,7 +14,7 @@ namespace SmartParser.Lib
             .ContainsAny("недвижим");
         public static bool IsNameDeclarationField(DeclarationField f)
         {
-            return f == NameAndOccupationOrRelativeType || f == NameOrRelativeType;
+            return f == NameAndOccupationOrRelativeType || f == NameOrRelativeType || f == DeclarantIndexAndName;
         }
 
         public static DeclarationField TryGetField(string parentColumnTitle, string subColumnTitle)
@@ -32,6 +32,7 @@ namespace SmartParser.Lib
             str = NormalizeString(str);
             return str switch
             {
+                _ when str.IsNumeroSignAndName() => DeclarantIndexAndName,
                 _ when str.IsNumeroSign() => DeclarantIndex,
                 _ when IsIncomeYear(str) => IncomeYear,
                 _ when IsNameAndOccupation(str) => NameAndOccupationOrRelativeType,
@@ -53,11 +54,13 @@ namespace SmartParser.Lib
                 _ when str.IsMixedSummerHouseSquare() => MixedSummerHouseSquare,
                 _ when str.IsMixedGarageSquare() => MixedGarageSquare,
 
+                _ when IsOwnedRealEstateTypeAndCountry(parentColumnTitle, subColumnTitle) => OwnedRealEstateTypeAndCountry,
                 _ when IsOwnedRealEstateType(parentColumnTitle, subColumnTitle) => OwnedRealEstateType,
                 _ when IsOwnedRealEstateOwnershipType(parentColumnTitle, subColumnTitle) => OwnedRealEstateOwnershipType,
                 _ when IsOwnedRealEstateSquare(parentColumnTitle, subColumnTitle) => OwnedRealEstateSquare,
                 _ when str.IsOwnedRealEstateCountry() => OwnedRealEstateCountry,
 
+                _ when IsStateRealEstateTypeAndCountry(parentColumnTitle, subColumnTitle) => StateRealEstateTypeAndCountry,
                 _ when str.IsStatePropertyType() => StatePropertyType,
                 _ when str.IsStatePropertySquare() => StatePropertySquare,
                 _ when str.IsStatePropertyCountry() => StatePropertyCountry,
@@ -132,6 +135,11 @@ namespace SmartParser.Lib
                    || str.Replace("\\", "/").Equals("п/п", StringComparison.OrdinalIgnoreCase);
         }
 
+        public static bool IsNumeroSignAndName(this string str)
+        {
+            return str.IsNumeroSign() && str.IsName();
+        }
+
         public static bool IsIncomeYear(string str)
         {
             str = str.OnlyRussianLowercase();
@@ -177,9 +185,18 @@ namespace SmartParser.Lib
 
         private static bool IsMixedRealEstateOwnershipType(this string s) => s.IsMixedColumn() && HasOwnershipTypeString(s);
 
-        private static bool HasRealEstateTypeStr(this string s) => s
-            .OnlyRussianLowercase()
-            .ContainsAny("видобъекта", "видобъектов", "видобьекта", "видимущества", "видыобъектов", "видынедвижимости", "видинаименованиеимущества", "виднедвижимости");
+        private static bool HasRealEstateTypeStr(string s) 
+        {
+            s = s.OnlyRussianLowercase();
+            return s.ContainsAny("видобъекта", 
+                                "видобъектов", 
+                                "видобьекта", 
+                                "видимущества", 
+                                "видыобъектов", 
+                                "видынедвижимости", 
+                                "видинаименованиеимущества", 
+                                "виднедвижимости");
+        }
 
         private static bool HasOwnershipTypeString(this string s)
         {
@@ -224,6 +241,16 @@ namespace SmartParser.Lib
                 return true;
             }
             return false;
+        }
+        private static bool IsOwnedRealEstateTypeAndCountry(string parentColumnTitle, string subTitle)
+        {
+            var s = parentColumnTitle + " " + subTitle;
+            return s.IsOwnedColumn() && HasRealEstateTypeStr(s) && s.HasCountryString();
+        }
+        private static bool IsStateRealEstateTypeAndCountry(string parentColumnTitle, string subTitle)
+        {
+            var s = parentColumnTitle + " " + subTitle;
+            return s.IsStateColumn() && HasRealEstateTypeStr(s) && s.HasCountryString();
         }
 
         private static bool IsOwnedRealEstateOwnershipType(string parentColumnTitle, string subTitle) {

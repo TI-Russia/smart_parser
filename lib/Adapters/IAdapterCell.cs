@@ -55,16 +55,18 @@ namespace SmartParser.Lib
             string[] lines;
 
             // Eg: "1. Квартира\n2. Квартира"
-            if (Regex.Matches(value, @"^\d\.\s+.+\n\d\.\s", RegexOptions.Singleline).Count > 0)
+            // Eg: "1) Квартира\n2) Квартира"
+            if (Regex.Matches(value, @"^\d[\.\)]\s+.+\n\d\.\s", RegexOptions.Singleline).Count > 0)
             {
-                lines = (string[])Regex.Split(value, @"\d\.\s").Skip(1).ToArray();
+                lines = (string[])Regex.Split(value, @"\d[\.\)]\s").Skip(1).ToArray();
                 return lines;
             }
 
-            // a weaker regexp but the same count
-            if (Regex.Matches(value, @"^\s*\d\.\s*.+\n\d\.\s*", RegexOptions.Singleline).Count > 0)
+            // a weaker regexp but the same count (bullet can contain two digits)
+            // Eg: "1. Квартира\n10. Квартира"
+            if (Regex.Matches(value, @"^\s*\d[\.\)]\s*.+\n\d[\.\)]\s*", RegexOptions.Singleline).Count > 0)
             {
-                lines = (string[])Regex.Split(value, @"\d+\s*\.").Skip(1).ToArray();
+                lines = (string[])Regex.Split(value, @"\d{1,2}\s*[\.\)]").Skip(1).ToArray();
                 if (lines.Length == linesWithNumbers.Count && linesWithNumbers.Count > 0)
                 {
                     return lines;

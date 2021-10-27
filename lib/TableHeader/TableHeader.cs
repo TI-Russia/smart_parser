@@ -109,5 +109,17 @@ namespace SmartParser.Lib
             return HeaderEnd ?? GetPossibleHeaderBegin() + 2;
         }
 
+        public bool HasNameColumn()
+        {
+            foreach(var x in ColumnOrder.Keys)
+            {
+                if (HeaderHelpers.IsNameDeclarationField(x))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
     }
 }

@@ -294,6 +294,7 @@ namespace SmartParser.Lib
 
         void ParseRealtiesDistributedByColumns(string ownTypeByColumn, string realtyTypeFromColumnTitle, string cellText, Person person)
         {
+            // each realty type in a separate column
             foreach (var bulletText in FindBullets(cellText))
             {
                 RealEstateProperty realEstateProperty = new RealEstateProperty();
@@ -352,6 +353,7 @@ namespace SmartParser.Lib
             }
             var realtyType = GetRealtyTypeFromColumnTitle(fieldName);
             if (realtyType != null) {
+                // each realty type in a separate column
                 ParseRealtiesDistributedByColumns(ownTypeByColumn, realtyType, text, person);
             }
             else
@@ -376,22 +378,64 @@ namespace SmartParser.Lib
 
         }
 
+        void ParseTypeAndCountry(DataRow currRow, DeclarationField realtyType, string ownTypeByColumn, Person person)
+        {
+            var typeAndCountry = new TRealtyCell(currRow.GetDeclarationField(realtyType));
+            var cellSquareField = (realtyType == DeclarationField.OwnedRealEstateTypeAndCountry) ? DeclarationField.OwnedRealEstateSquare : DeclarationField.StatePropertySquare;
+            var squareCell = new TRealtyCell(currRow.GetDeclarationField(cellSquareField));
+            List<int> linesWithNumbers = TRealtyCellSpan.GetLinesStaringWithNumbers(squareCell.DataCell.GetText(true));
+            if (linesWithNumbers.Count > 0)
+            {
+                typeAndCountry.ParseByEmptyLines(linesWithNumbers);
+                squareCell.ParseByEmptyLines(linesWithNumbers);
+            }
+            for (int i = 0; i < squareCell.ParsedItems.Count; ++i)
+            {
+                var typeAndCountryStr = typeAndCountry.GetParsedItem(i);
+                var type = typeAndCountryStr;
+                var countryStr = "";
+
+                if (typeAndCountryStr.Contains('('))
+                {
+                    int bracket = typeAndCountryStr.IndexOf('(');
+                    type = typeAndCountryStr.Substring(0, bracket).Trim();
+                    countryStr = typeAndCountryStr.Substring(bracket).Trim(' ', '\n', '(', ')');
+                }
+                var squareRaw = squareCell.GetParsedItem(i);
+
+                RealEstateProperty realEstateProperty = new RealEstateProperty();
+                realEstateProperty.Text = type;
+                realEstateProperty.type_raw = type;
+                realEstateProperty.square = DataHelper.ParseSquare(squareRaw);
+                realEstateProperty.square_raw = ParserBase.NormalizeRawDecimalForTest(squareRaw);
+                realEstateProperty.country_raw = DataHelper.ParseCountry(countryStr).NormSpaces();
+                realEstateProperty.own_type_by_column = ownTypeByColumn;
+                person.RealEstateProperties.Add(realEstateProperty);
+            }
+        }
+
         public void ParseOwnedProperty(DataRow currRow, Person person)
         {
             if (!currRow.ColumnOrdering.ContainsField(DeclarationField.OwnedRealEstateSquare))
             {
                 AddRealEstateWithNaturalText(currRow, DeclarationField.OwnedColumnWithNaturalText, TRealtyCellSpan.OwnedString, person);
-                return;
             }
-            var estateTypeCell = currRow.GetDeclarationField(DeclarationField.OwnedRealEstateType);
-            Cell ownTypeCell = null;
-            if (currRow.ColumnOrdering.OwnershipTypeInSeparateField)
+            else if (currRow.ColumnOrdering.ContainsField(DeclarationField.OwnedRealEstateTypeAndCountry))
             {
-                ownTypeCell = currRow.GetDeclarationField(DeclarationField.OwnedRealEstateOwnershipType);
+                ParseTypeAndCountry(currRow, DeclarationField.OwnedRealEstateTypeAndCountry, TRealtyCellSpan.OwnedString, person);
             }
-            var squareCell = currRow.GetDeclarationField(DeclarationField.OwnedRealEstateSquare);
-            var countryCell = currRow.GetDeclarationField(DeclarationField.OwnedRealEstateCountry, false);
-            ParseOwnedOrMixedProperty(estateTypeCell, ownTypeCell, squareCell, countryCell, currRow, person, TRealtyCellSpan.OwnedString);
+            else
+            {
+                var estateTypeCell = currRow.GetDeclarationField(DeclarationField.OwnedRealEstateType);
+                Cell ownTypeCell = null;
+                if (currRow.ColumnOrdering.OwnershipTypeInSeparateField)
+                {
+                    ownTypeCell = currRow.GetDeclarationField(DeclarationField.OwnedRealEstateOwnershipType);
+                }
+                var squareCell = currRow.GetDeclarationField(DeclarationField.OwnedRealEstateSquare);
+                var countryCell = currRow.GetDeclarationField(DeclarationField.OwnedRealEstateCountry, false);
+                ParseOwnedOrMixedProperty(estateTypeCell, ownTypeCell, squareCell, countryCell, currRow, person, TRealtyCellSpan.OwnedString);
+            }
         }
 
         public void ParseRealtiesWithTypesInTitles(DataRow currRow, Person person)
@@ -440,24 +484,31 @@ namespace SmartParser.Lib
                 AddRealEstateWithNaturalText(currRow, DeclarationField.StateColumnWithNaturalText, TRealtyCellSpan.StateString, person);
                 return;
             }
-            Cell statePropTypeCell = currRow.GetDeclarationField(DeclarationField.StatePropertyType, false);
-            if (statePropTypeCell == null || DataHelper.IsEmptyValue(statePropTypeCell.GetText(true)))
+            else if (currRow.ColumnOrdering.ContainsField(DeclarationField.StateRealEstateTypeAndCountry))
             {
-                return;
+                ParseTypeAndCountry(currRow, DeclarationField.StateRealEstateTypeAndCountry, TRealtyCellSpan.StateString, person);
             }
-            Cell ownershipTypeCell = currRow.GetDeclarationField(DeclarationField.StatePropertyOwnershipType, false);
-            Cell squareCell = currRow.GetDeclarationField(DeclarationField.StatePropertySquare);
-            Cell countryCell = currRow.GetDeclarationField(DeclarationField.StatePropertyCountry, false);
+            else
+            {
+                Cell propTypeCell = currRow.GetDeclarationField(DeclarationField.StatePropertyType, false);
+                if (propTypeCell == null || DataHelper.IsEmptyValue(propTypeCell.GetText(true)))
+                {
+                    return;
+                }
+                Cell ownershipTypeCell = currRow.GetDeclarationField(DeclarationField.StatePropertyOwnershipType, false);
+                Cell squareCell = currRow.GetDeclarationField(DeclarationField.StatePropertySquare);
+                Cell countryCell = currRow.GetDeclarationField(DeclarationField.StatePropertyCountry, false);
 
-           
-            try
-            {
-                var cellSpan = new TRealtyCellSpan(statePropTypeCell, ownershipTypeCell, squareCell, countryCell);
-                cellSpan.ParseStatePropertyManyValuesInOneCell(person);
-            }
-            catch (Exception e)
-            {
-                Logger.Error("***ERROR row({0}) {1}", currRow.Cells[0].Row, e.Message);
+
+                try
+                {
+                    var cellSpan = new TRealtyCellSpan(propTypeCell, ownershipTypeCell, squareCell, countryCell);
+                    cellSpan.ParseStatePropertyManyValuesInOneCell(person);
+                }
+                catch (Exception e)
+                {
+                    Logger.Error("***ERROR row({0}) {1}", currRow.Cells[0].Row, e.Message);
+                }
             }
 
         }

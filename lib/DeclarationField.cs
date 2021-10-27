@@ -49,6 +49,7 @@ namespace SmartParser.Lib
         IncomeYear = 14,
         OccupationOrRelativeType = 15,
         DeclaredYearlyOtherIncome = 16 | StartsWithDigitMask,
+        DeclarantIndexAndName = 17 | StartsWithDigitMask,
 
         // Для случая, когда один и тот же набор колонок содержит сведения и о частной, и о государственной собственности
         MixedRealEstateType = Mixed | RealtyTypeMask,
@@ -85,15 +86,16 @@ namespace SmartParser.Lib
         OwnedRealEstateSquare = Owned | SquareMask,
         OwnedRealEstateCountry = Owned | CountryMask,
         OwnedColumnWithNaturalText = Owned | NaturalText,
+        OwnedRealEstateTypeAndCountry = Owned | RealtyTypeMask | CountryMask,
 
         StatePropertyType = State | RealtyTypeMask,
         StatePropertySquare = State | SquareMask,
         StatePropertyCountry = State | CountryMask,
         StatePropertyOwnershipType = State | OwnershipTypeMask,
         StateColumnWithNaturalText = State | NaturalText,
+        StateRealEstateTypeAndCountry = State | RealtyTypeMask | CountryMask,
 
-
-        // Поля, которые мы собираем, но пока не сохраняем в JSON
+        // Поля, которые мы собираем, но пока не сохраняем в JSON (first byte)
         AcquiredProperty = 101,
         MoneySources = 102,
         Comments = 103,

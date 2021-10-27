@@ -318,6 +318,31 @@ namespace SmartParser.Lib
             return true;
         }
 
+        bool DivideIndexAndName(Cell nameCell)
+        {
+            NameDocPosition = adapter.GetDocumentPosition(GetRowIndex(), nameCell.Col);
+
+            string v = nameCell.GetText(true);
+            if (DataHelper.IsEmptyValue(v)) return true;
+            if (DataHelper.IsRelativeInfo(v))
+            {
+                SetRelative(v);
+            }
+            else
+            {
+                string pattern = @"\s*\d+[\.\)]\s*(\w.+)";
+                var match = Regex.Match(v, pattern);
+                if (match == null || !match.Success)
+                {
+                    Logger.Debug(String.Format("cannot parser index and name: {0}", v));
+                    return false;
+                }
+                PersonName = match.Groups[1].Value.Trim();
+
+            }
+            return true;
+        }
+
         public static bool CheckPersonName(String s)
         {
             if (s.Contains('.')) {
@@ -360,6 +385,13 @@ namespace SmartParser.Lib
                     }
                 }
             }
+            else if (this.ColumnOrdering.ContainsField(DeclarationField.DeclarantIndexAndName))
+            {
+                if (!DivideIndexAndName(GetDeclarationField(DeclarationField.DeclarantIndexAndName)))
+                {
+                    return false;
+                }
+            }
             else
             {
                 var nameCell = GetDeclarationField(DeclarationField.NameOrRelativeType);
@@ -377,7 +409,7 @@ namespace SmartParser.Lib
                 {
                     Department = adapter.GetDocumentDepartmentFromMetaTag();
                 }
-                
+
                 if (!DataHelper.IsEmptyValue(nameOrRelativeType))
                 {
                     if (DataHelper.IsRelativeInfo(nameOrRelativeType))
@@ -388,8 +420,8 @@ namespace SmartParser.Lib
                     {
                         SetRelative(Occupation);
                     }
-                    else if (nameOrRelativeType.Trim(',').Contains(",") || 
-                                (  nameOrRelativeType.Contains(" -") 
+                    else if (nameOrRelativeType.Trim(',').Contains(",") ||
+                                (nameOrRelativeType.Contains(" -")
                                 && Regex.Split(nameOrRelativeType, @"[\,\s\n]+").Count() > 3))
                     {
                         if (!DivideNameAndOccupation(nameCell))
@@ -398,7 +430,7 @@ namespace SmartParser.Lib
                         }
                     }
                     else
-                    { 
+                    {
                         PersonName = nameOrRelativeType;
                         if (!CheckPersonName(PersonName))
                         {

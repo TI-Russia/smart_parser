@@ -254,7 +254,7 @@ namespace SmartParser.Lib
 
         public void CreateNewRelative(DataRow row)
         {
-            Logger.Debug("Relative {0} at row {1}", row.RelativeType, row.GetRowIndex());
+            Logger.Debug(String.Format("Relative {0} at row {1}", row.RelativeType, row.GetRowIndex()));
             if (CurrentDeclarant == null)
             {
                 if (FailOnRelativeOrphan)

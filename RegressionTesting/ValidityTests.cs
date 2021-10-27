@@ -999,6 +999,13 @@ namespace RegressionTesting
             TestSmartParser("31832_1.xls", "prod");
         }
 
+        [TestMethod]
+        [TestCategory("doc")]
+        public void Test20838()
+        {
+            TestSmartParser("20838.doc", "prod");
+        }
+
         private static void SetupLog4Net()
         {
             log4net.Repository.ILoggerRepository repo = log4net.LogManager.GetRepository(Assembly.GetEntryAssembly());
