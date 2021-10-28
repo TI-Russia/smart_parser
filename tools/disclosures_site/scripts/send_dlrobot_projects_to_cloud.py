@@ -93,7 +93,7 @@ class TBackupper:
         django_sub_template = "full_sql_dump.html"
         date = datetime.fromtimestamp(self.args.max_ctime).strftime("%Y-%m-%d")
         with open(django_sub_template, "w") as outp:
-            outp.write("Полный sql-дамп: <a href=\"{}\">скачать c Яндекс-диска</a> (date={}, size={})".format(
+            outp.write("Полный sql-дамп (mysql 8.0 и выше): <a href=\"{}\">скачать c Яндекс-диска</a> (date={}, size={})".format(
                 url, date, Path(output_file).stat().st_size))
         self.log_and_system("scp {} $FRONTEND:$FRONTEND_WEB_SITE/declarations/templates/statistics".format(django_sub_template))
 

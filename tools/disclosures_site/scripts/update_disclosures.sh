@@ -50,7 +50,7 @@ source $COMMON_SCRIPT
     python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev --directory $DLROBOT_FOLDER
 
 
-#10  Импорт json в dislosures_db (36 hours)
+#10  Импорт json в dislosures_db (48 hours)
      python3 $TOOLS/disclosures_site/manage.py import_json \
                  --settings disclosures.settings.dev \
                  --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER \
