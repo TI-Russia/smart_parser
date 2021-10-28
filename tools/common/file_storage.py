@@ -14,6 +14,32 @@ import shutil
 default_max_bin_file_size = 10 * (2 ** 30)
 
 
+class TStoredFileInfo:
+
+    def __init__(self, file_no=None, file_position=None, file_size=None, file_extension=None, aux_params=None):
+        self.file_no = file_no
+        self.file_position = file_position
+        self.file_size = file_size
+        self.file_extension = file_extension
+        self.aux_params = aux_params
+        self.file_contents = None
+
+    def read_from_string(self, file_info):
+        file_info = file_info.decode('latin').split(";")
+        self.file_no = int(file_info[0])
+        self.file_position = int(file_info[1])
+        self.file_size = int(file_info[2])
+        self.file_extension = file_info[3]
+
+    def write_to_string(self):
+        return "{};{};{};{};{}".format(
+            self.file_no,
+            self.file_position,
+            self.file_size,
+            self.file_extension,
+            self.aux_params)
+
+
 class TFileStorage:
     header_repeat_max_len = 20
     stats_key = "stats"
@@ -107,20 +133,19 @@ class TFileStorage:
     def has_saved_file(self, sha256):
         return sha256 in self.saved_file_params
 
-    def get_saved_file(self, sha256):
+    def get_saved_file(self, sha256): 
         file_info = self.saved_file_params.get(sha256)
         if file_info is None:
             self.logger.debug("cannot find key {}".format(sha256))
-            return None, None
-        file_info = file_info.decode('latin').split(";")
-        file_no, file_pos, size, extension = file_info[0:4]
-        file_no = int(file_no)
-        if file_no >= len(self.bin_files):
-            self.logger.error("bad file no {} for key ={}  ".format(file_no, sha256))
-            return None, None
-        self.bin_files[file_no].seek(int(file_pos))
-        file_contents = self.bin_files[file_no].read(int(size))
-        return file_contents, extension
+            return None
+        info = TStoredFileInfo()
+        info.read_from_string(file_info)
+        if info.file_no >= len(self.bin_files):
+            self.logger.error("bad file no {} for key = {}  ".format(info.file_no, sha256))
+            return None
+        self.bin_files[info.file_no].seek(info.file_position)
+        info.file_contents = self.bin_files[info.file_no].read(info.file_size)
+        return info
 
     def create_new_bin_file(self):
         self.bin_files[-1].close()
@@ -163,7 +188,7 @@ class TFileStorage:
                 sha256, output_bin_file.name, exp))
             raise
         try:
-            start_file_pos = output_bin_file.tell()
+            file_position = output_bin_file.tell()
             output_bin_file.write(file_bytes)
             output_bin_file.flush()
         except IOError as exp:
@@ -172,13 +197,9 @@ class TFileStorage:
             raise
 
         try:
-            value = "{};{};{};{};{}".format(
-                len(self.bin_files) - 1,
-                start_file_pos,
-                len(file_bytes),
-                file_extension,
-                aux_params)
-            self.write_key_to_dbm(sha256, value)
+            info = TStoredFileInfo(file_position=file_position, file_no=len(self.bin_files) - 1,
+                        file_size=len(file_bytes), file_extension=file_extension,aux_params=aux_params)
+            self.write_key_to_dbm(sha256, info.write_to_string())
         except Exception as exp:
             self.logger.error("cannot add file info {} to {}, exception:{}".format(
                 sha256, self.dbm_path, exp))
@@ -205,12 +226,12 @@ class TFileStorage:
             i += 1
             if (i % 100) == 0:
                 self.logger.debug("file N {}".format(i))
-            data, file_extension = self.get_saved_file(key)
-            sha256 = build_dislosures_sha256_by_file_data(data, file_extension)
+            info = self.get_saved_file(key)
+            sha256 = build_dislosures_sha256_by_file_data(info.file_contents, info.file_extension)
             if sha256 != key:
                 errors_count += 1
-                self.logger.error("key {} has invalid data, length={}, file_extension={}".format(
-                    key, len(data), file_extension))
+                self.logger.error("key {} has invalid data, length={}, file_extension={}, bin_file_index={}".format(
+                    key, info.file_size, info.file_extension, info.file_no))
                 if fail_fast:
                     self.logger.error("stop checking")
                     return False

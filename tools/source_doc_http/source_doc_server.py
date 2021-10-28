@@ -84,15 +84,15 @@ class TSourceDocRequestHandler(http.server.BaseHTTPRequestHandler):
             self.send_error_wrapper('sha256 not in cgi', log_error=True)
             return
 
-        file_data, file_extension = self.server.get_source_document(query_components['sha256'])
-        if file_data is None:
+        file_info = self.server.get_source_document(query_components['sha256'])
+        if file_info is None:
             self.send_error_wrapper("not found", http_code=http.HTTPStatus.NOT_FOUND, log_error=True)
             return
 
         self.send_response(200)
-        self.send_header('file_extension', file_extension)
+        self.send_header('file_extension', file_info.file_extension)
         self.end_headers()
-        self.wfile.write(file_data)
+        self.wfile.write(file_info.file_contents)
 
     def do_GET(self):
         try:
