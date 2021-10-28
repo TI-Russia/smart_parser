@@ -114,8 +114,6 @@ class TFileStorage:
             return None, None
         file_info = file_info.decode('latin').split(";")
         file_no, file_pos, size, extension = file_info[0:4]
-        if len(file_info) == 5:
-            aux_params = file_info[4] # not used, but saved for the future
         file_no = int(file_no)
         if file_no >= len(self.bin_files):
             self.logger.error("bad file no {} for key ={}  ".format(file_no, sha256))
@@ -199,3 +197,17 @@ class TFileStorage:
                 self.saved_file_params.sync() # for nt
             self.saved_file_params.close()
             self.bin_files[-1].close()
+
+    def check_storage(self):
+        i = 0
+        for key in self.get_all_keys():
+            i += 1
+            if (i % 100) == 0:
+                self.logger.debug("file N {}".format(i))
+            data, file_extension = self.get_saved_file(key)
+            sha256 = build_dislosures_sha256_by_file_data(data, file_extension)
+            if sha256 != key:
+                self.logger.error("key {} has invalid data".format(key))
+                return False
+        self.logger.info("checked {} documents".format(i))
+        return True

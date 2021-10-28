@@ -7,7 +7,7 @@ import zlib
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--db", dest='dbm_file')
-    parser.add_argument("--action", dest='action', help="can be print, get, create")
+    parser.add_argument("--action", dest='action', help="can be print, get, create, print_keys")
     parser.add_argument("--key", dest='key', help="key to get")
     parser.add_argument("--zlib-value", dest='use_zlib', action="store_true", default=False)
     return parser.parse_args()
@@ -38,9 +38,14 @@ if __name__ == '__main__':
                     value = read_value(args, db, k)
                     print("{}\t{}".format(k.decode('utf8'), value))
                     k = db.nextkey(k)
+            elif args.action == "get":
+                value = read_value(args, db, args.key)
+                print(value)
+            elif args.action == "print_keys":
+                while k is not None:
+                    print(k.decode('utf8'))
+                    k = db.nextkey(k)
             else:
-                if args.action == "get":
-                    value = read_value(args, db, args.key)
-                    print(value)
+                print("unknown action")
 
 
