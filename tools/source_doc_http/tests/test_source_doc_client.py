@@ -145,7 +145,7 @@ class TestReadOnly(TestCase):
         self.env.server.file_storage.close_file_storage()
         self.env.server.file_storage.read_only = True
         self.env.server.file_storage.load_from_disk()
-        self.assertTrue( self.env.server.file_storage.check_storage() )
+        self.assertTrue( self.env.server.file_storage.check_storage(False) )
 
         file_data2 = b"12345_2"
         with open("test2.txt", "wb") as outp:

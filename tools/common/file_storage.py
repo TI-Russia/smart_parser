@@ -198,8 +198,9 @@ class TFileStorage:
             self.saved_file_params.close()
             self.bin_files[-1].close()
 
-    def check_storage(self):
+    def check_storage(self, fail_fast):
         i = 0
+        errors_count  = 0
         for key in self.get_all_keys():
             i += 1
             if (i % 100) == 0:
@@ -207,7 +208,11 @@ class TFileStorage:
             data, file_extension = self.get_saved_file(key)
             sha256 = build_dislosures_sha256_by_file_data(data, file_extension)
             if sha256 != key:
-                self.logger.error("key {} has invalid data".format(key))
-                return False
-        self.logger.info("checked {} documents".format(i))
-        return True
+                errors_count += 1
+                self.logger.error("key {} has invalid data, length={}, file_extension={}".format(
+                    key, len(data), file_extension))
+                if fail_fast:
+                    self.logger.error("stop checking")
+                    return False
+        self.logger.info("checked {} documents, errors_count={}".format(i, errors_count))
+        return errors_count == 0
