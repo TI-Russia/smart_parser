@@ -97,6 +97,11 @@ class TSourceDocRequestHandler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         try:
             path = urllib.parse.urlparse(self.path).path
+            pitstop_file = ".dlrobot_pit_stop"
+            if os.path.exists(pitstop_file):
+                self.server.logger.info("found {} file, exit".format(pitstop_file))
+                os.unlink(pitstop_file)
+                self.server.stop_server()
             if path == "/ping":
                 self.send_response(200)
                 self.end_headers()
