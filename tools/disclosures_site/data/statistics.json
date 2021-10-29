@@ -420,5 +420,23 @@
             "realty_property_count": 18243769,
             "realty_in_use_count": 11133804
         }
+    },
+    {
+        "crawl_epoch": 1635172664,
+        "metrics": {
+            "source_document_count": 846812,
+            "source_document_only_dlrobot_count": 572989,
+            "source_document_only_human_count": 140660,
+            "source_document_both_found_count": 133163,
+            "sections_count": 6695458,
+            "sections_count_only_dlrobot": 2928389,
+            "sections_count_both_found": 1781185,
+            "sections_person_name_income_year_declarant_income_size": 6119933,
+            "sections_person_name_income_year_spouse_income_size": 3641205,
+            "sections_dedupe_score_greater_0": 6184743,
+            "person_count": 1929428,
+            "realty_property_count": 18355411,
+            "realty_in_use_count": 11206113
+        }
     }
 ]
