@@ -275,7 +275,7 @@ class Person(models.Model):
         sections = list()
         for _, year_sections in groupby(sorted(self.section_set.all(), key=attrgetter("income_year")), key=attrgetter("income_year")):
             for s in year_sections:
-                if s.corrected_section_id() is None:
+                if s.corrected_section_id is None:
                     sections.append(s) # one section per year
                     break
         return sections
