@@ -275,8 +275,9 @@ class Person(models.Model):
         sections = list()
         for _, year_sections in groupby(sorted(self.section_set.all(), key=attrgetter("income_year")), key=attrgetter("income_year")):
             for s in year_sections:
-                sections.append(s) # one section per year
-                break
+                if s.corrected_section_id() is None:
+                    sections.append(s) # one section per year
+                    break
         return sections
 
     def income_growth_yearly(self):
@@ -326,6 +327,7 @@ def get_relative_index_wrapper(record):
         return Relative.main_declarant_relative_index_integer
     else:
         return record.relative_index
+
 
 class RealEstate(models.Model):
     section = models.ForeignKey('declarations.Section', on_delete=models.CASCADE)
