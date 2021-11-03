@@ -118,23 +118,15 @@ class TImporter:
         return True
 
     def calc_income_year(self, input_json, src_doc: TSourceDocument, section_json, section_index):
+        # take year from a particular declarant (many declarants with different year in one file)
         # do not use here default value for get, since smart_parser explicitly write "year": null
         year = section_json.get('year')
         if year is not None:
             return int(year)
 
-        # take income_year from the document heading
-        year = input_json.get('document', dict()).get('year')
+        year = src_doc.calc_document_income_year(input_json)
 
-        # If absent, take it from declarator db
-        if year is None:
-            year = src_doc.get_declarator_income_year()
-
-        # If absent, take it from html anchor text
-        if year is None:
-            year = src_doc.get_external_income_year_from_dlrobot()
-
-        # otherwise the file is useless
+        # if year is absent, then the file is useless
         if year is None:
             raise TSmartParserSectionJson.SerializerException(
                 "year is not defined: section No {}".format(section_index))

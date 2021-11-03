@@ -13,7 +13,7 @@ import os
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--action", dest='action', help="can be stats, select, "
-                                                        "print_sha256, print_web_sites, "
+                                                        "print_sha256, print_web_sites, create_sample, "
                                                         "delete, to_utf8, titles, check_office, to_json,"
                                                         " build_office_train_set, print_office_id, rebuild_ml_pool")
     parser.add_argument("--input-file", dest='input_file')

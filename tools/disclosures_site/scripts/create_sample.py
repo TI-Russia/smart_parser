@@ -1,70 +1,75 @@
-import json
+from declarations.input_json import TDlrobotHumanFileDBM
+from source_doc_http.source_doc_client import TSourceDocClient
+from common.logging_wrapper import setup_logging
+from smart_parser_http.smart_parser_client import TSmartParserCacheClient
+
 import os
 import random
-import glob
 import argparse
 import shutil
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--file-json",  dest='file_jsons', required=False,  action="append", help="parser-job-priority-1.json")
-    parser.add_argument("--output-folder", dest='output_folder', default='sample')
-    parser.add_argument("--human-files-folder", dest='human_files_folder', default='human_files')
+    parser.add_argument("--input-dbm-file", dest='input_file', required=True, help="dlrobot_human.dbm")
+    parser.add_argument("--output-file", dest='output_file', default='sample.tar')
     parser.add_argument("--sample-size", dest='sample_size', default=1000, type=int)
+    parser.add_argument("--income-year", dest='income_year', type=int, required=False)
     return parser.parse_args()
-
-
-def add_file_globs(sample_file, files):
-    with open(sample_file, "r", encoding="utf8") as inp:
-        for x in json.load(inp):
-            if len(x['archive_files']) != 0:
-                for i, f in enumerate(x['archive_files']):
-                    _, file_extension = os.path.splitext(f)
-                    files.append ("{}_{}.*".format(x['id'], i))
-            else:
-                _, file_extension = os.path.splitext(x['file'])
-                files.append("{}.*".format(x['id']))
-
-
-def get_sample_by_priority_files(args):
-    file_globs = list()
-    for f in args.file_jsons:
-        add_file_globs("parser-job-priority-1.json", file_globs)
-
-    random.shuffle(file_globs)
-
-    files_count = 0
-
-    for file_glob in file_globs:
-        for f in glob.glob(os.path.join(args.human_files_folder, file_glob)):
-            shutil.copy(f, args.output_folder)
-            files_count += 1
-            if files_count >= args.sample_size:
-                break
-        if files_count >= args.sample_size:
-            break
-
-
-def get_sample_by_all_human_files(args):
-    files = list(x for x in os.listdir(args.human_files_folder) if not x.endswith(".zip"))
-    sample = random.sample(files, args.sample_size)
-    for f in sample:
-        shutil.copy(os.path.join(args.human_files_folder, f), args.output_folder)
 
 
 def main():
     args = parse_args()
-    if os.path.exists(args.output_folder):
-        print ("delete output folder{}, if you do not need it")
-        return
-    os.mkdir(args.output_folder)
-    if args.file_jsons is None:
-        get_sample_by_all_human_files(args)
-    else:
-        get_sample_by_priority_files(args)
+    logger = setup_logging("create_sample")
+    dlrobot_human = TDlrobotHumanFileDBM(args.input_file)
+    dlrobot_human.open_db_read_only()
+    source_doc_client = TSourceDocClient(TSourceDocClient.parse_args([]))
+    smart_parser_client = TSmartParserCacheClient(TSmartParserCacheClient.parse_args([]))
+    logger.info("create population")
 
-    os.system("tar cf sample.tar {}".format(args.output_folder))
+    tmp_folder = '/tmp/create_sample_sp'
+    if os.path.exists(tmp_folder):
+        shutil.rmtree(tmp_folder)
+    logger.info("create directory {}".format(tmp_folder))
+    os.mkdir(tmp_folder)
+    population = list(dlrobot_human.get_all_keys())
+    random.shuffle(population)
+
+    logger.info("fetch files")
+    found = set()
+    for sha256 in population:
+        logger.debug("get doc {}".format(sha256))
+        file_data, file_extension = source_doc_client.retrieve_file_data_by_sha256(sha256)
+        if file_data is None:
+            logger.error("cannot get data for {}".format(sha256))
+            continue
+
+        if args.income_year is not None:
+            smart_parser_json = smart_parser_client.retrieve_json_by_sha256(sha256)
+            if smart_parser_json is None or len(smart_parser_json) == 0:
+                logger.error("empty or invalid smart parser json for {}".format(sha256))
+                continue
+            src_doc = dlrobot_human.get_document(sha256)
+            year = src_doc.calc_document_income_year(smart_parser_json)
+            if year != args.income_year:
+                logger.error("different year ({} != {})".format(year, args.income_year))
+                continue
+        found.add(sha256)
+        file_path = os.path.join(tmp_folder, "{}{}".format(len(found) + 1, file_extension))
+        with open(file_path, "wb") as outp:
+            outp.write(file_data)
+        if len(found) >= args.sample_size:
+            break
+
+    logger.info("found {} files".format(len(found)))
+    output_file = os.path.abspath(args.output_file)
+    cmd = "tar -C {} --create --file {} {}".format(
+        os.path.dirname(tmp_folder),
+        output_file,
+        os.path.basename(tmp_folder))
+    logger.info(cmd)
+    os.system(cmd)
+
 
 if __name__ == "__main__":
     main()

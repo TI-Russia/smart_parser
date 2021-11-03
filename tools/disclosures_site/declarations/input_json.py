@@ -131,6 +131,22 @@ class TSourceDocument:
                 return int(r.declaration_year)
         return None
 
+    def calc_document_income_year(self, smart_parser_json):
+        # take income_year from the document heading
+        year = smart_parser_json.get('document', dict()).get('year')
+
+        # If absent, take it from declarator db
+        if year is None:
+            year = self.get_declarator_income_year()
+
+        # If absent, take it from html anchor text
+        if year is None:
+            year = self.get_external_income_year_from_dlrobot()
+        if year is None:
+            return year
+        return int(year)
+
+
     def add_web_reference(self, web_ref):
         if web_ref is not None and web_ref not in self.web_references:
             self.web_references.append(web_ref)

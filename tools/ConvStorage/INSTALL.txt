@@ -11,6 +11,10 @@
 
 1.3 net stop windows search (руками в панели services)
 
+1.4  run Windows Security and add two exclusions c:\tmp\conv_db and c:\tmp\conv_db
+
+1.5 https://blog.emsisoft.com/en/28620/antimalware-service-executable/ ?
+
 ===============
 2.0 Install Microsoft Word 2019
 

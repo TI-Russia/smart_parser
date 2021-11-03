@@ -42,6 +42,7 @@ if __name__ == '__main__':
                 value = read_value(args, db, args.key)
                 print(value)
             elif args.action == "print_keys":
+                k = db.firstkey()
                 while k is not None:
                     print(k.decode('utf8'))
                     k = db.nextkey(k)
