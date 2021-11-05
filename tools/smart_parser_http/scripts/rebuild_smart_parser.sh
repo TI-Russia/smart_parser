@@ -1,7 +1,8 @@
 set -e
 export SOURCE_DOC_SERVER_ADDRESS=migalka:8090
 export SMART_PARSER_SERVER_ADDRESS=migalka:8165
-export HOSTS="samsung,migalka,lena,avito"
+#export HOSTS="samsung,migalka,lena,avito"
+export HOSTS="touchless,lena"
 JOBS_COUNT=4
 
 #rebuild the new version on migalka
@@ -51,15 +52,18 @@ fi
 
 
 #start processing
-parallel -a all_source_sha256.txt \
-     --env SOURCE_DOC_SERVER_ADDRESS \
-     --env ASPOSE_LIC \
-     --env DECLARATOR_CONV_URL \
-     --env SMART_PARSER_SERVER_ADDRESS \
-     --env PYTHONPATH  \
-     --jobs $JOBS_COUNT \
-     -S $HOSTS  \
-     --joblog parallel.log \
-     --verbose \
-     --workdir /tmp \
-      python3 /home/sokirko/smart_parser/tools/smart_parser_http/scripts/rebuid_smart_parser_worker.py {}
+IMPUT_FILE=all_source_sha256.txt
+#IMPUT_FILE=a.100
+  parallel -a $IMPUT_FILE \
+       --env SOURCE_DOC_SERVER_ADDRESS \
+       --env ASPOSE_LIC \
+       --env DECLARATOR_CONV_URL \
+       --env SMART_PARSER_SERVER_ADDRESS \
+       --env PYTHONPATH  \
+       --memfree 200M \
+       --jobs $JOBS_COUNT \
+       -S $HOSTS  \
+       --joblog parallel.log \
+       --verbose \
+       --workdir /tmp \
+        python3 /home/sokirko/smart_parser/tools/smart_parser_http/scripts/rebuid_smart_parser_worker.py {}

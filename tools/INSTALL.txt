@@ -16,8 +16,6 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
 1.2 set date
    sudo dpkg-reconfigure tzdata
 
-1.3.  Get lic.bin (proprietary license file) from sokirko@yandex.ru, move lic.bin to $HOME, add to ~/.profile:
-   scp -P 2223 disclosures.ru:~/lic.bin ~/
 
 1.4 For laptops (not cloud servers), set in /etc/systemd/logind.conf the following lines:
  HandleLidSwitch=ignore
@@ -33,9 +31,9 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
 ==========================================================================
 
 2.1 sudo apt update
-   sudo apt install -y  curl p7zip-full unrar libcurl4-openssl-dev libssl-dev libreoffice \
-        python3-wheel calibre  catdoc xlsx2csv default-libmysqlclient-dev libgdiplus python3-pip python3.8-dev \
-        firefox git  sshfs libcurl4  libxss1 libappindicator1 libindicator7 pdfcrack qpdf abiword
+       sudo apt install -y  curl p7zip-full unrar libcurl4-openssl-dev libssl-dev libreoffice \
+            python3-wheel calibre  catdoc xlsx2csv default-libmysqlclient-dev libgdiplus python3-pip python3.8-dev \
+            git  sshfs libcurl4  libxss1 libappindicator1 libindicator7 pdfcrack qpdf abiword
 
 2.2 git clone https://github.com/TI-Russia/smart_parser.git ~/smart_parser
 
@@ -51,10 +49,14 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
       sudo apt-get update
       sudo apt-get install -y dotnet-sdk-3.1
 
+2.5.  Get lic.bin (proprietary license file) from sokirko@yandex.ru, move lic.bin to $HOME, add to ~/.profile:
+"migalka" is a central server
+
+   scp  migalka:~/lic.bin ~/
 
 2.6 add  ~/smart_parser/tools/disclosures_site/tools/update_common.sh to  ~/.profile
 
-    cat ~/smart_parser/tools/disclosures_site/tools/update_common.sh >> ~/.profile
+    cat ~/smart_parser/tools/disclosures_site/scripts/update_common.sh >> ~/.profile
     source ~/.profile
 
 2.7 compile and test smart_parser (c#, ~/smart_parser/src)
@@ -65,14 +67,12 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
    dotnet build -c Release ~/smart_parser/tools/Office2Txt
    dotnet test -c Release ~/smart_parser/tools/Office2Txt
 
-#2.9.  download https://github.com/mozilla/geckodriver/releases/tag/v0.26.0 (linux or windows);
-#      cd  /usr/local/bin
-#      sudo wget https://github.com/mozilla/geckodriver/releases/download/v0.26.0/geckodriver-v0.26.0-linux64.tar.gz
-#      sudo tar xfz geckodriver-v0.26.0-linux64.tar.gz
+2.8.1 install google chrome of a specific version
+wget -O /tmp/chrome.deb https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_93.0.4577.63-1_amd64.deb
+sudo apt install -y /tmp/chrome.deb
+rm /tmp/chrome.deb
 
 2.9 Install google-chrome and chromedriver 90 (be careful to update it, run all tests to check that dl_robot works
-    sudo apt-get install google-chrome-stable=93.0.4577.63-1
-
     rm -rf chromedriver_linux64.zip
     wget https://chromedriver.storage.googleapis.com/93.0.4577.15/chromedriver_linux64.zip
     rm -rf chromedriver
