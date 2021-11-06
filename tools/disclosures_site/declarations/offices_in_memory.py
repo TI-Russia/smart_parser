@@ -8,13 +8,15 @@ import re
 
 class TOfficeInMemory:
 
-    def __init__(self, office_id=None, name=None, parent_id=None, type_id=None, rubric_id=None, region_id=None):
+    def __init__(self, office_id=None, name=None, parent_id=None, type_id=None, rubric_id=None, region_id=None,
+                 address=None):
         self.office_id = office_id
         self.name = name
         self.parent_id = parent_id
         self.type_id = type_id
         self.rubric_id = rubric_id
         self.region_id = region_id
+        self.address = address
 
     def from_json(self, js):
         self.office_id = int(js['id'])
@@ -23,7 +25,22 @@ class TOfficeInMemory:
         self.type_id = js['type_id']
         self.rubric_id = js.get('rubric_id')
         self.region_id = js['region_id']
+        self.address = js.get('address')
         return self
+
+    def to_json(self):
+        rec = {
+            'id': self.office_id,
+            'name': self.name,
+            'parent_id': self.parent_id,
+            'type_id': self.type_id,
+            #'rubric_id': self.rubric_id, this field is only in db
+            'region_id': self.region_id
+        }
+        if self.address is not None:
+            rec['address'] = self.address
+        return rec
+
 
 
 class TOfficeTableInMemory:
@@ -90,6 +107,11 @@ class TOfficeTableInMemory:
                 self.offices[office_id] = TOfficeInMemory().from_json(o)
         if TOfficeTableInMemory.SELECTED_OFFICES_FOR_TESTS is None:
             self._init_special()
+
+    def write_to_local_file(self, file_path):
+        with open(file_path, "w") as outp:
+            offices = list(x.to_json() for x in self.offices.values())
+            json.dump(offices, outp, indent=4, ensure_ascii=False)
 
     def read_from_table(self, table):
         for o in table:

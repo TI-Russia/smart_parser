@@ -36,3 +36,17 @@ class RegionsTestCase(TestCase):
         self.assertEqual(28, r("Никита Рязанский из Красноярского края"))
         self.assertEqual(28, r("представитель Москвы в Красноярском крае")) #longest match
         self.assertEqual(28, r("Межрегиональное управление № 042 ФМБА (Красноярский край, г. Зеленогорск"))
+
+    def test_region_capitals(self):
+        def r(s):
+            d = regions.search_capital_in_address(s)
+            return d
+        regions = TRussianRegions()
+        self.assertEqual(63, r("Россия, Москва, Красная площадь,1"))
+        self.assertEqual(66, r("Россия, Нижний Новгород, Красная площадь,1"))
+        self.assertEqual(85, r("улица Уфаимская, Кызыл, Тува"))
+        self.assertEqual(70, r("улица Воронежская, Орёл"))
+        self.assertEqual(70, r("улица Воронежская, Орел"))
+        self.assertEqual(80, r("Россия, Свердловская область, Екатеринбург, проспект Ленина, 32"))
+        self.assertEqual(5, r("Россия, Республика Бурятия, Улан-Удэ, улица Смолина, 18"))
+        self.assertEqual(None, r("уфаимская"))
