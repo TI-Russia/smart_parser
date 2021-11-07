@@ -105,8 +105,8 @@ class TInputTask:
         self.only_ocr = only_ocr
 
 
-
 class TConvertProcessor(http.server.HTTPServer):
+    pause_service_actions_file_path = ".pause"
     @staticmethod
     def parse_args(arglist):
         parser = argparse.ArgumentParser()
@@ -199,7 +199,7 @@ class TConvertProcessor(http.server.HTTPServer):
             msg = "cannot find qpdf, sudo apt install qpdf"
             self.logger.error(msg)
             raise Exception(msg)
-        if shutil.which("qpdf") is None:
+        if shutil.which("pdfcrack") is None:
             msg = "cannot find pdfcrack\nsee https://sourceforge.net/projects/pdfcrack/files/"
             self.logger.error(msg)
             raise Exception(msg)
@@ -301,9 +301,10 @@ class TConvertProcessor(http.server.HTTPServer):
             self.continuous_winword_failures_count = 0
             return docx_file
         else:
-            self.continuous_winword_failures_count += 1
-            if self.continuous_winword_failures_count > 20:
-                self.send_to_telegram("pdf conversion server:continuous_winword_failures_count = {}".format(self.continuous_winword_failures_count))
+            if not os.path.exists(docx_file) or os.path.getsize(docx_file) == 0:
+                self.continuous_winword_failures_count += 1
+                if self.continuous_winword_failures_count > 20:
+                    self.send_to_telegram("pdf conversion server:continuous_winword_failures_count = {}".format(self.continuous_winword_failures_count))
             return None
 
     def process_one_input_file(self, input_task: TInputTask):
@@ -478,6 +479,7 @@ class TConvertProcessor(http.server.HTTPServer):
                 'failed_files_size': self.failed_files_size,
                 'finished_ocr_tasks': self.finished_ocr_tasks,
                 'snow_ball_os_error_count': self.convert_storage.snow_ball_os_error_count,
+                "pause_service_actions": self.pause_service_actions(),
             }
         except Exception as exp:
             return {"exception": str(exp)}
@@ -529,11 +531,15 @@ class TConvertProcessor(http.server.HTTPServer):
             self.restart_ocr()
             self.got_ocred_file_last_time_stamp = time.time()  #otherwize restart will be too often
 
+    def pause_service_actions(self):
+        return os.path.exists(self.pause_service_actions_file_path)
+
     def service_actions_in_a_thread(self):
         last_heart_beat = time.time()
         while self.http_server_is_working:
             if time.time() - last_heart_beat >= self.args.central_heart_rate:
-                self.process_all_tasks()
+                if not self.pause_service_actions():
+                    self.process_all_tasks()
                 last_heart_beat = time.time()
             else:
                 time.sleep(1)
