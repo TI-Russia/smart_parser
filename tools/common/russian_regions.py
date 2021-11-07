@@ -1,4 +1,3 @@
-import re
 import sys
 from common.primitives import normalize_whitespace
 import ahocorasick
@@ -2186,6 +2185,7 @@ class TRegion:
         self.short_name_en = None
         self.name_en = None
         self.name = None
+        self.wikidata_id = None
 
     def from_json(self, r):
         self.id = int(r['id'])
@@ -2195,6 +2195,7 @@ class TRegion:
 
         self.name_en = r['name_en']
         self.short_name_en = r['short_name_en']
+        self.wikidata_id = r['wikidata_id']
         return self
 
 
@@ -2206,6 +2207,7 @@ class TRussianRegions:
         self.region_name_to_region = dict()
         self.region_id_to_region = dict()
         self.capitals_to_regions = dict()
+        self.wikidata2region = dict()
         self.all_forms = ahocorasick.Automaton()
         self.nominative_forms = ahocorasick.Automaton()
         self.all_capitals = ahocorasick.Automaton()
@@ -2216,6 +2218,7 @@ class TRussianRegions:
             self.region_name_to_region[r.name.lower()] = r
             self.region_name_to_region[r.short_name.lower()] = r
             self.region_id_to_region[r.id] = r
+            self.wikidata2region[r.wikidata_id] = r
 
             forms = set([r.name, r.short_name])
             if r.id != RUSSIA_REGION_ID:
@@ -2305,6 +2308,9 @@ class TRussianRegions:
     #nominative in a text
     def search_region_in_address(self, text, unknown_region=None):
         return self.get_region_using_automat(self.nominative_forms, text, unknown_region)
+
+    def get_region_by_wikidata_id(self, wikidata_id):
+        return self.wikidata2region.get(wikidata_id)
 
 if __name__ == "__main__":
     regions = TRussianRegions()

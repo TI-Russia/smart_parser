@@ -9,7 +9,7 @@ import re
 class TOfficeInMemory:
 
     def __init__(self, office_id=None, name=None, parent_id=None, type_id=None, rubric_id=None, region_id=None,
-                 address=None):
+                 address=None, wikidata_id=None):
         self.office_id = office_id
         self.name = name
         self.parent_id = parent_id
@@ -17,6 +17,7 @@ class TOfficeInMemory:
         self.rubric_id = rubric_id
         self.region_id = region_id
         self.address = address
+        self.wikidata_id = wikidata_id
 
     def from_json(self, js):
         self.office_id = int(js['id'])
@@ -26,6 +27,7 @@ class TOfficeInMemory:
         self.rubric_id = js.get('rubric_id')
         self.region_id = js['region_id']
         self.address = js.get('address')
+        self.wikidata_id = js.get('wikidata_id')
         return self
 
     def to_json(self):
@@ -34,11 +36,13 @@ class TOfficeInMemory:
             'name': self.name,
             'parent_id': self.parent_id,
             'type_id': self.type_id,
-            #'rubric_id': self.rubric_id, this field is only in db
+            #'rubric_id': self.rubric_id, this field is only in sql db
             'region_id': self.region_id
         }
         if self.address is not None:
             rec['address'] = self.address
+        if self.wikidata_id is not None:
+            rec['wikidata_id'] = self.wikidata_id
         return rec
 
 
