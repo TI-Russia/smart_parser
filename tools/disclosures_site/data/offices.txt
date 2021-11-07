@@ -8608,7 +8608,7 @@
         "name": "Невско-Ладожское бассейновое водное управление Федерального агентства водных ресурсов",
         "parent_id": 502,
         "type_id": 23,
-        "region_id": null
+        "region_id": 1
     },
     {
         "id": 1304,
@@ -36476,7 +36476,7 @@
         "name": "Межрегиональное управление № 029 ФМБА (Чувашская Республика, г. Новочебоксарск)",
         "parent_id": 497,
         "type_id": 23,
-        "region_id": null
+        "region_id": 91
     },
     {
         "id": 5307,
@@ -64479,28 +64479,6 @@
         "wikidata_id": "Q1697"
     },
     {
-        "id": 20090,
-        "name": "Сельское поселение Акатьевское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
-        "id": 20091,
-        "name": "Сельское поселение Аксёно-Бутырское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": 64,
-        "wikidata_id": "Q1697"
-    },
-    {
-        "id": 20092,
-        "name": "Сельское поселение Астаповское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20093,
         "name": "Сельское поселение Атепцевское",
         "parent_id": null,
@@ -64525,13 +64503,6 @@
         "wikidata_id": "Q1697"
     },
     {
-        "id": 20096,
-        "name": "Сельское поселение Большерогачёвское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20097,
         "name": "Сельское поселение Борисовское",
         "parent_id": null,
@@ -64554,13 +64525,6 @@
         "type_id": null,
         "region_id": 64,
         "wikidata_id": "Q1697"
-    },
-    {
-        "id": 20100,
-        "name": "Сельское поселение Букарёвское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20101,
@@ -64603,20 +64567,6 @@
         "wikidata_id": "Q1697"
     },
     {
-        "id": 20106,
-        "name": "Сельское поселение Веселёвское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
-        "id": 20107,
-        "name": "Сельское поселение Волковское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20108,
         "name": "Сельское поселение Володарское",
         "parent_id": null,
@@ -64631,13 +64581,6 @@
         "type_id": null,
         "region_id": 64,
         "wikidata_id": "Q1697"
-    },
-    {
-        "id": 20110,
-        "name": "Сельское поселение Габовское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20111,
@@ -64656,33 +64599,12 @@
         "wikidata_id": "Q1697"
     },
     {
-        "id": 20113,
-        "name": "Сельское поселение Горетовское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20114,
         "name": "Сельское поселение Гребневское",
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
         "wikidata_id": "Q1697"
-    },
-    {
-        "id": 20115,
-        "name": "Сельское поселение Гуслевское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
-        "id": 20116,
-        "name": "Сельское поселение Давыдовское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20117,
@@ -64773,13 +64695,6 @@
         "wikidata_id": "Q1697"
     },
     {
-        "id": 20128,
-        "name": "Сельское поселение Заруденское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20129,
         "name": "Сельское поселение Застолбье",
         "parent_id": null,
@@ -64844,40 +64759,12 @@
         "wikidata_id": "Q1697"
     },
     {
-        "id": 20137,
-        "name": "Сельское поселение Клишинское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20138,
         "name": "Сельское поселение Колюбакинское",
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
         "wikidata_id": "Q1697"
-    },
-    {
-        "id": 20139,
-        "name": "Сельское поселение Константиновское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
-        "id": 20140,
-        "name": "Сельское поселение Костровское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
-        "id": 20141,
-        "name": "Сельское поселение Краснопоймовское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20142,
@@ -64910,13 +64797,6 @@
         "type_id": null,
         "region_id": 64,
         "wikidata_id": "Q1697"
-    },
-    {
-        "id": 20146,
-        "name": "Сельское поселение Кутузовское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20147,
@@ -64967,26 +64847,12 @@
         "wikidata_id": "Q1697"
     },
     {
-        "id": 20153,
-        "name": "сельское поселение Машоновское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20154,
         "name": "Сельское поселение Медвежье-Озёрское",
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
         "wikidata_id": "Q1697"
-    },
-    {
-        "id": 20155,
-        "name": "Сельское поселение Молоковское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20156,
@@ -65021,13 +64887,6 @@
         "wikidata_id": "Q1697"
     },
     {
-        "id": 20160,
-        "name": "Сельское поселение Огудневское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20161,
         "name": "Сельское поселение Осташёвское",
         "parent_id": null,
@@ -65044,26 +64903,12 @@
         "wikidata_id": "Q1697"
     },
     {
-        "id": 20163,
-        "name": "Сельское поселение Павло-Слободское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20164,
         "name": "Сельское поселение Петровское",
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
         "wikidata_id": "Q1697"
-    },
-    {
-        "id": 20165,
-        "name": "Сельское поселение Пешковское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20166,
@@ -65114,13 +64959,6 @@
         "wikidata_id": "Q1697"
     },
     {
-        "id": 20172,
-        "name": "Сельское поселение Саввинское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20173,
         "name": "Сельское поселение Саранпауль",
         "parent_id": null,
@@ -65153,13 +64991,6 @@
         "wikidata_id": "Q3447"
     },
     {
-        "id": 20177,
-        "name": "Зимитицкое сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20178,
         "name": "Ивановский сельсовет",
         "parent_id": null,
@@ -65181,13 +65012,6 @@
         "type_id": null,
         "region_id": 67,
         "wikidata_id": "Q2240"
-    },
-    {
-        "id": 20181,
-        "name": "Ильинское сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20182,
@@ -65228,13 +65052,6 @@
         "type_id": null,
         "region_id": 20,
         "wikidata_id": "Q5422"
-    },
-    {
-        "id": 20187,
-        "name": "Калининское сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20188,
@@ -65393,7 +65210,7 @@
         "name": "Корниловское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 106
     },
     {
         "id": 20208,
@@ -65440,7 +65257,7 @@
         "name": "Красносельское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 56
     },
     {
         "id": 20214,
@@ -65515,18 +65332,11 @@
         "wikidata_id": "Q5545"
     },
     {
-        "id": 20223,
-        "name": "Михайловский сельсовет",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20224,
         "name": "Михайловский сельсовет",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 4
     },
     {
         "id": 20225,

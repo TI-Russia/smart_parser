@@ -1,4 +1,5 @@
 import sys
+import sys
 from common.primitives import normalize_whitespace
 import ahocorasick
 

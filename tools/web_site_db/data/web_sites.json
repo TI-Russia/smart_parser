@@ -49173,18 +49173,6 @@
         "calc_office_id": 20089,
         "status": "abandoned"
     },
-    "akatevskoe.ru": {
-        "calc_office_id": 20090,
-        "status": "abandoned"
-    },
-    "akseno-butyrki.ru": {
-        "calc_office_id": 20091,
-        "status": "abandoned"
-    },
-    "astapovskoe.ru": {
-        "calc_office_id": 20092,
-        "status": "abandoned"
-    },
     "atepcevskoe.ru": {
         "calc_office_id": 20093,
         "status": "abandoned"
@@ -49195,10 +49183,6 @@
     },
     "biorki.ru": {
         "calc_office_id": 20095,
-        "status": "abandoned"
-    },
-    "rogachevo-admin.ru": {
-        "calc_office_id": 20096,
         "status": "abandoned"
     },
     "spborisovskoe.ru": {
@@ -49213,10 +49197,6 @@
         "calc_office_id": 20099,
         "http_protocol": "http",
         "title": "Территориальное отделение Бужаровское"
-    },
-    "сп-букарёвское.рф": {
-        "calc_office_id": 20100,
-        "status": "abandoned"
     },
     "adm-bulat.ru": {
         "calc_office_id": 20101,
@@ -49239,24 +49219,12 @@
         "calc_office_id": 20105,
         "status": "abandoned"
     },
-    "adm-veselevo.ru": {
-        "calc_office_id": 20106,
-        "status": "abandoned"
-    },
-    "volkovskoe-sp.ru": {
-        "calc_office_id": 20107,
-        "status": "abandoned"
-    },
     "spvolodarskoe.ru": {
         "calc_office_id": 20108,
         "status": "abandoned"
     },
     "volchenki.ru": {
         "calc_office_id": 20109,
-        "status": "abandoned"
-    },
-    "gabovskoe.ru": {
-        "calc_office_id": 20110,
         "status": "abandoned"
     },
     "gazoprovodskoe.ru": {
@@ -49267,20 +49235,8 @@
         "calc_office_id": 20112,
         "status": "abandoned"
     },
-    "spgoretovskoe.ru": {
-        "calc_office_id": 20113,
-        "status": "abandoned"
-    },
     "grebnevo-org.ru": {
         "calc_office_id": 20114,
-        "status": "abandoned"
-    },
-    "guslevo.ru": {
-        "calc_office_id": 20115,
-        "status": "abandoned"
-    },
-    "davidovo-adm.ru": {
-        "calc_office_id": 20116,
         "status": "abandoned"
     },
     "danserpreg.ru": {
@@ -49328,10 +49284,6 @@
         "calc_office_id": 20127,
         "status": "abandoned"
     },
-    "zarudnya.ru": {
-        "calc_office_id": 20128,
-        "status": "abandoned"
-    },
     "web.archive.org": {
         "calc_office_id": 20129,
         "status": "abandoned"
@@ -49364,24 +49316,8 @@
         "calc_office_id": 20136,
         "status": "abandoned"
     },
-    "adm-klishino.ru": {
-        "calc_office_id": 20137,
-        "status": "abandoned"
-    },
     "kolubakino.ru": {
         "calc_office_id": 20138,
-        "status": "abandoned"
-    },
-    "константиновское.рф": {
-        "calc_office_id": 20139,
-        "status": "abandoned"
-    },
-    "костровское.рф": {
-        "calc_office_id": 20140,
-        "status": "abandoned"
-    },
-    "redpoyma.ru": {
-        "calc_office_id": 20141,
         "status": "abandoned"
     },
     "к-профинтерн.рф": {
@@ -49401,10 +49337,6 @@
     },
     "кузнецовское.рф": {
         "calc_office_id": 20145,
-        "status": "abandoned"
-    },
-    "k1812.ru": {
-        "calc_office_id": 20146,
         "status": "abandoned"
     },
     "lagovskiy.ru": {
@@ -49432,18 +49364,10 @@
         "calc_office_id": 20152,
         "status": "abandoned"
     },
-    "mashonovskoe.ru": {
-        "calc_office_id": 20153,
-        "status": "abandoned"
-    },
     "spmedvezhye-ozerskoe.ru": {
         "calc_office_id": 20154,
         "http_protocol": "http",
         "title": "Путаны по услугам"
-    },
-    "adm-molokovo.ru": {
-        "calc_office_id": 20155,
-        "status": "abandoned"
     },
     "adm-nazarevskoe.ru": {
         "calc_office_id": 20156,
@@ -49462,10 +49386,6 @@
         "calc_office_id": 20159,
         "status": "abandoned"
     },
-    "огудневское.рф": {
-        "calc_office_id": 20160,
-        "status": "abandoned"
-    },
     "ostashevo-adm.ru": {
         "calc_office_id": 20161,
         "status": "abandoned"
@@ -49474,18 +49394,10 @@
         "calc_office_id": 20162,
         "status": "abandoned"
     },
-    "mosp-pavlosl.ru": {
-        "calc_office_id": 20163,
-        "status": "abandoned"
-    },
     "petrovskoye.ru": {
         "calc_office_id": 20164,
         "http_protocol": "http",
         "title": "Петровское сельское поселение - село Петровское Клинский район"
-    },
-    "peshki.ru": {
-        "calc_office_id": 20165,
-        "status": "abandoned"
     },
     "polnovat.ru": {
         "calc_office_id": 20166,
@@ -49509,10 +49421,6 @@
         "http_protocol": "https",
         "title": "Администрация сельского поселения Раменское"
     },
-    "savvinoadm.ru": {
-        "calc_office_id": 20172,
-        "status": "abandoned"
-    },
     "саранпауль-адм.рф": {
         "calc_office_id": 20173,
         "http_protocol": "http",
@@ -49532,10 +49440,6 @@
         "http_protocol": "https",
         "title": "Официальный сайт Администрации Землянского сельского поселения Семилукского района"
     },
-    "zim-adm.ru": {
-        "calc_office_id": 20177,
-        "status": "abandoned"
-    },
     "ivanovo.bekovo.pnzreg.ru": {
         "calc_office_id": 20178,
         "http_protocol": "http",
@@ -49549,11 +49453,6 @@
         "calc_office_id": 20180,
         "http_protocol": "http",
         "title": "Официальный сайт Администрации Ильиногорского сельского поселения | Главная"
-    },
-    "ильинское-сп.рф": {
-        "calc_office_id": 20181,
-        "http_protocol": "http",
-        "title": "Администрация Ильинского сельского поселения Ярославской области | Главная"
     },
     "moitalmas.ru": {
         "calc_office_id": 20182,
@@ -49579,11 +49478,6 @@
         "calc_office_id": 20186,
         "http_protocol": "https",
         "title": "Официальный сайт МО \"Казмасское\" - МО Казмасское"
-    },
-    "kalininckoe.ru": {
-        "calc_office_id": 20187,
-        "http_protocol": "http",
-        "title": "Калининское сельское поселение"
     },
     "kalinovskoemo.ru": {
         "calc_office_id": 20188,
