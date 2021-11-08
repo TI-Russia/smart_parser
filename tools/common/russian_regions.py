@@ -1446,6 +1446,7 @@ RUSSIAN_REGIONS = [
     {
         "id": 80,
         "name": "Свердловская область",
+        \
         "code": 66,
         "short_name": "Свердловская область",
         "extra_short_name": "Свердловская обл.",
@@ -2173,7 +2174,35 @@ RUSSIAN_REGIONS = [
             "в г. севастополе",
             "в севастополе"
         ]
+    },
+    {
+        "id": 111,
+        "name": "Байконур",
+        "code": 94,
+        "short_name": "Байконур",
+        "extra_short_name": "Baikonur",
+        "name_ru": "Байконур",
+        "name_en": "",
+        "short_name_ru": "Байконур",
+        "short_name_en": "",
+        "extra_short_name_ru": "Baikonur",
+        "wikidata_id": "Q165413",
+        "capital": "Байконур",
+        "slug": "Baikonur",
+        "federal_district_id": 0,
+        "dative": [
+            "по байконуру"
+        ],
+        "genitive": [
+            "г. байконура",
+            "байконура"
+        ],
+        "locative": [
+            "в г. байконуре",
+            "в байконуре"
+        ]
     }
+
 ]
 
 

@@ -52463,10 +52463,6 @@
         "status": "abandoned",
         "redirect_to": "тельмановский.рф"
     },
-    "vorsha.sbnray.ru": {
-        "calc_office_id": 20847,
-        "status": "abandoned"
-    },
     "kambalkasp.ru": {
         "calc_office_id": 20848,
         "http_protocol": "https",
@@ -53424,6 +53420,7 @@
     "n-sergi.midural.ru": {
         "calc_office_id": 20972,
         "http_protocol": "http",
+        "status": "abandoned",
         "title": "Главная —"
     },
     "nowusman.narod.ru": {
@@ -53850,10 +53847,6 @@
         "status": "abandoned",
         "http_protocol": "http"
     },
-    "donskoyselsovet.ru": {
-        "calc_office_id": 20993,
-        "status": "abandoned"
-    },
     "trynovskoe.ru": {
         "calc_office_id": 20994,
         "http_protocol": "http",
@@ -53868,25 +53861,13 @@
         "calc_office_id": 20996,
         "status": "abandoned"
     },
-    "admstepnovskiy.ru": {
-        "calc_office_id": 20997,
-        "status": "abandoned"
-    },
     "verhnerus.ru": {
         "calc_office_id": 20998,
         "http_protocol": "https",
         "title": "Экспертный блог Бирюкова Дмитрия"
     },
-    "admshangala.ru": {
-        "calc_office_id": 20999,
-        "status": "abandoned"
-    },
     "горькаябалка.рф": {
         "calc_office_id": 21000,
-        "status": "abandoned"
-    },
-    "admniny.ru": {
-        "calc_office_id": 21001,
         "status": "abandoned"
     },
     "admotkaznoe.ru": {
@@ -53925,14 +53906,6 @@
     },
     "sengileevskaya-adm.ru": {
         "calc_office_id": 21010,
-        "status": "abandoned"
-    },
-    "adm-tatarka.ru": {
-        "calc_office_id": 21011,
-        "status": "abandoned"
-    },
-    "темнолесская.рф": {
-        "calc_office_id": 21012,
         "status": "abandoned"
     },
     "cimlyansky.ru": {
