@@ -46,14 +46,15 @@ class TWikidataRecords:
     def get_region_by_name(self, name):
         if name not in self.name2wikidata:
             return None, None
-        wikidata_urls = set (x['oblast'] for x in self.name2wikidata[name])
         regions = set()
-        for x in wikidata_urls:
-            wikidata_id = os.path.basename(x)
-            region_id = self.regions.get_region_by_wikidata_id(wikidata_id)
-            if region_id is  None:
+        for x in self.name2wikidata.get(name, []):
+            url = x['oblast']
+            region_wikidata_id = os.path.basename(url)
+            region_id = self.regions.get_region_by_wikidata_id(region_wikidata_id)
+            if region_id is None:
                 continue
-            regions.add((wikidata_id, region_id))
+            entry_id = os.path.basename(x['item'])
+            regions.add((entry_id, region_id))
         if len(regions) == 1:
             return list(regions)[0]
         return None, None
@@ -61,17 +62,18 @@ class TWikidataRecords:
     def get_region_by_url(self, name, url):
         if name not in self.name2wikidata:
             return None, None
-        urls = set (x['website'] for x in self.name2wikidata[name])
         regions = set()
         (_, netloc1, _, _, _) = urlsplit_pro(url)
-        for x in urls:
-            (_, netloc2, _, _, _) = urlsplit_pro(x)
+        for x in self.name2wikidata.get(name, []):
+            url = x['oblast']
+            (_, netloc2, _, _, _) = urlsplit_pro(url)
             if netloc1 == netloc2:
-                wikidata_id = os.path.basename(x)
-                region_id = self.regions.get_region_by_wikidata_id(wikidata_id)
+                region_wikidata_id = os.path.basename(url)
+                region_id = self.regions.get_region_by_wikidata_id(region_wikidata_id)
                 if region_id is None:
                     continue
-                regions.add((wikidata_id, region_id))
+                entry_id = os.path.basename(x['item'])
+                regions.add((entry_id, region_id))
         if len(regions) == 1:
             return list(regions)[0]
         return None, None
@@ -88,7 +90,7 @@ def main():
 
     web_sites_db = TDeclarationWebSiteList(logger,
                                            TDeclarationWebSiteList.default_input_task_list_path).load_from_disk()
-    office_to_urls = web_sites_db.build_office_to_main_website()
+    office_to_urls = web_sites_db.build_office_to_main_website(take_abandoned=True)
     with open(args.input_file) as inp:
         for l in inp:
             office_id, name = l.strip().split("\t")
@@ -101,7 +103,7 @@ def main():
             if wikidata_id is not None:
                 cause = "name"
             else:
-                urls = office_to_urls.get(office_id, [])
+                urls = office_to_urls.get(int(office_id), [])
                 if len(urls) == 0:
                     logger.debug("office_id={}, name={} no valid urls, delete office?")
                     continue

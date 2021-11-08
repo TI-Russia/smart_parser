@@ -67150,7 +67150,7 @@
         "name": "Петровское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 56
     },
     {
         "id": 20473,
@@ -67173,7 +67173,7 @@
         "name": "Мичуринское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 56
     },
     {
         "id": 20476,
@@ -67348,14 +67348,14 @@
         "name": "Заволжское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 101
     },
     {
         "id": 20498,
         "name": "Заволжское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 107
     },
     {
         "id": 20499,
@@ -67502,20 +67502,6 @@
         "wikidata_id": "Q2191"
     },
     {
-        "id": 20517,
-        "name": "Муниципальное образование Нюксенское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
-        "id": 20518,
-        "name": "Крыловское сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20519,
         "name": "Кузяновский сельсовет",
         "parent_id": null,
@@ -67552,7 +67538,7 @@
         "name": "Куликовское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 56
     },
     {
         "id": 20524,
@@ -67561,20 +67547,6 @@
         "type_id": null,
         "region_id": 29,
         "wikidata_id": "Q5400"
-    },
-    {
-        "id": 20525,
-        "name": "Купросское сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
-        "id": 20526,
-        "name": "Курсавский сельсовет",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20527,
@@ -67765,7 +67737,7 @@
         "name": "Сусанинское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 32
     },
     {
         "id": 20551,
@@ -67790,13 +67762,6 @@
         "type_id": null,
         "region_id": 67,
         "wikidata_id": "Q2240"
-    },
-    {
-        "id": 20554,
-        "name": "Таманское сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20555,
@@ -67837,13 +67802,6 @@
         "type_id": null,
         "region_id": 41,
         "wikidata_id": "Q3819"
-    },
-    {
-        "id": 20560,
-        "name": "Терпилицкое сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20561,
@@ -68206,13 +68164,6 @@
         "wikidata_id": "Q2191"
     },
     {
-        "id": 20606,
-        "name": "Ларионовское сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20607,
         "name": "Лаголовское сельское поселение",
         "parent_id": null,
@@ -68517,40 +68468,12 @@
         "wikidata_id": "Q1697"
     },
     {
-        "id": 20645,
-        "name": "Шилинский сельсовет",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20646,
         "name": "Новокачалинское сельское поселение",
         "parent_id": null,
         "type_id": null,
         "region_id": 74,
         "wikidata_id": "Q4341"
-    },
-    {
-        "id": 20647,
-        "name": "Сельское поселение Ошейкинское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
-        "id": 20648,
-        "name": "Сельское поселение Рахмановское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
-        "id": 20649,
-        "name": "Сельское поселение Пестриковское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20650,
@@ -68657,20 +68580,6 @@
         "wikidata_id": "Q2842"
     },
     {
-        "id": 20663,
-        "name": "Сельское поселение Баранцевское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
-        "id": 20664,
-        "name": "Сельское поселение Белавинское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20665,
         "name": "Сельское поселение Березняковское",
         "parent_id": null,
@@ -68715,20 +68624,6 @@
         "type_id": null,
         "region_id": 64,
         "wikidata_id": "Q1697"
-    },
-    {
-        "id": 20671,
-        "name": "Сельское поселение Ельдигинское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
-        "id": 20672,
-        "name": "Сельское поселение Леонтьевское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20673,
@@ -68798,7 +68693,8 @@
         "name": "Сельское поселение Соболевское",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 64,
+        "wikidata_id": "Q16696594"
     },
     {
         "id": 20682,
