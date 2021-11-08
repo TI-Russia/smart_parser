@@ -68588,13 +68588,6 @@
         "wikidata_id": "Q16696540"
     },
     {
-        "id": 20666,
-        "name": "Сельское поселение Бояркинское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20667,
         "name": "Сельское поселение Васильевское",
         "parent_id": null,
@@ -68609,13 +68602,6 @@
         "type_id": null,
         "region_id": 64,
         "wikidata_id": "Q16696546"
-    },
-    {
-        "id": 20669,
-        "name": "Сельское поселение Ганусовское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20670,
@@ -68640,13 +68626,6 @@
         "type_id": null,
         "region_id": 64,
         "wikidata_id": "Q16696566"
-    },
-    {
-        "id": 20675,
-        "name": "Сельское поселение Новинское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20676,
@@ -68729,13 +68708,6 @@
         "wikidata_id": "Q16701348"
     },
     {
-        "id": 20686,
-        "name": "Станица Марьинская",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20687,
         "name": "Старомарьевский сельсовет",
         "parent_id": null,
@@ -68812,7 +68784,7 @@
         "name": "Александровское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 41
     },
     {
         "id": 20697,
@@ -68861,13 +68833,6 @@
         "type_id": null,
         "region_id": 96,
         "wikidata_id": "Q17266250"
-    },
-    {
-        "id": 20703,
-        "name": "Алейниковское сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20704,
@@ -69046,13 +69011,6 @@
         "wikidata_id": "Q17506318"
     },
     {
-        "id": 20726,
-        "name": "Ильинское сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20727,
         "name": "Красненское сельское поселение",
         "parent_id": null,
@@ -69189,13 +69147,6 @@
         "wikidata_id": "Q14507305"
     },
     {
-        "id": 20744,
-        "name": "Искровский сельсовет",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20745,
         "name": "Краснооктябрьский сельсовет",
         "parent_id": null,
@@ -69252,27 +69203,6 @@
         "wikidata_id": "Q14507328"
     },
     {
-        "id": 20752,
-        "name": "Дубровское сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
-        "id": 20753,
-        "name": "Сельское поселение Каринское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
-        "id": 20754,
-        "name": "Сельское поселение Лозовское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20755,
         "name": "Кузнечихинское сельское поселение",
         "parent_id": null,
@@ -69295,13 +69225,6 @@
         "type_id": null,
         "region_id": 107,
         "wikidata_id": "Q14558304"
-    },
-    {
-        "id": 20758,
-        "name": "Сельское поселение Гололобовское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20759,
@@ -69342,13 +69265,6 @@
         "type_id": null,
         "region_id": 51,
         "wikidata_id": "Q14558871"
-    },
-    {
-        "id": 20764,
-        "name": "Первомайское сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20765,
@@ -69423,13 +69339,6 @@
         "wikidata_id": "Q15058797"
     },
     {
-        "id": 20774,
-        "name": "Каменский сельсовет",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20775,
         "name": "Котельниковский сельсовет",
         "parent_id": null,
@@ -69470,13 +69379,6 @@
         "wikidata_id": "Q15058805"
     },
     {
-        "id": 20780,
-        "name": "Ивановский сельсовет",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20781,
         "name": "Муниципальное образование «Ново-Ленино»",
         "parent_id": null,
@@ -69485,18 +69387,12 @@
         "wikidata_id": "Q16022146"
     },
     {
-        "id": 20782,
-        "name": "Андреевское сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20783,
         "name": "Андреевское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 107,
+        "wikidata_id": "Q16488399"
     },
     {
         "id": 20784,
@@ -69521,13 +69417,6 @@
         "type_id": null,
         "region_id": 81,
         "wikidata_id": "Q16626594"
-    },
-    {
-        "id": 20787,
-        "name": "Большекустовское сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20788,
@@ -69584,13 +69473,6 @@
         "type_id": null,
         "region_id": 53,
         "wikidata_id": "Q16648034"
-    },
-    {
-        "id": 20795,
-        "name": "Заветненский сельсовет",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20796,
@@ -69695,13 +69577,6 @@
         "type_id": null,
         "region_id": 81,
         "wikidata_id": "Q16686906"
-    },
-    {
-        "id": 20809,
-        "name": "Посадское сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20810,
@@ -69880,13 +69755,6 @@
         "wikidata_id": "Q17506585"
     },
     {
-        "id": 20832,
-        "name": "Советское сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20833,
         "name": "Вострецовское сельское поселение",
         "parent_id": null,
@@ -69901,13 +69769,6 @@
         "type_id": null,
         "region_id": 96,
         "wikidata_id": "Q17506595"
-    },
-    {
-        "id": 20835,
-        "name": "Беломестненское сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20836,
@@ -70017,7 +69878,8 @@
         "name": "Зоркинское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 79,
+        "wikidata_id": "Q19837098"
     },
     {
         "id": 20850,
@@ -70056,7 +69918,8 @@
         "name": "Советское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 41,
+        "wikidata_id": "Q18590481"
     },
     {
         "id": 20855,
@@ -70095,7 +69958,8 @@
         "name": "Искровский сельсовет",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 68,
+        "wikidata_id": "Q19631897"
     },
     {
         "id": 20860,

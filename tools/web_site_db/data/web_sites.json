@@ -51060,14 +51060,6 @@
         "http_protocol": "https",
         "title": "Официальный сайт Администрации Нурминского сельского поселения Тосненского района Ленинградской области"
     },
-    "nuks-pos.zz.mu": {
-        "calc_office_id": 20517,
-        "status": "abandoned"
-    },
-    "krylovo-osa.ru": {
-        "calc_office_id": 20518,
-        "status": "abandoned"
-    },
     "kuzanovo.ru": {
         "calc_office_id": 20519,
         "http_protocol": "http",
@@ -51097,14 +51089,6 @@
         "calc_office_id": 20524,
         "http_protocol": "http",
         "title": "Новости | Администрация Култаевского сельского поселения"
-    },
-    "kupros.admuswa.ru": {
-        "calc_office_id": 20525,
-        "status": "abandoned"
-    },
-    "kursavka.info": {
-        "calc_office_id": 20526,
-        "status": "abandoned"
     },
     "mokursk.ru": {
         "calc_office_id": 20527,
@@ -51239,10 +51223,6 @@
         "http_protocol": "http",
         "title": "Администрация Сырковского сельского поселения | Главная"
     },
-    "admtaman.ru": {
-        "calc_office_id": 20554,
-        "status": "abandoned"
-    },
     "татауровское.рф": {
         "calc_office_id": 20555,
         "http_protocol": "https",
@@ -51265,10 +51245,6 @@
     },
     "ternovskoe-adm34.wixsite.com": {
         "calc_office_id": 20559,
-        "status": "abandoned"
-    },
-    "terpilizi-adm.ru": {
-        "calc_office_id": 20560,
         "status": "abandoned"
     },
     "terskyi.ru": {
@@ -51488,10 +51464,6 @@
         "http_protocol": "http",
         "redirect_to": "агалатово.рф"
     },
-    "ларионово-адм.рф": {
-        "calc_office_id": 20606,
-        "status": "abandoned"
-    },
     "lagolovo.org": {
         "calc_office_id": 20607,
         "http_protocol": "http",
@@ -51670,24 +51642,8 @@
         "calc_office_id": 20644,
         "status": "abandoned"
     },
-    "shila-sovet.ru": {
-        "calc_office_id": 20645,
-        "status": "abandoned"
-    },
     "nksp.hanka.ru": {
         "calc_office_id": 20646,
-        "status": "abandoned"
-    },
-    "osheikino.ru": {
-        "calc_office_id": 20647,
-        "status": "abandoned"
-    },
-    "rahmanovo.org.ru": {
-        "calc_office_id": 20648,
-        "status": "abandoned"
-    },
-    "pestrikovo.ru": {
-        "calc_office_id": 20649,
         "status": "abandoned"
     },
     "radugnoeadmin.ru": {
@@ -51755,20 +51711,8 @@
         "http_protocol": "http",
         "title": "Администрация СПС Тарутино"
     },
-    "сп-баранцевское.рф": {
-        "calc_office_id": 20663,
-        "status": "abandoned"
-    },
-    "lifebelavino.ru": {
-        "calc_office_id": 20664,
-        "status": "abandoned"
-    },
     "bereznykovskoe.ru": {
         "calc_office_id": 20665,
-        "status": "abandoned"
-    },
-    "сп-бояркинское.рф": {
-        "calc_office_id": 20666,
         "status": "abandoned"
     },
     "a-vasilyevskoe-ru.ru": {
@@ -51780,20 +51724,8 @@
         "calc_office_id": 20668,
         "status": "abandoned"
     },
-    "ganusovo.ru": {
-        "calc_office_id": 20669,
-        "status": "abandoned"
-    },
     "gorskoe-adm.ru": {
         "calc_office_id": 20670,
-        "status": "abandoned"
-    },
-    "eldigino.org": {
-        "calc_office_id": 20671,
-        "status": "abandoned"
-    },
-    "leontevo-smr.ru": {
-        "calc_office_id": 20672,
         "status": "abandoned"
     },
     "malaya-dubna.ru": {
@@ -51802,10 +51734,6 @@
     },
     "poselenie-mikulino.ru": {
         "calc_office_id": 20674,
-        "status": "abandoned"
-    },
-    "sp-novoe.ru": {
-        "calc_office_id": 20675,
         "status": "abandoned"
     },
     "adm-hx.ru": {
@@ -51850,10 +51778,6 @@
         "calc_office_id": 20685,
         "status": "abandoned",
         "http_protocol": "http"
-    },
-    "marinskaya.info": {
-        "calc_office_id": 20686,
-        "status": "abandoned"
     },
     "staromarevka.ru": {
         "calc_office_id": 20687,
@@ -51921,10 +51845,6 @@
     },
     "afanasievskoe.ru": {
         "calc_office_id": 20702,
-        "status": "abandoned"
-    },
-    "aleynikovskoe.ru": {
-        "calc_office_id": 20703,
         "status": "abandoned"
     },
     "razsp.ru": {
@@ -52031,10 +51951,6 @@
         "calc_office_id": 20725,
         "status": "abandoned"
     },
-    "ilyinskoe-aleks.ru": {
-        "calc_office_id": 20726,
-        "status": "abandoned"
-    },
     "krasnenskoe-alex.ru": {
         "calc_office_id": 20727,
         "status": "abandoned"
@@ -52114,10 +52030,6 @@
         "calc_office_id": 20743,
         "status": "abandoned"
     },
-    "moiskra.ru": {
-        "calc_office_id": 20744,
-        "status": "abandoned"
-    },
     "k-oktyabr.ru": {
         "calc_office_id": 20745,
         "status": "abandoned"
@@ -52148,19 +52060,6 @@
         "calc_office_id": 20751,
         "status": "abandoned"
     },
-    "dubrovoadm.ru": {
-        "calc_office_id": 20752,
-        "http_protocol": "https",
-        "title": "Дубрава-дизайн - Дизайн ландшафта: советы, правила, идеи"
-    },
-    "karino-adm.ru": {
-        "calc_office_id": 20753,
-        "status": "abandoned"
-    },
-    "sp-loza.ru": {
-        "calc_office_id": 20754,
-        "status": "abandoned"
-    },
     "admkuzn76.yarregion.ru": {
         "calc_office_id": 20755,
         "status": "abandoned"
@@ -52172,10 +52071,6 @@
     },
     "adm-tunoshna.ru": {
         "calc_office_id": 20757,
-        "status": "abandoned"
-    },
-    "gololobovskoe.ru": {
-        "calc_office_id": 20758,
         "status": "abandoned"
     },
     "tempy.net": {
@@ -52200,10 +52095,6 @@
         "calc_office_id": 20763,
         "http_protocol": "https",
         "title": "МО Зимнякское сельское поселение Кильмезского района Кировской области | официальный сайт"
-    },
-    "первомайское-сп.рф": {
-        "calc_office_id": 20764,
-        "status": "abandoned"
     },
     "grachevka-selsovet.ru": {
         "calc_office_id": 20765,
@@ -52247,10 +52138,6 @@
         "http_protocol": "http",
         "title": "Общая информация | Официальный сайт муниципального образования \"Зоринский сельсовет\" Обоянского района"
     },
-    "adm-kam.ru": {
-        "calc_office_id": 20774,
-        "status": "abandoned"
-    },
     "kotelss.rkursk.ru": {
         "calc_office_id": 20775,
         "http_protocol": "http",
@@ -52277,18 +52164,10 @@
         "http_protocol": "http",
         "title": "Общая информация | Официальный сайт муниципального образования \"Шевелевский сельсовет\" Обоянского района"
     },
-    "ivanovskoe26.ru": {
-        "calc_office_id": 20780,
-        "status": "abandoned"
-    },
     "новоленино.рф": {
         "calc_office_id": 20781,
         "http_protocol": "http",
         "title": "Ново-Ленинского сельского поселения Осинского района Иркутской области - Главная"
-    },
-    "andreevosp.ru": {
-        "calc_office_id": 20782,
-        "status": "abandoned"
     },
     "asp-borisogleb.ru": {
         "calc_office_id": 20783,
@@ -52311,10 +52190,6 @@
         "calc_office_id": 20786,
         "http_protocol": "http",
         "title": "Администрации МО Балтийский сельсовет | Главная"
-    },
-    "b-kusty.ru": {
-        "calc_office_id": 20787,
-        "status": "abandoned"
     },
     "adm-burmakino.ru": {
         "calc_office_id": 20788,
@@ -52350,10 +52225,6 @@
         "calc_office_id": 20794,
         "http_protocol": "http",
         "title": "Администрация Екатерининского сельского поселения Кадыйского муниципального района Костромской области | Главная"
-    },
-    "zavetnoemo.ru": {
-        "calc_office_id": 20795,
-        "status": "abandoned"
     },
     "selsovet.sehost.ru": {
         "calc_office_id": 20796,
@@ -52413,10 +52284,6 @@
         "calc_office_id": 20808,
         "http_protocol": "http",
         "title": "Администрация муниципального образования Полтавского сельсовета Курского района Ставропольского края | Главная"
-    },
-    "admposad.ru": {
-        "calc_office_id": 20809,
-        "status": "abandoned"
     },
     "fazanny.ru": {
         "calc_office_id": 20810,
@@ -52534,10 +52401,6 @@
         "calc_office_id": 20831,
         "status": "abandoned"
     },
-    "sovetskoe-aleks.ru": {
-        "calc_office_id": 20832,
-        "status": "abandoned"
-    },
     "вострецово.рф": {
         "calc_office_id": 20833,
         "http_protocol": "https",
@@ -52545,10 +52408,6 @@
     },
     "hreschatovskoe.ru": {
         "calc_office_id": 20834,
-        "status": "abandoned"
-    },
-    "belmest.ru": {
-        "calc_office_id": 20835,
         "status": "abandoned"
     },
     "admbesson.ru": {
@@ -52664,7 +52523,8 @@
     "admiskra.ru": {
         "calc_office_id": 20859,
         "http_protocol": "https",
-        "title": "admiskra.ru |"
+        "status": "abandoned",
+        "title": ""
     },
     "адмкузьмичи.рф": {
         "calc_office_id": 20860,

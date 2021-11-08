@@ -65,10 +65,9 @@ class TWikidataRecords:
         regions = set()
         (_, netloc1, _, _, _) = urlsplit_pro(url)
         for x in self.name2wikidata.get(name, []):
-            url = x['oblast']
-            (_, netloc2, _, _, _) = urlsplit_pro(url)
+            (_, netloc2, _, _, _) = urlsplit_pro(x['website'])
             if netloc1 == netloc2:
-                region_wikidata_id = os.path.basename(url)
+                region_wikidata_id = os.path.basename(x['oblast'])
                 region_id = self.regions.get_region_by_wikidata_id(region_wikidata_id)
                 if region_id is None:
                     continue
@@ -122,6 +121,7 @@ def main():
                 office.wikidata_id = wikidata_id
     logger.info("write to {}".format(args.output_file))
     offices.write_to_local_file(args.output_file)
+
 
 if __name__ == "__main__":
     main()
