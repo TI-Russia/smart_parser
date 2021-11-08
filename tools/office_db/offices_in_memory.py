@@ -39,7 +39,7 @@ class TOfficeInMemory:
             'name': self.name,
             'parent_id': self.parent_id,
             'type_id': self.type_id,
-            #'rubric_id': self.rubric_id, this field is only in sql db
+            'rubric_id': self.rubric_id,
             'region_id': self.region_id
         }
         if self.address is not None:

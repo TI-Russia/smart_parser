@@ -25,8 +25,6 @@ class Command(BaseCommand):
         self.logger = setup_logging(log_file_name="build_office_calculated_params.log")
 
     def handle(self, *args, **options):
-        web_sites_db = TDeclarationWebSiteList(self.logger, TDeclarationWebSiteList.default_input_task_list_path).load_from_disk()
-        office_to_urls = web_sites_db.build_office_to_main_website()
         query = """
             select o.id, min(s.income_year), count(s.id) 
             from declarations_office o
@@ -63,7 +61,6 @@ class Command(BaseCommand):
                 "child_office_examples": list(get_child_offices(o.id, o.parent_id)),
                 "source_document_count": office_to_doc_count.get(o.id, 0),
                 "section_count": sum(params[o.id].values()),
-                "urls": list(office_to_urls[o.id])
             }
             o.save()
 
