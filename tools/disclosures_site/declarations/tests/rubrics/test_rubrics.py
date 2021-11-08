@@ -1,4 +1,4 @@
-from declarations.rubrics import TOfficeProps, TOfficeRubrics
+from office_db.rubrics import TOfficeProps, TOfficeRubrics
 
 
 from django.test import TestCase

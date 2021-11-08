@@ -1,5 +1,5 @@
-from declarations.offices_in_memory import TOfficeTableInMemory
-from declarations.rubrics import get_russian_rubric_str
+from office_db.offices_in_memory import TOfficeTableInMemory
+from office_db.rubrics import get_russian_rubric_str
 from django.core.management import BaseCommand
 from common.logging_wrapper import setup_logging
 import declarations.models as models

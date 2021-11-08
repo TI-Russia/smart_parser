@@ -1,4 +1,4 @@
-from common.russian_regions import TRussianRegions
+from office_db.russian_regions import TRussianRegions
 from common.logging_wrapper import setup_logging
 
 import json

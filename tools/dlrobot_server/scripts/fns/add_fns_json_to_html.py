@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import json
 import sys
 import os
-from common.russian_regions import TRussianRegions
+from office_db.russian_regions import TRussianRegions
 
 
 def include_fns_json_to_html(json_path, html_path):

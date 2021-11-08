@@ -3,7 +3,7 @@ from web_site_db.robot_project import TRobotProject
 from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
 from common.logging_wrapper import setup_logging
 from common.export_files import TExportFile
-from declarations.offices_in_memory import TOfficeTableInMemory
+from office_db.offices_in_memory import TOfficeTableInMemory
 
 import os
 import sys

@@ -4,7 +4,7 @@ from . import models
 from declarations.documents import ElasticSectionDocument, ElasticPersonDocument, ElasticOfficeDocument, ElasticFileDocument
 from common.russian_fio import TRussianFio, TRussianFioRecognizer
 from disclosures_site.declarations.statistics import TDisclosuresStatisticsHistory
-from declarations.rubrics import fill_combo_box_with_rubrics
+from office_db.rubrics import fill_combo_box_with_rubrics
 from common.content_types import file_extension_to_content_type
 from declarations.apps import DeclarationsConfig
 from declarations.car_brands import CAR_BRANDS

@@ -1,8 +1,8 @@
 from declarations.models import Section, Person, Office, Source_Document
-from .offices_in_memory import TOfficeTableInMemory
-from .rubrics import get_russian_rubric_str
+from office_db.offices_in_memory import TOfficeTableInMemory
+from office_db.rubrics import get_russian_rubric_str
 
-from django_elasticsearch_dsl import Document, IntegerField, TextField, ByteField, KeywordField
+from django_elasticsearch_dsl import Document, IntegerField, TextField, KeywordField
 from django_elasticsearch_dsl.registries import registry
 from django.conf import settings
 from elasticsearch_dsl import Index

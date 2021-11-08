@@ -1,6 +1,7 @@
 import random
 
-from web_site_db.web_sites import TDeclarationWebSiteList, TDeclarationWebSite
+from web_site_db.web_sites import TDeclarationWebSiteList
+from office_db.declaration_office_website import TDeclarationWebSite
 from web_site_db.web_site_status import TWebSiteReachStatus
 from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
 from web_site_db.robot_project import TRobotProject
@@ -8,7 +9,7 @@ from common.urllib_parse_pro import strip_scheme_and_query, TUrlUtf8Encode
 from common.logging_wrapper import setup_logging
 from common.http_request import THttpRequester
 from common.download import TDownloadEnv
-from declarations.offices_in_memory import TOfficeInMemory, TOfficeTableInMemory
+from office_db.offices_in_memory import TOfficeInMemory, TOfficeTableInMemory
 from common.serp_parser import SearchEngine, SearchEngineEnum
 
 from copy import deepcopy

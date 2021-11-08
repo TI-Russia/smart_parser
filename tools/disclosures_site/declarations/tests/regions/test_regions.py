@@ -1,8 +1,8 @@
-from common.russian_regions import TRussianRegions
+from office_db.russian_regions import TRussianRegions
 
 
 from django.test import TestCase
-from operator import itemgetter
+
 
 class RegionsTestCase(TestCase):
 

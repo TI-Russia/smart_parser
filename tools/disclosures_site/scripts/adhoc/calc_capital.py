@@ -1,6 +1,6 @@
 import json
 
-from common.russian_regions import TRussianRegions
+from office_db.russian_regions import TRussianRegions
 import argparse
 
 

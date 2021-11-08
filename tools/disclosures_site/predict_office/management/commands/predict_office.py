@@ -5,8 +5,8 @@ from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from disclosures_site.predict_office.prediction_case import TPredictionCase
 from common.logging_wrapper import setup_logging
 from declarations.documents import OFFICES
-from disclosures_site.declarations.offices_in_memory import TOfficeInMemory
-from disclosures_site.declarations.rubrics import TOfficeRubrics
+from office_db.offices_in_memory import TOfficeInMemory
+from office_db.rubrics import TOfficeRubrics
 
 import os
 import json

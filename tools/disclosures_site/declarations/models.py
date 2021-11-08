@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import  get_language
 from .countries import get_country_str
-from .rubrics import get_russian_rubric_str
+from office_db.rubrics import get_russian_rubric_str
 from declarations.nominal_income import get_average_nominal_incomes, YearIncome
 from declarations.ratings import TPersonRatings
 from declarations.car_brands import CAR_BRANDS

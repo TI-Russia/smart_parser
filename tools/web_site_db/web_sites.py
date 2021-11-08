@@ -1,5 +1,3 @@
-import re
-
 from common.urllib_parse_pro import strip_scheme_and_query, TUrlUtf8Encode, urlsplit_pro
 from web_site_db.web_site_status import TWebSiteReachStatus
 
@@ -7,9 +5,9 @@ import json
 import os
 from collections import defaultdict
 import datetime
+import re
 
-
-class TDeclarationWebSite:
+class TDeclarationWebSiteObsolete:
     def __init__(self):
         self.calculated_office_id = None
         self.reach_status = TWebSiteReachStatus.normal
@@ -85,7 +83,7 @@ class TDeclarationWebSiteList:
     def load_from_disk(self):
         with open(self.file_name, "r") as inp:
             for k, v in json.load(inp).items():
-                self.web_sites[k] = TDeclarationWebSite().read_from_json(v)
+                self.web_sites[k] = TDeclarationWebSiteObsolete().read_from_json(v)
         self.build_web_domains_redirects()
         self.web_domain_to_web_site.clear()
         for k, v in self.web_sites.items():
@@ -113,7 +111,7 @@ class TDeclarationWebSiteList:
             return list()
         return l
 
-    def get_first_site_by_web_domain(self, web_domain: str) -> TDeclarationWebSite:
+    def get_first_site_by_web_domain(self, web_domain: str) -> TDeclarationWebSiteObsolete:
         assert '/' not in web_domain
         l = self.get_sites_by_web_domain(web_domain)
         if len(l) == 0:
@@ -149,7 +147,7 @@ class TDeclarationWebSiteList:
         assert site_url not in self.web_sites
 
         self.logger.debug("add web site {} ".format(site_url))
-        s = TDeclarationWebSite()
+        s = TDeclarationWebSiteObsolete()
         s.calculated_office_id = office_id
         self.web_sites[site_url] = s
 
@@ -173,7 +171,7 @@ class TDeclarationWebSiteList:
     def has_web_site(self, site_url):
         return site_url in self.web_sites
 
-    def get_web_site(self, site_url) -> TDeclarationWebSite:
+    def get_web_site(self, site_url) -> TDeclarationWebSiteObsolete:
         return self.web_sites.get(site_url)
 
     def save_to_disk(self):

@@ -1,5 +1,5 @@
 import declarations.models as models
-from declarations.rubrics import get_all_rubric_ids, get_russian_rubric_str
+from office_db.rubrics import get_all_rubric_ids, get_russian_rubric_str
 from declarations.gender_recognize import TGender, TGenderRecognizer
 from common.logging_wrapper import setup_logging
 from declarations.sql_helpers import fetch_cursor_by_chunks

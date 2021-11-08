@@ -1,4 +1,4 @@
-from common.russian_regions import TRussianRegions
+from office_db.russian_regions import TRussianRegions
 from web_site_db.web_sites import TDeclarationWebSiteList
 from common.urllib_parse_pro import urlsplit_pro
 

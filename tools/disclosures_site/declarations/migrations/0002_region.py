@@ -1,10 +1,7 @@
-from django.db import migrations, models
+from django.db import migrations
 from declarations.models import SynonymClass
-from common.russian_regions import TRussianRegions
+from office_db.russian_regions import TRussianRegions
 
-import gzip
-import json
-import os
 
 #echo  "select *  from declarations_region" |  mysqlsh --sql --result-format=json/array --uri=declarator@localhost -pdeclarator -D declarator  | gzip -c > data/regions.txt.gz
 def add_regions(apps, schema_editor):

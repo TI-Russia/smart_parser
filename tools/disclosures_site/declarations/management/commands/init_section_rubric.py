@@ -1,8 +1,8 @@
 from django.core.management import BaseCommand
 import declarations.models as models
-from declarations.rubrics import TOfficeRubrics
+from office_db.rubrics import TOfficeRubrics
 from concurrent.futures import ProcessPoolExecutor
-from declarations.offices_in_memory import TOfficeTableInMemory
+from office_db.offices_in_memory import TOfficeTableInMemory
 
 from django.db import transaction
 import sys

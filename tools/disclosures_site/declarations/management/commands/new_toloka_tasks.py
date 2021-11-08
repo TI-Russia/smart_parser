@@ -1,7 +1,7 @@
 from common.logging_wrapper import setup_logging
 from deduplicate.toloka import TToloka
 from common.russian_fio import TRussianFio
-from declarations.rubrics import get_russian_rubric_str
+from office_db.rubrics import get_russian_rubric_str
 from declarations.serializers import get_section_json
 import declarations.models as models
 

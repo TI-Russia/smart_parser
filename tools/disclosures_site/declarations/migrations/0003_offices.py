@@ -1,4 +1,4 @@
-from declarations.offices_in_memory import TOfficeTableInMemory, TOfficeInMemory
+from office_db.offices_in_memory import TOfficeTableInMemory, TOfficeInMemory
 
 from django.db import migrations
 

@@ -1,5 +1,5 @@
 import declarations.models as models
-from common.russian_regions import TRussianRegions, RUSSIA_AS_A_WHOLE_REGION_ID
+from office_db.russian_regions import TRussianRegions, RUSSIA_AS_A_WHOLE_REGION_ID
 
 from django.core.management import BaseCommand
 from itertools import groupby

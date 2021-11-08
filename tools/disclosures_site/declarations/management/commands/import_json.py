@@ -5,8 +5,8 @@ from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from declarations.input_json import TDlrobotHumanFileDBM, TSourceDocument, TDeclaratorReference, TWebReference
 from common.logging_wrapper import setup_logging
 from declarations.documents import OFFICES
-from declarations.rubrics import TOfficeRubrics
-from common.russian_regions import TRussianRegions, RUSSIA_AS_A_WHOLE_REGION_ID
+from office_db.rubrics import TOfficeRubrics
+from office_db.russian_regions import TRussianRegions, RUSSIA_AS_A_WHOLE_REGION_ID
 
 from multiprocessing import Pool
 import os

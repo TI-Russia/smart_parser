@@ -3,9 +3,9 @@ from common.download import get_file_extension_only_by_headers
 from common.primitives import normalize_and_russify_anchor_text
 from common.link_info import TLinkInfo, check_sub_page_or_iframe
 from common.content_types import ACCEPTED_DECLARATION_FILE_EXTENSIONS, DEFAULT_HTML_EXTENSION
-from common.russian_declarant_position import is_public_servant_role
-from common.russian_office_word import has_office_word_in_beginning
-from common.russian_geo_word import has_geo_leaf_word_in_beginning
+from office_db.russian_declarant_position import is_public_servant_role
+from office_db.russian_office_word import has_office_word_in_beginning
+from office_db.russian_geo_word import has_geo_leaf_word_in_beginning
 from common.content_types import is_video_or_audio_file_extension
 
 import re
