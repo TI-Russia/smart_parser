@@ -64788,7 +64788,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414381"
     },
     {
         "id": 20145,
@@ -64796,7 +64796,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414382"
     },
     {
         "id": 20147,
@@ -64995,7 +64995,8 @@
         "name": "Ивановский сельсовет",
         "parent_id": null,
         "type_id": null,
-        "region_id": 72
+        "region_id": 72,
+        "wikidata_id": "Q4196702"
     },
     {
         "id": 20179,
@@ -65083,7 +65084,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 20,
-        "wikidata_id": "Q5422"
+        "wikidata_id": "Q4211426"
     },
     {
         "id": 20192,
@@ -65257,7 +65258,8 @@
         "name": "Красносельское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": 56
+        "region_id": 56,
+        "wikidata_id": "Q4239059"
     },
     {
         "id": 20214,
@@ -65336,7 +65338,8 @@
         "name": "Михайловский сельсовет",
         "parent_id": null,
         "type_id": null,
-        "region_id": 4
+        "region_id": 4,
+        "wikidata_id": "Q4297785"
     },
     {
         "id": 20226,
@@ -65615,7 +65618,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 20,
-        "wikidata_id": "Q5422"
+        "wikidata_id": "Q4333258"
     },
     {
         "id": 20263,
@@ -65742,14 +65745,16 @@
         "name": "Петровский сельсовет",
         "parent_id": null,
         "type_id": null,
-        "region_id": 4
+        "region_id": 4,
+        "wikidata_id": "Q4361283"
     },
     {
         "id": 20279,
         "name": "Петровское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": 107
+        "region_id": 107,
+        "wikidata_id": "Q4361415"
     },
     {
         "id": 20280,
@@ -65930,7 +65935,8 @@
         "name": "Раздольевское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": 56
+        "region_id": 56,
+        "wikidata_id": "Q4388454"
     },
     {
         "id": 20304,
@@ -65969,7 +65975,8 @@
         "name": "Ромашкинское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": 56
+        "region_id": 56,
+        "wikidata_id": "Q4397512"
     },
     {
         "id": 20309,
@@ -66217,7 +66224,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4094735"
     },
     {
         "id": 20341,
@@ -66606,7 +66613,8 @@
         "name": "Горское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": 101
+        "region_id": 67,
+        "wikidata_id": "Q4145929"
     },
     {
         "id": 20391,
@@ -66876,7 +66884,8 @@
         "name": "Сосновский сельсовет",
         "parent_id": null,
         "type_id": null,
-        "region_id": 72
+        "region_id": 72,
+        "wikidata_id": "Q4429690"
     },
     {
         "id": 20438,
@@ -66963,7 +66972,8 @@
         "name": "Алейниковское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": 43
+        "region_id": 43,
+        "wikidata_id": "Q4060805"
     },
     {
         "id": 20449,
@@ -66978,14 +66988,16 @@
         "name": "Александровское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": 43
+        "region_id": 43,
+        "wikidata_id": "Q4061534"
     },
     {
         "id": 20451,
         "name": "Александровское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": 43
+        "region_id": 43,
+        "wikidata_id": "Q4061537"
     },
     {
         "id": 20452,
@@ -67000,7 +67012,8 @@
         "name": "Андреевское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": 55
+        "region_id": 69,
+        "wikidata_id": "Q4065779"
     },
     {
         "id": 20454,
@@ -67127,7 +67140,8 @@
         "name": "Сусанинское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": 56
+        "region_id": 56,
+        "wikidata_id": "Q51011"
     },
     {
         "id": 20470,
@@ -67150,7 +67164,8 @@
         "name": "Петровское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": 56
+        "region_id": 56,
+        "wikidata_id": "Q2342996"
     },
     {
         "id": 20473,
@@ -67173,7 +67188,8 @@
         "name": "Мичуринское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": 56
+        "region_id": 56,
+        "wikidata_id": "Q2659959"
     },
     {
         "id": 20476,
@@ -67355,7 +67371,8 @@
         "name": "Заволжское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": 107
+        "region_id": 107,
+        "wikidata_id": "Q4183265"
     },
     {
         "id": 20499,
@@ -67395,7 +67412,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 76,
-        "wikidata_id": "Q3573"
+        "wikidata_id": "Q4280846"
     },
     {
         "id": 20504,
@@ -67403,7 +67420,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 76,
-        "wikidata_id": "Q3573"
+        "wikidata_id": "Q4280848"
     },
     {
         "id": 20505,
@@ -67443,7 +67460,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 20,
-        "wikidata_id": "Q5422"
+        "wikidata_id": "Q4272187"
     },
     {
         "id": 20510,
@@ -67538,7 +67555,8 @@
         "name": "Куликовское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": 56
+        "region_id": 27,
+        "wikidata_id": "Q4246289"
     },
     {
         "id": 20524,
@@ -67737,7 +67755,8 @@
         "name": "Сусанинское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": 32
+        "region_id": 32,
+        "wikidata_id": "Q4446688"
     },
     {
         "id": 20551,
@@ -68185,7 +68204,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q12084238"
     },
     {
         "id": 20610,
@@ -68784,7 +68803,8 @@
         "name": "Александровское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": 41
+        "region_id": 41,
+        "wikidata_id": "Q17154802"
     },
     {
         "id": 20697,
@@ -69859,13 +69879,6 @@
         "wikidata_id": "Q14505644"
     },
     {
-        "id": 20847,
-        "name": "Воршинское сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20848,
         "name": "Село Каменная Балка",
         "parent_id": null,
@@ -69974,7 +69987,8 @@
         "name": "Куликовское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 41,
+        "wikidata_id": "Q19835649"
     },
     {
         "id": 20862,
@@ -70005,7 +70019,8 @@
         "name": "Сосновский сельсовет",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 55,
+        "wikidata_id": "Q19836511"
     },
     {
         "id": 20866,
@@ -70108,7 +70123,8 @@
         "name": "Петровский сельсовет",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 105,
+        "wikidata_id": "Q20085053"
     },
     {
         "id": 20879,
@@ -70435,7 +70451,8 @@
         "name": "Село Воямполка",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 48,
+        "wikidata_id": "Q21193609"
     },
     {
         "id": 20920,
@@ -70639,7 +70656,8 @@
         "name": "Зоркинское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 109,
+        "wikidata_id": "Q65129724"
     },
     {
         "id": 20947,
