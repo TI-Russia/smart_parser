@@ -153,10 +153,11 @@ class TDeclarationWebSiteList:
         s.calculated_office_id = office_id
         self.web_sites[site_url] = s
 
-    def build_office_to_main_website(self, add_http_scheme=True, only_web_domain=False):
+    def build_office_to_main_website(self, add_http_scheme=True, only_web_domain=False, take_abandoned=False):
         office_to_website = defaultdict(set)
         for site_url, web_site_info in self.web_sites.items():
-            if TWebSiteReachStatus.can_communicate(web_site_info.reach_status) and site_url.find('declarator.org') == -1:
+            if (take_abandoned or TWebSiteReachStatus.can_communicate(web_site_info.reach_status)) and \
+                    site_url.find('declarator.org') == -1:
                 if add_http_scheme:
                     p = web_site_info.http_protocol
                     if p is None:

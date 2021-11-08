@@ -1,5 +1,5 @@
 import declarations.models as models
-from common.russian_regions import TRussianRegions
+from common.russian_regions import TRussianRegions, RUSSIA_AS_A_WHOLE_REGION_ID
 
 from django.core.management import BaseCommand
 from itertools import groupby
@@ -91,7 +91,7 @@ class Command(BaseCommand):
         x = list()
         y = list()
         for s in region_stats:
-            if s.region_id is not None and s.citizen_month_median_income is not None:
+            if s.region_id is not None and s.region_id != RUSSIA_AS_A_WHOLE_REGION_ID and s.citizen_month_median_income is not None:
                 x.append(s.citizen_month_median_income)
                 y.append(s.declarant_month_median_income)
         print("normaltest citizen_month_median_income {}".format(scipy.stats.normaltest(sorted(x))))
@@ -122,7 +122,7 @@ class Command(BaseCommand):
             os.mkdir(report_folder)
         data = list()
         for r in region_stats:
-            if r.region_id is None or r.citizen_month_median_income is None:
+            if r.region_id is None or r.region_id == RUSSIA_AS_A_WHOLE_REGION_ID or r.citizen_month_median_income is None:
                 continue
             data.append((r.region_id,
                 r.region_name,

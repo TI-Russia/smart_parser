@@ -93,6 +93,10 @@ def main():
         for l in inp:
             office_id, name = l.strip().split("\t")
             office = offices.offices.get(int(office_id))
+            if office is None:
+                logger.debug("cannot find office_id={}, name={} no valid urls, deleted office?")
+                continue
+
             wikidata_id, region = wd.get_region_by_name(name)
             if wikidata_id is not None:
                 cause = "name"

@@ -1,5 +1,5 @@
 from declarations.rubrics import TOfficeRubrics, RubricsInRussian, TOfficeProps
-from common.russian_regions import RUSSIA_REGION_ID
+from common.russian_regions import RUSSIA_AS_A_WHOLE_REGION_ID
 import json
 import os
 import re
@@ -90,7 +90,7 @@ class TOfficeTableInMemory:
         for office_id, office_info in self.offices.items():
             if office_info.parent_id == main_fsin_office_id:
                 self.fsin_by_region[office_info.region_id] = office_id
-        self.fsin_by_region[RUSSIA_REGION_ID] = main_fsin_office_id
+        self.fsin_by_region[RUSSIA_AS_A_WHOLE_REGION_ID] = main_fsin_office_id
 
     def get_office_id_to_ml_office_id(self):
         return list((i, o) for i, o in enumerate(self.offices))

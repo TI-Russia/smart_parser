@@ -1,14 +1,14 @@
-import sys
-import sys
 from common.primitives import normalize_whitespace
+
+import sys
 import ahocorasick
 
 
-RUSSIA_REGION_ID = 0
+RUSSIA_AS_A_WHOLE_REGION_ID = 2
 
 RUSSIAN_REGIONS = [
     {
-        "id": RUSSIA_REGION_ID,
+        "id": RUSSIA_AS_A_WHOLE_REGION_ID,
         "name": "Россия",
         "code": 0,
         "short_name": "РФ",
@@ -2222,7 +2222,7 @@ class TRussianRegions:
             self.wikidata2region[r.wikidata_id] = r
 
             forms = set([r.name, r.short_name])
-            if r.id != RUSSIA_REGION_ID:
+            if r.id != RUSSIA_AS_A_WHOLE_REGION_ID:
                 for f in forms:
                     self.nominative_forms.add_word(f.lower(), (r.id, f.lower()))
 
@@ -2230,7 +2230,7 @@ class TRussianRegions:
                 forms.update(region.get(case, []))
             for f in forms:
                 self.all_forms.add_word(f.lower(), (r.id, f.lower()))
-            if r.id != RUSSIA_REGION_ID:
+            if r.id != RUSSIA_AS_A_WHOLE_REGION_ID:
                 capital = normalize_whitespace(region['capital'].lower())
                 self.capitals_to_regions[capital] = r
                 self.all_capitals.add_word(capital, (r.id, capital))
@@ -2312,6 +2312,7 @@ class TRussianRegions:
 
     def get_region_by_wikidata_id(self, wikidata_id):
         return self.wikidata2region.get(wikidata_id)
+
 
 if __name__ == "__main__":
     regions = TRussianRegions()

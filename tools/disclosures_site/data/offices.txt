@@ -18,21 +18,21 @@
         "name": "Центральная избирательная комиссия",
         "parent_id": null,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4,
         "name": "Министерство внутренних дел",
         "parent_id": 589,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 5,
         "name": "Совет Федерации",
         "parent_id": null,
         "type_id": 24,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 6,
@@ -46,7 +46,7 @@
         "name": "Федеральная миграционная служба",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 8,
@@ -3007,7 +3007,7 @@
         "name": "Федеральная антимонопольная служба",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 447,
@@ -3028,42 +3028,42 @@
         "name": "Президент Российской Федерации",
         "parent_id": null,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 450,
         "name": "Министерство обороны ",
         "parent_id": 589,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 453,
         "name": "Правительство РФ",
         "parent_id": null,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 456,
         "name": "Администрация Президента РФ",
         "parent_id": null,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 461,
         "name": "Федеральная служба судебных приставов",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 463,
         "name": "Федеральная служба по тарифам ",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 464,
@@ -3077,364 +3077,364 @@
         "name": "Министерство энергетики ",
         "parent_id": 589,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 467,
         "name": "Федеральная служба безопасности",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 468,
         "name": "Федеральная служба по контролю за оборотом наркотиков",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 470,
         "name": "Федеральная налоговая служба",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 471,
         "name": "Федеральная служба по гидрометеорологии и мониторингу окружающей среды",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 472,
         "name": "Федеральная служба государственной статистики",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 473,
         "name": "Федеральная служба по экологическому, технологическому и атомному надзору ",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 474,
         "name": "Федеральная служба в сфере защиты прав потребителей и благополучия человека",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 476,
         "name": "Федеральная служба по финансовым рынкам",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 477,
         "name": "Федеральная служба по надзору в сфере транспорта",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 478,
         "name": "Федеральная служба государственной регистрации, кадастра и картографии ",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 479,
         "name": "Федеральное Казначейство",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 480,
         "name": "Федеральная служба финансово-бюджетного надзора",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 481,
         "name": "Федеральная служба по надзору в сфере связи, информационных технологий и массовых коммуникаций ",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 482,
         "name": "Федеральная служба исполнения наказаний",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 483,
         "name": "Федеральная служба по ветеринарному и фитосанитарному надзору ",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 485,
         "name": "Федеральная служба страхового надзора ",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 486,
         "name": "Федеральное агентство по делам СНГ, соотечественников, проживающих за рубежом, и по международному гуманитарному сотрудничеству",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 487,
         "name": "Федеральная служба по военно-техническому сотрудничеству",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 488,
         "name": "Федеральная служба по оборонному заказу ",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 489,
         "name": "Федеральная служба по техническому и экспортному контролю",
         "parent_id": 464,
         "type_id": 24,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 490,
         "name": "Федеральное агентство по поставкам вооружения, военной, специальной техники и материальных средств ",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 491,
         "name": "Федеральное агентство специального строительства ",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 492,
         "name": "Государственная фельдъегерская служба ",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 493,
         "name": "Служба внешней разведки ",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 494,
         "name": "Федеральная служба охраны",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 495,
         "name": "Федеральная служба по надзору в сфере здравоохранения",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 496,
         "name": "Федеральная служба по труду и занятости",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 497,
         "name": "Федеральное медико-биологическое агентство",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 498,
         "name": "Федеральное архивное агентство",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 499,
         "name": "Федеральная служба по интеллектуальной собственности",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 500,
         "name": "Федеральная служба по надзору в сфере образования и науки",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 501,
         "name": "Федеральная служба по надзору в сфере природопользования",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 502,
         "name": "Федеральное агентство водных ресурсов",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 503,
         "name": "Федеральное агентство по недропользованию",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 504,
         "name": "Федеральное агентство по техническому регулированию и метрологии",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 505,
         "name": "Федеральное агентство по печати и массовым коммуникациям",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 506,
         "name": "Федеральное агентство связи ",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 507,
         "name": "Федеральное агентство по делам молодежи",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 508,
         "name": "Федеральное агентство по туризму",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 509,
         "name": "Федеральное агентство воздушного транспорта",
         "parent_id": 464,
         "type_id": 24,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 510,
         "name": "Федеральное дорожное агентство",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 511,
         "name": "Федеральное агентство железнодорожного транспорта",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 512,
         "name": "Федеральное агентство морского и речного транспорта",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 513,
         "name": "Федеральная служба по аккредитации",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 514,
         "name": "Федеральное агентство по государственным резервам",
         "parent_id": 464,
         "type_id": 24,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 515,
         "name": "Федеральное агентство по управлению государственным имуществом ",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 516,
         "name": "Федеральная служба по регулированию алкогольного рынка",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 517,
         "name": "Государственная корпорация по космической деятельности «Роскосмос»",
         "parent_id": 962,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 518,
         "name": "Федеральное агентство лесного хозяйства",
         "parent_id": 464,
         "type_id": 24,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 519,
         "name": "Федеральное агентство по обустройству государственной границы Российской Федерации",
         "parent_id": 464,
         "type_id": 24,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 520,
         "name": "Федеральное агентство по рыболовству",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 527,
@@ -3770,35 +3770,35 @@
         "name": "Управление делами Президента ",
         "parent_id": 464,
         "type_id": 24,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 576,
         "name": "Федеральная таможенная служба",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 578,
         "name": "Федеральная служба по финансовому мониторингу",
         "parent_id": 464,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 579,
         "name": "Министерство культуры ",
         "parent_id": 589,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 580,
         "name": "Министерство по делам гражданской обороны, чрезвычайным ситуациям и ликвидации последствий стихийных бедствий",
         "parent_id": 589,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 581,
@@ -3861,91 +3861,91 @@
         "name": "Министерство иностранных дел ",
         "parent_id": 589,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 595,
         "name": "Министерство юстиции ",
         "parent_id": 589,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 596,
         "name": "Министерство здравоохранения",
         "parent_id": 589,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 598,
         "name": "Министерство образования и науки",
         "parent_id": 589,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 599,
         "name": "Министерство природных ресурсов и экологии ",
         "parent_id": 589,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 600,
         "name": "Министерство промышленности и торговли ",
         "parent_id": 589,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 601,
         "name": "Министерство цифрового развития, связи и массовых коммуникаций",
         "parent_id": 589,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 602,
         "name": "Министерство регионального развития",
         "parent_id": 589,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 603,
         "name": "Министерство экономического развития",
         "parent_id": 589,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 604,
         "name": "Министерство финансов ",
         "parent_id": 589,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 605,
         "name": "Министерство транспорта",
         "parent_id": 589,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 606,
         "name": "Министерство спорта ",
         "parent_id": 589,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 607,
         "name": "Министерство сельского хозяйства ",
         "parent_id": 589,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 608,
@@ -3966,28 +3966,28 @@
         "name": "Верховный Суд",
         "parent_id": 626,
         "type_id": 23,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 611,
         "name": "Constitutional Court of the Russian Federation",
         "parent_id": 832,
         "type_id": 23,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 612,
         "name": "Центральный Банк",
         "parent_id": null,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 613,
         "name": "Высший Арбитражный Суд (с 06.08.2014 включен в состав Верховного суда)",
         "parent_id": 618,
         "type_id": 23,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 618,
@@ -5438,21 +5438,21 @@
         "name": "Прокуратура",
         "parent_id": null,
         "type_id": 16,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 831,
         "name": "Генеральная прокуратура",
         "parent_id": 830,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 832,
         "name": "Конституционный Суд",
         "parent_id": null,
         "type_id": 17,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 833,
@@ -5585,21 +5585,21 @@
         "name": "Территориальное управление Федеральной службы по аккредитации Центральный федеральный округ (ликвидировано приказом № 104 от 13.01.2016)",
         "parent_id": 513,
         "type_id": 23,
-        "region_id": null
+        "region_id": 63
     },
     {
         "id": 860,
         "name": "Территориальное управление Федеральной службы по аккредитации Приволжский федеральный округ",
         "parent_id": 513,
         "type_id": 23,
-        "region_id": null
+        "region_id": 18
     },
     {
         "id": 861,
         "name": "Территориальное управление Федеральной службы по аккредитации Сибирский федеральный округ",
         "parent_id": 513,
         "type_id": 23,
-        "region_id": null
+        "region_id": 28
     },
     {
         "id": 862,
@@ -5613,21 +5613,21 @@
         "name": "Территориальное управление Федеральной службы по аккредитации Дальневосточный федеральный округ",
         "parent_id": 513,
         "type_id": 23,
-        "region_id": null
+        "region_id": 72
     },
     {
         "id": 864,
         "name": "Территориальное управление Федеральной службы по аккредитации Южный, Северо-Кавказский федеральные округа",
         "parent_id": 513,
         "type_id": 23,
-        "region_id": null
+        "region_id": 76
     },
     {
         "id": 865,
         "name": "Территориальное управление Федеральной службы по аккредитации Уральский федеральный округ",
         "parent_id": 513,
         "type_id": 23,
-        "region_id": null
+        "region_id": 79
     },
     {
         "id": 867,
@@ -6256,7 +6256,7 @@
         "name": "Следственный комитет",
         "parent_id": null,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 960,
@@ -6277,28 +6277,28 @@
         "name": "Банк развития и внешнеэкономической деятельности (Внешэкономбанк)",
         "parent_id": 962,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 967,
         "name": "Russian Highways (Avtodor)",
         "parent_id": 962,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 968,
         "name": "Deposit Insurance Agency",
         "parent_id": 962,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 969,
         "name": "Государственная корпорация по атомной энергии \"Росатом\"",
         "parent_id": 962,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 970,
@@ -6319,35 +6319,35 @@
         "name": "Фонд содействия реформированию ЖКХ",
         "parent_id": 962,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 973,
         "name": "Государственные внебюджетные фонды",
         "parent_id": null,
         "type_id": 12,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 974,
         "name": "Пенсионный фонд Российской Федерации",
         "parent_id": 973,
         "type_id": 22,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 975,
         "name": "Федеральный фонд обязательного медицинского страхования",
         "parent_id": 973,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 976,
         "name": "Фонд социального страхования",
         "parent_id": 973,
         "type_id": 22,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 978,
@@ -6375,14 +6375,14 @@
         "name": "Министерство труда и социальной защиты",
         "parent_id": 589,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 982,
         "name": "Министерство по развитию Дальнего Востока и Арктики",
         "parent_id": 589,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 983,
@@ -7502,7 +7502,7 @@
         "name": "Министерство строительства и жилищно-коммунального хозяйства",
         "parent_id": 589,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 1144,
@@ -8615,7 +8615,7 @@
         "name": "Московско-Окское бассейновое водное управление Федерального агентства водных ресурсов",
         "parent_id": 502,
         "type_id": 23,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 1305,
@@ -27234,322 +27234,322 @@
         "name": "Agency for Strategic Initiatives",
         "parent_id": 3986,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 3989,
         "name": "Национальный фонд содействия инвалидам РФ",
         "parent_id": 3986,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 3990,
         "name": "Федеральный фонд производственных инноваций (ликвидирован 01.09.2015)",
         "parent_id": 3986,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 3991,
         "name": "Исследовательский центр частного права имени С.С. Алексеева при Президенте РФ",
         "parent_id": 3986,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 3992,
         "name": "Аналитический центр при Правительстве РФ",
         "parent_id": 3986,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 3993,
         "name": "Национальный исследовательский центр \"Курчатовский институт\"",
         "parent_id": 3986,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 3994,
         "name": "Russian State Military, Historical, and Cultural Center of the Russian Government",
         "parent_id": 3986,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 3995,
         "name": "Российский гуманитарный научный фонд (29.02.2016 ликвидирован в форме обратного присоединения к РФФИ)",
         "parent_id": 3986,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 3996,
         "name": "Российский фонд фундаментальных исследований",
         "parent_id": 3986,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 3997,
         "name": "Фонд содействия развитию малых форм предприятий в научно-технической сфере",
         "parent_id": 3986,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 3998,
         "name": "Институт законодательства и сравнительного правоведения при Правительстве РФ",
         "parent_id": 3986,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 3999,
         "name": "Civilian Airport Administration ",
         "parent_id": 3986,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4000,
         "name": "Главное производственно-коммерческое управление по обслуживанию дипломатического корпуса при МИД РФ (информация о руководителе в разделе МИД РФ)",
         "parent_id": 3986,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4001,
         "name": "Civic Chamber of the Russian Federation",
         "parent_id": 3986,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4002,
         "name": "Государственная корпорация по организации воздушного движения в РФ",
         "parent_id": 3986,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4003,
         "name": "Khrunichev State Research and Production Center ",
         "parent_id": 3986,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4004,
         "name": "Russian News Agency (TASS)",
         "parent_id": 3986,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4005,
         "name": "Космическая связь",
         "parent_id": 3986,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4006,
         "name": "Почта России",
         "parent_id": 3986,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4007,
         "name": "Предприятие по управлению собственностью за рубежом Управления делами Президента РФ",
         "parent_id": 3986,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4008,
         "name": "Rosmorport",
         "parent_id": 3986,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4009,
         "name": "Central Depository - Central fund of storage and processing of stock market information",
         "parent_id": 3986,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4010,
         "name": "АО ДОМ.РФ",
         "parent_id": 3987,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4011,
         "name": "Oil Transporting Joint-Stock Company \"Transneft\"",
         "parent_id": 3987,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4012,
         "name": "Aeroflot - Russian Airlines",
         "parent_id": 3987,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4013,
         "name": "Gazprom",
         "parent_id": 3987,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4014,
         "name": "Zarubezhneft",
         "parent_id": 3987,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4015,
         "name": "Inter RAO UES",
         "parent_id": 3987,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4016,
         "name": "North Caucasus Development Corporation",
         "parent_id": 3987,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4017,
         "name": "North Caucasus Resorts",
         "parent_id": 3987,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4018,
         "name": "PJSC of Intercity and International Electrical Communication \"Rostelecom\"",
         "parent_id": 3987,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4019,
         "name": "Sheremetyevo International Airport",
         "parent_id": 3987,
         "type_id": 21,
-        "region_id": null
+        "region_id": 63
     },
     {
         "id": 4020,
         "name": "\"Rosneft\" Oil Company",
         "parent_id": 3987,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4021,
         "name": "United Aircraft Construction Corporation",
         "parent_id": 3987,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4022,
         "name": "United Shipbuilding Corporation",
         "parent_id": 3987,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4023,
         "name": "S.P. Korolev Rocket and Space Corporation \"Energia\"",
         "parent_id": 3987,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4024,
         "name": "Rusnano",
         "parent_id": 3987,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4025,
         "name": "Rosneftegaz",
         "parent_id": 3987,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4026,
         "name": "Rocket and Space Instrumentation and Information Systems Corporation",
         "parent_id": 3987,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4027,
         "name": "Российские железные дороги",
         "parent_id": 3987,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4028,
         "name": "Rosseti",
         "parent_id": 3987,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4029,
         "name": "Russian Agricultural Bank",
         "parent_id": 3987,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4030,
         "name": "System Operator of the Unified Energy System",
         "parent_id": 3987,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4031,
         "name": "Modern Commercial Fleet \"Sovcomflot\"",
         "parent_id": 3987,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4032,
         "name": "Federal Hydroelectrical Company \"Rushydro\"",
         "parent_id": 3987,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4033,
         "name": "Federal Grid Company",
         "parent_id": 3987,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4034,
@@ -28690,35 +28690,35 @@
         "name": "Министерство по делам Крыма",
         "parent_id": 589,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4197,
         "name": "Министерство по делам Северного Кавказа",
         "parent_id": 589,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4198,
         "name": "Главное управление специальных программ Президента",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4199,
         "name": "Федеральное агентство научных организаций",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4200,
         "name": "Федеральное агентство по делам национальностей",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4202,
@@ -29572,7 +29572,7 @@
         "name": " Управления МВД на транспорте",
         "parent_id": 4,
         "type_id": 17,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4328,
@@ -30772,7 +30772,7 @@
         "name": "Управление федеральной службы в сфере защиты прав потребителей и благополучия человека по железнодорожному транспорту",
         "parent_id": 474,
         "type_id": 23,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4498,
@@ -32342,7 +32342,7 @@
         "name": "Межрегиональное операционное управление Федерального казначейства",
         "parent_id": 479,
         "type_id": 23,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 4721,
@@ -37882,7 +37882,7 @@
         "name": "Внуковская таможня",
         "parent_id": 576,
         "type_id": 23,
-        "region_id": null
+        "region_id": 64
     },
     {
         "id": 5499,
@@ -37897,7 +37897,7 @@
         "name": "Домодедовская таможня",
         "parent_id": 576,
         "type_id": 23,
-        "region_id": null
+        "region_id": 64
     },
     {
         "id": 5501,
@@ -41446,24 +41446,24 @@
     },
     {
         "id": 6101,
-        "name": "Федеральная служба  войск национальной гвардии Российской Федерации",
+        "name": "Федеральная служба войск национальной гвардии Российской Федерации",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 6109,
         "name": "Департамент государственной политики в сфере общего образования",
         "parent_id": 598,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 6119,
         "name": "Судебный департамент при Верховном Суде РФ",
         "parent_id": 626,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 6120,
@@ -43115,7 +43115,7 @@
         "name": "ГОУ ВПО \"Кыргызско-Российский Славянский университет\"",
         "parent_id": 870,
         "type_id": 21,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 6362,
@@ -43381,7 +43381,7 @@
         "name": "Главная военная прокуратура",
         "parent_id": 830,
         "type_id": 8,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 6401,
@@ -45484,7 +45484,7 @@
         "name": "Министерство науки и высшего образования",
         "parent_id": 589,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 6743,
@@ -45725,21 +45725,21 @@
         "name": "Министерство здравоохранения и социального развития",
         "parent_id": 589,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 6779,
         "name": "Федеральное агентство по строительству и жилищно-коммунальному хозяйству",
         "parent_id": 464,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 6780,
         "name": "Министерство просвещения",
         "parent_id": 589,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 6781,
@@ -57354,14 +57354,14 @@
         "name": "Аппарат Совета Федерации",
         "parent_id": 5,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 8441,
         "name": "Аппарат Государственной Думы",
         "parent_id": 14,
         "type_id": 7,
-        "region_id": null
+        "region_id": 2
     },
     {
         "id": 8442,
@@ -64995,7 +64995,7 @@
         "name": "Ивановский сельсовет",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 72
     },
     {
         "id": 20179,
@@ -65339,13 +65339,6 @@
         "region_id": 4
     },
     {
-        "id": 20225,
-        "name": "Мичуринское сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20226,
         "name": "Муниципальное образование «Черёмушкинское»",
         "parent_id": null,
@@ -65366,7 +65359,7 @@
         "name": "Мостякское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 88
     },
     {
         "id": 20229,
@@ -65537,13 +65530,6 @@
         "wikidata_id": "Q3447"
     },
     {
-        "id": 20250,
-        "name": "Нижнеждановский сельсовет",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20251,
         "name": "Низинское сельское поселение",
         "parent_id": null,
@@ -65614,13 +65600,6 @@
         "type_id": null,
         "region_id": 81,
         "wikidata_id": "Q5207"
-    },
-    {
-        "id": 20260,
-        "name": "Новосельское сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20261,
@@ -65763,21 +65742,21 @@
         "name": "Петровский сельсовет",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 4
     },
     {
         "id": 20279,
         "name": "Петровское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 107
     },
     {
         "id": 20280,
         "name": "Петропавловское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 89
     },
     {
         "id": 20281,
@@ -65810,13 +65789,6 @@
         "type_id": null,
         "region_id": 42,
         "wikidata_id": "Q2015"
-    },
-    {
-        "id": 20285,
-        "name": "Подшиваловское сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20286,
@@ -65951,14 +65923,14 @@
         "name": "Раздольевское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 36
     },
     {
         "id": 20303,
         "name": "Раздольевское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 56
     },
     {
         "id": 20304,
@@ -65997,7 +65969,7 @@
         "name": "Ромашкинское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 56
     },
     {
         "id": 20309,
@@ -66094,13 +66066,6 @@
         "type_id": null,
         "region_id": 56,
         "wikidata_id": "Q2191"
-    },
-    {
-        "id": 20321,
-        "name": "Беловское сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20322,
@@ -66339,14 +66304,7 @@
         "name": "Вальдиватское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
-    },
-    {
-        "id": 20352,
-        "name": "Варавайское сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
+        "region_id": 88
     },
     {
         "id": 20353,
@@ -66529,7 +66487,7 @@
         "name": "Выскатское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 56
     },
     {
         "id": 20376,
@@ -66648,7 +66606,7 @@
         "name": "Горское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 101
     },
     {
         "id": 20391,
@@ -66667,13 +66625,6 @@
         "wikidata_id": "Q1697"
     },
     {
-        "id": 20393,
-        "name": "Сельское поселение Соколовское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20394,
         "name": "Сельское поселение Софьинское",
         "parent_id": null,
@@ -66682,40 +66633,12 @@
         "wikidata_id": "Q1697"
     },
     {
-        "id": 20395,
-        "name": "Сельское поселение Спасское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20396,
         "name": "Сельское поселение Спутник",
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
         "wikidata_id": "Q1697"
-    },
-    {
-        "id": 20397,
-        "name": "Сельское поселение Старорузское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
-        "id": 20398,
-        "name": "Сельское поселение Стрелковское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
-        "id": 20399,
-        "name": "Сельское поселение Струпненское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20400,
@@ -66732,13 +66655,6 @@
         "type_id": null,
         "region_id": 42,
         "wikidata_id": "Q2015"
-    },
-    {
-        "id": 20402,
-        "name": "Сельское поселение Ташировское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20403,
@@ -66769,7 +66685,7 @@
         "name": "Сельское поселение Ушарбай",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 44
     },
     {
         "id": 20407,
@@ -66788,40 +66704,12 @@
         "wikidata_id": "Q1697"
     },
     {
-        "id": 20409,
-        "name": "Сельское поселение Фруктовское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
-        "id": 20410,
-        "name": "Сельское поселение Хорошовское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20411,
         "name": "Сельское поселение Царёвское",
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
         "wikidata_id": "Q1697"
-    },
-    {
-        "id": 20412,
-        "name": "Сельское поселение Часцовское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
-        "id": 20413,
-        "name": "Сельское поселение Чисменское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20414,
@@ -66870,13 +66758,6 @@
         "type_id": null,
         "region_id": 64,
         "wikidata_id": "Q1697"
-    },
-    {
-        "id": 20420,
-        "name": "Сельское поселение Якотское",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
     },
     {
         "id": 20421,
@@ -66951,20 +66832,6 @@
         "wikidata_id": "Q2240"
     },
     {
-        "id": 20430,
-        "name": "Совхозное сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
-        "id": 20431,
-        "name": "Совхозное сельское поселение",
-        "parent_id": null,
-        "type_id": null,
-        "region_id": null
-    },
-    {
         "id": 20432,
         "name": "Соломинское сельское поселение",
         "parent_id": null,
@@ -67009,7 +66876,7 @@
         "name": "Сосновский сельсовет",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 72
     },
     {
         "id": 20438,
@@ -67096,7 +66963,7 @@
         "name": "Алейниковское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 43
     },
     {
         "id": 20449,
@@ -67111,14 +66978,14 @@
         "name": "Александровское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 43
     },
     {
         "id": 20451,
         "name": "Александровское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 43
     },
     {
         "id": 20452,
@@ -67133,7 +67000,7 @@
         "name": "Андреевское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 55
     },
     {
         "id": 20454,
@@ -67260,7 +67127,7 @@
         "name": "Сусанинское сельское поселение",
         "parent_id": null,
         "type_id": null,
-        "region_id": null
+        "region_id": 56
     },
     {
         "id": 20470,
