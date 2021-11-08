@@ -17,8 +17,11 @@ def add_offices(apps, schema_editor):
                    region_id=office.region_id
                    )
         if TOfficeTableInMemory.SELECTED_OFFICES_FOR_TESTS is None:
-            c.rubric_id=offices.build_office_rubric(None, office.office_id)
-        c.save()
+            c.rubric_id = offices.build_office_rubric(None, office.office_id)
+        try:
+            c.save()
+        except Exception as exp:
+            print ("office name: {}, general exception".format(office.name))
 
 
 def clear_offices(apps, schema_editor):
