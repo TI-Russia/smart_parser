@@ -64404,7 +64404,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 97,
-        "wikidata_id": "Q2842"
+        "wikidata_id": "Q4414047"
     },
     {
         "id": 20081,
@@ -64412,7 +64412,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 97,
-        "wikidata_id": "Q2842"
+        "wikidata_id": "Q4414054"
     },
     {
         "id": 20082,
@@ -64420,7 +64420,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 97,
-        "wikidata_id": "Q2842"
+        "wikidata_id": "Q4414057"
     },
     {
         "id": 20083,
@@ -64428,7 +64428,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 44,
-        "wikidata_id": "Q6838"
+        "wikidata_id": "Q4414058"
     },
     {
         "id": 20084,
@@ -64436,7 +64436,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 97,
-        "wikidata_id": "Q2842"
+        "wikidata_id": "Q4414063"
     },
     {
         "id": 20085,
@@ -64444,7 +64444,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 97,
-        "wikidata_id": "Q2842"
+        "wikidata_id": "Q4414072"
     },
     {
         "id": 20086,
@@ -64452,7 +64452,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 97,
-        "wikidata_id": "Q2842"
+        "wikidata_id": "Q4414077"
     },
     {
         "id": 20087,
@@ -64460,7 +64460,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 97,
-        "wikidata_id": "Q2842"
+        "wikidata_id": "Q4414091"
     },
     {
         "id": 20088,
@@ -64468,7 +64468,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 44,
-        "wikidata_id": "Q6838"
+        "wikidata_id": "Q4414093"
     },
     {
         "id": 20089,
@@ -64476,7 +64476,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414099"
     },
     {
         "id": 20093,
@@ -64484,7 +64484,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414129"
     },
     {
         "id": 20094,
@@ -64492,7 +64492,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414130"
     },
     {
         "id": 20095,
@@ -64500,7 +64500,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414141"
     },
     {
         "id": 20097,
@@ -64508,7 +64508,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414169"
     },
     {
         "id": 20098,
@@ -64516,7 +64516,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414171"
     },
     {
         "id": 20099,
@@ -64524,7 +64524,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414176"
     },
     {
         "id": 20101,
@@ -64532,7 +64532,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414179"
     },
     {
         "id": 20102,
@@ -64540,7 +64540,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414180"
     },
     {
         "id": 20103,
@@ -64548,7 +64548,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q16696544"
     },
     {
         "id": 20104,
@@ -64556,7 +64556,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414189"
     },
     {
         "id": 20105,
@@ -64564,7 +64564,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414189"
     },
     {
         "id": 20108,
@@ -64572,7 +64572,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414206"
     },
     {
         "id": 20109,
@@ -64580,7 +64580,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414209"
     },
     {
         "id": 20111,
@@ -64588,7 +64588,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414221"
     },
     {
         "id": 20112,
@@ -64596,7 +64596,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414227"
     },
     {
         "id": 20114,
@@ -64604,7 +64604,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414233"
     },
     {
         "id": 20117,
@@ -64612,7 +64612,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414238"
     },
     {
         "id": 20118,
@@ -64620,7 +64620,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414239"
     },
     {
         "id": 20119,
@@ -64628,7 +64628,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414245"
     },
     {
         "id": 20120,
@@ -64636,7 +64636,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414246"
     },
     {
         "id": 20121,
@@ -64644,7 +64644,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414263"
     },
     {
         "id": 20122,
@@ -64652,7 +64652,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414263"
     },
     {
         "id": 20123,
@@ -64660,7 +64660,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414264"
     },
     {
         "id": 20124,
@@ -64668,7 +64668,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414266"
     },
     {
         "id": 20125,
@@ -64676,7 +64676,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414272"
     },
     {
         "id": 20126,
@@ -64684,7 +64684,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414277"
     },
     {
         "id": 20127,
@@ -64692,7 +64692,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414287"
     },
     {
         "id": 20129,
@@ -64700,7 +64700,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 101,
-        "wikidata_id": "Q2292"
+        "wikidata_id": "Q4414293"
     },
     {
         "id": 20130,
@@ -64708,7 +64708,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414302"
     },
     {
         "id": 20131,
@@ -64716,7 +64716,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414302"
     },
     {
         "id": 20132,
@@ -64724,7 +64724,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414308"
     },
     {
         "id": 20133,
@@ -64732,7 +64732,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414308"
     },
     {
         "id": 20134,
@@ -64740,7 +64740,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414317"
     },
     {
         "id": 20135,
@@ -64748,7 +64748,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414327"
     },
     {
         "id": 20136,
@@ -64756,7 +64756,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414328"
     },
     {
         "id": 20138,
@@ -64764,7 +64764,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414344"
     },
     {
         "id": 20142,
@@ -64772,7 +64772,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 107,
-        "wikidata_id": "Q2448"
+        "wikidata_id": "Q4414371"
     },
     {
         "id": 20143,
@@ -64780,7 +64780,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414374"
     },
     {
         "id": 20144,
@@ -64804,7 +64804,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414395"
     },
     {
         "id": 20148,
@@ -64812,7 +64812,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414399"
     },
     {
         "id": 20149,
@@ -64820,7 +64820,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414409"
     },
     {
         "id": 20150,
@@ -64828,7 +64828,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414410"
     },
     {
         "id": 20151,
@@ -64836,7 +64836,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414413"
     },
     {
         "id": 20152,
@@ -64844,7 +64844,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414423"
     },
     {
         "id": 20154,
@@ -64852,7 +64852,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414430"
     },
     {
         "id": 20156,
@@ -64860,7 +64860,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414447"
     },
     {
         "id": 20157,
@@ -64868,7 +64868,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414451"
     },
     {
         "id": 20158,
@@ -64876,7 +64876,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 89,
-        "wikidata_id": "Q5714"
+        "wikidata_id": "Q4414489"
     },
     {
         "id": 20159,
@@ -64884,7 +64884,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414496"
     },
     {
         "id": 20161,
@@ -64892,7 +64892,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414504"
     },
     {
         "id": 20162,
@@ -64900,7 +64900,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414506"
     },
     {
         "id": 20164,
@@ -64908,7 +64908,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414520"
     },
     {
         "id": 20166,
@@ -64916,7 +64916,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 108,
-        "wikidata_id": "Q6320"
+        "wikidata_id": "Q4414541"
     },
     {
         "id": 20167,
@@ -64924,7 +64924,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414542"
     },
     {
         "id": 20168,
@@ -64932,7 +64932,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414552"
     },
     {
         "id": 20169,
@@ -64940,7 +64940,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414560"
     },
     {
         "id": 20170,
@@ -64956,7 +64956,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q14553979"
     },
     {
         "id": 20173,
@@ -64964,7 +64964,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 108,
-        "wikidata_id": "Q6320"
+        "wikidata_id": "Q4414581"
     },
     {
         "id": 20174,
@@ -64972,7 +64972,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414585"
     },
     {
         "id": 20175,
@@ -64980,7 +64980,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 20,
-        "wikidata_id": "Q5422"
+        "wikidata_id": "Q4187301"
     },
     {
         "id": 20176,
@@ -64988,7 +64988,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 43,
-        "wikidata_id": "Q3447"
+        "wikidata_id": "Q4191206"
     },
     {
         "id": 20178,
@@ -65003,7 +65003,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4198374"
     },
     {
         "id": 20180,
@@ -65011,7 +65011,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4199676"
     },
     {
         "id": 20182,
@@ -65019,7 +65019,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 20,
-        "wikidata_id": "Q5422"
+        "wikidata_id": "Q4205239"
     },
     {
         "id": 20183,
@@ -65027,7 +65027,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 4,
-        "wikidata_id": "Q5710"
+        "wikidata_id": "Q4205304"
     },
     {
         "id": 20184,
@@ -65035,7 +65035,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 4,
-        "wikidata_id": "Q5710"
+        "wikidata_id": "Q4205549"
     },
     {
         "id": 20185,
@@ -65043,7 +65043,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4206730"
     },
     {
         "id": 20186,
@@ -65051,7 +65051,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 20,
-        "wikidata_id": "Q5422"
+        "wikidata_id": "Q4208378"
     },
     {
         "id": 20188,
@@ -65059,7 +65059,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q4209909"
     },
     {
         "id": 20189,
@@ -65067,7 +65067,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4209988"
     },
     {
         "id": 20190,
@@ -65075,7 +65075,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4210288"
     },
     {
         "id": 20191,
@@ -65091,7 +65091,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 6,
-        "wikidata_id": "Q5971"
+        "wikidata_id": "Q4213900"
     },
     {
         "id": 20193,
@@ -65099,7 +65099,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q4215427"
     },
     {
         "id": 20194,
@@ -65107,7 +65107,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 101,
-        "wikidata_id": "Q2292"
+        "wikidata_id": "Q4217732"
     },
     {
         "id": 20195,
@@ -65115,7 +65115,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 76,
-        "wikidata_id": "Q3573"
+        "wikidata_id": "Q4218294"
     },
     {
         "id": 20196,
@@ -65123,7 +65123,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 27,
-        "wikidata_id": "Q3680"
+        "wikidata_id": "Q4219771"
     },
     {
         "id": 20197,
@@ -65131,7 +65131,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 27,
-        "wikidata_id": "Q3680"
+        "wikidata_id": "Q4220272"
     },
     {
         "id": 20198,
@@ -65139,7 +65139,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4220404"
     },
     {
         "id": 20199,
@@ -65147,7 +65147,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4221028"
     },
     {
         "id": 20200,
@@ -65155,7 +65155,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4222010"
     },
     {
         "id": 20201,
@@ -65163,7 +65163,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 20,
-        "wikidata_id": "Q5422"
+        "wikidata_id": "Q4222726"
     },
     {
         "id": 20202,
@@ -65171,7 +65171,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4224084"
     },
     {
         "id": 20203,
@@ -65179,7 +65179,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4228742"
     },
     {
         "id": 20204,
@@ -65187,7 +65187,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 107,
-        "wikidata_id": "Q2448"
+        "wikidata_id": "Q4231470"
     },
     {
         "id": 20205,
@@ -65195,7 +65195,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4231932"
     },
     {
         "id": 20206,
@@ -65203,7 +65203,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4232365"
     },
     {
         "id": 20207,
@@ -65218,7 +65218,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 100,
-        "wikidata_id": "Q2347"
+        "wikidata_id": "Q4235645"
     },
     {
         "id": 20209,
@@ -65226,7 +65226,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4235996"
     },
     {
         "id": 20210,
@@ -65234,7 +65234,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 3,
-        "wikidata_id": "Q3734"
+        "wikidata_id": "Q4237032"
     },
     {
         "id": 20211,
@@ -65242,7 +65242,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 72,
-        "wikidata_id": "Q5545"
+        "wikidata_id": "Q4238568"
     },
     {
         "id": 20212,
@@ -65250,7 +65250,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 27,
-        "wikidata_id": "Q3680"
+        "wikidata_id": "Q4238811"
     },
     {
         "id": 20213,
@@ -65265,7 +65265,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 41,
-        "wikidata_id": "Q3819"
+        "wikidata_id": "Q4239066"
     },
     {
         "id": 20215,
@@ -65273,7 +65273,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q4239271"
     },
     {
         "id": 20216,
@@ -65281,7 +65281,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 88,
-        "wikidata_id": "Q5634"
+        "wikidata_id": "Q4239301"
     },
     {
         "id": 20217,
@@ -65289,7 +65289,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q4241985"
     },
     {
         "id": 20218,
@@ -65297,7 +65297,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4287483"
     },
     {
         "id": 20219,
@@ -65305,7 +65305,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4289935"
     },
     {
         "id": 20220,
@@ -65313,7 +65313,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4294176"
     },
     {
         "id": 20221,
@@ -65321,7 +65321,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 88,
-        "wikidata_id": "Q5634"
+        "wikidata_id": "Q4295730"
     },
     {
         "id": 20222,
@@ -65329,7 +65329,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 72,
-        "wikidata_id": "Q5545"
+        "wikidata_id": "Q4296696"
     },
     {
         "id": 20224,
@@ -65344,7 +65344,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 20,
-        "wikidata_id": "Q5422"
+        "wikidata_id": "Q12170113"
     },
     {
         "id": 20227,
@@ -65352,7 +65352,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4299779"
     },
     {
         "id": 20228,
@@ -65367,7 +65367,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4305271"
     },
     {
         "id": 20230,
@@ -65375,7 +65375,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 72,
-        "wikidata_id": "Q5545"
+        "wikidata_id": "Q4305326"
     },
     {
         "id": 20231,
@@ -65383,7 +65383,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 37,
-        "wikidata_id": "Q1875"
+        "wikidata_id": "Q4307184"
     },
     {
         "id": 20232,
@@ -65391,7 +65391,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4307193"
     },
     {
         "id": 20233,
@@ -65399,7 +65399,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 37,
-        "wikidata_id": "Q1875"
+        "wikidata_id": "Q4307276"
     },
     {
         "id": 20234,
@@ -65407,7 +65407,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 37,
-        "wikidata_id": "Q1875"
+        "wikidata_id": "Q4307333"
     },
     {
         "id": 20235,
@@ -65415,7 +65415,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 36,
-        "wikidata_id": "Q2702"
+        "wikidata_id": "Q4307350"
     },
     {
         "id": 20236,
@@ -65423,7 +65423,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 37,
-        "wikidata_id": "Q1875"
+        "wikidata_id": "Q4307369"
     },
     {
         "id": 20237,
@@ -65431,7 +65431,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 37,
-        "wikidata_id": "Q1875"
+        "wikidata_id": "Q4307440"
     },
     {
         "id": 20238,
@@ -65439,7 +65439,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 37,
-        "wikidata_id": "Q1875"
+        "wikidata_id": "Q4307451"
     },
     {
         "id": 20239,
@@ -65447,7 +65447,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 37,
-        "wikidata_id": "Q1875"
+        "wikidata_id": "Q4307457"
     },
     {
         "id": 20240,
@@ -65455,7 +65455,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4308064"
     },
     {
         "id": 20241,
@@ -65463,7 +65463,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 96,
-        "wikidata_id": "Q3329"
+        "wikidata_id": "Q4308994"
     },
     {
         "id": 20242,
@@ -65471,7 +65471,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4309237"
     },
     {
         "id": 20243,
@@ -65479,7 +65479,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 107,
-        "wikidata_id": "Q2448"
+        "wikidata_id": "Q4312231"
     },
     {
         "id": 20244,
@@ -65487,7 +65487,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4315548"
     },
     {
         "id": 20245,
@@ -65495,7 +65495,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q4316207"
     },
     {
         "id": 20246,
@@ -65503,7 +65503,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4316219"
     },
     {
         "id": 20247,
@@ -65511,7 +65511,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 27,
-        "wikidata_id": "Q3680"
+        "wikidata_id": "Q4316272"
     },
     {
         "id": 20248,
@@ -65519,7 +65519,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 107,
-        "wikidata_id": "Q2448"
+        "wikidata_id": "Q4316650"
     },
     {
         "id": 20249,
@@ -65527,7 +65527,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 43,
-        "wikidata_id": "Q3447"
+        "wikidata_id": "Q4318747"
     },
     {
         "id": 20251,
@@ -65535,7 +65535,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4319490"
     },
     {
         "id": 20252,
@@ -65543,7 +65543,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q4323153"
     },
     {
         "id": 20253,
@@ -65551,7 +65551,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q4323249"
     },
     {
         "id": 20254,
@@ -65559,7 +65559,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4323599"
     },
     {
         "id": 20255,
@@ -65567,7 +65567,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q4324149"
     },
     {
         "id": 20256,
@@ -65575,7 +65575,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 28,
-        "wikidata_id": "Q6563"
+        "wikidata_id": "Q4324721"
     },
     {
         "id": 20257,
@@ -65583,7 +65583,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 41,
-        "wikidata_id": "Q3819"
+        "wikidata_id": "Q4324749"
     },
     {
         "id": 20258,
@@ -65591,7 +65591,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 88,
-        "wikidata_id": "Q5634"
+        "wikidata_id": "Q4324951"
     },
     {
         "id": 20259,
@@ -65599,7 +65599,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q4325136"
     },
     {
         "id": 20261,
@@ -65607,7 +65607,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 27,
-        "wikidata_id": "Q3680"
+        "wikidata_id": "Q4325420"
     },
     {
         "id": 20262,
@@ -65631,7 +65631,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4335350"
     },
     {
         "id": 20265,
@@ -65639,7 +65639,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4336134"
     },
     {
         "id": 20266,
@@ -65647,7 +65647,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4336353"
     },
     {
         "id": 20267,
@@ -65655,7 +65655,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4336427"
     },
     {
         "id": 20268,
@@ -65663,7 +65663,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4339282"
     },
     {
         "id": 20269,
@@ -65671,7 +65671,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 53,
-        "wikidata_id": "Q2596"
+        "wikidata_id": "Q4346174"
     },
     {
         "id": 20270,
@@ -65679,7 +65679,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4348522"
     },
     {
         "id": 20271,
@@ -65687,7 +65687,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4350308"
     },
     {
         "id": 20272,
@@ -65695,7 +65695,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 27,
-        "wikidata_id": "Q3680"
+        "wikidata_id": "Q4350794"
     },
     {
         "id": 20273,
@@ -65703,7 +65703,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4355376"
     },
     {
         "id": 20274,
@@ -65711,7 +65711,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 43,
-        "wikidata_id": "Q3447"
+        "wikidata_id": "Q4359730"
     },
     {
         "id": 20275,
@@ -65719,7 +65719,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4359831"
     },
     {
         "id": 20276,
@@ -65727,7 +65727,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4359902"
     },
     {
         "id": 20277,
@@ -65735,7 +65735,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4359962"
     },
     {
         "id": 20278,
@@ -65764,7 +65764,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 20,
-        "wikidata_id": "Q5422"
+        "wikidata_id": "Q4363405"
     },
     {
         "id": 20282,
@@ -65772,7 +65772,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 70,
-        "wikidata_id": "Q3129"
+        "wikidata_id": "Q4365238"
     },
     {
         "id": 20283,
@@ -65780,7 +65780,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4367486"
     },
     {
         "id": 20284,
@@ -65788,7 +65788,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 42,
-        "wikidata_id": "Q2015"
+        "wikidata_id": "Q4367758"
     },
     {
         "id": 20286,
@@ -65796,7 +65796,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 107,
-        "wikidata_id": "Q2448"
+        "wikidata_id": "Q4369455"
     },
     {
         "id": 20287,
@@ -65804,7 +65804,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4371564"
     },
     {
         "id": 20288,
@@ -65812,7 +65812,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 12,
-        "wikidata_id": "Q1914"
+        "wikidata_id": "Q4373115"
     },
     {
         "id": 20289,
@@ -65820,7 +65820,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 107,
-        "wikidata_id": "Q2448"
+        "wikidata_id": "Q4377557"
     },
     {
         "id": 20290,
@@ -65828,7 +65828,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 88,
-        "wikidata_id": "Q5634"
+        "wikidata_id": "Q4377696"
     },
     {
         "id": 20291,
@@ -65836,7 +65836,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q4377939"
     },
     {
         "id": 20292,
@@ -65844,7 +65844,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 98,
-        "wikidata_id": "Q5741"
+        "wikidata_id": "Q4380935"
     },
     {
         "id": 20293,
@@ -65852,7 +65852,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4384041"
     },
     {
         "id": 20294,
@@ -65860,7 +65860,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4384347"
     },
     {
         "id": 20295,
@@ -65868,7 +65868,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4385010"
     },
     {
         "id": 20296,
@@ -65876,7 +65876,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4385068"
     },
     {
         "id": 20297,
@@ -65884,7 +65884,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 27,
-        "wikidata_id": "Q3680"
+        "wikidata_id": "Q4385147"
     },
     {
         "id": 20298,
@@ -65892,7 +65892,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q4385800"
     },
     {
         "id": 20299,
@@ -65900,7 +65900,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 72,
-        "wikidata_id": "Q5545"
+        "wikidata_id": "Q4386134"
     },
     {
         "id": 20300,
@@ -65908,7 +65908,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4386737"
     },
     {
         "id": 20301,
@@ -65916,7 +65916,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q4388255"
     },
     {
         "id": 20302,
@@ -65938,7 +65938,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4388646"
     },
     {
         "id": 20305,
@@ -65946,7 +65946,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4390755"
     },
     {
         "id": 20306,
@@ -65954,7 +65954,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4393734"
     },
     {
         "id": 20307,
@@ -65962,7 +65962,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4397377"
     },
     {
         "id": 20308,
@@ -65977,7 +65977,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4397708"
     },
     {
         "id": 20310,
@@ -65985,7 +65985,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4398865"
     },
     {
         "id": 20311,
@@ -65993,7 +65993,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4400911"
     },
     {
         "id": 20312,
@@ -66001,7 +66001,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q4402179"
     },
     {
         "id": 20313,
@@ -66009,7 +66009,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q4403552"
     },
     {
         "id": 20314,
@@ -66017,7 +66017,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4403589"
     },
     {
         "id": 20315,
@@ -66025,7 +66025,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 4,
-        "wikidata_id": "Q5710"
+        "wikidata_id": "Q4405268"
     },
     {
         "id": 20316,
@@ -66033,7 +66033,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 43,
-        "wikidata_id": "Q3447"
+        "wikidata_id": "Q4406627"
     },
     {
         "id": 20317,
@@ -66041,7 +66041,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 76,
-        "wikidata_id": "Q3573"
+        "wikidata_id": "Q4407499"
     },
     {
         "id": 20318,
@@ -66049,7 +66049,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 46,
-        "wikidata_id": "Q1749"
+        "wikidata_id": "Q4408357"
     },
     {
         "id": 20319,
@@ -66057,7 +66057,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 97,
-        "wikidata_id": "Q2842"
+        "wikidata_id": "Q4414042"
     },
     {
         "id": 20320,
@@ -66065,7 +66065,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4080550"
     },
     {
         "id": 20322,
@@ -66073,7 +66073,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 70,
-        "wikidata_id": "Q3129"
+        "wikidata_id": "Q4084662"
     },
     {
         "id": 20323,
@@ -66081,7 +66081,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4085589"
     },
     {
         "id": 20324,
@@ -66089,7 +66089,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 43,
-        "wikidata_id": "Q3447"
+        "wikidata_id": "Q4087544"
     },
     {
         "id": 20325,
@@ -66097,7 +66097,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 107,
-        "wikidata_id": "Q2448"
+        "wikidata_id": "Q4087801"
     },
     {
         "id": 20326,
@@ -66105,7 +66105,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 66,
-        "wikidata_id": "Q2246"
+        "wikidata_id": "Q4087869"
     },
     {
         "id": 20327,
@@ -66113,7 +66113,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 88,
-        "wikidata_id": "Q5634"
+        "wikidata_id": "Q4089462"
     },
     {
         "id": 20328,
@@ -66121,7 +66121,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 69,
-        "wikidata_id": "Q5835"
+        "wikidata_id": "Q4089787"
     },
     {
         "id": 20329,
@@ -66129,7 +66129,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 76,
-        "wikidata_id": "Q3573"
+        "wikidata_id": "Q4090757"
     },
     {
         "id": 20330,
@@ -66137,7 +66137,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4091935"
     },
     {
         "id": 20331,
@@ -66145,7 +66145,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 29,
-        "wikidata_id": "Q5400"
+        "wikidata_id": "Q4091940"
     },
     {
         "id": 20332,
@@ -66153,7 +66153,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 43,
-        "wikidata_id": "Q3447"
+        "wikidata_id": "Q4091949"
     },
     {
         "id": 20333,
@@ -66161,7 +66161,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 76,
-        "wikidata_id": "Q3573"
+        "wikidata_id": "Q4091978"
     },
     {
         "id": 20334,
@@ -66169,7 +66169,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 76,
-        "wikidata_id": "Q3573"
+        "wikidata_id": "Q4091984"
     },
     {
         "id": 20335,
@@ -66177,7 +66177,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4091987"
     },
     {
         "id": 20336,
@@ -66185,7 +66185,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 96,
-        "wikidata_id": "Q3329"
+        "wikidata_id": "Q4092241"
     },
     {
         "id": 20337,
@@ -66193,7 +66193,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4094166"
     },
     {
         "id": 20338,
@@ -66201,7 +66201,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4094416"
     },
     {
         "id": 20339,
@@ -66209,7 +66209,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 70,
-        "wikidata_id": "Q3129"
+        "wikidata_id": "Q4094593"
     },
     {
         "id": 20340,
@@ -66225,7 +66225,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 43,
-        "wikidata_id": "Q3447"
+        "wikidata_id": "Q4094878"
     },
     {
         "id": 20342,
@@ -66233,7 +66233,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 107,
-        "wikidata_id": "Q2448"
+        "wikidata_id": "Q4096258"
     },
     {
         "id": 20343,
@@ -66241,7 +66241,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 36,
-        "wikidata_id": "Q2702"
+        "wikidata_id": "Q4097326"
     },
     {
         "id": 20344,
@@ -66249,7 +66249,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4097833"
     },
     {
         "id": 20345,
@@ -66257,7 +66257,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 43,
-        "wikidata_id": "Q3447"
+        "wikidata_id": "Q4099300"
     },
     {
         "id": 20346,
@@ -66265,7 +66265,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 20,
-        "wikidata_id": "Q5422"
+        "wikidata_id": "Q4099359"
     },
     {
         "id": 20347,
@@ -66273,7 +66273,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 101,
-        "wikidata_id": "Q2292"
+        "wikidata_id": "Q4099384"
     },
     {
         "id": 20348,
@@ -66281,7 +66281,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4099429"
     },
     {
         "id": 20349,
@@ -66289,7 +66289,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4101029"
     },
     {
         "id": 20350,
@@ -66297,7 +66297,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 101,
-        "wikidata_id": "Q2292"
+        "wikidata_id": "Q4102422"
     },
     {
         "id": 20351,
@@ -66312,7 +66312,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 20,
-        "wikidata_id": "Q5422"
+        "wikidata_id": "Q4103573"
     },
     {
         "id": 20354,
@@ -66320,7 +66320,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 107,
-        "wikidata_id": "Q2448"
+        "wikidata_id": "Q4103742"
     },
     {
         "id": 20355,
@@ -66328,7 +66328,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 27,
-        "wikidata_id": "Q3680"
+        "wikidata_id": "Q4105194"
     },
     {
         "id": 20356,
@@ -66336,7 +66336,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4106808"
     },
     {
         "id": 20357,
@@ -66344,7 +66344,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4107610"
     },
     {
         "id": 20358,
@@ -66352,7 +66352,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q4107718"
     },
     {
         "id": 20359,
@@ -66360,7 +66360,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 72,
-        "wikidata_id": "Q5545"
+        "wikidata_id": "Q4108172"
     },
     {
         "id": 20360,
@@ -66368,7 +66368,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 4,
-        "wikidata_id": "Q5710"
+        "wikidata_id": "Q4109189"
     },
     {
         "id": 20361,
@@ -66376,7 +66376,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 27,
-        "wikidata_id": "Q3680"
+        "wikidata_id": "Q4109417"
     },
     {
         "id": 20362,
@@ -66384,7 +66384,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4111262"
     },
     {
         "id": 20363,
@@ -66392,7 +66392,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4111626"
     },
     {
         "id": 20364,
@@ -66400,7 +66400,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q4111911"
     },
     {
         "id": 20365,
@@ -66408,7 +66408,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4112249"
     },
     {
         "id": 20366,
@@ -66416,7 +66416,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q4114154"
     },
     {
         "id": 20367,
@@ -66424,7 +66424,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 76,
-        "wikidata_id": "Q3573"
+        "wikidata_id": "Q4122666"
     },
     {
         "id": 20368,
@@ -66432,7 +66432,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 107,
-        "wikidata_id": "Q2448"
+        "wikidata_id": "Q4123159"
     },
     {
         "id": 20369,
@@ -66440,7 +66440,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q4123470"
     },
     {
         "id": 20370,
@@ -66448,7 +66448,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4123754"
     },
     {
         "id": 20371,
@@ -66456,7 +66456,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4123882"
     },
     {
         "id": 20372,
@@ -66464,7 +66464,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 76,
-        "wikidata_id": "Q3573"
+        "wikidata_id": "Q4124110"
     },
     {
         "id": 20373,
@@ -66472,7 +66472,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4124135"
     },
     {
         "id": 20374,
@@ -66480,7 +66480,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 72,
-        "wikidata_id": "Q5545"
+        "wikidata_id": "Q4124473"
     },
     {
         "id": 20375,
@@ -66495,7 +66495,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 43,
-        "wikidata_id": "Q3447"
+        "wikidata_id": "Q4130341"
     },
     {
         "id": 20377,
@@ -66503,7 +66503,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 36,
-        "wikidata_id": "Q2702"
+        "wikidata_id": "Q4130470"
     },
     {
         "id": 20378,
@@ -66511,7 +66511,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4130515"
     },
     {
         "id": 20379,
@@ -66519,7 +66519,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 80,
-        "wikidata_id": "Q5462"
+        "wikidata_id": "Q4132656"
     },
     {
         "id": 20380,
@@ -66527,7 +66527,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q4138979"
     },
     {
         "id": 20381,
@@ -66535,7 +66535,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4139377"
     },
     {
         "id": 20382,
@@ -66543,7 +66543,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 107,
-        "wikidata_id": "Q2448"
+        "wikidata_id": "Q4139656"
     },
     {
         "id": 20383,
@@ -66551,7 +66551,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4139663"
     },
     {
         "id": 20384,
@@ -66559,7 +66559,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 41,
-        "wikidata_id": "Q3819"
+        "wikidata_id": "Q4140551"
     },
     {
         "id": 20385,
@@ -66567,7 +66567,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 20,
-        "wikidata_id": "Q5422"
+        "wikidata_id": "Q4142850"
     },
     {
         "id": 20386,
@@ -66575,7 +66575,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4143281"
     },
     {
         "id": 20387,
@@ -66583,7 +66583,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4143678"
     },
     {
         "id": 20388,
@@ -66591,7 +66591,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 70,
-        "wikidata_id": "Q3129"
+        "wikidata_id": "Q4143741"
     },
     {
         "id": 20389,
@@ -66599,7 +66599,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q4145288"
     },
     {
         "id": 20390,
@@ -66614,7 +66614,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414597"
     },
     {
         "id": 20392,
@@ -66622,7 +66622,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414611"
     },
     {
         "id": 20394,
@@ -66630,7 +66630,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414618"
     },
     {
         "id": 20396,
@@ -66638,7 +66638,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414624"
     },
     {
         "id": 20400,
@@ -66646,7 +66646,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414650"
     },
     {
         "id": 20401,
@@ -66654,7 +66654,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 42,
-        "wikidata_id": "Q2015"
+        "wikidata_id": "Q4414656"
     },
     {
         "id": 20403,
@@ -66662,7 +66662,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414666"
     },
     {
         "id": 20404,
@@ -66670,7 +66670,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 77,
-        "wikidata_id": "Q1727"
+        "wikidata_id": "Q4414675"
     },
     {
         "id": 20405,
@@ -66678,7 +66678,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414684"
     },
     {
         "id": 20406,
@@ -66693,7 +66693,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414698"
     },
     {
         "id": 20408,
@@ -66701,7 +66701,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414699"
     },
     {
         "id": 20411,
@@ -66709,7 +66709,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414717"
     },
     {
         "id": 20414,
@@ -66717,7 +66717,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414738"
     },
     {
         "id": 20415,
@@ -66725,7 +66725,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 77,
-        "wikidata_id": "Q1727"
+        "wikidata_id": "Q4414743"
     },
     {
         "id": 20416,
@@ -66733,7 +66733,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 77,
-        "wikidata_id": "Q1727"
+        "wikidata_id": "Q4414757"
     },
     {
         "id": 20417,
@@ -66741,7 +66741,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414758"
     },
     {
         "id": 20418,
@@ -66749,7 +66749,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414760"
     },
     {
         "id": 20419,
@@ -66757,7 +66757,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414764"
     },
     {
         "id": 20421,
@@ -66765,7 +66765,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414766"
     },
     {
         "id": 20422,
@@ -66773,7 +66773,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414767"
     },
     {
         "id": 20423,
@@ -66781,7 +66781,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4414972"
     },
     {
         "id": 20424,
@@ -66789,7 +66789,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 107,
-        "wikidata_id": "Q2448"
+        "wikidata_id": "Q4415414"
     },
     {
         "id": 20425,
@@ -66797,7 +66797,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4416010"
     },
     {
         "id": 20426,
@@ -66805,7 +66805,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4417405"
     },
     {
         "id": 20427,
@@ -66813,7 +66813,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 4,
-        "wikidata_id": "Q5710"
+        "wikidata_id": "Q4421788"
     },
     {
         "id": 20428,
@@ -66821,7 +66821,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4422492"
     },
     {
         "id": 20429,
@@ -66829,7 +66829,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4422902"
     },
     {
         "id": 20432,
@@ -66837,7 +66837,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 70,
-        "wikidata_id": "Q3129"
+        "wikidata_id": "Q4428305"
     },
     {
         "id": 20433,
@@ -66845,7 +66845,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 76,
-        "wikidata_id": "Q3573"
+        "wikidata_id": "Q4428349"
     },
     {
         "id": 20434,
@@ -66853,7 +66853,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 38,
-        "wikidata_id": "Q3941"
+        "wikidata_id": "Q16681230"
     },
     {
         "id": 20435,
@@ -66861,7 +66861,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 43,
-        "wikidata_id": "Q3447"
+        "wikidata_id": "Q4428725"
     },
     {
         "id": 20436,
@@ -66869,7 +66869,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 5,
-        "wikidata_id": "Q6809"
+        "wikidata_id": "Q4429646"
     },
     {
         "id": 20437,
@@ -66884,7 +66884,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q4438548"
     },
     {
         "id": 20439,
@@ -66892,7 +66892,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 20,
-        "wikidata_id": "Q5422"
+        "wikidata_id": "Q4438554"
     },
     {
         "id": 20440,
@@ -66900,7 +66900,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 3,
-        "wikidata_id": "Q3734"
+        "wikidata_id": "Q4440089"
     },
     {
         "id": 20441,
@@ -66908,7 +66908,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 4,
-        "wikidata_id": "Q5710"
+        "wikidata_id": "Q4069605"
     },
     {
         "id": 20442,
@@ -66916,7 +66916,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 11,
-        "wikidata_id": "Q5328"
+        "wikidata_id": "Q4070912"
     },
     {
         "id": 20443,
@@ -66924,7 +66924,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 41,
-        "wikidata_id": "Q3819"
+        "wikidata_id": "Q4070969"
     },
     {
         "id": 20444,
@@ -66932,7 +66932,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 3,
-        "wikidata_id": "Q3734"
+        "wikidata_id": "Q4072765"
     },
     {
         "id": 20445,
@@ -66940,7 +66940,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 20,
-        "wikidata_id": "Q5422"
+        "wikidata_id": "Q4074373"
     },
     {
         "id": 20446,
@@ -66948,7 +66948,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 27,
-        "wikidata_id": "Q3680"
+        "wikidata_id": "Q4057211"
     },
     {
         "id": 20447,
@@ -66956,7 +66956,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 43,
-        "wikidata_id": "Q3447"
+        "wikidata_id": "Q4058801"
     },
     {
         "id": 20448,
@@ -66971,7 +66971,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q4061490"
     },
     {
         "id": 20450,
@@ -66993,7 +66993,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 70,
-        "wikidata_id": "Q3129"
+        "wikidata_id": "Q4062176"
     },
     {
         "id": 20453,
@@ -67008,7 +67008,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q4066079"
     },
     {
         "id": 20455,
@@ -67016,7 +67016,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4067811"
     },
     {
         "id": 20456,
@@ -67024,7 +67024,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q4069158"
     },
     {
         "id": 20457,
@@ -67032,7 +67032,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 4,
-        "wikidata_id": "Q5710"
+        "wikidata_id": "Q4075422"
     },
     {
         "id": 20458,
@@ -67040,7 +67040,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 76,
-        "wikidata_id": "Q3573"
+        "wikidata_id": "Q4078216"
     },
     {
         "id": 20459,
@@ -67048,7 +67048,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q4079137"
     },
     {
         "id": 20460,
@@ -67056,7 +67056,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q50699"
     },
     {
         "id": 20461,
@@ -67064,7 +67064,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q50702"
     },
     {
         "id": 20462,
@@ -67072,7 +67072,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q50729"
     },
     {
         "id": 20463,
@@ -67080,7 +67080,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q50924"
     },
     {
         "id": 20464,
@@ -67088,7 +67088,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q50933"
     },
     {
         "id": 20465,
@@ -67096,7 +67096,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q50994"
     },
     {
         "id": 20466,
@@ -67104,7 +67104,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q50995"
     },
     {
         "id": 20467,
@@ -67112,7 +67112,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q50996"
     },
     {
         "id": 20468,
@@ -67120,7 +67120,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q50999"
     },
     {
         "id": 20469,
@@ -67135,7 +67135,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q51017"
     },
     {
         "id": 20471,
@@ -67143,7 +67143,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q82340"
     },
     {
         "id": 20472,
@@ -67158,7 +67158,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q2455024"
     },
     {
         "id": 20474,
@@ -67166,7 +67166,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q2455024"
     },
     {
         "id": 20475,
@@ -67181,7 +67181,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q3220064"
     },
     {
         "id": 20477,
@@ -67189,7 +67189,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q3738354"
     },
     {
         "id": 20478,
@@ -67197,7 +67197,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4053704"
     },
     {
         "id": 20479,
@@ -67205,7 +67205,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 70,
-        "wikidata_id": "Q3129"
+        "wikidata_id": "Q4164383"
     },
     {
         "id": 20480,
@@ -67213,7 +67213,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 70,
-        "wikidata_id": "Q3129"
+        "wikidata_id": "Q4165728"
     },
     {
         "id": 20481,
@@ -67221,7 +67221,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 70,
-        "wikidata_id": "Q3129"
+        "wikidata_id": "Q4168792"
     },
     {
         "id": 20482,
@@ -67229,7 +67229,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 76,
-        "wikidata_id": "Q3573"
+        "wikidata_id": "Q4170116"
     },
     {
         "id": 20483,
@@ -67237,7 +67237,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 3,
-        "wikidata_id": "Q3734"
+        "wikidata_id": "Q4170410"
     },
     {
         "id": 20484,
@@ -67245,7 +67245,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4151255"
     },
     {
         "id": 20485,
@@ -67253,7 +67253,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q4152892"
     },
     {
         "id": 20486,
@@ -67261,7 +67261,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 45,
-        "wikidata_id": "Q6585"
+        "wikidata_id": "Q4154219"
     },
     {
         "id": 20487,
@@ -67269,7 +67269,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 3,
-        "wikidata_id": "Q3734"
+        "wikidata_id": "Q4155358"
     },
     {
         "id": 20488,
@@ -67277,7 +67277,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4160840"
     },
     {
         "id": 20489,
@@ -67285,7 +67285,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 4,
-        "wikidata_id": "Q5710"
+        "wikidata_id": "Q4162853"
     },
     {
         "id": 20490,
@@ -67293,7 +67293,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 43,
-        "wikidata_id": "Q3447"
+        "wikidata_id": "Q4173446"
     },
     {
         "id": 20491,
@@ -67301,7 +67301,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4174060"
     },
     {
         "id": 20492,
@@ -67309,7 +67309,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 76,
-        "wikidata_id": "Q3573"
+        "wikidata_id": "Q4174415"
     },
     {
         "id": 20493,
@@ -67317,7 +67317,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 88,
-        "wikidata_id": "Q5634"
+        "wikidata_id": "Q4175139"
     },
     {
         "id": 20494,
@@ -67325,7 +67325,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 45,
-        "wikidata_id": "Q6585"
+        "wikidata_id": "Q4176940"
     },
     {
         "id": 20495,
@@ -67333,7 +67333,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 88,
-        "wikidata_id": "Q5634"
+        "wikidata_id": "Q4178622"
     },
     {
         "id": 20496,
@@ -67341,7 +67341,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4180524"
     },
     {
         "id": 20497,
@@ -67363,7 +67363,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 20,
-        "wikidata_id": "Q5422"
+        "wikidata_id": "Q4183367"
     },
     {
         "id": 20500,
@@ -67371,7 +67371,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4184700"
     },
     {
         "id": 20501,
@@ -67379,7 +67379,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 70,
-        "wikidata_id": "Q3129"
+        "wikidata_id": "Q4278080"
     },
     {
         "id": 20502,
@@ -67387,7 +67387,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 20,
-        "wikidata_id": "Q5422"
+        "wikidata_id": "Q4278405"
     },
     {
         "id": 20503,
@@ -67411,7 +67411,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4266866"
     },
     {
         "id": 20506,
@@ -67419,7 +67419,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 43,
-        "wikidata_id": "Q3447"
+        "wikidata_id": "Q4267188"
     },
     {
         "id": 20507,
@@ -67427,7 +67427,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 70,
-        "wikidata_id": "Q3129"
+        "wikidata_id": "Q4267831"
     },
     {
         "id": 20508,
@@ -67435,7 +67435,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4271719"
     },
     {
         "id": 20509,
@@ -67451,7 +67451,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 12,
-        "wikidata_id": "Q1914"
+        "wikidata_id": "Q4272756"
     },
     {
         "id": 20511,
@@ -67459,7 +67459,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 36,
-        "wikidata_id": "Q2702"
+        "wikidata_id": "Q4272837"
     },
     {
         "id": 20512,
@@ -67467,7 +67467,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 42,
-        "wikidata_id": "Q2015"
+        "wikidata_id": "Q4275151"
     },
     {
         "id": 20513,
@@ -67475,7 +67475,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 4,
-        "wikidata_id": "Q5710"
+        "wikidata_id": "Q4275499"
     },
     {
         "id": 20514,
@@ -67483,7 +67483,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 41,
-        "wikidata_id": "Q3819"
+        "wikidata_id": "Q4325946"
     },
     {
         "id": 20515,
@@ -67491,7 +67491,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 20,
-        "wikidata_id": "Q5422"
+        "wikidata_id": "Q4327514"
     },
     {
         "id": 20516,
@@ -67499,7 +67499,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4328141"
     },
     {
         "id": 20519,
@@ -67507,7 +67507,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 4,
-        "wikidata_id": "Q5710"
+        "wikidata_id": "Q4245542"
     },
     {
         "id": 20520,
@@ -67515,7 +67515,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4245543"
     },
     {
         "id": 20521,
@@ -67523,7 +67523,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4245628"
     },
     {
         "id": 20522,
@@ -67531,7 +67531,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 4,
-        "wikidata_id": "Q5710"
+        "wikidata_id": "Q4246046"
     },
     {
         "id": 20523,
@@ -67546,7 +67546,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 29,
-        "wikidata_id": "Q5400"
+        "wikidata_id": "Q4246434"
     },
     {
         "id": 20527,
@@ -67554,7 +67554,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4248879"
     },
     {
         "id": 20528,
@@ -67562,7 +67562,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q4249065"
     },
     {
         "id": 20529,
@@ -67570,7 +67570,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4249225"
     },
     {
         "id": 20530,
@@ -67578,7 +67578,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 76,
-        "wikidata_id": "Q3573"
+        "wikidata_id": "Q4249470"
     },
     {
         "id": 20531,
@@ -67586,7 +67586,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4254385"
     },
     {
         "id": 20532,
@@ -67594,7 +67594,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 41,
-        "wikidata_id": "Q3819"
+        "wikidata_id": "Q4254449"
     },
     {
         "id": 20533,
@@ -67602,7 +67602,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4259587"
     },
     {
         "id": 20534,
@@ -67610,7 +67610,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q4260086"
     },
     {
         "id": 20535,
@@ -67618,7 +67618,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q4262139"
     },
     {
         "id": 20536,
@@ -67626,7 +67626,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 100,
-        "wikidata_id": "Q2347"
+        "wikidata_id": "Q4262851"
     },
     {
         "id": 20537,
@@ -67634,7 +67634,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4263110"
     },
     {
         "id": 20538,
@@ -67642,7 +67642,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 20,
-        "wikidata_id": "Q5422"
+        "wikidata_id": "Q4440388"
     },
     {
         "id": 20539,
@@ -67650,7 +67650,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 38,
-        "wikidata_id": "Q3941"
+        "wikidata_id": "Q4440458"
     },
     {
         "id": 20540,
@@ -67658,7 +67658,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4440461"
     },
     {
         "id": 20541,
@@ -67666,7 +67666,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4440558"
     },
     {
         "id": 20542,
@@ -67674,7 +67674,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 42,
-        "wikidata_id": "Q2015"
+        "wikidata_id": "Q4440645"
     },
     {
         "id": 20543,
@@ -67682,7 +67682,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 100,
-        "wikidata_id": "Q2347"
+        "wikidata_id": "Q4442732"
     },
     {
         "id": 20544,
@@ -67690,7 +67690,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 70,
-        "wikidata_id": "Q3129"
+        "wikidata_id": "Q4442830"
     },
     {
         "id": 20545,
@@ -67698,7 +67698,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 101,
-        "wikidata_id": "Q2292"
+        "wikidata_id": "Q4443526"
     },
     {
         "id": 20546,
@@ -67706,7 +67706,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q4444515"
     },
     {
         "id": 20547,
@@ -67714,7 +67714,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q4445205"
     },
     {
         "id": 20548,
@@ -67722,7 +67722,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 107,
-        "wikidata_id": "Q2448"
+        "wikidata_id": "Q4445472"
     },
     {
         "id": 20549,
@@ -67730,7 +67730,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 32,
-        "wikidata_id": "Q7788"
+        "wikidata_id": "Q4445750"
     },
     {
         "id": 20550,
@@ -67745,7 +67745,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4447175"
     },
     {
         "id": 20552,
@@ -67753,7 +67753,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 29,
-        "wikidata_id": "Q5400"
+        "wikidata_id": "Q4447927"
     },
     {
         "id": 20553,
@@ -67761,7 +67761,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4448041"
     },
     {
         "id": 20555,
@@ -67769,7 +67769,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 5,
-        "wikidata_id": "Q6809"
+        "wikidata_id": "Q4452561"
     },
     {
         "id": 20556,
@@ -67777,7 +67777,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 3,
-        "wikidata_id": "Q3734"
+        "wikidata_id": "Q4452856"
     },
     {
         "id": 20557,
@@ -67785,7 +67785,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4454306"
     },
     {
         "id": 20558,
@@ -67793,7 +67793,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 109,
-        "wikidata_id": "Q15966495"
+        "wikidata_id": "Q4454706"
     },
     {
         "id": 20559,
@@ -67801,7 +67801,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 41,
-        "wikidata_id": "Q3819"
+        "wikidata_id": "Q4456082"
     },
     {
         "id": 20561,
@@ -67809,7 +67809,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q4456303"
     },
     {
         "id": 20562,
@@ -67817,7 +67817,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 3,
-        "wikidata_id": "Q3734"
+        "wikidata_id": "Q4457443"
     },
     {
         "id": 20563,
@@ -67825,7 +67825,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4459298"
     },
     {
         "id": 20564,
@@ -67833,7 +67833,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 101,
-        "wikidata_id": "Q2292"
+        "wikidata_id": "Q4460865"
     },
     {
         "id": 20565,
@@ -67841,7 +67841,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4461126"
     },
     {
         "id": 20566,
@@ -67849,7 +67849,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 76,
-        "wikidata_id": "Q3573"
+        "wikidata_id": "Q4462393"
     },
     {
         "id": 20567,
@@ -67857,7 +67857,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q4463541"
     },
     {
         "id": 20568,
@@ -67865,7 +67865,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q4464090"
     },
     {
         "id": 20569,
@@ -67873,7 +67873,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4464218"
     },
     {
         "id": 20570,
@@ -67881,7 +67881,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4464230"
     },
     {
         "id": 20571,
@@ -67889,7 +67889,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 43,
-        "wikidata_id": "Q3447"
+        "wikidata_id": "Q4464389"
     },
     {
         "id": 20572,
@@ -67897,7 +67897,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4465756"
     },
     {
         "id": 20573,
@@ -67905,7 +67905,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 46,
-        "wikidata_id": "Q1749"
+        "wikidata_id": "Q4465820"
     },
     {
         "id": 20574,
@@ -67913,7 +67913,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4468177"
     },
     {
         "id": 20575,
@@ -67921,7 +67921,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 4,
-        "wikidata_id": "Q5710"
+        "wikidata_id": "Q4477100"
     },
     {
         "id": 20576,
@@ -67929,7 +67929,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4478481"
     },
     {
         "id": 20577,
@@ -67937,7 +67937,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4480924"
     },
     {
         "id": 20578,
@@ -67945,7 +67945,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4482009"
     },
     {
         "id": 20579,
@@ -67953,7 +67953,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 43,
-        "wikidata_id": "Q3447"
+        "wikidata_id": "Q4484307"
     },
     {
         "id": 20580,
@@ -67961,7 +67961,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 96,
-        "wikidata_id": "Q3329"
+        "wikidata_id": "Q4498126"
     },
     {
         "id": 20581,
@@ -67969,7 +67969,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 88,
-        "wikidata_id": "Q5634"
+        "wikidata_id": "Q4498512"
     },
     {
         "id": 20582,
@@ -67977,7 +67977,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 101,
-        "wikidata_id": "Q2292"
+        "wikidata_id": "Q4500336"
     },
     {
         "id": 20583,
@@ -67985,7 +67985,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 20,
-        "wikidata_id": "Q5422"
+        "wikidata_id": "Q4500592"
     },
     {
         "id": 20584,
@@ -67993,7 +67993,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4503607"
     },
     {
         "id": 20585,
@@ -68001,7 +68001,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4513896"
     },
     {
         "id": 20586,
@@ -68009,7 +68009,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 4,
-        "wikidata_id": "Q5710"
+        "wikidata_id": "Q4517429"
     },
     {
         "id": 20587,
@@ -68017,7 +68017,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 20,
-        "wikidata_id": "Q5422"
+        "wikidata_id": "Q4519126"
     },
     {
         "id": 20588,
@@ -68025,7 +68025,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4520264"
     },
     {
         "id": 20589,
@@ -68033,7 +68033,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 100,
-        "wikidata_id": "Q2347"
+        "wikidata_id": "Q4520847"
     },
     {
         "id": 20590,
@@ -68041,7 +68041,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 27,
-        "wikidata_id": "Q3680"
+        "wikidata_id": "Q4522992"
     },
     {
         "id": 20591,
@@ -68049,7 +68049,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 42,
-        "wikidata_id": "Q2015"
+        "wikidata_id": "Q4526054"
     },
     {
         "id": 20592,
@@ -68057,7 +68057,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4527845"
     },
     {
         "id": 20593,
@@ -68065,7 +68065,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4528498"
     },
     {
         "id": 20594,
@@ -68073,7 +68073,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 6,
-        "wikidata_id": "Q5971"
+        "wikidata_id": "Q4529402"
     },
     {
         "id": 20595,
@@ -68081,7 +68081,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q4533116"
     },
     {
         "id": 20596,
@@ -68089,7 +68089,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4534281"
     },
     {
         "id": 20597,
@@ -68097,7 +68097,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q4535538"
     },
     {
         "id": 20598,
@@ -68105,7 +68105,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 20,
-        "wikidata_id": "Q5422"
+        "wikidata_id": "Q4536241"
     },
     {
         "id": 20599,
@@ -68113,7 +68113,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 72,
-        "wikidata_id": "Q5545"
+        "wikidata_id": "Q4537031"
     },
     {
         "id": 20600,
@@ -68121,7 +68121,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 20,
-        "wikidata_id": "Q5422"
+        "wikidata_id": "Q4537380"
     },
     {
         "id": 20601,
@@ -68129,7 +68129,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 4,
-        "wikidata_id": "Q5710"
+        "wikidata_id": "Q4538303"
     },
     {
         "id": 20602,
@@ -68137,7 +68137,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 105,
-        "wikidata_id": "Q5338"
+        "wikidata_id": "Q4539394"
     },
     {
         "id": 20603,
@@ -68145,7 +68145,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q5399803"
     },
     {
         "id": 20604,
@@ -68153,7 +68153,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q5489166"
     },
     {
         "id": 20605,
@@ -68161,7 +68161,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q6644557"
     },
     {
         "id": 20607,
@@ -68169,7 +68169,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q7448516"
     },
     {
         "id": 20608,
@@ -68177,7 +68177,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q11885945"
     },
     {
         "id": 20609,
@@ -68193,7 +68193,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 109,
-        "wikidata_id": "Q15966495"
+        "wikidata_id": "Q12133682"
     },
     {
         "id": 20611,
@@ -68201,7 +68201,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q12150397"
     },
     {
         "id": 20612,
@@ -68209,7 +68209,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q14485867"
     },
     {
         "id": 20613,
@@ -68217,7 +68217,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 41,
-        "wikidata_id": "Q3819"
+        "wikidata_id": "Q14487136"
     },
     {
         "id": 20614,
@@ -68225,7 +68225,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q14487604"
     },
     {
         "id": 20615,
@@ -68233,7 +68233,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 11,
-        "wikidata_id": "Q5328"
+        "wikidata_id": "Q14488162"
     },
     {
         "id": 20616,
@@ -68241,7 +68241,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 107,
-        "wikidata_id": "Q2448"
+        "wikidata_id": "Q14489050"
     },
     {
         "id": 20617,
@@ -68249,7 +68249,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q14489112"
     },
     {
         "id": 20618,
@@ -68257,7 +68257,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4398865"
     },
     {
         "id": 20619,
@@ -68265,7 +68265,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 47,
-        "wikidata_id": "Q3953"
+        "wikidata_id": "Q14489195"
     },
     {
         "id": 20620,
@@ -68273,7 +68273,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q14489224"
     },
     {
         "id": 20621,
@@ -68281,7 +68281,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q14489230"
     },
     {
         "id": 20622,
@@ -68289,7 +68289,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q14489237"
     },
     {
         "id": 20623,
@@ -68297,7 +68297,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q14489240"
     },
     {
         "id": 20624,
@@ -68305,7 +68305,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q14489243"
     },
     {
         "id": 20625,
@@ -68313,7 +68313,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q14489246"
     },
     {
         "id": 20626,
@@ -68321,7 +68321,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q14489257"
     },
     {
         "id": 20627,
@@ -68329,7 +68329,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q14489268"
     },
     {
         "id": 20628,
@@ -68337,7 +68337,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q14489271"
     },
     {
         "id": 20629,
@@ -68345,7 +68345,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 44,
-        "wikidata_id": "Q6838"
+        "wikidata_id": "Q14489311"
     },
     {
         "id": 20630,
@@ -68353,7 +68353,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q14489313"
     },
     {
         "id": 20631,
@@ -68361,7 +68361,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q14489315"
     },
     {
         "id": 20632,
@@ -68369,7 +68369,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 107,
-        "wikidata_id": "Q2448"
+        "wikidata_id": "Q14489321"
     },
     {
         "id": 20633,
@@ -68377,7 +68377,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q14489323"
     },
     {
         "id": 20634,
@@ -68385,7 +68385,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 107,
-        "wikidata_id": "Q2448"
+        "wikidata_id": "Q14489326"
     },
     {
         "id": 20635,
@@ -68393,7 +68393,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 107,
-        "wikidata_id": "Q2448"
+        "wikidata_id": "Q14489330"
     },
     {
         "id": 20636,
@@ -68401,7 +68401,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q14489333"
     },
     {
         "id": 20637,
@@ -68409,7 +68409,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q14489335"
     },
     {
         "id": 20638,
@@ -68417,7 +68417,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 70,
-        "wikidata_id": "Q3129"
+        "wikidata_id": "Q14489344"
     },
     {
         "id": 20639,
@@ -68425,7 +68425,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q14489348"
     },
     {
         "id": 20640,
@@ -68433,7 +68433,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q14489358"
     },
     {
         "id": 20641,
@@ -68441,7 +68441,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q14489379"
     },
     {
         "id": 20642,
@@ -68449,7 +68449,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q14489391"
     },
     {
         "id": 20643,
@@ -68457,7 +68457,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q14489410"
     },
     {
         "id": 20644,
@@ -68465,7 +68465,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q14489413"
     },
     {
         "id": 20646,
@@ -68473,7 +68473,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 74,
-        "wikidata_id": "Q4341"
+        "wikidata_id": "Q14489456"
     },
     {
         "id": 20650,
@@ -68481,7 +68481,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q14501145"
     },
     {
         "id": 20651,
@@ -68489,7 +68489,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 97,
-        "wikidata_id": "Q2842"
+        "wikidata_id": "Q16696265"
     },
     {
         "id": 20652,
@@ -68497,7 +68497,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 97,
-        "wikidata_id": "Q2842"
+        "wikidata_id": "Q16696267"
     },
     {
         "id": 20653,
@@ -68505,7 +68505,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 97,
-        "wikidata_id": "Q2842"
+        "wikidata_id": "Q16696271"
     },
     {
         "id": 20654,
@@ -68513,7 +68513,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 97,
-        "wikidata_id": "Q2842"
+        "wikidata_id": "Q16696289"
     },
     {
         "id": 20655,
@@ -68521,7 +68521,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 97,
-        "wikidata_id": "Q2842"
+        "wikidata_id": "Q16696323"
     },
     {
         "id": 20656,
@@ -68529,7 +68529,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 97,
-        "wikidata_id": "Q2842"
+        "wikidata_id": "Q16696343"
     },
     {
         "id": 20657,
@@ -68537,7 +68537,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 97,
-        "wikidata_id": "Q2842"
+        "wikidata_id": "Q16696345"
     },
     {
         "id": 20658,
@@ -68545,7 +68545,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 97,
-        "wikidata_id": "Q2842"
+        "wikidata_id": "Q16696355"
     },
     {
         "id": 20659,
@@ -68553,7 +68553,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 97,
-        "wikidata_id": "Q2842"
+        "wikidata_id": "Q16696361"
     },
     {
         "id": 20660,
@@ -68561,7 +68561,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 97,
-        "wikidata_id": "Q2842"
+        "wikidata_id": "Q16696437"
     },
     {
         "id": 20661,
@@ -68569,7 +68569,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 97,
-        "wikidata_id": "Q2842"
+        "wikidata_id": "Q16696497"
     },
     {
         "id": 20662,
@@ -68577,7 +68577,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 97,
-        "wikidata_id": "Q2842"
+        "wikidata_id": "Q16696513"
     },
     {
         "id": 20665,
@@ -68585,7 +68585,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q16696540"
     },
     {
         "id": 20666,
@@ -68600,7 +68600,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q16696544"
     },
     {
         "id": 20668,
@@ -68608,7 +68608,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q16696546"
     },
     {
         "id": 20669,
@@ -68623,7 +68623,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414231"
     },
     {
         "id": 20673,
@@ -68631,7 +68631,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q16696564"
     },
     {
         "id": 20674,
@@ -68639,7 +68639,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q16696566"
     },
     {
         "id": 20675,
@@ -68654,7 +68654,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q16696574"
     },
     {
         "id": 20677,
@@ -68662,7 +68662,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q16696582"
     },
     {
         "id": 20678,
@@ -68670,7 +68670,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q16696584"
     },
     {
         "id": 20679,
@@ -68678,7 +68678,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q16696590"
     },
     {
         "id": 20680,
@@ -68686,7 +68686,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q16696592"
     },
     {
         "id": 20681,
@@ -68702,7 +68702,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q16696604"
     },
     {
         "id": 20683,
@@ -68710,7 +68710,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q16697110"
     },
     {
         "id": 20684,
@@ -68718,7 +68718,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q16697248"
     },
     {
         "id": 20685,
@@ -68726,7 +68726,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q16701348"
     },
     {
         "id": 20686,
@@ -68741,7 +68741,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q16701817"
     },
     {
         "id": 20688,
@@ -68749,7 +68749,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 29,
-        "wikidata_id": "Q5400"
+        "wikidata_id": "Q16710654"
     },
     {
         "id": 20689,
@@ -68757,7 +68757,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 12,
-        "wikidata_id": "Q1914"
+        "wikidata_id": "Q16713549"
     },
     {
         "id": 20690,
@@ -68765,7 +68765,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 41,
-        "wikidata_id": "Q3819"
+        "wikidata_id": "Q17154787"
     },
     {
         "id": 20691,
@@ -68773,7 +68773,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 41,
-        "wikidata_id": "Q3819"
+        "wikidata_id": "Q17154789"
     },
     {
         "id": 20692,
@@ -68781,7 +68781,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 41,
-        "wikidata_id": "Q3819"
+        "wikidata_id": "Q17154790"
     },
     {
         "id": 20693,
@@ -68789,7 +68789,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 41,
-        "wikidata_id": "Q3819"
+        "wikidata_id": "Q17154795"
     },
     {
         "id": 20694,
@@ -68797,7 +68797,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 41,
-        "wikidata_id": "Q3819"
+        "wikidata_id": "Q17154798"
     },
     {
         "id": 20695,
@@ -68805,7 +68805,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 41,
-        "wikidata_id": "Q3819"
+        "wikidata_id": "Q17154801"
     },
     {
         "id": 20696,
@@ -68820,7 +68820,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 96,
-        "wikidata_id": "Q3329"
+        "wikidata_id": "Q17266183"
     },
     {
         "id": 20698,
@@ -68828,7 +68828,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 96,
-        "wikidata_id": "Q3329"
+        "wikidata_id": "Q17266184"
     },
     {
         "id": 20699,
@@ -68836,7 +68836,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 96,
-        "wikidata_id": "Q3329"
+        "wikidata_id": "Q17266188"
     },
     {
         "id": 20700,
@@ -68844,7 +68844,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 96,
-        "wikidata_id": "Q3329"
+        "wikidata_id": "Q17266189"
     },
     {
         "id": 20701,
@@ -68852,7 +68852,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 96,
-        "wikidata_id": "Q3329"
+        "wikidata_id": "Q17266230"
     },
     {
         "id": 20702,
@@ -68860,7 +68860,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 96,
-        "wikidata_id": "Q3329"
+        "wikidata_id": "Q17266250"
     },
     {
         "id": 20703,
@@ -68875,7 +68875,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 74,
-        "wikidata_id": "Q4341"
+        "wikidata_id": "Q17384823"
     },
     {
         "id": 20705,
@@ -68883,7 +68883,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 33,
-        "wikidata_id": "Q6886"
+        "wikidata_id": "Q17462401"
     },
     {
         "id": 20706,
@@ -68891,7 +68891,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 74,
-        "wikidata_id": "Q4341"
+        "wikidata_id": "Q17494941"
     },
     {
         "id": 20707,
@@ -68899,7 +68899,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 33,
-        "wikidata_id": "Q6886"
+        "wikidata_id": "Q17495071"
     },
     {
         "id": 20708,
@@ -68907,7 +68907,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 28,
-        "wikidata_id": "Q6563"
+        "wikidata_id": "Q17506081"
     },
     {
         "id": 20709,
@@ -68915,7 +68915,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 98,
-        "wikidata_id": "Q5741"
+        "wikidata_id": "Q17506094"
     },
     {
         "id": 20710,
@@ -68923,7 +68923,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 98,
-        "wikidata_id": "Q5741"
+        "wikidata_id": "Q17506166"
     },
     {
         "id": 20711,
@@ -68931,7 +68931,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 98,
-        "wikidata_id": "Q5741"
+        "wikidata_id": "Q17506200"
     },
     {
         "id": 20712,
@@ -68939,7 +68939,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 28,
-        "wikidata_id": "Q6563"
+        "wikidata_id": "Q17506279"
     },
     {
         "id": 20713,
@@ -68947,7 +68947,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 98,
-        "wikidata_id": "Q5741"
+        "wikidata_id": "Q17506283"
     },
     {
         "id": 20714,
@@ -68955,7 +68955,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 28,
-        "wikidata_id": "Q6563"
+        "wikidata_id": "Q17506286"
     },
     {
         "id": 20715,
@@ -68963,7 +68963,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 28,
-        "wikidata_id": "Q6563"
+        "wikidata_id": "Q17506288"
     },
     {
         "id": 20716,
@@ -68971,7 +68971,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 28,
-        "wikidata_id": "Q6563"
+        "wikidata_id": "Q17506291"
     },
     {
         "id": 20717,
@@ -68979,7 +68979,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 28,
-        "wikidata_id": "Q6563"
+        "wikidata_id": "Q17506292"
     },
     {
         "id": 20718,
@@ -68987,7 +68987,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 28,
-        "wikidata_id": "Q6563"
+        "wikidata_id": "Q17506293"
     },
     {
         "id": 20719,
@@ -68995,7 +68995,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 28,
-        "wikidata_id": "Q6563"
+        "wikidata_id": "Q17506294"
     },
     {
         "id": 20720,
@@ -69003,7 +69003,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 28,
-        "wikidata_id": "Q6563"
+        "wikidata_id": "Q17506295"
     },
     {
         "id": 20721,
@@ -69011,7 +69011,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 28,
-        "wikidata_id": "Q6563"
+        "wikidata_id": "Q17506296"
     },
     {
         "id": 20722,
@@ -69019,7 +69019,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 28,
-        "wikidata_id": "Q6563"
+        "wikidata_id": "Q17506297"
     },
     {
         "id": 20723,
@@ -69027,7 +69027,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 28,
-        "wikidata_id": "Q6563"
+        "wikidata_id": "Q17506313"
     },
     {
         "id": 20724,
@@ -69035,7 +69035,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 28,
-        "wikidata_id": "Q6563"
+        "wikidata_id": "Q17506314"
     },
     {
         "id": 20725,
@@ -69043,7 +69043,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 96,
-        "wikidata_id": "Q3329"
+        "wikidata_id": "Q17506318"
     },
     {
         "id": 20726,
@@ -69058,7 +69058,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 96,
-        "wikidata_id": "Q3329"
+        "wikidata_id": "Q17506330"
     },
     {
         "id": 20728,
@@ -69066,7 +69066,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 96,
-        "wikidata_id": "Q3329"
+        "wikidata_id": "Q17506332"
     },
     {
         "id": 20729,
@@ -69074,7 +69074,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 28,
-        "wikidata_id": "Q6563"
+        "wikidata_id": "Q17506357"
     },
     {
         "id": 20730,
@@ -69082,7 +69082,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 80,
-        "wikidata_id": "Q5462"
+        "wikidata_id": "Q14506889"
     },
     {
         "id": 20731,
@@ -69090,7 +69090,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 44,
-        "wikidata_id": "Q6838"
+        "wikidata_id": "Q14506918"
     },
     {
         "id": 20732,
@@ -69098,7 +69098,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 89,
-        "wikidata_id": "Q5714"
+        "wikidata_id": "Q14506937"
     },
     {
         "id": 20733,
@@ -69106,7 +69106,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q14506941"
     },
     {
         "id": 20734,
@@ -69114,7 +69114,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q14506942"
     },
     {
         "id": 20735,
@@ -69122,7 +69122,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q14506944"
     },
     {
         "id": 20736,
@@ -69130,7 +69130,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q14506948"
     },
     {
         "id": 20737,
@@ -69138,7 +69138,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q14506954"
     },
     {
         "id": 20738,
@@ -69146,7 +69146,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q14506960"
     },
     {
         "id": 20739,
@@ -69154,7 +69154,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q14506976"
     },
     {
         "id": 20740,
@@ -69162,7 +69162,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q14507230"
     },
     {
         "id": 20741,
@@ -69170,7 +69170,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q14507232"
     },
     {
         "id": 20742,
@@ -69178,7 +69178,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q14507234"
     },
     {
         "id": 20743,
@@ -69186,7 +69186,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q14507305"
     },
     {
         "id": 20744,
@@ -69201,7 +69201,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q14507313"
     },
     {
         "id": 20746,
@@ -69209,7 +69209,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q14507314"
     },
     {
         "id": 20747,
@@ -69225,7 +69225,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q14507317"
     },
     {
         "id": 20749,
@@ -69233,7 +69233,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q14507321"
     },
     {
         "id": 20750,
@@ -69241,7 +69241,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q14507327"
     },
     {
         "id": 20751,
@@ -69249,7 +69249,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q14507328"
     },
     {
         "id": 20752,
@@ -69278,7 +69278,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 107,
-        "wikidata_id": "Q2448"
+        "wikidata_id": "Q14558302"
     },
     {
         "id": 20756,
@@ -69286,7 +69286,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 107,
-        "wikidata_id": "Q2448"
+        "wikidata_id": "Q14558303"
     },
     {
         "id": 20757,
@@ -69294,7 +69294,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 107,
-        "wikidata_id": "Q2448"
+        "wikidata_id": "Q14558304"
     },
     {
         "id": 20758,
@@ -69309,7 +69309,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q14558439"
     },
     {
         "id": 20760,
@@ -69317,7 +69317,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 64,
-        "wikidata_id": "Q1697"
+        "wikidata_id": "Q4414272"
     },
     {
         "id": 20761,
@@ -69325,7 +69325,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 51,
-        "wikidata_id": "Q5387"
+        "wikidata_id": "Q14558557"
     },
     {
         "id": 20762,
@@ -69333,7 +69333,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 51,
-        "wikidata_id": "Q5387"
+        "wikidata_id": "Q14558560"
     },
     {
         "id": 20763,
@@ -69341,7 +69341,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 51,
-        "wikidata_id": "Q5387"
+        "wikidata_id": "Q14558871"
     },
     {
         "id": 20764,
@@ -69356,7 +69356,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q14647355"
     },
     {
         "id": 20766,
@@ -69364,7 +69364,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q14647357"
     },
     {
         "id": 20767,
@@ -69372,7 +69372,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q14647367"
     },
     {
         "id": 20768,
@@ -69380,7 +69380,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q15058784"
     },
     {
         "id": 20769,
@@ -69388,7 +69388,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q15058792"
     },
     {
         "id": 20770,
@@ -69396,7 +69396,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q15058794"
     },
     {
         "id": 20771,
@@ -69404,7 +69404,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q15058795"
     },
     {
         "id": 20772,
@@ -69412,7 +69412,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q15058796"
     },
     {
         "id": 20773,
@@ -69420,7 +69420,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q15058797"
     },
     {
         "id": 20774,
@@ -69435,7 +69435,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q15058799"
     },
     {
         "id": 20776,
@@ -69443,7 +69443,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q15058800"
     },
     {
         "id": 20777,
@@ -69451,7 +69451,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q15058801"
     },
     {
         "id": 20778,
@@ -69459,7 +69459,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q15058804"
     },
     {
         "id": 20779,
@@ -69467,7 +69467,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q15058805"
     },
     {
         "id": 20780,
@@ -69482,7 +69482,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 45,
-        "wikidata_id": "Q6585"
+        "wikidata_id": "Q16022146"
     },
     {
         "id": 20782,
@@ -69504,7 +69504,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q16535275"
     },
     {
         "id": 20785,
@@ -69512,7 +69512,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q16535633"
     },
     {
         "id": 20786,
@@ -69520,7 +69520,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q16626594"
     },
     {
         "id": 20787,
@@ -69535,7 +69535,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 107,
-        "wikidata_id": "Q2448"
+        "wikidata_id": "Q16628431"
     },
     {
         "id": 20789,
@@ -69543,7 +69543,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q16629373"
     },
     {
         "id": 20790,
@@ -69551,7 +69551,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q16632085"
     },
     {
         "id": 20791,
@@ -69559,7 +69559,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q16635673"
     },
     {
         "id": 20792,
@@ -69567,7 +69567,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q16636211"
     },
     {
         "id": 20793,
@@ -69575,7 +69575,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 79,
-        "wikidata_id": "Q5334"
+        "wikidata_id": "Q16638869"
     },
     {
         "id": 20794,
@@ -69583,7 +69583,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 53,
-        "wikidata_id": "Q2596"
+        "wikidata_id": "Q16648034"
     },
     {
         "id": 20795,
@@ -69598,7 +69598,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q16657050"
     },
     {
         "id": 20797,
@@ -69606,7 +69606,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q16661377"
     },
     {
         "id": 20798,
@@ -69614,7 +69614,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 29,
-        "wikidata_id": "Q5400"
+        "wikidata_id": "Q16665786"
     },
     {
         "id": 20799,
@@ -69622,7 +69622,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q16669115"
     },
     {
         "id": 20800,
@@ -69630,7 +69630,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 47,
-        "wikidata_id": "Q3953"
+        "wikidata_id": "Q16674219"
     },
     {
         "id": 20801,
@@ -69638,7 +69638,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q16676681"
     },
     {
         "id": 20802,
@@ -69646,7 +69646,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 29,
-        "wikidata_id": "Q5400"
+        "wikidata_id": "Q16677432"
     },
     {
         "id": 20803,
@@ -69654,7 +69654,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 66,
-        "wikidata_id": "Q2246"
+        "wikidata_id": "Q16678547"
     },
     {
         "id": 20804,
@@ -69662,7 +69662,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 41,
-        "wikidata_id": "Q3819"
+        "wikidata_id": "Q16680618"
     },
     {
         "id": 20805,
@@ -69678,7 +69678,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 29,
-        "wikidata_id": "Q5400"
+        "wikidata_id": "Q16683608"
     },
     {
         "id": 20807,
@@ -69686,7 +69686,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 107,
-        "wikidata_id": "Q2448"
+        "wikidata_id": "Q16684077"
     },
     {
         "id": 20808,
@@ -69694,7 +69694,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q16686906"
     },
     {
         "id": 20809,
@@ -69709,7 +69709,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q16687487"
     },
     {
         "id": 20811,
@@ -69717,7 +69717,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 41,
-        "wikidata_id": "Q3819"
+        "wikidata_id": "Q16690025"
     },
     {
         "id": 20812,
@@ -69725,7 +69725,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q16692708"
     },
     {
         "id": 20813,
@@ -69733,7 +69733,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q16692776"
     },
     {
         "id": 20814,
@@ -69741,7 +69741,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4146454"
     },
     {
         "id": 20815,
@@ -69749,7 +69749,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4146510"
     },
     {
         "id": 20816,
@@ -69757,7 +69757,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 29,
-        "wikidata_id": "Q5400"
+        "wikidata_id": "Q4148593"
     },
     {
         "id": 20817,
@@ -69765,7 +69765,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q4150251"
     },
     {
         "id": 20818,
@@ -69773,7 +69773,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q4150553"
     },
     {
         "id": 20819,
@@ -69781,7 +69781,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 98,
-        "wikidata_id": "Q5741"
+        "wikidata_id": "Q17506403"
     },
     {
         "id": 20820,
@@ -69789,7 +69789,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 98,
-        "wikidata_id": "Q5741"
+        "wikidata_id": "Q17506415"
     },
     {
         "id": 20821,
@@ -69797,7 +69797,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 98,
-        "wikidata_id": "Q5741"
+        "wikidata_id": "Q17506432"
     },
     {
         "id": 20822,
@@ -69805,7 +69805,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 28,
-        "wikidata_id": "Q6563"
+        "wikidata_id": "Q17506449"
     },
     {
         "id": 20823,
@@ -69813,7 +69813,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 98,
-        "wikidata_id": "Q5741"
+        "wikidata_id": "Q17506490"
     },
     {
         "id": 20824,
@@ -69821,7 +69821,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 28,
-        "wikidata_id": "Q6563"
+        "wikidata_id": "Q17506502"
     },
     {
         "id": 20825,
@@ -69829,7 +69829,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q17506567"
     },
     {
         "id": 20826,
@@ -69837,7 +69837,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 74,
-        "wikidata_id": "Q4341"
+        "wikidata_id": "Q17506577"
     },
     {
         "id": 20827,
@@ -69845,7 +69845,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 96,
-        "wikidata_id": "Q3329"
+        "wikidata_id": "Q17506581"
     },
     {
         "id": 20828,
@@ -69853,7 +69853,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 96,
-        "wikidata_id": "Q3329"
+        "wikidata_id": "Q17506582"
     },
     {
         "id": 20829,
@@ -69861,7 +69861,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 96,
-        "wikidata_id": "Q3329"
+        "wikidata_id": "Q17506583"
     },
     {
         "id": 20830,
@@ -69869,7 +69869,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 96,
-        "wikidata_id": "Q3329"
+        "wikidata_id": "Q17506584"
     },
     {
         "id": 20831,
@@ -69877,7 +69877,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 96,
-        "wikidata_id": "Q3329"
+        "wikidata_id": "Q17506585"
     },
     {
         "id": 20832,
@@ -69892,7 +69892,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 74,
-        "wikidata_id": "Q4341"
+        "wikidata_id": "Q17506587"
     },
     {
         "id": 20834,
@@ -69900,7 +69900,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 96,
-        "wikidata_id": "Q3329"
+        "wikidata_id": "Q17506595"
     },
     {
         "id": 20835,
@@ -69915,7 +69915,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 96,
-        "wikidata_id": "Q3329"
+        "wikidata_id": "Q17506601"
     },
     {
         "id": 20837,
@@ -69923,7 +69923,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 33,
-        "wikidata_id": "Q6886"
+        "wikidata_id": "Q17506659"
     },
     {
         "id": 20838,
@@ -69931,7 +69931,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 74,
-        "wikidata_id": "Q4341"
+        "wikidata_id": "Q17506727"
     },
     {
         "id": 20839,
@@ -69939,7 +69939,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 33,
-        "wikidata_id": "Q6886"
+        "wikidata_id": "Q17506729"
     },
     {
         "id": 20840,
@@ -69947,7 +69947,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 21,
-        "wikidata_id": "Q6543"
+        "wikidata_id": "Q17506795"
     },
     {
         "id": 20841,
@@ -69955,7 +69955,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 96,
-        "wikidata_id": "Q3329"
+        "wikidata_id": "Q18400494"
     },
     {
         "id": 20842,
@@ -69963,7 +69963,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 53,
-        "wikidata_id": "Q2596"
+        "wikidata_id": "Q18400661"
     },
     {
         "id": 20843,
@@ -69971,7 +69971,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 53,
-        "wikidata_id": "Q2596"
+        "wikidata_id": "Q18401870"
     },
     {
         "id": 20844,
@@ -69979,7 +69979,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 5,
-        "wikidata_id": "Q6809"
+        "wikidata_id": "Q18405821"
     },
     {
         "id": 20845,
@@ -69987,7 +69987,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 27,
-        "wikidata_id": "Q3680"
+        "wikidata_id": "Q14503759"
     },
     {
         "id": 20846,
@@ -69995,7 +69995,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q14505644"
     },
     {
         "id": 20847,
@@ -70010,7 +70010,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q14506765"
     },
     {
         "id": 20849,
@@ -70025,7 +70025,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q16693068"
     },
     {
         "id": 20851,
@@ -70033,7 +70033,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q16696079"
     },
     {
         "id": 20852,
@@ -70041,7 +70041,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 97,
-        "wikidata_id": "Q2842"
+        "wikidata_id": "Q16696180"
     },
     {
         "id": 20853,
@@ -70049,7 +70049,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 97,
-        "wikidata_id": "Q2842"
+        "wikidata_id": "Q16696201"
     },
     {
         "id": 20854,
@@ -70064,7 +70064,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q18613646"
     },
     {
         "id": 20856,
@@ -70072,7 +70072,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 41,
-        "wikidata_id": "Q3819"
+        "wikidata_id": "Q18649543"
     },
     {
         "id": 20857,
@@ -70080,7 +70080,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 41,
-        "wikidata_id": "Q3819"
+        "wikidata_id": "Q19386797"
     },
     {
         "id": 20858,
@@ -70088,7 +70088,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 41,
-        "wikidata_id": "Q3819"
+        "wikidata_id": "Q19397116"
     },
     {
         "id": 20859,
@@ -70103,7 +70103,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 41,
-        "wikidata_id": "Q3819"
+        "wikidata_id": "Q19817317"
     },
     {
         "id": 20861,
@@ -70118,7 +70118,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 53,
-        "wikidata_id": "Q2596"
+        "wikidata_id": "Q19836336"
     },
     {
         "id": 20863,
@@ -70126,7 +70126,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q19836439"
     },
     {
         "id": 20864,
@@ -70134,7 +70134,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q19836509"
     },
     {
         "id": 20865,
@@ -70149,7 +70149,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q19836512"
     },
     {
         "id": 20867,
@@ -70157,7 +70157,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q19836516"
     },
     {
         "id": 20868,
@@ -70165,7 +70165,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q19836517"
     },
     {
         "id": 20869,
@@ -70173,7 +70173,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q19836519"
     },
     {
         "id": 20870,
@@ -70181,7 +70181,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q19836522"
     },
     {
         "id": 20871,
@@ -70189,7 +70189,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 98,
-        "wikidata_id": "Q5741"
+        "wikidata_id": "Q19836579"
     },
     {
         "id": 20872,
@@ -70197,7 +70197,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 5,
-        "wikidata_id": "Q6809"
+        "wikidata_id": "Q19836605"
     },
     {
         "id": 20873,
@@ -70205,7 +70205,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 5,
-        "wikidata_id": "Q6809"
+        "wikidata_id": "Q19836694"
     },
     {
         "id": 20874,
@@ -70213,7 +70213,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 89,
-        "wikidata_id": "Q5714"
+        "wikidata_id": "Q19836702"
     },
     {
         "id": 20875,
@@ -70221,7 +70221,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 44,
-        "wikidata_id": "Q6838"
+        "wikidata_id": "Q19836843"
     },
     {
         "id": 20876,
@@ -70229,7 +70229,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 13,
-        "wikidata_id": "Q2073"
+        "wikidata_id": "Q20084947"
     },
     {
         "id": 20877,
@@ -70237,7 +70237,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 105,
-        "wikidata_id": "Q5338"
+        "wikidata_id": "Q20085052"
     },
     {
         "id": 20878,
@@ -70252,7 +70252,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q20379639"
     },
     {
         "id": 20880,
@@ -70260,7 +70260,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q20379774"
     },
     {
         "id": 20881,
@@ -70268,7 +70268,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 67,
-        "wikidata_id": "Q2240"
+        "wikidata_id": "Q20379826"
     },
     {
         "id": 20882,
@@ -70276,7 +70276,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q20379960"
     },
     {
         "id": 20883,
@@ -70284,7 +70284,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 5,
-        "wikidata_id": "Q6809"
+        "wikidata_id": "Q19837496"
     },
     {
         "id": 20884,
@@ -70292,7 +70292,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 5,
-        "wikidata_id": "Q6809"
+        "wikidata_id": "Q19837505"
     },
     {
         "id": 20885,
@@ -70300,7 +70300,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 5,
-        "wikidata_id": "Q6809"
+        "wikidata_id": "Q19837515"
     },
     {
         "id": 20886,
@@ -70308,7 +70308,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 5,
-        "wikidata_id": "Q6809"
+        "wikidata_id": "Q19837517"
     },
     {
         "id": 20887,
@@ -70316,7 +70316,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 5,
-        "wikidata_id": "Q6809"
+        "wikidata_id": "Q19837521"
     },
     {
         "id": 20888,
@@ -70324,7 +70324,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 105,
-        "wikidata_id": "Q5338"
+        "wikidata_id": "Q19837615"
     },
     {
         "id": 20889,
@@ -70332,7 +70332,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 99,
-        "wikidata_id": "Q2654"
+        "wikidata_id": "Q19837775"
     },
     {
         "id": 20890,
@@ -70340,7 +70340,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 99,
-        "wikidata_id": "Q2654"
+        "wikidata_id": "Q19837805"
     },
     {
         "id": 20891,
@@ -70348,7 +70348,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 70,
-        "wikidata_id": "Q3129"
+        "wikidata_id": "Q20084581"
     },
     {
         "id": 20892,
@@ -70356,7 +70356,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 53,
-        "wikidata_id": "Q2596"
+        "wikidata_id": "Q20084626"
     },
     {
         "id": 20893,
@@ -70364,7 +70364,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 53,
-        "wikidata_id": "Q2596"
+        "wikidata_id": "Q20084629"
     },
     {
         "id": 20894,
@@ -70372,7 +70372,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 5,
-        "wikidata_id": "Q6809"
+        "wikidata_id": "Q20658539"
     },
     {
         "id": 20895,
@@ -70380,7 +70380,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q20658590"
     },
     {
         "id": 20896,
@@ -70388,7 +70388,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q20658592"
     },
     {
         "id": 20897,
@@ -70396,7 +70396,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q20658593"
     },
     {
         "id": 20898,
@@ -70404,7 +70404,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q20658594"
     },
     {
         "id": 20899,
@@ -70412,7 +70412,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q20658595"
     },
     {
         "id": 20900,
@@ -70420,7 +70420,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q20658596"
     },
     {
         "id": 20901,
@@ -70428,7 +70428,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q20658608"
     },
     {
         "id": 20902,
@@ -70436,7 +70436,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q20658609"
     },
     {
         "id": 20903,
@@ -70444,7 +70444,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q20658611"
     },
     {
         "id": 20904,
@@ -70452,7 +70452,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 6,
-        "wikidata_id": "Q5971"
+        "wikidata_id": "Q20658703"
     },
     {
         "id": 20905,
@@ -70460,7 +70460,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 37,
-        "wikidata_id": "Q1875"
+        "wikidata_id": "Q20658759"
     },
     {
         "id": 20906,
@@ -70468,7 +70468,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 5,
-        "wikidata_id": "Q6809"
+        "wikidata_id": "Q20658898"
     },
     {
         "id": 20907,
@@ -70476,7 +70476,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 44,
-        "wikidata_id": "Q6838"
+        "wikidata_id": "Q21193176"
     },
     {
         "id": 20908,
@@ -70484,7 +70484,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 70,
-        "wikidata_id": "Q3129"
+        "wikidata_id": "Q21193249"
     },
     {
         "id": 20909,
@@ -70492,7 +70492,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 44,
-        "wikidata_id": "Q6838"
+        "wikidata_id": "Q21193305"
     },
     {
         "id": 20910,
@@ -70500,7 +70500,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 89,
-        "wikidata_id": "Q5714"
+        "wikidata_id": "Q21193369"
     },
     {
         "id": 20911,
@@ -70508,7 +70508,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 44,
-        "wikidata_id": "Q6838"
+        "wikidata_id": "Q21193442"
     },
     {
         "id": 20912,
@@ -70516,7 +70516,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 44,
-        "wikidata_id": "Q6838"
+        "wikidata_id": "Q21193491"
     },
     {
         "id": 20913,
@@ -70524,7 +70524,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 44,
-        "wikidata_id": "Q6838"
+        "wikidata_id": "Q21193505"
     },
     {
         "id": 20914,
@@ -70532,7 +70532,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 44,
-        "wikidata_id": "Q6838"
+        "wikidata_id": "Q21193507"
     },
     {
         "id": 20915,
@@ -70540,7 +70540,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 44,
-        "wikidata_id": "Q6838"
+        "wikidata_id": "Q21193528"
     },
     {
         "id": 20916,
@@ -70548,7 +70548,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 44,
-        "wikidata_id": "Q6838"
+        "wikidata_id": "Q21193536"
     },
     {
         "id": 20917,
@@ -70556,7 +70556,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 44,
-        "wikidata_id": "Q6838"
+        "wikidata_id": "Q21193554"
     },
     {
         "id": 20918,
@@ -70564,7 +70564,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 44,
-        "wikidata_id": "Q6838"
+        "wikidata_id": "Q21193569"
     },
     {
         "id": 20919,
@@ -70579,7 +70579,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 59,
-        "wikidata_id": "Q5118"
+        "wikidata_id": "Q21194124"
     },
     {
         "id": 20921,
@@ -70587,7 +70587,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 59,
-        "wikidata_id": "Q5118"
+        "wikidata_id": "Q21194250"
     },
     {
         "id": 20922,
@@ -70595,7 +70595,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 32,
-        "wikidata_id": "Q7788"
+        "wikidata_id": "Q21194685"
     },
     {
         "id": 20923,
@@ -70603,7 +70603,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 5,
-        "wikidata_id": "Q6809"
+        "wikidata_id": "Q21194750"
     },
     {
         "id": 20924,
@@ -70611,7 +70611,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 55,
-        "wikidata_id": "Q3178"
+        "wikidata_id": "Q21195273"
     },
     {
         "id": 20925,
@@ -70619,7 +70619,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 79,
-        "wikidata_id": "Q5334"
+        "wikidata_id": "Q21195381"
     },
     {
         "id": 20926,
@@ -70627,7 +70627,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 66,
-        "wikidata_id": "Q2246"
+        "wikidata_id": "Q23895621"
     },
     {
         "id": 20927,
@@ -70635,7 +70635,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 105,
-        "wikidata_id": "Q5338"
+        "wikidata_id": "Q23895741"
     },
     {
         "id": 20928,
@@ -70643,7 +70643,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 105,
-        "wikidata_id": "Q5338"
+        "wikidata_id": "Q23895898"
     },
     {
         "id": 20929,
@@ -70651,7 +70651,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 105,
-        "wikidata_id": "Q5338"
+        "wikidata_id": "Q23895947"
     },
     {
         "id": 20930,
@@ -70659,7 +70659,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 105,
-        "wikidata_id": "Q5338"
+        "wikidata_id": "Q23896034"
     },
     {
         "id": 20931,
@@ -70667,7 +70667,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 105,
-        "wikidata_id": "Q5338"
+        "wikidata_id": "Q23896209"
     },
     {
         "id": 20932,
@@ -70675,7 +70675,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 72,
-        "wikidata_id": "Q5545"
+        "wikidata_id": "Q23896573"
     },
     {
         "id": 20933,
@@ -70683,7 +70683,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 72,
-        "wikidata_id": "Q5545"
+        "wikidata_id": "Q23897072"
     },
     {
         "id": 20934,
@@ -70691,7 +70691,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 72,
-        "wikidata_id": "Q5545"
+        "wikidata_id": "Q23897103"
     },
     {
         "id": 20935,
@@ -70699,7 +70699,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 72,
-        "wikidata_id": "Q5545"
+        "wikidata_id": "Q23897252"
     },
     {
         "id": 20936,
@@ -70707,7 +70707,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 82,
-        "wikidata_id": "Q3550"
+        "wikidata_id": "Q23897857"
     },
     {
         "id": 20937,
@@ -70715,7 +70715,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 13,
-        "wikidata_id": "Q2073"
+        "wikidata_id": "Q23978138"
     },
     {
         "id": 20938,
@@ -70723,7 +70723,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 13,
-        "wikidata_id": "Q2073"
+        "wikidata_id": "Q24051185"
     },
     {
         "id": 20939,
@@ -70731,7 +70731,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 97,
-        "wikidata_id": "Q2842"
+        "wikidata_id": "Q24208254"
     },
     {
         "id": 20940,
@@ -70760,7 +70760,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 56,
-        "wikidata_id": "Q2191"
+        "wikidata_id": "Q56357554"
     },
     {
         "id": 20945,
@@ -70768,7 +70768,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 98,
-        "wikidata_id": "Q5741"
+        "wikidata_id": "Q60851957"
     },
     {
         "id": 20946,
@@ -70783,7 +70783,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 109,
-        "wikidata_id": "Q15966495"
+        "wikidata_id": "Q65129730"
     },
     {
         "id": 20948,
@@ -70791,7 +70791,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 109,
-        "wikidata_id": "Q15966495"
+        "wikidata_id": "Q65177042"
     },
     {
         "id": 20949,
@@ -70799,7 +70799,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 109,
-        "wikidata_id": "Q15966495"
+        "wikidata_id": "Q65177045"
     },
     {
         "id": 20950,
@@ -70807,7 +70807,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 109,
-        "wikidata_id": "Q15966495"
+        "wikidata_id": "Q65177046"
     },
     {
         "id": 20951,
@@ -70815,7 +70815,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 109,
-        "wikidata_id": "Q15966495"
+        "wikidata_id": "Q65177050"
     },
     {
         "id": 20952,
@@ -70823,7 +70823,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 109,
-        "wikidata_id": "Q15966495"
+        "wikidata_id": "Q65177179"
     },
     {
         "id": 20953,
@@ -70831,7 +70831,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 109,
-        "wikidata_id": "Q15966495"
+        "wikidata_id": "Q65177204"
     },
     {
         "id": 20954,
@@ -70839,7 +70839,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 109,
-        "wikidata_id": "Q15966495"
+        "wikidata_id": "Q66717771"
     },
     {
         "id": 20955,
@@ -70847,7 +70847,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 109,
-        "wikidata_id": "Q15966495"
+        "wikidata_id": "Q66717804"
     },
     {
         "id": 20956,
@@ -70855,7 +70855,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 109,
-        "wikidata_id": "Q15966495"
+        "wikidata_id": "Q66724377"
     },
     {
         "id": 20957,
@@ -70863,7 +70863,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 109,
-        "wikidata_id": "Q15966495"
+        "wikidata_id": "Q66724746"
     },
     {
         "id": 20958,
@@ -70871,7 +70871,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 109,
-        "wikidata_id": "Q15966495"
+        "wikidata_id": "Q66727695"
     },
     {
         "id": 20959,
@@ -70879,7 +70879,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 109,
-        "wikidata_id": "Q15966495"
+        "wikidata_id": "Q66730332"
     },
     {
         "id": 20960,
@@ -70887,7 +70887,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 109,
-        "wikidata_id": "Q15966495"
+        "wikidata_id": "Q66730540"
     },
     {
         "id": 20961,
@@ -70895,7 +70895,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 109,
-        "wikidata_id": "Q15966495"
+        "wikidata_id": "Q66813564"
     },
     {
         "id": 20962,
@@ -70903,7 +70903,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 109,
-        "wikidata_id": "Q15966495"
+        "wikidata_id": "Q66821507"
     },
     {
         "id": 20965,
@@ -70939,7 +70939,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 70,
-        "wikidata_id": "Q3129"
+        "wikidata_id": "Q21349355"
     },
     {
         "id": 20985,
@@ -70947,7 +70947,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 84,
-        "wikidata_id": "Q2792"
+        "wikidata_id": "Q21857778"
     },
     {
         "id": 20986,
@@ -70955,7 +70955,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q23010198"
     },
     {
         "id": 20987,
@@ -70963,7 +70963,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q23010365"
     },
     {
         "id": 20988,
@@ -70971,7 +70971,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q23010400"
     },
     {
         "id": 20989,
@@ -70979,7 +70979,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q23010406"
     },
     {
         "id": 20990,
@@ -70987,7 +70987,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q23010430"
     },
     {
         "id": 20991,
@@ -70995,7 +70995,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q23014636"
     },
     {
         "id": 20992,
@@ -71003,7 +71003,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q23014870"
     },
     {
         "id": 20993,
@@ -71018,7 +71018,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q23015601"
     },
     {
         "id": 20995,
@@ -71026,7 +71026,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q23015623"
     },
     {
         "id": 20996,
@@ -71034,7 +71034,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q23015629"
     },
     {
         "id": 20997,
@@ -71049,7 +71049,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q23015663"
     },
     {
         "id": 20999,
@@ -71078,7 +71078,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q23043604"
     },
     {
         "id": 21003,
@@ -71093,7 +71093,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q23043606"
     },
     {
         "id": 21005,
@@ -71101,7 +71101,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q23043612"
     },
     {
         "id": 21006,
@@ -71109,7 +71109,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q23043613"
     },
     {
         "id": 21007,
@@ -71117,7 +71117,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q23043614"
     },
     {
         "id": 21008,
@@ -71125,7 +71125,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q23043616"
     },
     {
         "id": 21009,
@@ -71133,7 +71133,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q23043618"
     },
     {
         "id": 21010,
@@ -71141,7 +71141,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 81,
-        "wikidata_id": "Q5207"
+        "wikidata_id": "Q23043620"
     },
     {
         "id": 21011,
@@ -71170,7 +71170,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 57,
-        "wikidata_id": "Q3510"
+        "wikidata_id": "Q23895201"
     },
     {
         "id": 21015,
@@ -71178,7 +71178,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 57,
-        "wikidata_id": "Q3510"
+        "wikidata_id": "Q23895214"
     },
     {
         "id": 21016,
@@ -71186,7 +71186,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 70,
-        "wikidata_id": "Q3129"
+        "wikidata_id": "Q23895343"
     },
     {
         "id": 21017,
@@ -71194,7 +71194,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 66,
-        "wikidata_id": "Q2246"
+        "wikidata_id": "Q23895344"
     },
     {
         "id": 21018,
@@ -71202,7 +71202,7 @@
         "parent_id": null,
         "type_id": null,
         "region_id": 66,
-        "wikidata_id": "Q2246"
+        "wikidata_id": "Q23895345"
     },
     {
         "id": 21024,
