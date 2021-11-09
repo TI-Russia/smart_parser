@@ -3,7 +3,7 @@ from web_site_db.robot_project import TRobotProject
 from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
 from common.logging_wrapper import setup_logging
 from common.export_files import TExportFile
-from office_db.offices_in_memory import TOfficeTableInMemory
+from office_db.web_site_list import TDeclarationWebSiteList
 
 import os
 import sys
@@ -37,9 +37,8 @@ class TJoiner:
         self.output_dlrobot_human = TDlrobotHumanFileDBM(args.output_json)
         self.output_dlrobot_human.create_db()
         self.old_files_with_office_count = 0
-        self.offices = TOfficeTableInMemory()
-        self.offices.read_from_local_file()
-
+        self.web_sites_db = TDeclarationWebSiteList(self.logger)
+        self.offices = self.web_sites_db.offices
 
     def add_dlrobot_file(self, sha256, file_extension, web_refs=[], decl_refs=[]):
         src_doc = self.output_dlrobot_human.get_document_maybe(sha256)
@@ -61,7 +60,7 @@ class TJoiner:
             self.logger.error("no dlrobot project file found".format(project_folder))
             return
         try:
-            project = TRobotProject(self.logger, project_path, [], None)
+            project = TRobotProject(self.logger, project_path, [], None, web_sites_db=self.web_sites_db)
             project.read_project(check_step_names=False)
             office_info: TWebSiteCrawlSnapshot
             office_info = project.web_site_snapshots[0]

@@ -15,7 +15,7 @@ class TRobotProject:
     visited_pages_extension = ".visited_pages"
 
     def __init__(self, logger, filename, robot_step_passports, export_folder,
-                 enable_search_engine=True, start_selenium=True):
+                 enable_search_engine=True, start_selenium=True, web_sites_db=None):
         self.logger = logger
         self.start_time = time.time()
         self.total_timeout = 0
@@ -29,7 +29,9 @@ class TRobotProject:
         self.robot_step_passports = robot_step_passports
         self.enable_search_engine = enable_search_engine  #switched off in tests, otherwize google shows captcha
         self.export_folder = export_folder
-        self.web_sites_db = TDeclarationWebSiteList(self.logger)
+        self.web_sites_db = web_sites_db
+        if self.web_sites_db is None:
+            self.web_sites_db = TDeclarationWebSiteList(self.logger)
         self.start_selenium = start_selenium
 
     def have_time_for_last_dl_recognizer(self):

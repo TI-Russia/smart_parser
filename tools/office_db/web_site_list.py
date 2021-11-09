@@ -1,4 +1,4 @@
-from common.urllib_parse_pro import  urlsplit_pro
+from common.urllib_parse_pro import  urlsplit_pro, get_site_url
 from common.web_site_status import TWebSiteReachStatus
 from office_db.offices_in_memory import TOfficeTableInMemory, TOfficeInMemory, TDeclarationWebSite
 
@@ -23,15 +23,16 @@ class TDeclarationWebSiteList:
         o: TOfficeInMemory
         for o in self.offices.offices.values():
             for u in o.office_web_sites:
-                assert u.url not in self.web_sites
-                self.web_sites[u.url] = u
-                self.web_sites_to_office[u.url] = o
+                site_url = get_site_url(u.url)
+                if site_url in self.web_sites:
+                    assert site_url not in self.web_sites
+                self.web_sites[site_url] = u
+                self.web_sites_to_office[site_url] = o
 
         self.build_web_domains_redirects()
         self.web_domain_to_web_site.clear()
         for k, v in self.web_sites.items():
-            parsed_url = urlsplit_pro(k)
-            self.web_domain_to_web_site[parsed_url.hostname].append(parsed_url.hostname + parsed_url.path)
+            self.web_domain_to_web_site[urlsplit_pro(k).hostname].append(get_site_url(k))
 
     def build_web_domains_redirects(self):
         self.web_domains_redirects = defaultdict(set)
@@ -104,13 +105,7 @@ class TDeclarationWebSiteList:
                     if fail_fast:
                         return False
             if site_info.redirect_to is not None:
-                if not self.has_web_site(site_info.redirect_to):
-                    if site_info.redirect_to.startswith('https'):
-                        fixed_url = "http" + site_info.redirect_to[5:]
-                        if self.has_web_site(fixed_url):
-                            site_info.redirect_to = fixed_url
-                            logger.error("fix protocol for redirect {}".format(site_url, site_info.redirect_to))
-                            continue
+                if not self.has_web_site(get_site_url(site_info.redirect_to)):
                     errors += 1
                     logger.error("{} has missing redirect {}".format(site_url, site_info.redirect_to))
                     if fail_fast:

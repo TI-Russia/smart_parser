@@ -9,6 +9,11 @@ def urlsplit_pro(url):
     return urllib.parse.urlsplit(url)
 
 
+def get_site_url(url):
+    parsed_url = urlsplit_pro(url)
+    return parsed_url.netloc + parsed_url.path
+
+
 def get_url_modifications(url: str):
     o = urlsplit_pro(url)
     if len(o.scheme) > 0:

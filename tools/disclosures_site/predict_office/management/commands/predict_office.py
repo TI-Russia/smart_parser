@@ -104,10 +104,9 @@ class TOfficePredictor:
     def get_office_using_max_freq_heuristics(self, sha256, src_doc):
         web_ref: TWebReference
         for web_ref in src_doc.web_references:
-            web_site = self.office_ml_model.office_index.web_sites.get_web_site(web_ref._site_url)
-            if web_site is not None:
-                self.set_office_id(sha256, src_doc, web_site.calculated_office_id, "max freq heuristics")
-                return
+            office = self.office_ml_model.office_index.web_sites.get_office(web_ref._site_url)
+            if office is not None:
+                self.set_office_id(sha256, src_doc, office.office_id, "max freq heuristics")
 
     def predict_office(self):
         cases_for_ml_predict = list()
