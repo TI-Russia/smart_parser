@@ -11,7 +11,7 @@ import re
 class TOfficeInMemory:
 
     def __init__(self, office_id=None, name=None, parent_id=None, type_id=None, rubric_id=None, region_id=None,
-                 address=None, wikidata_id=None):
+                 address=None, wikidata_id=None, office_web_sites=None):
         self.office_id = office_id
         self.name = name
         self.parent_id = parent_id
@@ -21,6 +21,8 @@ class TOfficeInMemory:
         self.address = address
         self.wikidata_id = wikidata_id
         self.office_web_sites = list()
+        if office_web_sites is not None:
+            self.office_web_sites = office_web_sites
 
     def from_json(self, js):
         self.office_id = int(js['id'])
@@ -113,9 +115,9 @@ class TOfficeTableInMemory:
     # echo  "select *  from declarations_office" |  mysqlsh --sql --result-format=json/array --uri=declarator@localhost -pdeclarator -D declarator data/offices.txt
     # echo  "select * from declarator.declarations_office  where id not in (select id from disclosures_db.declarations_office)" |  mysqlsh --sql --result-format=json/array --uri=declarator@localhost -pdeclarator -D declarator > offices.txt
 
-    def read_from_local_file(self):
-        # without rubrics
-        filepath = os.path.join(os.path.dirname(__file__), "../office_db/data/offices.txt")
+    def read_from_local_file(self, filepath=None):
+        if  filepath is None:
+            filepath = os.path.join(os.path.dirname(__file__), "../office_db/data/offices.txt")
         with open(filepath) as inp:
             offices = json.load(inp)
             for o in offices:

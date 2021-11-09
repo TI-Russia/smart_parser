@@ -1,4 +1,4 @@
-from dlrobot.dlrobot_server.common_server_worker import DLROBOT_HEADER_KEYS
+from dlrobot.common.central_protocol import DLROBOT_HEADER_KEYS
 from common.archives import TDearchiver
 from dlrobot.common.robot_project import TRobotProject
 from common.logging_wrapper import setup_logging

@@ -1,15 +1,17 @@
-from dlrobot.dlrobot_server.dlrobot_central import TDlrobotHTTPServer
+from dlrobot.central.dlrobot_central import TDlrobotHTTPServer
 from dlrobot.worker.dlrobot_worker import TDlrobotWorker
-from dlrobot.dlrobot_server.scripts.fns.unzip_archive import TUnzipper
-from dlrobot.dlrobot_server.common_server_worker import TTimeouts, PITSTOP_FILE
+from dlrobot.central.scripts.fns.unzip_archive import TUnzipper
+from dlrobot.common.central_protocol import TTimeouts
+from dlrobot.common.dl_robot_round import TDeclarationRounds
 from smart_parser_http.smart_parser_server import TSmartParserHTTPServer
 from source_doc_http.source_doc_server import TSourceDocHTTPServer
 from common.web_site_status import TWebSiteReachStatus
-from dlrobot.common.dl_robot_round import TDeclarationRounds
 from common.primitives import build_dislosures_sha256, is_local_http_port_free
 from common.archives import TDearchiver
 from disclosures_site.scripts.join_human_and_dlrobot import TJoiner
 from declarations.input_json import TSourceDocument, TDlrobotHumanFileDBM
+from office_db.offices_in_memory import TOfficeInMemory
+from office_db.declaration_office_website import TDeclarationWebSite
 
 from unittest import TestCase
 import os
@@ -44,7 +46,7 @@ class TTestEnv:
         self.central_thread = None
         self.worker_thread = None
         self.worker = None
-        self.input_web_sites_file = None
+        self.input_office_file = None
         self.result_folder = None
         self.worker_folder = os.path.join(self.data_folder, "workdir")
         self.web_site = None
@@ -71,26 +73,27 @@ class TTestEnv:
         self.smart_parser_server = TSmartParserHTTPServer(TSmartParserHTTPServer.parse_args(server_args))
         threading.Thread(target=start_server, args=(self.smart_parser_server,)).start()
 
-    def build_web_sites_file(self, web_site):
-        self.input_web_sites_file = os.path.join(self.data_folder, "web_sites.json")
-        with open(self.input_web_sites_file, "w") as outp:
+    def build_custom_offices_file(self, web_site):
+        self.input_office_file = os.path.join(self.data_folder, "test_office.txt")
+        with open(self.input_office_file, "w") as outp:
             if web_site is not None:
                 if not isinstance(web_site, list):
                     web_sites = [web_site]
                 else:
                     web_sites = web_site
-                js = dict()
-                for w in web_sites:
-                    js[w] = {
-                        "calc_office_id": None
-                    }
+                js = [
+                        TOfficeInMemory(
+                            office_id=1,
+                            region_id=1,
+                            office_web_sites=list(TDeclarationWebSite(u) for u in web_sites)).to_json()
+                    ]
             else:
-                js = {}
+                js = []
             json.dump(js, outp, indent=4, ensure_ascii=False)
 
     def setup_central(self, enable_smart_parser, web_site, dlrobot_project_timeout=5*60, tries_count=2,
                       enable_source_doc_server=False, history_file=None):
-        self.build_web_sites_file(web_site)
+        self.build_custom_offices_file(web_site)
         self.result_folder = os.path.join(self.data_folder, "processed_projects")
         if history_file is None:
             remote_calls_file_name = os.path.join(self.data_folder, "dlrobot_remote_calls.dat")
@@ -103,7 +106,7 @@ class TTestEnv:
             yesterday = (datetime.date.today() - datetime.timedelta(days=1))
             json.dump(TDeclarationRounds.build_an_example(yesterday), outp)
         server_args = [
-            '--input-task-list', self.input_web_sites_file,
+            '--custom-offices-file', self.input_office_file,
             '--remote-calls-file', remote_calls_file_name,
             '--result-folder', self.result_folder,
             '--server-address', self.central_address,
@@ -264,7 +267,7 @@ class WorkerPitStop(TestCase):
         self.env.tearDown()
 
     def test_worker_pitstop(self):
-        with open(os.path.join(self.env.worker_folder, PITSTOP_FILE), "w"):
+        with open(os.path.join(self.env.worker_folder, TDlrobotHTTPServer.PITSTOP_FILE), "w"):
             pass
         time.sleep(3)
         self.assertFalse(self.env.worker_thread.is_alive())
@@ -282,7 +285,7 @@ class CentralPitStop(TestCase):
 
     def test_central_pitstop(self):
         self.assertTrue(self.env.central_thread.is_alive())
-        with open (os.path.join(self.env.data_folder, PITSTOP_FILE), "w"):
+        with open (os.path.join(self.env.data_folder, TDlrobotHTTPServer.PITSTOP_FILE), "w"):
             pass
         time.sleep(self.env.central.args.central_heart_rate + 1)
         self.assertTrue( self.env.central.stop_process )

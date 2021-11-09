@@ -1,14 +1,16 @@
 from ConvStorage.conversion_client import TDocConversionClient
-from dlrobot.dlrobot_server.common_server_worker import DLROBOT_HTTP_CODE, TTimeouts, TYandexCloud, DLROBOT_HEADER_KEYS, PITSTOP_FILE
+from dlrobot.common.central_protocol import DLROBOT_HTTP_CODE, TTimeouts, DLROBOT_HEADER_KEYS
+from dlrobot.common.yandex_cloud import TYandexCloud
 from common.primitives import convert_timeout_to_seconds, check_internet
 from common.urllib_parse_pro import TUrlUtf8Encode
 from dlrobot.common.remote_call import TRemoteDlrobotCall, TRemoteDlrobotCallList
 from common.web_site_status import TWebSiteReachStatus
 from office_db.web_site_list import TDeclarationWebSiteList
+from office_db.offices_in_memory import TOfficeTableInMemory
 from dlrobot.common.dl_robot_round import TDeclarationRounds
 from dlrobot.common.robot_project import TRobotProject
 from common.logging_wrapper import setup_logging
-from dlrobot.dlrobot_server.send_docs import TDeclarationSender
+from dlrobot.central.send_docs import TDeclarationSender
 
 import argparse
 import re
@@ -26,13 +28,14 @@ import telegram_send
 
 class TDlrobotHTTPServer(http.server.HTTPServer):
     max_continuous_failures_count = 7
+    PITSTOP_FILE = ".dlrobot_pit_stop"
 
     @staticmethod
     def parse_args(arg_list):
         parser = argparse.ArgumentParser()
         parser.add_argument("--server-address", dest='server_address', default=None,
                             help="by default read it from environment variable DLROBOT_CENTRAL_SERVER_ADDRESS")
-
+        parser.add_argument("--custom-offices-file", dest='offices_file', required=False)
         parser.add_argument("--log-file-name", dest='log_file_name', required=False, default="dlrobot_central.log")
         parser.add_argument("--remote-calls-file", dest='remote_calls_file', default=None)
         parser.add_argument("--result-folder", dest='result_folder', required=True)
@@ -79,7 +82,9 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                                                            min_start_time_stamp=rounds.start_time_stamp)
         self.worker_2_running_tasks = defaultdict(list)
         self.worker_2_continuous_failures_count = defaultdict(int)
-        self.web_sites_db = TDeclarationWebSiteList(self.logger)
+        offices = TOfficeTableInMemory()
+        offices.read_from_local_file(self.args.offices_file)
+        self.web_sites_db = TDeclarationWebSiteList(self.logger, offices=offices)
         if not os.path.exists(self.args.result_folder):
             os.makedirs(self.args.result_folder)
         self.web_sites_to_process = self.find_projects_to_process()
@@ -323,10 +328,10 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
             if self.service_action_count % 10 == 0:
                 self.logger.debug('alive')
             self.last_service_action_time_stamp = current_time
-            if os.path.exists(PITSTOP_FILE):
+            if os.path.exists(self.PITSTOP_FILE):
                 self.stop_process = True
                 self.logger.debug("stop sending tasks, exit for a pit stop after all tasks complete")
-                os.unlink(PITSTOP_FILE)
+                os.unlink(self.PITSTOP_FILE)
             if self.stop_process and self.get_running_jobs_count() == 0:
                 self.logger.debug("exit via exception")
                 raise Exception("exit for pit stop")

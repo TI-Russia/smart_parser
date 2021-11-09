@@ -1,5 +1,5 @@
 from common.logging_wrapper import setup_logging
-from dlrobot.dlrobot_server.send_docs import TDeclarationSender
+from dlrobot.central.send_docs import TDeclarationSender
 
 import argparse
 import os

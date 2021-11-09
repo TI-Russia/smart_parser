@@ -4,9 +4,12 @@ import shutil
 import psutil
 import time
 import sys
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from common_server_worker import PITSTOP_FILE, TYandexCloud
 import subprocess
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../..'))
+
+from dlrobot.common.yandex_cloud import TYandexCloud
+from dlrobot.worker.dlrobot_worker import TDlrobotWorker
 
 
 def parse_args():
@@ -36,7 +39,7 @@ def stop_dlrobot_worker_gently():
     if not os.path.exists(worker_folder):
         print("no dlrobot_worker folder found: {}".format(worker_folder))
         return
-    pitstop_file = os.path.join(worker_folder, PITSTOP_FILE)
+    pitstop_file = os.path.join(worker_folder, TDlrobotWorker.PITSTOP_FILE)
     with open(pitstop_file, "w") as outp:
         pass
     assert os.path.exists(pitstop_file)

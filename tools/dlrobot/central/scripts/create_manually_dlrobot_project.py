@@ -1,6 +1,6 @@
 from common.logging_wrapper import setup_logging
 from  web_site_db.robot_project import TRobotProject
-from dlrobot.dlrobot_server.send_docs import TDeclarationSender
+from dlrobot.central.send_docs import TDeclarationSender
 
 import os
 import argparse

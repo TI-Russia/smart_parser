@@ -1,4 +1,4 @@
-from dlrobot.dlrobot_server.common_server_worker import DLROBOT_HTTP_CODE, TTimeouts, PITSTOP_FILE, DLROBOT_HEADER_KEYS
+from dlrobot.common.central_protocol import DLROBOT_HTTP_CODE, TTimeouts, DLROBOT_HEADER_KEYS
 from common.logging_wrapper import setup_logging
 from common.urllib_parse_pro import TUrlUtf8Encode
 
@@ -26,6 +26,7 @@ TIMEOUT_FILE_PATH = "timeout.txt"
 
 class DlrobotWorkerException(Exception):
     pass
+
 
 def test_dlrobot_script(logger):
     proc = subprocess.Popen(
@@ -84,6 +85,8 @@ def signal_term_handler(signum, frame):
 
 
 class TDlrobotWorker:
+    PITSTOP_FILE = ".dlrobot_pit_stop"
+
     def __init__(self, args):
         self.args = args
         self.working = True
@@ -337,13 +340,13 @@ class TDlrobotWorker:
         if geckodriver is None:
             raise Exception("cannot find geckodriver (selenium)")
 
-        if os.path.exists(PITSTOP_FILE):
-            os.unlink(PITSTOP_FILE)
+        if os.path.exists(self.PITSTOP_FILE):
+            os.unlink(self.PITSTOP_FILE)
 
     def run_dlrobot_and_send_results_in_thread(self):
         while self.working:
-            if os.path.exists(PITSTOP_FILE):
-                self.logger.debug("exit because file {} exists".format(PITSTOP_FILE))
+            if os.path.exists(self.PITSTOP_FILE):
+                self.logger.debug("exit because file {} exists".format(self.PITSTOP_FILE))
                 break
             if not threading.main_thread().is_alive():
                 break
@@ -410,6 +413,6 @@ if __name__ == "__main__":
         client.logger.error(exp)
     finally:
         client.working = False
-        if os.path.exists(PITSTOP_FILE):
-            os.unlink(PITSTOP_FILE)
+        if os.path.exists(TDlrobotWorker.PITSTOP_FILE):
+            os.unlink(TDlrobotWorker.PITSTOP_FILE)
         client.stop_worker()
