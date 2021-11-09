@@ -1,4 +1,5 @@
 from common.urllib_parse_pro import  urlsplit_pro
+from common.web_site_status import TWebSiteReachStatus
 from office_db.offices_in_memory import TOfficeTableInMemory, TOfficeInMemory, TDeclarationWebSite
 
 from collections import defaultdict
@@ -91,4 +92,29 @@ class TDeclarationWebSiteList:
     def get_office(self, site_url) -> TOfficeInMemory:
         return self.web_sites_to_office.get(site_url)
 
+    def check_valid(self, logger, fail_fast=True):
+        cnt = 0
+        errors = 0
+        for site_url, site_info in self.web_sites.items():
+            cnt += 1
+            if TWebSiteReachStatus.can_communicate(site_info.reach_status):
+                if not site_info.url.startswith('http'):
+                    errors += 1
+                    logger.error("{} has no protocol".format(site_url))
+                    if fail_fast:
+                        return False
+            if site_info.redirect_to is not None:
+                if not self.has_web_site(site_info.redirect_to):
+                    if site_info.redirect_to.startswith('https'):
+                        fixed_url = "http" + site_info.redirect_to[5:]
+                        if self.has_web_site(fixed_url):
+                            site_info.redirect_to = fixed_url
+                            logger.error("fix protocol for redirect {}".format(site_url, site_info.redirect_to))
+                            continue
+                    errors += 1
+                    logger.error("{} has missing redirect {}".format(site_url, site_info.redirect_to))
+                    if fail_fast:
+                        return False
+        self.logger.info("checked {} sites".format(cnt))
+        return errors == 0
 

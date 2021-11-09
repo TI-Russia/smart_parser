@@ -171,14 +171,7 @@ class TWebSitesManager:
             print(web_domain)
 
     def check(self):
-        for web_domain in self.get_url_list():
-            site_info = self.web_sites.get_web_site(web_domain)
-            if TWebSiteReachStatus.can_communicate(site_info.reach_status):
-                if not site_info.url.startwith('http'):
-                    self.logger.error("{} has no protocol".format(web_domain))
-            if site_info.redirect_to is not None:
-                if not self.web_sites.has_web_site(site_info.redirect_to):
-                    self.logger.error("{} has missing redirect {}".format(web_domain, site_info.redirect_to))
+        self.web_sites.check_valid(self.logger, fail_fast=False)
 
     def redirect_subdomain(self):
         for web_domain in self.get_url_list(start_selenium=True):
