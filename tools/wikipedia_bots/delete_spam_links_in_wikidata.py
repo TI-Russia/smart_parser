@@ -112,7 +112,7 @@ if __name__ == '__main__':
     #with open (wikidata_file, "w") as outp:
     #    json.dump(data, outp)
     urls = read_geo_with_sites(wikidata_file)
-    markup_file = "../web_site_db/data/web_sites_markup.txt"
+    markup_file = "../common/data/web_sites_markup.txt"
     site_list_path = "web_sites_to_deprecate.txt"
     #sites = build_site_list(urls, markup_file)
     #with open (site_list_path, "w") as outp:

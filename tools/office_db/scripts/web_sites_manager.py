@@ -1,8 +1,8 @@
 from office_db.web_site_list import TDeclarationWebSiteList
 from office_db.declaration_office_website import TDeclarationWebSite
 from common.web_site_status import TWebSiteReachStatus
-from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
-from web_site_db.robot_project import TRobotProject
+from dlrobot.common.robot_web_site import TWebSiteCrawlSnapshot
+from dlrobot.common.robot_project import TRobotProject
 from common.urllib_parse_pro import strip_scheme_and_query, TUrlUtf8Encode
 from common.logging_wrapper import setup_logging
 from common.http_request import THttpRequester

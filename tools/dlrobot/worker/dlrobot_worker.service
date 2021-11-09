@@ -1,0 +1,13 @@
+    [Unit]
+    Description=workers for dlrobots
+
+    [Service]
+    User=sokirko
+    Environment=PYTHONPATH=/home/sokirko/smart_parser/tools
+    ExecStart=/usr/bin/python3 /home/sokirko/smart_parser/tools/dlrobot/worker/dlrobot_worker.py start --server-address c.disclosures.ru:8089 --worker-count 2
+    ExecStop=/usr/bin/python3 /home/sokirko/smart_parser/tools/dlrobot/worker/dlrobot_worker.py stop
+    Type=simple
+
+
+    [Install]
+    WantedBy=multi-user.target

@@ -63,7 +63,7 @@ source $COMMON_SCRIPT
      python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric sections_person_name_income_year_spouse_income_size  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
 
 #10.1  остановка dlrobot на $DEDUPE_HOSTS в параллель (максмимум 3 часа), может немного одновременно проработать со сливалкой
-echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/scripts/dl_cloud_manager.py --action stop --host &
+echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/central/scripts/dl_cloud_manager.py --action stop --host &
 
 #11 создание surname_rank (40 мин)
   python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclosures.settings.dev
@@ -97,7 +97,7 @@ echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/
      python3 $TOOLS/disclosures_site/scripts/check_person_id_permanence.py --prod-db disclosures_db --dev-db disclosures_db_dev
 
 #12.1 запускаем обратно dlrobot_worker
-  echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot_server/scripts/dl_cloud_manager.py --action start --host &
+  echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/central/scripts/dl_cloud_manager.py --action start --host &
 
 #12.2
 python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.dev --directory $DLROBOT_FOLDER/new_permalinks &
@@ -107,7 +107,7 @@ new_permalinks_pid=$!
    cd $TOOLS/disclosures_site
    git pull origin master
    python3 manage.py add_disclosures_statistics --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
-   git commit -m "new statistics" data/statistics.json ../web_site_db/data/dlrobot_remote_calls.dat
+   git commit -m "new statistics" data/statistics.json ../dlrobot/central/data/dlrobot_remote_calls.dat
    git push
 
 #14 построение пола (gender)

@@ -1,6 +1,6 @@
 from declarations.input_json import TSourceDocument, TDlrobotHumanFileDBM, TWebReference
-from web_site_db.robot_project import TRobotProject
-from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
+from dlrobot.common.robot_project import TRobotProject
+from dlrobot.common.robot_web_site import TWebSiteCrawlSnapshot
 from common.logging_wrapper import setup_logging
 from common.export_files import TExportFile
 from office_db.web_site_list import TDeclarationWebSiteList
