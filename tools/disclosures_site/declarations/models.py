@@ -8,13 +8,11 @@ from declarations.car_brands import CAR_BRANDS
 from common.urllib_parse_pro import urlsplit_pro
 from declarations.corrections import SECTION_CORRECTIONS
 
-
 from collections import defaultdict
 from operator import attrgetter
 from itertools import groupby
 import os
 
-1111111111111111111111 urls !!!
 
 def get_django_language():
     lang = get_language().lower()
@@ -109,7 +107,6 @@ class Office(models.Model):
 
     @property
     def urls_html(self):
-
         pairs = ((u, urlsplit_pro(u).netloc) for u in self.calculated_params['urls'])
         return "&nbsp;&nbsp;&nbsp;".join('<a href="{}">{}</a>'.format(url, anchor) for url, anchor in pairs)
 

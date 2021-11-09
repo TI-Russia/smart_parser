@@ -1,8 +1,6 @@
 
 from common.logging_wrapper import setup_logging
-from office_db.offices_in_memory import TOfficeTableInMemory, TOfficeInMemory
-from office_db.declaration_office_website import TDeclarationWebSite, TWebSiteReachStatus
-from web_site_db.web_sites import TDeclarationWebSiteList, TDeclarationWebSiteObsolete
+from office_db.offices_in_memory import TOfficeTableInMemory
 
 import argparse
 

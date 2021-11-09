@@ -1,6 +1,6 @@
 from web_site_db.remote_call import TRemoteDlrobotCall
 from common.logging_wrapper import setup_logging
-from web_site_db.web_sites import TDeclarationWebSiteList, TWebSiteReachStatus
+from office_db.web_site_list import TDeclarationWebSiteList, TWebSiteReachStatus
 from common.html_parser import THtmlParser
 
 import os
@@ -64,7 +64,6 @@ if __name__ == "__main__":
     args = parse_args()
     logger = setup_logging("analyze_remote_calls")
     web_sites = TDeclarationWebSiteList(logger)
-    web_sites.load_from_disk()
     remote_calls = TRemoteDlrobotCall.read_remote_calls_from_file(args.input_file)
     with open(args.output_file, "w") as outp:
         if args.action == "print_sites_wo_results":

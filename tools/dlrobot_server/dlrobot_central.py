@@ -3,8 +3,9 @@ from dlrobot_server.common_server_worker import DLROBOT_HTTP_CODE, TTimeouts, TY
 from common.primitives import convert_timeout_to_seconds, check_internet
 from common.urllib_parse_pro import TUrlUtf8Encode
 from web_site_db.remote_call import TRemoteDlrobotCall, TRemoteDlrobotCallList
-from web_site_db.web_site_status import TWebSiteReachStatus
-from web_site_db.web_sites import TDeclarationWebSiteList, TDeclarationRounds
+from common.web_site_status import TWebSiteReachStatus
+from office_db.web_site_list import TDeclarationWebSiteList
+from web_site_db.dl_robot_round import TDeclarationRounds
 from web_site_db.robot_project import TRobotProject
 from common.logging_wrapper import setup_logging
 from dlrobot_server.send_docs import TDeclarationSender
@@ -33,8 +34,6 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                             help="by default read it from environment variable DLROBOT_CENTRAL_SERVER_ADDRESS")
 
         parser.add_argument("--log-file-name", dest='log_file_name', required=False, default="dlrobot_central.log")
-        parser.add_argument("--input-task-list", dest='input_task_list', required=False,
-                            default=TDeclarationWebSiteList.default_input_task_list_path)
         parser.add_argument("--remote-calls-file", dest='remote_calls_file', default=None)
         parser.add_argument("--result-folder", dest='result_folder', required=True)
         parser.add_argument("--tries-count", dest='tries_count', required=False, default=2, type=int)
@@ -80,7 +79,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                                                            min_start_time_stamp=rounds.start_time_stamp)
         self.worker_2_running_tasks = defaultdict(list)
         self.worker_2_continuous_failures_count = defaultdict(int)
-        self.web_sites_db = TDeclarationWebSiteList(self.logger, self.args.input_task_list).load_from_disk()
+        self.web_sites_db = TDeclarationWebSiteList(self.logger)
         if not os.path.exists(self.args.result_folder):
             os.makedirs(self.args.result_folder)
         self.web_sites_to_process = self.find_projects_to_process()
@@ -189,8 +188,6 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
             self.logger.error("{} is not registered in the web site db, no office information is available for the site")
         else:
             remote_call.crawling_timeout = int(remote_call.crawling_timeout * web_site_passport.dlrobot_max_time_coeff)
-            if web_site_passport.regional_main_pages is not None:
-                regional_main_pages = list(web_site_passport.regional_main_pages.keys())
         project_content_str = TRobotProject.create_project_str(site_url,
                                                                regional_main_pages,
                                                                disable_search_engine=not self.args.enable_search_engines

@@ -1,8 +1,8 @@
 from web_site_db.robot_web_site import TWebSiteCrawlSnapshot
 from common.selenium_driver import TSeleniumDriver
-from web_site_db.web_site_status import TWebSiteReachStatus
+from common.web_site_status import TWebSiteReachStatus
 from common.export_files import TExportFile
-from web_site_db.web_sites import TDeclarationWebSiteList
+from office_db.web_site_list import TDeclarationWebSiteList
 
 import json
 import shutil
@@ -29,7 +29,7 @@ class TRobotProject:
         self.robot_step_passports = robot_step_passports
         self.enable_search_engine = enable_search_engine  #switched off in tests, otherwize google shows captcha
         self.export_folder = export_folder
-        self.web_sites_db = TDeclarationWebSiteList(self.logger).load_from_disk()
+        self.web_sites_db = TDeclarationWebSiteList(self.logger)
         self.start_selenium = start_selenium
 
     def have_time_for_last_dl_recognizer(self):

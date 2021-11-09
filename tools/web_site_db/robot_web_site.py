@@ -1,7 +1,7 @@
 from common.http_request import THttpRequester
 from common.link_info import TClickEngine
 from web_site_db.robot_step import TRobotStep, TUrlInfo
-from web_site_db.web_site_status import TWebSiteReachStatus
+from common.web_site_status import TWebSiteReachStatus
 from common.export_files import TExportEnvironment
 from common.serp_parser import SearchEngine, SerpException
 import common.urllib_parse_pro as urllib_parse_pro

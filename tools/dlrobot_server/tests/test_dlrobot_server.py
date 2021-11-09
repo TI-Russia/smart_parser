@@ -4,8 +4,8 @@ from dlrobot_server.scripts.fns.unzip_archive import TUnzipper
 from dlrobot_server.common_server_worker import TTimeouts, PITSTOP_FILE
 from smart_parser_http.smart_parser_server import TSmartParserHTTPServer
 from source_doc_http.source_doc_server import TSourceDocHTTPServer
-from web_site_db.web_site_status import TWebSiteReachStatus
-from web_site_db.web_sites import TDeclarationRounds
+from common.web_site_status import TWebSiteReachStatus
+from web_site_db.dl_robot_round import TDeclarationRounds
 from common.primitives import build_dislosures_sha256, is_local_http_port_free
 from common.archives import TDearchiver
 from disclosures_site.scripts.join_human_and_dlrobot import TJoiner

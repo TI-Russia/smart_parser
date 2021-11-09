@@ -1,9 +1,9 @@
-from web_site_db.web_site_status import TWebSiteReachStatus
+from common.web_site_status import TWebSiteReachStatus
 
 
 class TDeclarationWebSite:
-    def __init__(self):
-        self.url = None
+    def __init__(self, url=None):
+        self.url = url
         self.reach_status = TWebSiteReachStatus.normal
         self.dlrobot_max_time_coeff = 1.0
         self.comments = None
@@ -46,3 +46,6 @@ class TDeclarationWebSite:
 
     def set_title(self, title):
         self.title = title
+
+    def can_communicate(self):
+        return TWebSiteReachStatus.can_communicate(self.reach_status)

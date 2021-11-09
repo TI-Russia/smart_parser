@@ -1,4 +1,6 @@
-from web_site_db.web_sites import TDeclarationWebSiteList
+!!!! this script must be fully refactored after joining sites and offices !!!!
+
+from office_db.web_site_list import TDeclarationWebSiteList
 from common.urllib_parse_pro import get_site_domain_wo_www
 from office_db.russian_regions import TRussianRegions
 from common.logging_wrapper import setup_logging
@@ -9,6 +11,35 @@ import os
 import pymysql
 from operator import itemgetter
 from collections import defaultdict
+
+
+#parts of TDeclarationWebSiteList, must be declared here
+
+def add_new_websites_from_declarator(self, website_to_most_freq_office):
+    errors = list()
+    for web_site, calculated_office_id in website_to_most_freq_office.items():
+        if web_site not in self.web_sites:
+            self.add_web_site(web_site, calculated_office_id)
+        elif self.web_sites[web_site].calculated_office_id >= self.disclosures_office_start_id:
+            errors.append("web site: {}, declarator office id: {}, disclosures office id: {}".format(
+                web_site, calculated_office_id, self.web_sites[web_site].calculated_office_id))
+    if len(errors) > 0:
+        file_name = "conflict_offices.txt"
+        with open(file_name, "w") as outp:
+            for x in errors:
+                outp.write(x + "\n")
+        raise Exception(
+            "there are web sites that are referenced in disclosures web_site_snapshots and declarator web_site_snapshots" +
+            "we have to office ambiguity. These web sites are written to {}".format(file_name))
+
+
+def update_from_office_urls(self, offices, logger):
+    for o in offices:
+        web_site = strip_scheme_and_query(o.get('url'))
+        if web_site not in self.web_sites:
+            self.add_web_site(web_site, o['id'])
+            logger.info('add a website {} from office.url'.format(web_site))
+
 
 
 def parse_args():
@@ -212,6 +243,7 @@ class TOfficeJoiner:
 
 
 def main():
+
     args = parse_args()
     joiner = TOfficeJoiner(args)
     if args.action == "all":

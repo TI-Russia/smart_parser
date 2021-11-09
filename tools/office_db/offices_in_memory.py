@@ -1,6 +1,7 @@
 from office_db.rubrics import TOfficeRubrics, RubricsInRussian, TOfficeProps
 from office_db.russian_regions import RUSSIA_AS_A_WHOLE_REGION_ID
 from office_db.declaration_office_website import TDeclarationWebSite
+from common.urllib_parse_pro import TUrlUtf8Encode
 
 import json
 import os
@@ -49,6 +50,16 @@ class TOfficeInMemory:
         if len(self.office_web_sites) > 0:
             rec['urls'] = list(x.write_to_json() for x in self.office_web_sites)
         return rec
+
+    def add_web_site(self, site_url: str):
+        # russian domain must be in utf8
+        assert not TUrlUtf8Encode.is_idna_string(site_url)
+        assert site_url.startswith("http")
+        for x in self.office_web_sites:
+            assert x.url != site_url
+        s = TDeclarationWebSite()
+        s.url = site_url
+        self.office_web_sites.append(s)
 
 
 class TOfficeTableInMemory:

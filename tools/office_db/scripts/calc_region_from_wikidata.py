@@ -3,7 +3,7 @@ from office_db.russian_regions import TRussianRegions
 from common.logging_wrapper import setup_logging
 from office_db.offices_in_memory import TOfficeTableInMemory
 from common.urllib_parse_pro import urlsplit_pro
-from web_site_db.web_sites import TDeclarationWebSiteList
+from office_db.web_site_list import TDeclarationWebSiteList
 
 import json
 import argparse

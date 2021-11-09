@@ -1,6 +1,7 @@
-from web_site_db.web_sites import TDeclarationWebSiteList
 from common.logging_wrapper import setup_logging
 import declarations.models as models
+from office_db.offices_in_memory import TOfficeTableInMemory, TOfficeInMemory
+
 
 from django.core.management import BaseCommand
 from django.db import connection
@@ -25,6 +26,8 @@ class Command(BaseCommand):
         self.logger = setup_logging(log_file_name="build_office_calculated_params.log")
 
     def handle(self, *args, **options):
+        offices = TOfficeTableInMemory()
+        offices.read_from_local_file()
         query = """
             select o.id, min(s.income_year), count(s.id) 
             from declarations_office o
@@ -54,13 +57,18 @@ class Command(BaseCommand):
             office_to_doc_count = dict(cursor)
 
         self.logger.info("set calculated_params...")
+
         for o in models.Office.objects.all():
+            office: TOfficeInMemory
+            office = offices.offices[o.id]
+
             o.calculated_params = {
                 "section_count_by_years":  params[o.id],
                 "child_offices_count": models.Office.objects.all().filter(parent_id=o.id).count(),
                 "child_office_examples": list(get_child_offices(o.id, o.parent_id)),
                 "source_document_count": office_to_doc_count.get(o.id, 0),
                 "section_count": sum(params[o.id].values()),
+                "urls": list(x.url for x in office.office_web_sites if x.can_communicate())
             }
             o.save()
 
