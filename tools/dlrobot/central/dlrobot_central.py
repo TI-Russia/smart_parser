@@ -107,7 +107,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
     def send_to_telegram(self, message):
         if self.args.enable_telegram:
             self.logger.debug("send to telegram: {}".format(message))
-            telegram_send.send(messages=[message])
+            telegram_send.send( messages=[message])
 
     def stop_server(self):
         self.server_close()
