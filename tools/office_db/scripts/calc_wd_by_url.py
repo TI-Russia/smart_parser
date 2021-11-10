@@ -78,8 +78,9 @@ def main():
                 office.wikidata_id = wikidata_id
                 logger.debug("set wikidata for {} to {}".format(office.name, wikidata_id))
             elif office.wikidata_id != wikidata_id:
-                logger.error("office {} has  wikidata_id={}, but the input file has {}, skip it".format(
-                    office.name, office.wikidata_id, wikidata_id))
+                logger.error("office https://disclosures.ru/office/{} {} has  wikidata_id=https://www.wikidata.org/wiki/{}, "
+                             "but the input file has https://www.wikidata.org/wiki/{}, skip it".format(
+                    office.office_id, office.name, office.wikidata_id, wikidata_id))
     logger.info("write to {}".format(args.output_file))
     offices.write_to_local_file(args.output_file)
 
