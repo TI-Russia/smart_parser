@@ -1,6 +1,6 @@
 from . import models
 from common.primitives import normalize_whitespace
-from declarations.countries import get_country_code
+from office_db.countries import get_country_code
 from office_db.rubrics import TOfficeRubrics
 from declarations.documents import OFFICES
 from declarations.section_passport import TSectionPassportItems1,TSectionPassportItems2

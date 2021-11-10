@@ -1,7 +1,7 @@
 from office_db.rubrics import TOfficeRubrics, RubricsInRussian, TOfficeProps
 from office_db.russian_regions import RUSSIA_AS_A_WHOLE_REGION_ID
 from office_db.declaration_office_website import TDeclarationWebSite
-from common.urllib_parse_pro import TUrlUtf8Encode
+from common.urllib_parse_pro import TUrlUtf8Encode, urlsplit_pro
 
 import json
 import os
@@ -62,6 +62,27 @@ class TOfficeInMemory:
         s = TDeclarationWebSite()
         s.url = site_url
         self.office_web_sites.append(s)
+
+    @property
+    def urls_html(self):
+        site_info: TDeclarationWebSite
+        hrefs = list()
+        for site_info in self.office_web_sites:
+            p = urlsplit_pro(site_info.url)
+            anchor = p.netloc + p.path
+            if not site_info.can_communicate():
+                href = "{} (obsolete)".format(anchor)
+            else:
+                href = '<a href="{}">{}</a>'.format(site_info.url, anchor)
+            hrefs.append(href)
+        return ";&nbsp;&nbsp;&nbsp;".join(hrefs)
+
+    @property
+    def wikidata_url_html(self):
+        if self.wikidata_id is None:
+            return ''
+        id = self.wikidata_id
+        return "<a href=\"https://www.wikidata.org/wiki/{}\">{}</a>".format(id, id)
 
 
 class TOfficeTableInMemory:

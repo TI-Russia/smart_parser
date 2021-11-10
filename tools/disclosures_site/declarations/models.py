@@ -1,12 +1,14 @@
 from django.db import models
 from django.utils.translation import  get_language
-from .countries import get_country_str
+from office_db.countries import get_country_str
 from office_db.rubrics import get_russian_rubric_str
 from declarations.nominal_income import get_average_nominal_incomes, YearIncome
 from declarations.ratings import TPersonRatings
 from declarations.car_brands import CAR_BRANDS
 from common.urllib_parse_pro import urlsplit_pro
 from declarations.corrections import SECTION_CORRECTIONS
+from office_db.offices_in_memory import TOfficeTableInMemory, TOfficeInMemory
+from office_db.declaration_office_website import TDeclarationWebSite
 
 from collections import defaultdict
 from operator import attrgetter
@@ -57,6 +59,7 @@ class Region_Synonyms(models.Model):
 
 
 class Office(models.Model):
+    offices_in_memory = TOfficeTableInMemory()
     name = models.TextField(verbose_name='office name')
     region = models.ForeignKey('declarations.Region', verbose_name="region", on_delete=models.CASCADE, null=True)
     type_id = models.IntegerField(null=True)
@@ -106,9 +109,8 @@ class Office(models.Model):
         return html
 
     @property
-    def urls_html(self):
-        pairs = ((u, urlsplit_pro(u).netloc) for u in self.calculated_params['urls'])
-        return "&nbsp;&nbsp;&nbsp;".join('<a href="{}">{}</a>'.format(url, anchor) for url, anchor in pairs)
+    def office_in_memory(self):
+        return Office.offices_in_memory.offices.get(self.id)
 
     @property
     def parent_office_name(self):
@@ -122,6 +124,13 @@ class Office(models.Model):
             return "unknown"
         else:
             return get_russian_rubric_str(self.rubric_id)
+
+    @staticmethod
+    def static_initalize():
+        Office.offices_in_memory.read_from_local_file()
+
+
+Office.static_initalize()
 
 
 class Relative:
