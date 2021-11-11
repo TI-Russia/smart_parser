@@ -9,13 +9,14 @@ import requests
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--input-file", dest='input_file')
+    parser.add_argument("--result-count", dest='result_count', type=int, default=10)
     parser.add_argument("--api-key", dest='api_key')
     return parser.parse_args()
 
 
-def ask_yandex_map_api(apikey, org_name):
+def ask_yandex_map_api(apikey, org_name, result_count=1):
     url = 'https://search-maps.yandex.ru/v1/'
-    params = {'apikey': apikey, 'lang': 'ru_RU', 'type': 'biz', 'results': 1, 'text': org_name}
+    params = {'apikey': apikey, 'lang': 'ru_RU', 'type': 'biz', 'results': result_count, 'text': org_name}
     result = requests.get(url, params=params)
     return json.loads(result.text)
 
@@ -23,11 +24,10 @@ def ask_yandex_map_api(apikey, org_name):
 def main():
     args = parse_args()
     logger = setup_logging("fetch_yandex_maps")
-    regions = TRussianRegions()
     with open(args.input_file) as inp:
         for l in inp:
             office_id, name = l.strip().split("\t")
-            yandex_org = ask_yandex_map_api(args.api_key, name)
+            yandex_org = ask_yandex_map_api(args.api_key, name, args.result_count)
             if list(yandex_org.get('features', [])) == 0:
                 logger.error("cannot find office id={}, name={}".format(office_id, name))
                 print("\t".join([office_id, name, json.dumps({}, ensure_ascii=False)]))
