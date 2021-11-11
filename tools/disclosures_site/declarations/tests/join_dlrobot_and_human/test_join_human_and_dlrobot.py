@@ -149,7 +149,6 @@ class JoinDLrobotAndHuman(TestCase):
         joiner = TJoiner(TJoiner.parse_args(args))
         joiner.main()
 
-
         dlrobot_human = TDlrobotHumanFileDBM(self.dlrobot_human_path)
         dlrobot_human.open_db_read_only()
         stats = dlrobot_human.get_stats()

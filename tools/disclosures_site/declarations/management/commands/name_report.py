@@ -42,7 +42,7 @@ class Command(BaseCommand):
             from declarations_person p
             join declarations_section s on s.person_id=p.id
             join declarations_office o on s.office_id=o.id
-            where o.region_id is not null
+            where o.region_id is not null and o.region_id <> 0
             limit {}  
         """.format(max_count)
         surnames = defaultdict(int)

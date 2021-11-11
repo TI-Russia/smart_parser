@@ -32,10 +32,19 @@
         </tr>
     {% endif %}
 
-    <tr>
-        <td><b>Вебстраницы:</b></td>
-        <td>{{office.urls_html|safe}}</td>
-    </tr>
+    {% with o_in_m=office.office_in_memory %}
+        {% if o_in_m %}
+            <tr>
+                <td><b>Вебстраницы:</b></td>
+                <td>{{o_in_m.urls_html|safe}}</td>
+            </tr>
+
+            <tr>
+                <td><b>Викидата:</b></td>
+                <td>{{o_in_m.wikidata_url_html|safe}}</td>
+            </tr>
+        {% endif %}
+    {% endwith %}
 
     <tr>
         <td><b>Исходные документы:</b></td>

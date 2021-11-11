@@ -1,8 +1,0 @@
-{
-    "sites": [
-        {
-            "morda_url": "http://admkrsk.ru",
-            "name": ""
-        }
-    ]
-}

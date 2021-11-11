@@ -1,5 +1,5 @@
-from web_site_db.remote_call import TRemoteDlrobotCallList
-from web_site_db.web_sites import TDeclarationRounds
+from dlrobot.common.remote_call import TRemoteDlrobotCallList
+from dlrobot.common.dl_robot_round import TDeclarationRounds
 from source_doc_http.source_doc_client import TSourceDocClient
 from common.logging_wrapper import setup_logging
 

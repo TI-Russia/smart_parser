@@ -53,7 +53,7 @@ python3 $TOOLS/disclosures_site/scripts/export_human_files.py --start-from-an-em
 
 #mkdir -p processed_projects/dogm.mos.ru
 #cd processed_projects/dogm.mos.ru
-#python3 $TOOLS/robots/dlrobot/dlrobot.py --project dogm.mos.ru.txt
+#python3 $TOOLS/robots/dlrobot/dl_robot.py --project dogm.mos.ru.txt
 python3 $TOOLS/source_doc_http/source_doc_client.py --action put --walk-folder-recursive processed_projects/dogm.mos.ru/result
 python3 $TOOLS/smart_parser_http/smart_parser_client.py --action put --walk-folder-recursive processed_projects/dogm.mos.ru/result
 sleep 2m

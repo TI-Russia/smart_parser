@@ -1,5 +1,5 @@
-from common.russian_regions import TRussianRegions
-from web_site_db.web_sites import TDeclarationWebSiteList
+from office_db.russian_regions import TRussianRegions
+from office_db.web_site_list import TDeclarationWebSiteList
 from common.urllib_parse_pro import urlsplit_pro
 
 import re
@@ -50,7 +50,6 @@ class TOfficePredictIndex:
         self.office_id_2_ml_office_id = None
         self.ml_office_id_2_office_id = None
         self.web_sites = TDeclarationWebSiteList(self.logger)
-        self.web_sites.load_from_disk()
         self.regions = TRussianRegions()
 
     def get_bigrams_count(self):

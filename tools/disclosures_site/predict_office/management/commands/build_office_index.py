@@ -2,7 +2,7 @@ from disclosures_site.predict_office.office_index import TOfficePredictIndex, TO
 from common.logging_wrapper import setup_logging
 from django.core.management import BaseCommand
 from declarations.documents import OFFICES
-from declarations.offices_in_memory import TOfficeInMemory
+from office_db.offices_in_memory import TOfficeInMemory
 from collections import defaultdict
 
 

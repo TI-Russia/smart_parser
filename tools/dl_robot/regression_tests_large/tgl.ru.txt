@@ -1,8 +1,0 @@
-{
-    "sites": [
-        {
-            "morda_url": "https://tgl.ru",
-            "name": ""
-        }
-    ]
-}

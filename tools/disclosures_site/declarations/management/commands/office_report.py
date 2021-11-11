@@ -1,11 +1,11 @@
 import declarations.models as models
-from declarations.rubrics import get_russian_rubric_str, get_all_rubric_ids
+from office_db.rubrics import get_russian_rubric_str, get_all_rubric_ids
 from declarations.nominal_income import YearIncome, get_average_nominal_incomes
 
 from django.core.management import BaseCommand
 from itertools import groupby
 from operator import itemgetter
-from statistics import median, fmean
+from statistics import median
 from django.db import connection
 import os
 from bs4 import BeautifulSoup

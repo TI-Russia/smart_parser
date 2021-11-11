@@ -1,9 +1,0 @@
-{
-    "sites": [
-        {
-            "morda_url": "https://www.mos.ru",
-            "name": ""
-        }
-    ]
-}
-

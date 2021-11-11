@@ -2,7 +2,7 @@ from common.logging_wrapper import setup_logging
 from declarations.car_brands import CAR_BRANDS
 import declarations.models as models
 from declarations.gender_recognize import TGender
-from declarations.rubrics import get_all_rubric_ids
+from office_db.rubrics import get_all_rubric_ids
 
 from django.core.management import BaseCommand
 from django.db import connection

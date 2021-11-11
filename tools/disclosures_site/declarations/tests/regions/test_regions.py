@@ -1,8 +1,8 @@
-from common.russian_regions import TRussianRegions
+from office_db.russian_regions import TRussianRegions
 
 
 from django.test import TestCase
-from operator import itemgetter
+
 
 class RegionsTestCase(TestCase):
 
@@ -24,6 +24,8 @@ class RegionsTestCase(TestCase):
         self.assertEqual(17, regions.get_region_in_nominative_and_dative("по северной осетии").id)
         self.assertEqual(109, regions.get_region_in_nominative_and_dative("по республике Крым").id)
         self.assertEqual(1, regions.get_region_in_nominative_and_dative("по санкт-петербургу").id)
+        self.assertEqual(53, regions.get_region_in_nominative_and_dative("костромская область").id)
+        self.assertEqual(69 , regions.get_region_in_nominative_and_dative(    "омская область").id)
         self.assertEqual(None, regions.get_region_in_nominative_and_dative("по московской области   мусор"))
 
     def test_regions_all_forms(self):
@@ -36,6 +38,9 @@ class RegionsTestCase(TestCase):
         self.assertEqual(28, r("Никита Рязанский из Красноярского края"))
         self.assertEqual(28, r("представитель Москвы в Красноярском крае")) #longest match
         self.assertEqual(28, r("Межрегиональное управление № 042 ФМБА (Красноярский край, г. Зеленогорск"))
+        #  что делать ?
+        self.assertEqual(69, r(     "омская область"))
+        self.assertEqual(53, r("костромская область"))
 
     def test_region_capitals(self):
         def r(s):

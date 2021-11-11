@@ -1,10 +1,7 @@
-from django.db import migrations, models
+from django.db import migrations
 from declarations.models import SynonymClass
-from common.russian_regions import TRussianRegions
+from office_db.russian_regions import TRussianRegions
 
-import gzip
-import json
-import os
 
 #echo  "select *  from declarations_region" |  mysqlsh --sql --result-format=json/array --uri=declarator@localhost -pdeclarator -D declarator  | gzip -c > data/regions.txt.gz
 def add_regions(apps, schema_editor):
@@ -13,8 +10,8 @@ def add_regions(apps, schema_editor):
     RegionSynonyms = apps.get_model('declarations', 'Region_Synonyms')
     regions = TRussianRegions()
     for r in regions.regions:
-        if r.id == 0:
-            continue  # skip Russian Federation
+        #if r.id == 0:
+        #    continue  # skip Russian Federation
 
         rec = Region(
             id=r.id,

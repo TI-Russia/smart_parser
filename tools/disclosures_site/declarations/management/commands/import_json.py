@@ -5,8 +5,8 @@ from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from declarations.input_json import TDlrobotHumanFileDBM, TSourceDocument, TDeclaratorReference, TWebReference
 from common.logging_wrapper import setup_logging
 from declarations.documents import OFFICES
-from declarations.rubrics import TOfficeRubrics
-from common.russian_regions import TRussianRegions, RUSSIA_REGION_ID
+from office_db.rubrics import TOfficeRubrics
+from office_db.russian_regions import TRussianRegions
 
 from multiprocessing import Pool
 import os
@@ -137,8 +137,8 @@ class TImporter:
         department = section_json.get('person', dict()).get('department')
         if department is None or len(department) < 5:
             return src_doc.calculated_office_id
-        region = self.regions.get_region_all_forms(department, RUSSIA_REGION_ID)
-        return OFFICES.fsin_by_region.get(region, OFFICES.fsin_by_region[RUSSIA_REGION_ID])
+        region = self.regions.get_region_all_forms(department, TRussianRegions.Russia_as_s_whole_region_id)
+        return OFFICES.fsin_by_region.get(region, OFFICES.fsin_by_region[TRussianRegions.Russia_as_s_whole_region_id])
 
     def import_one_smart_parser_json(self, source_document_in_db, input_json, src_doc: TSourceDocument):
         imported_section_years = list()
