@@ -49,11 +49,11 @@ class TDlrobotStats:
         self.build_stats(min_date)
 
     def build_stats(self, min_date=None, min_total_minutes=0):
-        self.logger.info("build_stats")
         min_time_stamp = min_date.timestamp() if min_date is not None else 0
         website_count = 0
         sum_count = 0
         all_calls_sorted_by_end_time = sorted(self.remote_calls.get_all_calls(), key=lambda x: x.file_line_index)
+        self.logger.info("build_stats for {} records".format(len(all_calls_sorted_by_end_time)))
         for remote_call in all_calls_sorted_by_end_time:
             if remote_call.end_time is None or remote_call.end_time < min_time_stamp:
                 continue
@@ -82,7 +82,7 @@ class TDlrobotStats:
                 self.failures_by_hostnames[remote_call.worker_host_name] += 1
             else:
                 self.successes_by_hostnames[remote_call.worker_host_name] += 1
-        self.logger.debug("build_stats: min_date={} web_sites_count={}".format(min_date, website_count))
+        self.logger.debug("build_stats: min_date={} web_sites_count={} sel".format(min_date, website_count))
 
     def write_declaration_crawling_stats(self, html_file):
         df = pd.DataFrame({'Date': self.end_times,
