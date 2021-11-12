@@ -87,8 +87,7 @@ class TOfficePool:
                     if site_info is not None:
                         calculated_office_id = site_info.calculated_office_id
                     else:
-                        self.logger.error("cannot find web domain {} in web_sites.json, please, update"
-                                          " web_sites.json".format(case.web_domain))
+                        self.logger.error("cannot find web domain {} in data/offices.txt, please, update it".format(case.web_domain))
 
                 if calculated_office_id is not None:
                     hypots[calculated_office_id] = 1

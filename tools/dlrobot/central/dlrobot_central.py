@@ -253,7 +253,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         remote_call.exit_code = exit_code
         remote_call.end_time = int(time.time())
         project_folder = self.untar_file(project_file, result_archive)
-        remote_call.calc_project_stats(self.logger, project_folder)
+        remote_call.calc_project_stats(self.logger, self.web_sites_db, project_folder)
         if not TWebSiteReachStatus.can_communicate(remote_call.reach_status):
             remote_call.exit_code = -1
         self.decl_sender.send_declaraion_files_to_other_servers(project_folder)

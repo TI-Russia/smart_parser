@@ -87,7 +87,7 @@ class TOfficePredictIndex:
         # if this web domain is unknown, take web domain from site_url
         web_domain = urlsplit_pro(site_url).hostname
         if self.web_sites.get_first_site_by_web_domain(web_domain) is None:
-            self.logger.error("web domain {} is missing in web_sites.json".format(site_url))
+            self.logger.error("web domain {} is missing in offices.txt".format(site_url))
         return web_domain
 
     def get_ml_office_id(self, office_id: int):

@@ -180,7 +180,6 @@ class TWebSitesManager:
                 continue
             self.check_alive_one_site(web_domain)
 
-    #python3 web_sites_manager.py --action create_departments --input-file data/web_sites.json --output-file data/web_sites.json.1 --parent-office-id 4202 --query-template "спб  {}"
     def create_departments(self):
         o: TOfficeInMemory
         TDownloadEnv.clear_cache_folder()

@@ -65,13 +65,13 @@ class TRemoteDlrobotCall:
                 'web_site': self.web_site
         }
 
-    def calc_project_stats(self, logger, project_folder):
+    def calc_project_stats(self, logger, web_sites_db, project_folder):
         if not self.task_ended():
             return
         try:
             path = os.path.join(project_folder, self.project_file)
             with TRobotProject(logger, path, [], None, start_selenium=False,
-                               enable_search_engine=False) as project:
+                               enable_search_engine=False, web_sites_db=web_sites_db) as project:
                 project.read_project(check_step_names=False)
                 web_site_snapshot = project.web_site_snapshots[0]
                 self.result_files_count = len(web_site_snapshot.export_env.exported_files)
