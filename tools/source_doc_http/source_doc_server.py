@@ -82,6 +82,7 @@ class TSourceDocRequestHandler(http.server.BaseHTTPRequestHandler):
             self.send_response(200)
             self.end_headers()
             self.wfile.write(b"exited\n")
+            sys.exit(0)
         elif self.path == "/ping":
             self.send_response(200)
             self.end_headers()
