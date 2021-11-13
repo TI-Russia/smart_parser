@@ -1,6 +1,9 @@
+import time
+
 from source_doc_http.source_doc_server import TSourceDocHTTPServer
 from source_doc_http.source_doc_client import TSourceDocClient
 from common.primitives import build_dislosures_sha256
+
 
 from unittest import TestCase
 import os
@@ -10,7 +13,7 @@ import shutil
 
 def start_server(server):
     server.serve_forever()
-
+    print("start_server exit")
 
 class TTestEnv:
     def __init__(self, port, max_bin_file_size=None, read_only=False):
@@ -32,6 +35,7 @@ class TTestEnv:
             "--server-address", self.server_address,
             '--log-file-name', "source_doc_server.{}.log".format(self.port),
             '--data-folder', self.data_folder,
+            '--heart-rate', str(1),
         ]
         if self.max_bin_file_size is not None:
             server_args.extend(['--max-bin-file-size', str(self.max_bin_file_size)])
@@ -46,12 +50,13 @@ class TTestEnv:
         ]
         self.client = TSourceDocClient(TSourceDocClient.parse_args(client_args))
 
-    def tearDown(self):
-        self.server.stop_server()
+    def tearDown(self, stop_server=True):
+        if stop_server:
+            self.server.stop_server()
         self.server_thread.join(0)
         if os.path.exists(self.data_folder):
             shutil.rmtree(self.data_folder, ignore_errors=True)
-        os.chdir( os.path.dirname(__file__))
+        os.chdir(os.path.dirname(__file__))
 
 
 class TestTSourceDocClient1(TestCase):
@@ -154,3 +159,27 @@ class TestReadOnly(TestCase):
         self.assertTrue(self.env.client.send_file("test2.txt"))
         stats = self.env.client.get_stats()
         self.assertEqual(1, stats['source_doc_count'])
+
+
+class TestExit(TestCase):
+    port = 8495
+    def setUp(self):
+        self.env = TTestEnv(TestExit.port)
+
+    def tearDown(self):
+        self.env.tearDown(stop_server=False)
+
+    def test_server_exit(self):
+        file_data1 = b"12345_1"
+        with open("test8484.txt", "wb") as outp:
+            outp.write(file_data1)
+
+        self.assertTrue(self.env.client.send_file("test8484.txt"))
+
+        stats = self.env.client.get_stats(timeout=1)
+        self.assertEqual(1, stats['source_doc_count'])
+        with open(TSourceDocHTTPServer.stop_file, "w") as outp:
+            outp.write(".")
+        time.sleep(2)
+        stats = self.env.client.get_stats(timeout=1)
+        self.assertIsNone(stats)

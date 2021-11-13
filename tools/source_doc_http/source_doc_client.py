@@ -71,10 +71,10 @@ class TSourceDocClient(object):
             except socket.timeout as st:
                 self.logger.error("timeout in source_doc_client.send_file")
 
-    def get_stats(self):
+    def get_stats(self, timeout=30):
         data = None
         try:
-            conn = http.client.HTTPConnection(self.server_address)
+            conn = http.client.HTTPConnection(self.server_address, timeout=timeout)
             conn.request("GET", "/stats")
             response = conn.getresponse()
             data = response.read().decode('utf8')

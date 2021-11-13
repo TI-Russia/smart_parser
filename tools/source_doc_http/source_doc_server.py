@@ -8,9 +8,12 @@ import os
 import json
 import urllib
 import http.server
+import time
 
 
 class TSourceDocHTTPServer(http.server.HTTPServer):
+    stop_file = ".stop"
+
     @staticmethod
     def parse_args(arg_list):
         parser = argparse.ArgumentParser()
@@ -20,7 +23,7 @@ class TSourceDocHTTPServer(http.server.HTTPServer):
         parser.add_argument("--data-folder", dest='data_folder', required=False, default=".")
         parser.add_argument('--max-bin-file-size', dest='max_bin_file_size', required=False, default=10 * (2 ** 30), type=int)
         parser.add_argument('--read-only', dest='read_only', required=False, default=False, action="store_true")
-
+        parser.add_argument("--heart-rate", dest='heart_rate', type=int, required=False, default=20)
         args = parser.parse_args(arg_list)
         if args.server_address is None:
             args.server_address = os.environ['SOURCE_DOC_SERVER_ADDRESS']
@@ -33,6 +36,9 @@ class TSourceDocHTTPServer(http.server.HTTPServer):
         self.file_storage = TFileStorage(self.logger, self.args.data_folder, self.max_bin_file_size, read_only=self.args.read_only)
         host, port = self.args.server_address.split(":")
         self.logger.debug("start server on {}:{}".format(host, int(port)))
+        self.last_heart_beat = time.time()
+        if os.path.exists(TSourceDocHTTPServer.stop_file):
+            os.unlink(TSourceDocHTTPServer.stop_file)
         try:
             super().__init__((host, int(port)), TSourceDocRequestHandler)
         except Exception as exp:
@@ -41,8 +47,10 @@ class TSourceDocHTTPServer(http.server.HTTPServer):
 
     def stop_server(self):
         self.file_storage.close_file_storage()
-        self.server_close()
+        self.logger.info("shutdown")
         self.shutdown()
+        self.server_close()
+        self.logger.info("exit from def stop_server")
 
     def get_source_document(self, sha256):
         return self.file_storage.get_saved_file(sha256)
@@ -52,6 +60,16 @@ class TSourceDocHTTPServer(http.server.HTTPServer):
 
     def get_stats(self):
         return self.file_storage.get_stats()
+
+    def service_actions(self):
+        current_time = time.time()
+        if current_time - self.last_heart_beat >= self.args.heart_rate:
+            if os.path.exists(TSourceDocHTTPServer.stop_file):
+                os.unlink(TSourceDocHTTPServer.stop_file)
+                #self.logger.info("stop_server")
+                #self.stop_server()
+                raise Exception("stop_server")
+            self.last_heart_beat = time.time()
 
 
 class TSourceDocRequestHandler(http.server.BaseHTTPRequestHandler):
@@ -75,15 +93,7 @@ class TSourceDocRequestHandler(http.server.BaseHTTPRequestHandler):
         http.server.SimpleHTTPRequestHandler.send_error(self, http_code, message)
 
     def process_special_commands(self):
-        if self.path == "/stop" and os.path.exists(".stop"):
-            os.unlink(".stop")
-            self.server.logger.info("stop_server")
-            self.server.stop_server()
-            self.send_response(200)
-            self.end_headers()
-            self.wfile.write(b"exited\n")
-            sys.exit(0)
-        elif self.path == "/ping":
+        if self.path == "/ping":
             self.send_response(200)
             self.end_headers()
             self.wfile.write(b"pong\n")
