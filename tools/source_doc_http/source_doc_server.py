@@ -74,11 +74,30 @@ class TSourceDocRequestHandler(http.server.BaseHTTPRequestHandler):
             self.server.logger.error(message)
         http.server.SimpleHTTPRequestHandler.send_error(self, http_code, message)
 
+    def process_special_commands(self):
+        if self.path == "/stop" and os.path.exists(".stop"):
+            os.unlink(".stop")
+            self.server.logger("stop_server")
+            self.server.stop_server()
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(b"exited\n")
+            return True
+        return False
+
     def process_get_source_document(self):
         query_components = dict()
         if not self.parse_cgi(query_components):
             self.send_error_wrapper('bad request', log_error=False)
             return
+
+        try:
+            if self.process_special_commands():
+                return
+        except Exception as exp:
+            self.server.logger.error(exp)
+            return
+
 
         if 'sha256' not in query_components:
             self.send_error_wrapper('sha256 not in cgi', log_error=True)
