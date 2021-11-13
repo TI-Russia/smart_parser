@@ -82,8 +82,18 @@ class TSourceDocRequestHandler(http.server.BaseHTTPRequestHandler):
             self.send_response(200)
             self.end_headers()
             self.wfile.write(b"exited\n")
-            return True
-        return False
+        elif self.path == "/ping":
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(b"pong\n")
+        elif self.path == "/stats":
+            self.send_response(200)
+            self.end_headers()
+            stats = json.dumps(self.server.get_stats()) + "\n"
+            self.wfile.write(stats.encode('utf8'))
+        else:
+            return False
+        return True
 
     def process_get_source_document(self):
         query_components = dict()
@@ -115,22 +125,14 @@ class TSourceDocRequestHandler(http.server.BaseHTTPRequestHandler):
 
     def do_GET(self):
         try:
+            try:
+                if self.process_special_commands():
+                    return
+            except Exception as exp:
+                self.server.logger.error(exp)
+                return
             path = urllib.parse.urlparse(self.path).path
-            pitstop_file = ".dlrobot_pit_stop"
-            if os.path.exists(pitstop_file):
-                self.server.logger.info("found {} file, exit".format(pitstop_file))
-                os.unlink(pitstop_file)
-                self.server.stop_server()
-            if path == "/ping":
-                self.send_response(200)
-                self.end_headers()
-                self.wfile.write(b"pong\n")
-            elif path == "/stats":
-                self.send_response(200)
-                self.end_headers()
-                stats = json.dumps(self.server.get_stats()) + "\n"
-                self.wfile.write(stats.encode('utf8'))
-            elif path == "/get_source_document":
+            if path == "/get_source_document":
                 self.process_get_source_document()
             else:
                 self.send_error_wrapper("unsupported action", log_error=False)
