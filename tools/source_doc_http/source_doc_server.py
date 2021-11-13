@@ -77,7 +77,7 @@ class TSourceDocRequestHandler(http.server.BaseHTTPRequestHandler):
     def process_special_commands(self):
         if self.path == "/stop" and os.path.exists(".stop"):
             os.unlink(".stop")
-            self.server.logger("stop_server")
+            self.server.logger.info("stop_server")
             self.server.stop_server()
             self.send_response(200)
             self.end_headers()
