@@ -84,7 +84,7 @@ rm /tmp/chrome.deb
     cd ~/smart_parser/tools/dlrobot/robot
     python3 -m unittest -v -f
 
-    cd ~/smart_parser/tools/dlrobot/server  
+    cd ~/smart_parser/tools/dlrobot/server
     python3 -m unittest
 
     cd ~/smart_parser/tools/dlrobot/worker
