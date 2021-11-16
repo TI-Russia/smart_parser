@@ -31,17 +31,18 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
 ==========================================================================
 
 2.1 sudo apt update
-       sudo apt install -y  curl p7zip-full unrar libcurl4-openssl-dev libssl-dev libreoffice \
+    sudo apt install -y  curl p7zip-full unrar libcurl4-openssl-dev libssl-dev libreoffice \
             python3-wheel calibre  catdoc xlsx2csv default-libmysqlclient-dev libgdiplus python3-pip python3.8-dev \
-            git  sshfs libcurl4  libxss1 libappindicator1 libindicator7 pdfcrack qpdf abiword
+            git  sshfs libcurl4  libxss1 libappindicator1 libindicator7 pdfcrack qpdf abiword wget
 
 2.2 git clone https://github.com/TI-Russia/smart_parser.git ~/smart_parser
 
 2.3 Install python3 modules
    #curl https://sh.rustup.rs -sSf | sh   # for module cryptography
-   pip3 install -r /home/sokirko/smart_parser/tools/requirements.txt
+   pip3 install -r ~/smart_parser/tools/requirements.txt
 
-2.4. install dotnet according  sudo apt-get install -y dotnet-runtime-3.1
+2.4. install dotnet according
+      #sudo apt-get install -y dotnet-runtime-3.1
       wget  https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
       sudo dpkg -i packages-microsoft-prod.deb
       sudo apt-get update
@@ -80,10 +81,13 @@ rm /tmp/chrome.deb
     sudo mv chromedriver /usr/bin
 
 2.11 Test dlrobot
-    cd ~/smart_parser/tools/dl_robot/tests
+    cd ~/smart_parser/tools/dlrobot/robot
+    python3 -m unittest -v -f
+
+    cd ~/smart_parser/tools/dlrobot/server  
     python3 -m unittest
 
-    cd ~/smart_parser/tools/dlrobot_server
+    cd ~/smart_parser/tools/dlrobot/worker
     python3 -m unittest
 
 

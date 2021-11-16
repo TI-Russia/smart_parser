@@ -1,7 +1,7 @@
 #1.2. Объявление переменных (кроме тех, что уже объявлены в ~/smart_parser/tools/INSTALL.txt)
 
 # todo: выписывать smart_parser в $DLROBOT_FOLDER и делать ссылку на него в проде
-export TOOLS=/home/sokirko/smart_parser/tools
+export TOOLS=~/smart_parser/tools
 export DLROBOT_CENTRAL_FOLDER=~/declarator_hdd/declarator/dlrobot_central
 export DLROBOT_UPDATES_FOLDER=~/declarator_hdd/declarator/dlrobot_updates
 export YANDEX_DISK_FOLDER=~/declarator_hdd/Yandex.Disk/declarator

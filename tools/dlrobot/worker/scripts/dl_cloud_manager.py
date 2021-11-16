@@ -6,7 +6,7 @@ import time
 import sys
 import subprocess
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../..'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../../..'))
 
 from dlrobot.common.yandex_cloud import TYandexCloud
 from dlrobot.worker.dlrobot_worker import TDlrobotWorker
