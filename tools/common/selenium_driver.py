@@ -87,6 +87,7 @@ class TSeleniumDriver:
         user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36"
         options.add_argument("user-agent={}".format(user_agent))
         options.add_argument("--disable-dev-shm-usage")
+        options.add_argument("--no-sandbox")
         options.add_experimental_option("excludeSwitches", ["enable-automation"])
         options.add_experimental_option('useAutomationExtension', False)
         prefs = {
@@ -115,7 +116,8 @@ class TSeleniumDriver:
                 self.logger.error("Cannot start selenium, exception:{}, sleep and retry...".format(str(exp)))
                 time.sleep(10)
             finally:
-                os.environ['LANG'] = save_LANG
+                if save_LANG is not None:
+                    os.environ['LANG'] = save_LANG
 
     def stop_executable(self):
         if self.the_driver is not None:
