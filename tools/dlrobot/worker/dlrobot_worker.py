@@ -336,9 +336,9 @@ class TDlrobotWorker:
         assert (test_dlrobot_script(self.logger))
         if self.args.action == "run_once":
             self.args.worker_count = 1
-        geckodriver = shutil.which("geckodriver")
+        geckodriver = shutil.which("chromedriver")
         if geckodriver is None:
-            raise Exception("cannot find geckodriver (selenium)")
+            raise Exception("cannot find chromedriver (selenium)")
 
         if os.path.exists(self.PITSTOP_FILE):
             os.unlink(self.PITSTOP_FILE)
