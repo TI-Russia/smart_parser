@@ -34,8 +34,7 @@ git clone https://github.com/TI-Russia/smart_parser.git
 
 docker build  ~/smart_parser/tools/deploy/docker/step1 --tag disclosures
 docker build  ~/smart_parser/tools/deploy/docker/step2 --tag disclosures_test
-
-
+    
 
 =====================================================================================
 ========================= 3. INSTALL DLROBOT_CENTRAL SERVICE=========================
