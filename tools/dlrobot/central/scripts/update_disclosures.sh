@@ -3,8 +3,7 @@
 #0 ~/smart_parser/tools/INSTALL.txt are prerequisites
 
 set -e
-SOURCE_ROOT=~/smart_parser/tools/disclosures_site
-COMMON_SCRIPT=$SOURCE_ROOT/scripts/update_common.sh
+COMMON_SCRIPT=$(dirname $0)/profile.sh
 source $COMMON_SCRIPT
 
 
@@ -17,7 +16,8 @@ source $COMMON_SCRIPT
 
     mkdir -p $CRAWL_EPOCH
     cd $CRAWL_EPOCH
-    cp $COMMON_SCRIPT .profile
+    cp ~/smart_parser/tools/deploy/profile.sh .
+    cp $COMMON_SCRIPT >> .profile
     echo "" >> .profile
     echo "" >> .profile
     echo "export DLROBOT_FOLDER=$DLROBOT_FOLDER" >> .profile

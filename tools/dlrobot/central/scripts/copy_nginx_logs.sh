@@ -1,4 +1,4 @@
-COMMON_SCRIPT=$(dirname $0)/update_common.sh
+COMMON_SCRIPT=$(dirname $0)/profile.sh
 source $COMMON_SCRIPT # import ACCESS_LOG_ARCHIVE
 
 FRONTEND_NGINX_LOGS=/var/log/nginx

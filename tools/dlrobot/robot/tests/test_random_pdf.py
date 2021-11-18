@@ -1,3 +1,5 @@
+import time
+
 from DeclDocRecognizer.external_convertors import TExternalConverters
 from common.download import TDownloadEnv
 from ConvStorage.conv_storage_server import TConvertProcessor
@@ -50,4 +52,5 @@ class TestRandomPdf(TestCase):
 
     def test_pdf(self):
         self.assertEqual(len(self.env.get_result_files()), 0)
+        time.sleep(3)
         self.assertGreater(TDownloadEnv.CONVERSION_CLIENT.all_pdf_size_sent_to_conversion, 0)

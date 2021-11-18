@@ -1,9 +1,5 @@
-#common variables
-export TOOLS=$HOME/smart_parser/tools
-export ASPOSE_LIC=$HOME/lic.bin
-export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
-export DECLARATOR_CONV_URL=c.disclosures.ru:8091
-
+SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+source $SCRIPT_DIR/../../../deploy/profile.sh
 
 export CENTRAL_HOST_NAME=migalka
 export DLROBOT_CENTRAL_FOLDER=~/declarator_hdd/declarator/dlrobot_central

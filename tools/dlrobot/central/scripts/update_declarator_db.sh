@@ -1,7 +1,6 @@
 set -e
 
-SOURCE_ROOT=~/smart_parser/tools/disclosures_site
-COMMON_SCRIPT=$SOURCE_ROOT/scripts/update_common.sh
+COMMON_SCRIPT=$(dirname $0)/profile.sh
 source $COMMON_SCRIPT
 
 

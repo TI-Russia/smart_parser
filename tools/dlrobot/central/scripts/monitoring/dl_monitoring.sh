@@ -1,4 +1,4 @@
-COMMON_SCRIPT=$(dirname $0)/../update_common.sh
+COMMON_SCRIPT=$(dirname $0)/../profile.sh
 source $COMMON_SCRIPT
 export TMP_FOLDER=/tmp/dlrobot_monitoring
 export CENTRAL_STATS=$TOOLS/dlrobot/central/data/dlrobot_remote_calls.dat

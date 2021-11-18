@@ -2,7 +2,7 @@
 ============ 1. INSTALLATION GUIDE FOR DLROBOT WORKERS (HARDWARE) ===================
 =====================================================================================
 
-This configuration is tested on Ubuntu 18, 20 (preferable)
+This configuration is tested on Ubuntu 20.04
 
 1.1. Yandex cloud worker, create workstation
    2 ГБ RAM, 3 ГБ своп, 25 ГБ HDD, Ubuntu 20, "interruptable", public IP, price 300 RUB
@@ -26,76 +26,22 @@ This configuration is tested on Ubuntu 18, 20 (preferable)
 
 
 
-==========================================================================
-===== 2.  COMMON WORKER/SERVER ACTIONS (do it for all workstations)  =====
-==========================================================================
+====================================================================================
+===== 2.  COMMON WORKER/SERVER DEPLOYMENT ACTIONS (do it for all workstations)  =====
+====================================================================================
 
-2.1 sudo apt update
-    sudo apt install -y  curl p7zip-full unrar libcurl4-openssl-dev libssl-dev libreoffice \
-            python3-wheel calibre  catdoc xlsx2csv default-libmysqlclient-dev libgdiplus python3-pip python3.8-dev \
-            git  sshfs libcurl4  libxss1 libappindicator1 libindicator7 pdfcrack qpdf abiword wget
+docker build  ~/smart_parser/tools/deploy/docker/step1 --tag disclosures
+docker build  ~/smart_parser/tools/deploy/docker/step2 --tag disclosures_test
 
-2.2 git clone https://github.com/TI-Russia/smart_parser.git ~/smart_parser
-
-2.3 Install python3 modules
-   #curl https://sh.rustup.rs -sSf | sh   # for module cryptography
-   pip3 install -r ~/smart_parser/tools/requirements.txt
-
-2.4. install dotnet according
-      #sudo apt-get install -y dotnet-runtime-3.1
-      wget  https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-      sudo dpkg -i packages-microsoft-prod.deb
-      sudo apt-get update
-      sudo apt-get install -y apt-transport-https
-      sudo apt-get update
-      sudo apt-get install -y dotnet-sdk-3.1
-
-2.5.  Get lic.bin (proprietary license file) from sokirko@yandex.ru, move lic.bin to $HOME, add to ~/.profile:
-"migalka" is a central server
-
-   scp  migalka:~/lic.bin ~/
-
-2.6 add  ~/smart_parser/tools/disclosures_site/tools/update_common.sh to  ~/.profile
-
-    cat ~/smart_parser/tools/disclosures_site/scripts/update_common.sh >> ~/.profile
-    source ~/.profile
-
-2.7 compile and test smart_parser (c#, ~/smart_parser/src)
-   dotnet build -c Release --no-incremental ~/smart_parser/src
-   dotnet test -c Release ~/smart_parser
-
-2.8 compile  and test ~/smart_parser/tools/Office2Txt
-   dotnet build -c Release ~/smart_parser/tools/Office2Txt
-   dotnet test -c Release ~/smart_parser/tools/Office2Txt
-
-2.8.1 install google chrome of a specific version
-wget -O /tmp/chrome.deb https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_93.0.4577.63-1_amd64.deb
-sudo apt install -y /tmp/chrome.deb
-rm /tmp/chrome.deb
-
-2.9 Install google-chrome and chromedriver 90 (be careful to update it, run all tests to check that dl_robot works
-    rm -rf chromedriver_linux64.zip
-    wget https://chromedriver.storage.googleapis.com/93.0.4577.15/chromedriver_linux64.zip
-    rm -rf chromedriver
-    unzip chromedriver_linux64.zip
-    sudo mv chromedriver /usr/bin
-
-2.11 Test dlrobot
-    cd ~/smart_parser/tools/dlrobot/robot
-    python3 -m unittest -v -f
-
-    cd ~/smart_parser/tools/dlrobot/server
-    python3 -m unittest
-
-    cd ~/smart_parser/tools/dlrobot/worker
-    python3 -m unittest
 
 
 =====================================================================================
 ========================= 3. INSTALL DLROBOT_CENTRAL SERVICE=========================
 =====================================================================================
 
-3.1 install yandex cloud console (central)
+3.0 sudo apt install parallel, mysql
+
+3.1 install yandex cloud console
    curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
    source ~/.profile
    get token from sokirko@yandex.ru (more ~/.config/yandex-cloud/config.yaml)
@@ -128,7 +74,7 @@ rm /tmp/chrome.deb
                 --server-address $DLROBOT_CENTRAL_SERVER_ADDRESS \
                 --result-folder processed_projects --check-yandex-cloud
 
-3.7  init crontab in central for monitoring (crontab -e), add lines from $TOOLS/disclosures_server/crontab.txt
+3.7  init crontab in central for monitoring (crontab -e), add lines from $TOOLS/dlrobot/central/scripts/crontab.txt
 
 3.8  Get api-token from telegram BotFather and give it to
     telegram-send --configure
@@ -136,7 +82,7 @@ rm /tmp/chrome.deb
 3.9 sudo apt install parallel
 
 3.10 Install workstation monitoring
-  sudo cp ~/smart_parser/tools/workstation_monitoring/workstation_monitoring.service /etc/systemd/system
+  sudo cp ~/smart_parser/tools/dlrobot/workstation_monitoring/workstation_monitoring.service /etc/systemd/system
   sudo systemctl enable workstation_monitoring
   sudo systemctl daemon-reload
   sudo systemctl start workstation_monitoring
@@ -147,7 +93,7 @@ rm /tmp/chrome.deb
 =====================================================================================
 
 4.1 Create dlrobot worker service:
-    sudo cp ~/smart_parser/tools/dlrobot_server/dlrobot_worker.service /etc/systemd/system
+    sudo cp ~/smart_parser/tools/dlrobot/worker/dlrobot_worker.service /etc/systemd/system
     sudo chmod 644 /etc/systemd/system/dlrobot_worker.service
     sudo systemctl enable dlrobot_worker
     sudo systemctl daemon-reload
@@ -164,7 +110,7 @@ rm /tmp/chrome.deb
 
 
 =====================================================================================
-============ 5. INSTALLATION GUIDE FOR WWW (can be on the central)  =================
+============ 5. INSTALLATION GUIDE FOR WWW                         =================
 =====================================================================================
 
 Following https://habr.com/ru/post/501414/
