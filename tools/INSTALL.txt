@@ -29,6 +29,8 @@ This configuration is tested on Ubuntu 20.04
 ====================================================================================
 ===== 2.  COMMON WORKER/SERVER DEPLOYMENT ACTIONS (do it for all workstations)  =====
 ====================================================================================
+cd ~
+git clone https://github.com/TI-Russia/smart_parser.git
 
 docker build  ~/smart_parser/tools/deploy/docker/step1 --tag disclosures
 docker build  ~/smart_parser/tools/deploy/docker/step2 --tag disclosures_test

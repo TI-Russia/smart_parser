@@ -1,4 +1,4 @@
-DROPBOX=C:/tmp/examples.header_recall/sample
+DROPBOX=${1:-C:/tmp/examples.header_recall/sample}
 SMART_PARSER=C:/tmp/smart_parser/smart_parser/src/bin/Release/netcoreapp3.1/smart_parser.exe
 TMPFOLDER=documents
 CORPUS_PROCESS=C:/tmp/smart_parser/smart_parser/tools/CorpusProcess/corpus_process.py

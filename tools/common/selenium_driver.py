@@ -196,7 +196,7 @@ class TSeleniumDriver:
         self.logger.debug("sleep for {}".format(timeout))
         time.sleep(timeout)
 
-        body = self.the_driver.find_element(By.TAG_NAME 'body')
+        body = self.the_driver.find_element(By.TAG_NAME, 'body')
 
         self.logger.debug("scroll down")
         if self.scroll_to_bottom_and_wait_more_results and body:
