@@ -12,7 +12,10 @@ class TestOnePageTimeout(TestDeclarationLinkBase):
         super().tearDown()
 
     def test_one_page_timeout(self):
+        save = THttpRequester.WEB_PAGE_LINKS_PROCESSING_MAX_TIME
         THttpRequester.WEB_PAGE_LINKS_PROCESSING_MAX_TIME = 5
-        links = self.process_one_page("web_sites/one_page_timeout/sved.html")
-        self.assertEqual(self.one_page_timeout_count, 1)
-
+        try:
+            links = self.process_one_page("web_sites/one_page_timeout/sved.html")
+            self.assertEqual(self.one_page_timeout_count, 1)
+        finally:
+            THttpRequester.WEB_PAGE_LINKS_PROCESSING_MAX_TIME = save
