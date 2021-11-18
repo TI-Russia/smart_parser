@@ -164,7 +164,7 @@ class TSeleniumDriver:
                 raise
 
     def get_buttons_and_links(self):
-        return list(self.the_driver.find_element(By.XPATH, '//button | //a'))
+        return list(self.the_driver.find_elements(By.XPATH, '//button | //a'))
 
     def get_links_js(self, timeout=4):
         js = """
@@ -196,7 +196,7 @@ class TSeleniumDriver:
         self.logger.debug("sleep for {}".format(timeout))
         time.sleep(timeout)
 
-        body = self.the_driver.find_element_by_tag_name('body')
+        body = self.the_driver.find_element(By.TAG_NAME 'body')
 
         self.logger.debug("scroll down")
         if self.scroll_to_bottom_and_wait_more_results and body:

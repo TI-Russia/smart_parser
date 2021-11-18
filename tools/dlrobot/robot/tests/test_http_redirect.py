@@ -5,7 +5,7 @@ from unittest import TestCase
 
 
 class TestRecursion(TestCase):
-    def test_redirect_yandex(self):
+    def test_redirect_popular_site(self):
         THttpRequester.initialize(setup_logging())
         redirected_url, headers = THttpRequester.request_url_headers_with_global_cache("http://www.meduza.io")
         self.assertIsNotNone(headers)
