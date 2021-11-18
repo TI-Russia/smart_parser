@@ -10,7 +10,7 @@ def download_from_tgl_serp(web_site: TWebSiteCrawlSnapshot, sved_url):
     robot_step = web_site.robot_steps[-1]
     driver = robot_step.get_selenium_driver()
     hrefs = list()
-    for c in driver.the_driver.find_elements_by_class_name("dl"):
+    for c in driver.find_elements_by_class_name("dl"):
         try:
             href = c.get_attribute("href")
             if href is not None:
@@ -27,7 +27,7 @@ def download_from_tgl_serp(web_site: TWebSiteCrawlSnapshot, sved_url):
 def click_next_page(web_site: TWebSiteCrawlSnapshot):
     robot_step = web_site.robot_steps[-1]
     driver = robot_step.get_selenium_driver()
-    page_button_arr = driver.the_driver.find_elements_by_class_name("next")
+    page_button_arr = driver.find_elements_by_class_name("next")
     if len(page_button_arr) == 0:
         return False
     page_button_arr[0].click()

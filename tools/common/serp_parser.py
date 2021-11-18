@@ -104,7 +104,7 @@ class SearchEngine:
         search_results = []
         selenium_holder.logger.debug("start reading serp")
         elements = list()
-        for element in selenium_holder.the_driver.find_elements_by_tag_name("a"):
+        for element in selenium_holder.find_elements_by_tag_name("a"):
             url = element.get_attribute("href")
             if url is not None and url != '#' and url.startswith('http'):
                 if not SearchEngine.is_search_engine_ref(url):

@@ -20,11 +20,11 @@ def tomsk_gov_ru(web_site: TWebSiteCrawlSnapshot):
             declaration_year = int(declaration_year)
         robot_step.logger.info("select year {}".format(declaration_year))
         time.sleep(3)
-        for c in driver.the_driver.find_elements_by_class_name("toggle"):
+        for c in driver.find_elements_by_class_name("toggle"):
             robot_step.logger.info("click toggle element")
             c.click()
             time.sleep(2)
-        for c1 in driver.the_driver.find_elements_by_partial_link_text("Скачать"):
+        for c1 in driver.find_elements_by_partial_link_text("Скачать"):
             href = c1.get_attribute("href")
             robot_step.logger.info("click {}".format(href))
             c1.click()

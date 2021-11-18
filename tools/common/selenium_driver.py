@@ -9,6 +9,7 @@ from selenium.common.exceptions import WebDriverException, InvalidSwitchToTarget
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options as ChromeOptions
+from selenium.webdriver.common.by import By
 
 import os
 import shutil
@@ -123,6 +124,15 @@ class TSeleniumDriver:
         if self.the_driver is not None:
             self.the_driver.quit()
 
+    def find_elements_by_class_name(self, class_name):
+        return self.the_driver.find_element(By.CLASS_NAME, class_name)
+
+    def find_elements_by_partial_link_text(self, text):
+        return self.the_driver.find_element(By.PARTIAL_LINK_TEXT, text)
+
+    def find_elements_by_tag_name(self, tag_name):
+        return self.the_driver.find_element(By.TAG_NAME, tag_name)
+
     def close_not_first_tab(self):
         while len(self.the_driver.window_handles) > 1:
             self.the_driver.switch_to.window(self.the_driver.window_handles[len(self.the_driver.window_handles) - 1])
@@ -154,7 +164,7 @@ class TSeleniumDriver:
                 raise
 
     def get_buttons_and_links(self):
-        return list(self.the_driver.find_elements_by_xpath('//button | //a'))
+        return list(self.the_driver.find_element(By.XPATH, '//button | //a'))
 
     def get_links_js(self, timeout=4):
         js = """
