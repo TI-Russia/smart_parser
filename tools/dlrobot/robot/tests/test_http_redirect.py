@@ -7,9 +7,9 @@ from unittest import TestCase
 class TestRecursion(TestCase):
     def test_redirect_yandex(self):
         THttpRequester.initialize(setup_logging())
-        redirected_url, headers = THttpRequester.request_url_headers_with_global_cache("http://www.yandex.ru")
+        redirected_url, headers = THttpRequester.request_url_headers_with_global_cache("http://www.meduza.io")
         self.assertIsNotNone(headers)
-        self.assertEqual(redirected_url, 'https://yandex.ru/')
+        self.assertEqual(redirected_url, 'https://meduza.io/')
 
     def test_gibdd(self):
         try:
