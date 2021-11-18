@@ -125,13 +125,13 @@ class TSeleniumDriver:
             self.the_driver.quit()
 
     def find_elements_by_class_name(self, class_name):
-        return self.the_driver.find_element(By.CLASS_NAME, class_name)
+        return self.the_driver.find_elements(By.CLASS_NAME, class_name)
 
     def find_elements_by_partial_link_text(self, text):
-        return self.the_driver.find_element(By.PARTIAL_LINK_TEXT, text)
+        return self.the_driver.find_elements(By.PARTIAL_LINK_TEXT, text)
 
     def find_elements_by_tag_name(self, tag_name):
-        return self.the_driver.find_element(By.TAG_NAME, tag_name)
+        return self.the_driver.find_elements(By.TAG_NAME, tag_name)
 
     def close_not_first_tab(self):
         while len(self.the_driver.window_handles) > 1:

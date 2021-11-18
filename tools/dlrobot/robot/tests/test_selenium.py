@@ -2,6 +2,7 @@ from common.selenium_driver import TSeleniumDriver
 from common.link_info import TLinkInfo, TClickEngine
 from common.download import TDownloadEnv
 from common.logging_wrapper import close_logger, setup_logging
+from dlrobot.robot.tests.common_env import TestDlrobotEnv
 
 import os
 import shutil
@@ -32,14 +33,10 @@ class TestSelenium(TestCase):
         return urls_and_elements
 
     def setUp(self):
-        self.data_folder = os.path.join(os.path.dirname(__file__), "data.selenuim")
-        if os.path.exists(self.data_folder):
-            shutil.rmtree(self.data_folder, ignore_errors=True)
-        os.mkdir(self.data_folder)
-        os.chdir(self.data_folder)
+        self.env = TestDlrobotEnv("data.selenuim")
 
         self.logger = setup_logging(log_file_name="check_selenium.log")
-        self.download_folder = os.path.join(self.data_folder, "download")
+        self.download_folder = os.path.join(self.env.data_folder, "download")
         os.mkdir(self.download_folder)
         try:
             self.driver_holder = TSeleniumDriver(self.logger, headless=True,
@@ -54,10 +51,7 @@ class TestSelenium(TestCase):
     def tearDown(self):
         self.driver_holder.stop_executable()
         close_logger(self.logger)
-        os.chdir(os.path.dirname(__file__))
-
-        if os.path.exists(self.data_folder):
-            shutil.rmtree(self.data_folder, ignore_errors=True)
+        self.env.delete_temp_folder()
 
     def get_all_link_elements(self, url):
         self.logger.info("navigate to {}\n".format(url))

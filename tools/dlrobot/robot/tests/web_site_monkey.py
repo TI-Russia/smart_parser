@@ -63,7 +63,8 @@ class TTestEnv:
         close_logger(self.dlrobot.logger)
         os.chdir(os.path.dirname(__file__))
         if os.path.exists(self.data_folder):
-            shutil.rmtree(self.data_folder, ignore_errors=True)
+            if os.environ.get("DEBUG_TESTS") is None:
+                shutil.rmtree(self.data_folder, ignore_errors=True)
 
     def get_result_files(self):
         files = list()

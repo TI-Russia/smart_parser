@@ -2,13 +2,14 @@ from common.download import get_file_extension_only_by_headers, TDownloadedFile,
              DEFAULT_HTML_EXTENSION, TDownloadEnv
 from common.http_request import THttpRequester
 from common.logging_wrapper import close_logger, setup_logging
+from dlrobot.robot.tests.common_env import TestDlrobotEnv
 
 import http.server
-from unittest import TestCase
 import time
 import os
 import threading
 import shutil
+from unittest import TestCase
 
 HTTP_HEAD_REQUESTS_COUNT = 0
 HTTP_GET_REQUESTS_COUNT = 0
@@ -53,11 +54,8 @@ class TestContentType(TestCase):
         self.web_server = http.server.HTTPServer(('127.0.0.1', self.web_site_port), THttpServerHandler)
         threading.Thread(target=start_server, args=(self.web_server,)).start()
         time.sleep(1)
-        self.data_folder = os.path.join(os.path.dirname(__file__), "data.content_type")
-        if os.path.exists(self.data_folder):
-            shutil.rmtree(self.data_folder, ignore_errors=False)
-        os.mkdir(self.data_folder)
-        os.chdir(self.data_folder)
+        self.env = TestDlrobotEnv("data.content_type")
+
         TDownloadEnv.clear_cache_folder()
         self.logger = setup_logging(log_file_name="dlrobot.log")
         THttpRequester.initialize(self.logger)
@@ -66,9 +64,7 @@ class TestContentType(TestCase):
         self.web_server.shutdown()
         close_logger(self.logger)
         time.sleep(1)
-        os.chdir(os.path.dirname(__file__))
-        if os.path.exists(self.data_folder):
-            shutil.rmtree(self.data_folder, ignore_errors=False)
+        self.env.delete_temp_folder()
 
     def build_url(self, path):
         return 'http://' + os.path.join(self.server_address, path).replace('\\', '/')

@@ -3,14 +3,15 @@ from dlrobot.common.robot_step import TRobotStep, TUrlInfo
 from dlrobot.common.robot_project import TRobotProject
 from common.http_request import THttpRequester
 from common.logging_wrapper import close_logger, setup_logging
+from dlrobot.robot.tests.common_env import TestDlrobotEnv
+
 
 import http.server
-from unittest import TestCase
 import time
+from unittest import TestCase
 import os
 import urllib
 import threading
-import shutil
 from pathlib import Path
 import json
 
@@ -104,24 +105,19 @@ class TestDeclarationLinkBase(TestCase):
         self.http_server_thread = threading.Thread(target=start_server, args=(self.web_server,))
         self.http_server_thread.start()
         time.sleep(1)
-        self.data_folder = os.path.join(os.path.dirname(__file__), "data." + name)
-        if os.path.exists(self.data_folder):
-            shutil.rmtree(self.data_folder, ignore_errors=True)
-        os.mkdir(self.data_folder)
-        os.chdir(self.data_folder)
+        self.env = TestDlrobotEnv("data." + name)
+
         THttpRequester.ENABLE = False
         TDownloadEnv.clear_cache_folder()
         self.logger = setup_logging(log_file_name="dlrobot.log")
         THttpRequester.initialize(self.logger)
-        self.project_path = os.path.join(self.data_folder, "project.txt")
+        self.project_path = os.path.join(self.env.data_folder, "project.txt")
         TRobotProject.create_project("http://127.0.0.1:{}".format(self.web_site_port), self.project_path)
 
     def tearDown(self):
         self.web_server.shutdown()
         close_logger(self.logger)
-        os.chdir(os.path.dirname(__file__))
-        if os.path.exists(self.data_folder):
-            shutil.rmtree(self.data_folder, ignore_errors=True)
+        self.env.delete_temp_folder()
         self.http_server_thread.join(1)
         self.web_server.server_close()
         time.sleep(1)

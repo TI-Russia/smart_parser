@@ -1,29 +1,22 @@
 from common.serp_parser import SearchEngine, SearchEngineEnum
 from common.selenium_driver import TSeleniumDriver
+from dlrobot.robot.tests.common_env import TestDlrobotEnv
 
 import random
 import logging
 from unittest import TestCase
-import shutil
-import os
 
 
 class TestSimple(TestCase):
 
     def setUp(self):
-        self.data_folder = os.path.join(os.path.dirname(__file__), "data.search_engine")
-        if os.path.exists(self.data_folder):
-            shutil.rmtree(self.data_folder, ignore_errors=True)
-        os.mkdir(self.data_folder)
-        os.chdir(self.data_folder)
-
+        self.env = TestDlrobotEnv("data.search_engine")
         self.driver_holder = TSeleniumDriver(logging, headless=True)
         self.driver_holder.start_executable()
 
     def tearDown(self):
         self.driver_holder.stop_executable()
-        if os.environ.get("DEBUG_TESTS") is None:
-            shutil.rmtree(self.data_folder, ignore_errors=True)
+        self.env.delete_temp_folder()
 
     def check_search_engine(self, search_engine_id):
         sites = ["ru.wikipedia.org", "microsoft.com", "ru.stackoverflow.com", "news.ru"]

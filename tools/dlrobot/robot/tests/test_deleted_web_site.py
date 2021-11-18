@@ -3,27 +3,21 @@ from common.web_site_status import TWebSiteReachStatus
 from dlrobot.common.robot_project import TRobotProject
 from common.download import TDownloadEnv
 from common.http_request import THttpRequester
+from dlrobot.robot.tests.common_env import TestDlrobotEnv
 
 import os
-import shutil
 from unittest import TestCase
 
 
 class TestDeletedWebSite(TestCase):
     def setUp(self):
-        self.data_folder = os.path.join(os.path.dirname(__file__), "data.deleted_sweb_site")
-        if os.path.exists(self.data_folder):
-            shutil.rmtree(self.data_folder, ignore_errors=True)
-        os.mkdir(self.data_folder)
-        os.chdir(self.data_folder)
+        self.env = TestDlrobotEnv("data.deleted_sweb_site")
 
     def tearDown(self):
-        os.chdir(os.path.dirname(__file__))
-        if os.path.exists(self.data_folder):
-            shutil.rmtree(self.data_folder, ignore_errors=True)
+        self.env.delete_temp_folder()
 
     def test_unknown_site(self):
-        self.project_path = os.path.join(self.data_folder, "project.txt")
+        self.project_path = os.path.join(self.env.data_folder, "project.txt")
         TRobotProject.create_project("http://unknown_site.org", self.project_path)
         dlrobot = TDlrobot(TDlrobot.parse_args(['--clear-cache-folder',  '--project', self.project_path]))
         try:

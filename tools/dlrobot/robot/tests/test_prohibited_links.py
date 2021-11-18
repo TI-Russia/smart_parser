@@ -3,9 +3,8 @@ from common.download import TDownloadEnv
 from common.logging_wrapper import setup_logging
 from dlrobot.common.robot_project import TRobotProject
 from common.link_info import TLinkInfo, TClickEngine
+from dlrobot.robot.tests.common_env import TestDlrobotEnv
 
-import os
-import shutil
 from unittest import TestCase
 
 
@@ -15,15 +14,11 @@ class TestProhibitedLinksBase(TestCase):
         self.project = TRobotProject(logger, '', [], "result", enable_search_engine=False)
         web_site = self.project.add_web_site(morda_url)
         self.robot_step = TRobotStep(web_site)
-
-        d = os.path.join(os.path.dirname(__file__), "data.prohibited")
-        if os.path.exists(d):
-            shutil.rmtree(d, ignore_errors=True)
-        os.mkdir(d)
-        TDownloadEnv.FILE_CACHE_FOLDER = d
+        self.env = TestDlrobotEnv("data.prohibited")
+        TDownloadEnv.FILE_CACHE_FOLDER = self.env.data_folder
 
     def tearDown(self):
-        shutil.rmtree(TDownloadEnv.FILE_CACHE_FOLDER, ignore_errors=True)
+        self.env.delete_temp_folder()
 
     def check_follow(self, src, trg, canon):
         if not src.startswith('http'):

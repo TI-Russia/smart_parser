@@ -3,15 +3,13 @@ from dlrobot.common.robot_step import TRobotStep, TUrlInfo
 from dlrobot.common.robot_project import TRobotProject
 from common.http_request import THttpRequester
 from common.logging_wrapper import close_logger, setup_logging
+from dlrobot.robot.tests.common_env import TestDlrobotEnv
 
-from unittest import TestCase
 import os
 import urllib
 import shutil
 import json
-import threading
-import http
-from functools import partial
+from unittest import TestCase
 
 
 class TestDeclarationLinkSelenium(TestCase):
@@ -54,14 +52,8 @@ class TestDeclarationLinkSelenium(TestCase):
             return links
 
     def setUp(self, website_folder):
-        #TRobotStep.check_local_address = True
-        name = os.path.basename(website_folder)
-        self.data_folder = os.path.join(os.path.dirname(__file__), "data.{}".format(name))
-        if os.path.exists(self.data_folder):
-            shutil.rmtree(self.data_folder, ignore_errors=True)
-        os.mkdir(self.data_folder)
-        shutil.copy2(os.path.join(os.path.dirname(__file__), website_folder, "project.txt"), self.data_folder)
-        os.chdir(self.data_folder)
+        self.env = TestDlrobotEnv("data.{}".format(os.path.basename(website_folder)))
+        shutil.copy2(os.path.join(os.path.dirname(__file__), website_folder, "project.txt"), self.env.data_folder)
         THttpRequester.ENABLE = False
         self.logger = setup_logging(log_file_name="dlrobot.log")
         THttpRequester.initialize(self.logger)
@@ -70,9 +62,7 @@ class TestDeclarationLinkSelenium(TestCase):
         if hasattr(self, "web_site") and self.web_site is not None:
             self.web_site.shutdown()
         close_logger(self.logger)
-        os.chdir(os.path.dirname(__file__))
-        if os.path.exists(self.data_folder):
-            shutil.rmtree(self.data_folder, ignore_errors=True)
+        self.env.delete_temp_folder()
         TRobotStep.check_local_address = False
 
     def compare_to_file(self, links, file_name):

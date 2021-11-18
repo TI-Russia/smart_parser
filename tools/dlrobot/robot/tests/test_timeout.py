@@ -1,13 +1,13 @@
 from common.download import TDownloadedFile, TDownloadEnv
 from common.http_request import THttpRequester
 from common.logging_wrapper import close_logger, setup_logging
+from dlrobot.robot.tests.common_env import TestDlrobotEnv
+
 
 import http.server
-from unittest import TestCase
 import time
-import os
 import threading
-import shutil
+from unittest import TestCase
 
 HTTP_HEAD_REQUESTS_COUNT = 0
 HTTP_GET_REQUESTS_COUNT = 0
@@ -62,11 +62,7 @@ class TestFileCache(TestCase):
         self.web_server = TestHTTPServer(self.web_site_port)
         threading.Thread(target=start_server, args=(self.web_server,)).start()
         time.sleep(1)
-        self.data_folder = os.path.join(os.path.dirname(__file__), "data.timeout")
-        if os.path.exists(self.data_folder):
-            shutil.rmtree(self.data_folder, ignore_errors=True)
-        os.mkdir(self.data_folder)
-        os.chdir(self.data_folder)
+        self.env = TestDlrobotEnv("data.timeout")
         TDownloadEnv.clear_cache_folder()
         self.logger = setup_logging(log_file_name="dlrobot.log")
         THttpRequester.initialize(self.logger)
@@ -74,9 +70,7 @@ class TestFileCache(TestCase):
     def tearDown(self):
         self.web_server.shutdown()
         close_logger(self.logger)
-        os.chdir(os.path.dirname(__file__))
-        if os.path.exists(self.data_folder):
-            shutil.rmtree(self.data_folder, ignore_errors=True)
+        self.env.delete_temp_folder()
 
     def test_request_timed_out(self):
         url = self.build_url('/very_long')
