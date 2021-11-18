@@ -19,6 +19,7 @@ def start_server(server):
 
 
 class TTestEnv:
+    additional_ports = [8221, 8222, 8223]
 
     def __init__(self, port, website_folder, regional_main_pages=[]):
         self.dlrobot = None
@@ -31,6 +32,11 @@ class TTestEnv:
             shutil.rmtree(self.data_folder, ignore_errors=True)
         handler = partial(http.server.SimpleHTTPRequestHandler,
                           directory=self.web_site_folder)
+        if not is_local_http_port_free(port):
+            for p in TTestEnv.additional_ports:
+                if is_local_http_port_free(p):
+                    port = p
+                    break
         assert is_local_http_port_free(port)
         self.web_site = http.server.HTTPServer(server_address=("127.0.0.1", port), RequestHandlerClass=handler)
         os.mkdir(self.data_folder)
