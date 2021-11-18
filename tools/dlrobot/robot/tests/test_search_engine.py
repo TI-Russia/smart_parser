@@ -22,7 +22,8 @@ class TestSimple(TestCase):
 
     def tearDown(self):
         self.driver_holder.stop_executable()
-        shutil.rmtree(self.data_folder, ignore_errors=True)
+        if os.environ.get("DEBUG_TESTS") is None:
+            shutil.rmtree(self.data_folder, ignore_errors=True)
 
     def check_search_engine(self, search_engine_id):
         sites = ["ru.wikipedia.org", "microsoft.com", "ru.stackoverflow.com", "news.ru"]
@@ -30,6 +31,7 @@ class TestSimple(TestCase):
         random.seed()
         site = random.choice(sites)
         query = random.choice(queries)
+        print("search_engine_id={}, query={}, site={}".format(search_engine_id, query, site))
         urls = SearchEngine().site_search(search_engine_id,
                                       site,
                                       query,
