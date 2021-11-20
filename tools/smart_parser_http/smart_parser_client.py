@@ -114,6 +114,16 @@ class TSmartParserCacheClient(object):
         else:
             return None
 
+    def print_keys_on_server(self):
+        conn = http.client.HTTPConnection(self.server_address)
+        conn.request("GET", "/print_keys")
+        response = conn.getresponse()
+        if response.code == 200:
+            file_name = response.read().decode('utf8')
+            return file_name
+        else:
+            return None
+
     def retrieve_json_by_source_file(self, file_path):
         return self.retrieve_json_by_sha256(build_dislosures_sha256(file_path))
 
@@ -187,6 +197,8 @@ class TSmartParserCacheClient(object):
                         print("not found")
                     else:
                         print(json.dumps(js, ensure_ascii=False))
+                elif self.args.action == "print_keys_on_server":
+                    print(self.print_keys_on_server())
                 elif self.args.action == "title":
                     js = self.retrieve_json_by_sha256(f)
                     title = TSmartParserCacheClient.get_title_from_smart_parser_json(js)

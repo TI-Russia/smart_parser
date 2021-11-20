@@ -75,6 +75,15 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         self.smart_parser_thread.join(0)
         self.shutdown()
 
+    def print_keys(self):
+        file_name = os.path.abspath("keys.txt")
+        with open(file_name, "w") as outp:
+            k = self.json_cache_dbm.firstkey()
+            while k is not None:
+                outp.write(k.decode('utf8') + "\n")
+                k = self.json_cache_dbm.nextkey(k)
+        return file_name
+
     def check_file_extension(self, filename):
         _, extension = os.path.splitext(filename)
         return extension in ACCEPTED_DOCUMENT_EXTENSIONS
@@ -248,19 +257,38 @@ class TSmartParserRequestHandler(http.server.BaseHTTPRequestHandler):
         self.wfile.write(js)
         return
 
+    def process_special_commands(self):
+        path = urllib.parse.urlparse(self.path).path
+        if path == "/ping":
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(b"pong\n")
+            return True
+        elif path == "/stats":
+            self.send_response(200)
+            self.end_headers()
+            stats = json.dumps(self.server.get_stats()) + "\n"
+            self.wfile.write(stats.encode('utf8'))
+            return True
+        elif path == "/print_keys":
+            file_name = self.server.print_keys()
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(file_name.encode('utf8'))
+            return True
+        else:
+            return False
+
     def do_GET(self):
         try:
+            try:
+                if self.process_special_commands():
+                    return
+            except Exception as exp:
+                self.server.logger.error(exp)
+                return
             path = urllib.parse.urlparse(self.path).path
-            if path == "/ping":
-                self.send_response(200)
-                self.end_headers()
-                self.wfile.write(b"pong\n")
-            elif path == "/stats":
-                self.send_response(200)
-                self.end_headers()
-                stats = json.dumps(self.server.get_stats()) + "\n"
-                self.wfile.write(stats.encode('utf8'))
-            elif path == "/get_json":
+            if path == "/get_json":
                 self.process_get_json()
             else:
                 self.send_error_wrapper("unsupported action", log_error=False)
