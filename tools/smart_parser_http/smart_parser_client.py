@@ -21,7 +21,8 @@ class TSmartParserCacheClient(object):
         parser.add_argument("--server-address", dest='server_address', default=None,
                             help="by default read it from environment variable SMART_PARSER_SERVER_ADDRESS")
         parser.add_argument("--action", dest='action',
-                            help="can be put, get, get_by_sha256, title, office_strings,  put_json or stats", required=False)
+                            help="can be put, get, get_by_sha256, title, office_strings,  put_json, print_keys_on_server or stats",
+                            required=False)
         parser.add_argument("--walk-folder-recursive", dest='walk_folder_recursive', default=None, required=False)
         parser.add_argument("--timeout", dest='timeout', default=300, type=int)
         parser.add_argument("--rebuild", dest='rebuild', action="store_true", default=False)
@@ -189,6 +190,8 @@ class TSmartParserCacheClient(object):
     def main(self):
         if self.args.action == "stats":
             print(json.dumps(self.get_stats()))
+        elif self.args.action == "print_keys_on_server":
+            print(self.print_keys_on_server())
         else:
             for f in self.get_files():
                 if self.args.action == "get_by_sha256":
@@ -197,8 +200,6 @@ class TSmartParserCacheClient(object):
                         print("not found")
                     else:
                         print(json.dumps(js, ensure_ascii=False))
-                elif self.args.action == "print_keys_on_server":
-                    print(self.print_keys_on_server())
                 elif self.args.action == "title":
                     js = self.retrieve_json_by_sha256(f)
                     title = TSmartParserCacheClient.get_title_from_smart_parser_json(js)
