@@ -74,6 +74,7 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         time.sleep(self.TASK_TIMEOUT)
         self.worker_pool.close()
         self.smart_parser_thread.join(0)
+        self.logger.info("server is closed")
         if run_shutdown:
             self.shutdown()
 
@@ -85,6 +86,19 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
                 outp.write(k.decode('utf8') + "\n")
                 k = self.json_cache_dbm.nextkey(k)
         return file_name
+
+    def delete_old_keys(self):
+        version = ",{}".format(self.get_last_smart_parser_version())
+        key = self.json_cache_dbm.firstkey()
+        deleted_keys_count = 0
+        while key is not None:
+            next_key = self.json_cache_dbm.nextkey(key)
+            if not key.decode('latin').endswith(version):
+                self.logger.debug("delete {}".format(key.decode('latin')))
+                del self.json_cache_dbm[key]
+                deleted_keys_count += 1
+            key = next_key
+        self.logger.info("deleted_keys_count = {}".format(deleted_keys_count))
 
     def check_file_extension(self, filename):
         _, extension = os.path.splitext(filename)
@@ -104,6 +118,9 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         self.logger.error("initialize input task queue with {} files".format(task_queue.qsize()))
         return task_queue
 
+    def get_last_smart_parser_version(self):
+        return self.versions[-1]
+
     def read_smart_parser_versions(self):
         with open (os.path.join(os.path.dirname(__file__), "../../src/Resources/versions.txt"), "r") as inp:
             versions = list(x['id'] for x in json.load(inp)['versions'])
@@ -118,7 +135,7 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
 
     def build_key(self, sha256, smart_parser_version):
         if smart_parser_version is None:
-            smart_parser_version = self.versions[-1]
+            smart_parser_version = self.get_last_smart_parser_version()
         return ",".join([sha256, smart_parser_version])
 
     def get_smart_parser_json(self, sha256, smart_parser_version=None):
@@ -205,11 +222,15 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
             self.logger.error("general exception in run_smart_parser_thread: {} ".format(exp))
             raise
 
+    def get_records_count(self):
+        return len(self.json_cache_dbm)
+
     def get_stats(self):
         return {
             'queue_size': self.task_queue.qsize(),
             'session_write_count': self.session_write_count,
-            'unsynced_records_count': self.unsynced_records_count
+            'unsynced_records_count': self.unsynced_records_count,
+            'records_count':  self.get_records_count()
         }
 
     def service_actions(self):

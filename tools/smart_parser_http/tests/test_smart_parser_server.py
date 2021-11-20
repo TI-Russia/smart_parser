@@ -221,3 +221,24 @@ class TestExit(TestCase):
         time.sleep(3)
         stats = self.env.client.get_stats(timeout=1)
         self.assertIsNone(stats)
+
+
+class TestDeleteOldKeys(TestCase):
+    def setUp(self):
+        self.env = TTestEnv(8394)
+        self.env.setUp(1)
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def test_delete_old_keys(self):
+        sha256 = "a9aa9e3edb4676abdf88092d00715f6ad8a0606628c349afcd977bbd1922885f"
+        file_path1 = sha256 + ".docx.json"
+        with open(file_path1, "w") as outp:
+            json.dump({"aaa": 1}, outp)
+        self.assertTrue(self.env.client.send_file(file_path1, external_json=True, smart_parser_version='0.3'))
+        self.assertTrue(self.env.client.send_file(file_path1, external_json=True, smart_parser_version='0.4'))
+        self.assertTrue(self.env.client.send_file(file_path1, external_json=True,
+                                                  smart_parser_version=self.env.server.get_last_smart_parser_version()))
+        self.env.server.delete_old_keys()
+        self.assertEqual(1, self.env.server.get_records_count())
