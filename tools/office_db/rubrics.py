@@ -16,6 +16,7 @@ class TOfficeRubrics:
     Other = 20
 
 
+
 RubricsInRussian = {
     TOfficeRubrics.Court: {
         "name": "Суды",

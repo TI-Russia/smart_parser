@@ -179,6 +179,10 @@ class TOfficeTableInMemory:
                 all_rubrics.add(rubric)
         return all_rubrics
 
+    def set_rubrics(self, logger):
+        for o in self.offices.values():
+            o.rubric_id = self.build_office_rubric(logger, o.office_id)
+
     def build_office_rubric(self, logger, office_id):
         rubrics = self._get_all_rubrics(office_id)
         office: TOfficeInMemory

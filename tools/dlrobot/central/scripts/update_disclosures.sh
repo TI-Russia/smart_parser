@@ -3,7 +3,7 @@
 #0 ~/smart_parser/tools/INSTALL.txt are prerequisites
 
 set -e
-COMMON_SCRIPT=$(dirname $0)/profile.sh
+COMMON_SCRIPT=~/smart_parser/tools/dlrobot/central/scripts/profile.sh
 source $COMMON_SCRIPT
 
 
@@ -16,9 +16,7 @@ source $COMMON_SCRIPT
 
     mkdir -p $CRAWL_EPOCH
     cd $CRAWL_EPOCH
-    cp ~/smart_parser/tools/deploy/profile.sh .
-    cp $COMMON_SCRIPT >> .profile
-    echo "" >> .profile
+    echo "source $COMMON_SCRIPT" >.profile
     echo "" >> .profile
     echo "export DLROBOT_FOLDER=$DLROBOT_FOLDER" >> .profile
     echo "export CRAWL_EPOCH=$CRAWL_EPOCH" >> .profile
@@ -28,7 +26,7 @@ source $COMMON_SCRIPT
 #2.  инициализация базы disclosures
     python3 $TOOLS/disclosures_site/manage.py create_database --settings disclosures.settings.dev --skip-checks
 
-#3  слияние по файлам dlrobot, declarator  и старого disclosures, получение dlrobot_human.json
+#3  слияние по файлам dlrobot, declarator  и старого disclosures, получение dlrobot_human.dbm
       python3 $TOOLS/disclosures_site/scripts/join_human_and_dlrobot.py \
           --max-ctime $CRAWL_EPOCH \
           --input-dlrobot-folder  "$DLROBOT_CENTRAL_FOLDER/processed_projects" \

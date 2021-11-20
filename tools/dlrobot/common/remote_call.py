@@ -6,6 +6,7 @@ import time
 import json
 import sys
 from collections import defaultdict
+from unidecode import unidecode
 
 
 class TRemoteDlrobotCall:
@@ -34,7 +35,11 @@ class TRemoteDlrobotCall:
 
     @staticmethod
     def web_site_to_project_file(s):
-        return site_url_to_file_name(s) + ".txt"
+        s = site_url_to_file_name(s)
+
+        #chrome cannot start in cyrillic directories
+        s = unidecode(s).replace("'", "_")
+        return s + ".txt"
 
     def get_total_minutes(self):
         end_time = self.end_time if self.end_time is not None else 0

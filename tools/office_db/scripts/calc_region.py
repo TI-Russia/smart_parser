@@ -24,13 +24,10 @@ def main():
         for l in inp:
             office_id, name, yandex_info = l.strip().split("\t")
             address = json.loads(yandex_info).get('address', '')
-            region_id = regions.search_region_in_address(address)
+            region_id = regions.calc_region_by_address(address)
             if region_id is None:
-                region_id = regions.search_capital_in_address(address)
-                if region_id is None:
-                    logger.error("cannot recognize region for {}".format(address))
-                    region_id = -1
-            if region_id != -1:
+                logger.error("cannot recognize region for {}".format(address))
+            else:
                 office = offices.offices.get(int(office_id))
                 logger.debug("office_id={}, change region_id={} to region_id={}".format(office_id, office.region_id, region_id))
                 office.region_id = region_id

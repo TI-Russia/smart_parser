@@ -16,8 +16,7 @@ def main():
     logger = setup_logging("set_rubrics")
     offices = TOfficeTableInMemory(use_office_types=False)
     offices.read_from_local_file()
-    for o in offices.offices.values():
-        o.rubric_id = offices.build_office_rubric(logger, o.office_id)
+    offices.set_rubrics(logger)
     logger.info("write to {}".format(args.output_file))
     offices.write_to_local_file(args.output_file)
 

@@ -151,6 +151,12 @@ class TRussianRegions:
     def search_region_in_address(self, text, unknown_region=None):
         return self.get_region_using_automat(self.nominative_forms, text, unknown_region)
 
+    def calc_region_by_address(self, address):
+        region_id = self.search_region_in_address(address)
+        if region_id is None:
+            region_id = self.search_capital_in_address(address)
+        return region_id
+
     def get_region_by_wikidata_id(self, wikidata_id):
         return self.wikidata2region.get(wikidata_id)
 

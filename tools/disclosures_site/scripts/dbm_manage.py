@@ -7,7 +7,8 @@ import zlib
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--db", dest='dbm_file')
-    parser.add_argument("--action", dest='action', help="can be print, get, create, print_keys")
+    parser.add_argument("--output-db", dest='output_dbm_file', required=False)
+    parser.add_argument("--action", dest='action', help="can be print, get, create, print_keys, copy")
     parser.add_argument("--key", dest='key', help="key to get")
     parser.add_argument("--zlib-value", dest='use_zlib', action="store_true", default=False)
     return parser.parse_args()
@@ -41,6 +42,13 @@ if __name__ == '__main__':
             elif args.action == "get":
                 value = read_value(args, db, args.key)
                 print(value)
+            elif args.action == "copy":
+                # get rid of old values
+                k = db.firstkey()
+                with gdbm.open(args.output_dbm_file, "c") as out_db:
+                    while k is not None:
+                        out_db[k] = db[k]
+                        k = db.nextkey(k)
             elif args.action == "print_keys":
                 k = db.firstkey()
                 while k is not None:
