@@ -86,10 +86,10 @@ class TSmartParserCacheClient(object):
         else:
             return True
 
-    def get_stats(self):
+    def get_stats(self, timeout=30):
         data = None
         try:
-            conn = http.client.HTTPConnection(self.server_address)
+            conn = http.client.HTTPConnection(self.server_address, timeout=timeout)
             conn.request("GET", "/stats")
             response = conn.getresponse()
             data = response.read().decode('utf8')

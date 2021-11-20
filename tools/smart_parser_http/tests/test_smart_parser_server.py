@@ -202,3 +202,22 @@ class TestPrintKeys(TestCase):
         self.assertEqual(self.env.client.get_stats()['session_write_count'], 1)
         filename = self.env.client.print_keys_on_server()
         self.assertTrue(os.path.exists(filename))
+
+
+class TestExit(TestCase):
+    def setUp(self):
+        self.env = TTestEnv(8395)
+        self.env.setUp(1, heart_rate=1)
+
+    def tearDown(self):
+        pass
+        #self.env.tearDown()
+
+    def test_smartparser_server_exit(self):
+        stats = self.env.client.get_stats(timeout=1)
+        self.assertIsNotNone(stats)
+        with open(TSmartParserHTTPServer.stop_file, "w") as outp:
+            outp.write(".")
+        time.sleep(3)
+        stats = self.env.client.get_stats(timeout=1)
+        self.assertIsNone(stats)

@@ -23,6 +23,7 @@ from pathlib import Path
 
 class TSmartParserHTTPServer(http.server.HTTPServer):
     SMART_PARSE_FAIL_CONSTANT = b"no_json_found"
+    stop_file = ".stop"
     TASK_TIMEOUT = 10
 
     @staticmethod
@@ -65,7 +66,7 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         self.smart_parser_thread = threading.Thread(target=self.run_smart_parser_thread_pool)
         self.smart_parser_thread.start()
 
-    def stop_server(self):
+    def stop_server(self, run_shutdown=True):
         self.json_cache_dbm.sync()
         self.json_cache_dbm.close()
         self.working = False
@@ -73,7 +74,8 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         time.sleep(self.TASK_TIMEOUT)
         self.worker_pool.close()
         self.smart_parser_thread.join(0)
-        self.shutdown()
+        if run_shutdown:
+            self.shutdown()
 
     def print_keys(self):
         file_name = os.path.abspath("keys.txt")
@@ -214,6 +216,10 @@ class TSmartParserHTTPServer(http.server.HTTPServer):
         current_time = time.time()
         if current_time - self.last_heart_beat >= self.args.heart_rate:
             self.sync_to_disc(True)
+            if os.path.exists(self.stop_file):
+                os.unlink(self.stop_file)
+                self.stop_server(run_shutdown=False)
+                raise Exception("stop_server")
             self.last_heart_beat = time.time()
 
 
