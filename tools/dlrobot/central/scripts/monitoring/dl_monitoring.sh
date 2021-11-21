@@ -11,7 +11,7 @@ curl $DLROBOT_CENTRAL_SERVER_ADDRESS/stats >>$CENTRAL_STATS_HISTORY
 rm -rf $TMP_FOLDER;
 mkdir $TMP_FOLDER;
 
-python3 $TOOLS/disclosures_site/scripts/monitoring/dl_monitoring.py --central-stats-file  $CENTRAL_STATS \
+python3 $TOOLS/dlrobot/central/scripts/monitoring/dl_monitoring.py --central-stats-file  $CENTRAL_STATS \
     --conversion-server-stats $CONV_STATS --central-server-cpu-and-mem  /tmp/glances.dat \
     --central-stats-history $CENTRAL_STATS_HISTORY --output-folder $TMP_FOLDER
 

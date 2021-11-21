@@ -70,11 +70,11 @@ class TDlrobotHumanManager:
 
         new_dlrobot_human.close_db()
 
-    def delete_by_sha256(self, output_file, select=True):
+    def delete_by_sha256(self):
         sha256_list = self.build_sha256_list()
         assert self.args.output_file is not None
 
-        new_dlrobot_human = TDlrobotHumanFileDBM(output_file)
+        new_dlrobot_human = TDlrobotHumanFileDBM(self.args.output_file)
         new_dlrobot_human.create_db()
 
         for sha256, src_doc in self.dlrobot_human.get_all_documents():
