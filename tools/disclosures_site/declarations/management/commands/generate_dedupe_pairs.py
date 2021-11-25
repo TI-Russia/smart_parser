@@ -397,7 +397,8 @@ class Command(BaseCommand):
             self.ml_model = TMLModel(self.options["model_file"])
 
     def cluster_sections(self):
-        for _, leaf_clusters in self.cluster_by_minimal_fio.items():
+        for fio, leaf_clusters in self.cluster_by_minimal_fio.items():
+            self.logger.debug("cluster inside for {}: {} sections".format(fio, len(leaf_clusters)))
             clustering = TFioClustering(self.logger, leaf_clusters, self.ml_model, self.threshold)
             clustering.cluster()
             yield clustering.clusters
