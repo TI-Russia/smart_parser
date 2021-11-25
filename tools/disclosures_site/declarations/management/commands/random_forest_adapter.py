@@ -271,7 +271,6 @@ class TFioClustering:
         if len(self.leaf_clusters) == 1:
             self.clusters[0] = [(self.leaf_clusters[0], 0)]
         else:
-            self.logger.debug("build_redundant_distance_matrix...")
             self.square_form_distance_matrix = self.build_redundant_distance_matrix()
             condensed_matrix = squareform(self.square_form_distance_matrix)
 
@@ -281,25 +280,28 @@ class TFioClustering:
             self.logger.debug("fcluster...")
             self.object_to_cluster_index = fcluster(linkage_matrix, t=self.min_distance, criterion="distance")
 
-            self.logger.debug("set cluster id to {} objects...")
             objects_count = len(self.object_to_cluster_index)
+            self.logger.debug("set cluster id to {} objects...".format(objects_count))
             for i in range(objects_count):
                 distance = self.get_min_distance(i)
                 self.clusters[self.object_to_cluster_index[i]].append((self.leaf_clusters[i], distance))
 
     def build_redundant_distance_matrix(self):
+        leaf_clusters_count = len(self.leaf_clusters)
+        self.logger.debug("init features for build_redundant_distance_matrix {}x{}...".format(leaf_clusters_count, leaf_clusters_count))
         """ build scipy squareform, single call predict_proba is too slow """
         square_form_distance_matrix = list()
         X = list()
-        for i in range(len(self.leaf_clusters)):
-            for k in range(len(self.leaf_clusters)):
+        for i in range(leaf_clusters_count):
+            for k in range(leaf_clusters_count):
                 i1, i2 = (i, k) if i < k else (k, i)
                 X.append(self.ml_model.get_features(self.leaf_clusters[i1], self.leaf_clusters[i2]))
         ml_scores = self.ml_model.predict_positive_proba(X)
 
-        for i in range(len(self.leaf_clusters)):
+        self.logger.debug("calc distance...")
+        for i in range(leaf_clusters_count):
             row = list()
-            for k in range(len(self.leaf_clusters)):
+            for k in range(leaf_clusters_count):
                 ml_score = ml_scores[i * len(self.leaf_clusters) + k]
                 distance = self.get_distance(self.leaf_clusters[i], self.leaf_clusters[k], ml_score)
                 row.append(distance)
