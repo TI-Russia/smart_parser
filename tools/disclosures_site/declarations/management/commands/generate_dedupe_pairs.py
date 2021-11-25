@@ -398,7 +398,7 @@ class Command(BaseCommand):
 
     def cluster_sections(self):
         for _, leaf_clusters in self.cluster_by_minimal_fio.items():
-            clustering = TFioClustering(leaf_clusters, self.ml_model, self.threshold)
+            clustering = TFioClustering(self.logger, leaf_clusters, self.ml_model, self.threshold)
             clustering.cluster()
             yield clustering.clusters
 

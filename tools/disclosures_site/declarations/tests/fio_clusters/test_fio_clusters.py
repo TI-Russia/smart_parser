@@ -1,5 +1,6 @@
 from declarations.management.commands.random_forest_adapter import TDeduplicationObject, TFioClustering, \
     TDeduplicationRecordId
+from common.logging_wrapper import setup_logging
 from django.test import TestCase
 from collections import defaultdict
 
@@ -49,8 +50,9 @@ class AmbiguousFio(TestCase):
         for c in objs:
             cluster_by_minimal_fio[c.fio.build_fio_with_initials()].append(c)
         self.assertEqual(len(cluster_by_minimal_fio), 1)
+        logger =  setup_logging("test_ambiguous_ivanov")
         for _, leaf_clusters in cluster_by_minimal_fio.items():
-            clustering = TFioClustering(leaf_clusters, ml_model, 0.89)
+            clustering = TFioClustering(logger, leaf_clusters, ml_model, 0.89)
             clustering.cluster()
             self.assertEqual(len(clustering.clusters), 2)
             for x in clustering.clusters.values():
@@ -73,7 +75,8 @@ class AmbiguousFio(TestCase):
         for c in objs:
             cluster_by_minimal_fio[c.fio.build_fio_with_initials()].append(c)
         self.assertEqual(len(cluster_by_minimal_fio), 1)
+        logger = setup_logging("cluster_merge")
         for _, leaf_clusters in cluster_by_minimal_fio.items():
-            clustering = TFioClustering(leaf_clusters, ml_model, 0.89)
+            clustering = TFioClustering(logger, leaf_clusters, ml_model, 0.89)
             clustering.cluster()
             self.assertEqual(len(clustering.clusters), 1)

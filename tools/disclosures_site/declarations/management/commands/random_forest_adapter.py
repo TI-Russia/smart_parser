@@ -248,7 +248,8 @@ class TMLModel:
 
 class TFioClustering:
 
-    def __init__(self, leaf_clusters, ml_model, threshold):
+    def __init__(self, logger, leaf_clusters, ml_model, threshold):
+        self.logger = logger
         self.leaf_clusters = leaf_clusters
         self.ml_model = ml_model
         self.square_form_distance_matrix = None
@@ -270,12 +271,19 @@ class TFioClustering:
         if len(self.leaf_clusters) == 1:
             self.clusters[0] = [(self.leaf_clusters[0], 0)]
         else:
+            self.logger.debug("build_redundant_distance_matrix...")
             self.square_form_distance_matrix = self.build_redundant_distance_matrix()
             condensed_matrix = squareform(self.square_form_distance_matrix)
+
+            self.logger.debug("linkage method=single...")
             linkage_matrix = linkage(condensed_matrix, method="single")
+
+            self.logger.debug("fcluster...")
             self.object_to_cluster_index = fcluster(linkage_matrix, t=self.min_distance, criterion="distance")
-            for i in range(len(self.object_to_cluster_index)):
-                #distance = self.get_average_distance(i)
+
+            self.logger.debug("set cluster id to {} objects...")
+            objects_count = len(self.object_to_cluster_index)
+            for i in range(objects_count):
                 distance = self.get_min_distance(i)
                 self.clusters[self.object_to_cluster_index[i]].append((self.leaf_clusters[i], distance))
 
