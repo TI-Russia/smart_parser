@@ -29,6 +29,7 @@ def clear_folder(folder):
     for f in os.listdir(folder):
         os.unlink(os.path.join(folder, f))
 
+
 class TTestConvBase(TestCase):
     def __init__(self, methodName='runTest'):
         super().__init__(methodName)
@@ -40,6 +41,9 @@ class TTestConvBase(TestCase):
         self.server_thread = None
         self.server_process = None
         self.client = None
+        self.converters = TExternalConverters(enable_smart_parser=False, enable_calibre=False, enable_cat_doc=False,
+                                         enable_xls2csv=False, enable_office_2_txt=False)
+
         self.pdf_ocr_folder = os.path.join(os.path.dirname(__file__), "pdf.ocr")
         self.pdf_ocr_out_folder = os.path.join(os.path.dirname(__file__), "pdf.ocr.out")
         if not os.path.exists(self.pdf_ocr_folder) or not os.path.exists(self.pdf_ocr_out_folder):
@@ -100,7 +104,8 @@ class TTestConvBase(TestCase):
         self.server_thread.join(0)
         self.start_server_thread()
 
-    def process_with_client(self, input_files, timeout=None, rebuild=False, skip_receiving=False, log_name="client"):
+    def process_with_client(self, input_files, timeout=None, rebuild=False, skip_receiving=False, log_name="client",
+                            input_task_timeout=5):
         output_files = list(os.path.basename(i) + ".docx" for i in input_files)
         for o in output_files:
             if os.path.exists(o):
@@ -122,6 +127,7 @@ class TTestConvBase(TestCase):
         try:
             self.client_count += 1
             self.client = TDocConversionClient(TDocConversionClient.parse_args(client_args), logger=logger)
+            self.client.input_task_timeout = input_task_timeout
             self.client.start_conversion_thread()
             self.client.process_files()
             return output_files
@@ -465,18 +471,16 @@ class TestHighLoadPing(TTestConvBase):
     def setUp(self):
         self.before_files = list()
         self.background_files = list()
-        converters = TExternalConverters(enable_smart_parser=False, enable_calibre=False, enable_cat_doc=False,
-                                         enable_xls2csv=False, enable_office_2_txt=False)
         self.setup_server("many_pings2")
 
         for i in range(10):
             random_pdf_file = os.path.join( self.data_folder, "random_{}.pdf".format(i))
-            converters.build_random_pdf(random_pdf_file, cnt=500)
+            self.converters.build_random_pdf(random_pdf_file, cnt=500)
             self.before_files.append(random_pdf_file)
 
         for i in range(5):
             random_pdf_file = os.path.join( self.data_folder, "random_background_{}.pdf".format(i))
-            converters.build_random_pdf(random_pdf_file, cnt=500)
+            self.converters.build_random_pdf(random_pdf_file, cnt=500)
             self.background_files.append(random_pdf_file)
 
     def is_converting(self):
@@ -572,3 +576,25 @@ class TestWinwordHangs(TTestConvBase):
         self.assertGreater(file_size, 5000)
         stats = self.server.get_stats()
         self.assertEqual(1, stats['finished_ocr_tasks'])
+
+
+class TestExceptionInServiceActions(TTestConvBase):
+    def setUp(self):
+        self.setup_server("service_actions_exp", ['--central-heart-rate', '1', '--disable-winword',])
+
+    def tearDown(self):
+        self.tear_down()
+
+    def test_exception_in_service_actions(self):
+        # sometimes in service actions occurs an unknown exception, in this case we should exit from all threads
+        # and exit from the program
+        random_pdf_file = os.path.join(self.data_folder, "random.pdf")
+        self.converters.build_random_pdf(random_pdf_file, cnt=500)
+        self.process_with_client([random_pdf_file], skip_receiving=True, input_task_timeout=1)[0]
+        time.sleep(5)
+        self.client.stop_conversion_thread(timeout=2)
+        self.server.ocr_tasks = None
+        time.sleep(2)
+        stats = self.server.get_stats()
+        self.assertIsNotNone(stats.get('exception'))
+

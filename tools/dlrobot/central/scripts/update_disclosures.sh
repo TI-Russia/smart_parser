@@ -95,11 +95,7 @@ source $COMMON_SCRIPT
        python3 $TOOLS/disclosures_site/scripts/check_person_id_permanence.py --prod-db disclosures_db --dev-db disclosures_db_dev
 
 #12.1 запускаем обратно dlrobot_worker
-  echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/central/scripts/dl_cloud_manager.py --action start --host &
-
-#12.2
-python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.dev --directory $DLROBOT_FOLDER/new_permalinks &
-new_permalinks_pid=$!
+  echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot/worker/scripts/dl_cloud_manager.py --action start --host &
 
 #13  Коммит статистики
    cd $TOOLS/disclosures_site
@@ -107,6 +103,11 @@ new_permalinks_pid=$!
    python3 manage.py add_disclosures_statistics --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
    git commit -m "new statistics" data/statistics.json ../dlrobot/central/data/dlrobot_remote_calls.dat
    git push
+
+#13.1
+cd $DLROBOT_FOLDER
+python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.dev --directory $DLROBOT_FOLDER/new_permalinks &
+new_permalinks_pid=$!
 
 #14 построение пола (gender)
    cd $DLROBOT_FOLDER
