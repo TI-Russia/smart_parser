@@ -2,20 +2,16 @@ from common.logging_wrapper import setup_logging
 import shutil
 import os
 import argparse
-from datetime import datetime
-from pathlib import Path
 
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--action", dest='action', default="last_actions", help="can be last_actions, publish_sql_link or move_mysql_dump")
     parser.add_argument("--max-ctime", dest='max_ctime', required=False, type=int,
                         default=int(os.environ.get("CRAWL_EPOCH")),
                         help="max ctime of an input folder")
     parser.add_argument("--processed-projects-folder", dest='processed_projects_folder', required=True)
     parser.add_argument("--update-folder", dest='update_folder', required=True)
     parser.add_argument("--output-cloud-folder", dest='output_cloud_folder', required=True)
-    parser.add_argument("--mysql-dump-tar", dest='mysql_dump_gz', required=False, default="disclosures.sql.gz")
     args = parser.parse_args()
     assert args.max_ctime is not None
     return args
@@ -79,38 +75,12 @@ class TBackupper:
         list_file = os.path.join(self.output_folder, "processed_projects_file_list.txt")
         self.log_and_system("tar --file {} --list > {}".format(tar_file1, list_file))
 
-    def copy_mysql_dump(self):
-        self.logger.info("cp {} to {}".format(self.args.mysql_dump_gz, self.output_folder))
-        shutil.copy2(self.args.mysql_dump_gz, self.output_folder)
-        self.log_and_system("yandex-disk sync --exclude-dirs=declarator/source_doc ")
-
-    def publish_sql_link(self):
-        output_file = os.path.join(self.output_folder, self.args.mysql_dump_gz)
-        tmp_file = "ya_disk.url"
-        self.log_and_system("yandex-disk start; yandex-disk publish {} > {}; yandex-disk stop".format(output_file, tmp_file))
-        with open(tmp_file) as inp:
-            url = inp.read().strip()
-        django_sub_template = "full_sql_dump.html"
-        date = datetime.fromtimestamp(self.args.max_ctime).strftime("%Y-%m-%d")
-        with open(django_sub_template, "w") as outp:
-            outp.write("Полный sql-дамп (mysql 8.0 и выше): <a href=\"{}\">скачать c Яндекс-диска</a> (date={}, size={})".format(
-                url, date, Path(output_file).stat().st_size))
-        self.log_and_system("scp {} $FRONTEND:$FRONTEND_WEB_SITE/declarations/templates/statistics".format(django_sub_template))
-
     def main(self):
         self.logger.info("max_ctime = {}".format(self.args.max_ctime))
-        if self.args.action == "last_actions":
-            self.copy_dlrobot_human()
-            self.copy_dlrobot_central_log()
-            self.move_processed_projects()
-            self.logger.info("all done")
-        elif self.args.action == "move_mysql_dump":
-            self.copy_mysql_dump()
-            self.publish_sql_link()
-        elif self.args.action == "publish_sql_link":
-            self.publish_sql_link()
-        else:
-            raise Exception("unknown action {}".format(self.args.action))
+        self.copy_dlrobot_human()
+        self.copy_dlrobot_central_log()
+        self.move_processed_projects()
+        self.logger.info("all done")
 
 
 if __name__ == '__main__':

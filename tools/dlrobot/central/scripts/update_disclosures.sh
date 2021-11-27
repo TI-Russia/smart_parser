@@ -133,7 +133,14 @@ new_permalinks_pid=$!
 
 #18 создание дампа базы
     cd $DLROBOT_FOLDER
-    mysqldump -u disclosures -pdisclosures disclosures_db_dev  |  gzip -c > $DLROBOT_FOLDER/disclosures.sql.gz
+    mysqldump -u disclosures -pdisclosures disclosures_db_dev  |  gzip -c > disclosures.sql.gz
+    cp disclosures.sql.gz $YANDEX_DISK_FOLDER/dlrobot_updates/$CRAWL_EPOCH
+
+#18.1
+    python3 $TOOLS/dlrobot/central/scripts/yandex_disk.py --action sync --exclude-dirs declarator/source_doc --wait
+    python3 $TOOLS/dlrobot/central/scripts/yandex_disk.py --action publish_speical \
+        --cloud-path declarator/dlrobot_updates/disclosures.sql.gz --report-output-file full_sql_dump.html
+    scp full_sql_dump.html $FRONTEND:$FRONTEND_WEB_SITE/declarations/templates/statistics
 
 wait $new_permalinks_pid
 
@@ -161,12 +168,6 @@ wait $new_permalinks_pid
 
     scp $DLROBOT_FOLDER/sitemap.tar $FRONTEND:/tmp/sitemap.tar
 
-#20.1
-    python3 $TOOLS/disclosures_site/scripts/send_dlrobot_projects_to_cloud.py  --action move_mysql_dump \
-        --processed-projects-folder $DLROBOT_CENTRAL_FOLDER"/processed_projects" \
-        --update-folder $DLROBOT_FOLDER \
-        --output-cloud-folder $YANDEX_DISK_FOLDER/dlrobot_updates
-
 #21 обновление prod
     elastic_search_version_prod=`ssh $FRONTEND sudo /usr/share/elasticsearch/bin/elasticsearch --version`
     elastic_search_version_central=`sudo /usr/share/elasticsearch/bin/elasticsearch --version`
@@ -187,7 +188,7 @@ wait $new_permalinks_pid
 
 #22  посылаем данные dlrobot в каталог, который синхронизируется с облаком, очищаем dlrobot_central (без возврата)
     cd $DLROBOT_FOLDER
-    python3 $TOOLS/disclosures_site/scripts/send_dlrobot_projects_to_cloud.py  \
+    python3 $TOOLS/dlrobot/central/scripts/send_dlrobot_projects_to_cloud.py  \
         --processed-projects-folder $DLROBOT_CENTRAL_FOLDER"/processed_projects" \
         --update-folder $DLROBOT_FOLDER \
         --output-cloud-folder $YANDEX_DISK_FOLDER/dlrobot_updates

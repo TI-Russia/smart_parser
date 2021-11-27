@@ -1,10 +1,11 @@
 SHELL=/bin/bash
 MAILTO=sokirko@yandex.ru
 SCRIPTS=/home/sokirko/smart_parser/tools/dlrobot/central/scripts
+PYTHONPATH=/home/sokirko/smart_parser/tools:$PYTHONPATH
 
 ##Mins  Hours  Days   Months  Day of the week
 */10       *     *        *      *    /bin/bash $SCRIPTS/monitoring/dl_monitoring.sh
-*/20       */5   *        *      *    yandex-disk sync
+20       5   *        *      *    /usr/bin/python3 $SCRIPTS/yandex_disk.py --action sync
 57   23 * * *   /bin/bash $SCRIPTS/copy_nginx_logs.sh
 */20 */4  * * * rsync -av --partial --inplace --append-verify --progress /home/sokirko/declarator_hdd/Yandex.Disk/declarator/source_doc   sokirko@iphil:/data/sokirko/Yandex.disk/declarator
 
