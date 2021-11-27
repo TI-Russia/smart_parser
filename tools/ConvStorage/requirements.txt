@@ -5,3 +5,4 @@ setuptools_rust
 python-magic
 python-magic-bin
 bs4
+lxml

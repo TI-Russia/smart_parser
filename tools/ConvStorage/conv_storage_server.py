@@ -229,13 +229,14 @@ class TConvertProcessor(http.server.HTTPServer):
             self.logger.error("exit due exception {}".format(exp))
             self.stop_http_server()
 
-    def stop_http_server(self):
+    def stop_http_server(self, run_shutdown=True):
         if self.http_server_is_working:
             self.logger.debug("try to stop http server  ")
             self.http_server_is_working = False
-            self.shutdown()
             self.server_close()
-            self.server_actions_thread.join(1)
+            if run_shutdown:
+                self.shutdown()
+                self.server_actions_thread.join(1)
             try:
                 if os.path.exists(self.args.input_folder_cracked):
                     shutil.rmtree(self.args.input_folder_cracked, ignore_errors=False)
@@ -378,9 +379,11 @@ class TConvertProcessor(http.server.HTTPServer):
             try:
                 with open(log_file_full_path, "r", encoding="utf-16-le", errors="ignore") as inp:
                     for line in inp:
-                        m = re.match('.*Error:.*: ([^ ]+.pdf)\.?$', line)
-                        if m is not None:
-                            broken_files.append(m.group(1))
+                        if line.find('Error:') != -1:
+                            m = re.search('[a-f0-9]{64}.pdf', line)
+                            if m is not None:
+                                file_path = os.path.join(self.args.ocr_input_folder, m.group(0))
+                                broken_files.append(file_path)
                         if line.find('Pages processed') != -1:
                             log_is_completed = True
             except Exception as exp:
@@ -395,11 +398,10 @@ class TConvertProcessor(http.server.HTTPServer):
                 shutil.move(log_file_full_path, os.path.join(self.args.ocr_logs_folder, log_file + "." + str(time.time())))
             except Exception as exp:
                 self.logger.error("exception: {}".format(exp))
-            for filename in broken_files:
 
+            for filename in broken_files:
                 if os.path.exists(filename):
                     if not TConvertStorage.is_normal_input_file_name(filename):
-                        self.convert_storage.delete_file_silently(filename)
                         self.convert_storage.delete_file_silently(filename)
                     else:
                         sha256 = TConvertStorage.get_sha256_from_filename(filename)
@@ -539,7 +541,13 @@ class TConvertProcessor(http.server.HTTPServer):
         while self.http_server_is_working:
             if time.time() - last_heart_beat >= self.args.central_heart_rate:
                 if not self.pause_service_actions():
-                    self.process_all_tasks()
+                    try:
+                        self.process_all_tasks()
+                    except Exception as exp:
+                        if self.logger is not None:
+                            self.logger.error(exp)
+                        self.stop_http_server(run_shutdown=False)
+                        sys.exit(1)
                 last_heart_beat = time.time()
             else:
                 time.sleep(1)
