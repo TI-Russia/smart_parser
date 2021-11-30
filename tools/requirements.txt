@@ -10,7 +10,7 @@ Django
 django-modeltranslation
 celery
 unidecode
-dedupe==1.10.0
+webdavclient
 pymysql
 sklearn
 python-Levenshtein

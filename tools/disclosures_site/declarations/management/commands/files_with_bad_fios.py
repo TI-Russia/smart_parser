@@ -19,7 +19,7 @@ class Command(BaseCommand):
         bad = defaultdict(int)
         sql = """
             select id, person_name, source_document_id, name_rank, surname_rank 
-            from declarations_section
+            from declarations_section   
         """
         cnt = 0
         s  = models.Section.objects.get(id=2083901)
