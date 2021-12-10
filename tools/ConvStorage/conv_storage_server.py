@@ -237,7 +237,11 @@ class TConvertProcessor(http.server.HTTPServer):
             self.server_close()
             if run_shutdown:
                 self.shutdown()
-                self.server_actions_thread.join(1)
+                stop_timeout = 60
+                self.logger.debug("try to join server_actions_thread in {} seconds".format(stop_timeout))
+                self.server_actions_thread.join(stop_timeout)
+                if self.server_actions_thread.is_alive():
+                    raise Exception("cannot stop server_actions_thread in {} seconds".format(stop_timeout))
             try:
                 if os.path.exists(self.args.input_folder_cracked):
                     shutil.rmtree(self.args.input_folder_cracked, ignore_errors=False)
@@ -315,6 +319,9 @@ class TConvertProcessor(http.server.HTTPServer):
         stripped_file = os.path.join(self.args.input_folder_cracked, basename)
         self.logger.debug("process input file {}, pwd={}".format(input_file, os.getcwd()))
         strip_drm(self.logger, input_file, stripped_file)
+
+        if not self.http_server_is_working:
+            return
 
         docxfile = None if input_task.only_ocr else self.convert_with_microsoft_word(stripped_file)
         if docxfile is not None:
@@ -415,6 +422,9 @@ class TConvertProcessor(http.server.HTTPServer):
         files_count = 0
         while not self.input_task_queue.empty():
             task = self.input_task_queue.get()
+            if not self.http_server_is_working:
+                return
+
             try:
                 self.process_one_input_file(task)
                 files_count += 1
@@ -524,13 +534,19 @@ class TConvertProcessor(http.server.HTTPServer):
         current_time = time.time()
         if current_time - self.file_garbage_collection_timestamp >= 60:  # just not too often
             self.file_garbage_collection_timestamp = current_time
+            if not self.http_server_is_working:
+                return
             self.process_ocr_logs()
+            if not self.http_server_is_working:
+                return
             self.process_stalled_files()
 
         current_time = time.time()
         if  current_time - self.got_ocred_file_last_time_stamp > self.args.ocr_restart_time and \
                 current_time - self.ocr_queue_is_empty_last_time_stamp > self.args.ocr_restart_time :
             self.logger.debug("last ocr file was received long ago and all this time the ocr queue was not empty")
+            if not self.http_server_is_working:
+                return
             self.restart_ocr()
             self.got_ocred_file_last_time_stamp = time.time()  #otherwize restart will be too often
 

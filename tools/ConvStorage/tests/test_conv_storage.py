@@ -25,9 +25,18 @@ def recreate_folder(folder):
         shutil.rmtree(folder, ignore_errors=False)
     os.mkdir(folder)
 
-def clear_folder(folder):
-    for f in os.listdir(folder):
-        os.unlink(os.path.join(folder, f))
+
+def clear_folder_with_retry(folder, retry_count=3):
+    for i in range(retry_count):
+        try:
+            for f in os.listdir(folder):
+                os.unlink(os.path.join(folder, f))
+        except Exception as e:
+            print("cannot delete {}, exception = {}".format(folder, str(e)))
+            if i + 1 == retry_count:
+                raise
+            print("sleep 20 seconds")
+            time.sleep(20)
 
 
 class TTestConvBase(TestCase):
@@ -78,8 +87,8 @@ class TTestConvBase(TestCase):
         if os.path.exists(log_file):
             os.unlink(log_file)
 
-        clear_folder(self.pdf_ocr_folder)
-        clear_folder(self.pdf_ocr_out_folder)
+        clear_folder_with_retry(self.pdf_ocr_folder)
+        clear_folder_with_retry(self.pdf_ocr_out_folder)
         TConvertStorage.create_empty_db(db_input_files, db_converted_files, self.project_file)
 
         self.server_args = [
@@ -162,14 +171,14 @@ class TTestConvBase(TestCase):
 
         os.chdir(os.path.dirname(__file__))
 
-        if delete_temp_files:
-            for i in range(3):
-                try:
-                    if os.path.exists(self.data_folder):
-                        shutil.rmtree(self.data_folder, ignore_errors=True)
-                except Exception as e:
-                    print("cannot delete {}, exception = {}".format(self.data_folder, str(e)))
-                    time.sleep(10)
+        # if delete_temp_files:
+        #     for i in range(3):
+        #         try:
+        #             if os.path.exists(self.data_folder):
+        #                 shutil.rmtree(self.data_folder, ignore_errors=True)
+        #         except Exception as e:
+        #             print("cannot delete {}, exception = {}".format(self.data_folder, str(e)))
+        #             time.sleep(10)
 
 
 class TestPing(TTestConvBase):
