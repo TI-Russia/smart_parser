@@ -144,17 +144,25 @@ class TTestConvBase(TestCase):
         self._feedErrorsToResult(result, self._outcome.errors)
         error = self.list2reason(result.errors)
         failure = self.list2reason(result.failures)
-        ok = not error and not failure
+        delete_temp_files = not error and not failure
+
+        if self.client is not None:
+            self.client.stop_conversion_thread(1)
+            self.client = None
 
         if self.server is not None:
             self.server.stop_http_server()
             self.server_thread.join(0)
+            self.server = None
         else:
-            self.server_process.terminate()
+            self.server_process.kill()
+            self.server_process = None
+
+        time.sleep(5)
 
         os.chdir(os.path.dirname(__file__))
 
-        if ok:
+        if delete_temp_files:
             for i in range(3):
                 try:
                     if os.path.exists(self.data_folder):
@@ -171,7 +179,7 @@ class TestPing(TTestConvBase):
     def tearDown(self):
         self.tear_down()
 
-    def test_ping(self):
+    def test_simple_ping(self):
         cmd = "curl -s -w '%{{http_code}}'  {}/ping --output dummy.txt >http_code.txt".format(self.server_address)
         exit_code = os.system(cmd)
         self.assertEqual(exit_code, 0)
@@ -325,9 +333,9 @@ class TestWinwordConvertToJpg(TTestConvBase):
         self.assertListEqual(file_sizes, new_file_sizes)
 
 
-class TestRestart(TTestConvBase):
+class TestRestartOcr(TTestConvBase):
     def setUp(self):
-        self.setup_server("restart")
+        self.setup_server("restart_ocr")
 
     def tearDown(self):
         self.tear_down()

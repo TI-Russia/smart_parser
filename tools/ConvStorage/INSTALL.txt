@@ -24,37 +24,52 @@
 3.1 Install Cygwin в c:\cygwin64 with
       g++, gcc, git, p7zip, wget, jq,  libssl-dev, lynx, wget, curl
 
-3.1 add C:\cygwin64\bin to PATH for all users, but after C:\Users\sokir\AppData\Local\Microsoft\WindowsApps\
+3.1 add C:\cygwin64\bin to PATH for all users, but after main python folder!
 
 ===============
-4.1 download Visual Studio Community, install all options for C#
+4. download Visual Studio Community, install all options for C#
 
-4.2 compile c:/tmp/smart_parser/smart_parser/tools/MicrosoftPdf2Docx in debug mode
-
-================
-4.1  install python 3.10 via Microsoft Store!
-
-4.2 check
- $ where python
-  C:\Users\sokir\AppData\Local\Microsoft\WindowsApps\python.exe                                                                                          c
-  c:\cygwin64\bin\python
-
-4.3  telegram-send --configure
 
 ================
 5. Get git repository
    mkdir c:/tmp/smart_parser; cd  c:/tmp/smart_parser
    git clone git@github.com:TI-Russia/smart_parser.git
 
-6. cd /cygdrive/c/tmp/smart_parser/smart_parser/tools/ConvStorage/; python -m pip install -r requirements.txt
 
-
-
-
-9. cd c:/tmp/smart_parser/smart_parser/tools/MicrosoftPdf2Docx/tests;
+6.1 compile c:/tmp/smart_parser/smart_parser/tools/MicrosoftPdf2Docx in debug mode
+6.2. cd c:/tmp/smart_parser/smart_parser/tools/MicrosoftPdf2Docx/tests;
     bash run_tests.sh  (may output one gui message box)
    the last line must be "success"
-     
+
+
+================
+##7.1  install python 3.10 via Microsoft Store!
+#7.2 check
+# $ where python
+#  C:\Users\sokir\AppData\Local\Microsoft\WindowsApps\python.exe                                                                                          c
+#  c:\cygwin64\bin\python
+#7.3  telegram-send --configure
+из-за зависаний
+
+
+7.1 пробую устанавливать 3.10 от Python.org в с:\python310
+7.2 where python
+  C:\Python310\python.exe                                                                                          c
+7.3 cd c:/tmp/smart_parser/smart_parser/tools/ConvStorage/; python -m pip install -r requirements.txt
+
+7.5 if you run program on other python version, delete all old folder __pycache__ in all folders, otherwise python freezes!!
+  
+===
+9. C:\Python310\Scripts\telegram-send --configure
+
+====
+9.1  check where libmagic.dll, if it is not present then 
+    copy C:\Python310\Lib\site-packages\magic\libmagic.dll libmagic C:\Windows\System32\ 
+    copy C:\Python310\Lib\site-packages\magic\magic.mgc C:\Windows\System32\ 
+  run   python -m magic , it must not freeze
+
+
+======     
 10. download and compile pdfcrack  https://sourceforge.net/projects/pdfcrack
  (I used g++ from cygwin)
 
@@ -81,7 +96,8 @@
 
 
 17.   run the simple test:
-     python -m unittest -f -v -k ping
+     python -m unittest -f -v -k test_simple_ping
+    python -m unittest -f -v -k magic
 
 18. import prod.hft to Finereader HotFolder (gui)
 
