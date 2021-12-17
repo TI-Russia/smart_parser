@@ -1,5 +1,15 @@
 import re
 from common.primitives import normalize_whitespace
+from pylem import MorphanHolder, MorphLanguage, LemmaInfo
+
+RUSSIAN_MORPH_DICT = MorphanHolder(MorphLanguage.Russian)
+
+def is_morph_surname(w):
+    lemm_info: LemmaInfo
+    for lemm_info in RUSSIAN_MORPH_DICT.lemmatize(w):
+        if not lemm_info.predicted and 'surname' in lemm_info.morph_features:
+            return True
+    return False
 
 POPULAR_RUSSIAN_NAMES = [
     "елена", "татьяна", "наталья", "ольга", "ирина", "светлана", "александр", "сергей", "марина",    "владимир", "людмила",
@@ -114,6 +124,7 @@ class TRussianFio:
             return False
         if re.search(r"(\s|\()((жена)|(сын)|(дочь)|(супруг)|(супруга))$",  person_name, flags=re.IGNORECASE) is not None:
             return False
+        person_name = re.sub("([\s.][А-ЯЁ])\s+[.]", "\\1.", person_name)
         lower_person = person_name.lower()
         patronymic2 = ""
         for patr2 in ['оглы']:
@@ -139,11 +150,21 @@ class TRussianFio:
         if len(parts) == 4:
             #Пыжик Игорь Григорьев Ич
             p = parts[2] + parts[3].lower()
-            if TRussianFioRecognizer.has_patronymic_suffix(p) and len(p) < 15:
+            if TRussianFioRecognizer.has_patronymic_suffix(p) and len(p) < 15 and len(parts[3]) <= 4:
                 parts[2] = p
                 parts = parts[:-1]
 
+        if len(parts) == 4:
+            #Великоречан Ина Е. Е.')
+            p = parts[0] + parts[1].lower()
+            if RUSSIAN_MORPH_DICT.is_in_dictionary(p):
+                parts = [p, parts[2], parts[3]]
 
+        if len(parts) == 3 and self._check_name_initial_complex(parts[2]):
+            #Великоречан Ина Е.Е.')
+            p = parts[0] + parts[1].lower()
+            if RUSSIAN_MORPH_DICT.is_in_dictionary(p):
+                parts = [p, parts[2]]
 
         count_Russian_words = 0
         if count_full_stops == 0:
@@ -158,19 +179,22 @@ class TRussianFio:
 
 
         self.case = None
-        if count_Russian_words >= 3 and \
+        if count_Russian_words == 3 and \
                 (TRussianFioRecognizer.has_patronymic_suffix(parts[2]) or \
-                 TRussianFioRecognizer.has_surname_suffix(parts[0])) :
+                 TRussianFioRecognizer.has_surname_suffix(parts[0])):
             # Иванов Иван Иванович
             # Гулиев Гурбангули Арастун Оглы"
+            self.family_name = parts[0]
+            self.first_name = parts[1]
+            self.patronymic = parts[2]
+            self.case = "full_name_0"
+        elif  count_Russian_words > 3 and TRussianFioRecognizer.has_patronymic_suffix(parts[2]) and \
+            is_morph_surname(parts[0]):
             # or Russian name with garbage "Иванов Иван Иванович (председатель)"
             self.family_name = parts[0]
             self.first_name = parts[1]
             self.patronymic = parts[2]
-            if count_Russian_words == 3:
-                self.case = "full_name_0"
-            else:
-                self.case = "full_name_1"
+            self.case = "full_name_1"
         elif count_Russian_words == 3 and TRussianFioRecognizer.has_patronymic_suffix(parts[1]):
             #  Иван Иванович Иванов
             self.family_name = parts[2]
