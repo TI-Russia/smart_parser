@@ -41,6 +41,9 @@ def convert_pdf_to_docx_with_abiword(input_path, out_path):
     shutil.move(temp_outfile, out_path)
 
 
+def taskkill_windows(process_name):
+    subprocess.run(['taskkill', '/F', '/IM', process_name],  stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
+
 def move_file_with_retry(logger, file_name, output_folder):
     output_file = os.path.join(output_folder, os.path.basename(file_name))
     for try_index in [1, 2, 3]:
@@ -52,7 +55,7 @@ def move_file_with_retry(logger, file_name, output_folder):
         except Exception as exp:
             logger.error("cannot move {}, exception={}, wait 20 seconds...".format(file_name, exp))
             time.sleep(20)
-    shutil.move(file_name, folder)
+    shutil.move(file_name, output_folder)
 
 
 def setup_logging(logfilename):
@@ -67,15 +70,17 @@ def setup_logging(logfilename):
 
 
 def strip_drm(logger, filename, stripped_file):
+    pdfcrack_path = 'pdfcrack'
     with open("crack.info", "w", encoding="utf8") as outf:
-        subprocess.run(['pdfcrack', filename], stderr=subprocess.DEVNULL, stdout=outf)
-        logger.debug("pdfcrack {}".format(filename))
+        subprocess.run([pdfcrack_path, filename], stderr=subprocess.DEVNULL, stdout=outf)
+        logger.debug("{} {}".format(pdfcrack_path, filename))
     password = None
     with open("crack.info", "r") as log:
         prefix = "found user-password: "
         for l in log:
             if l.startswith(prefix):
                 password = prefix[len(prefix):].strip("'")
+    taskkill_windows('pdfcrack.exe')
     os.unlink("crack.info")
     qpdf = ['qpdf', '--decrypt']
     if password is not None:
@@ -87,10 +92,6 @@ def strip_drm(logger, filename, stripped_file):
         logger.error("qpdf failed on {}, error {} ".format(filename, status.stderr.decode('utf8')))
         logger.error("try to use the original file")
         shutil.copyfile(filename, stripped_file)
-
-
-def taskkill_windows(process_name):
-    subprocess.run(['taskkill', '/F', '/IM', process_name],  stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
 
 
 class TInputTask:
@@ -236,7 +237,11 @@ class TConvertProcessor(http.server.HTTPServer):
             self.server_close()
             if run_shutdown:
                 self.shutdown()
-                self.server_actions_thread.join(1)
+                stop_timeout = 60
+                self.logger.debug("try to join server_actions_thread in {} seconds".format(stop_timeout))
+                self.server_actions_thread.join(stop_timeout)
+                if self.server_actions_thread.is_alive():
+                    raise Exception("cannot stop server_actions_thread in {} seconds".format(stop_timeout))
             try:
                 if os.path.exists(self.args.input_folder_cracked):
                     shutil.rmtree(self.args.input_folder_cracked, ignore_errors=False)
@@ -314,6 +319,9 @@ class TConvertProcessor(http.server.HTTPServer):
         stripped_file = os.path.join(self.args.input_folder_cracked, basename)
         self.logger.debug("process input file {}, pwd={}".format(input_file, os.getcwd()))
         strip_drm(self.logger, input_file, stripped_file)
+
+        if not self.http_server_is_working:
+            return
 
         docxfile = None if input_task.only_ocr else self.convert_with_microsoft_word(stripped_file)
         if docxfile is not None:
@@ -414,6 +422,9 @@ class TConvertProcessor(http.server.HTTPServer):
         files_count = 0
         while not self.input_task_queue.empty():
             task = self.input_task_queue.get()
+            if not self.http_server_is_working:
+                return
+
             try:
                 self.process_one_input_file(task)
                 files_count += 1
@@ -510,7 +521,7 @@ class TConvertProcessor(http.server.HTTPServer):
         creationflags = subprocess.DETACHED_PROCESS | subprocess.CREATE_NEW_PROCESS_GROUP | \
                                 subprocess.CREATE_BREAKAWAY_FROM_JOB | subprocess.SW_HIDE
         subprocess.Popen([self.hot_folder_path], creationflags=creationflags, stdin=subprocess.DEVNULL,
-                         stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
+                         stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL, cwd="c:/")
 
     def process_all_tasks(self):
         if len(self.ocr_tasks) == 0:
@@ -523,13 +534,19 @@ class TConvertProcessor(http.server.HTTPServer):
         current_time = time.time()
         if current_time - self.file_garbage_collection_timestamp >= 60:  # just not too often
             self.file_garbage_collection_timestamp = current_time
+            if not self.http_server_is_working:
+                return
             self.process_ocr_logs()
+            if not self.http_server_is_working:
+                return
             self.process_stalled_files()
 
         current_time = time.time()
         if  current_time - self.got_ocred_file_last_time_stamp > self.args.ocr_restart_time and \
                 current_time - self.ocr_queue_is_empty_last_time_stamp > self.args.ocr_restart_time :
             self.logger.debug("last ocr file was received long ago and all this time the ocr queue was not empty")
+            if not self.http_server_is_working:
+                return
             self.restart_ocr()
             self.got_ocred_file_last_time_stamp = time.time()  #otherwize restart will be too often
 
