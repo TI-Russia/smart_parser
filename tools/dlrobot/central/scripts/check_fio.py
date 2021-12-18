@@ -1,6 +1,9 @@
 from common.russian_fio import TRussianFioRecognizer, TRussianFio
 import argparse
 import json
+from pylem import MorphanHolder, MorphLanguage, LemmaInfo
+
+RUSSIAN_MORPH_DICT = MorphanHolder(MorphLanguage.Russian)
 
 
 def parse_args():
@@ -26,7 +29,7 @@ def main1():
                 verdict = "contain_fio"
             print("{}\t{}".format(line.strip(), verdict))
 
-def main():
+def main2():
     args = parse_args()
     with open(args.input) as inp:
         for line in inp:
@@ -37,7 +40,19 @@ def main():
                     r = {'s': fio.family_name, 'n': fio.first_name, 'p': fio.patronymic, 'g':g}
                     print (json.dumps(r, ensure_ascii=False))
             except ValueError as exp:
+
                 pass
+
+
+def main():
+    r = TRussianFio.is_morph_surname_or_predicted('Кириллова')
+    args = parse_args()
+    with open(args.input) as inp:
+        for line in inp:
+            line = line.strip()
+            if len(line) == 0 or TRussianFio.is_morph_surname_or_predicted(line.strip()):
+                continue
+            print(line)
 
 if __name__ == "__main__":
     main()

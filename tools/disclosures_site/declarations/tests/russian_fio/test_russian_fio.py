@@ -52,6 +52,8 @@ class ResolveFullNameTestCase(TestCase):
         self.assertEqual(_P('Долевая 2/3 Доля').is_resolved, False)
         self.assertEqual(_P('Цинцадзе Гис Ионович (Супруг)').is_resolved, False)
         self.assertEqual(_P('Сотрудник Кондратьев Вадим Сергеевич').is_resolved, False)
+        self.assertEqual(_P('Сделка Совершалась').is_resolved, False)
+        self.assertEqual(_P('Сделка Не Совершалась').is_resolved, False)
 
         self.assertTrue(_P("Иванов Иван Иванович").is_compatible_to(_P("Иванов И. И.")))
         self.assertTrue(_P("Иванов Иван Иванович").is_compatible_to(_P(" Иванов Иван Иванович ")))

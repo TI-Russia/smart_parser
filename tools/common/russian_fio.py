@@ -11,6 +11,7 @@ def is_morph_surname(w):
             return True
     return False
 
+
 POPULAR_RUSSIAN_NAMES = [
     "елена", "татьяна", "наталья", "ольга", "ирина", "светлана", "александр", "сергей", "марина",    "владимир", "людмила",
     "юлия", "галина", "алексей", "андрей", "анна", "екатерина", "надежда", "дмитрий", "оксана",    "николай", "валентина",
@@ -85,6 +86,14 @@ class TRussianFio:
         return  (len(s) == 1 and s[0].isalpha() and s[0].upper() == s[0]) or \
                 (len(s) == 2 and s[0].isalpha() and s[1] == '.') or \
                 (len(s) == 3 and s[0] == '.' and s[1].isalpha() and s[2] == '.')
+
+    @staticmethod
+    def is_morph_surname_or_predicted(w):
+        lemm_info: LemmaInfo
+        for lemm_info in RUSSIAN_MORPH_DICT.lemmatize(w):
+            if lemm_info.predicted or 'surname' in lemm_info.morph_features:
+                return True
+        return False
 
     def _check_name_initial_complex(self, s):
         if count_alpha(s) < 2:
@@ -201,12 +210,12 @@ class TRussianFio:
             self.first_name = parts[0]
             self.patronymic = parts[1]
             self.case = "full_name_2"
-        elif count_Russian_words == 3:
+        elif count_Russian_words == 3 and self.is_morph_surname_or_predicted(parts[0]):
             # not Russian name like "Заман Шамима Хасмат-Уз"
             self.family_name = parts[0]
             self.first_name = parts[1]
             self.patronymic = parts[2]
-            self.case = "full_name_and_garbage"
+            self.case = "not_russian_names"
         elif len(parts) == 3 and self.is_name_initial(parts[1]) and (self.is_name_initial(parts[2]) or self._check_name_initial_complex(parts[2])):
             # Иванов И. И.
             # Ахмедова З. М.-Т.
