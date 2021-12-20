@@ -89,6 +89,8 @@ class TRussianFio:
 
     @staticmethod
     def is_morph_surname_or_predicted(w):
+        if w.lower() == "машина":
+            return False
         lemm_info: LemmaInfo
         for lemm_info in RUSSIAN_MORPH_DICT.lemmatize(w):
             if lemm_info.predicted or 'surname' in lemm_info.morph_features:
@@ -187,18 +189,22 @@ class TRussianFio:
                 parts[0] = [parts[0] + parts[1].lower(), parts[2]]
 
 
+        if count_Russian_words >= 3:
+            word1_has_surname_suffix = TRussianFioRecognizer.has_surname_suffix(parts[0])
+            word2_is_popular_name = parts[1].lower() in POPULAR_RUSSIAN_NAMES_SET
+            word3_is_patronymic = TRussianFioRecognizer.has_patronymic_suffix(parts[2])
+            weight = sum(1 for i in [word1_has_surname_suffix, word2_is_popular_name, word3_is_patronymic]  if i)
+        else:
+            weight = 0
         self.case = None
-        if count_Russian_words == 3 and \
-                (TRussianFioRecognizer.has_patronymic_suffix(parts[2]) or \
-                 TRussianFioRecognizer.has_surname_suffix(parts[0])):
+        if count_Russian_words == 3 and weight > 1:
             # Иванов Иван Иванович
             # Гулиев Гурбангули Арастун Оглы"
             self.family_name = parts[0]
             self.first_name = parts[1]
             self.patronymic = parts[2]
             self.case = "full_name_0"
-        elif  count_Russian_words > 3 and TRussianFioRecognizer.has_patronymic_suffix(parts[2]) and \
-            is_morph_surname(parts[0]):
+        elif  count_Russian_words > 3 and is_morph_surname(parts[0]) and word3_is_patronymic:
             # or Russian name with garbage "Иванов Иван Иванович (председатель)"
             self.family_name = parts[0]
             self.first_name = parts[1]
