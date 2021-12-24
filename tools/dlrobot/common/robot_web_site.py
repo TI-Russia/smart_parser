@@ -26,6 +26,7 @@ class TWebSiteCrawlSnapshot:
         self.logger = project.logger
         self.export_env = TExportEnvironment(self)
         self.stopped_by_timeout = False
+        self.main_page_source = None
 
         #serialized members
         self.url_nodes = dict()
@@ -58,7 +59,7 @@ class TWebSiteCrawlSnapshot:
             return True
         return self.other_projects_regexp.search(url) is None
 
-    def init_main_page_url_from_redirected_url(self, url, title):
+    def init_main_page_url_from_redirected_url(self, url, title, page_source):
         o = urllib_parse_pro.urlsplit_pro(url)
         netloc = o.netloc
         scheme = o.scheme
@@ -74,6 +75,7 @@ class TWebSiteCrawlSnapshot:
              ''])
         self.logger.debug("main_url_page={}".format(self.main_page_url))
         self.reach_status = TWebSiteReachStatus.normal
+        self.main_page_source = page_source
         self.url_nodes[self.main_page_url] = TUrlInfo(title=title)
 
     def get_url_modifications(url: str):
@@ -100,9 +102,10 @@ class TWebSiteCrawlSnapshot:
                 self.parent_project.selenium_driver.navigate(url)
                 time.sleep(3)
                 title = self.parent_project.selenium_driver.the_driver.title
+                html = self.parent_project.selenium_driver.the_driver.page_source
                 self.init_main_page_url_from_redirected_url(
                     self.parent_project.selenium_driver.the_driver.current_url,
-                    title)
+                    title, html)
                 return
             except WebDriverException as exp:
                 self.logger.error("cannot fetch {}  with selenium, sleep 3 sec".format(url))
