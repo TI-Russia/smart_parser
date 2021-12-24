@@ -40,7 +40,7 @@ docker build  ~/smart_parser/tools/deploy/docker/step2 --tag disclosures_test
 ========================= 3. INSTALL DLROBOT_CENTRAL SERVICE=========================
 =====================================================================================
 
-3.0 sudo apt install parallel, mysql
+3.0 sudo apt install parallel mysql cmake ninja-build python-pytest
 
 3.1 install yandex cloud console
    curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash

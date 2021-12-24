@@ -5,6 +5,7 @@ from office_db.rubrics import TOfficeRubrics
 from declarations.documents import OFFICES
 from declarations.section_passport import TSectionPassportItems1,TSectionPassportItems2
 from office_db.offices_in_memory import TOfficeTableInMemory
+from common.russian_fio import TRussianFio
 import re
 
 
@@ -120,8 +121,11 @@ class TSmartParserSectionJson:
         else:
             fio = person_info.get('name', person_info.get('name_raw'))
             if fio is None:
-                raise TSmartParserSectionJson.SerializerException("cannot find 'name' or 'name_raw'in json")
-        self.section.person_name = normalize_fio_before_db_insert(fio)
+                raise TSmartParserSectionJson.SerializerException("cannot find 'name' or 'name_raw'     in json")
+        fio = normalize_fio_before_db_insert(fio)
+        if not TRussianFio(fio).is_resolved:
+            raise TSmartParserSectionJson.SerializerException("cannot resolve person name {}".format(fio))
+        self.section.person_name = fio
         self.section.position = person_info.get("role")
         self.section.department = person_info.get("department")
 

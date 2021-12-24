@@ -7,7 +7,7 @@ from common.urllib_parse_pro import strip_scheme_and_query, TUrlUtf8Encode
 from common.logging_wrapper import setup_logging
 from common.http_request import THttpRequester
 from common.download import TDownloadEnv
-from office_db.offices_in_memory import TOfficeInMemory
+from office_db.offices_in_memory import TOfficeInMemory, TOfficeTableInMemory
 from common.serp_parser import SearchEngine, SearchEngineEnum
 
 
@@ -22,6 +22,8 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--action", dest='action', help="can be ban, to_utf8, move, mark_large_sites, check_alive, "
                                                         "print_urls, check, redirect_subdomain, regional_to_main")
+    parser.add_argument("--input-offices", dest='input_offices', required=False, default=None,
+                        help="default is ~/smart_parser/tools/offices_db/data/offices.txt")
     parser.add_argument("--output-file", dest='output_file', required=True)
     parser.add_argument("--url-list", dest='url_list', required=False)
     parser.add_argument("--take-all-web-sites", dest='take_all_web_sites', required=False, action="store_true", default=False,
@@ -38,7 +40,13 @@ class TWebSitesManager:
     def __init__(self):
         self.args = parse_args()
         self.logger = setup_logging("web_sites")
-        self.web_sites = TDeclarationWebSiteList(self.logger)
+        if self.args.input_offices is not None:
+            offices = TOfficeTableInMemory()
+            offices.read_from_local_file(self.args.input_offices)
+            self.web_sites = TDeclarationWebSiteList(self.logger, offices=offices)
+        else:
+            self.web_sites = TDeclarationWebSiteList(self.logger)
+
         self.temp_dlrobot_project: TRobotProject
         self.temp_dlrobot_project = None
         THttpRequester.initialize(self.logger)
@@ -82,11 +90,11 @@ class TWebSitesManager:
             self.logger.info("rm {}".format(TDownloadEnv.FILE_CACHE_FOLDER))
             TDownloadEnv.clear_cache_folder()
             project_path = "project.txt"
-            TRobotProject.create_project("dummy.ru", project_path, web_sites_db=self.web_sites)
+            TRobotProject.create_project("dummy.ru", project_path)
             with TRobotProject(self.logger, project_path, [], "result") as self.temp_dlrobot_project:
                 for w in domains_filtered:
                     yield w
-            os.unlink(project_path)
+                os.unlink(project_path)
         else:
             for w in domains_filtered:
                 yield w
@@ -114,7 +122,7 @@ class TWebSitesManager:
                 cnt += 1
         self.logger.info("{} conversions made".format(cnt))
 
-    def check_alive_one_site(self,  url):
+    def browse_one_url(self,  url):
         self.logger.info("check {}".format(url))
         web_site = TWebSiteCrawlSnapshot(self.temp_dlrobot_project, morda_url=url)
         web_site.fetch_the_main_page(enable_search_engine=False)
@@ -133,7 +141,7 @@ class TWebSitesManager:
     def check_alive_one_url(self, site_url, complete_bans):
         site_info: TDeclarationWebSite
         site_info = self.web_sites.get_web_site(site_url)
-        web_site = self.check_alive_one_site(site_url)
+        web_site = self.browse_one_url(site_url)
         office = self.web_sites.get_office(site_url)
         if web_site is None:
             self.logger.info("     {} is dead".format(site_url))
@@ -142,7 +150,7 @@ class TWebSitesManager:
         else:
             new_site_url = web_site.get_main_url_protocol() + "://" + strip_scheme_and_query(web_site.main_page_url)
             title = web_site.get_title(web_site.main_page_url)
-            if new_site_url != site_url:
+            if strip_scheme_and_query(web_site.main_page_url).strip('/') != site_url.strip('/'):
                 self.logger.info('   {} is alive, but is redirected to {}'.format(site_url, new_site_url))
                 new_site_info = None
                 for u in office.office_web_sites:
@@ -158,13 +166,23 @@ class TWebSitesManager:
                 self.logger.info("     {} is alive, main_page_url = {}".format(
                     site_url, web_site.main_page_url))
                 site_info.set_title(title)
+            try:
+                if web_site.main_page_source.lower().find('коррупц') != -1:
+                    self.logger.info("site contains corruption keyword {}".format(site_url))
+                    site_info.corruption_keyword_in_html = True
+                with open(site_url.strip('/').replace('/', '_') + ".page_source.html", "w") as outp:
+                    outp.write(web_site.main_page_source)
+            except Exception as exp:
+                self.logger.error("cannot save page html to file: {} ".format(site_url))
 
     def check_alive(self):
         complete_bans = list()
+        checked_count = 0
         for site_url in self.get_url_list(start_selenium=True):
             self.check_alive_one_url(site_url, complete_bans)
+            checked_count += 1
 
-        self.logger.info("ban {} web sites".format(len(complete_bans)))
+        self.logger.info("ban {} web sites out of {} sites".format(len(complete_bans), checked_count))
 
     def print_keys(self):
         for web_domain in self.get_url_list():
@@ -178,7 +196,7 @@ class TWebSitesManager:
             site_info = self.web_sites.get_web_site(web_domain)
             if site_info.redirect_to is None or not web_domain.endswith(site_info.redirect_to):
                 continue
-            self.check_alive_one_site(web_domain)
+            self.browse_one_url(web_domain)
 
     def create_departments(self):
         o: TOfficeInMemory
