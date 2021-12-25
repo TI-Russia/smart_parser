@@ -155,6 +155,9 @@ class TOfficeTableInMemory:
             offices = list(x.to_json() for x in self.offices.values())
             json.dump(offices, outp, indent=4, ensure_ascii=False)
 
+    def add_office(self, office: TOfficeInMemory):
+        self.offices[str(office.office_id)] = office
+
     def read_from_table(self, table):
         for o in table:
             self.offices[o.id] = TOfficeInMemory(
