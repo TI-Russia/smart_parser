@@ -18,7 +18,7 @@ class TestMid(TestDeclarationLinkSelenium):
         found_links = self.collect_links_selenium(url, is_last_step=True)
         self.assertGreater(len(found_links), 0)
         downloaded_files = list(k for k in found_links.keys() if k.find('document') != -1)
-        self.assertEqual(2, len(downloaded_files))
+        self.assertGreater(len(downloaded_files), 0)
 
     def test_mid_video(self):
         THttpRequester.ENABLE_HEAD_REQUESTS = True
