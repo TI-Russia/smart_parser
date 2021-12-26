@@ -34,13 +34,15 @@ def parse_args():
                         help="for example, --action move --filter-regex '.mvd.ru$'  --replace-substring .мвд.рф")
     parser.add_argument("--parent-office-id", dest='parent_office_id', type=int, required=False)
     parser.add_argument("--query-template", dest='query_template', required=False)
+    parser.add_argument("--logfile", dest='logfile', default="web_sites.log")
+
     return parser.parse_args()
 
 
 class TWebSitesManager:
     def __init__(self):
         self.args = parse_args()
-        self.logger = setup_logging("web_sites")
+        self.logger = setup_logging(log_file_name=self.args.logfile)
         if self.args.input_offices is not None:
             offices = TOfficeTableInMemory()
             offices.read_from_local_file(self.args.input_offices)
