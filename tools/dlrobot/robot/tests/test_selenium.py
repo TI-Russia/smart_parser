@@ -66,7 +66,7 @@ class TestSelenium(TestCase):
         self.assertGreater(len(urls_and_elements), 0,  msg="no links with the given anchor found")
 
         if child_url is not None:
-            found_urls = (url for (url, elem) in urls_and_elements)
+            found_urls = list(url for (url, elem) in urls_and_elements)
             self.assertIn(child_url, found_urls, msg="cannot find {} in sublinks".format(child_url))
         return urls_and_elements
 
@@ -79,7 +79,7 @@ class TestSelenium(TestCase):
 
     def test_selenium_mid(self):
         elements = self.get_all_link_elements('http://www.mid.ru')
-        self.check_anchor(elements, "противодействие", "https://www.mid.ru/activity/corruption/general")
+        self.check_anchor(elements, "противодействие")
 
     def test_download_pdf(self):
         shutil.rmtree(TDownloadEnv.get_download_folder(), ignore_errors=True)

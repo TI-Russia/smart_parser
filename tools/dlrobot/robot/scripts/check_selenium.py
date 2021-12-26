@@ -22,6 +22,7 @@ def parse_args():
     parser.add_argument("--element-id", dest='element_id', required=False)
     parser.add_argument("--download-folder", dest='download_folder', required=False, default=None)
     parser.add_argument("--repeat-count", dest='repeat_count', type=int, default=1)
+    parser.add_argument("--do-not-stop-selenium-on-exit", dest='stop_selenium', action="store_false", default=True)
     parser.add_argument("urls", nargs="*")
     args = parser.parse_args()
     return args
@@ -107,5 +108,5 @@ if __name__ == '__main__':
         pagespeed(driver, url, args.element_id, args.repeat_count)
     else:
         print("unknown action {}".format(args.action))
-
-    driver.stop_executable()
+    if args.stop_selenium:
+        driver.stop_executable()

@@ -25,6 +25,8 @@ class ResolveFullNameTestCase(TestCase):
         self.assertEqual(_P("Мамедов Ч..Г."), _F("Мамедов", "Ч", "Г"))
         self.assertEqual(_P("Пашин А.Е"), _F("Пашин", "А", "Е"))
         self.assertEqual(_P("Гулиев Гурбангули Арастун Оглы"), _F("Гулиев", "Гурбангули", "Арастун Оглы"))
+        self.assertEqual(_P("Гасанова Рена Амрали Кызы"), _F("Гасанова", "Рена", "Амрали Кызы"))
+
         self.assertEqual(_P("Заман Шамима Хасмат-Уз"), _F("Заман", "Шамима", "Хасмат-Уз"))
         self.assertEqual(_P("А.В.Бойко"), _F("Бойко", "А", "В"))
         self.assertEqual(_P('Дорошенкова М В.'), _F("Дорошенкова", "М", "В"))
@@ -33,12 +35,17 @@ class ResolveFullNameTestCase(TestCase):
         self.assertEqual(_P('Изъюрова Вик- Тория Александровна'), _F("Изъюрова", "Виктория", "Александровна"))
         self.assertEqual(_P('Романова Людмила Афанасьевна.'), _F("Романова", "Людмила", "Афанасьевна"))
         self.assertEqual(_P('Строганова Наталья Александров На'), _F("Строганова", "Наталья", "Александровна"))
+        self.assertEqual(_P('А.А. Кайгородова'), _F("Кайгородова", "А", "А"))
 
-        # to do after add morphology
+        # use Russian morphology dictionary
         self.assertEqual(_P('Великоречан Ина Е.Е'), _F("Великоречанина", "Е", "Е"))
         self.assertEqual(_P('Махиборо Да Н.М.'), _F("Махиборода", "Н", "М"))
         self.assertEqual(_P('Халыев А.С .'), _F("Халыев", "А", "С"))
         self.assertEqual(_P('Погуляйченко Оле Г Васильевич'), _F("Погуляйченко", "Олег", "Васильевич"))
+        self.assertEqual(_P('Воецкая Ирина'), _F("Воецкая", "Ирина", ""))
+        self.assertEqual(_P('Друзина Инна'), _F("Друзина", "Инна", ""))
+        self.assertEqual(_P('Гладилина Светлана В.'), _F("Гладилина", "Светлана", "В"))
+        self.assertEqual(_P('Разогрееванина Николаевна'), _F("Разогреева", "Нина", "Николаевна"))
 
         self.assertEqual(TRussianFio("Иванов", from_search_request=True), _F("Иванов", "", ""))
 
@@ -54,6 +61,20 @@ class ResolveFullNameTestCase(TestCase):
         self.assertEqual(_P('Сотрудник Кондратьев Вадим Сергеевич').is_resolved, False)
         self.assertEqual(_P('Сделка Совершалась').is_resolved, False)
         self.assertEqual(_P('Сделка Не Совершалась').is_resolved, False)
+        self.assertEqual(_P('Руденко Р.Р. Учитель С Доплатой За Руководство Оу').is_resolved, False)
+        self.assertEqual(_P('Дети Тиханова Надежда Евгеньевна').is_resolved, False)
+        self.assertEqual(_P('Земельный Участок Дачный').is_resolved, False)
+        self.assertEqual(_P('Дачный Земельный Участок').is_resolved, False)
+        self.assertEqual(_P('Садовый Земельный Участок').is_resolved, False)
+        self.assertEqual(_P('Летний Домик Индивидуальная').is_resolved, False)
+        self.assertEqual(_P('Земли Населенных Пунктов').is_resolved, False)
+        self.assertEqual(_P('Машина Рено Логан').is_resolved, False)
+        self.assertEqual(_P('Жилой дом пай').is_resolved, False)
+        self.assertEqual(_P('Овощная Ячейка Дом').is_resolved, False)
+        self.assertEqual(_P('Изолированная Часть Жилого').is_resolved, False)
+        self.assertEqual(_P('Военная Пенсия').is_resolved, False)
+        self.assertEqual(_P('Дмитрий Анатольевич').is_resolved, False)
+        self.assertEqual(_P('Горячева Михайловна').is_resolved, False)
 
         self.assertTrue(_P("Иванов Иван Иванович").is_compatible_to(_P("Иванов И. И.")))
         self.assertTrue(_P("Иванов Иван Иванович").is_compatible_to(_P(" Иванов Иван Иванович ")))
