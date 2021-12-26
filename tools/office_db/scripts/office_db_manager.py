@@ -90,6 +90,7 @@ class TWebSitesManager:
 
         domains_filtered = (w for w in web_domains if self.check_web_site_filters(w))
         if start_selenium:
+            TDownloadEnv.FILE_CACHE_FOLDER = TDownloadEnv.FILE_CACHE_FOLDER + "_{}_[}".format(time.time(), os.getpid())
             self.logger.info("rm {}".format(TDownloadEnv.FILE_CACHE_FOLDER))
             TDownloadEnv.clear_cache_folder()
             project_path = "project.txt"
