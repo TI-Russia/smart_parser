@@ -45,12 +45,11 @@ def main2():
 
 
 def main():
-    r = TRussianFio.is_morph_surname_or_predicted('Кириллова')
     args = parse_args()
     with open(args.input) as inp:
         for line in inp:
             line = line.strip()
-            if len(line) == 0 or TRussianFio.is_morph_surname_or_predicted(line.strip()):
+            if len(line) == 0 or TRussianFioRecognizer.is_morph_surname_or_predicted(line.strip()):
                 continue
             print(line)
 
