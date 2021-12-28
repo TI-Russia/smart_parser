@@ -7,6 +7,7 @@ from dlrobot.common.remote_call import TRemoteDlrobotCall, TRemoteDlrobotCallLis
 from common.web_site_status import TWebSiteReachStatus
 from office_db.web_site_list import TDeclarationWebSiteList
 from office_db.offices_in_memory import TOfficeTableInMemory
+from office_db.declaration_office_website import TDeclarationWebSite
 from dlrobot.common.dl_robot_round import TDeclarationRounds
 from dlrobot.common.robot_project import TRobotProject
 from common.logging_wrapper import setup_logging
@@ -46,7 +47,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         parser.add_argument("--check-yandex-cloud", dest='check_yandex_cloud', default=False, action='store_true',
                             required=False, help="check yandex cloud health and restart workstations")
         parser.add_argument("--skip-worker-check", dest='skip_worker_check', default=False, action='store_true',
-                            required=False, help="skip checking that this tast was given to this worker")
+                            required=False, help="skip checking that this task was given to this worker")
         parser.add_argument("--enable-ip-checking", dest='enable_ip_checking', default=False, action='store_true',
                             required=False)
         parser.add_argument("--disable-smart-parser-server", dest="enable_smart_parser",
@@ -60,6 +61,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         parser.add_argument("--disable-pdf-conversion-server-checking", dest="pdf_conversion_server_checking",
                             default=True,  required=False, action="store_false")
         parser.add_argument("--web-site-regexp", dest="web_site_regexp", required=False)
+        parser.add_argument("--office-source-id", dest="office_source_id", required=False)
         parser.add_argument("--round-file", dest="round_file", default=TDeclarationRounds.default_dlrobot_round_path)
 
         args = parser.parse_args(arg_list)
@@ -156,9 +158,13 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
     def find_projects_to_process(self):
         web_sites_to_process = list()
         self.logger.info("filter web sites")
+        web_site_info: TDeclarationWebSite
         for web_site, web_site_info in self.web_sites_db.web_sites.items():
             if self.args.web_site_regexp is not None:
                 if re.match(self.args.web_site_regexp, web_site) is None:
+                    continue
+            if self.args.office_source_id is not None:
+                if web_site_info.get_parent_source_id() != self.args.office_source_id:
                     continue
             if TWebSiteReachStatus.can_communicate(web_site_info.reach_status):
                 project_file = TRemoteDlrobotCall.web_site_to_project_file(web_site)

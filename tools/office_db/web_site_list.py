@@ -22,6 +22,7 @@ class TDeclarationWebSiteList:
             self.offices = offices
         o: TOfficeInMemory
         for o in self.offices.offices.values():
+            u:  TDeclarationWebSite
             for u in o.office_web_sites:
                 site_url = get_site_url(u.url)
                 if site_url in self.web_sites:

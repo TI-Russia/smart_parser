@@ -2,7 +2,7 @@ from common.web_site_status import TWebSiteReachStatus
 
 
 class TDeclarationWebSite:
-    def __init__(self, url=None):
+    def __init__(self, url=None, parent_office=None):
         self.url = url
         self.reach_status = TWebSiteReachStatus.normal
         self.dlrobot_max_time_coeff = 1.0
@@ -10,6 +10,9 @@ class TDeclarationWebSite:
         self.redirect_to = None
         self.title = None
         self.corruption_keyword_in_html = None
+
+        # not serialized items
+        self.parent_office = parent_office
 
     def read_from_json(self, js):
         self.url = js.get('url')
@@ -53,3 +56,9 @@ class TDeclarationWebSite:
 
     def can_communicate(self):
         return TWebSiteReachStatus.can_communicate(self.reach_status)
+
+    def set_parent(self, office):
+        self.parent_office = office
+
+    def get_parent_source_id(self):
+        return self.parent_office.source_id

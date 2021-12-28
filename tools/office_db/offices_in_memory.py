@@ -11,9 +11,10 @@ import re
 class TOfficeInMemory:
 
     def __init__(self, office_id=None, name=None, parent_id=None, type_id=None, rubric_id=None, region_id=None,
-                 address=None, wikidata_id=None, office_web_sites=None):
+                 address=None, wikidata_id=None, office_web_sites=None, source_id=None):
         self.office_id = office_id
         self.name = name
+        self.source_id = source_id
         self.parent_id = parent_id
         self.type_id = type_id
         self.rubric_id = rubric_id
@@ -33,7 +34,8 @@ class TOfficeInMemory:
         self.region_id = js['region_id']
         self.address = js.get('address')
         self.wikidata_id = js.get('wikidata_id')
-        self.office_web_sites = list( TDeclarationWebSite().read_from_json(x) for x in js.get('urls', list()))
+        self.source_id = js.get('source_id')
+        self.office_web_sites = list( TDeclarationWebSite(parent_office=self).read_from_json(x) for x in js.get('urls', list()))
         return self
 
     def to_json(self):
@@ -43,7 +45,8 @@ class TOfficeInMemory:
             'parent_id': self.parent_id,
             'type_id': self.type_id,
             'rubric_id': self.rubric_id,
-            'region_id': self.region_id
+            'region_id': self.region_id,
+            'source_id': self.source_id
         }
         if self.address is not None:
             rec['address'] = self.address
@@ -59,7 +62,7 @@ class TOfficeInMemory:
         assert site_url.startswith("http")
         for x in self.office_web_sites:
             assert x.url != site_url
-        s = TDeclarationWebSite()
+        s = TDeclarationWebSite(parent_office=self)
         s.url = site_url
         self.office_web_sites.append(s)
 

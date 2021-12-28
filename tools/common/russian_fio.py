@@ -118,7 +118,7 @@ class TRussianFioRecognizer:
         return is_title_case(w1) and is_title_case(w2) and TRussianFioRecognizer.has_patronymic_suffix(w3)
 
     @staticmethod
-    def is_name_initial(self, s):
+    def is_name_initial(s):
         return  (len(s) == 1 and s[0].isalpha() and s[0].upper() == s[0]) or \
                 (len(s) == 2 and s[0].isalpha() and s[1] == '.') or \
                 (len(s) == 3 and s[0] == '.' and s[1].isalpha() and s[2] == '.')
