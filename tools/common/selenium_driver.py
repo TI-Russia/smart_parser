@@ -91,6 +91,7 @@ class TSeleniumDriver:
         options.add_argument("--no-sandbox")
         options.add_experimental_option("excludeSwitches", ["enable-automation"])
         options.add_experimental_option('useAutomationExtension', False)
+        options.add_argument('--disable-blink-features=AutomationControlled')
         prefs = {
             'download.default_directory': self.download_folder,
              'plugins.always_open_pdf_externally': True

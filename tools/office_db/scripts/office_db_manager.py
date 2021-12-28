@@ -21,10 +21,11 @@ import time
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--action", dest='action', help="can be ban, to_utf8, move, mark_large_sites, check_alive, "
-                                                        "print_urls, check, redirect_subdomain, regional_to_main")
+                                                        "print_urls, check, redirect_subdomain, regional_to_main, split")
     parser.add_argument("--input-offices", dest='input_offices', required=False, default=None,
                         help="default is ~/smart_parser/tools/offices_db/data/offices.txt")
-    parser.add_argument("--output-file", dest='output_file', required=True)
+    parser.add_argument("--output-file", dest='output_file', required=False)
+    parser.add_argument("--split-parts", dest='split_parts', type=int, default=100)
     parser.add_argument("--url-list", dest='url_list', required=False)
     parser.add_argument("--take-all-web-sites", dest='take_all_web_sites', required=False, action="store_true", default=False,
                         help="by default we skip all abandoned web sites")
@@ -33,13 +34,15 @@ def parse_args():
                         help="for example, --action move --filter-regex '.mvd.ru$'  --replace-substring .мвд.рф")
     parser.add_argument("--parent-office-id", dest='parent_office_id', type=int, required=False)
     parser.add_argument("--query-template", dest='query_template', required=False)
+    parser.add_argument("--logfile", dest='logfile', default="web_sites.log")
+
     return parser.parse_args()
 
 
 class TWebSitesManager:
     def __init__(self):
         self.args = parse_args()
-        self.logger = setup_logging("web_sites")
+        self.logger = setup_logging(log_file_name=self.args.logfile)
         if self.args.input_offices is not None:
             offices = TOfficeTableInMemory()
             offices.read_from_local_file(self.args.input_offices)
@@ -87,6 +90,7 @@ class TWebSitesManager:
 
         domains_filtered = (w for w in web_domains if self.check_web_site_filters(w))
         if start_selenium:
+            TDownloadEnv.FILE_CACHE_FOLDER = TDownloadEnv.FILE_CACHE_FOLDER + "_{}_{}".format(time.time(), os.getpid())
             self.logger.info("rm {}".format(TDownloadEnv.FILE_CACHE_FOLDER))
             TDownloadEnv.clear_cache_folder()
             project_path = "project.txt"
@@ -188,6 +192,22 @@ class TWebSitesManager:
         for web_domain in self.get_url_list():
             print(web_domain)
 
+    def split(self):
+        parts_count = self.args.split_parts
+        chunk_size = int(len(self.web_sites.offices.offices) / parts_count)
+        offices = list(self.web_sites.offices.offices.values())
+        chunk_id = 0
+        cnt = 0
+        for l in range(0, len(offices), chunk_size):
+            chunk_id += 1
+            o = TOfficeTableInMemory()
+            for i in offices[l:l + chunk_size]:
+                o.add_office(i)
+            file_path = "chunk_offices_{}.txt".format(chunk_id)
+            o.write_to_local_file(file_path)
+            cnt += len (o.offices)
+        assert cnt == len(offices)
+
     def check(self):
         self.web_sites.check_valid(self.logger, fail_fast=False)
 
@@ -240,6 +260,9 @@ class TWebSitesManager:
             self.redirect_subdomain()
         elif self.args.action == "create_departments":
             self.create_departments()
+        elif self.args.action == "split":
+            self.split()
+            return
         else:
             raise Exception("unknown action")
 

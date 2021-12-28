@@ -32,8 +32,16 @@ cp p.txt ~/smart_parser/tools/disclosures_site/predict_office/pools/pool200a.txt
 
 #on dev machine
 cd $FOLDER
+
+# If you loose train.declarator.txt, then you can restore it by pools/train.declarator.source.txt (in git)
+# In principle, train.declarator.txt contains all declarator markup (document, office) pairs,
+# so train.declarator.txt cam be rebuilt by command
+# python /home/sokirko/smart_parser/tools/disclosures_site/scripts/dlrobot_human.py --action build_office_train_set
+# I remember that train.declarator.txt was somehow modified after creation (I forgot the details).
+TRAIN_DECLARATOR=~/tmp/predict_office/train.declarator.txt
+
 python3 ~/smart_parser/tools/disclosures_site/manage.py build_office_index --settings disclosures.settings.dev
-python3 ~/smart_parser/tools/disclosures_site/predict_office/management/commands/prepare_train_pool.py --pool ~/smart_parser/tools/disclosures_site/predict_office/pools/train.declarator.txt  ~/smart_parser/tools/disclosures_site/predict_office/pools/train.sud.txt  ~/smart_parser/tools/disclosures_site/predict_office/pools/train.toloka.txt,3  --output-train-pool train_pool.txt
+python3 ~/smart_parser/tools/disclosures_site/predict_office/management/commands/prepare_train_pool.py --pool $TRAIN_DECLARATOR  ~/smart_parser/tools/disclosures_site/predict_office/pools/train.sud.txt  ~/smart_parser/tools/disclosures_site/predict_office/pools/train.toloka.txt,3  --output-train-pool train_pool.txt
 python3 ~/smart_parser/tools/disclosures_site/manage.py tf_office_train --model-folder model  --train-pool train_pool.txt --epoch-count  19
 python3 ~/smart_parser/tools/disclosures_site/manage.py tf_office_test --test-pool ~/smart_parser/tools/disclosures_site/predict_office/pools/test_fixed.txt  --bigrams-path office_ngrams.txt  --model-folder model --threshold 0.99
 

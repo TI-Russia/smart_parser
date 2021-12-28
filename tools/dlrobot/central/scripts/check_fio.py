@@ -13,7 +13,7 @@ def parse_args():
     return args
 
 
-def main():
+def main1():
     args = parse_args()
     recognizer = TRussianFioRecognizer()
     with open(args.input) as inp:
@@ -44,13 +44,12 @@ def main2():
                 pass
 
 
-def main3():
-    r = TRussianFio.is_morph_surname_or_predicted('Кириллова')
+def main():
     args = parse_args()
     with open(args.input) as inp:
         for line in inp:
             line = line.strip()
-            if len(line) == 0 or TRussianFio.is_morph_surname_or_predicted(line.strip()):
+            if len(line) == 0 or TRussianFioRecognizer.is_morph_surname_or_predicted(line.strip()):
                 continue
             print(line)
 
