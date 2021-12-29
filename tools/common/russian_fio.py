@@ -11,6 +11,13 @@ def is_morph_surname(w):
             return True
     return False
 
+def is_morph_first_name(w):
+    lemm_info: LemmaInfo
+    for lemm_info in RUSSIAN_MORPH_DICT.lemmatize(w):
+        if not lemm_info.predicted and 'name' in lemm_info.morph_features and 'poss' not in lemm_info.morph_features:
+            return True
+    return False
+
 
 POPULAR_RUSSIAN_NAMES = [
     "елена", "татьяна", "наталья", "ольга", "ирина", "светлана", "александр", "сергей", "марина",    "владимир", "людмила",
@@ -34,114 +41,6 @@ POPULAR_RUSSIAN_NAMES = [
 ]
 
 POPULAR_RUSSIAN_NAMES_SET = set(POPULAR_RUSSIAN_NAMES)
-
-class TRussianFioRecognizer:
-    feminine_russian_patronymic_suffixes = {"вна", "чна"}
-    masculine_russian_patronymic_suffixes = {"вич", "мич", "ьич", "тич"}
-    russian_patronymic_suffixes = feminine_russian_patronymic_suffixes | masculine_russian_patronymic_suffixes
-    russian_family_name_suffixes = {'ва', 'ов', 'на', 'ин', 'ев', 'ко', 'ая', 'ий', 'ик'}
-
-    @staticmethod
-    def is_masculine_patronymic(s):
-        return len(s) >= 5 and s[-3:].lower() in TRussianFioRecognizer.masculine_russian_patronymic_suffixes
-
-    @staticmethod
-    def is_feminine_patronymic(s):
-        return len(s) >= 5 and s[-3:].lower() in TRussianFioRecognizer.feminine_russian_patronymic_suffixes
-
-    @staticmethod
-    def has_patronymic_suffix(s):
-        return len(s) >= 5 and s.strip(',-').lower()[-3:] in TRussianFioRecognizer.russian_patronymic_suffixes
-
-    @staticmethod
-    def has_surname_suffix(s):
-        return len(s) >= 5 and s.strip(',-').lower()[-2:] in TRussianFioRecognizer.russian_family_name_suffixes
-
-    @staticmethod
-    def is_morph_surname_or_predicted(w):
-        lemm_info: LemmaInfo
-        for lemm_info in RUSSIAN_MORPH_DICT.lemmatize(w):
-            if lemm_info.predicted or 'surname' in lemm_info.morph_features:
-                return True
-        return False
-
-    @staticmethod
-    def is_dictionary_surname(w):
-        lemm_info: LemmaInfo
-        for lemm_info in RUSSIAN_MORPH_DICT.lemmatize(w):
-            if not lemm_info.predicted and 'surname' in lemm_info.morph_features:
-                return True
-        return False
-
-    @staticmethod
-    def string_contains_Russian_name(rus_text):
-        rus_text = rus_text.strip()
-        if rus_text.find('(') != -1:
-            rus_text = rus_text[:rus_text.find('(')].strip()
-        words = rus_text.split(' ')
-
-        relatives = {"супруг", "супруга", "сын", "дочь"}
-        while len(words) > 0 and words[-1].lower() in relatives:
-            words = words[0:-1]
-
-        if len(words) > 0 and re.search('^[0-9]+[.]\s*$', words[0]) is not None:
-            words = words[1:]
-
-        if len(words) >= 3 and ( \
-                TRussianFioRecognizer.is_russian_full_name(words[0],  words[1],  words[2]) or \
-                TRussianFioRecognizer.is_russian_full_name(words[-3], words[-2], words[-1])):
-            return True
-
-        rus_text = " ".join(words)
-        if re.search('[А-ЯЁ]\s*[.]\s*[А-ЯЁ]\s*[.]\s*$', rus_text) is not None:
-            return True
-
-        # Иванов И.И.
-        if re.search('^[А-ЯЁ][а-яё]+\s+[А-ЯЁ]\s*[.]\s*[А-ЯЁ]\s*[.]', rus_text) is not None:
-            return True
-
-        # И.И. Иванов
-        if re.search('[А-ЯЁ]\s*[.]\s*[А-ЯЁ]\s*[.][А-ЯЁ][а-яё]+$', rus_text) is not None:
-            return True
-        return False
-
-    @staticmethod
-    def prepare_for_search_index(str):
-        if str is None:
-            return None
-        str = str.replace("Ё", "Е").replace("ё", "е")
-        return str
-
-    @staticmethod
-    def is_russian_full_name(w1, w2, w3):
-        #Иванов Иван Иванович
-        return is_title_case(w1) and is_title_case(w2) and TRussianFioRecognizer.has_patronymic_suffix(w3)
-
-    @staticmethod
-    def is_name_initial(self, s):
-        return  (len(s) == 1 and s[0].isalpha() and s[0].upper() == s[0]) or \
-                (len(s) == 2 and s[0].isalpha() and s[1] == '.') or \
-                (len(s) == 3 and s[0] == '.' and s[1].isalpha() and s[2] == '.')
-
-
-"""
-Good fullnames (full list in test_serializers.py):
-    resolve_fullname("Мамедов Чингиз Георгиевич")
-    resolve_fullname("Мамедов ЧН")
-    resolve_fullname("Мамедов ЧН.")
-    resolve_fullname("МамедовЧН.")
-    resolve_fullname("Мамедов Ч.Г.")
-    resolve_fullname("Ч.Г. Мамедов")`
-    resolve_fullname("Мамедов Ч.Г.-О.")
-    resolve_fullname("Мамедов Ч.Г.О")
-    resolve_fullname("Халиуллина Гульнур Ахметнагимовна Ахметнагимовна")
-Bad fullnames (None):
-    resolve_fullname("Мамедов Ч.")
-    resolve_fullname("Иванов")
-    resolve_fullname("квартира")
-    resolve_fullname("Иванов ..")
-    resolve_fullname("Мамедов ААА")
-"""
 
 def is_title_case(s):
     return s.title() == s
@@ -170,6 +69,21 @@ class TRussianFio:
         self.patronymic = patronymic.lower()
         self.is_resolved = True
         return self
+
+    def is_name_initial(self, s):
+        return  (len(s) == 1 and s[0].isalpha() and s[0].upper() == s[0]) or \
+                (len(s) == 2 and s[0].isalpha() and s[1] == '.') or \
+                (len(s) == 3 and s[0] == '.' and s[1].isalpha() and s[2] == '.')
+
+    @staticmethod
+    def is_morph_surname_or_predicted(w):
+        if w.lower() == "машина":
+            return False
+        lemm_info: LemmaInfo
+        for lemm_info in RUSSIAN_MORPH_DICT.lemmatize(w):
+            if lemm_info.predicted or 'surname' in lemm_info.morph_features:
+                return True
+        return False
 
     def _check_name_initial_complex(self, s):
         if count_alpha(s) < 2:
@@ -212,7 +126,7 @@ class TRussianFio:
         person_name = re.sub("([\s.][А-ЯЁ])\s+[.]", "\\1.", person_name)
         lower_person = person_name.lower()
         patronymic2 = ""
-        for patr2 in ['оглы']:
+        for patr2 in ['оглы', 'кызы', 'кзы', 'гызы']:
             if lower_person.endswith(patr2):
                 patronymic2 = " " + person_name[-len(patr2):]
                 person_name = person_name[:-len(patr2)].strip()
@@ -231,6 +145,16 @@ class TRussianFio:
             p = parts[1].strip('-') + parts[2]
             if p.lower() in POPULAR_RUSSIAN_NAMES_SET:
                 parts = [parts[0], p, parts[3]]
+
+        if len(parts) == 2 and len(parts[0]) > 10 and TRussianFioRecognizer.has_patronymic_suffix(parts[1]):
+            #Разогрееванина Николаевна
+            for i in range(3, len(parts[0])-3):
+                p1 = parts[0][:i]
+                p2 = parts[0][i:]
+                if TRussianFioRecognizer.has_surname_suffix(p1) or is_morph_surname(p1):
+                    if p2.lower() in POPULAR_RUSSIAN_NAMES_SET:
+                        parts = [p1, p2.title(), parts[1]]
+                        break
 
         if len(parts) == 4:
             #Пыжик Игорь Григорьев Ич
@@ -263,18 +187,22 @@ class TRussianFio:
                 parts[0] = [parts[0] + parts[1].lower(), parts[2]]
 
 
+        if count_Russian_words >= 3:
+            word1_has_surname_suffix = TRussianFioRecognizer.has_surname_suffix(parts[0])
+            word2_is_popular_name = parts[1].lower() in POPULAR_RUSSIAN_NAMES_SET
+            word3_is_patronymic = TRussianFioRecognizer.has_patronymic_suffix(parts[2])
+            weight = sum(1 for i in [word1_has_surname_suffix, word2_is_popular_name, word3_is_patronymic]  if i)
+        else:
+            weight = 0
         self.case = None
-        if count_Russian_words == 3 and \
-                (TRussianFioRecognizer.has_patronymic_suffix(parts[2]) or \
-                 TRussianFioRecognizer.has_surname_suffix(parts[0])):
+        if count_Russian_words == 3 and weight > 1:
             # Иванов Иван Иванович
             # Гулиев Гурбангули Арастун Оглы"
             self.family_name = parts[0]
             self.first_name = parts[1]
             self.patronymic = parts[2]
             self.case = "full_name_0"
-        elif  count_Russian_words > 3 and TRussianFioRecognizer.has_patronymic_suffix(parts[2]) and \
-            is_morph_surname(parts[0]):
+        elif  count_Russian_words > 3 and is_morph_surname(parts[0]) and word3_is_patronymic:
             # or Russian name with garbage "Иванов Иван Иванович (председатель)"
             self.family_name = parts[0]
             self.first_name = parts[1]
@@ -286,33 +214,49 @@ class TRussianFio:
             self.first_name = parts[0]
             self.patronymic = parts[1]
             self.case = "full_name_2"
-        elif count_Russian_words == 3 and TRussianFioRecognizer.is_morph_surname_or_predicted(parts[0]):
+        elif count_Russian_words == 3 and self.is_morph_surname_or_predicted(parts[0]):
             # not Russian name like "Заман Шамима Хасмат-Уз"
             self.family_name = parts[0]
             self.first_name = parts[1]
             self.patronymic = parts[2]
             self.case = "not_russian_names"
-        elif len(parts) == 3 and TRussianFioRecognizer.is_name_initial(parts[1]) and (TRussianFioRecognizer.is_name_initial(parts[2]) or self._check_name_initial_complex(parts[2])):
+        elif len(parts) == 3 and self.is_name_initial(parts[1]) and (self.is_name_initial(parts[2]) or self._check_name_initial_complex(parts[2])):
             # Иванов И. И.
             # Ахмедова З. М.-Т.
             self.family_name = parts[0]
             self.first_name = parts[1].strip('.')
             self.patronymic = parts[2].strip('.')
             self.case = "abbridged_name_1"
-        elif len(parts) == 3 and TRussianFioRecognizer.is_name_initial(parts[0]) and TRussianFioRecognizer.is_name_initial(parts[1]):
+        elif len(parts) == 3 and self.is_name_initial(parts[0]) and self.is_name_initial(parts[1]):
             #  И. И. Иванов
             self.family_name = parts[2]
             self.first_name = parts[0].strip('.')
             self.patronymic = parts[1].strip('.')
             self.case = "abbridged_name_2"
+        elif len(parts) == 3 and TRussianFioRecognizer.has_surname_suffix(parts[0]) and is_morph_first_name(parts[1]) \
+                and self.is_name_initial(parts[2]):
+            self.family_name = parts[0]
+            self.first_name = parts[1]
+            self.patronymic = parts[2]
+            self.case = "patronymic_is_initial"
         elif len(parts) == 2 and self._check_name_initial_complex(parts[1]):
             # name like "Мамедов Ч.Г.-О."
             self.family_name = parts[0]
             self.case = "name_initial_complex1"
         elif len(parts) == 2 and self._check_name_initial_complex(parts[0]):
+            #А.А. Кайгородова
             # name like "Ч.Г.-О. Мамедов "
             self.family_name = parts[1]
             self.case = "name_initial_complex2"
+        elif len(parts) == 2 and TRussianFioRecognizer.has_surname_suffix(parts[0]) and \
+              is_morph_first_name(parts[1]):
+            #Воецкая Ирина
+            #Друзина Инна
+            self.family_name = parts[0]
+            self.first_name = parts[1]
+            self.patronymic = ''
+            self.case = "surname_and_name"
+
         elif len(parts) == 1 and count_full_stops == 2 and len(person_name) > 6 and \
                 self._check_name_initial_complex(person_name[:4]):
             #А.В.Бойко
@@ -370,3 +314,68 @@ class TRussianFio:
 
 
 
+class TRussianFioRecognizer:
+    feminine_russian_patronymic_suffixes = {"вна", "чна"}
+    masculine_russian_patronymic_suffixes = {"вич", "мич", "ьич", "тич"}
+    russian_patronymic_suffixes = feminine_russian_patronymic_suffixes | masculine_russian_patronymic_suffixes
+    russian_family_name_suffixes = {'ва', 'ов', 'на', 'ин', 'ев', 'ко', 'ая', 'ий', 'ик'}
+
+    @staticmethod
+    def is_masculine_patronymic(s):
+        return len(s) >= 5 and s[-3:].lower() in TRussianFioRecognizer.masculine_russian_patronymic_suffixes
+
+    @staticmethod
+    def is_feminine_patronymic(s):
+        return len(s) >= 5 and s[-3:].lower() in TRussianFioRecognizer.feminine_russian_patronymic_suffixes
+
+    @staticmethod
+    def has_patronymic_suffix(s):
+        return len(s) >= 5 and s.strip(',-').lower()[-3:] in TRussianFioRecognizer.russian_patronymic_suffixes
+
+    @staticmethod
+    def has_surname_suffix(s):
+        return len(s) >= 5 and s.strip(',-').lower()[-2:] in TRussianFioRecognizer.russian_family_name_suffixes
+
+    @staticmethod
+    def string_contains_Russian_name(rus_text):
+        rus_text = rus_text.strip()
+        if rus_text.find('(') != -1:
+            rus_text = rus_text[:rus_text.find('(')].strip()
+        words = rus_text.split(' ')
+
+        relatives = {"супруг", "супруга", "сын", "дочь"}
+        while len(words) > 0 and words[-1].lower() in relatives:
+            words = words[0:-1]
+
+        if len(words) > 0 and re.search('^[0-9]+[.]\s*$', words[0]) is not None:
+            words = words[1:]
+
+        if len(words) >= 3 and ( \
+                TRussianFioRecognizer.is_russian_full_name(words[0],  words[1],  words[2]) or \
+                TRussianFioRecognizer.is_russian_full_name(words[-3], words[-2], words[-1])):
+            return True
+
+        rus_text = " ".join(words)
+        if re.search('[А-ЯЁ]\s*[.]\s*[А-ЯЁ]\s*[.]\s*$', rus_text) is not None:
+            return True
+
+        # Иванов И.И.
+        if re.search('^[А-ЯЁ][а-яё]+\s+[А-ЯЁ]\s*[.]\s*[А-ЯЁ]\s*[.]', rus_text) is not None:
+            return True
+
+        # И.И. Иванов
+        if re.search('[А-ЯЁ]\s*[.]\s*[А-ЯЁ]\s*[.][А-ЯЁ][а-яё]+$', rus_text) is not None:
+            return True
+        return False
+
+    @staticmethod
+    def prepare_for_search_index(str):
+        if str is None:
+            return None
+        str = str.replace("Ё", "Е").replace("ё", "е")
+        return str
+
+    @staticmethod
+    def is_russian_full_name(w1, w2, w3):
+        #Иванов Иван Иванович
+        return is_title_case(w1) and is_title_case(w2) and TRussianFioRecognizer.has_patronymic_suffix(w3)
