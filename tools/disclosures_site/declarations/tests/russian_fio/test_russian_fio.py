@@ -91,6 +91,17 @@ class ResolveFullNameTestCase(TestCase):
         self.assertEqual(_P("Иванов Иван Иванович"), _F("Иванов", "Иван", "Иванович"))
         self.assertEqual(_P(" Иванов Иван  Иванович "), _F("Иванов", "Иван", "Иванович"))
 
+    def test_normalize_person_name(self):
+        def _P(fio):
+            return TRussianFio(fio).get_normalized_person_name()
+
+        self.assertEqual(_P("Иванов Иван Иванович"), "Иванов Иван Иванович")
+        self.assertEqual(_P("Иванов И. И."),"Иванов И. И.")
+        self.assertEqual(_P("Иванов И.И."), "Иванов И. И.")
+        self.assertEqual(_P("И.И. Иванов"), "Иванов И. И.")
+        self.assertEqual(_P("Иванов И И"), "Иванов И И")
+        self.assertEqual(_P("Иванов Иван Иванович    оглы"), "Иванов Иван Иванович Оглы")
+
     def test_contains(self):
         r = TRussianFioRecognizer()
         self.assertTrue(r.string_contains_Russian_name('Новикова Татьяна Николаевна Жилой Дом (Долевая Собственность ½)'))

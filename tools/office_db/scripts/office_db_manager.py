@@ -20,7 +20,7 @@ import time
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--action", dest='action', help="can be ban, to_utf8, move, mark_large_sites, check_alive, "
+    parser.add_argument("--action", dest='action', help="can be ban, to_utf8, move, mark_large_sites, check_alive, select, "
                                                         "print_urls, check, redirect_subdomain, regional_to_main, split")
     parser.add_argument("--input-offices", dest='input_offices', required=False, default=None,
                         help="default is ~/smart_parser/tools/offices_db/data/offices.txt")
@@ -245,6 +245,14 @@ class TWebSitesManager:
                             self.check_alive_one_url(new_web_site.url)
                     time.sleep(20)
 
+    def select(self):
+        out = TOfficeTableInMemory()
+        for web_domain in self.get_url_list():
+            site_info: TDeclarationWebSite
+            site_info = self.web_sites.get_web_site(web_domain)
+            out.add_office(site_info.parent_office)
+        self.web_sites.offices = out
+
     def main(self):
         if self.args.action == "ban":
             self.ban_sites()
@@ -260,6 +268,8 @@ class TWebSitesManager:
             self.redirect_subdomain()
         elif self.args.action == "create_departments":
             self.create_departments()
+        elif self.args.action == "select":
+            self.select()
         elif self.args.action == "split":
             self.split()
             return

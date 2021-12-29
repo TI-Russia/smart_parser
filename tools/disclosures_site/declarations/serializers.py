@@ -123,9 +123,10 @@ class TSmartParserSectionJson:
             if fio is None:
                 raise TSmartParserSectionJson.SerializerException("cannot find 'name' or 'name_raw'     in json")
         fio = normalize_fio_before_db_insert(fio)
-        if not TRussianFio(fio).is_resolved:
+        resolved_fio = TRussianFio(fio)
+        if not resolved_fio.is_resolved:
             raise TSmartParserSectionJson.SerializerException("cannot resolve person name {}".format(fio))
-        self.section.person_name = fio
+        self.section.person_name = resolved_fio.get_normalized_person_name()
         self.section.position = person_info.get("role")
         self.section.department = person_info.get("department")
 

@@ -52,7 +52,9 @@ class TRussianFio:
     def __init__(self, person_name, from_search_request=False, make_lower=True):
         self.case = None
         self.first_name = ""
+        self.first_name_is_abridged = False
         self.patronymic = ""
+        self.patronymic_is_abridged = False
         self.family_name = ""
         if from_search_request:
             self.is_resolved = self._resolve_person_name_pattern_from_search_request(person_name)
@@ -85,28 +87,48 @@ class TRussianFio:
                 return True
         return False
 
+    def set_first_name(self, s):
+        if s.endswith('.'):
+            self.first_name_is_abridged = True
+        self.first_name = s.strip('.')
+
+    def set_patronymic(self, s):
+        if s.endswith('.'):
+            self.patronymic_is_abridged = True
+        self.patronymic = s.strip('.')
+
+    def get_normalized_person_name(self):
+        s = self.family_name.title() + " " + self.first_name.title()
+        if self.first_name_is_abridged:
+            s += '.'
+        if len(self.patronymic) > 0:
+            s += " " + self.patronymic.title()
+            if self.patronymic_is_abridged:
+                s += '.'
+        return s
+
     def _check_name_initial_complex(self, s):
         if count_alpha(s) < 2:
             return False
         if s.count('.') > 1 and s.endswith('.'):
             #like Ч.Г.-О.
-            self.first_name = s[:2].strip('.')
-            self.patronymic = s[2:].strip('.')
+            self.set_first_name(s[:2])
+            self.set_patronymic(s[2:])
             return True
         elif len(s) == 2 and s.upper() == s:
             #like ЧГ
-            self.first_name = s[0]
-            self.patronymic = s[1]
+            self.set_first_name(s[0] + ".")
+            self.set_patronymic(s[1] + ".")
             return True
         elif len(s) == 3 and s.upper() == s and s[2] == '.':
             # like ЧГ.
-            self.first_name = s[0]
-            self.patronymic = s[1]
+            self.set_first_name(s[0] + ".")
+            self.set_patronymic(s[1] + ".")
             return True
         elif len(s) == 3 and s.upper() == s and s[1] == '.':
             # like А.Е
-            self.first_name = s[0]
-            self.patronymic = s[2]
+            self.set_first_name(s[0] + ".")
+            self.set_patronymic(s[2] + ".")
             return True
         else:
             return False
@@ -224,20 +246,20 @@ class TRussianFio:
             # Иванов И. И.
             # Ахмедова З. М.-Т.
             self.family_name = parts[0]
-            self.first_name = parts[1].strip('.')
-            self.patronymic = parts[2].strip('.')
+            self.set_first_name(parts[1])
+            self.set_patronymic(parts[2])
             self.case = "abbridged_name_1"
         elif len(parts) == 3 and self.is_name_initial(parts[0]) and self.is_name_initial(parts[1]):
             #  И. И. Иванов
             self.family_name = parts[2]
-            self.first_name = parts[0].strip('.')
-            self.patronymic = parts[1].strip('.')
+            self.set_first_name(parts[0])
+            self.set_patronymic(parts[1])
             self.case = "abbridged_name_2"
         elif len(parts) == 3 and TRussianFioRecognizer.has_surname_suffix(parts[0]) and is_morph_first_name(parts[1]) \
                 and self.is_name_initial(parts[2]):
             self.family_name = parts[0]
-            self.first_name = parts[1]
-            self.patronymic = parts[2]
+            self.set_first_name(parts[1])
+            self.set_patronymic(parts[2])
             self.case = "patronymic_is_initial"
         elif len(parts) == 2 and self._check_name_initial_complex(parts[1]):
             # name like "Мамедов Ч.Г.-О."
