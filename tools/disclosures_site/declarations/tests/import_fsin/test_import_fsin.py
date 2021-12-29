@@ -32,12 +32,12 @@ class FsinImportTestCase(TestCase):
 
         self.assertEqual(models.Section.objects.count(), 6)
         surname_to_office = {
-            "Калашников А.П.": 482,
-            "Романов Р.В.": 482,
-            "Казан Ш.Т.": 3900,
-            "Галиев Р.Т.": 3906,
-            "Жамсаранов Ц.Л.": 3909,
-            "Батыров Ю.М.": 3913
+            "Калашников А. П.": 482,
+            "Романов Р. В.": 482,
+            "Казан Ш. Т.": 3900,
+            "Галиев Р. Т.": 3906,
+            "Жамсаранов Ц. Л.": 3909,
+            "Батыров Ю. М.": 3913
         }
         for s in models.Section.objects.all():
             self.assertEqual(surname_to_office[s.person_name], s.office_id, s.person_name)
