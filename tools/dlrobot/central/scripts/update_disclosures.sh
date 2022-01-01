@@ -43,18 +43,18 @@ source $COMMON_SCRIPT
    # можно создать их прям сейчас
    #python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.prod --directory $DLROBOT_FOLDER
 
-#9 (надо включить в import_json?)
-    cd $DLROBOT_FOLDER # important
-    python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev --directory $DLROBOT_FOLDER
+  #9 (надо включить в import_json?)
+      cd $DLROBOT_FOLDER # important
+      python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev --directory $DLROBOT_FOLDER
 
 
-#10  Импорт json в dislosures_db (48 hours)
-     python3 $TOOLS/disclosures_site/manage.py import_json \
-                 --settings disclosures.settings.dev \
-                 --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER \
-                 --dlrobot-human dlrobot_human.dbm   \
-                   --process-count 2  \
-                   --permalinks-folder $DLROBOT_FOLDER
+  #10  Импорт json в dislosures_db (48 hours)
+       python3 $TOOLS/disclosures_site/manage.py import_json \
+                   --settings disclosures.settings.dev \
+                   --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER \
+                   --dlrobot-human dlrobot_human.dbm   \
+                     --process-count 2  \
+                     --permalinks-folder $DLROBOT_FOLDER
 
      python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric source_document_count  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
      python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric sections_person_name_income_year_declarant_income_size  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
