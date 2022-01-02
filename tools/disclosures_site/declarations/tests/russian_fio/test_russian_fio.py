@@ -37,6 +37,9 @@ class ResolveFullNameTestCase(TestCase):
         self.assertEqual(_P('Строганова Наталья Александров На'), _F("Строганова", "Наталья", "Александровна"))
         self.assertEqual(_P('А.А. Кайгородова'), _F("Кайгородова", "А", "А"))
 
+        #correct ocr errors ѐ ->   ё
+        self.assertEqual(_P('Кулѐва Ольга Владимировна'), _F("Кулёва", "Ольга", "Владимировна"))
+
         # use Russian morphology dictionary
         self.assertEqual(_P('Великоречан Ина Е.Е'), _F("Великоречанина", "Е", "Е"))
         self.assertEqual(_P('Махиборо Да Н.М.'), _F("Махиборода", "Н", "М"))

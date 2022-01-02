@@ -150,7 +150,9 @@ class TRussianFio:
         if re.search(r"(\s|\()((жена)|(сын)|(дочь)|(супруг)|(супруга))$",  person_name, flags=re.IGNORECASE) is not None:
             return False
         person_name = re.sub("([\s.][А-ЯЁ])\s+[.]", "\\1.", person_name)
+        person_name = person_name.replace('ѐ', 'ё').replace('ѐ', 'ё')
         lower_person = person_name.lower()
+
         patronymic2 = ""
         for patr2 in ['оглы', 'кызы', 'кзы', 'гызы']:
             if lower_person.endswith(patr2):
