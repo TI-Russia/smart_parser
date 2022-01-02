@@ -51,6 +51,7 @@ def count_alpha(s):
 class TRussianFio:
     def __init__(self, person_name, from_search_request=False, make_lower=True):
         self.case = None
+        self.input_person_name = person_name
         self.first_name = ""
         self.first_name_is_abridged = False
         self.patronymic = ""
@@ -98,14 +99,17 @@ class TRussianFio:
         self.patronymic = s.strip('.')
 
     def get_normalized_person_name(self):
-        s = self.family_name.title() + " " + self.first_name.title()
-        if self.first_name_is_abridged:
-            s += '.'
-        if len(self.patronymic) > 0:
-            s += " " + self.patronymic.title()
-            if self.patronymic_is_abridged:
+        if self.is_resolved:
+            s = self.family_name.title() + " " + self.first_name.title()
+            if self.first_name_is_abridged:
                 s += '.'
-        return s
+            if len(self.patronymic) > 0:
+                s += " " + self.patronymic.title()
+                if self.patronymic_is_abridged:
+                    s += '.'
+            return s
+        else:
+            return normalize_whitespace(self.input_person_name).lower()
 
     def _check_name_initial_complex(self, s):
         if count_alpha(s) < 2:

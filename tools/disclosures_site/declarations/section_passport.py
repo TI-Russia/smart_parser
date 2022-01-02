@@ -1,6 +1,5 @@
-from common.primitives import normalize_whitespace
-from declarations import models
-
+#from common.primitives import normalize_whitespace
+from common.russian_fio import TRussianFio
 from django.db import connection
 
 
@@ -17,7 +16,7 @@ class TSectionPassportItems1:
         self.vehicle_count = str(convert_to_int_with_nones(vehicle_count))
         self.office_id = str(office_id)
         self.year = str(year)
-        self.person_name = normalize_whitespace(person_name).lower()
+        self.person_name = TRussianFio(person_name).get_normalized_person_name()
 
     def get_main_section_passport(self):
         return ";".join((self.office_id,
@@ -75,7 +74,7 @@ class TSectionPassportItems2:
     def __init__(self, document_id, year, person_name, income_sum):
         self.document_id = str(document_id)
         self.year = str(year)
-        self.person_name = normalize_whitespace(person_name).lower()
+        self.person_name = self.person_name = TRussianFio(person_name).get_normalized_person_name()
         self.income_sum = str(convert_to_int_with_nones(income_sum))
 
     def get_main_section_passport(self):

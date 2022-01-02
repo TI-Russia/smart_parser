@@ -1,4 +1,4 @@
-# Процесс создание базы disclosures = dlrobot+declarator (раз в месяц?)
+  # Процесс создание базы disclosures = dlrobot+declarator (раз в месяц?)
 
 #0 ~/smart_parser/tools/INSTALL.txt are prerequisites
 

@@ -1,0 +1,17 @@
+{
+    "document_folder": "domains_2",
+    "documents": {
+        "2d96530c79609baeece80a0b2b4f7320a83e9b9f22bbf2de2cd39a6c23488411": {
+            "file_ext": ".docx",
+            "intersection_status": "only_dlrobot",
+            "office_id": 5963,
+            "w_refs": [
+                {
+                    "crawl_epoch": 1,
+                    "url": null,
+                    "web_domain": "test.org"
+                }
+            ]
+        }
+    }
+}
