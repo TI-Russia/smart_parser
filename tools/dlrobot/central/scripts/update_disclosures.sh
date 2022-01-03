@@ -121,8 +121,8 @@ new_permalinks_pid=$!
 
 #17.1 build access logs squeeze
     cd $DLROBOT_FOLDER
-    python3 $TOOLS/disclosures_site/manage.py access_log_squeeze  \
-              --access-log-folder $ACCESS_LOG_ARCHIVE --output-path access_log_squeeze.txt
+    python3 $TOOLS/disclosures_site/scripts/access_log_squeeze.py --action build_popular_site_pages \
+      --access-log-folder $ACCESS_LOG_ARCHIVE --output-path access_log_squeeze.txt
 
 #17.2 update person redirects and filter access logs
     python3 $TOOLS/disclosures_site/manage.py update_person_redirects  --settings disclosures.settings.dev \
