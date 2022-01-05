@@ -21,19 +21,28 @@ class TSourceDocHTTPServer(http.server.HTTPServer):
                             help="by default read it from environment variable SOURCE_DOC_SERVER_ADDRESS")
         parser.add_argument("--log-file-name", dest='log_file_name', required=False, default="source_doc_server.log")
         parser.add_argument("--data-folder", dest='data_folder', required=False, default=".")
+
+        parser.add_argument("--archive-folder", dest='archive_folder', required=False)
+        parser.add_argument("--header-archive-copy-timeout", dest='header_archive_copy_timeout', required=False, type=int)
+
         parser.add_argument('--max-bin-file-size', dest='max_bin_file_size', required=False, default=10 * (2 ** 30), type=int)
         parser.add_argument('--read-only', dest='read_only', required=False, default=False, action="store_true")
         parser.add_argument("--heart-rate", dest='heart_rate', type=int, required=False, default=20)
+
         args = parser.parse_args(arg_list)
         if args.server_address is None:
             args.server_address = os.environ['SOURCE_DOC_SERVER_ADDRESS']
+        if args.archive_folder is not None and args.header_archive_copy_timeout is None:
+            args.header_archive_copy_timeout = 3 * 60 * 60
         return args
 
     def __init__(self, args, logger=None):
         self.args = args
         self.max_bin_file_size = self.args.max_bin_file_size
         self.logger = logger if logger is not None else setup_logging(log_file_name=args.log_file_name, append_mode=True)
-        self.file_storage = TFileStorage(self.logger, self.args.data_folder, self.max_bin_file_size, read_only=self.args.read_only)
+        self.file_storage = TFileStorage(self.logger, self.args.data_folder, self.max_bin_file_size,
+                                         read_only=self.args.read_only, archive_folder=self.args.archive_folder,
+                                         header_archive_timeout=self.args.header_archive_copy_timeout)
         host, port = self.args.server_address.split(":")
         self.logger.debug("start server on {}:{}".format(host, int(port)))
         self.last_heart_beat = time.time()

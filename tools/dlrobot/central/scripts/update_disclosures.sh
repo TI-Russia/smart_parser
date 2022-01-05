@@ -140,7 +140,7 @@ new_permalinks_pid=$!
 #18.1
     python3 $TOOLS/dlrobot/central/scripts/yandex_disk.py --action sync --exclude-dirs declarator/source_doc --wait
     python3 $TOOLS/dlrobot/central/scripts/yandex_disk.py --action publish_special \
-        --cloud-path declarator/dlrobot_updates/disclosures.sql.gz --report-output-file full_sql_dump.html
+        --cloud-path declarator/dlrobot_updates//$CRAWL_EPOCH/disclosures.sql.gz --report-output-file full_sql_dump.html
     scp full_sql_dump.html $FRONTEND:$FRONTEND_WEB_SITE/declarations/templates/statistics
 
 wait $new_permalinks_pid

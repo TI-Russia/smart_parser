@@ -15,11 +15,17 @@ def start_server(server):
     server.serve_forever()
     print("start_server exit")
 
+
 class TTestEnv:
-    def __init__(self, port, max_bin_file_size=None, read_only=False):
+    def __init__(self, port, max_bin_file_size=None, read_only=False, use_archives=False):
         self.port = port
         self.max_bin_file_size = max_bin_file_size
         self.data_folder = "data.{}".format(port)
+        self.archive_folder = "archive.{}".format(port) if use_archives else None
+        if self.archive_folder is not None:
+            if os.path.exists(self.archive_folder):
+                shutil.rmtree(self.archive_folder)
+            os.mkdir(self.archive_folder)
         self.server_address = "localhost:{}".format(self.port)
         self.server = None
         self.server_thread = None
@@ -39,6 +45,9 @@ class TTestEnv:
         ]
         if self.max_bin_file_size is not None:
             server_args.extend(['--max-bin-file-size', str(self.max_bin_file_size)])
+        if self.archive_folder is not None:
+            server_args.extend(['--archive-folder', self.archive_folder])
+            server_args.extend(['--header-archive-copy-timeout', str(1)])
         if read_only:
             server_args.extend(['--read-only'])
         self.server = TSourceDocHTTPServer(TSourceDocHTTPServer.parse_args(server_args))
@@ -183,3 +192,30 @@ class TestExit(TestCase):
         time.sleep(2)
         stats = self.env.client.get_stats(timeout=1)
         self.assertIsNone(stats)
+
+
+class TestSourceDocArchive(TestCase):
+
+    def setUp(self):
+        self.env = TTestEnv(8496, 4, use_archives=True)
+
+    def tearDown(self):
+        self.env.tearDown()
+
+    def test_many_bin_files_with_archive(self):
+        file_data1 = b"12345_1"
+        with open("test1.txt", "wb") as outp:
+            outp.write(file_data1)
+        file_data2 = b"12345_2"
+        with open("test2.txt", "wb") as outp:
+            outp.write(file_data2)
+
+        self.assertTrue(self.env.client.send_file("test1.txt"))
+        time.sleep(1)
+        self.assertTrue(self.env.client.send_file("test2.txt"))
+        stats = self.env.client.get_stats()
+        self.assertEqual(stats['bin_files_count'], 2)
+        archive_files = os.listdir(self.env.archive_folder)
+        self.assertEqual(2, len(archive_files))
+        self.assertIn('header.dbm', archive_files)
+
