@@ -1,5 +1,3 @@
-import operator
-
 from . import models
 from declarations.documents import ElasticSectionDocument, ElasticPersonDocument, ElasticOfficeDocument, ElasticFileDocument
 from common.russian_fio import TRussianFio, TRussianFioRecognizer
@@ -22,6 +20,13 @@ import urllib
 from django.shortcuts import render
 from django.http import Http404
 from django.shortcuts import redirect
+import operator
+import logging
+import json
+
+
+logger = logging.getLogger(__name__)
+
 
 class SectionView(generic.DetailView):
     model = models.Section
@@ -358,9 +363,12 @@ class CommonSearchView(FormView, generic.ListView):
                 field_type = type(self.elastic_search_document._fields.get(sort_by))
                 if field_type != TextField: # elasticsearch cannot sort by a TextField
                     query_dict['sort'] = [{sort_by: {"order": order}}]
-
+            logger.debug("search_query {} {}".format(
+                self.elastic_search_document.__name__,
+                json.dumps(query_dict, ensure_ascii=False)))
             search = self.elastic_search_document.search()
             search_results = search.update_from_dict(query_dict)
+            logger.debug("search_results_count = {}".format(search_results.count()))
             return search_results
         except Exception as e:
             return None
@@ -425,6 +433,7 @@ class CommonSearchView(FormView, generic.ListView):
         return query_fields
 
     def get_queryset_common(self):
+
         search_results = self.query_elastic_search(True)
         if search_results is None:
             return []
@@ -438,13 +447,14 @@ class CommonSearchView(FormView, generic.ListView):
 
         sort_by, order = self.get_sort_order()
         if sort_by == "person_name":
-            object_list.sort(key=lambda x: x.person_name, reverse=(order=="desc"))
+            object_list.sort(key=lambda x: x.person_name, reverse=(order == "desc"))
         elif sort_by == "name":
             object_list.sort(key=lambda x: x.name, reverse=(order == "desc"))
         elif sort_by == "web_domains":
             object_list.sort(key=lambda x: x.web_domains, reverse=(order == "desc"))
         elif sort_by == "intersection_status":
             object_list.sort(key=lambda x: x.intersection_status, reverse=(order == "desc"))
+        logger.debug('serp_size_after_filtering = {}'.format(len(object_list)))
         return object_list
 
 

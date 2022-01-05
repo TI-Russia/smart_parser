@@ -26,6 +26,11 @@ class TBackupper:
         if not os.path.exists(self.output_folder):
             self.logger.info("create folder {}".format(self.output_folder))
             os.mkdir(self.output_folder)
+        if not os.path.isdir(self.output_folder):
+            shutil.move(self.output_folder, self.output_folder + ".delete_me")
+            self.logger.info("create folder {}".format(self.output_folder))
+            os.mkdir(self.output_folder)
+            os.path.isdir(self.output_folder)
 
         self.logger.info("cd {}".format(args.update_folder))
         os.chdir(args.update_folder)

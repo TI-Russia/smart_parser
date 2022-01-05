@@ -14,8 +14,7 @@ def safe_makedir(path):
 def get_logging_settings(log_path):
     log_dir = os.path.dirname(log_path)
     safe_makedir(log_dir)
-    troubles_fn = 'troubles_%s' % os.path.basename(log_path)
-    troubles_path = os.path.join(log_dir, troubles_fn)
+    search_log_file = os.path.join(log_dir, 'search.log')
     logging_dict = {
         'version': 1,
         'disable_existing_loggers': False,
@@ -35,6 +34,14 @@ def get_logging_settings(log_path):
                 'level': 'DEBUG',
                 'class': 'logging.handlers.RotatingFileHandler',
                 'filename': log_path,
+                'formatter': 'verbose',
+                'maxBytes': 50 * 1024 * 1024,  # 50 Mb
+                'backupCount': 5
+            },
+            'search_log_file_handler': {
+                'level': 'DEBUG',
+                'class': 'logging.handlers.RotatingFileHandler',
+                'filename': search_log_file,
                 'formatter': 'verbose',
                 'maxBytes': 50 * 1024 * 1024,  # 50 Mb
                 'backupCount': 5
@@ -70,6 +77,11 @@ def get_logging_settings(log_path):
                 'handlers': ['file'],
                 'propagate': False,
             },
+           'declarations.views': {
+               'handlers': ['search_log_file_handler'],
+               'propagate': False,
+               'level': 'DEBUG',
+           },
         }
     }
     return logging_dict
