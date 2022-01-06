@@ -8,7 +8,7 @@ import os
 import json
 import urllib
 import http.server
-import time
+from threading import Timer
 
 
 class TSourceDocHTTPServer(http.server.HTTPServer):
@@ -27,7 +27,7 @@ class TSourceDocHTTPServer(http.server.HTTPServer):
 
         parser.add_argument('--max-bin-file-size', dest='max_bin_file_size', required=False, default=10 * (2 ** 30), type=int)
         parser.add_argument('--read-only', dest='read_only', required=False, default=False, action="store_true")
-        parser.add_argument("--heart-rate", dest='heart_rate', type=int, required=False, default=20)
+        parser.add_argument("--heart-rate", dest='heart_rate', type=int, required=False, default=20, help="timeout in seconds")
 
         args = parser.parse_args(arg_list)
         if args.server_address is None:
@@ -45,7 +45,8 @@ class TSourceDocHTTPServer(http.server.HTTPServer):
                                          header_archive_timeout=self.args.header_archive_copy_timeout)
         host, port = self.args.server_address.split(":")
         self.logger.debug("start server on {}:{}".format(host, int(port)))
-        self.last_heart_beat = time.time()
+        self.heart_beat = Timer(self.args.heart_rate, self.heart_beat_actions_in_different_thread)
+        self.heart_beat.start()
         if os.path.exists(TSourceDocHTTPServer.stop_file):
             os.unlink(TSourceDocHTTPServer.stop_file)
         try:
@@ -59,6 +60,7 @@ class TSourceDocHTTPServer(http.server.HTTPServer):
         self.logger.info("shutdown")
         self.shutdown()
         self.server_close()
+        self.heart_beat.cancel()
         self.logger.info("exit from def stop_server")
 
     def get_source_document(self, sha256):
@@ -70,16 +72,11 @@ class TSourceDocHTTPServer(http.server.HTTPServer):
     def get_stats(self):
         return self.file_storage.get_stats()
 
-    def service_actions(self):
-        current_time = time.time()
-        if current_time - self.last_heart_beat >= self.args.heart_rate:
-            if os.path.exists(TSourceDocHTTPServer.stop_file):
-                os.unlink(TSourceDocHTTPServer.stop_file)
-                #self.logger.info("stop_server")
-                #self.stop_server()
-                raise Exception("stop_server")
-            self.last_heart_beat = time.time()
-
+    def heart_beat_actions_in_different_thread(self):
+        if os.path.exists(TSourceDocHTTPServer.stop_file):
+            os.unlink(TSourceDocHTTPServer.stop_file)
+            self.stop_server()
+        self.file_storage.sync_with_archive()
 
 class TSourceDocRequestHandler(http.server.BaseHTTPRequestHandler):
 

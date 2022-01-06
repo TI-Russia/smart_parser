@@ -172,6 +172,7 @@ class TestReadOnly(TestCase):
 
 class TestExit(TestCase):
     port = 8495
+
     def setUp(self):
         self.env = TTestEnv(TestExit.port)
 
@@ -189,7 +190,7 @@ class TestExit(TestCase):
         self.assertEqual(1, stats['source_doc_count'])
         with open(TSourceDocHTTPServer.stop_file, "w") as outp:
             outp.write(".")
-        time.sleep(2)
+        time.sleep(20)
         stats = self.env.client.get_stats(timeout=1)
         self.assertIsNone(stats)
 
@@ -216,6 +217,6 @@ class TestSourceDocArchive(TestCase):
         stats = self.env.client.get_stats()
         self.assertEqual(stats['bin_files_count'], 2)
         archive_files = os.listdir(self.env.archive_folder)
-        self.assertEqual(2, len(archive_files))
+        self.assertEqual(3, len(archive_files))
         self.assertIn('header.dbm', archive_files)
 
