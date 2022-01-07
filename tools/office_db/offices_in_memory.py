@@ -6,6 +6,7 @@ from common.urllib_parse_pro import TUrlUtf8Encode, urlsplit_pro
 import json
 import os
 import re
+from collections import defaultdict
 
 
 class TOfficeInMemory:
@@ -115,6 +116,14 @@ class TOfficeTableInMemory:
         if office_id is None:
             return None
         return self.offices[int(office_id)].parent_id
+
+    def get_child_offices_dict(self):
+        office: TOfficeInMemory
+        res = defaultdict(list)
+        for office in self.offices.values():
+            if office.parent_id is not None:
+                res[office.parent_id].append(office)
+        return res
 
     def __init__(self, use_office_types=True):
         self.use_office_types = use_office_types
