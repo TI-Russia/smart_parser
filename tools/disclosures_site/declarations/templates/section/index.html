@@ -7,6 +7,7 @@
 {% block content %}
 
 <form action="{% url 'section_search' %}" method="get" style="width:100%">
+    <input type="hidden" name="request_ref" value="search_frm" />
     <div class="desktop">
         <div class="search_input">
             <abbr title="Начинайте с фамилии, например, Иванов Иван Иванович или Иванов И.И.">
