@@ -5,6 +5,7 @@
 {% block content %}
 
 <form action="{% url 'office_search' %}" method="get">
+    <input type="hidden" name="request_ref" value="search_frm" />
     <div class="desktop">
         {{form.name.label_tag}} {{ form.name }} &#32;&#32;&#32;
         {{form.region_id.label_tag}} {{form.region_id}}  &#32;&#32;&#32;

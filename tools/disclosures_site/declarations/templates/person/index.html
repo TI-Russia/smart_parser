@@ -6,6 +6,7 @@
 {% block content %}
 
 <form action="{% url 'person_search' %}" method="get">
+    <input type="hidden" name="request_ref" value="search_frm" />
     {{form.person_name.label_tag}} {{ form.person_name }}
     <input type="submit" value="Поиск">
     <br/>
