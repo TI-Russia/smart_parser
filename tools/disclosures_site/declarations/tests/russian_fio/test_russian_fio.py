@@ -38,6 +38,20 @@ class ResolveFullNameTestCase(TestCase):
         self.assertEqual(_P('А.А. Кайгородова'), _F("Кайгородова", "А", "А"))
         self.assertEqual(_P('Туба Давор Симович'), _F("Туба", "Давор", "Симович"))
         self.assertEqual(_P('Шпак Игрь Алесандрович'), _F("Шпак", "Игрь", "Алесандрович"))
+        self.assertEqual(_P('Слатвинский Д,А.'), _F("Слатвинский", "Д", "А"))
+        self.assertEqual(_P('ШАККУМ Мартин Люцианович'), _F("Шаккум", "Мартин", "Люцианович"))
+
+        # I do know how to solve it
+        #self.assertEqual(_P('ЛеКиашвили Д.З.'), _F("Лекиашвили", "Д", "З"))
+
+        self.assertEqual(_P('Зейналов Б.Н.о.'), _F("Зейналов", "Б", "Н.о"))
+        self.assertEqual(_P('Никулаева Мария ивановна'), _F("Никулаева", "Мария", "Ивановна"))
+        self.assertEqual(_P('Гунбатов Д.Ш.О'), _F("Гунбатов", "Д", "Ш.о"))
+        self.assertEqual(_P('Мамедов.Х.Н.'), _F("Мамедов", "Х", "Н"))
+        self.assertEqual(_P('Морозова С,А'), _F("Морозова", "С", "А"))
+        self.assertEqual(_P('Грудинин И. В..'), _F("Грудинин", "И", "В"))
+        self.assertEqual(_P('Рыбаков Анатолий Витальевич, Глава Муниципального Образования'),
+                            _F("Рыбаков", "Анатолий", "Витальевич"))
 
         #correct ocr errors ѐ ->   ё
         self.assertEqual(_P('Кулѐва Ольга Владимировна'), _F("Кулёва", "Ольга", "Владимировна"))
@@ -55,6 +69,7 @@ class ResolveFullNameTestCase(TestCase):
         self.assertEqual(TRussianFio("Иванов", from_search_request=True), _F("Иванов", "", ""))
 
         self.assertEqual(_P("квартира").is_resolved, False)
+        self.assertEqual(_P("Ф.И.О.").is_resolved, False)
         self.assertEqual(_P("Иванов").is_resolved, False)
         self.assertEqual(_P("Иванов ..").is_resolved, False)
         self.assertEqual(_P("Мамедов ААА").is_resolved, False)
