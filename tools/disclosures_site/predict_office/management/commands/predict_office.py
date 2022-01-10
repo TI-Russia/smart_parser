@@ -96,8 +96,12 @@ class TOfficePredictor:
                 already.add(case.sha256)
 
     def update_office_string(self, sha256, src_doc):
-        src_doc.office_strings = json.dumps(self.smart_parser_server_client.get_office_strings(sha256),
-                                            ensure_ascii=False)
+        try:
+            src_doc.office_strings = json.dumps(self.smart_parser_server_client.get_office_strings(sha256),
+                                                ensure_ascii=False)
+        except json.JSONDecodeError as err:
+            self.logger.error("bad json for sha256={} err={}".format(sha256, str(err)))
+            raise
         #real write to dbm
         self.dlrobot_human.update_source_document(sha256, src_doc)
 
