@@ -475,8 +475,21 @@ class CommonSearchView(FormView, generic.ListView):
         elif sort_by == "intersection_status":
             object_list.sort(key=lambda x: x.intersection_status, reverse=(order == "desc"))
         self.log('serp_size_after_filtering = {}'.format(len(object_list)))
+        self.init_person_name_corrections(object_list)
         return object_list
 
+    def init_person_name_corrections(self, object_list):
+        if len(object_list) == 0:
+            name = self.field_params.get('person_name')
+            if name is not None and len(name) > 5:
+                fio = TRussianFio(name, from_search_request=False)
+                if fio.is_resolved:
+                    name = TRussianFio.convert_to_rml_encoding(fio.get_normalized_person_name())
+                    corrections = FIO_MISSPELL_CORRECTOR.correct_misspell(name)
+                    if len(corrections) > 0:
+                        if name != corrections[0]:
+                            self.person_name_corrections = list(TRussianFio.convert_from_rml_encoding(c) for c in corrections[:10])
+                            self.log('person names corrections count = {}'.format(len(self.person_name_corrections)))
 
 class OfficeSearchView(CommonSearchView):
     model = models.Office
@@ -526,16 +539,6 @@ class SectionSearchView(CommonSearchView):
     def get_queryset(self):
         self.build_field_params()
         object_list = self.get_queryset_common()
-        if len(object_list) == 0:
-            name = self.field_params.get('person_name')
-            if name is not None and len(name) > 5:
-                fio = TRussianFio(name, from_search_request=False)
-                if fio.is_resolved:
-                    name = TRussianFio.convert_to_rml_encoding(fio.get_normalized_person_name())
-                    corrections = FIO_MISSPELL_CORRECTOR.correct_misspell(name)
-                    if len(corrections) > 0:
-                        if name != corrections[0]:
-                                self.person_name_corrections = list(TRussianFio.convert_from_rml_encoding(c) for c in corrections[:10])
         return object_list
 
 

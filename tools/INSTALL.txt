@@ -135,6 +135,7 @@ Following https://habr.com/ru/post/501414/
     GRANT ALL PRIVILEGES ON *.* TO 'db_creator'@'localhost' WITH GRANT OPTION;
     FLUSH PRIVILEGES;
 
+    CREATE USER 'disclosures'@'localhost' IDENTIFIED BY 'disclosures';
     GRANT ALL PRIVILEGES ON *.* TO 'disclosures'@'' WITH GRANT OPTION;
     FLUSH PRIVILEGES;
 
