@@ -1,7 +1,8 @@
 MYSQL_TAR=$1
 ELASTICSEARCH_TAR=$2
 SITEMAP_ARCHIVE=$3
-HOST=${4:-"disclosures.ru"}
+MISSPELL_FOLDER=$4
+HOST=${5:-"disclosures.ru"}
 
 export TOOLS=/home/sokirko/smart_parser/tools
 export DISCLOSURES_FOlDER=$TOOLS/disclosures_site
@@ -21,8 +22,14 @@ function switch_service() {
   sudo systemctl status $service
 }
 
-#0
+#0.1
 python3 -m pip install -r $TOOLS/requirements.txt
+
+#0.2
+if [ ! -d $MISSPELL_FOLDER ]; then
+  echo "cannot find misspell folder $MISSPELL_FOLDER"
+  exit 1
+fi
 
 #1. mysql
 NEW_MYSQL=/var/lib/mysql.new
@@ -81,16 +88,29 @@ fi
 #3.  sitemaps
 tar xf $SITEMAP_ARCHIVE
 
+#4. misspell
+rm -rf data/misspell_bin.sav
+mv  data/misspell_bin data/misspell_bin.sav
+mv  $MISSPELL_FOLDER data
 
-#4  restart
+#5  restart
 sudo systemctl restart gunicorn
 
-#5 testing by curl
+#6 testing by curl
 req_count=`python3 scripts/dolbilo.py --input-access-log data/access.test.log.gz  --host $HOST | jq ".normal_response_count"`
 canon_req_count="141"
 if [ "$req_count" != $canon_req_count ]; then
   echo "site testing returns only $req_count requests with 200 http code, while it must be $canon_req_count requests"
   exit 1
 fi
+
+#7
+python3 manage.py test --tag=front --settings disclosures.settings.prod declarations/tests  --no-input
+if [ $? != 0 ]; then
+    echo "python3 manage.py test has failed on the production server, It is not fatal, but please inspect the problems. Web-site users can suffer... "
+    echo "The new version was not rolled back."
+    exit 1
+fi
+
 
 echo "all done"

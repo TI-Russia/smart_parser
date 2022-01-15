@@ -1,9 +1,9 @@
-from django.test import TestCase
+from django.test import TestCase, tag
 from common.russian_fio import TRussianFio, TRussianFioRecognizer
 
 
 class ResolveFullNameTestCase(TestCase):
-
+    @tag('central', 'front')
     def test_search_section_by_person_name(self):
         def _P(fio):
             return TRussianFio(fio)
@@ -101,6 +101,7 @@ class ResolveFullNameTestCase(TestCase):
         self.assertTrue(_P("Иванов Иван Иванович").is_compatible_to(_F("Иванов", "И", "")))
         self.assertTrue(_P("Иванов Иван Иванович").is_compatible_to(_F("Иванов", "", "")))
 
+    @tag('central', 'front')
     def test_resolve_person_name_search_request(self):
         def _P(fio):
             return TRussianFio(fio, from_search_request=True)
@@ -111,6 +112,7 @@ class ResolveFullNameTestCase(TestCase):
         self.assertEqual(_P("Иванов Иван Иванович"), _F("Иванов", "Иван", "Иванович"))
         self.assertEqual(_P(" Иванов Иван  Иванович "), _F("Иванов", "Иван", "Иванович"))
 
+    @tag('central', 'front')
     def test_normalize_person_name(self):
         def _P(fio):
             return TRussianFio(fio).get_normalized_person_name()
@@ -122,6 +124,7 @@ class ResolveFullNameTestCase(TestCase):
         self.assertEqual(_P("Иванов И И"), "Иванов И И")
         self.assertEqual(_P("Иванов Иван Иванович    оглы"), "Иванов Иван Иванович Оглы")
 
+    @tag('central', 'front')
     def test_contains(self):
         r = TRussianFioRecognizer()
         self.assertTrue(r.string_contains_Russian_name('Новикова Татьяна Николаевна Жилой Дом (Долевая Собственность ½)'))

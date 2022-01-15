@@ -5,13 +5,13 @@ from common.logging_wrapper import setup_logging
 from common.primitives import build_dislosures_sha256
 import declarations.models as models
 
-from django.test import TestCase
+from django.test import TestCase, tag
 import os
 import json
 
 
 class SecondPassportImportTestCase(TestCase):
-
+    @tag('central')
     def test_import_second_passport(self):
         self.assertGreater(models.Office.objects.count(), 0)
         models.Section.objects.all().delete()

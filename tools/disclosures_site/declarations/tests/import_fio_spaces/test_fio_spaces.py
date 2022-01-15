@@ -4,7 +4,7 @@ from declarations.permalinks import TPermalinksManager
 from common.logging_wrapper import setup_logging
 import declarations.models as models
 
-from django.test import TestCase
+from django.test import TestCase, tag
 import os
 
 
@@ -13,7 +13,7 @@ import os
 # We have to ignore this space during db recreation.
 
 class FioSpacesTestCase(TestCase):
-
+    @tag('central')
     def test_import_second_passport(self):
         self.assertGreater(models.Office.objects.count(), 0)
         models.Section.objects.all().delete()

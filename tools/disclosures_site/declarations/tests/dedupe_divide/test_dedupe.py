@@ -5,10 +5,10 @@ from declarations.management.commands.create_permalink_storage import CreatePerm
 from declarations.tests.dedupe_base_for_tests import TestDedupeBase
 
 import os
-
+from django.test import tag
 
 class DividePersonInHalf(TestDedupeBase):
-
+    @tag('central')
     def test(self):
         self.initialize()
         permalinks_folder = os.path.dirname(__file__)

@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, tag
 import declarations.models as models
 from declarations.views import SectionSearchView, compare_Russian_fio
 from declarations.management.commands.build_elastic_index import BuildElasticIndex
@@ -14,7 +14,7 @@ class FioSearchTestCase(TestCase):
         results = view.get_queryset()
         return results
 
-
+    @tag('front')
     def test_search_section_by_person_name(self):
         self.assertGreater(models.Office.objects.count(), 0)
         models.Section.objects.all().delete()
@@ -28,6 +28,7 @@ class FioSearchTestCase(TestCase):
         self.assertEqual(self.search_sections_by_fio("Иванов Иван Иванович")[0].id, 1)
         self.assertEqual(self.search_sections_by_fio("Иванов Иван")[0].id, 1)
 
+    @tag('front')
     def test_search_section_by_partial_person_name(self):
         models.Section.objects.all().delete()
         models.Source_Document.objects.all().delete()
@@ -59,5 +60,6 @@ class FioSearchTestCase(TestCase):
         res = self.search_sections_by_fio("Один")
         self.assertEqual(len(res), 1)
 
+    @tag('front')
     def test_fio_compare(self):
         self.assertFalse(compare_Russian_fio("Сокирко Иван Ильич", "Алексей Ильич"))

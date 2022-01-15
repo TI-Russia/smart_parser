@@ -26,7 +26,8 @@ class TDeclarationWebSiteList:
             for u in o.office_web_sites:
                 site_url = get_site_url(u.url)
                 if site_url in self.web_sites:
-                    assert site_url not in self.web_sites
+                    if site_url in self.web_sites:
+                        raise Exception("url {} occurs in office db more than one time".format(site_url))
                 self.web_sites[site_url] = u
                 self.web_sites_to_office[site_url] = o
 

@@ -1,10 +1,11 @@
-from django.test import TestCase
+from django.test import TestCase, tag
 from scripts.access_log_squeeze import TAccessLogReader
 import os
 
 
 class TestAccessLogSqueeze(TestCase):
 
+    @tag('front')
     def test_access_log_squeeze(self):
         output = os.path.join(os.path.dirname(__file__), "access_log_squeeze.txt")
         args = TAccessLogReader.parse_args([

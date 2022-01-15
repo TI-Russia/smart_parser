@@ -2,7 +2,7 @@ import declarations.models as models
 from disclosures_site.scripts.join_human_and_dlrobot import TJoiner
 from declarations.input_json import TDlrobotHumanFileDBM
 
-from django.test import TestCase
+from django.test import TestCase, tag
 import os
 import json
 
@@ -138,6 +138,7 @@ class JoinDLrobotAndHuman(TestCase):
         if os.path.exists(self.dlrobot_human_path):
             os.unlink(self.dlrobot_human_path)
 
+    @tag('central')
     def test_join_dlrobot_and_human(self):
         self.assertGreater(models.Office.objects.count(), 0)
         args = ['--max-ctime', '5602811863', #the far future

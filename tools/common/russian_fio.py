@@ -1,8 +1,11 @@
-import re
 from common.primitives import normalize_whitespace
 from pylem import MorphanHolder, MorphLanguage, LemmaInfo
 
+import re
+import os
+
 RUSSIAN_MORPH_DICT = MorphanHolder(MorphLanguage.Russian)
+
 
 def is_morph_surname(w):
     lemm_info: LemmaInfo
@@ -17,6 +20,7 @@ def is_morph_first_name(w):
         if not lemm_info.predicted and 'name' in lemm_info.morph_features and 'poss' not in lemm_info.morph_features:
             return True
     return False
+
 
 def get_max_word_weight(word_list):
     lemm_info: LemmaInfo
@@ -47,6 +51,7 @@ POPULAR_RUSSIAN_NAMES = [
 
 POPULAR_RUSSIAN_NAMES_SET = set(POPULAR_RUSSIAN_NAMES)
 
+
 def is_title_case(s):
     return s.title() == s
 
@@ -56,6 +61,8 @@ def count_alpha(s):
 
 
 class TRussianFio:
+    fio_misspell_path = os.path.join(os.path.dirname(__file__), "../disclosures_site/data/misspell_bin")
+
     def __init__(self, person_name, from_search_request=False, make_lower=True):
         self.case = None
         self.input_person_name = person_name
@@ -85,6 +92,14 @@ class TRussianFio:
                 (len(s) == 2 and s[0].isalpha() and s[1] == '.') or \
                 (len(s) == 3 and s[0] == '.' and s[1].isalpha() and s[2] == '.') or \
                 (len(s) == 3 and s[0].isupper() and s[1] == '.' and s[2] == '.')
+
+    @staticmethod
+    def convert_to_rml_encoding(person_name):
+        return person_name.replace(' ', '_').upper()
+
+    @staticmethod
+    def convert_from_rml_encoding(person_name):
+        return " ".join(w.title() for w in person_name.split("_"))
 
     @staticmethod
     def is_morph_surname_or_predicted(w):
@@ -118,6 +133,17 @@ class TRussianFio:
             return s
         else:
             return normalize_whitespace(self.input_person_name).lower()
+
+    def get_abridged_normalized_person_name(self):
+        if not self.is_resolved:
+            return normalize_whitespace(self.input_person_name).lower()
+        s = self.family_name.title()
+        if len(self.first_name) >= 1:
+            s += " " + self.first_name[0].upper() + "."
+        if len(self.patronymic) >= 1:
+            s += " " + self.patronymic[0].upper() + "."
+        return s
+
 
     def _check_name_initial_complex(self, s):
         if count_alpha(s) < 2:

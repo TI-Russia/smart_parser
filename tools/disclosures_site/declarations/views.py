@@ -8,6 +8,7 @@ from declarations.apps import DeclarationsConfig
 from declarations.car_brands import CAR_BRANDS
 from declarations.gender_recognize import TGender
 from declarations.input_json import TIntersectionStatus
+from pylem import MorphanHolder, MorphLanguage
 
 from django.views import generic
 from django.views.generic.edit import FormView
@@ -26,6 +27,7 @@ import json
 
 
 logger = logging.getLogger(__name__)
+FIO_MISSPELL_CORRECTOR = MorphanHolder(MorphLanguage.FioDisclosures, TRussianFio.fio_misspell_path)
 
 
 class SectionView(generic.DetailView):
@@ -250,10 +252,20 @@ class CommonSearchView(FormView, generic.ListView):
         context = super().get_context_data(**kwargs)
         if hasattr(self, "hits_count"):
             context['hits_count'] = self.hits_count
-            if hasattr(self, "fuzzy_search"):
-                context['fuzzy_search'] = self.fuzzy_search
-            if hasattr(self, "skip_rubric_filtering"):
-                context['skip_rubric_filtering'] = self.skip_rubric_filtering
+            if self.hits_count > 0:
+                if hasattr(self, "fuzzy_search"):
+                    context['fuzzy_search'] = self.fuzzy_search
+                if hasattr(self, "skip_rubric_filtering"):
+                    context['skip_rubric_filtering'] = self.skip_rubric_filtering
+
+            old_cgi_fields = self.field_params
+            if hasattr(self, "person_name_corrections"):
+                context['corrections'] = list()
+                for person_name in self.person_name_corrections:
+                    new_cgi_fields = dict(old_cgi_fields.items())
+                    new_cgi_fields["person_name"] = person_name
+                    context['corrections'].append((self.get_query_in_cgi(new_cgi_fields), person_name))
+
             context['query_fields'] = self.get_query_in_cgi(self.field_params)
             old_sort_by, old_order = self.get_sort_order()
             old_cgi_fields = self.field_params
@@ -445,7 +457,7 @@ class CommonSearchView(FormView, generic.ListView):
         if search_results is None:
             return []
         object_list = self.filter_search_results(search_results)
-        if len(object_list) == 0 and self.field_params.get("rubric_id") is not None:
+        if len(object_list) == 0 and self.field_params.get("rubric_id") is not None and len(self.field_params.get("rubric_id")) > 0:
             self.log("search without rubric, because we get no results with rubric")
             search_results = self.query_elastic_search(False)
             if search_results is None:
@@ -513,7 +525,18 @@ class SectionSearchView(CommonSearchView):
 
     def get_queryset(self):
         self.build_field_params()
-        return self.get_queryset_common()
+        object_list = self.get_queryset_common()
+        if len(object_list) == 0:
+            name = self.field_params.get('person_name')
+            if name is not None and len(name) > 5:
+                fio = TRussianFio(name, from_search_request=False)
+                if fio.is_resolved:
+                    name = TRussianFio.convert_to_rml_encoding(fio.get_normalized_person_name())
+                    corrections = FIO_MISSPELL_CORRECTOR.correct_misspell(name)
+                    if len(corrections) > 0:
+                        if name != corrections[0]:
+                                self.person_name_corrections = list(TRussianFio.convert_from_rml_encoding(c) for c in corrections[:10])
+        return object_list
 
 
 class FileSearchView(CommonSearchView):

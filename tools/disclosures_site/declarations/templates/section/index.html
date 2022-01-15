@@ -112,45 +112,53 @@
 {% if hits_count is not None %}
     <br/>
     Число найденных деклараций: {{ hits_count }}
-    {% if fuzzy_search %}
-        <small>(точного вхождения не найдено, ищем без фильтра по ФИО) </small>
-    {% endif %}
-    {% if skip_rubric_filtering %}
-        <small>(ничего не найдено в указанной рубрике, убираем фильтр по рубрике) </small>
-    {% endif %}
 
-
-
-    <br/>
-
-    <table cellpadding="5">
-        <tr>
-            <th>ID</th>
-            <th><a href="?{{sort_by_person_name}}">ФИО</a></th>
-            <th><a href="?{{sort_by_income_year}}">Год</a></th>
-            <th><a href="?{{sort_by_person_id}}">Декларант</a></th>
-            <th><a href="?{{sort_by_income_size}}">Доход</a></th>
-            <th>Рубрика</th>
-        </tr>
-        {% for section in object_list %}
-        <tr>
-            <td>{{section.id }}</td>
-            <td><a href="/section/{{ section.id }}">{{ section.person_name }} </a></td>
-            <td>{{ section.income_year }}</td>
-            <td>
-                {% if section.person_id %}
-                <a href="/person/{{ section.person_id }}"> {{section.person_id }} </a>
-                {% endif %}
-            </td>
-            <td>{{ section.income_size }}</td>
-            <td><small>{{ section.rubric_str }}</small></td>
-        </tr>
+    {% if corrections %}
+        <br/><br/><small>может быть, вы имели в виду:  </small>
+        {% for href, anchor in corrections %}
+            <a href="?{{href}}">{{anchor}}</a>&nbsp; &nbsp;
         {% endfor %}
-    </table>
+    {% else %}
+        {% if fuzzy_search %}
+            <small>ничего не найдено(точного вхождения не найдено, ищем без фильтра по ФИО) </small>
+        {% endif %}
+        {% if skip_rubric_filtering %}
+            <small>(ничего не найдено в указанной рубрике, убираем фильтр по рубрике) </small>
+        {% endif %}
 
 
-    {% include "search/paginator.html" %}
+        <br/>
 
+        <table cellpadding="5">
+            <tr>
+                <th>ID</th>
+                <th><a href="?{{sort_by_person_name}}">ФИО</a></th>
+                <th><a href="?{{sort_by_income_year}}">Год</a></th>
+                <th><a href="?{{sort_by_person_id}}">Декларант</a></th>
+                <th><a href="?{{sort_by_income_size}}">Доход</a></th>
+                <th>Рубрика</th>
+            </tr>
+            {% for section in object_list %}
+            <tr>
+                <td>{{section.id }}</td>
+                <td><a href="/section/{{ section.id }}">{{ section.person_name }} </a></td>
+                <td>{{ section.income_year }}</td>
+                <td>
+                    {% if section.person_id %}
+                    <a href="/person/{{ section.person_id }}"> {{section.person_id }} </a>
+                    {% endif %}
+                </td>
+                <td>{{ section.income_size }}</td>
+                <td><small>{{ section.rubric_str }}</small></td>
+            </tr>
+            {% endfor %}
+        </table>
+
+
+        {% include "search/paginator.html" %}
+
+    {% endif %}
 {% endif %}
+
 
 {% endblock content %}

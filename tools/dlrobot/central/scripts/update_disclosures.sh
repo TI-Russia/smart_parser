@@ -61,7 +61,7 @@ source $COMMON_SCRIPT
      python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric sections_person_name_income_year_spouse_income_size  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
 
   #10.1  остановка dlrobot на $DEDUPE_HOSTS в параллель (максмимум 3 часа), может немного одновременно проработать со сливалкой
-  echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot/worker/scripts/dl_cloud_manager.py --action stop --host &
+    echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot/worker/scripts/dl_cloud_manager.py --action stop --host &
 
   #11 создание surname_rank (40 мин)
     python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclosures.settings.dev
@@ -132,6 +132,9 @@ new_permalinks_pid=$!
     python3 $TOOLS/disclosures_site/manage.py generate_sitemaps --settings disclosures.settings.prod --output-file disclosures/static/sitemap.xml \
        --access-log-squeeze access_log_squeeze_flt.txt --tar-path sitemap.tar
 
+#17.4 misspell dict
+    python3 $TOOLS/disclosures_site/manage.py create_misspell_fio_db --settings disclosures.settings.dev
+
 #18 создание дампа базы
     cd $DLROBOT_FOLDER
     mysqldump -u disclosures -pdisclosures disclosures_db_dev  |  gzip -c > disclosures.sql.gz
@@ -169,6 +172,9 @@ wait $new_permalinks_pid
 
     scp $DLROBOT_FOLDER/sitemap.tar $FRONTEND:/tmp/sitemap.tar
 
+    ssh $FRONTEND rm -rf /tmp/misspell_bin
+    scp $DLROBOT_FOLDER/data/misspell_bin $FRONTEND:/tmp
+
 #21 обновление prod
     elastic_search_version_prod=`ssh $FRONTEND sudo /usr/share/elasticsearch/bin/elasticsearch --version`
     elastic_search_version_central=`sudo /usr/share/elasticsearch/bin/elasticsearch --version`
@@ -184,7 +190,7 @@ wait $new_permalinks_pid
     fi
 
     ssh $FRONTEND git -C $FRONTEND_SRC pull
-    ssh $FRONTEND bash -x $FRONTEND_WEB_SITE/scripts/switch_prod.sh /tmp/mysql.tar.gz /tmp/elastic.tar.gz /tmp/sitemap.tar
+    ssh $FRONTEND bash -x $FRONTEND_WEB_SITE/scripts/switch_prod.sh /tmp/mysql.tar.gz /tmp/elastic.tar.gz /tmp/sitemap.tar /tmp/misspell_bin
     ssh $PROD_SOURCE_DOC_SERVER sudo systemctl restart source_declaration_doc
 
 #22  посылаем данные dlrobot в каталог, который синхронизируется с облаком, очищаем dlrobot_central (без возврата)

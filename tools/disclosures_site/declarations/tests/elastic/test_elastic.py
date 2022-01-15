@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, tag
 import declarations.models as models
 import time
 from declarations.documents import ElasticSectionDocument
@@ -9,7 +9,7 @@ from elasticsearch import Elasticsearch
 
 
 class ElasticTestCase(TestCase):
-
+    @tag('front')
     def test_elastic(self):
         self.assertGreater(models.Office.objects.count(), 0)
 

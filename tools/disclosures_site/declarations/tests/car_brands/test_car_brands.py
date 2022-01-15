@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, tag
 from declarations.car_brands import CarBrands
 import json
 import os
@@ -6,6 +6,7 @@ import os
 
 class ResolveCarBrands(TestCase):
 
+    @tag('front')
     def test_primitive_car_brand(self):
         def check(str, canon_brands):
             brands = list(brand_finder.get_brand_name(x) for x in brand_finder.find_brands(str))
@@ -22,6 +23,7 @@ class ResolveCarBrands(TestCase):
         check("Легковой автомобиль Пежо Peugeot", ["Peugeot"])
         check("автомобиль Мерседес-\nБенц GL \n350 CDI	Mersedes-Benz", ["Mersedes-Benz"])
 
+    @tag('front')
     def test_car_brand_1000(self):
         brand_finder = CarBrands()
         with open(os.path.join(os.path.dirname(__file__), 'cases_1000.txt')) as inp:

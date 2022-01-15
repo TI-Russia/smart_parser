@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, tag
 import declarations.models as models
 from declarations.views import OfficeSearchView
 from declarations.management.commands.build_elastic_index import BuildElasticIndex
@@ -7,7 +7,7 @@ from common.html_parser import THtmlParser
 
 
 class OfficeSearchTestCase(TestCase):
-
+    @tag('front')
     def test_search_for_office(self):
         self.assertGreater(models.Office.objects.count(), 0)
         BuildOfficeCalculatedParams(None, None).handle(None)

@@ -6,7 +6,7 @@ from declarations.management.commands.create_permalink_storage import CreatePerm
 import declarations.models as models
 import os
 import json
-from django.test import TestCase
+from django.test import TestCase, tag
 
 
 def build_declarator_squeeze(declarator_document_id, mapping_value, fio, income_main1, income_main2, use_only_surname,
@@ -75,6 +75,7 @@ class CopyPersonIdTestCaseBase(TestCase):
 
 
 class Simple(CopyPersonIdTestCaseBase):
+    @tag('central')
     def test(self):
 
         TPermaLinksPerson(CopyPersonIdTestCaseBase.permalinks_folder).create_and_save_empty_db()
@@ -87,6 +88,7 @@ class Simple(CopyPersonIdTestCaseBase):
 
 
 class OnlySurnameMatch(CopyPersonIdTestCaseBase):
+    @tag('central')
     def test_(self):
         TPermaLinksPerson(CopyPersonIdTestCaseBase.permalinks_folder).create_and_save_empty_db()
         self.run_copy_person_id(True, False)
@@ -97,6 +99,7 @@ class OnlySurnameMatch(CopyPersonIdTestCaseBase):
 
 
 class Ambiguity(CopyPersonIdTestCaseBase):
+    @tag('central')
     def test(self):
         TPermaLinksPerson(CopyPersonIdTestCaseBase.permalinks_folder).create_and_save_empty_db()
 
@@ -107,6 +110,7 @@ class Ambiguity(CopyPersonIdTestCaseBase):
 
 
 class SimpleRememberPrimaryKeys(CopyPersonIdTestCaseBase):
+    @tag('central')
     def test(self):
         TPermaLinksPerson(CopyPersonIdTestCaseBase.permalinks_folder).create_and_save_empty_db()
         self.run_copy_person_id(False, False)
@@ -122,6 +126,7 @@ class SimpleRememberPrimaryKeys(CopyPersonIdTestCaseBase):
 
 
 class ChangeDeclaratorPersonId(CopyPersonIdTestCaseBase):
+    @tag('central')
     def test(self):
         TPermaLinksPerson(CopyPersonIdTestCaseBase.permalinks_folder).create_and_save_empty_db()
         self.run_copy_person_id(False, False)
@@ -141,6 +146,7 @@ class ChangeDeclaratorPersonId(CopyPersonIdTestCaseBase):
 
 
 class AddDeclaratorPersonIdWhileDisclosuresPersonAlreadyExists(CopyPersonIdTestCaseBase):
+    @tag('central')
     def test(self):
         self.create_test_db()
 
