@@ -133,7 +133,7 @@ new_permalinks_pid=$!
        --access-log-squeeze access_log_squeeze_flt.txt --tar-path sitemap.tar
 
 #17.4 misspell dict
-    python3 $TOOLS/disclosures_site/manage.py create_misspell_fio_db --settings disclosures.settings.dev
+    python3 $TOOLS/disclosures_site/manage.py create_misspell_fio_db --settings disclosures.settings.dev --output-folder $DLROBOT_FOLDER/misspell_bin
 
 #18 создание дампа базы
     cd $DLROBOT_FOLDER
@@ -173,7 +173,7 @@ wait $new_permalinks_pid
     scp $DLROBOT_FOLDER/sitemap.tar $FRONTEND:/tmp/sitemap.tar
 
     ssh $FRONTEND rm -rf /tmp/misspell_bin
-    scp $DLROBOT_FOLDER/data/misspell_bin $FRONTEND:/tmp
+    scp -r $DLROBOT_FOLDER/misspell_bin $FRONTEND:/tmp
 
 #21 обновление prod
     elastic_search_version_prod=`ssh $FRONTEND sudo /usr/share/elasticsearch/bin/elasticsearch --version`

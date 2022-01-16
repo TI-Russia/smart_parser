@@ -17,6 +17,22 @@ class Command(BaseCommand):
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
         self.logger = setup_logging(log_file_name="create_misspell_db.log")
+        self.rml_path = None
+        self.converter1 = None
+        self.converter2 = None
+        self.output_folder = None
+
+    def init_options(self, options):
+        self.rml_path = options['rml_path']
+        if not os.path.exists(self.rml_path):
+            raise Exception("folder {} does not exist".format(self.rml_path))
+        self.converter1 = os.path.join(self.rml_path, 'Source/morph_dict/scripts/mrd_manager.py')
+        if not os.path.exists(self.converter1):
+            raise Exception("{} does not exist".format(self.converter1))
+        self.converter2 = os.path.join(self.rml_path, 'Bin/MorphGen')
+        if not os.path.exists(self.converter2):
+            raise Exception("{} does not exist".format(self.converter2))
+        self.output_folder = options['output_folder']
 
     def build_person_names(self):
         self.logger.info("process {} person names".format(models.Section.objects.count()))
@@ -47,24 +63,34 @@ class Command(BaseCommand):
         exitcode = os.system(cmd)
         assert exitcode == 0
 
-    def build_binaries_with_RML(self, temp_list_path, output_path):
-        RML = "/home/sokirko/RML"
-        assert os.path.exists(RML)
-        converter1 = os.path.join(RML, 'Source/morph_dict/scripts/mrd_manager.py')
+    def build_binaries_with_RML(self, temp_list_path):
         cmd = '{} {} --action create_for_misspell --word-list {} --output-mrd-path {}'.format(
-            sys.executable, converter1, temp_list_path, os.path.join(output_path, "morphs.mrd")
+            sys.executable, self.converter1, temp_list_path, os.path.join(self.output_folder, "morphs.mrd")
         )
         self.run_system(cmd)
 
-        converter2 = os.path.join(RML, 'Bin/MorphGen')
         cmd = '{} --input {} --output-folder {}'.format(
-            converter2, os.path.join(output_path, "project.mwz"), output_path)
+            self.converter2, os.path.join(self.output_folder, "project.mwz"), self.output_folder)
         self.run_system(cmd)
 
+    def add_arguments(self, parser):
+        parser.add_argument(
+                '--rml-path',
+            dest='rml_path',
+            default="/home/sokirko/RML"
+        )
+        parser.add_argument(
+                '--output-folder',
+            dest='output_folder',
+            default=TRussianFio.fio_misspell_path
+        )
+
     def handle(self, *args, **options):
-        output_folder = TRussianFio.fio_misspell_path
-        temp_list = os.path.join(output_folder, "fio_list.txt")
+        self.init_options(options)
+        if not os.path.exists(self.output_folder):
+            os.mkdir(self.output_folder)
+        temp_list = os.path.join(self.output_folder, "fio_list.txt")
         with open(temp_list, "w") as outp:
             self.write_list(outp)
-        self.build_binaries_with_RML(temp_list, output_folder)
+        self.build_binaries_with_RML(temp_list)
         os.unlink(temp_list)
