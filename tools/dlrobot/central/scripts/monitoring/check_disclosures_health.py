@@ -117,7 +117,7 @@ class TCheckState:
 class TMonitoring:
     def __init__(self):
         self.args = parse_args()
-        self.logger = setup_logging("health_chk.log")
+        self.logger = setup_logging("check_disclosures_heath")
         self.last_messages = dict()
         self.checks = list()
         with open(self.args.config) as inp:
