@@ -12,6 +12,7 @@ def parse_args(arg_list):
     parser.add_argument("--host", dest='host')
     parser.add_argument("--use-http", dest='use_http', action="store_true", default=False)
     parser.add_argument("--input-access-log", dest='input_access_log')
+    parser.add_argument("--expected-normal-count", dest='expected_normal_count')
     parser.add_argument("--user-agent", dest='user_agent', required=False, default="Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)")
     return parser.parse_args(arg_list)
 
@@ -61,3 +62,7 @@ if __name__ == "__main__":
     }
     logger.debug(json.dumps(metrics))
     print(json.dumps(metrics))
+    if args.expected_normal_count is not None:
+        if args.expected_normal_count != normal_response_count:
+            logger.error("expected_normal_count = {}, read_count={}".format(args.expected_normal_count, normal_response_count))
+            sys.exit(1)
