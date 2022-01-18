@@ -16,8 +16,6 @@ import urllib.parse
 
 
 class TWebSiteCrawlSnapshot:
-    DEFAULT_CRAWLING_TIMEOUT = 60 * 60 * 3 # 3 hours
-    CRAWLING_TIMEOUT = DEFAULT_CRAWLING_TIMEOUT
 
     def __init__(self, project, morda_url=""):
         #runtime members (no serialization)
@@ -150,8 +148,9 @@ class TWebSiteCrawlSnapshot:
     def check_crawling_timeouts(self, robot_speed, crawled_web_pages_count):
         current_time = time.time()
         crawl_time_all_steps = current_time - self.start_crawling_time
-        if crawl_time_all_steps > TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT:
-            self.logger.error("timeout stop crawling: TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT={}".format(TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT))
+        if crawl_time_all_steps > self.parent_project.config.crawling_timeout:
+            self.logger.error("timeout stop crawling: TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT={}".format(
+                self.parent_project.config.crawling_timeout))
             self.stopped_by_timeout = True
             return False
 

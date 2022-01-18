@@ -2,7 +2,7 @@ from dlrobot.robot.tests.selenium_for_tests import TestDeclarationLinkSelenium
 from common.http_request import THttpRequester
 from common.link_info import TLinkInfo, TClickEngine
 from dlrobot.common.robot_step import TRobotStep
-
+from dlrobot.common.robot_config import TRobotConfig
 
 class TestMid(TestDeclarationLinkSelenium):
 
@@ -27,9 +27,15 @@ class TestMid(TestDeclarationLinkSelenium):
             target_url='https://www.mid.ru/documents/10180/4780294/210610%281%29.mp4/8acd221f-cb28-4522-a251-5437b160672e'
         )
         logger = self.logger
+
+        class TDummyProject:
+            def __init__(self):
+                self.config = TRobotConfig.read_by_config_type("prod")
+
         class TDummyOffice:
             def __init__(self):
                 self.logger = logger
+                self.parent_project = TDummyProject()
 
         step_info = TRobotStep(TDummyOffice())
         res = step_info.normalize_and_check_link(link_info, TRobotStep.looks_like_a_declaration_link)

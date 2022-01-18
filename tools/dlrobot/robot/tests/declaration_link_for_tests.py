@@ -73,14 +73,12 @@ class TestDeclarationLinkBase(TestCase):
         self.web_server.set_web_site_folder(os.path.dirname(file_path))
         TDownloadEnv.clear_cache_folder()
         start_url = self.build_url('/' + os.path.basename(file_path))
-        config = {
-            "robot_steps": [
+        robot_steps = [
                 {
                     'step_name': "declarations"
                 }
-            ]
-        }
-        with TRobotProject(self.logger, self.project_path, TRobotConfig(config), "result", enable_search_engine=False
+        ]
+        with TRobotProject(self.logger, self.project_path, TRobotConfig(passport_steps=robot_steps), "result", enable_search_engine=False
                            ) as project:
             project.add_web_site(self.server_address)
             office_info = project.web_site_snapshots[0]

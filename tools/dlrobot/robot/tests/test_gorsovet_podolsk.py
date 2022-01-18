@@ -1,5 +1,4 @@
 from dlrobot.robot.tests.selenium_for_tests import TestDeclarationLinkSelenium
-import os
 
 
 class GorSovet_Podolsk(TestDeclarationLinkSelenium):

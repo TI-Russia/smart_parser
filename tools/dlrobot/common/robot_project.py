@@ -20,7 +20,6 @@ class TRobotProject:
                  enable_search_engine=True, start_selenium=True, web_sites_db=None):
         self.logger = logger
         self.start_time = time.time()
-        self.total_timeout = 0
         self.selenium_driver = TSeleniumDriver(logger)
         self.visited_pages_file = filename + TRobotProject.visited_pages_extension
         self.click_paths_file = filename + ".click_paths"
@@ -37,13 +36,7 @@ class TRobotProject:
         self.start_selenium = start_selenium
 
     def have_time_for_last_dl_recognizer(self):
-        if self.total_timeout == 0:
-            return True
-        future_kill_time = self.start_time + self.total_timeout
-        if future_kill_time - time.time() < 60*20:
-            #we need at least 20 minutes to export files
-            return False
-        return True
+        return self.config.have_time_for_last_dl_recognizer(self.start_time)
 
     def get_robot_step_names(self):
         return list(r['step_name'] for r in self.config.get_step_passports())

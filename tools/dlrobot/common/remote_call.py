@@ -1,5 +1,6 @@
 from dlrobot.common.robot_project import TRobotProject
 from common.urllib_parse_pro import site_url_to_file_name
+from dlrobot.common.robot_config import TRobotConfig
 
 import os
 import time
@@ -21,7 +22,6 @@ class TRemoteDlrobotCall:
         self.result_files_count = 0
         self.worker_host_name = None
         self.reach_status = None
-        self.crawling_timeout = None #not serialized
         self.file_line_index = None
 
     def task_ended(self):
@@ -70,12 +70,12 @@ class TRemoteDlrobotCall:
                 'web_site': self.web_site
         }
 
-    def calc_project_stats(self, logger, web_sites_db, project_folder):
+    def calc_project_stats(self, logger, web_sites_db, project_folder, config: TRobotConfig):
         if not self.task_ended():
             return
         try:
             path = os.path.join(project_folder, self.project_file)
-            with TRobotProject(logger, path, start_selenium=False,
+            with TRobotProject(logger, path, config=config, start_selenium=False,
                                enable_search_engine=False, web_sites_db=web_sites_db) as project:
                 project.read_project(check_step_names=False)
                 web_site_snapshot = project.web_site_snapshots[0]

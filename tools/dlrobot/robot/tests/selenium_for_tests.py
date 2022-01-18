@@ -1,6 +1,7 @@
 from common.download import  TDownloadEnv
 from dlrobot.common.robot_step import TRobotStep, TUrlInfo
 from dlrobot.common.robot_project import TRobotProject
+from dlrobot.common.robot_config import TRobotConfig
 from common.http_request import THttpRequester
 from common.logging_wrapper import close_logger, setup_logging
 from dlrobot.robot.tests.common_env import TestDlrobotEnv
@@ -18,14 +19,8 @@ class TestDeclarationLinkSelenium(TestCase):
                                is_last_step=False):
 
         TDownloadEnv.clear_cache_folder()
-        config = {
-            "robot_steps": [
-                {
-                    'step_name': "declarations"
-                }
-            ]
-        }
-        with TRobotProject(self.logger, "project.txt", config, "result", enable_search_engine=False,
+        robot_steps = [{'step_name': "declarations"}]
+        with TRobotProject(self.logger, "project.txt", TRobotConfig(passport_steps=robot_steps), "result", enable_search_engine=False,
                            ) as project:
             project.read_project()
             office_info = project.web_site_snapshots[0]

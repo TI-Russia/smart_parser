@@ -5,7 +5,6 @@ class TDeclarationWebSite:
     def __init__(self, url=None, parent_office=None):
         self.url = url
         self.reach_status = TWebSiteReachStatus.normal
-        self.dlrobot_max_time_coeff = 1.0
         self.comments = None
         self.redirect_to = None
         self.title = None
@@ -17,7 +16,6 @@ class TDeclarationWebSite:
     def read_from_json(self, js):
         self.url = js.get('url')
         self.reach_status = js.get('status', TWebSiteReachStatus.normal)
-        self.dlrobot_max_time_coeff = js.get('dlrobot_max_time_coeff', 1.0)
         self.comments = js.get('comments')
         self.redirect_to = js.get('redirect_to')
         self.corruption_keyword_in_html = js.get('corruption_keyword_in_html')
@@ -32,8 +30,6 @@ class TDeclarationWebSite:
         }
         if self.reach_status != TWebSiteReachStatus.normal:
             rec['status'] = self.reach_status
-        if self.dlrobot_max_time_coeff != 1.0:
-            rec['dlrobot_max_time_coeff'] = self.dlrobot_max_time_coeff
         if self.comments is not None:
             rec['comments'] = self.comments
         if self.redirect_to is not None:
