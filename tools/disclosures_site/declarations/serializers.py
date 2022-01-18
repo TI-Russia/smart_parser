@@ -2,7 +2,6 @@ from . import models
 from common.primitives import normalize_whitespace
 from office_db.countries import get_country_code
 from office_db.rubrics import TOfficeRubrics
-from declarations.documents import OFFICES
 from declarations.section_passport import TSectionPassportItems1,TSectionPassportItems2
 from office_db.offices_in_memory import TOfficeTableInMemory
 from common.russian_fio import TRussianFio
@@ -93,7 +92,7 @@ class TSmartParserSectionJson:
     def init_rubric(self):
         # json_reader.section.rubric_id = source_document_in_db.office.rubric_id does not work
         # may be we should call source_document_in_db.refresh_from_db
-        self.section.rubric_id = OFFICES.offices[self.section.office.id].rubric_id
+        self.section.rubric_id = models.Office.offices_in_memory.offices[self.section.office.id].rubric_id
 
         if self.section.rubric_id == TOfficeRubrics.Municipality and \
                 TOfficeTableInMemory.convert_municipality_to_education(self.section.position):

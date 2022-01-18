@@ -4,7 +4,6 @@ from declarations.permalinks import TPermaLinksSection, TPermaLinksSourceDocumen
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from declarations.input_json import TDlrobotHumanFileDBM, TSourceDocument, TDeclaratorReference, TWebReference
 from common.logging_wrapper import setup_logging
-from declarations.documents import OFFICES
 from office_db.rubrics import TOfficeRubrics
 from office_db.russian_regions import TRussianRegions
 
@@ -138,14 +137,14 @@ class TImporter:
         if department is None or len(department) < 5:
             return src_doc.calculated_office_id
         region = self.regions.get_region_all_forms(department, TRussianRegions.Russia_as_s_whole_region_id)
-        return OFFICES.fsin_by_region.get(region, OFFICES.fsin_by_region[TRussianRegions.Russia_as_s_whole_region_id])
+        return models.Office.offices_in_memory.fsin_by_region.get(region, models.Office.offices_in_memory.fsin_by_region[TRussianRegions.Russia_as_s_whole_region_id])
 
     def import_one_smart_parser_json(self, source_document_in_db, input_json, src_doc: TSourceDocument):
         imported_section_years = list()
         section_index = 0
         TImporter.logger.debug("try to import {} declarants".format(len(input_json['persons'])))
         incomes = list()
-        is_fsin = OFFICES.offices[src_doc.calculated_office_id].rubric_id == TOfficeRubrics.Gulag
+        is_fsin = models.Office.offices_in_memory.offices[src_doc.calculated_office_id].rubric_id == TOfficeRubrics.Gulag
 
         for raw_section in input_json['persons']:
             section_index += 1
@@ -206,7 +205,7 @@ class TImporter:
             return response
 
     def import_office(self, office_id):
-        if self.args.get('rubric_id') is not None and OFFICES.offices.get(office_id).rubric_id != self.args.get(
+        if self.args.get('rubric_id') is not None and models.Office.offices_in_memory.offices.get(office_id).rubric_id != self.args.get(
                 'rubric_id'):
             return
 
@@ -241,7 +240,7 @@ class TImporter:
         cnt = 0
         for office_id in self.office_to_source_documents.keys():
             cnt += 1
-            if OFFICES.offices.get(office_id).rubric_id == TOfficeRubrics.Gulag:
+            if models.Office.offices_in_memory.offices.get(office_id).rubric_id == TOfficeRubrics.Gulag:
                 #put all fsin offices to the first process
                 bucket_id = 0
             else:
