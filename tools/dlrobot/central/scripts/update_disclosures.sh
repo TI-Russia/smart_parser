@@ -176,21 +176,10 @@ wait $new_permalinks_pid
     scp -r $DLROBOT_FOLDER/misspell_bin $FRONTEND:/tmp
 
 #21 обновление prod
-    elastic_search_version_prod=`ssh $FRONTEND sudo /usr/share/elasticsearch/bin/elasticsearch --version`
-    elastic_search_version_central=`sudo /usr/share/elasticsearch/bin/elasticsearch --version`
-    if [ "$elastic_search_version_prod" != "$elastic_search_version_central" ]; then
-      echo "Error! Elasticsearch version in the central server and in the prod server are different. Binary indices can be incompatible!"
-      exit 1
-    fi
-    mysql_version_prod=`ssh $FRONTEND sudo mysqld --version`
-    mysql_version_central=`sudo mysqld --version`
-    if [ "$mysql_version_prod" != "$mysql_version_central" ]; then
-      echo "Error! Mysql version in the central server and in the prod server are different. Binary indices can be incompatible!"
-      exit 1
-    fi
-
-    ssh $FRONTEND git -C $FRONTEND_SRC pull
-    ssh $FRONTEND bash -x $FRONTEND_WEB_SITE/scripts/switch_prod.sh /tmp/mysql.tar.gz /tmp/elastic.tar.gz /tmp/sitemap.tar /tmp/misspell_bin
+    ssh $FRONTEND python3 $FRONTEND_WEB_SITE/scripts/setup_head_version.py --mysql-version `sudo mysqld --version` \
+               --elasticsearch-version `sudo /usr/share/elasticsearch/bin/elasticsearch --version`
+    ssh $FRONTEND python3 $FRONTEND_WEB_SITE/scripts/switch_prod.py --mysql-tar /tmp/mysql.tar.gz \
+      --elasticsearch-tar /tmp/elastic.tar.gz --sitemap-tar /tmp/sitemap.tar --misspell-folder /tmp/misspell_bin
     ssh $PROD_SOURCE_DOC_SERVER sudo systemctl restart source_declaration_doc
 
 #22  посылаем данные dlrobot в каталог, который синхронизируется с облаком, очищаем dlrobot_central (без возврата)

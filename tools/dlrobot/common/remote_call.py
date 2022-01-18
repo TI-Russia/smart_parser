@@ -75,7 +75,7 @@ class TRemoteDlrobotCall:
             return
         try:
             path = os.path.join(project_folder, self.project_file)
-            with TRobotProject(logger, path, [], None, start_selenium=False,
+            with TRobotProject(logger, path, start_selenium=False,
                                enable_search_engine=False, web_sites_db=web_sites_db) as project:
                 project.read_project(check_step_names=False)
                 web_site_snapshot = project.web_site_snapshots[0]

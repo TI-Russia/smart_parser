@@ -43,10 +43,8 @@ class TWebSiteCrawlSnapshot:
                 self.main_page_url)
 
         self.robot_steps = list()
-        for i in range(len(project.robot_step_passports)):
-            is_last_step = (i == len(project.robot_step_passports) - 1)
-            passport = project.robot_step_passports[i]
-            step = TRobotStep(self, **passport, is_last_step=is_last_step)
+        for i, passport in enumerate(project.config.get_step_passports()):
+            step = TRobotStep(self, **passport, is_last_step=(i == len(project.config.get_step_passports()) - 1))
             self.robot_steps.append(step)
 
     # declarations number per minute
@@ -185,7 +183,7 @@ class TWebSiteCrawlSnapshot:
             self.robot_steps = list()
             steps = init_json.get('steps', list())
             for i in range(len(steps)):
-                step = self.parent_project.robot_step_passports[i]
+                step = self.parent_project.config.get_step_passports()[i]
                 self.robot_steps.append(TRobotStep(self, **step, is_last_step=(i == len(steps) - 1)))
         for url, info in init_json.get('url_nodes', dict()).items():
             self.url_nodes[url] = TUrlInfo().from_json(info)

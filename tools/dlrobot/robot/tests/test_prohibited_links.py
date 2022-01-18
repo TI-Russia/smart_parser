@@ -11,7 +11,7 @@ from unittest import TestCase
 class TestProhibitedLinksBase(TestCase):
     def setup_project(self, morda_url):
         logger = setup_logging('prohibited')
-        self.project = TRobotProject(logger, '', [], "result", enable_search_engine=False)
+        self.project = TRobotProject(logger, '',  export_folder="result", enable_search_engine=False)
         web_site = self.project.add_web_site(morda_url)
         self.robot_step = TRobotStep(web_site)
         self.env = TestDlrobotEnv("data.prohibited")

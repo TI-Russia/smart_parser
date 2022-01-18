@@ -1,6 +1,7 @@
 from dlrobot.common.robot_web_site import TWebSiteCrawlSnapshot
 from common.selenium_driver import TSeleniumDriver
 from common.web_site_status import TWebSiteReachStatus
+from dlrobot.common.robot_config import TRobotConfig
 from common.export_files import TExportFile
 from office_db.web_site_list import TDeclarationWebSiteList
 
@@ -11,10 +12,11 @@ import tempfile
 import time
 
 
+
 class TRobotProject:
     visited_pages_extension = ".visited_pages"
 
-    def __init__(self, logger, filename, robot_step_passports, export_folder,
+    def __init__(self, logger, filename, config:TRobotConfig=None, export_folder=None,
                  enable_search_engine=True, start_selenium=True, web_sites_db=None):
         self.logger = logger
         self.start_time = time.time()
@@ -26,7 +28,7 @@ class TRobotProject:
         if len(filename)  > 0 and not os.path.exists(self.visited_pages_file):
             shutil.copy2(filename, self.visited_pages_file)
         self.web_site_snapshots = list()
-        self.robot_step_passports = robot_step_passports
+        self.config = config
         self.enable_search_engine = enable_search_engine  #switched off in tests, otherwize google shows captcha
         self.export_folder = export_folder
         self.web_sites_db = web_sites_db
@@ -44,7 +46,7 @@ class TRobotProject:
         return True
 
     def get_robot_step_names(self):
-        return list(r['step_name'] for r in self.robot_step_passports)
+        return list(r['step_name'] for r in self.config.get_step_passports())
 
     def __enter__(self):
         if self.start_selenium:
@@ -147,11 +149,7 @@ class TRobotProject:
             if check_step_names:
                 if 'step_names' in json_dict:
                     if json_dict['step_names'] != self.get_robot_step_names():
-                        raise Exception("different step step_names, adjust manually or rebuild the project")
-            else:
-                self.robot_step_passports = list()
-                for step_name in json_dict['step_names']:
-                    self.robot_step_passports.append({'step_name': step_name})
+                        raise Exception("different step names, adjust manually or rebuild the project")
 
             for o in json_dict.get('sites', []):
                 web_site = TWebSiteCrawlSnapshot(self).read_from_json(o)

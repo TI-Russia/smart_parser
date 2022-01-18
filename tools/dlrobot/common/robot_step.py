@@ -8,7 +8,8 @@ from common.http_request import THttpRequester
 from common.popular_sites import is_super_popular_domain
 from common.serp_parser import SearchEngine, SearchEngineEnum, SerpException
 from common.primitives import normalize_and_russify_anchor_text
-from dlrobot.robot.declaration_link import looks_like_a_declaration_link_without_cache, best_declaration_regex_match
+from dlrobot.robot.declaration_link import looks_like_a_declaration_link_without_cache, best_declaration_regex_match, \
+            url_features
 from dlrobot.common.url_info import TUrlInfo
 from common.languages import is_human_language
 
@@ -96,18 +97,17 @@ class TRobotStep:
 
     def __init__(self, website, step_name=None, step_urls=None, max_links_from_one_page=1000000,
                  transitive=False, is_last_step=False,
-                 check_link_func=None, include_sources=None, check_link_func_2=None, search_engine=None,
+                 check_link_func=None, include_sources=None, search_engine=None,
                  sitemap_xml_processor=None, profiler=None):
         self.website = website
         self.logger = website.logger
         self.step_name = step_name
         self.url_to_weight = dict() if step_urls is None else step_urls
         self.transitive = transitive
-        self.check_link_func = check_link_func
-        self.check_link_func_2 = check_link_func_2
+        self.check_link_func = getattr(self, check_link_func) if check_link_func is not None else self.looks_like_a_declaration_link
         self.search_engine = dict() if search_engine is None else search_engine
         self.include_sources = include_sources
-        self.sitemap_xml_processor = sitemap_xml_processor
+        self.sitemap_xml_processor = getattr(self, sitemap_xml_processor) if sitemap_xml_processor is not None else None
         self.is_last_step = is_last_step
         # see https://sutr.ru/about_the_university/svedeniya-ob-ou/education/ with 20000 links
         # see https://www.gov.spb.ru/sitemap/ with 8000 links (and it is normal for great web sites)
@@ -215,6 +215,14 @@ class TRobotStep:
                 text.startswith('структура') or  \
                 text.startswith('органы администрации')
 
+    def check_sveden_url_sitemap_xml(self, url):
+        features = url_features(url)
+
+        if sum(features) > 1:
+            return TLinkInfo.BEST_LINK_WEIGHT
+
+        return TLinkInfo.MINIMAL_LINK_WEIGHT
+
     def check_anticorr_link_text(self, link_info: TLinkInfo):
         text = link_info.anchor_text.strip().lower()
         if text.find('антикоррупционная комиссия') != -1:
@@ -255,7 +263,7 @@ class TRobotStep:
                 self.logger.debug("skip language link {}".format(link_info.anchor_text))
                 return False
             # no http head requests in the general wrapper, since they are too slow to process pages with 8000 links like gov.spb sitemap
-            if not check_link_func(self, link_info):
+            if not self.check_link_func(link_info):
                 return False
             else:
                 self.logger.debug("link {} passed {}".format(prepare_for_logging(link_info.anchor_text), check_link_func.__name__))
@@ -535,7 +543,9 @@ class TRobotStep:
             link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
             self.add_link_wrapper(link_info)
 
-    def add_links_from_sitemap_xml(self,  check_url_func):
+    def add_links_from_sitemap_xml(self):
+        if self.sitemap_xml_processor is None:
+            return
         assert self.website.main_page_url in self.website.url_nodes
         root_page = self.website.main_page_url.strip('/')
         tree = sitemap_tree_for_homepage(root_page)
@@ -543,7 +553,7 @@ class TRobotStep:
         useful = 0
         for page in tree.all_pages():
             cnt += 1
-            weight = check_url_func(page.url)
+            weight = self.sitemap_xml_processor(page.url)
             if weight > TLinkInfo.MINIMAL_LINK_WEIGHT:
                 if page.url not in self.pages_to_process:
                     useful += 1
@@ -602,8 +612,7 @@ class TRobotStep:
             self.use_search_engine(self.website.main_page_url)
             self.pages_to_process.update(self.url_to_weight)
 
-        if self.sitemap_xml_processor:
-            self.add_links_from_sitemap_xml(self.sitemap_xml_processor.get('check_url_func'))
+        self.add_links_from_sitemap_xml()
 
         self.apply_function_to_links(self.check_link_func)
 

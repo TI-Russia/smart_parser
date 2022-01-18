@@ -2,9 +2,9 @@
 from dlrobot.common.robot_project import TRobotProject
 from dlrobot.common.robot_step import TRobotStep
 from dlrobot.common.robot_web_site import TWebSiteCrawlSnapshot
+from dlrobot.common.robot_config import TRobotConfig
 from common.primitives import convert_timeout_to_seconds
 from common.http_request import THttpRequester
-from dlrobot.robot.declaration_link import check_sveden_url_sitemap_xml
 from common.logging_wrapper import setup_logging
 from dlrobot.robot.adhoc import process_adhoc
 
@@ -14,47 +14,16 @@ import os
 import sys
 import argparse
 import traceback
-from datetime import datetime
-
-ROBOT_STEPS = [
-    {
-        'step_name': "sitemap",
-        'check_link_func': TRobotStep.check_link_sitemap,
-        'include_sources': 'always'
-    },
-    {
-        'step_name': "anticorruption_div",
-        'check_link_func': TRobotStep.check_anticorr_link_text,
-        'include_sources': "always",
-        'search_engine': {
-            'request': "противодействие коррупции",
-            'policy': "run_always_before",
-            'max_serp_results': 1
-        },
-    },
-    {
-        'max_links_from_one_page': 1500, #sosnogorsk.org
-        'step_name': "declarations",
-        'check_link_func': TRobotStep.looks_like_a_declaration_link,
-        #'include_sources': "copy_if_empty",
-        'search_engine': {
-            'request': '"сведения о доходах {}"'.format(datetime.now().year - 1),
-            'policy': "run_always_before"
-        },
-        'sitemap_xml_processor': {
-            'check_url_func':  check_sveden_url_sitemap_xml
-        },
-        'transitive': True,
-    }
-]
 
 
 class TDlrobot:
     @staticmethod
     def parse_args(arg_list):
-        global ROBOT_STEPS
         parser = argparse.ArgumentParser()
         parser.add_argument("--project", dest='project', default="web_site_snapshots.txt", required=True)
+        parser.add_argument("--config", dest='config',
+                            default=os.path.join(os.path.dirname(__file__), "dlrobot_config.json"),
+                            required=False)
         parser.add_argument("--step", dest='step', default=None)
         parser.add_argument("--start-from", dest='start_from', default=None)
         parser.add_argument("--stop-after", dest='stop_after', default=None)
@@ -99,25 +68,18 @@ class TDlrobot:
     def __init__(self, args):
         self.args = args
         self.logger = setup_logging(log_file_name=args.logfile, logger_name="dlr")
+        self.config = TRobotConfig.read_from_file(self.args.config)
         self.logger.debug("TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT={}".format(TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT))
         TDownloadEnv.init_conversion(self.logger)
         THttpRequester.initialize(self.logger)
         if args.clear_cache_folder:
             TDownloadEnv.clear_cache_folder()
 
-    def step_index_by_name(self, name):
-        if name is None:
-            return -1
-        for i, r in enumerate(ROBOT_STEPS):
-            if name == r['step_name']:
-                return i
-        raise Exception("cannot find step {}".format(name))
-
     def make_steps(self, project):
         if not process_adhoc(project):
             if self.args.start_from != "last_step":
-                start = self.step_index_by_name(self.args.start_from) if self.args.start_from is not None else 0
-                end = self.step_index_by_name(self.args.stop_after) + 1 if self.args.stop_after is not None else len(ROBOT_STEPS)
+                start = self.config.get_step_index_by_name(self.args.start_from) if self.args.start_from is not None else 0
+                end = self.config.get_step_index_by_name(self.args.stop_after) + 1 if self.args.stop_after is not None else len(self.config.get_step_passports())
                 for step_no in range(start, end):
                     for web_site in project.web_site_snapshots:
                         web_site.find_links_for_one_website(step_no)
@@ -137,7 +99,7 @@ class TDlrobot:
     def open_project(self):
         self.logger.debug("hostname={}".format(platform.node()))
         self.logger.debug("use {} as a cache folder".format(os.path.realpath(TDownloadEnv.FILE_CACHE_FOLDER)))
-        with TRobotProject(self.logger, self.args.project, ROBOT_STEPS, self.args.result_folder) as project:
+        with TRobotProject(self.logger, self.args.project, self.config, self.args.result_folder) as project:
             project.total_timeout = convert_timeout_to_seconds(self.args.total_timeout)
             self.logger.debug("total_timeout = {}".format(self.args.total_timeout))
             project.read_project()

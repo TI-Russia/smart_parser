@@ -60,7 +60,7 @@ class TJoiner:
             self.logger.error("no dlrobot project file found".format(project_folder))
             return
         try:
-            project = TRobotProject(self.logger, project_path, [], None, web_sites_db=self.web_sites_db)
+            project = TRobotProject(self.logger, project_path, web_sites_db=self.web_sites_db)
             project.read_project(check_step_names=False)
             office_info: TWebSiteCrawlSnapshot
             office_info = project.web_site_snapshots[0]

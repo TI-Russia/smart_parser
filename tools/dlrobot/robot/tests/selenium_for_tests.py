@@ -18,18 +18,20 @@ class TestDeclarationLinkSelenium(TestCase):
                                is_last_step=False):
 
         TDownloadEnv.clear_cache_folder()
-        robot_steps = [
-            {
-                'step_name': "declarations"
-            }
-        ]
-        with TRobotProject(self.logger, "project.txt", robot_steps, "result", enable_search_engine=False,
+        config = {
+            "robot_steps": [
+                {
+                    'step_name': "declarations"
+                }
+            ]
+        }
+        with TRobotProject(self.logger, "project.txt", config, "result", enable_search_engine=False,
                            ) as project:
             project.read_project()
             office_info = project.web_site_snapshots[0]
             office_info.create_export_folder()
 
-            step_info = TRobotStep(office_info, **robot_steps[0], is_last_step=is_last_step)
+            step_info = TRobotStep(office_info, step_name="declarations", is_last_step=is_last_step)
             if isinstance(start_url, list):
                 for x in start_url:
                     step_info.pages_to_process[x] = 0

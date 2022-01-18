@@ -95,7 +95,7 @@ class TWebSitesManager:
             TDownloadEnv.clear_cache_folder()
             project_path = "project.txt"
             TRobotProject.create_project("dummy.ru", project_path)
-            with TRobotProject(self.logger, project_path, [], "result") as self.temp_dlrobot_project:
+            with TRobotProject(self.logger, project_path, export_folder="result") as self.temp_dlrobot_project:
                 for w in domains_filtered:
                     yield w
                 os.unlink(project_path)
@@ -223,7 +223,7 @@ class TWebSitesManager:
         TDownloadEnv.clear_cache_folder()
         project_path = "project.txt"
         TRobotProject.create_project("dummy.ru", project_path, web_sites_db=self.web_sites)
-        with TRobotProject(self.logger, project_path, [], "result") as self.temp_dlrobot_project:
+        with TRobotProject(self.logger, project_path, export_folder="result") as self.temp_dlrobot_project:
             for o in self.web_sites.offices.values():
                 if o.parent_id == self.args.parent_office_id:
                     self.logger.info("ofiice id = {}, {}".format(o.office_id, o.name))
