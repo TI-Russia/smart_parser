@@ -67,9 +67,6 @@ class TRobotConfig:
         self.pdf_quota_conversion = v
         TDownloadEnv.PDF_QUOTA_CONVERSION = v
 
-    def set_crawling_timeout(self, v):
-        self.crawling_timeout = v
-
     def get_step_passports(self):
         return self.passport_steps
 

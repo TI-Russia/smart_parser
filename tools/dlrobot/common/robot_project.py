@@ -106,7 +106,8 @@ class TRobotProject:
 
         robot_project_path = os.path.join(web_domain + ".txt")
         TRobotProject.create_project(web_domain, robot_project_path)
-        with TRobotProject(logger, robot_project_path, [], None, start_selenium=False) as project:
+        config = TRobotConfig.read_by_config_type("prod")
+        with TRobotProject(logger, robot_project_path, config, None, start_selenium=False) as project:
             project.add_web_site(web_domain)
             project.web_site_snapshots[0].reach_status = TWebSiteReachStatus.normal
             export_env = project.web_site_snapshots[0].export_env
@@ -153,7 +154,7 @@ class TRobotProject:
 
     def fetch_main_pages(self):
         for site in self.web_site_snapshots:
-            site.fetch_the_main_page()
+            site.fetch_the_main_page(self.enable_search_engine)
 
     def write_click_features(self, filename):
         self.logger.info("create {}".format(filename))
