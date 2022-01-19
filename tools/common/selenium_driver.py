@@ -16,6 +16,15 @@ import shutil
 from pathlib import Path
 import time
 
+POPULAR_ERROR_HTTP_CODES = {
+    '401': 'Unauthorized',
+    '404': 'Not Found',
+    '410': 'Gone',
+    '500': 'Internal Server Error',
+    '502': 'Bad Gateway',
+    '504': 'Gateway Timeout',
+}
+
 
 def make_folder_empty(folder):
     for filename in os.listdir(folder):
@@ -92,6 +101,7 @@ class TSeleniumDriver:
         options.add_experimental_option("excludeSwitches", ["enable-automation"])
         options.add_experimental_option('useAutomationExtension', False)
         options.add_argument('--disable-blink-features=AutomationControlled')
+
         prefs = {
             'download.default_directory': self.download_folder,
              'plugins.always_open_pdf_externally': True
@@ -109,7 +119,10 @@ class TSeleniumDriver:
         for retry in range(self.start_retry_count):
             try:
                 os.environ['LANG'] = 'ru'
-                self.the_driver = webdriver.Chrome(options=options, service_args=service_args)
+                self.the_driver = webdriver.Chrome(
+                        options=options,
+                        service_args=service_args
+                        )
                 self.the_driver.set_window_size(1440, 900)
                 break
             except (WebDriverException, InvalidSwitchToTargetException) as exp:
@@ -139,6 +152,16 @@ class TSeleniumDriver:
             self.the_driver.switch_to.window(self.the_driver.window_handles[len(self.the_driver.window_handles) - 1])
             self.the_driver.close()
 
+    def check_http_code(self, url):
+        if len(self.the_driver.page_source) < 700:
+            title = self.the_driver.title.strip()
+            if title.startswith('4') or title.startswith('3'):
+                words = title.split(' ')
+                if words[0] in POPULAR_ERROR_HTTP_CODES:
+                    message = " ".join(words[1:])
+                    if message == POPULAR_ERROR_HTTP_CODES[words[0]]:
+                        raise THttpRequester.RobotHttpException(message, url, words[0], "GET")
+
     def navigate(self, url):
         #to reduce memory usage
         if self.driver_processed_urls_count > 100:
@@ -163,6 +186,8 @@ class TSeleniumDriver:
             title = self.the_driver.title
             if len(title) == 0:
                 raise
+        self.check_http_code(url)
+
 
     def get_buttons_and_links(self):
         return list(self.the_driver.find_elements(By.XPATH, '//button | //a'))
