@@ -155,7 +155,7 @@ class TSeleniumDriver:
     def check_http_code(self, url):
         if len(self.the_driver.page_source) < 700:
             title = self.the_driver.title.strip()
-            if title.startswith('4') or title.startswith('3'):
+            if title.startswith('4') or title.startswith('3') or title.startswith('5'):
                 words = title.split(' ')
                 if words[0] in POPULAR_ERROR_HTTP_CODES:
                     message = " ".join(words[1:])
