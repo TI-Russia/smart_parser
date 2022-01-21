@@ -23,7 +23,6 @@ class TDearchiver:
             self.logger.error("export folder {} must exist before calling TDearchiver".format(outfolder))
             os.makedirs(self.outfolder, exist_ok=True)
 
-
     def unzip_one_archive(self, input_file, main_index):
         global FILE_EXTENSIONS_IN_ARCHIVE
         with zipfile.ZipFile(input_file) as zf:

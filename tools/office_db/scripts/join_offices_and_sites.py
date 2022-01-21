@@ -32,7 +32,6 @@ def main():
         i = TDeclarationWebSite()
         i.url = p + "://" + url
         i.reach_status = url_info.reach_status
-        i.dlrobot_max_time_coeff = url_info.dlrobot_max_time_coeff
         i.comments = url_info.comments
         i.redirect_to = url_info.redirect_to
         i.title = url_info.title

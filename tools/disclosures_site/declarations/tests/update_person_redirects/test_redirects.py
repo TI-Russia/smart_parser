@@ -2,7 +2,7 @@ from declarations.management.commands.create_database import CreateDatabase
 from declarations.management.commands.update_person_redirects import UpdatePersonRedirects
 import declarations.models as models
 from office_db.offices_in_memory import TOfficeTableInMemory
-from django.test import TestCase
+from django.test import TestCase, tag
 from django.db import connection
 from django.conf import settings
 import argparse
@@ -92,6 +92,7 @@ class PersonRedirectTestCase(TestCase):
                 output_squeeze.append(json.loads(l))
         return output_squeeze
 
+    @tag('front')
     def test_missing_person(self):
         old_data = {
             'persons': [{'id': 1}],
@@ -104,6 +105,7 @@ class PersonRedirectTestCase(TestCase):
         output_squeeze = self.run_updater(input_squeeze)
         self.assertEqual(0, len(output_squeeze))
 
+    @tag('front')
     def test_copy_old_redirects(self):
         data = {
             'persons': [{'id': 1}],
@@ -122,6 +124,7 @@ class PersonRedirectTestCase(TestCase):
         self.assertEqual(1, models.PersonRedirect.objects.all().count())
         self.assertEqual(1, models.PersonRedirect.objects.get(id=2).new_person_id)
 
+    @tag('front')
     def test_create_redirect(self):
         data = {
             'persons': [{'id': 1}],
@@ -147,6 +150,7 @@ class PersonRedirectTestCase(TestCase):
         self.assertIsNotNone(r)
         self.assertEqual(2, r.new_person_id)
 
+    @tag('front')
     def test_create_redirect_of_redirect(self):
         data = {
             'persons': [{'id': 2}],
@@ -177,6 +181,7 @@ class PersonRedirectTestCase(TestCase):
         self.assertIsNotNone(r)
         self.assertEqual(3, r.new_person_id)
 
+    @tag('front')
     def test_forget_section(self):
         data = {
             'source_documents': [{'id': 1}],
@@ -195,6 +200,7 @@ class PersonRedirectTestCase(TestCase):
         output_squeeze = self.run_updater(input_squeeze)
         self.assertEqual(0, len(output_squeeze))
 
+    @tag('front')
     def test_redirect_to_best_person(self):
         assert models.Office.objects.get(id=1) is not None
         data = {

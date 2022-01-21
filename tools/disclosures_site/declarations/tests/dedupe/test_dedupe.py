@@ -4,12 +4,12 @@ from declarations.permalinks import TPermaLinksPerson
 from declarations.management.commands.create_permalink_storage import CreatePermalinksStorageCommand
 from common.logging_wrapper import setup_logging
 from declarations.tests.dedupe_base_for_tests import TestDedupeBase
-
+from django.test import tag
 import os
 
 
 class CreateNewPersonId(TestDedupeBase):
-
+    @tag('central')
     def test(self):
         self.initialize()
         self.create_section(1, "Иванов Иван Иванович")
@@ -38,7 +38,7 @@ class CreateNewPersonId(TestDedupeBase):
 
 
 class UseOldPersonId(TestDedupeBase):
-
+    @tag('central')
     def test(self):
         self.initialize()
 
@@ -83,7 +83,7 @@ class UseOldPersonId(TestDedupeBase):
 
 
 class RememberOldPersonId(TestDedupeBase):
-
+    @tag('central')
     def test(self):
         self.initialize()
 
@@ -129,7 +129,7 @@ class RememberOldPersonId(TestDedupeBase):
 
 
 class AddNewSectionsToOldPersonId(TestDedupeBase):
-
+    @tag('central')
     def test(self):
         self.initialize()
         permalinks_folder = os.path.dirname(__file__)

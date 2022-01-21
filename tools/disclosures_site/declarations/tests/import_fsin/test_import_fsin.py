@@ -2,14 +2,14 @@ from declarations.management.commands.import_json import ImportJsonCommand
 from declarations.tests.smart_parser_for_testing import SmartParserServerForTesting
 from declarations.permalinks import TPermalinksManager
 from common.logging_wrapper import setup_logging
-from django.test import TestCase
+from django.test import TestCase, tag
 import os
 import declarations.models as models
 from declarations.management.commands.create_permalink_storage import CreatePermalinksStorageCommand
 
 
 class FsinImportTestCase(TestCase):
-
+    @tag('central')
     def test_fsin_import(self):
         self.assertGreater(models.Office.objects.count(), 0)
         models.Income.objects.all().delete()
@@ -32,12 +32,12 @@ class FsinImportTestCase(TestCase):
 
         self.assertEqual(models.Section.objects.count(), 6)
         surname_to_office = {
-            "Калашников А.П.": 482,
-            "Романов Р.В.": 482,
-            "Казан Ш.Т.": 3900,
-            "Галиев Р.Т.": 3906,
-            "Жамсаранов Ц.Л.": 3909,
-            "Батыров Ю.М.": 3913
+            "Калашников А. П.": 482,
+            "Романов Р. В.": 482,
+            "Казан Ш. Т.": 3900,
+            "Галиев Р. Т.": 3906,
+            "Жамсаранов Ц. Л.": 3909,
+            "Батыров Ю. М.": 3913
         }
         for s in models.Section.objects.all():
             self.assertEqual(surname_to_office[s.person_name], s.office_id, s.person_name)

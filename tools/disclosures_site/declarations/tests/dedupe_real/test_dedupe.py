@@ -5,11 +5,11 @@ from common.logging_wrapper import setup_logging
 from declarations.sql_helpers import run_sql_script
 
 import os
-from django.test import TestCase
+from django.test import TestCase, tag
 
 
 class ComplexDedupeTestCase(TestCase):
-
+    @tag('central')
     def test(self):
         logger = setup_logging(logger_name="test_real_dedupe")
         sql_script = os.path.join( os.path.dirname(__file__), "disclosures.sql.person_id_5295.n")

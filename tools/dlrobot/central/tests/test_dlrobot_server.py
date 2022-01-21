@@ -1,8 +1,8 @@
 from dlrobot.central.dlrobot_central import TDlrobotHTTPServer
 from dlrobot.worker.dlrobot_worker import TDlrobotWorker
 from dlrobot.central.scripts.fns.unzip_archive import TUnzipper
-from dlrobot.common.central_protocol import TTimeouts
 from dlrobot.common.dl_robot_round import TDeclarationRounds
+from dlrobot.common.robot_config import TRobotConfig
 from smart_parser_http.smart_parser_server import TSmartParserHTTPServer
 from source_doc_http.source_doc_server import TSourceDocHTTPServer
 from common.web_site_status import TWebSiteReachStatus
@@ -91,7 +91,7 @@ class TTestEnv:
                 js = []
             json.dump(js, outp, indent=4, ensure_ascii=False)
 
-    def setup_central(self, enable_smart_parser, web_site, dlrobot_project_timeout=5*60, tries_count=2,
+    def setup_central(self, enable_smart_parser, web_site, config=None, tries_count=2,
                       enable_source_doc_server=False, history_file=None):
         self.build_custom_offices_file(web_site)
         self.result_folder = os.path.join(self.data_folder, "processed_projects")
@@ -112,7 +112,7 @@ class TTestEnv:
             '--server-address', self.central_address,
             '--tries-count', str(tries_count),
             '--central-heart-rate', '1s',
-            '--dlrobot-crawling-timeout', str(dlrobot_project_timeout),
+            '--dlrobot-config-type', 'test',
             '--log-file-name', os.path.join(self.data_folder, "dlrobot_central.log"),
             '--disable-search-engines',
             '--disable-telegram',
@@ -124,10 +124,12 @@ class TTestEnv:
         if not enable_source_doc_server:
             server_args.append('--disable-source-doc-server')
         self.central = TDlrobotHTTPServer(TDlrobotHTTPServer.parse_args(server_args))
+        if config is not None:
+            self.central.config = config
         self.central_thread = threading.Thread(target=start_server, args=(self.central,))
         self.central_thread.start()
 
-    def setup_worker(self, action, fake_dlrobot=False):
+    def setup_worker(self, action, fake_dlrobot=False, crawling_timeout=None):
         os.mkdir(self.worker_folder)
         worker_args = [
             '--server-address', self.central_address,
@@ -136,6 +138,9 @@ class TTestEnv:
         ]
         if fake_dlrobot:
             worker_args.append('--fake-dlrobot')
+        if crawling_timeout is not None:
+            worker_args.extend(['--crawling-timeout', str(crawling_timeout)])
+
         worker_args.append(action)
         self.worker = TDlrobotWorker(TDlrobotWorker.parse_args(worker_args))
         self.start_worker_thread()
@@ -165,7 +170,7 @@ class TTestEnv:
         if self.worker is not None:
             self.worker_thread.join(0)
         if self.web_site is not None:
-            print ('web_site shutdown')
+            print('web_site shutdown')
             self.web_site.shutdown()
         if self.smart_parser_server is not None:
             self.smart_parser_server.stop_server()
@@ -245,7 +250,7 @@ class TestBadDomain(TestCase):
         self.env.worker_thread.join(200)
         self.assertEqual(1, self.env.count_projects_results())
         self.assertEqual(1, self.env.central.get_stats()['processed_tasks'])
-        self.assertEqual(self.env.get_last_reach_status(), TWebSiteReachStatus.abandoned)
+        self.assertEqual(self.env.get_last_reach_status(), TWebSiteReachStatus.out_of_reach)
 
         self.env.start_worker_thread()
         self.env.worker_thread.join(200)
@@ -297,20 +302,23 @@ class DlrobotTimeout(TestCase):
 
     def setUp(self):
         self.env = TTestEnv(self.central_port)
-        self.env.setup_central(False, ".bad_domain", dlrobot_project_timeout=2, tries_count=1)
-        self.env.setup_worker("run_once")
+        config = TRobotConfig.read_by_config_type("test")
+        config.crawling_timeout = 2
+        config.last_conversion_timeout = 0
+        config.export_files_timeout = 0
+        config.tar_and_tranfer_timeout = 0
+
+        self.env.setup_central(False, ".bad_domain", config=config, tries_count=1)
 
     def tearDown(self):
         self.env.tearDown()
 
     def test_timeout(self):
-        old_timeouts = TTimeouts.save_timeouts()
-        TTimeouts.set_timeouts(0)
+        self.env.setup_worker("run_once", crawling_timeout=0)
         self.assertTrue(self.env.worker_thread.is_alive())
         time.sleep(2)
         self.env.worker.stop_worker()
         time.sleep(2)
-        TTimeouts.restore_timeouts(old_timeouts)
         stats = self.env.central.get_stats()
 
         # still have the project in the input tasks since timeouted project have one more retry

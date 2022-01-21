@@ -42,7 +42,8 @@ def convert_pdf_to_docx_with_abiword(input_path, out_path):
 
 
 def taskkill_windows(process_name):
-    subprocess.run(['taskkill', '/F', '/IM', process_name],  stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
+    if os.name == 'nt':
+        subprocess.run(['taskkill', '/F', '/IM', process_name],  stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
 
 def move_file_with_retry(logger, file_name, output_folder):
     output_file = os.path.join(output_folder, os.path.basename(file_name))

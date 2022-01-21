@@ -1,10 +1,11 @@
-from django.test import TestCase
+from django.test import TestCase, tag
 import declarations.models as models
 from declarations.corrections import SECTION_CORRECTIONS
 
 
+# corrections by a website user's request
 class CorrectedPersonTestCase(TestCase):
-
+    @tag('front')
     def test_corrected_person(self):
         models.Section.objects.all().delete()
         models.Source_Document.objects.all().delete()

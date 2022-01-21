@@ -1,4 +1,5 @@
-from dlrobot.common.central_protocol import DLROBOT_HTTP_CODE, TTimeouts, DLROBOT_HEADER_KEYS
+from dlrobot.common.central_protocol import DLROBOT_HTTP_CODE, DLROBOT_HEADER_KEYS
+from dlrobot.common.robot_config import TRobotConfig
 from common.logging_wrapper import setup_logging
 from common.urllib_parse_pro import TUrlUtf8Encode
 
@@ -122,6 +123,8 @@ class TDlrobotWorker:
         parser.add_argument("--fake-dlrobot", dest='fake_dlrobot', required=False, default=False, action="store_true")
         parser.add_argument("--worker-count", dest='worker_count', default=2, type=int)
         parser.add_argument(dest='action', help="can be start, stop, restart, run_once")
+        parser.add_argument("--crawling-timeout", dest='crawling_timeout',
+                                help="overwite crawling timeout that was sent by the central")
 
         args = parser.parse_args(arg_list)
         return args
@@ -144,11 +147,11 @@ class TDlrobotWorker:
         if project_file is None:
             self.logger.error("cannot find header {}".format(DLROBOT_HEADER_KEYS.PROJECT_FILE))
             raise DlrobotWorkerException()
-        crawling_timeout_str = response.getheader(DLROBOT_HEADER_KEYS.CRAWLING_TIMEOUT)
-        if crawling_timeout_str is None:
-            self.logger.error("cannot find header {}".format(DLROBOT_HEADER_KEYS.CRAWLING_TIMEOUT))
+        dlrobot_config_type = response.getheader(DLROBOT_HEADER_KEYS.DLROBOT_CONFIG_TYPE)
+        if dlrobot_config_type is None:
+            self.logger.error("cannot find header {}".format(DLROBOT_HEADER_KEYS.DLROBOT_CONFIG_TYPE))
             raise DlrobotWorkerException()
-        crawling_timeout = int(crawling_timeout_str)
+        config = TRobotConfig.read_by_config_type(dlrobot_config_type)
         file_data = response.read()
         self.logger.debug("get task {} size={}".format(project_file, len(file_data)))
         basename_project_file = os.path.basename(project_file)
@@ -164,9 +167,9 @@ class TDlrobotWorker:
         with open(project_file, "wb") as outp:
             outp.write(file_data)
         with open(os.path.join(folder, TIMEOUT_FILE_PATH), "w") as outp:
-            outp.write("{}".format(int(time.time()) + TTimeouts.get_timeout_to_delete_files_in_worker(crawling_timeout)))
+            outp.write("{}".format(int(time.time()) + config.get_timeout_to_delete_files_in_worker()))
 
-        return project_file, crawling_timeout
+        return project_file, config
 
     def clean_folder_before_archiving(self, project_folder, result_folder, exit_code):
         with os.scandir(project_folder) as it:
@@ -190,7 +193,7 @@ class TDlrobotWorker:
                 self.logger.debug("delete folder {} since dlrobot failed".format(folder))
                 shutil.rmtree(folder, ignore_errors=True)
 
-    def run_dlrobot(self, project_file, crawling_timeout):
+    def run_dlrobot(self, project_file, config):
         project_folder = os.path.dirname(os.path.realpath(project_file)).replace('\\', '/')
         if self.args.fake_dlrobot:
             with open(project_file + ".dummy_random", "wb") as outp:
@@ -202,18 +205,18 @@ class TDlrobotWorker:
         my_env['TMPDIR'] = project_folder
         exit_code = 1
         result_folder = "result"
-        total_timeout = TTimeouts.get_kill_timeout_in_worker(crawling_timeout)
         try:
             dlrobot_call = [
-                '/usr/bin/python3',
+                sys.executable,
                 DLROBOT_PATH,
                 '--cache-folder-tmp',
                 '--project', os.path.basename(project_file),
-                '--crawling-timeout', str(crawling_timeout),
-                '--last-conversion-timeout', str(TTimeouts.WAIT_CONVERSION_TIMEOUT),
-                '--result-folder', "result",
-                '--total-timeout', str(total_timeout)
+                '--config-type', config.config_type,
+                '--result-folder', "result"
             ]
+            if self.args.crawling_timeout is not None:
+                dlrobot_call.extend(['--crawling-timeout', str(self.args.crawling_timeout)])
+
             self.logger.debug(" ".join(dlrobot_call))
             with open(os.path.join(project_folder, "dlrobot.out"), "w") as dout:
                 with open(os.path.join(project_folder, "dlrobot.err"), "w") as derr:
@@ -224,12 +227,12 @@ class TDlrobotWorker:
                         env=my_env,
                         cwd=project_folder,
                         text=True)
-            proc.wait(total_timeout + 2*60)  # 4 hours + 2 minutes
+            proc.wait(config.get_dlrobot_total_timeout() + 2*60)  # 4 hours + 2 minutes
             exit_code = proc.returncode
 
         except subprocess.TimeoutExpired as exp:
             self.logger.error("wait raises timeout exception:{},  timeout={}".format(
-                str(exp), total_timeout))
+                str(exp), config.get_dlrobot_total_timeout()))
         except Exception as exp:
             self.logger.error(exp)
 
@@ -360,8 +363,8 @@ class TDlrobotWorker:
                     iteration_timeout = 60 * 10  # there is a hope that the second process frees the disk
             else:
                 try:
-                    project_file, crawling_timeout = self.get_new_task_job()
-                    exit_code = self.run_dlrobot(project_file, crawling_timeout)
+                    project_file, config = self.get_new_task_job()
+                    exit_code = self.run_dlrobot(project_file, config)
                     iteration_timeout = 0
                     if self.working:
                         self.send_results_back(project_file, exit_code)

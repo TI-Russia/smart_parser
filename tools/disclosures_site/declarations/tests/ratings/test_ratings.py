@@ -1,11 +1,11 @@
 import declarations.models as models
 from declarations.management.commands.build_ratings import BuildRatingCommand
 
-from django.test import TestCase
+from django.test import TestCase, tag
 
 
 class RatingTestCase(TestCase):
-
+    @tag('cemtral')
     def test_rating(self):
         models.Person.objects.all().delete()
         models.Section.objects.all().delete()

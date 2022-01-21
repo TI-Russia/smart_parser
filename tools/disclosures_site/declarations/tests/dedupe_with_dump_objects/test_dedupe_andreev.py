@@ -5,11 +5,11 @@ from common.logging_wrapper import setup_logging
 
 
 import os
-from django.test import TestCase
+from django.test import TestCase, tag
 
 
 class AndreevDedupeTestCase(TestCase):
-
+    @tag('central')
     def test(self):
         logger = setup_logging(logger_name="test_real_dedupe")
         models.Section.objects.all().delete()

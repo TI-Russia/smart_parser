@@ -1,12 +1,14 @@
 from ConvStorage.conversion_client import TDocConversionClient
-from dlrobot.common.central_protocol import DLROBOT_HTTP_CODE, TTimeouts, DLROBOT_HEADER_KEYS
+from dlrobot.common.central_protocol import DLROBOT_HTTP_CODE, DLROBOT_HEADER_KEYS
 from dlrobot.common.yandex_cloud import TYandexCloud
 from common.primitives import convert_timeout_to_seconds, check_internet
+from dlrobot.common.robot_config import TRobotConfig
 from common.urllib_parse_pro import TUrlUtf8Encode
 from dlrobot.common.remote_call import TRemoteDlrobotCall, TRemoteDlrobotCallList
 from common.web_site_status import TWebSiteReachStatus
 from office_db.web_site_list import TDeclarationWebSiteList
 from office_db.offices_in_memory import TOfficeTableInMemory
+from office_db.declaration_office_website import TDeclarationWebSite
 from dlrobot.common.dl_robot_round import TDeclarationRounds
 from dlrobot.common.robot_project import TRobotProject
 from common.logging_wrapper import setup_logging
@@ -35,18 +37,18 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         parser = argparse.ArgumentParser()
         parser.add_argument("--server-address", dest='server_address', default=None,
                             help="by default read it from environment variable DLROBOT_CENTRAL_SERVER_ADDRESS")
+        parser.add_argument("--dlrobot-config-type", dest='dlrobot_config_type',
+                            required=False, default="prod", help="can be prod, preliminary or test")
         parser.add_argument("--custom-offices-file", dest='offices_file', required=False)
         parser.add_argument("--log-file-name", dest='log_file_name', required=False, default="dlrobot_central.log")
         parser.add_argument("--remote-calls-file", dest='remote_calls_file', default=None)
         parser.add_argument("--result-folder", dest='result_folder', required=True)
         parser.add_argument("--tries-count", dest='tries_count', required=False, default=2, type=int)
         parser.add_argument("--central-heart-rate", dest='central_heart_rate', required=False, default='60s')
-        parser.add_argument("--dlrobot-crawling-timeout", dest='dlrobot_crawling_timeout',
-                            required=False, default=TTimeouts.MAIN_CRAWLING_TIMEOUT)
         parser.add_argument("--check-yandex-cloud", dest='check_yandex_cloud', default=False, action='store_true',
                             required=False, help="check yandex cloud health and restart workstations")
         parser.add_argument("--skip-worker-check", dest='skip_worker_check', default=False, action='store_true',
-                            required=False, help="skip checking that this tast was given to this worker")
+                            required=False, help="skip checking that this task was given to this worker")
         parser.add_argument("--enable-ip-checking", dest='enable_ip_checking', default=False, action='store_true',
                             required=False)
         parser.add_argument("--disable-smart-parser-server", dest="enable_smart_parser",
@@ -60,11 +62,11 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         parser.add_argument("--disable-pdf-conversion-server-checking", dest="pdf_conversion_server_checking",
                             default=True,  required=False, action="store_false")
         parser.add_argument("--web-site-regexp", dest="web_site_regexp", required=False)
+        parser.add_argument("--office-source-id", dest="office_source_id", required=False)
         parser.add_argument("--round-file", dest="round_file", default=TDeclarationRounds.default_dlrobot_round_path)
 
         args = parser.parse_args(arg_list)
         args.central_heart_rate = convert_timeout_to_seconds(args.central_heart_rate)
-        args.dlrobot_crawling_timeout = convert_timeout_to_seconds(args.dlrobot_crawling_timeout)
         if args.server_address is None:
             args.server_address = os.environ['DLROBOT_CENTRAL_SERVER_ADDRESS']
         if args.check_yandex_cloud:
@@ -89,6 +91,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
             os.makedirs(self.args.result_folder)
         self.web_sites_to_process = self.find_projects_to_process()
         self.cloud_id_to_worker_ip = dict()
+        self.config = TRobotConfig.read_by_config_type(self.args.dlrobot_config_type)
         self.last_remote_call = None  # for testing
         host, port = self.args.server_address.split(":")
         self.logger.debug("start server on {}:{}".format(host, port))
@@ -156,9 +159,13 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
     def find_projects_to_process(self):
         web_sites_to_process = list()
         self.logger.info("filter web sites")
+        web_site_info: TDeclarationWebSite
         for web_site, web_site_info in self.web_sites_db.web_sites.items():
             if self.args.web_site_regexp is not None:
                 if re.match(self.args.web_site_regexp, web_site) is None:
+                    continue
+            if self.args.office_source_id is not None:
+                if web_site_info.get_parent_source_id() != self.args.office_source_id:
                     continue
             if TWebSiteReachStatus.can_communicate(web_site_info.reach_status):
                 project_file = TRemoteDlrobotCall.web_site_to_project_file(web_site)
@@ -186,13 +193,10 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
                 project_file, worker_ip, worker_host_name, len(self.web_sites_to_process), self.get_running_jobs_count()))
         remote_call = TRemoteDlrobotCall(worker_ip=worker_ip, project_file=project_file, web_site=site_url)
         remote_call.worker_host_name = worker_host_name
-        remote_call.crawling_timeout = self.args.dlrobot_crawling_timeout
         web_site_passport = self.web_sites_db.get_web_site(site_url)
         regional_main_pages = list()
         if web_site_passport is None:
             self.logger.error("{} is not registered in the web site db, no office information is available for the site")
-        else:
-            remote_call.crawling_timeout = int(remote_call.crawling_timeout * web_site_passport.dlrobot_max_time_coeff)
         project_content_str = TRobotProject.create_project_str(site_url,
                                                                regional_main_pages,
                                                                disable_search_engine=not self.args.enable_search_engines
@@ -253,7 +257,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
         remote_call.exit_code = exit_code
         remote_call.end_time = int(time.time())
         project_folder = self.untar_file(project_file, result_archive)
-        remote_call.calc_project_stats(self.logger, self.web_sites_db, project_folder)
+        remote_call.calc_project_stats(self.logger, self.web_sites_db, project_folder, self.config)
         if not TWebSiteReachStatus.can_communicate(remote_call.reach_status):
             remote_call.exit_code = -1
         self.decl_sender.send_declaraion_files_to_other_servers(project_folder)
@@ -267,7 +271,7 @@ class TDlrobotHTTPServer(http.server.HTTPServer):
             for i in range(len(running_procs) - 1, -1, -1):
                 remote_call = running_procs[i]
                 elapsed_seconds = current_time - remote_call.start_time
-                if elapsed_seconds > TTimeouts.get_kill_timeout_in_central(remote_call.crawling_timeout):
+                if elapsed_seconds > self.config.get_kill_timeout_in_central():
                     self.logger.debug("task {} on worker {}(host={}) takes {} seconds, probably it failed, stop waiting for a result".format(
                         remote_call.web_site, remote_call.worker_ip, remote_call.worker_host_name,
                         elapsed_seconds
@@ -446,7 +450,7 @@ class TDlrobotRequestHandler(http.server.BaseHTTPRequestHandler):
 
         self.send_response(200)
         self.send_header(DLROBOT_HEADER_KEYS.PROJECT_FILE, TUrlUtf8Encode.to_idna(remote_call.project_file))
-        self.send_header(DLROBOT_HEADER_KEYS.CRAWLING_TIMEOUT, remote_call.crawling_timeout)
+        self.send_header(DLROBOT_HEADER_KEYS.DLROBOT_CONFIG_TYPE, self.server.config.config_type)
         self.end_headers()
         self.wfile.write(project_content)
 

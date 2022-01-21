@@ -16,8 +16,6 @@ import urllib.parse
 
 
 class TWebSiteCrawlSnapshot:
-    DEFAULT_CRAWLING_TIMEOUT = 60 * 60 * 3 # 3 hours
-    CRAWLING_TIMEOUT = DEFAULT_CRAWLING_TIMEOUT
 
     def __init__(self, project, morda_url=""):
         #runtime members (no serialization)
@@ -26,6 +24,7 @@ class TWebSiteCrawlSnapshot:
         self.logger = project.logger
         self.export_env = TExportEnvironment(self)
         self.stopped_by_timeout = False
+        self.main_page_source = None
 
         #serialized members
         self.url_nodes = dict()
@@ -42,10 +41,8 @@ class TWebSiteCrawlSnapshot:
                 self.main_page_url)
 
         self.robot_steps = list()
-        for i in range(len(project.robot_step_passports)):
-            is_last_step = (i == len(project.robot_step_passports) - 1)
-            passport = project.robot_step_passports[i]
-            step = TRobotStep(self, **passport, is_last_step=is_last_step)
+        for i, passport in enumerate(project.config.get_step_passports()):
+            step = TRobotStep(self, **passport, is_last_step=(i == len(project.config.get_step_passports()) - 1))
             self.robot_steps.append(step)
 
     # declarations number per minute
@@ -58,7 +55,7 @@ class TWebSiteCrawlSnapshot:
             return True
         return self.other_projects_regexp.search(url) is None
 
-    def init_main_page_url_from_redirected_url(self, url, title):
+    def init_main_page_url_from_redirected_url(self, url, title, page_source):
         o = urllib_parse_pro.urlsplit_pro(url)
         netloc = o.netloc
         scheme = o.scheme
@@ -74,6 +71,7 @@ class TWebSiteCrawlSnapshot:
              ''])
         self.logger.debug("main_url_page={}".format(self.main_page_url))
         self.reach_status = TWebSiteReachStatus.normal
+        self.main_page_source = page_source
         self.url_nodes[self.main_page_url] = TUrlInfo(title=title)
 
     def get_url_modifications(url: str):
@@ -100,9 +98,10 @@ class TWebSiteCrawlSnapshot:
                 self.parent_project.selenium_driver.navigate(url)
                 time.sleep(3)
                 title = self.parent_project.selenium_driver.the_driver.title
+                html = self.parent_project.selenium_driver.the_driver.page_source
                 self.init_main_page_url_from_redirected_url(
                     self.parent_project.selenium_driver.the_driver.current_url,
-                    title)
+                    title, html)
                 return
             except WebDriverException as exp:
                 self.logger.error("cannot fetch {}  with selenium, sleep 3 sec".format(url))
@@ -149,8 +148,9 @@ class TWebSiteCrawlSnapshot:
     def check_crawling_timeouts(self, robot_speed, crawled_web_pages_count):
         current_time = time.time()
         crawl_time_all_steps = current_time - self.start_crawling_time
-        if crawl_time_all_steps > TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT:
-            self.logger.error("timeout stop crawling: TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT={}".format(TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT))
+        if crawl_time_all_steps > self.parent_project.config.crawling_timeout:
+            self.logger.error("timeout stop crawling: TWebSiteCrawlSnapshot.CRAWLING_TIMEOUT={}".format(
+                self.parent_project.config.crawling_timeout))
             self.stopped_by_timeout = True
             return False
 
@@ -182,7 +182,7 @@ class TWebSiteCrawlSnapshot:
             self.robot_steps = list()
             steps = init_json.get('steps', list())
             for i in range(len(steps)):
-                step = self.parent_project.robot_step_passports[i]
+                step = self.parent_project.config.get_step_passports()[i]
                 self.robot_steps.append(TRobotStep(self, **step, is_last_step=(i == len(steps) - 1)))
         for url, info in init_json.get('url_nodes', dict()).items():
             self.url_nodes[url] = TUrlInfo().from_json(info)

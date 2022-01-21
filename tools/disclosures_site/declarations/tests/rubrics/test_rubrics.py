@@ -1,7 +1,7 @@
 from office_db.rubrics import TOfficeProps, TOfficeRubrics
 
 
-from django.test import TestCase
+from django.test import TestCase, tag
 
 
 class RubricTestCase(TestCase):
@@ -10,6 +10,7 @@ class RubricTestCase(TestCase):
         pattern = TOfficeProps(name, top_parent=top_parent, immediate_parent=immediate_parent)
         self.assertTrue(pattern.check_rubric(rubric))
 
+    @tag('central', 'front')
     def test_rubrics(self):
         self.check("Бабушкинский районный суд", 1316, TOfficeRubrics.Court)
         self.check("Воронеж - городской округ", 627, TOfficeRubrics.Municipality)

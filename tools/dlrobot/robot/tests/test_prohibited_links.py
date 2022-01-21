@@ -4,14 +4,14 @@ from common.logging_wrapper import setup_logging
 from dlrobot.common.robot_project import TRobotProject
 from common.link_info import TLinkInfo, TClickEngine
 from dlrobot.robot.tests.common_env import TestDlrobotEnv
-
+from dlrobot.common.robot_config import TRobotConfig
 from unittest import TestCase
 
 
 class TestProhibitedLinksBase(TestCase):
     def setup_project(self, morda_url):
         logger = setup_logging('prohibited')
-        self.project = TRobotProject(logger, '', [], "result", enable_search_engine=False)
+        self.project = TRobotProject(logger, '',  config=TRobotConfig(), export_folder="result", enable_search_engine=False)
         web_site = self.project.add_web_site(morda_url)
         self.robot_step = TRobotStep(web_site)
         self.env = TestDlrobotEnv("data.prohibited")

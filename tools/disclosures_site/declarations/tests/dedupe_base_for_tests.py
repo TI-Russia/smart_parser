@@ -1,4 +1,4 @@
-from django.test import TestCase
+from django.test import TestCase, tag
 import declarations.models as models
 
 TEST_OFFICE_ID = 1

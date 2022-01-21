@@ -11,7 +11,7 @@ class TestDeclarationLink(TestDeclarationLinkBase):
     def tearDown(self):
         super().tearDown()
 
-    def test_page_text(self):
+    def test_page_text(self):8
         links = self.process_one_page("web_sites/page_text/sved.html")
         #self.canonize_links(links, 'web_sites/page_text/found_links')
         self.compare_to_file(links, 'web_sites/page_text/found_links')

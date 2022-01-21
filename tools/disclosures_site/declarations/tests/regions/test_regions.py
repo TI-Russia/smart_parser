@@ -1,12 +1,12 @@
 from office_db.russian_regions import TRussianRegions
 
 
-from django.test import TestCase
+from django.test import TestCase, tag
 
 
 class RegionsTestCase(TestCase):
 
-
+    @tag('central')
     def test_regions_nominative(self):
         regions = TRussianRegions()
         self.assertEqual(63, regions.get_region_in_nominative("Москва").id)
@@ -16,6 +16,7 @@ class RegionsTestCase(TestCase):
         self.assertEqual(109, regions.get_region_in_nominative("Республика Крым").id)
         self.assertEqual(1, regions.get_region_in_nominative("санкт-петербург").id)
 
+    @tag('central')
     def test_regions_nominative_and_dative(self):
         regions = TRussianRegions()
         self.assertEqual(63, regions.get_region_in_nominative_and_dative("по г.Москве").id)
@@ -28,6 +29,7 @@ class RegionsTestCase(TestCase):
         self.assertEqual(69 , regions.get_region_in_nominative_and_dative(    "омская область").id)
         self.assertEqual(None, regions.get_region_in_nominative_and_dative("по московской области   мусор"))
 
+    @tag('central')
     def test_regions_all_forms(self):
         def r(s):
             d = regions.get_region_all_forms(s)
@@ -42,6 +44,7 @@ class RegionsTestCase(TestCase):
         self.assertEqual(69, r(     "омская область"))
         self.assertEqual(53, r("костромская область"))
 
+    @tag('central')
     def test_region_capitals(self):
         def r(s):
             d = regions.search_capital_in_address(s)

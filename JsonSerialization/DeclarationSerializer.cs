@@ -90,26 +90,6 @@ namespace TI.Declarator.JsonSerialization
             Schema = JSchema.Parse(File.ReadAllText(fullPath), SchemaSettings);
         }
 
-        public static string Serialize(Declaration declaration)
-        {
-            string comment = null;
-            string result = Serialize(declaration, ref comment);
-
-            return result;
-        }
-
-        public static string Serialize(Declaration declaration, bool validate)
-        {
-            string comments = null;
-            string jsonString = Serialize(declaration, ref comments);
-            if (validate && comments != null)
-            {
-                throw new Exception("Could not validate JSON output: " + comments);
-            }
-
-            return jsonString;
-        }
-
         public static JObject SerializeDocumentProperties(DeclarationProperties props)
         {
             var jProps = new JObject();
@@ -134,13 +114,13 @@ namespace TI.Declarator.JsonSerialization
             return jProps;
         }
 
-        public static string Serialize(Declaration declaration, ref string comment, bool validate = true)
+        public static string Serialize(Declaration declaration, ref string comment, bool validate = true, bool skipEmpty = true)
         {
             var jServants = new JArray();
             bool storeSheetNumbersInSections = SmartParserJsonFormat == SmartParserJsonFormatEnum.Disclosures && declaration.NotFirstSheetProperties.Count > 0;
             foreach (var declarant in declaration.PublicServants)
             {
-                if (declarant.DeclarantHasNoDeclarationInfo())
+                if (skipEmpty && declarant.DeclarantHasNoDeclarationInfo())
                 {
                     Logger.Debug("Empty declarant {0}", declarant.NameRaw);
                 }

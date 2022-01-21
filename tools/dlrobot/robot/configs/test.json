@@ -1,0 +1,38 @@
+{
+  "max_step_url_count": 1000,
+  "pdf_quota_conversion": 20971520,
+
+  "crawling_timeout": "5m",
+  "last_conversion_timeout": "1m",
+  "export_files_timeout": "1m",
+  "selenium_timeout": "6s",
+
+  "robot_steps": [
+    {
+      "step_name": "sitemap",
+      "check_link_func": "check_link_sitemap",
+      "include_sources": "always"
+    },
+    {
+      "step_name": "anticorruption_div",
+      "check_link_func": "check_anticorr_link_text",
+      "include_sources": "always",
+      "search_engine": {
+        "request": "противодействие коррупции",
+        "policy": "run_always_before",
+        "max_serp_results": 1
+      }
+    },
+    {
+      "step_name": "declarations",
+      "max_links_from_one_page": 1500,
+      "check_link_func": "looks_like_a_declaration_link",
+      "search_engine": {
+        "request": "сведения о доходах 2020",
+        "policy": "run_always_before"
+      },
+      "sitemap_xml_processor": "check_sveden_url_sitemap_xml",
+      "transitive": true
+    }
+  ]
+}

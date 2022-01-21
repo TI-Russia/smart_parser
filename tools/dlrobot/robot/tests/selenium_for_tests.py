@@ -1,6 +1,7 @@
 from common.download import  TDownloadEnv
 from dlrobot.common.robot_step import TRobotStep, TUrlInfo
 from dlrobot.common.robot_project import TRobotProject
+from dlrobot.common.robot_config import TRobotConfig
 from common.http_request import THttpRequester
 from common.logging_wrapper import close_logger, setup_logging
 from dlrobot.robot.tests.common_env import TestDlrobotEnv
@@ -18,18 +19,14 @@ class TestDeclarationLinkSelenium(TestCase):
                                is_last_step=False):
 
         TDownloadEnv.clear_cache_folder()
-        robot_steps = [
-            {
-                'step_name': "declarations"
-            }
-        ]
-        with TRobotProject(self.logger, "project.txt", robot_steps, "result", enable_search_engine=False,
+        robot_steps = [{'step_name': "declarations"}]
+        with TRobotProject(self.logger, "project.txt", TRobotConfig(passport_steps=robot_steps), "result", enable_search_engine=False,
                            ) as project:
             project.read_project()
             office_info = project.web_site_snapshots[0]
             office_info.create_export_folder()
 
-            step_info = TRobotStep(office_info, **robot_steps[0], is_last_step=is_last_step)
+            step_info = TRobotStep(office_info, step_name="declarations", is_last_step=is_last_step)
             if isinstance(start_url, list):
                 for x in start_url:
                     step_info.pages_to_process[x] = 0

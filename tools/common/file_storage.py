@@ -10,6 +10,7 @@ else:
 
 import os
 import shutil
+import time
 
 default_max_bin_file_size = 10 * (2 ** 30)
 
@@ -49,7 +50,8 @@ class TFileStorage:
 
     # disc_sync_rate means that we sync with disk after each sync_period db update
     # disc_sync_rate=1 means sync after each db update
-    def __init__(self, logger, data_folder, max_bin_file_size=default_max_bin_file_size, disc_sync_rate=1, read_only=False):
+    def __init__(self, logger, data_folder, max_bin_file_size=default_max_bin_file_size, disc_sync_rate=1,
+                 read_only=False, archive_folder=None, header_archive_timeout=None):
         self.data_folder =  data_folder
         self.read_only = read_only
         self.max_bin_file_size = max_bin_file_size
@@ -58,12 +60,31 @@ class TFileStorage:
         self.saved_file_params = None
         self.bin_files = list()
         self.dbm_path = None
+        self.archive_folder = archive_folder
+        if self.archive_folder is not None:
+            assert os.path.isdir(self.archive_folder)
+            assert header_archive_timeout is not None
+            self.archive_folder = os.path.abspath(self.archive_folder)
+
         self.load_from_disk()
         self.write_without_sync_count = 0
         if os.name == "nt":
             self.disc_sync_rate = disc_sync_rate
         else:
             self.disc_sync_rate = None
+        self.header_archive_timeout = header_archive_timeout
+        self.header_last_sync_timestamp = time.time()
+        if self.header_archive_timeout is not None:
+            assert self.archive_folder is not None
+
+    def sync_with_archive(self, force=False):
+        if self.archive_folder is not None:
+            if self.header_archive_timeout is not None:
+                if force  or (time.time() - self.header_last_sync_timestamp > self.header_archive_timeout):
+                    self.logger.debug("copy {} to {}".format(self.dbm_path, self.archive_folder))
+                    self.header_last_sync_timestamp = time.time()
+                    shutil.copy(self.dbm_path, self.archive_folder)
+                    shutil.copy(self.bin_files[-1].name, self.archive_folder)
 
     def write_key_to_dbm(self, key, value):
         self.saved_file_params[key] = value
@@ -74,6 +95,8 @@ class TFileStorage:
                 self.logger.debug("sync db")
             self.saved_file_params.sync()
             self.write_without_sync_count = 0
+
+        self.sync_with_archive()
 
     def get_all_keys(self):
         k = self.saved_file_params.firstkey()
@@ -149,9 +172,22 @@ class TFileStorage:
 
     def create_new_bin_file(self):
         self.bin_files[-1].close()
-        self.bin_files[-1] = open(self.get_bin_file_path(len(self.bin_files) - 1), "rb")
+        last_file_path = self.get_bin_file_path(len(self.bin_files) - 1)
+        if self.archive_folder is not None:
+            output_file = os.path.join(self.archive_folder, os.path.basename(last_file_path))
+            if os.path.exists(output_file):
+                if os.path.getsize(last_file_path) < os.path.getsize(output_file):
+                    raise Exception("cannot move {} to {}, since the last folder comtains a bigger file".format(last_file_path, self.archive_folder))
+                os.unlink(output_file)
+            shutil.move(last_file_path, output_file)
+            os.symlink(output_file, last_file_path)
+            if not os.path.islink(last_file_path):
+                raise Exception("{} must be a symbolic link".format(last_file_path))
 
-        self.bin_files.append (open(self.get_bin_file_path(len(self.bin_files)), "ab+"))
+        self.bin_files[-1] = open(last_file_path, "rb")
+
+        self.bin_files.append(open(self.get_bin_file_path(len(self.bin_files)), "ab+"))
+        self.sync_with_archive(force=True)
 
     def write_repeat_header_to_bin_file(self, file_bytes, file_extension, output_bin_file):
         # these headers are needed if the main dbm is lost

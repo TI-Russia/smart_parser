@@ -4,7 +4,6 @@ import os
 from dlrobot.common.robot_project import TRobotProject
 from dlrobot.common.robot_web_site import TWebSiteCrawlSnapshot
 from common.download import TDownloadedFile
-from dlrobot.robotdlrobot import ROBOT_STEPS
 from DeclDocRecognizer.external_convertors import TExternalConverters
 import shutil
 import csv
@@ -27,7 +26,7 @@ def parse_args():
 
 def create_toloka_pool(project_path, toloka_stream):
     logger = logging.getLogger("")
-    with TRobotProject(logger, project_path, ROBOT_STEPS, None) as project:
+    with TRobotProject(logger, project_path) as project:
         project.read_project()
         office_info: TWebSiteCrawlSnapshot
         office_info = project.web_site_snapshots[0]
@@ -57,7 +56,7 @@ def copy_files(args, toloka_results):
     assert args.positive_folder is not None
     assert args.negative_folder is not None
     logger = logging.getLogger("")
-    with TRobotProject(args.project, ROBOT_STEPS) as project:
+    with TRobotProject(args.project) as project:
         project.read_project()
         office_info: TWebSiteCrawlSnapshot
         office_info = project.web_site_snapshots[0]

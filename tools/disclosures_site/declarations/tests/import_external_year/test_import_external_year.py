@@ -4,12 +4,12 @@ from declarations.permalinks import TPermalinksManager
 from declarations.management.commands.import_json import ImportJsonCommand
 from common.logging_wrapper import setup_logging
 
-from django.test import TestCase
+from django.test import TestCase, tag
 import os
 
 
 class ExternalYearImportTestCase(TestCase):
-
+    @tag('central')
     def test_import_external_year(self):
         models.RealEstate.objects.all().delete()
         models.Section.objects.all().delete()

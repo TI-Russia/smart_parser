@@ -1,6 +1,7 @@
 from dlrobot.common.robot_web_site import TWebSiteCrawlSnapshot
 from common.selenium_driver import TSeleniumDriver
 from common.web_site_status import TWebSiteReachStatus
+from dlrobot.common.robot_config import TRobotConfig
 from common.export_files import TExportFile
 from office_db.web_site_list import TDeclarationWebSiteList
 
@@ -11,14 +12,14 @@ import tempfile
 import time
 
 
+
 class TRobotProject:
     visited_pages_extension = ".visited_pages"
 
-    def __init__(self, logger, filename, robot_step_passports, export_folder,
+    def __init__(self, logger, filename, config:TRobotConfig=None, export_folder=None,
                  enable_search_engine=True, start_selenium=True, web_sites_db=None):
         self.logger = logger
         self.start_time = time.time()
-        self.total_timeout = 0
         self.selenium_driver = TSeleniumDriver(logger)
         self.visited_pages_file = filename + TRobotProject.visited_pages_extension
         self.click_paths_file = filename + ".click_paths"
@@ -26,7 +27,7 @@ class TRobotProject:
         if len(filename)  > 0 and not os.path.exists(self.visited_pages_file):
             shutil.copy2(filename, self.visited_pages_file)
         self.web_site_snapshots = list()
-        self.robot_step_passports = robot_step_passports
+        self.config = config
         self.enable_search_engine = enable_search_engine  #switched off in tests, otherwize google shows captcha
         self.export_folder = export_folder
         self.web_sites_db = web_sites_db
@@ -35,16 +36,10 @@ class TRobotProject:
         self.start_selenium = start_selenium
 
     def have_time_for_last_dl_recognizer(self):
-        if self.total_timeout == 0:
-            return True
-        future_kill_time = self.start_time + self.total_timeout
-        if future_kill_time - time.time() < 60*20:
-            #we need at least 20 minutes to export files
-            return False
-        return True
+        return self.config.have_time_for_last_dl_recognizer(self.start_time)
 
     def get_robot_step_names(self):
-        return list(r['step_name'] for r in self.robot_step_passports)
+        return list(r['step_name'] for r in self.config.get_step_passports())
 
     def __enter__(self):
         if self.start_selenium:
@@ -111,7 +106,8 @@ class TRobotProject:
 
         robot_project_path = os.path.join(web_domain + ".txt")
         TRobotProject.create_project(web_domain, robot_project_path)
-        with TRobotProject(logger, robot_project_path, [], None, start_selenium=False) as project:
+        config = TRobotConfig.read_by_config_type("prod")
+        with TRobotProject(logger, robot_project_path, config, None, start_selenium=False) as project:
             project.add_web_site(web_domain)
             project.web_site_snapshots[0].reach_status = TWebSiteReachStatus.normal
             export_env = project.web_site_snapshots[0].export_env
@@ -147,11 +143,7 @@ class TRobotProject:
             if check_step_names:
                 if 'step_names' in json_dict:
                     if json_dict['step_names'] != self.get_robot_step_names():
-                        raise Exception("different step step_names, adjust manually or rebuild the project")
-            else:
-                self.robot_step_passports = list()
-                for step_name in json_dict['step_names']:
-                    self.robot_step_passports.append({'step_name': step_name})
+                        raise Exception("different step names, adjust manually or rebuild the project")
 
             for o in json_dict.get('sites', []):
                 web_site = TWebSiteCrawlSnapshot(self).read_from_json(o)
@@ -162,7 +154,7 @@ class TRobotProject:
 
     def fetch_main_pages(self):
         for site in self.web_site_snapshots:
-            site.fetch_the_main_page()
+            site.fetch_the_main_page(self.enable_search_engine)
 
     def write_click_features(self, filename):
         self.logger.info("create {}".format(filename))

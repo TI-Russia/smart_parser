@@ -58,10 +58,10 @@ class TYandexDiskClient:
     def publish(self, cloud_path):
         return self.client.publish(cloud_path)
 
-    def publish_speical(self, cloud_path, report_output_file):
+    def publish_special(self, cloud_path, report_output_file):
         url = self.client.publish(cloud_path)
         file_size = int(self.client.info(cloud_path)['size'])
-        date = datetime.fromtimestamp(time.time()).strftime("%Y-%m-%d")
+        date = datetime.datetime.fromtimestamp(time.time()).strftime("%Y-%m-%d")
         with open(report_output_file, "w") as outp:
             outp.write("Полный sql-дамп (mysql 8.0 и выше): <a href=\"{}\">скачать c Яндекс-диска</a> (date={}, size={})".format(
                 url, date, file_size))

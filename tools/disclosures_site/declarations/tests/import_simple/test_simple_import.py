@@ -5,17 +5,18 @@ from declarations.management.commands.import_json import ImportJsonCommand
 from declarations.serializers import normalize_fio_before_db_insert
 
 
-from django.test import TestCase
+from django.test import TestCase, tag
 import os
 
 
 class SimpleImportTestCase(TestCase):
-
+    @tag('central')
     def test_normalize_fio_before_db_insert(self):
         self.assertEqual(normalize_fio_before_db_insert('"Иванов Иван Иванович"'), "Иванов Иван Иванович")
         self.assertEqual(normalize_fio_before_db_insert("Иванов  Иван Иванович "), "Иванов Иван Иванович")
         self.assertEqual(normalize_fio_before_db_insert("12. Иванов Иван Иванович "), "Иванов Иван Иванович")
 
+    @tag('central')
     def test_simple_import(self):
         models.Income.objects.all().delete()
         models.RealEstate.objects.all().delete()

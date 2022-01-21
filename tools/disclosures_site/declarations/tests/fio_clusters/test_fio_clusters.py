@@ -1,7 +1,7 @@
 from declarations.management.commands.random_forest_adapter import TDeduplicationObject, TFioClustering, \
     TDeduplicationRecordId
 from common.logging_wrapper import setup_logging
-from django.test import TestCase
+from django.test import TestCase, tag
 from collections import defaultdict
 
 
@@ -36,7 +36,7 @@ class TTestMLModel:
 
 
 class AmbiguousFio(TestCase):
-
+    @tag('central')
     def test_ambiguous_ivanov(self):
         objs = [init_dedupe_object(1, "Иванов Владимир Николаевич"),
                 init_dedupe_object(2, "Иванов Владислав Николаевич"),
@@ -60,6 +60,7 @@ class AmbiguousFio(TestCase):
                     self.assertEqual(x[0][0].record_id.id, 2)
                     self.assertEqual(x[1][0].record_id.id, 3)
 
+    @tag('central')
     def test_cluster_merge(self):
         objs = [init_dedupe_object(1, "Иванов В. Н."),
                 init_dedupe_object(2, "Иванов В. Н."),

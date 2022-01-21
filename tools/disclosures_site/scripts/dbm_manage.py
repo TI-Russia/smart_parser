@@ -8,7 +8,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--db", dest='dbm_file')
     parser.add_argument("--output-db", dest='output_dbm_file', required=False)
-    parser.add_argument("--action", dest='action', help="can be print, get, create, print_keys, copy")
+    parser.add_argument("--action", dest='action', help="can be print, get, create, print_keys, copy, print_value_lengths, delete")
     parser.add_argument("--key", dest='key', help="key to get")
     parser.add_argument("--zlib-value", dest='use_zlib', action="store_true", default=False)
     return parser.parse_args()
@@ -31,6 +31,9 @@ if __name__ == '__main__':
             key, value = line.strip().split("\t")
             with gdbm.open(args.dbm_file, 'c') as db:
                 db[key] = value
+    elif args.action == "delete":
+        with gdbm.open(args.dbm_file, 'w') as db:
+            del db[args.key]
     else:
         with gdbm.open(args.dbm_file, 'r') as db:
             if args.action == "print":
@@ -38,6 +41,12 @@ if __name__ == '__main__':
                 while k is not None:
                     value = read_value(args, db, k)
                     print("{}\t{}".format(k.decode('utf8'), value))
+                    k = db.nextkey(k)
+            elif args.action == "print_value_lengths":
+                k = db.firstkey()
+                while k is not None:
+                    value = read_value(args, db, k)
+                    print("{}\t{}".format(k.decode('utf8'), len(value)))
                     k = db.nextkey(k)
             elif args.action == "get":
                 value = read_value(args, db, args.key)

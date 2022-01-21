@@ -2,6 +2,8 @@ from dlrobot.robot.tests.selenium_for_tests import TestDeclarationLinkSelenium
 from common.http_request import THttpRequester
 from dlrobot.common.robot_step import TRobotStep
 
+#there are two pages, the second page is almost the first one
+#search for "skip page, since its links are similar to the previous page (speed optimization)" in robot_step.py
 
 class TestEnadm(TestDeclarationLinkSelenium):
 

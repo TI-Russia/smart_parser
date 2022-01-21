@@ -3,13 +3,13 @@ from declarations.tests.smart_parser_for_testing import SmartParserServerForTest
 from declarations.permalinks import TPermalinksManager
 from common.logging_wrapper import setup_logging
 
-from django.test import TestCase
+from django.test import TestCase, tag
 import os
 import declarations.models as models
 
 
 class ComplexImportTestCase(TestCase):
-
+    @tag('central')
     def test_import_with_relatives(self):
         self.assertGreater(models.Office.objects.count(), 0)
         models.Section.objects.all().delete()

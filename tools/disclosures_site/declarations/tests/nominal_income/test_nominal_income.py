@@ -1,9 +1,9 @@
-from django.test import TestCase
+from django.test import TestCase, tag
 from declarations.nominal_income import get_average_nominal_incomes, YearIncome
 
 
 class NominalIncome(TestCase):
-
+    @tag('front', 'central')
     def test_nominal_income(self):
         # out of year scope
         self.assertIsNone(get_average_nominal_incomes([YearIncome(2008, 1), YearIncome(2009, 2)]))

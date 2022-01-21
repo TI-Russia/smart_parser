@@ -20,7 +20,6 @@ import cgi
 class TDownloadEnv:
     FILE_CACHE_FOLDER = "cached"
     CONVERSION_CLIENT: TDocConversionClient = None
-    LAST_CONVERSION_TIMEOUT = 30*60  # in seconds
     PDF_QUOTA_CONVERSION = 20 * 2**20 # in bytes
 
     @staticmethod

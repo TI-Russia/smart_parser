@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28803.352
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32002.185
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smart.Parser.Lib", "lib\Smart.Parser.Lib.csproj", "{76B50097-280E-484F-9F16-00E8785F53BA}"
 	ProjectSection(ProjectDependencies) = postProject

@@ -92,3 +92,4 @@ python3 $TOOLS/disclosures_site/manage.py build_genders --settings disclosures.s
 python3 $TOOLS/disclosures_site/manage.py build_ratings --settings disclosures.settings.dev
 python3 $TOOLS/disclosures_site/manage.py build_office_calculated_params --settings disclosures.settings.dev
 python3 $TOOLS/disclosures_site/manage.py build_elastic_index --settings disclosures.settings.dev
+python3 $TOOLS/disclosures_site/manage.py create_misspell_fio_db --settings disclosures.settings.dev

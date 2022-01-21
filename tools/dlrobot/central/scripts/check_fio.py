@@ -16,15 +16,13 @@ def parse_args():
 def main1():
     args = parse_args()
     recognizer = TRussianFioRecognizer()
+
     with open(args.input) as inp:
         for line in inp:
             verdict = "unknown"
             fio = TRussianFio(line.strip(), from_search_request=False, make_lower=False)
             if fio.is_resolved:
-                if recognizer.is_russian_full_name(fio.family_name, fio.first_name, fio.patronymic):
-                    verdict = "full_name"
-                else:
-                    verdict = "abridged_name"
+                verdict = fio.case
             elif recognizer.string_contains_Russian_name(line):
                 verdict = "contain_fio"
             print("{}\t{}".format(line.strip(), verdict))
@@ -44,15 +42,15 @@ def main2():
                 pass
 
 
-def main():
-    r = TRussianFio.is_morph_surname_or_predicted('Кириллова')
+def main3():
     args = parse_args()
     with open(args.input) as inp:
         for line in inp:
             line = line.strip()
-            if len(line) == 0 or TRussianFio.is_morph_surname_or_predicted(line.strip()):
+            if len(line) == 0 or TRussianFioRecognizer.is_morph_surname_or_predicted(line.strip()):
                 continue
             print(line)
 
+
 if __name__ == "__main__":
-    main()
+    main1()

@@ -585,7 +585,7 @@ namespace Smart.Parser
         static string DumpDeclarationsToJson(string inputFile, Declaration declaration)
         {
             string schema_errors = null;
-            string output = DeclarationSerializer.Serialize(declaration, ref schema_errors);
+            string output = DeclarationSerializer.Serialize(declaration, ref schema_errors, true, !SmartParser.Lib.TableHeader.SearchForFioColumnOnly);
 
             if (!String.IsNullOrEmpty(schema_errors))
             {

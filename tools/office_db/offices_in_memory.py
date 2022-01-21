@@ -6,14 +6,16 @@ from common.urllib_parse_pro import TUrlUtf8Encode, urlsplit_pro
 import json
 import os
 import re
+from collections import defaultdict
 
 
 class TOfficeInMemory:
 
     def __init__(self, office_id=None, name=None, parent_id=None, type_id=None, rubric_id=None, region_id=None,
-                 address=None, wikidata_id=None, office_web_sites=None):
+                 address=None, wikidata_id=None, office_web_sites=None, source_id=None):
         self.office_id = office_id
         self.name = name
+        self.source_id = source_id
         self.parent_id = parent_id
         self.type_id = type_id
         self.rubric_id = rubric_id
@@ -33,7 +35,8 @@ class TOfficeInMemory:
         self.region_id = js['region_id']
         self.address = js.get('address')
         self.wikidata_id = js.get('wikidata_id')
-        self.office_web_sites = list( TDeclarationWebSite().read_from_json(x) for x in js.get('urls', list()))
+        self.source_id = js.get('source_id')
+        self.office_web_sites = list( TDeclarationWebSite(parent_office=self).read_from_json(x) for x in js.get('urls', list()))
         return self
 
     def to_json(self):
@@ -43,7 +46,8 @@ class TOfficeInMemory:
             'parent_id': self.parent_id,
             'type_id': self.type_id,
             'rubric_id': self.rubric_id,
-            'region_id': self.region_id
+            'region_id': self.region_id,
+            'source_id': self.source_id
         }
         if self.address is not None:
             rec['address'] = self.address
@@ -59,7 +63,7 @@ class TOfficeInMemory:
         assert site_url.startswith("http")
         for x in self.office_web_sites:
             assert x.url != site_url
-        s = TDeclarationWebSite()
+        s = TDeclarationWebSite(parent_office=self)
         s.url = site_url
         self.office_web_sites.append(s)
 
@@ -113,6 +117,14 @@ class TOfficeTableInMemory:
             return None
         return self.offices[int(office_id)].parent_id
 
+    def get_child_offices_dict(self):
+        office: TOfficeInMemory
+        res = defaultdict(list)
+        for office in self.offices.values():
+            if office.parent_id is not None:
+                res[office.parent_id].append(office)
+        return res
+
     def __init__(self, use_office_types=True):
         self.use_office_types = use_office_types
         self.offices = dict()
@@ -154,6 +166,9 @@ class TOfficeTableInMemory:
         with open(file_path, "w") as outp:
             offices = list(x.to_json() for x in self.offices.values())
             json.dump(offices, outp, indent=4, ensure_ascii=False)
+
+    def add_office(self, office: TOfficeInMemory):
+        self.offices[str(office.office_id)] = office
 
     def read_from_table(self, table):
         for o in table:

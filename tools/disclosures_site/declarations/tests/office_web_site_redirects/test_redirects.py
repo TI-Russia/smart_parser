@@ -1,10 +1,11 @@
 from office_db.web_site_list import  TDeclarationWebSiteList
 from common.logging_wrapper import setup_logging
 
-from django.test import TestCase
+from django.test import TestCase, tag
 
 
 class RedirectsTestCase(TestCase):
+    @tag('central')
     def test_office_website_valid(self):
         logger = setup_logging("test_office_website_valid")
         web_sites = TDeclarationWebSiteList(logger)

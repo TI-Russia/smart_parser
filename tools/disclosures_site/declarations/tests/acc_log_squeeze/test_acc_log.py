@@ -1,21 +1,19 @@
-from django.test import TestCase
-from declarations.management.commands.access_log_squeeze import AccessLogSqueezer
+from django.test import TestCase, tag
+from scripts.access_log_squeeze import TAccessLogReader
 import os
-import argparse
 
 
 class TestAccessLogSqueeze(TestCase):
 
+    @tag('front')
     def test_access_log_squeeze(self):
-        sq = AccessLogSqueezer(None, None)
         output = os.path.join(os.path.dirname(__file__), "access_log_squeeze.txt")
-        parser = argparse.ArgumentParser()
-        sq.add_arguments(parser)
-        args = parser.parse_args([
+        args = TAccessLogReader.parse_args([
             '--access-log-folder', os.path.join(os.path.dirname(__file__), "logs"),
             '--output-path', output
         ])
-        sq.handle(None, **args.__dict__)
+        sq = TAccessLogReader(args)
+        sq.build_popular_site_pages()
 
         with open(output) as inp:
             lines = inp.readlines()

@@ -74,8 +74,6 @@ class TestWebsiteWithJs(TestCase):
         self.assertEqual (len(self.env.get_result_files()), 1)
 
 
-
-
 class TestCrawlingTimeout(TestCase):
     web_site_port = 8204
 

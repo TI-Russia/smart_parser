@@ -2,14 +2,16 @@ from common.download import TDownloadedFile, DEFAULT_HTML_EXTENSION, have_the_sa
             get_file_extension_only_by_headers, TDownloadEnv
 from common.primitives import prepare_for_logging
 from common.urllib_parse_pro import get_site_domain_wo_www, urlsplit_pro
-from common.html_parser import THtmlParser, get_html_title
+from common.html_parser import get_html_title
 from common.link_info import TLinkInfo, TClickEngine
 from common.http_request import THttpRequester
 from common.popular_sites import is_super_popular_domain
 from common.serp_parser import SearchEngine, SearchEngineEnum, SerpException
 from common.primitives import normalize_and_russify_anchor_text
-from dlrobot.robot.declaration_link import looks_like_a_declaration_link_without_cache, best_declaration_regex_match
+from dlrobot.robot.declaration_link import looks_like_a_declaration_link_without_cache, best_declaration_regex_match, \
+            url_features
 from dlrobot.common.url_info import TUrlInfo
+from dlrobot.common.robot_config import TRobotConfig
 from common.languages import is_human_language
 
 from selenium.common.exceptions import WebDriverException, InvalidSwitchToTargetException
@@ -90,24 +92,23 @@ def signal_alarm_handler(signum, frame):
 
 
 class TRobotStep:
-    max_step_url_count = 800
     check_local_address = False
-    selenium_timeout = 6
 
     def __init__(self, website, step_name=None, step_urls=None, max_links_from_one_page=1000000,
                  transitive=False, is_last_step=False,
-                 check_link_func=None, include_sources=None, check_link_func_2=None, search_engine=None,
+                 check_link_func=None, include_sources=None, search_engine=None,
                  sitemap_xml_processor=None, profiler=None):
         self.website = website
+        self.config: TRobotConfig
+        self.config = website.parent_project.config
         self.logger = website.logger
         self.step_name = step_name
         self.url_to_weight = dict() if step_urls is None else step_urls
         self.transitive = transitive
-        self.check_link_func = check_link_func
-        self.check_link_func_2 = check_link_func_2
+        self.robot_link_func = getattr(self, check_link_func).__func__ if check_link_func is not None else self.looks_like_a_declaration_link
         self.search_engine = dict() if search_engine is None else search_engine
         self.include_sources = include_sources
-        self.sitemap_xml_processor = sitemap_xml_processor
+        self.sitemap_xml_processor = getattr(self, sitemap_xml_processor) if sitemap_xml_processor is not None else None
         self.is_last_step = is_last_step
         # see https://sutr.ru/about_the_university/svedeniya-ob-ou/education/ with 20000 links
         # see https://www.gov.spb.ru/sitemap/ with 8000 links (and it is normal for great web sites)
@@ -214,6 +215,14 @@ class TRobotStep:
         return text.startswith('карта сайта') or \
                 text.startswith('структура') or  \
                 text.startswith('органы администрации')
+
+    def check_sveden_url_sitemap_xml(self, url):
+        features = url_features(url)
+
+        if sum(features) > 1:
+            return TLinkInfo.BEST_LINK_WEIGHT
+
+        return TLinkInfo.MINIMAL_LINK_WEIGHT
 
     def check_anticorr_link_text(self, link_info: TLinkInfo):
         text = link_info.anchor_text.strip().lower()
@@ -433,7 +442,7 @@ class TRobotStep:
     def click_all_selenium(self, main_url, check_link_func):
         self.logger.debug("find_links_with_selenium url={} ".format(main_url))
         THttpRequester.consider_request_policy(main_url, "GET_selenium")
-        elements = self.get_selenium_driver().navigate_and_get_links_js(main_url, TRobotStep.selenium_timeout)
+        elements = self.get_selenium_driver().navigate_and_get_links_js(main_url, self.config.selenium_timeout)
         if elements is None:
             self.logger.error("cannot get child elements using javascript for url={}".format(main_url))
             return
@@ -477,7 +486,7 @@ class TRobotStep:
         # может быть, надо брать ссылки не после, а до скролдауна и сравнивать их по href, а не по id,
         # т.е. до того как javaскрипт начал скрывать их (поближе  к чистой странице, как будто мы ее скачали curl)
 
-        elements = self.get_selenium_driver().get_links_js(timeout=TRobotStep.selenium_timeout)
+        elements = self.get_selenium_driver().get_links_js(timeout=self.config.selenium_timeout)
         if elements is None:
             self.logger.error("cannot get child elements using javascript for url={} (second)".format(main_url))
             return
@@ -506,7 +515,7 @@ class TRobotStep:
     def apply_function_to_links(self, check_link_func):
         assert len(self.pages_to_process) > 0
         self.last_processed_url_weights = list()
-        for url_index in range(TRobotStep.max_step_url_count):
+        for url_index in range(self.config.max_step_url_count):
             url = self.pop_url_with_max_weight(url_index)
             if url is None:
                 break
@@ -525,9 +534,9 @@ class TRobotStep:
                 signal.signal(signal.SIGALRM, signal.SIG_DFL)
                 signal.alarm(0)
 
-        if url_index == TRobotStep.max_step_url_count:
+        if url_index == self.config.max_step_url_count:
             self.logger.error("this is the last url (max={}) but we have time to crawl further".format(
-                TRobotStep.max_step_url_count))
+                self.config.max_step_url_count))
 
     def add_regional_main_pages(self):
         for url in self.website.get_regional_pages():
@@ -535,7 +544,9 @@ class TRobotStep:
             link_info.weight = TLinkInfo.NORMAL_LINK_WEIGHT
             self.add_link_wrapper(link_info)
 
-    def add_links_from_sitemap_xml(self,  check_url_func):
+    def add_links_from_sitemap_xml(self):
+        if self.sitemap_xml_processor is None:
+            return
         assert self.website.main_page_url in self.website.url_nodes
         root_page = self.website.main_page_url.strip('/')
         tree = sitemap_tree_for_homepage(root_page)
@@ -543,7 +554,7 @@ class TRobotStep:
         useful = 0
         for page in tree.all_pages():
             cnt += 1
-            weight = check_url_func(page.url)
+            weight = self.sitemap_xml_processor(page.url)
             if weight > TLinkInfo.MINIMAL_LINK_WEIGHT:
                 if page.url not in self.pages_to_process:
                     useful += 1
@@ -602,10 +613,9 @@ class TRobotStep:
             self.use_search_engine(self.website.main_page_url)
             self.pages_to_process.update(self.url_to_weight)
 
-        if self.sitemap_xml_processor:
-            self.add_links_from_sitemap_xml(self.sitemap_xml_processor.get('check_url_func'))
+        self.add_links_from_sitemap_xml()
 
-        self.apply_function_to_links(self.check_link_func)
+        self.apply_function_to_links(self.robot_link_func)
 
         if self.step_name == "sitemap":
             self.add_regional_main_pages()

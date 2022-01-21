@@ -6,6 +6,7 @@
 {% block content %}
 
 <form action="{% url 'person_search' %}" method="get">
+    <input type="hidden" name="request_ref" value="search_frm" />
     {{form.person_name.label_tag}} {{ form.person_name }}
     <input type="submit" value="Поиск">
     <br/>
@@ -16,26 +17,32 @@
     <br/>
       Число найденных декларантов: {{ hits_count }}
     <br/>
+    {% if corrections %}
+        <br/><br/><small>может быть, вы имели в виду:  </small>
+        {% for href, anchor in corrections %}
+            <a href="?{{href}}">{{anchor}}</a>&nbsp; &nbsp;
+        {% endfor %}
+    {% else %}
+        <table>
+            <tr>
+                <th>ID</th>
+                <th><a href="?{{sort_by_person_name}}">ФИО</a></th>
+                <th><a href="?{{sort_by_section_count}}">Число деклараций</a></th>
+            </tr>
 
-    <table>
-        <tr>
-            <th>ID</th>
-            <th><a href="?{{sort_by_person_name}}">ФИО</a></th>
-            <th><a href="?{{sort_by_section_count}}">Число деклараций</a></th>
-        </tr>
+          {% for person in object_list %}
+            <tr>
+              <td> {{ person.id }}: </td>
+              <td>
+                  <a href="/person/{{ person.id }}"> {{ person.person_name }} </a>
+              </td>
+              <td> &nbsp;&nbsp;{{ person.section_count }} </td>
+            </tr>
+          {% endfor %}
+        </table>
 
-      {% for person in object_list %}
-        <tr>
-          <td> {{ person.id }}: </td>
-          <td>
-              <a href="/person/{{ person.id }}"> {{ person.person_name }} </a>
-          </td>
-          <td> &nbsp;&nbsp;{{ person.section_count }} </td>
-        </tr>
-      {% endfor %}
-    </table>
-
-    {% include "search/paginator.html" %}
+        {% include "search/paginator.html" %}
+    {% endif %}
 {% endif %}
 
 {% endblock content %}

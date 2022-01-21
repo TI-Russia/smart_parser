@@ -1,6 +1,6 @@
 from declarations.management.commands.generate_dedupe_pairs import RunDedupe
 from declarations.management.commands.random_forest_adapter import TDeduplicationObject
-from django.test import TestCase
+from django.test import TestCase, tag
 
 
 class TPermalinksMonkey:
@@ -15,7 +15,7 @@ class TPermalinksMonkey:
 
 
 class ReuseOldPersonId(TestCase):
-
+    @tag('central')
     def test1(self):
         dedupe = RunDedupe()
         clusters = {1: [
@@ -29,6 +29,7 @@ class ReuseOldPersonId(TestCase):
         new_to_old_clusters = dedupe.build_cluster_to_old_person_id(clusters)
         self.assertEqual(0, len(new_to_old_clusters))
 
+    @tag('central')
     def test2(self):
         dedupe = RunDedupe()
         clusters = {1: [
@@ -43,6 +44,7 @@ class ReuseOldPersonId(TestCase):
         self.assertEqual(1, len(new_to_old_clusters))
         self.assertEqual(99, new_to_old_clusters[1])
 
+    @tag('central')
     def test3(self):
         dedupe = RunDedupe()
         clusters = {1:
@@ -59,6 +61,7 @@ class ReuseOldPersonId(TestCase):
         self.assertEqual(1, len(new_to_old_clusters))
         self.assertEqual(99, new_to_old_clusters[2])
 
+    @tag('central')
     def test4(self):
         dedupe = RunDedupe()
         clusters = {

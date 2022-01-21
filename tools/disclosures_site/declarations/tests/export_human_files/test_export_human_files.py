@@ -3,7 +3,7 @@ from disclosures_site.declarations.tests.source_doc_for_testing import SourceDoc
 from declarations.tests.smart_parser_for_testing import SmartParserServerForTesting
 from declarations.input_json import TDlrobotHumanFileDBM
 
-from django.test import TestCase
+from django.test import TestCase, tag
 import os
 import json
 import time
@@ -76,9 +76,11 @@ class ExportHuman(TestCase):
                 time.sleep(2)
                 self.assertEqual(smart_parser_server.server.get_stats()['session_write_count'], 1)
 
+    @tag('central')
     def test_4915(self):
         self.common_test(4915, canon_json_4915)
 
+    @tag('central')
     def test_10282(self):
         self.common_test(10282, canon_json_10282)
 

@@ -1,9 +1,9 @@
 from disclosures_site.predict_office.office_index import TOfficePredictIndex, TOfficeNgram, TOfficeWebDomain
 from common.logging_wrapper import setup_logging
 from django.core.management import BaseCommand
-from declarations.documents import OFFICES
 from office_db.offices_in_memory import TOfficeInMemory
 from collections import defaultdict
+import declarations.models as models
 
 
 class TOfficePredictIndexBuilder(TOfficePredictIndex):
@@ -25,7 +25,7 @@ class TOfficePredictIndexBuilder(TOfficePredictIndex):
         office_stems = defaultdict(set)
         self.offices = dict()
         office: TOfficeInMemory
-        for office in OFFICES.offices.values():
+        for office in models.Office.offices_in_memory.offices.values():
             region_id = office.region_id
             if region_id is None:
                 region_id = 0
@@ -55,8 +55,8 @@ class TOfficePredictIndexBuilder(TOfficePredictIndex):
         self.logger.info("built {} web domains".format(len(self.web_domains)))
 
     def build_ml_office_indices(self):
-        self.ml_office_id_2_office_id = dict((i, k) for i, k in enumerate(OFFICES.offices.keys()))
-        self.office_id_2_ml_office_id = dict((k, i) for i, k in enumerate(OFFICES.offices.keys()))
+        self.ml_office_id_2_office_id = dict((i, k) for i, k in enumerate(models.Office.offices_in_memory.offices.keys()))
+        self.office_id_2_ml_office_id = dict((k, i) for i, k in enumerate(models.Office.offices_in_memory.offices.keys()))
         self.logger.info("target office count = {}".format(len(self.office_id_2_ml_office_id)))
 
     def build(self):

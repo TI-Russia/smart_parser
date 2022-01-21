@@ -19,8 +19,6 @@ section_search_index.settings(
     number_of_replicas=0
 )
 
-OFFICES = None
-
 @registry.register_document
 @section_search_index.document
 class ElasticSectionDocument(Document):
@@ -137,8 +135,3 @@ def stop_elastic_indexing():
 
 stop_elastic_indexing()
 
-try:
-     OFFICES = TOfficeTableInMemory()
-     OFFICES.read_from_table(Office.objects.all())
-except DatabaseError as exp:
-    pass

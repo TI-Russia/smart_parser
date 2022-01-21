@@ -1,4 +1,4 @@
-# Процесс создание базы disclosures = dlrobot+declarator (раз в месяц?)
+  # Процесс создание базы disclosures = dlrobot+declarator (раз в месяц?)
 
 #0 ~/smart_parser/tools/INSTALL.txt are prerequisites
 
@@ -38,30 +38,30 @@ source $COMMON_SCRIPT
       cd $DLROBOT_FOLDER
     python3 $TOOLS/disclosures_site/manage.py predict_office --dlrobot-human-path dlrobot_human.dbm
 
-#6  Копирование базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод
+  #6  Копирование базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод
    mv $OLD_DLROBOT_FOLDER/new_permalinks/* .
    # можно создать их прям сейчас
-   #python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.prod --directory $DLROBOT_FOLDER
+     #python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.prod --directory $DLROBOT_FOLDER
 
-#9 (надо включить в import_json?)
-    cd $DLROBOT_FOLDER # important
-    python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev --directory $DLROBOT_FOLDER
+  #9 (надо включить в import_json?)
+      cd $DLROBOT_FOLDER # important
+      python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev --directory $DLROBOT_FOLDER
 
 
-#10  Импорт json в dislosures_db (48 hours)
-     python3 $TOOLS/disclosures_site/manage.py import_json \
-                 --settings disclosures.settings.dev \
-                 --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER \
-                 --dlrobot-human dlrobot_human.dbm   \
-                   --process-count 2  \
-                   --permalinks-folder $DLROBOT_FOLDER
+  #10  Импорт json в dislosures_db (48 hours)
+       python3 $TOOLS/disclosures_site/manage.py import_json \
+                   --settings disclosures.settings.dev \
+                   --smart-parser-human-json-folder $HUMAN_JSONS_FOLDER \
+                   --dlrobot-human dlrobot_human.dbm   \
+                     --process-count 2  \
+                     --permalinks-folder $DLROBOT_FOLDER
 
      python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric source_document_count  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
      python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric sections_person_name_income_year_declarant_income_size  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
      python3 $TOOLS/disclosures_site/manage.py add_disclosures_statistics --check-metric sections_person_name_income_year_spouse_income_size  --settings disclosures.settings.dev --crawl-epoch $CRAWL_EPOCH
 
   #10.1  остановка dlrobot на $DEDUPE_HOSTS в параллель (максмимум 3 часа), может немного одновременно проработать со сливалкой
-  echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot/worker/scripts/dl_cloud_manager.py --action stop --host &
+    echo "$DEDUPE_HOSTS" | xargs  --verbose -P 4 -n 1 python3 $TOOLS/dlrobot/worker/scripts/dl_cloud_manager.py --action stop --host &
 
   #11 создание surname_rank (40 мин)
     python3 $TOOLS/disclosures_site/manage.py build_surname_rank  --settings disclosures.settings.dev
@@ -121,8 +121,8 @@ new_permalinks_pid=$!
 
 #17.1 build access logs squeeze
     cd $DLROBOT_FOLDER
-    python3 $TOOLS/disclosures_site/manage.py access_log_squeeze  \
-              --access-log-folder $ACCESS_LOG_ARCHIVE --output-path access_log_squeeze.txt
+    python3 $TOOLS/disclosures_site/scripts/access_log_squeeze.py --action build_popular_site_pages \
+      --access-log-folder $ACCESS_LOG_ARCHIVE --output-path access_log_squeeze.txt
 
 #17.2 update person redirects and filter access logs
     python3 $TOOLS/disclosures_site/manage.py update_person_redirects  --settings disclosures.settings.dev \
@@ -132,6 +132,9 @@ new_permalinks_pid=$!
     python3 $TOOLS/disclosures_site/manage.py generate_sitemaps --settings disclosures.settings.prod --output-file disclosures/static/sitemap.xml \
        --access-log-squeeze access_log_squeeze_flt.txt --tar-path sitemap.tar
 
+#17.4 misspell dict
+    python3 $TOOLS/disclosures_site/manage.py create_misspell_fio_db --settings disclosures.settings.dev --output-folder $DLROBOT_FOLDER/misspell_bin
+
 #18 создание дампа базы
     cd $DLROBOT_FOLDER
     mysqldump -u disclosures -pdisclosures disclosures_db_dev  |  gzip -c > disclosures.sql.gz
@@ -139,8 +142,8 @@ new_permalinks_pid=$!
 
 #18.1
     python3 $TOOLS/dlrobot/central/scripts/yandex_disk.py --action sync --exclude-dirs declarator/source_doc --wait
-    python3 $TOOLS/dlrobot/central/scripts/yandex_disk.py --action publish_speical \
-        --cloud-path declarator/dlrobot_updates/disclosures.sql.gz --report-output-file full_sql_dump.html
+    python3 $TOOLS/dlrobot/central/scripts/yandex_disk.py --action publish_special \
+        --cloud-path declarator/dlrobot_updates//$CRAWL_EPOCH/disclosures.sql.gz --report-output-file full_sql_dump.html
     scp full_sql_dump.html $FRONTEND:$FRONTEND_WEB_SITE/declarations/templates/statistics
 
 wait $new_permalinks_pid
@@ -169,22 +172,14 @@ wait $new_permalinks_pid
 
     scp $DLROBOT_FOLDER/sitemap.tar $FRONTEND:/tmp/sitemap.tar
 
-#21 обновление prod
-    elastic_search_version_prod=`ssh $FRONTEND sudo /usr/share/elasticsearch/bin/elasticsearch --version`
-    elastic_search_version_central=`sudo /usr/share/elasticsearch/bin/elasticsearch --version`
-    if [ "$elastic_search_version_prod" != "$elastic_search_version_central" ]; then
-      echo "Error! Elasticsearch version in the central server and in the prod server are different. Binary indices can be incompatible!"
-      exit 1
-    fi
-    mysql_version_prod=`ssh $FRONTEND sudo mysqld --version`
-    mysql_version_central=`sudo mysqld --version`
-    if [ "$mysql_version_prod" != "$mysql_version_central" ]; then
-      echo "Error! Mysql version in the central server and in the prod server are different. Binary indices can be incompatible!"
-      exit 1
-    fi
+    ssh $FRONTEND rm -rf /tmp/misspell_bin
+    scp -r $DLROBOT_FOLDER/misspell_bin $FRONTEND:/tmp
 
-    ssh $FRONTEND git -C $FRONTEND_SRC pull
-    ssh $FRONTEND bash -x $FRONTEND_WEB_SITE/scripts/switch_prod.sh /tmp/mysql.tar.gz /tmp/elastic.tar.gz /tmp/sitemap.tar
+#21 обновление prod
+    ssh $FRONTEND python3 $FRONTEND_WEB_SITE/scripts/setup_head_version.py --mysql-version `sudo mysqld --version` \
+               --elasticsearch-version `sudo /usr/share/elasticsearch/bin/elasticsearch --version`
+    ssh $FRONTEND python3 $FRONTEND_WEB_SITE/scripts/switch_prod.py --mysql-tar /tmp/mysql.tar.gz \
+      --elasticsearch-tar /tmp/elastic.tar.gz --sitemap-tar /tmp/sitemap.tar --misspell-folder /tmp/misspell_bin
     ssh $PROD_SOURCE_DOC_SERVER sudo systemctl restart source_declaration_doc
 
 #22  посылаем данные dlrobot в каталог, который синхронизируется с облаком, очищаем dlrobot_central (без возврата)

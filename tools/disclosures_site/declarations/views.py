@@ -1,5 +1,3 @@
-import operator
-
 from . import models
 from declarations.documents import ElasticSectionDocument, ElasticPersonDocument, ElasticOfficeDocument, ElasticFileDocument
 from common.russian_fio import TRussianFio, TRussianFioRecognizer
@@ -10,6 +8,7 @@ from declarations.apps import DeclarationsConfig
 from declarations.car_brands import CAR_BRANDS
 from declarations.gender_recognize import TGender
 from declarations.input_json import TIntersectionStatus
+from pylem import MorphanHolder, MorphLanguage
 
 from django.views import generic
 from django.views.generic.edit import FormView
@@ -22,6 +21,14 @@ import urllib
 from django.shortcuts import render
 from django.http import Http404
 from django.shortcuts import redirect
+import operator
+import logging
+import json
+
+
+logger = logging.getLogger(__name__)
+FIO_MISSPELL_CORRECTOR = MorphanHolder(MorphLanguage.FioDisclosures, TRussianFio.fio_misspell_path)
+
 
 class SectionView(generic.DetailView):
     model = models.Section
@@ -245,22 +252,33 @@ class CommonSearchView(FormView, generic.ListView):
         context = super().get_context_data(**kwargs)
         if hasattr(self, "hits_count"):
             context['hits_count'] = self.hits_count
-            if hasattr(self, "fuzzy_search"):
-                context['fuzzy_search'] = self.fuzzy_search
-            if hasattr(self, "skip_rubric_filtering"):
-                context['skip_rubric_filtering'] = self.skip_rubric_filtering
-            context['query_fields'] = self.get_query_in_cgi()
+            if self.hits_count > 0:
+                if hasattr(self, "fuzzy_search"):
+                    context['fuzzy_search'] = self.fuzzy_search
+                if hasattr(self, "skip_rubric_filtering"):
+                    context['skip_rubric_filtering'] = self.skip_rubric_filtering
+
+            old_cgi_fields = self.field_params
+            if hasattr(self, "person_name_corrections"):
+                context['corrections'] = list()
+                for person_name in self.person_name_corrections:
+                    new_cgi_fields = dict(old_cgi_fields.items())
+                    new_cgi_fields["person_name"] = person_name
+                    context['corrections'].append((self.get_query_in_cgi(new_cgi_fields), person_name))
+
+            context['query_fields'] = self.get_query_in_cgi(self.field_params)
             old_sort_by, old_order = self.get_sort_order()
-            old_cgi_fields = self.get_initial()
+            old_cgi_fields = self.field_params
             for field in self.elastic_search_document._fields.keys():
                 new_cgi_fields = dict(old_cgi_fields.items())
                 new_cgi_fields["sort_by"] = field
                 if field == old_sort_by:
                     new_cgi_fields["order"] = "desc" if old_order == "asc" else "asc"
-                context['sort_by_' + field] = self.get_query_in_cgi(cgi_fields=new_cgi_fields)
+                context['sort_by_' + field] = self.get_query_in_cgi(new_cgi_fields)
 
         return context
 
+    # get_initial is a predefined Django method, do not rename it, since django uses it for rendering
     def get_initial(self):
         dct =  {
             'person_name': TRussianFioRecognizer.prepare_for_search_index(self.request.GET.get('person_name')),
@@ -295,20 +313,28 @@ class CommonSearchView(FormView, generic.ListView):
 
         return dct
 
+    def build_field_params(self):
+        self.field_params = self.get_initial()
+        self.request_reference = self.request.GET.get('request_ref')
+
+    def log(self, msg):
+        if self.request_reference is not None and self.request_reference == "search_frm":
+            logger.debug(msg)
+
     def build_person_name_elastic_search_query(self, should_items):
-        person_name = self.get_initial().get("person_name")
+        person_name = self.field_params.get("person_name")
         if person_name is not None and person_name != '':
             should_items.append({"match": {"person_name": person_name}})
             fio = TRussianFio(person_name, from_search_request=True)
             should_items.append({"match": {"person_name": fio.family_name}})
 
     def build_office_full_text_elastic_search_query(self, should_items):
-        office_query = self.get_initial().get('office_request')
+        office_query = self.field_params.get('office_request')
         if office_query is not None and len(office_query) > 0:
             if office_query.isdigit():
                 should_items.append({"terms": {"office_id": [int(office_query)]}})
             else:
-                oqd = {"query": {self.get_initial().get('match_operator'): {"name": {"query": office_query, "operator": "and"}}}}
+                oqd = {"query": {self.field_params.get('match_operator'): {"name": {"query": office_query, "operator": "and"}}}}
                 search_results = ElasticOfficeDocument.search().update_from_dict(oqd)
                 total = search_results.count()
                 if total == 0:
@@ -318,7 +344,7 @@ class CommonSearchView(FormView, generic.ListView):
 
     def query_elastic_search(self, use_rubric_filtering):
         def add_should_item(field_name, elastic_search_operaror, field_type, should_items):
-            field_value = self.get_initial().get(field_name)
+            field_value = self.field_params.get(field_name)
             if field_value is not None and field_value != '':
                 should_items.append({elastic_search_operaror: {field_name: field_type(field_value)}})
         try:
@@ -330,7 +356,7 @@ class CommonSearchView(FormView, generic.ListView):
             add_should_item("region_id", "term", int, should_items)
             add_should_item("car_brands", "term", str, should_items)
             add_should_item("income_year", "term", int, should_items)
-            add_should_item("position_and_department", self.get_initial().get("match_operator"), str, should_items)
+            add_should_item("position_and_department", self.field_params.get("match_operator"), str, should_items)
             add_should_item("web_domains", "term", str, should_items)
             add_should_item("source_document_id", "term", int, should_items)
             add_should_item("office_id", "term", int, should_items)
@@ -358,15 +384,19 @@ class CommonSearchView(FormView, generic.ListView):
                 field_type = type(self.elastic_search_document._fields.get(sort_by))
                 if field_type != TextField: # elasticsearch cannot sort by a TextField
                     query_dict['sort'] = [{sort_by: {"order": order}}]
-
+            self.log("search_query {} {}".format(
+                self.elastic_search_document.__name__,
+                json.dumps(query_dict, ensure_ascii=False)))
             search = self.elastic_search_document.search()
             search_results = search.update_from_dict(query_dict)
+            self.log("search_results_count = {}".format(search_results.count()))
             return search_results
         except Exception as e:
+            self.log("exception = {}".format(str(e)))
             return None
 
     def get_person_name_field(self):
-        person_name_query = self.get_initial().get('person_name')
+        person_name_query = self.field_params.get('person_name')
         if person_name_query is None or len(person_name_query) == 0:
             return None
         if 'person_name' not in self.elastic_search_document._fields:
@@ -402,11 +432,11 @@ class CommonSearchView(FormView, generic.ListView):
         return normal_documents
 
     def get_sort_order(self):
-        sort_by = self.get_initial().get('sort_by')
+        sort_by = self.field_params.get('sort_by')
         if sort_by is None:
             if self.default_sort_field is not None:
                 sort_by = self.default_sort_field[0]
-        order = self.get_initial().get('order')
+        order = self.field_params.get('order')
         if order is None:
             if self.default_sort_field is not None:
                 order = self.default_sort_field[1]
@@ -414,9 +444,7 @@ class CommonSearchView(FormView, generic.ListView):
                 order = "asc"
         return sort_by, order
 
-    def get_query_in_cgi(self, cgi_fields=None):
-        if cgi_fields is None:
-            cgi_fields = self.get_initial()
+    def get_query_in_cgi(self, cgi_fields):
         query_fields = []
         for (k, v) in cgi_fields.items():
             if v is not None and len(v) > 0:
@@ -429,7 +457,8 @@ class CommonSearchView(FormView, generic.ListView):
         if search_results is None:
             return []
         object_list = self.filter_search_results(search_results)
-        if len(object_list) == 0 and self.get_initial().get("rubric_id") is not None:
+        if len(object_list) == 0 and self.field_params.get("rubric_id") is not None and len(self.field_params.get("rubric_id")) > 0:
+            self.log("search without rubric, because we get no results with rubric")
             search_results = self.query_elastic_search(False)
             if search_results is None:
                 return []
@@ -438,15 +467,29 @@ class CommonSearchView(FormView, generic.ListView):
 
         sort_by, order = self.get_sort_order()
         if sort_by == "person_name":
-            object_list.sort(key=lambda x: x.person_name, reverse=(order=="desc"))
+            object_list.sort(key=lambda x: x.person_name, reverse=(order == "desc"))
         elif sort_by == "name":
             object_list.sort(key=lambda x: x.name, reverse=(order == "desc"))
         elif sort_by == "web_domains":
             object_list.sort(key=lambda x: x.web_domains, reverse=(order == "desc"))
         elif sort_by == "intersection_status":
             object_list.sort(key=lambda x: x.intersection_status, reverse=(order == "desc"))
+        self.log('serp_size_after_filtering = {}'.format(len(object_list)))
+        self.init_person_name_corrections(object_list)
         return object_list
 
+    def init_person_name_corrections(self, object_list):
+        if len(object_list) == 0:
+            name = self.field_params.get('person_name')
+            if name is not None and len(name) > 5:
+                fio = TRussianFio(name, from_search_request=False)
+                if fio.is_resolved:
+                    name = TRussianFio.convert_to_rml_encoding(fio.get_normalized_person_name())
+                    corrections = FIO_MISSPELL_CORRECTOR.correct_misspell(name)
+                    if len(corrections) > 0:
+                        if name != corrections[0]:
+                            self.person_name_corrections = list(TRussianFio.convert_from_rml_encoding(c) for c in corrections[:10])
+                            self.log('person names corrections count = {}'.format(len(self.person_name_corrections)))
 
 class OfficeSearchView(CommonSearchView):
     model = models.Office
@@ -456,9 +499,9 @@ class OfficeSearchView(CommonSearchView):
     max_document_count = 500
 
     def get_queryset(self):
-        initial = self.get_initial()
-        if initial.get('name') is None and initial.get('parent_id') is None and  initial.get("rubric_id") is None and \
-            initial.get('region_id') is None:
+        self.build_field_params()
+        if self.field_params.get('name') is None and self.field_params.get('parent_id') is None and  self.field_params.get("rubric_id") is None and \
+            self.field_params.get('region_id') is None:
             try:
                 search = self.elastic_search_document.search()
                 query_dict = {
@@ -482,6 +525,7 @@ class PersonSearchView(CommonSearchView):
     max_document_count = 1000
 
     def get_queryset(self):
+        self.build_field_params()
         return self.get_queryset_common()
 
 
@@ -493,7 +537,9 @@ class SectionSearchView(CommonSearchView):
     max_document_count = 1000
 
     def get_queryset(self):
-        return self.get_queryset_common()
+        self.build_field_params()
+        object_list = self.get_queryset_common()
+        return object_list
 
 
 class FileSearchView(CommonSearchView):
@@ -504,6 +550,7 @@ class FileSearchView(CommonSearchView):
     max_document_count = 300
 
     def get_queryset(self):
+        self.build_field_params()
         return self.get_queryset_common()
 
 

@@ -2,9 +2,9 @@ from . import models
 from common.primitives import normalize_whitespace
 from office_db.countries import get_country_code
 from office_db.rubrics import TOfficeRubrics
-from declarations.documents import OFFICES
 from declarations.section_passport import TSectionPassportItems1,TSectionPassportItems2
 from office_db.offices_in_memory import TOfficeTableInMemory
+from common.russian_fio import TRussianFio
 import re
 
 
@@ -92,7 +92,7 @@ class TSmartParserSectionJson:
     def init_rubric(self):
         # json_reader.section.rubric_id = source_document_in_db.office.rubric_id does not work
         # may be we should call source_document_in_db.refresh_from_db
-        self.section.rubric_id = OFFICES.offices[self.section.office.id].rubric_id
+        self.section.rubric_id = models.Office.offices_in_memory.offices[self.section.office.id].rubric_id
 
         if self.section.rubric_id == TOfficeRubrics.Municipality and \
                 TOfficeTableInMemory.convert_municipality_to_education(self.section.position):
@@ -120,8 +120,12 @@ class TSmartParserSectionJson:
         else:
             fio = person_info.get('name', person_info.get('name_raw'))
             if fio is None:
-                raise TSmartParserSectionJson.SerializerException("cannot find 'name' or 'name_raw'in json")
-        self.section.person_name = normalize_fio_before_db_insert(fio)
+                raise TSmartParserSectionJson.SerializerException("cannot find 'name' or 'name_raw'     in json")
+        fio = normalize_fio_before_db_insert(fio)
+        resolved_fio = TRussianFio(fio)
+        if not resolved_fio.is_resolved:
+            raise TSmartParserSectionJson.SerializerException("cannot resolve person name {}".format(fio))
+        self.section.person_name = resolved_fio.get_normalized_person_name()
         self.section.position = person_info.get("role")
         self.section.department = person_info.get("department")
 

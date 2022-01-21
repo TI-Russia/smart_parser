@@ -4,6 +4,7 @@ from dlrobot.common.robot_project import TRobotProject
 from common.http_request import THttpRequester
 from common.logging_wrapper import close_logger, setup_logging
 from dlrobot.robot.tests.common_env import TestDlrobotEnv
+from dlrobot.common.robot_config import TRobotConfig
 
 
 import http.server
@@ -73,18 +74,18 @@ class TestDeclarationLinkBase(TestCase):
         TDownloadEnv.clear_cache_folder()
         start_url = self.build_url('/' + os.path.basename(file_path))
         robot_steps = [
-            {
-                'step_name': "declarations"
-            }
+                {
+                    'step_name': "declarations"
+                }
         ]
-        with TRobotProject(self.logger, self.project_path, robot_steps, "result", enable_search_engine=False
+        with TRobotProject(self.logger, self.project_path, TRobotConfig(passport_steps=robot_steps), "result", enable_search_engine=False
                            ) as project:
             project.add_web_site(self.server_address)
             office_info = project.web_site_snapshots[0]
             office_info.create_export_folder()
             office_info.url_nodes[start_url] = TUrlInfo(title="", step_name=None)
 
-            step_info = TRobotStep(office_info, is_last_step=True, **robot_steps[0])
+            step_info = TRobotStep(office_info, is_last_step=True, step_name="declarations")
             step_info.pages_to_process[start_url] = 0
             step_info.processed_pages = set()
             step_info.apply_function_to_links(TRobotStep.looks_like_a_declaration_link)

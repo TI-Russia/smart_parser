@@ -5,6 +5,7 @@
 {% block content %}
 
 <form action="{% url 'file_search' %}" method="get">
+    <input type="hidden" name="request_ref" value="search_frm" />
     <div class="search_input1">
         {{form.web_domains.label_tag}}
         {{form.web_domains}} &nbsp;&nbsp;&nbsp;
@@ -12,7 +13,7 @@
     </div>
 
     <div class="desktop">
-        <div class="search_input1" c>
+        <div class="search_input1" >
             {{form.first_crawl_epoch.label_tag}}
             {{form.first_crawl_epoch}}
             &nbsp;&nbsp;&nbsp;

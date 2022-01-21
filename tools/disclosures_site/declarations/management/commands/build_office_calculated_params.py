@@ -7,20 +7,10 @@ from django.core.management import BaseCommand
 from django.db import connection
 from collections import defaultdict
 import datetime
+from django.db import transaction
 
 
-def get_child_offices(office_id, office_parent_id, max_count=5):
-    if office_parent_id is None:
-        return ""
-    cnt = 0
-    for x in models.Office.objects.all().filter(parent_id=office_id):
-        yield x.id, x.name
-        cnt += 1
-        if cnt >= max_count:
-            break
-
-
-class Command(BaseCommand):
+class BuildOfficeCalculatedParams(BaseCommand):
     def __init__(self, *args, **kwargs):
         super(Command, self).__init__(*args, **kwargs)
         self.logger = setup_logging(log_file_name="build_office_calculated_params.log")
@@ -36,7 +26,7 @@ class Command(BaseCommand):
             group by o.id, s.income_year
         """.format(datetime.datetime.now().year)
         with connection.cursor() as cursor:
-            self.logger.info("execute {}".format(query.replace("\n", " ")))
+            self.logger.info("execu te {}".format(query.replace("\n", " ")))
             cursor.execute(query)
             params = defaultdict(dict)
             self.logger.info("read data")
@@ -57,19 +47,24 @@ class Command(BaseCommand):
             office_to_doc_count = dict(cursor)
 
         self.logger.info("set calculated_params...")
+        child_offices = offices.get_child_offices_dict()
+        with transaction.atomic():
+            for o in models.Office.objects.all():
+                office: TOfficeInMemory
+                office = offices.offices[o.id]
+                if office.parent_id is None:
+                    child_examples = list()
+                else:
+                    child_examples = list((child.office_id, child.name) for child in child_offices[o.id][:5])
+                o.calculated_params = {
+                    "section_count_by_years":  params[o.id],
+                    "child_offices_count": len(child_offices[o.id]),
+                    "child_office_examples": child_examples,
+                    "source_document_count": office_to_doc_count.get(o.id, 0),
+                    "section_count": sum(params[o.id].values()),
+                    "urls": list(x.url for x in office.office_web_sites if x.can_communicate())
+                }
+                o.save()
+        self.logger.info("all done")
 
-        for o in models.Office.objects.all():
-            office: TOfficeInMemory
-            office = offices.offices[o.id]
-
-            o.calculated_params = {
-                "section_count_by_years":  params[o.id],
-                "child_offices_count": models.Office.objects.all().filter(parent_id=o.id).count(),
-                "child_office_examples": list(get_child_offices(o.id, o.parent_id)),
-                "source_document_count": office_to_doc_count.get(o.id, 0),
-                "section_count": sum(params[o.id].values()),
-                "urls": list(x.url for x in office.office_web_sites if x.can_communicate())
-            }
-            o.save()
-
-
+Command=BuildOfficeCalculatedParams
