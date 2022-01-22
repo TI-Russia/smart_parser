@@ -106,8 +106,10 @@ class TCheckState:
                     new_state = self.check_method(self.url, self.must_contain_substring)
                 else:
                     new_state = self.check_method(self.url)
+            except OSError:
+                new_state = False
             except Exception as exp:
-                self.parent.logger.error("failed {} {}, exception={}".format(self.typ, self.url, exp))
+                self.parent.send_alert_message("The result is unknown. Exception: {}".format(exp), self.typ, self.url, new_state)
                 return
             if not new_state or new_state != self.state:
                 self.parent.send_alert_message(self.name, self.typ , self.url, new_state)
