@@ -223,6 +223,8 @@ class TConvertProcessor(http.server.HTTPServer):
         self.http_server_is_working = True
         self.server_actions_thread = threading.Thread(target=self.service_actions_in_a_thread)
         # Exit the server thread when the main thread terminates
+        # eah, I remember when I used to believe in things too.
+        # https://stackoverflow.com/questions/21843916/python-daemon-thread-does-not-exit-when-parent-thread-exits
         self.server_actions_thread.daemon = True
         self.server_actions_thread.start()
         try:
@@ -719,9 +721,10 @@ def conversion_server_main(args):
     except Exception as exp:
         server.logger.error("general exception: {}".format(exp))
         exit_code = 1
-    server.stop_http_server()
-    server.logger.debug("reach the end of the main")
-    return exit_code
+    finally:
+        server.stop_http_server()
+        server.logger.debug("reach the end of the main")
+        return exit_code
 
 
 if __name__ == '__main__':
