@@ -1,5 +1,6 @@
 import declarations.models as models
 from office_db.russian_regions import TRussianRegions
+from declarations.rosstat_data import TRossStatData, TRegionYearInfo
 
 from django.core.management import BaseCommand
 from itertools import groupby
@@ -44,7 +45,7 @@ class Command(BaseCommand):
             type=int,
         )
 
-    def build_declarant_incomes(self, year, incomes_all_citizen, population, max_income=5000000):
+    def build_declarant_incomes(self, year, stats: TRossStatData, max_income=5000000):
         minOboronyId =  450
         query = """
             select o.region_id, i.size 
@@ -65,27 +66,12 @@ class Command(BaseCommand):
             for region_id, items in groupby(cursor, itemgetter(0)):
                 incomes = list(income for _, income in items )
                 region_name = regions.get(region_id, "")
+                stat_info: TRegionYearInfo
+                stat_info = stats[region_id].get(year)
                 s = TRegionStats(region_id, region_name, incomes,
-                                 incomes_all_citizen.get(region_id), population.get(region_id))
+                                 stat_info.median_income, stat_info.population)
                 region_stats.append(s)
         return region_stats
-
-    #rea csv from https://russia.duck.consulting
-    def read_russia_duck_consulting_csv(self, basename, year_to_read):
-        filepath = os.path.join(os.path.dirname(__file__), "../../../data/", basename)
-        incomes_all_citizen = dict()
-        with open(filepath, "r") as inp:
-            for line in inp:
-                year, region_str, income = line.split(',')
-                region = self.regions.get_region_in_nominative(region_str)
-                assert region is not None
-                year = int(year)
-                if year != year_to_read:
-                    continue
-                income = income.strip('\n')
-                if len(income) > 0:
-                    incomes_all_citizen[region.id] = int(float(income))
-        return incomes_all_citizen
 
     def print_pearson_corr(self, region_stats):
         x = list()
@@ -193,9 +179,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.options = options
         year = self.options['year']
-        incomes_all_citizen = self.read_russia_duck_consulting_csv("median_income.csv", year)
-        population = self.read_russia_duck_consulting_csv("russia_population.csv", year)
-        region_stats = self.build_declarant_incomes(year, incomes_all_citizen, population )
+        stats = TRossStatData()
+        stats.load_from_disk()
+        region_stats = self.build_declarant_incomes(year, stats)
         #self.print_regions_stats(region_stats)
         self.build_html_by_regions_stats(year, region_stats)
         self.print_pearson_corr(region_stats)
