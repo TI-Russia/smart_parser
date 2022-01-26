@@ -45,7 +45,7 @@ class TRossStatData:
                 if region_id not in self.region_stat:
                     self.region_stat[region_id] = dict()
                 for year, stat in years.items():
-                    self.region_stat[region_id][year] = TRegionYearInfo.from_json(stat)
+                    self.region_stat[int(region_id)][int(year)] = TRegionYearInfo.from_json(stat)
 
     def save_to_disk(self, postfix=""):
         d = dict()
@@ -62,3 +62,11 @@ class TRossStatData:
                 raise Exception("region {}, region_id={} is missing".format(r.name, r.id))
             if year not in self.region_stat[r.id]:
                 raise Exception("year {} region {}, region_id={} is missing".format(year, r.name, r.id))
+
+    def get_data(self, region_id, year: int):
+        return self.region_stat.get(region_id, dict()).get(year)
+
+    def set_data(self, region_id, year: int, info: TRegionYearInfo):
+        r = self.region_stat.get(region_id)
+        assert r is not None
+        r[year] = info

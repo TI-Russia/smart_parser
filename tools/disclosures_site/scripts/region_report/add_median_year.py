@@ -1,5 +1,7 @@
+
 from disclosures_site.declarations.rosstat_data import TRossStatData, TRegionYearInfo
 from common.primitives import normalize_whitespace
+
 
 def main():
     data = TRossStatData()
@@ -19,7 +21,6 @@ def main():
             else:
                 data.region_stat[region.id][year].median_income = value
     data.save_to_disk(".new")
-
 
 
 if __name__ == '__main__':

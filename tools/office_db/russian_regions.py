@@ -86,6 +86,11 @@ class TRussianRegions:
     def get_region_by_id(self, id: int):
         return self.region_id_to_region[id]
 
+    def iterate_regions_2021(self):
+        for r in self.regions:
+            if r.id != TRussianRegions.Russia_as_s_whole_region_id and r.id != 102 and r.id != 104 and r.id != 108 and r.id != 111:
+                yield r
+
     def get_region_in_nominative(self, russian_name):
         russian_name = russian_name.lower()
         if russian_name == "территории за пределами рф":
@@ -110,6 +115,18 @@ class TRussianRegions:
             return self.region_id_to_region[11]
         elif russian_name.find('северная осетия') != -1:
             return self.region_id_to_region[17]
+        elif russian_name.find('чувашская республика') != -1:
+            return self.region_id_to_region[91]
+        elif russian_name.find('ямало-ненецкий авт.округ') != -1:
+            return self.region_id_to_region[104]
+        elif russian_name.find('чукотский авт.округ') != -1:
+            return self.region_id_to_region[95]
+        elif russian_name.find('республика адыгея') != -1:
+            return self.region_id_to_region[3]
+        elif russian_name.find('татарстан') != -1:
+            return self.region_id_to_region[18]
+        elif russian_name.find('кузбасс') != -1:
+            return self.region_id_to_region[50]
         return self.region_name_to_region.get(russian_name)
 
     def get_region_in_nominative_and_dative(self, russian_name):
@@ -159,6 +176,10 @@ class TRussianRegions:
 
     def get_region_by_wikidata_id(self, wikidata_id):
         return self.wikidata2region.get(wikidata_id)
+
+    @staticmethod
+    def regions_was_captured_in_2014(region_id):
+        return region_id == 109 or region_id == 110
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
+# adhoc script, delete it in 2023
 import json
 from office_db.russian_regions import TRussianRegions
-from disclosures_site.declarations.rosstat_data import TRossStatData
 import os
 
 
