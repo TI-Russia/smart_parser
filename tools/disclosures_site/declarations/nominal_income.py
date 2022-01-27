@@ -73,6 +73,7 @@ IncomeCompare = namedtuple('IncomeCompare', ['population_income', 'declarant_inc
 def get_income_diff(income1, income2):
     return int(100.0 * (float(income2) - float(income1)) / float(income1))
 
+
 #years are not continous but ordered by year
 def get_average_nominal_incomes(year_incomes):
     if len(year_incomes) <= 1:
