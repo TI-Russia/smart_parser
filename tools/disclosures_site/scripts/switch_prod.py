@@ -9,10 +9,10 @@ from elasticsearch import Elasticsearch
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--mysql-tar", dest='mysql_tar')
-    parser.add_argument("--elasticsearch-tar", dest='elasticsearch_tar')
-    parser.add_argument("--sitemap-tar", dest='sitemap_tar')
-    parser.add_argument("--misspell-folder", dest='misspell_folder')
+    parser.add_argument("--mysql-tar", dest='mysql_tar', default=None)
+    parser.add_argument("--elasticsearch-tar", dest='elasticsearch_tar', default=None)
+    parser.add_argument("--sitemap-tar", dest='sitemap_tar', default=None)
+    parser.add_argument("--misspell-folder", dest='misspell_folder', default=None)
     parser.add_argument("--host", dest='host', default="disclosures.ru")
     return parser.parse_args()
 
@@ -103,13 +103,25 @@ class TSwitcher:
 
         disclosures_folder = os.path.join(os.path.dirname(__file__), "..")
         os.chdir(disclosures_folder)
-
-        self.switch_service_or_rollback('mysql', self.args.mysql_tar, self.check_mysql)
-        self.switch_service_or_rollback('elasticsearch', self.args.elasticsearch_tar, self.check_elasticsearch)
+        if self.args.mysql_tar is not None:
+            self.switch_service_or_rollback('mysql', self.args.mysql_tar, self.check_mysql)
+        else:
+            self.logger.info("skip mysql updating")
+        if self.args.elasticsearch_tar is not None:
+            self.switch_service_or_rollback('elasticsearch', self.args.elasticsearch_tar, self.check_elasticsearch)
+        else:
+            self.logger.info("skip elasticsearch updating")
 
         try:
-            self.run_cmd('tar xf {}'.format(self.args.sitemap_tar))
-            self.switch_misspell(self.args.misspell_folder)
+            if self.args.sitemap_tar is not None:
+                self.run_cmd('tar xf {}'.format(self.args.sitemap_tar))
+            else:
+                self.logger.info("skip sitemap updating")
+            if self.args.misspell_folder is not None:
+                self.switch_misspell(self.args.misspell_folder)
+            else:
+                self.logger.info("skip misspell updating")
+
             self.run_cmd('sudo systemctl restart gunicorn')
             self.test_final()
         except Exception as exp:
