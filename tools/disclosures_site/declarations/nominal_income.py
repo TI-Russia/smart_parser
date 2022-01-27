@@ -6,6 +6,9 @@ class YearIncome:
         self.year = year
         self.income = income
 
+    def __str__(self):
+        return "YearIncome({},{})".format(self.year, self.income)
+
 #average by the following sources:
 # https://ac.gov.ru/archive/files/publication/a/20967.pdf
 # https://ac.gov.ru/uploads/2-Publications/rus_feb_2020.pdf
@@ -62,6 +65,33 @@ ROSSTAT_ALL_RUSSIA_AVERAGE_MONTH_INCOME = {
     2020: 36073
 }
 
+#MROT is described in https://ru.wikipedia.org/wiki/%D0%9C%D0%B8%D0%BD%D0%B8%D0%BC%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9_%D1%80%D0%B0%D0%B7%D0%BC%D0%B5%D1%80_%D0%BE%D0%BF%D0%BB%D0%B0%D1%82%D1%8B_%D1%82%D1%80%D1%83%D0%B4%D0%B0_%D0%B2_%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B8
+#data are from https://base.garant.ru/10180093/
+MROT = {
+    2000: 132,
+    2001: 200,
+    2002: 405,
+    2003: 600,
+    2004:  600,
+    2005: 800,
+    2006: 1100,
+    2007: 2300,
+    2008: 2300,
+    2009: 4330,
+    2010: 4330,
+    2011: 4611,
+    2012: 4611,
+    2013: 5205,
+    2014: 5554,
+    2015: 5965,
+    2016: 7500,
+    2017: 7800,
+    2018: 10605,
+    2019: 11280,
+    2020: 12130,
+    2021: 12792,
+    2022: 13890
+}
 
 IncomeCompare = namedtuple('IncomeCompare', ['population_income', 'declarant_income', 'min_year', 'max_year'])
 
@@ -70,6 +100,7 @@ IncomeCompare = namedtuple('IncomeCompare', ['population_income', 'declarant_inc
 def get_average_nominal_incomes(year_incomes):
     if len(year_incomes) <= 1:
         return None
+    debug = ",".join(str(i) for i in year_incomes)
     first_declarant_income = None
     population_start_index = None
     last_declarant_income = None
@@ -77,6 +108,12 @@ def get_average_nominal_incomes(year_incomes):
     for year_income in year_incomes:
         if year_income.income == 0 or year_income.income is None:
             continue
+        if year_income.year not in MROT:
+            continue
+
+        if year_income.income < 12*MROT[year_income.year]:
+            continue
+
         k = find_year(year_income.year)
         if k != -1:
             if first_declarant_income is None:
