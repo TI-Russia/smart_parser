@@ -14,15 +14,15 @@ class NominalIncome(TestCase):
         # two years
         comp = get_average_nominal_incomes([YearIncome(2015, 100), YearIncome(2016, 200)])
         self.assertEqual(comp.declarant_income, 100) # 100% growth
-        self.assertAlmostEqual(comp.population_income, 1)  # 1.5% growth
-        self.assertEqual(comp.min_year, 2016)
+        self.assertAlmostEqual(comp.population_income, 1)  # int(1.51) = 1% growth
+        self.assertEqual(comp.min_year, 2015)
         self.assertEqual(comp.max_year, 2016)
 
         # 3 years
         comp = get_average_nominal_incomes([YearIncome(2015, 100), YearIncome(2016, 150), YearIncome(2017, 200)])
         self.assertEqual(comp.declarant_income, 100) # 100% growth
         self.assertAlmostEqual(comp.population_income, 4, places=3)  # 4.5% growth
-        self.assertEqual(comp.min_year, 2016)
+        self.assertEqual(comp.min_year, 2015)
         self.assertEqual(comp.max_year, 2017)
 
         #2040  year is ignored
@@ -30,7 +30,7 @@ class NominalIncome(TestCase):
                                             YearIncome(2040, 3000)])
         self.assertEqual(comp.declarant_income, 100) # 100% growth
         self.assertAlmostEqual(comp.population_income, 4, places=3)  # 4.5% growth
-        self.assertEqual(comp.min_year, 2016)
+        self.assertEqual(comp.min_year, 2015)
         self.assertEqual(comp.max_year, 2017)
 
         #2000  year is ignored
@@ -38,12 +38,12 @@ class NominalIncome(TestCase):
                                             YearIncome(2016, 150), YearIncome(2017, 200)])
         self.assertEqual(comp.declarant_income, 100) # 100% growth
         self.assertAlmostEqual(comp.population_income, 4, places=3)  # 4.5% growth
-        self.assertEqual(comp.min_year, 2016)
+        self.assertEqual(comp.min_year, 2015)
         self.assertEqual(comp.max_year, 2017)
 
         #zero income is ignored
         comp = get_average_nominal_incomes([YearIncome(2015, 0), YearIncome(2016, 150), YearIncome(2017, 200)])
         self.assertAlmostEqual(comp.declarant_income, 33, places=3)  # 33% growth
         self.assertAlmostEqual(comp.population_income, 2, places=3)  # 3% growth of 2017
-        self.assertEqual(comp.min_year, 2017)
+        self.assertEqual(comp.min_year, 2016)
         self.assertEqual(comp.max_year, 2017)
