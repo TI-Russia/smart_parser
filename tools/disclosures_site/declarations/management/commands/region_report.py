@@ -6,18 +6,18 @@ from django.core.management import BaseCommand
 from itertools import groupby
 from operator import itemgetter, attrgetter
 from statistics import median
-from django.db import connection
+from django.db import connectionself
 import os
 import scipy.stats
 
 
 class TRegionStats:
-    def  __init__(self, region_id, region_name, declarant_incomes, citizen_month_median_income, population):
+    def  __init__(self, region_id, region_name, declarant_incomes, citizen_month_median_salary, population):
         self.region_id = region_id
         self.region_name = region_name
         self.declarant_month_median_income = int(median(declarant_incomes) / 12)
         self.declarant_count = len(declarant_incomes)
-        self.citizen_month_median_income = citizen_month_median_income
+        self.citizen_month_median_salary = citizen_month_median_salary
         self.population = population
 
     def to_json(self):
@@ -25,7 +25,7 @@ class TRegionStats:
             'region' : self.region_name,
             'declarant_month_median_income': self.declarant_month_median_income,
             'declarant_count': self.declarant_count,
-            'citizen_month_median_income': self.citizen_month_median_income,
+            'citizen_month_median_salary': self.citizen_month_median_salary,
             'population': self.population
         }
 
@@ -69,7 +69,7 @@ class Command(BaseCommand):
                 stat_info: TRegionYearInfo
                 stat_info = stats[region_id].get(year)
                 s = TRegionStats(region_id, region_name, incomes,
-                                 stat_info.median_income, stat_info.population)
+                                 stat_info.median_salary, stat_info.population)
                 region_stats.append(s)
         return region_stats
 
@@ -77,10 +77,10 @@ class Command(BaseCommand):
         x = list()
         y = list()
         for s in region_stats:
-            if s.region_id is not None and s.region_id != TRussianRegions.Russia_as_s_whole_region_id and s.citizen_month_median_income is not None:
-                x.append(s.citizen_month_median_income)
+            if s.region_id is not None and s.region_id != TRussianRegions.Russia_as_s_whole_region_id and s.citizen_month_median_salary is not None:
+                x.append(s.citizen_month_median_salary)
                 y.append(s.declarant_month_median_income)
-        print("normaltest citizen_month_median_income {}".format(scipy.stats.normaltest(sorted(x))))
+        print("normaltest citizen_month_median_salary {}".format(scipy.stats.normaltest(sorted(x))))
         print("normaltest declarant_month_median_income {}".format(scipy.stats.normaltest(y)))
         print("Pearson correlation coefficients {}".format(scipy.stats.pearsonr(x, y)))
         print("Spearman correlation coefficients {}".format(scipy.stats.spearmanr(x, y)))
@@ -90,16 +90,16 @@ class Command(BaseCommand):
         region_stats.sort(key=attrgetter('declarant_month_median_income'), reverse=True)
         #print(json.dumps(list(l.to_json() for l in region_stats), ensure_ascii=False, indent=4))
         sum_declarant_month_median_income = 0
-        sum_citizen_month_median_income = 0
+        sum_citizen_month_median_salary = 0
         declarant_count = 0
         for s in region_stats:
-            if s.region_id is not None and s.citizen_month_median_income is not None:
+            if s.region_id is not None and s.citizen_month_median_salary is not None:
                 sum_declarant_month_median_income += s.declarant_month_median_income * s.declarant_count
-                sum_citizen_month_median_income += s.citizen_month_median_income * s.declarant_count
+                sum_citizen_month_median_salary += s.citizen_month_median_salary * s.declarant_count
                 declarant_count += s.declarant_count
         print("Income declarant/citizen ratio for {}: {}, declarant_count={}".format(
             year,
-            sum_declarant_month_median_income / sum_citizen_month_median_income,
+            sum_declarant_month_median_income / sum_citizen_month_median_salary,
             declarant_count))
 
     def build_html_by_regions_stats(self, year, region_stats):
@@ -108,13 +108,13 @@ class Command(BaseCommand):
             os.mkdir(report_folder)
         data = list()
         for r in region_stats:
-            if r.region_id is None or r.region_id == TRussianRegions.Russia_as_s_whole_region_id or r.citizen_month_median_income is None:
+            if r.region_id is None or r.region_id == TRussianRegions.Russia_as_s_whole_region_id or r.citizen_month_median_salary is None:
                 continue
             data.append((r.region_id,
                 r.region_name,
                 r.declarant_month_median_income,
-                r.citizen_month_median_income,
-                round(r.declarant_month_median_income / r.citizen_month_median_income, 2),
+                r.citizen_month_median_salary,
+                round(r.declarant_month_median_income / r.citizen_month_median_salary, 2),
                 r.declarant_count,
                 r.population,
                 int(r.population / r.declarant_count)))

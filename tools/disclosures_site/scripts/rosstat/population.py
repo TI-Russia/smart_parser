@@ -36,7 +36,7 @@ def main():
         if info2019.population != populations[0]:
             raise Exception("region_id={} different data {} != {}".format(region_id, info2019.population, populations[0]))
         s = data1.get_data(region_id, 2021)
-        assert  s.median_income > 0
+        assert  s.median_salary > 0
         s.population = populations[2]
         assert data1.get_data(region_id, 2020) is None
         data1.set_data(region_id, 2020, TRegionYearInfo(population=populations[1]))

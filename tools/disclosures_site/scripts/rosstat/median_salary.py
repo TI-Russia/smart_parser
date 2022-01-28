@@ -1,3 +1,4 @@
+# парсим 31 таблица из "Сведения о распределении численности работников по размерам заработной платы" от Росстата
 
 from disclosures_site.declarations.rosstat_data import TRossStatData, TRegionYearInfo
 from common.primitives import normalize_whitespace
@@ -17,9 +18,9 @@ def main():
             if region is None:
                 raise Exception("region {} is not found".format(name))
             if year not in data.region_stat[region.id]:
-                data.region_stat[region.id][year] = TRegionYearInfo(population=None, median_income=value)
+                data.region_stat[region.id][year] = TRegionYearInfo(population=None, median_salary=value)
             else:
-                data.region_stat[region.id][year].median_income = value
+                data.region_stat[region.id][year].median_salary = value
     data.save_to_disk(".new")
 
 
