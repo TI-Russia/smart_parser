@@ -21,25 +21,35 @@ import os
 
 
 class TRegionYearInfo:
-    def __init__(self, population=None, median_salary=None, average_income=None):
+    def __init__(self, population=None, median_salary=None, average_income=None, average_salary=None):
         self.population = population
         self.median_salary = median_salary
+        self.average_salary = average_salary
         self.average_income = average_income
 
     @staticmethod
     def from_json(j):
         r = TRegionYearInfo()
         r.median_salary = j.get('median_salary')
-        if r.median_salary is not None:
-            assert r.median_salary > 5000
-            assert r.median_salary < 300000
         r.population = j.get('population')
-        if r.population is not None:
-            assert r.population > 10000
         r.average_income = j.get('average_income')
-        if r.average_income is not None:
-            assert r.average_income > 10000
+        r.average_salary = j.get('average_salary')
+        r.check()
         return r
+
+    def check(self):
+        if self.median_salary is not None:
+            assert self.median_salary > 5000
+            assert self.median_salary < 300000
+        if self.population is not None:
+            assert self.population > 10000
+        if self.average_income is not None:
+            assert self.average_income > 10000
+
+        #Медианная зарплата составляет около 70 % от средней.
+        #https://ru.wikipedia.org/wiki/%D0%94%D0%BE%D1%85%D0%BE%D0%B4%D1%8B_%D0%BD%D0%B0%D1%81%D0%B5%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F_%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B8?fbclid=IwAR1PahTMesEzJmTJ9IRShaxUKNWfnGuqjLO8KeLS3yKjH6qo0EKlRHGgcjU
+        if self.median_salary is not None and self.average_salary is not None:
+            assert self.median_salary < self.average_salary
 
     def to_json(self):
         r = dict()
@@ -49,6 +59,8 @@ class TRegionYearInfo:
             r['median_salary'] = self.median_salary
         if self.average_income is not None:
             r['average_income'] = self.average_income
+        if self.average_salary is not None:
+            r['average_salary'] = self.average_salary
         return r
 
 
@@ -88,7 +100,11 @@ class TRossStatData:
     def get_data(self, region_id, year: int):
         return self.region_stat.get(region_id, dict()).get(year)
 
+    def get_or_create_data(self, region_id, year: int):
+        return self.region_stat.get(region_id, dict()).get(year, TRegionYearInfo())
+
     def set_data(self, region_id, year: int, info: TRegionYearInfo):
+        info.check()
         r = self.region_stat.get(region_id)
         assert r is not None
         r[year] = info

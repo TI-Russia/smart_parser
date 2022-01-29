@@ -39,7 +39,8 @@
       "2021": {
          "population": 463167,
          "median_salary": 28419,
-         "average_income": 32294
+         "average_income": 32294,
+         "average_salary": 34250
       },
       "2020": {
          "population": 463088,
@@ -86,7 +87,8 @@
       "2021": {
          "population": 2296353,
          "median_salary": 28559,
-         "average_income": 23507
+         "average_income": 23507,
+         "average_salary": 34629
       },
       "2020": {
          "population": 2317153,
@@ -133,7 +135,8 @@
       "2021": {
          "population": 781846,
          "median_salary": 50156,
-         "average_income": 36588
+         "average_income": 36588,
+         "average_salary": 62123
       },
       "2020": {
          "population": 790044,
@@ -180,7 +183,8 @@
       "2021": {
          "population": 1082662,
          "median_salary": 48782,
-         "average_income": 37942
+         "average_income": 37942,
+         "average_salary": 60732
       },
       "2020": {
          "population": 1092424,
@@ -227,7 +231,8 @@
       "2021": {
          "population": 997778,
          "median_salary": 30880,
-         "average_income": 25077
+         "average_income": 25077,
+         "average_salary": 40723
       },
       "2020": {
          "population": 1005782,
@@ -274,7 +279,8 @@
       "2021": {
          "population": 4013786,
          "median_salary": 35234,
-         "average_income": 29194
+         "average_income": 29194,
+         "average_salary": 44029
       },
       "2020": {
          "population": 4038151,
@@ -321,7 +327,8 @@
       "2021": {
          "population": 1541259,
          "median_salary": 35372,
-         "average_income": 33268
+         "average_income": 33268,
+         "average_salary": 41463
       },
       "2020": {
          "population": 1549151,
@@ -368,7 +375,8 @@
       "2021": {
          "population": 1182682,
          "median_salary": 28874,
-         "average_income": 28933
+         "average_income": 28933,
+         "average_salary": 34616
       },
       "2020": {
          "population": 1192491,
@@ -415,7 +423,8 @@
       "2021": {
          "population": 985431,
          "median_salary": 36481,
-         "average_income": 26203
+         "average_income": 26203,
+         "average_salary": 45318
       },
       "2020": {
          "population": 985937,
@@ -462,7 +471,8 @@
       "2021": {
          "population": 1342099,
          "median_salary": 33110,
-         "average_income": 27268
+         "average_income": 27268,
+         "average_salary": 39363
       },
       "2020": {
          "population": 1358416,
@@ -509,7 +519,8 @@
       "2021": {
          "population": 2474556,
          "median_salary": 31037,
-         "average_income": 25191
+         "average_income": 25191,
+         "average_salary": 36796
       },
       "2020": {
          "population": 2491036,
@@ -556,7 +567,8 @@
       "2021": {
          "population": 1151042,
          "median_salary": 39029,
-         "average_income": 29692
+         "average_income": 29692,
+         "average_salary": 46933
       },
       "2020": {
          "population": 1160445,
@@ -603,7 +615,8 @@
       "2021": {
          "population": 2305608,
          "median_salary": 32989,
-         "average_income": 32799
+         "average_income": 32799,
+         "average_salary": 41045
       },
       "2020": {
          "population": 2324205,
@@ -650,7 +663,8 @@
       "2021": {
          "population": 3133303,
          "median_salary": 23481,
-         "average_income": 26863
+         "average_income": 26863,
+         "average_salary": 29600
       },
       "2020": {
          "population": 3110858,
@@ -697,7 +711,8 @@
       "2021": {
          "population": 156500,
          "median_salary": 39702,
-         "average_income": 28041
+         "average_income": 28041,
+         "average_salary": 47860
       },
       "2020": {
          "population": 158305,
@@ -744,7 +759,8 @@
       "2021": {
          "population": 1053485,
          "median_salary": 39553,
-         "average_income": 27123
+         "average_income": 27123,
+         "average_salary": 51362
       },
       "2020": {
          "population": 1059700,
@@ -791,7 +807,8 @@
       "2021": {
          "population": 987032,
          "median_salary": 27343,
-         "average_income": 26817
+         "average_income": 26817,
+         "average_salary": 32973
       },
       "2020": {
          "population": 997135,
@@ -838,7 +855,8 @@
       "2021": {
          "population": 515564,
          "median_salary": 22937,
-         "average_income": 16676
+         "average_income": 16676,
+         "average_salary": 29037
       },
       "2020": {
          "population": 507061,
@@ -885,7 +903,8 @@
       "2021": {
          "population": 2375021,
          "median_salary": 44371,
-         "average_income": 27999
+         "average_income": 27999,
+         "average_salary": 55866
       },
       "2020": {
          "population": 2391193,
@@ -932,7 +951,8 @@
       "2021": {
          "population": 869191,
          "median_salary": 23263,
-         "average_income": 21318
+         "average_income": 21318,
+         "average_salary": 30355
       },
       "2020": {
          "population": 868350,
@@ -979,7 +999,8 @@
       "2021": {
          "population": 1018624,
          "median_salary": 35237,
-         "average_income": 29523
+         "average_income": 29523,
+         "average_salary": 44208
       },
       "2020": {
          "population": 1012512,
@@ -1026,7 +1047,8 @@
       "2021": {
          "population": 269984,
          "median_salary": 26006,
-         "average_income": 19554
+         "average_income": 19554,
+         "average_salary": 30782
       },
       "2020": {
          "population": 271135,
@@ -1073,7 +1095,8 @@
       "2021": {
          "population": 1000980,
          "median_salary": 39141,
-         "average_income": 33172
+         "average_income": 33172,
+         "average_salary": 48551
       },
       "2020": {
          "population": 1002575,
@@ -1120,7 +1143,8 @@
       "2021": {
          "population": 311667,
          "median_salary": 71778,
-         "average_income": 54763
+         "average_income": 54763,
+         "average_salary": 88773
       },
       "2020": {
          "population": 313016,
@@ -1167,7 +1191,8 @@
       "2021": {
          "population": 465357,
          "median_salary": 24047,
-         "average_income": 18457
+         "average_income": 18457,
+         "average_salary": 30583
       },
       "2020": {
          "population": 465528,
@@ -1214,7 +1239,8 @@
       "2021": {
          "population": 609071,
          "median_salary": 40545,
-         "average_income": 32447
+         "average_income": 32447,
+         "average_salary": 50086
       },
       "2020": {
          "population": 614064,
@@ -1261,7 +1287,8 @@
       "2021": {
          "population": 2633446,
          "median_salary": 39166,
-         "average_income": 25952
+         "average_income": 25952,
+         "average_salary": 48148
       },
       "2020": {
          "population": 2657854,
@@ -1308,7 +1335,8 @@
       "2021": {
          "population": 1250173,
          "median_salary": 29689,
-         "average_income": 24638
+         "average_income": 24638,
+         "average_salary": 35542
       },
       "2020": {
          "population": 1262402,
@@ -1355,7 +1383,8 @@
       "2021": {
          "population": 628423,
          "median_salary": 29494,
-         "average_income": 26683
+         "average_income": 26683,
+         "average_salary": 36141
       },
       "2020": {
          "population": 633385,
@@ -1402,7 +1431,8 @@
       "2021": {
          "population": 5683947,
          "median_salary": 33903,
-         "average_income": 38269
+         "average_income": 38269,
+         "average_salary": 42663
       },
       "2020": {
          "population": 5675462,
@@ -1449,7 +1479,8 @@
       "2021": {
          "population": 2855899,
          "median_salary": 45407,
-         "average_income": 33001
+         "average_income": 33001,
+         "average_salary": 59586
       },
       "2020": {
          "population": 2866255,
@@ -1496,7 +1527,8 @@
       "2021": {
          "population": 818570,
          "median_salary": 28760,
-         "average_income": 22219
+         "average_income": 22219,
+         "average_salary": 34652
       },
       "2020": {
          "population": 827166,
@@ -1543,7 +1575,8 @@
       "2021": {
          "population": 1096488,
          "median_salary": 31968,
-         "average_income": 30414
+         "average_income": 30414,
+         "average_salary": 38532
       },
       "2020": {
          "population": 1104008,
@@ -1590,7 +1623,8 @@
       "2021": {
          "population": 1892711,
          "median_salary": 47044,
-         "average_income": 34911
+         "average_income": 34911,
+         "average_salary": 56145
       },
       "2020": {
          "population": 1875872,
@@ -1637,7 +1671,8 @@
       "2021": {
          "population": 1128192,
          "median_salary": 33519,
-         "average_income": 32620
+         "average_income": 32620,
+         "average_salary": 40513
       },
       "2020": {
          "population": 1139371,
@@ -1684,7 +1719,8 @@
       "2021": {
          "population": 139034,
          "median_salary": 81101,
-         "average_income": 70658
+         "average_income": 70658,
+         "average_salary": 101735
       },
       "2020": {
          "population": 140149,
@@ -1731,7 +1767,8 @@
       "2021": {
          "population": 675332,
          "median_salary": 28161,
-         "average_income": 21621
+         "average_income": 21621,
+         "average_salary": 34297
       },
       "2020": {
          "population": 679417,
@@ -1778,7 +1815,8 @@
       "2021": {
          "population": 778965,
          "median_salary": 28739,
-         "average_income": 21505
+         "average_income": 21505,
+         "average_salary": 33339
       },
       "2020": {
          "population": 790197,
@@ -1825,7 +1863,8 @@
       "2021": {
          "population": 12655050,
          "median_salary": 75729,
-         "average_income": 80265
+         "average_income": 80265,
+         "average_salary": 112889
       },
       "2020": {
          "population": 12678079,
@@ -1872,7 +1911,8 @@
       "2021": {
          "population": 7708499,
          "median_salary": 51215,
-         "average_income": 49879
+         "average_income": 49879,
+         "average_salary": 64792
       },
       "2020": {
          "population": 7690863,
@@ -1919,7 +1959,8 @@
       "2021": {
          "population": 732864,
          "median_salary": 58996,
-         "average_income": 47698
+         "average_income": 47698,
+         "average_salary": 76627
       },
       "2020": {
          "population": 741404,
@@ -2000,7 +2041,8 @@
       "2021": {
          "population": 3176552,
          "median_salary": 35899,
-         "average_income": 35642
+         "average_income": 35642,
+         "average_salary": 45004
       },
       "2020": {
          "population": 3202946,
@@ -2047,7 +2089,8 @@
       "2021": {
          "population": 592415,
          "median_salary": 32827,
-         "average_income": 26640
+         "average_income": 26640,
+         "average_salary": 40192
       },
       "2020": {
          "population": 596508,
@@ -2094,7 +2137,8 @@
       "2021": {
          "population": 2785836,
          "median_salary": 37878,
-         "average_income": 32694
+         "average_income": 32694,
+         "average_salary": 47830
       },
       "2020": {
          "population": 2798170,
@@ -2141,7 +2185,8 @@
       "2021": {
          "population": 1903675,
          "median_salary": 31668,
-         "average_income": 27193
+         "average_income": 27193,
+         "average_salary": 39716
       },
       "2020": {
          "population": 1926665,
@@ -2188,7 +2233,8 @@
       "2021": {
          "population": 1942915,
          "median_salary": 32348,
-         "average_income": 24787
+         "average_income": 24787,
+         "average_salary": 39568
       },
       "2020": {
          "population": 1956835,
@@ -2235,7 +2281,8 @@
       "2021": {
          "population": 724686,
          "median_salary": 27888,
-         "average_income": 27539
+         "average_income": 27539,
+         "average_salary": 33243
       },
       "2020": {
          "population": 733498,
@@ -2282,7 +2329,8 @@
       "2021": {
          "population": 1290898,
          "median_salary": 29942,
-         "average_income": 24855
+         "average_income": 24855,
+         "average_salary": 35377
       },
       "2020": {
          "population": 1305563,
@@ -2329,7 +2377,8 @@
       "2021": {
          "population": 2579261,
          "median_salary": 36388,
-         "average_income": 29887
+         "average_income": 29887,
+         "average_salary": 44208
       },
       "2020": {
          "population": 2599260,
@@ -2376,7 +2425,8 @@
       "2021": {
          "population": 1877844,
          "median_salary": 47252,
-         "average_income": 38286
+         "average_income": 38286,
+         "average_salary": 59272
       },
       "2020": {
          "population": 1895868,
@@ -2423,7 +2473,8 @@
       "2021": {
          "population": 620249,
          "median_salary": 28608,
-         "average_income": 27670
+         "average_income": 27670,
+         "average_salary": 34132
       },
       "2020": {
          "population": 626115,
@@ -2470,7 +2521,8 @@
       "2021": {
          "population": 220954,
          "median_salary": 28932,
-         "average_income": 21413
+         "average_income": 21413,
+         "average_salary": 36674
       },
       "2020": {
          "population": 220181,
@@ -2517,7 +2569,8 @@
       "2021": {
          "population": 813590,
          "median_salary": 48238,
-         "average_income": 35278
+         "average_income": 35278,
+         "average_salary": 61523
       },
       "2020": {
          "population": 820473,
@@ -2564,7 +2617,8 @@
       "2021": {
          "population": 330368,
          "median_salary": 31825,
-         "average_income": 16897
+         "average_income": 16897,
+         "average_salary": 41306
       },
       "2020": {
          "population": 327383,
@@ -2611,7 +2665,8 @@
       "2021": {
          "population": 4181486,
          "median_salary": 32241,
-         "average_income": 32407
+         "average_income": 32407,
+         "average_salary": 40036
       },
       "2020": {
          "population": 4197821,
@@ -2658,7 +2713,8 @@
       "2021": {
          "population": 1098257,
          "median_salary": 33259,
-         "average_income": 27815
+         "average_income": 27815,
+         "average_salary": 40217
       },
       "2020": {
          "population": 1108847,
@@ -2705,7 +2761,8 @@
       "2021": {
          "population": 3154164,
          "median_salary": 34889,
-         "average_income": 29632
+         "average_income": 29632,
+         "average_salary": 42792
       },
       "2020": {
          "population": 3179532,
@@ -2752,7 +2809,8 @@
       "2021": {
          "population": 5384342,
          "median_salary": 58654,
-         "average_income": 51154
+         "average_income": 51154,
+         "average_salary": 76585
       },
       "2020": {
          "population": 5398064,
@@ -2799,7 +2857,8 @@
       "2021": {
          "population": 2395111,
          "median_salary": 30113,
-         "average_income": 24250
+         "average_income": 24250,
+         "average_salary": 36800
       },
       "2020": {
          "population": 2421895,
@@ -2846,7 +2905,8 @@
       "2021": {
          "population": 485621,
          "median_salary": 71639,
-         "average_income": 58643
+         "average_income": 58643,
+         "average_salary": 95717
       },
       "2020": {
          "population": 488257,
@@ -2893,7 +2953,8 @@
       "2021": {
          "population": 4290067,
          "median_salary": 39634,
-         "average_income": 37844
+         "average_income": 37844,
+         "average_salary": 49311
       },
       "2020": {
          "population": 4310681,
@@ -2940,7 +3001,8 @@
       "2021": {
          "population": 693098,
          "median_salary": 23691,
-         "average_income": 24148
+         "average_income": 24148,
+         "average_salary": 30937
       },
       "2020": {
          "population": 696837,
@@ -2987,7 +3049,8 @@
       "2021": {
          "population": 921127,
          "median_salary": 29089,
-         "average_income": 28753
+         "average_income": 28753,
+         "average_salary": 35992
       },
       "2020": {
          "population": 934889,
@@ -3034,7 +3097,8 @@
       "2021": {
          "population": 2792796,
          "median_salary": 28621,
-         "average_income": 24009
+         "average_income": 24009,
+         "average_salary": 35327
       },
       "2020": {
          "population": 2803573,
@@ -3081,7 +3145,8 @@
       "2021": {
          "population": 994420,
          "median_salary": 28172,
-         "average_income": 27209
+         "average_income": 27209,
+         "average_salary": 34168
       },
       "2020": {
          "population": 1006748,
@@ -3128,7 +3193,8 @@
       "2021": {
          "population": 3894120,
          "median_salary": 35966,
-         "average_income": 37051
+         "average_income": 37051,
+         "average_salary": 45193
       },
       "2020": {
          "population": 3902888,
@@ -3175,7 +3241,8 @@
       "2021": {
          "population": 1245619,
          "median_salary": 33549,
-         "average_income": 28678
+         "average_income": 28678,
+         "average_salary": 40347
       },
       "2020": {
          "population": 1260379,
@@ -3222,7 +3289,8 @@
       "2021": {
          "population": 1070339,
          "median_salary": 38708,
-         "average_income": 29505
+         "average_income": 29505,
+         "average_salary": 49520
       },
       "2020": {
          "population": 1079271,
@@ -3269,7 +3337,8 @@
       "2021": {
          "population": 1449115,
          "median_salary": 36658,
-         "average_income": 30856
+         "average_income": 30856,
+         "average_salary": 44701
       },
       "2020": {
          "population": 1466127,
@@ -3316,7 +3385,8 @@
       "2021": {
          "population": 3778053,
          "median_salary": 66149,
-         "average_income": 51247
+         "average_income": 51247,
+         "average_salary": 82770
       },
       "2020": {
          "population": 3756536,
@@ -3363,7 +3433,8 @@
       "2021": {
          "population": 1493356,
          "median_salary": 32022,
-         "average_income": 25395
+         "average_income": 25395,
+         "average_salary": 38144
       },
       "2020": {
          "population": 1500955,
@@ -3410,7 +3481,8 @@
       "2021": {
          "population": 1218319,
          "median_salary": 29791,
-         "average_income": 25476
+         "average_income": 25476,
+         "average_salary": 36649
       },
       "2020": {
          "population": 1229824,
@@ -3457,7 +3529,8 @@
       "2021": {
          "population": 1301127,
          "median_salary": 50197,
-         "average_income": 40888
+         "average_income": 40888,
+         "average_salary": 62179
       },
       "2020": {
          "population": 1315643,
@@ -3504,7 +3577,8 @@
       "2021": {
          "population": 532036,
          "median_salary": 36938,
-         "average_income": 24999
+         "average_income": 24999,
+         "average_salary": 46959
       },
       "2020": {
          "population": 534262,
@@ -3545,7 +3619,8 @@
          "median_salary": 60570
       },
       "2021": {
-         "median_salary": 68610
+         "median_salary": 68610,
+         "average_salary": 81909
       }
    },
    "89": {
@@ -3588,7 +3663,8 @@
       "2021": {
          "population": 3442810,
          "median_salary": 36107,
-         "average_income": 27152
+         "average_income": 27152,
+         "average_salary": 44539
       },
       "2020": {
          "population": 3466369,
@@ -3635,7 +3711,8 @@
       "2021": {
          "population": 1497992,
          "median_salary": 24836,
-         "average_income": 23600
+         "average_income": 23600,
+         "average_salary": 30509
       },
       "2020": {
          "population": 1478726,
@@ -3682,7 +3759,8 @@
       "2021": {
          "population": 1207875,
          "median_salary": 29130,
-         "average_income": 21859
+         "average_income": 21859,
+         "average_salary": 35394
       },
       "2020": {
          "population": 1217818,
@@ -3729,7 +3807,8 @@
       "2021": {
          "population": 49527,
          "median_salary": 95837,
-         "average_income": 95067
+         "average_income": 95067,
+         "average_salary": 114178
       },
       "2020": {
          "population": 50288,
@@ -3776,7 +3855,8 @@
       "2021": {
          "population": 981971,
          "median_salary": 62831,
-         "average_income": 44173
+         "average_income": 44173,
+         "average_salary": 78428
       },
       "2020": {
          "population": 971996,
@@ -3817,7 +3897,8 @@
          "median_salary": 77542
       },
       "2021": {
-         "median_salary": 92794
+         "median_salary": 92794,
+         "average_salary": 111598
       }
    },
    "107": {
@@ -3860,7 +3941,8 @@
       "2021": {
          "population": 1241424,
          "median_salary": 34175,
-         "average_income": 30900
+         "average_income": 30900,
+         "average_salary": 41411
       },
       "2020": {
          "population": 1253389,
@@ -3893,7 +3975,8 @@
       "2021": {
          "population": 1901578,
          "median_salary": 29470,
-         "average_income": 24338
+         "average_income": 24338,
+         "average_salary": 35880
       },
       "2020": {
          "population": 1912622,
@@ -3926,7 +4009,8 @@
       "2021": {
          "population": 509992,
          "median_salary": 35924,
-         "average_income": 27990
+         "average_income": 27990,
+         "average_salary": 43038
       },
       "2020": {
          "population": 449138,
