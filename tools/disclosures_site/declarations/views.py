@@ -9,6 +9,8 @@ from declarations.car_brands import CAR_BRANDS
 from declarations.gender_recognize import TGender
 from declarations.input_json import TIntersectionStatus
 from pylem import MorphanHolder, MorphLanguage
+from declarations.region_year_snapshot import TRegionYearStats, TAllRegionYearStats, ALL_YEAR_REGION_STATS
+
 
 from django.views import generic
 from django.views.generic.edit import FormView
@@ -24,6 +26,8 @@ from django.shortcuts import redirect
 import operator
 import logging
 import json
+from django.template import loader
+import csv
 
 
 logger = logging.getLogger(__name__)
@@ -559,3 +563,27 @@ def source_doc_getter(request, sha256_and_file_extension):
     data, file_extension = DeclarationsConfig.SOURCE_DOC_CLIENT.retrieve_file_data_by_sha256(sha256)
     content_type = file_extension_to_content_type(file_extension)
     return HttpResponse(data, content_type=content_type)
+
+
+def region_report_view(year, request):
+    template_name = 'reports/regions{}/index.html'.format(year)
+    template = loader.get_template(template_name)
+    data = ALL_YEAR_REGION_STATS.years.get(year)
+    context = {
+        'table_headers': list(zip(TRegionYearStats.get_table_headers(), TRegionYearStats.get_table_column_description())),
+        'table_rows': list(i.get_table_cells() for i in data.region_data.values()),
+        'year': year,
+        'corr_matrix': data.corr_matrix,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+def region_report_csv(year, request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="region_report_view_{}.csv"'.format(year)
+    data = ALL_YEAR_REGION_STATS.years.get(year)
+    writer = csv.writer(response, delimiter="\t")
+    writer.writerow([TRegionYearStats.get_table_headers()])
+    for i in data.region_data.values():
+        writer.writerow(i.get_table_cells())
+    return response

@@ -1,33 +1,15 @@
 import declarations.models as models
 from office_db.russian_regions import TRussianRegions
-from declarations.rosstat_data import TRossStatData, TRegionYearInfo
+from declarations.region_data import TRossStatData
+from declarations.all_russia_stat_info import get_mrot
+from declarations.region_year_snapshot import TRegionYearStats, TAllRegionYearStats
 
 from django.core.management import BaseCommand
 from itertools import groupby
-from operator import itemgetter, attrgetter
-from statistics import median
-from django.db import connectionself
-import os
+from operator import itemgetter
+from django.db import connection
 import scipy.stats
-
-
-class TRegionStats:
-    def  __init__(self, region_id, region_name, declarant_incomes, citizen_month_median_salary, population):
-        self.region_id = region_id
-        self.region_name = region_name
-        self.declarant_month_median_income = int(median(declarant_incomes) / 12)
-        self.declarant_count = len(declarant_incomes)
-        self.citizen_month_median_salary = citizen_month_median_salary
-        self.population = population
-
-    def to_json(self):
-        return {
-            'region' : self.region_name,
-            'declarant_month_median_income': self.declarant_month_median_income,
-            'declarant_count': self.declarant_count,
-            'citizen_month_median_salary': self.citizen_month_median_salary,
-            'population': self.population
-        }
+import json
 
 
 class Command(BaseCommand):
@@ -44,144 +26,92 @@ class Command(BaseCommand):
             dest='year',
             type=int,
         )
+        parser.add_argument(
+                '--main-report-html',
+            dest='main_report_html_path',
+            default='/reports/regions2020/index.html'
+        )
+        parser.add_argument(
+            '--output-json',
+            dest='output_json'
+        )
 
-    def build_declarant_incomes(self, year, stats: TRossStatData, max_income=5000000):
-        minOboronyId =  450
+    def build_declarant_incomes(self, year, max_income=5000000) -> TAllRegionYearStats:
+        region_data = TAllRegionYearStats(year, file_name=self.options.get('output_json'))
+        minOboronyId = 450
         query = """
-            select o.region_id, i.size 
-            from declarations_section s 
+            select o.region_id, i.size
+            from declarations_section   s 
             join declarations_office o on s.office_id=o.id  
             join declarations_income i on i.section_id=s.id  
             where s.income_year = {} and  
                  i.size < {} and 
                  i.size > 0 and 
                  i.relative='{}' and
-                 o.id != {}
+                 o.id != {} and
+                 o.region_id is  not null and
+                 o.region_id != {}
             order by o.region_id, i.size
-        """.format(year, max_income, models.Relative.main_declarant_code, minOboronyId)
-        regions = dict( (r.id, r.name) for r in models.Region.objects.all())
-        region_stats = list()
+        """.format(year, max_income, models.Relative.main_declarant_code, minOboronyId, TRussianRegions.Russia_as_s_whole_region_id)
+        regions = TRussianRegions()
+        mrot = get_mrot(year)
+        assert mrot is not None
         with connection.cursor() as cursor:
             cursor.execute(query)
             for region_id, items in groupby(cursor, itemgetter(0)):
-                incomes = list(income for _, income in items )
-                region_name = regions.get(region_id, "")
-                stat_info: TRegionYearInfo
-                stat_info = stats[region_id].get(year)
-                s = TRegionStats(region_id, region_name, incomes,
-                                 stat_info.median_salary, stat_info.population)
-                region_stats.append(s)
-        return region_stats
+                incomes = list(income for _, income in items if income/12 > mrot)
+                if region_id == TRussianRegions.Baikonur:
+                    continue
+                region = regions.get_region_by_id(region_id)
+                if region.joined_to is not None:
+                    region = regions.get_region_by_id(region.joined_to)
+                stat_info = region_data.ross_stat.get_data(region.id, year)
+                if stat_info is None:
+                    raise Exception(
+                        "cannot find stat_info for region.id={}, region.name={}".format(region.id, region.name))
+                population = stat_info.population
+                population_median_income = region_data.ross_stat.get_or_predict_median_salary(region.id, year)
+                if population_median_income is None:
+                    raise Exception(
+                        "cannot estimate population median_income for region.id={}, region.name={}".format(region.id, region.name))
+                s = TRegionYearStats(region.id, region.name, incomes, population_median_income, population,
+                                     region_data.ross_stat.get_data(region.id, 2021).er_election_2021)
+                region_data.add_snapshot(s)
 
-    def print_pearson_corr(self, region_stats):
+        region_data.calc_aux_params()
+        return region_data
+
+    def print_spearman_corr(self, region_stats):
         x = list()
         y = list()
-        for s in region_stats:
-            if s.region_id is not None and s.region_id != TRussianRegions.Russia_as_s_whole_region_id and s.citizen_month_median_salary is not None:
+        for s in region_stats.values():
+            if s.region_id is not None and s.citizen_month_median_salary is not None:
                 x.append(s.citizen_month_median_salary)
                 y.append(s.declarant_month_median_income)
-        print("normaltest citizen_month_median_salary {}".format(scipy.stats.normaltest(sorted(x))))
-        print("normaltest declarant_month_median_income {}".format(scipy.stats.normaltest(y)))
-        print("Pearson correlation coefficients {}".format(scipy.stats.pearsonr(x, y)))
+
+        alpha = 1e-3
+        _, p1 = scipy.stats.normaltest(x)
+        _, p2 = scipy.stats.normaltest(x)
+        if p1 < alpha or p2 < alpha:
+            # usually pvalue of normaltests are very low  (<10^-3)  it means it is unlikely that the data came from a normal distribution. For example:
+            # so we cannot use pearsonr here
+            print("Regional median income are not distributed normally, so we cannot  use Pearson correlation coefficients")
+        else:
+            print("Pearson correlation coefficients {}".format(scipy.stats.pearsonr(x, y)))
+
         print("Spearman correlation coefficients {}".format(scipy.stats.spearmanr(x, y)))
-
-
-    def print_regions_stats(self, region_stats):
-        region_stats.sort(key=attrgetter('declarant_month_median_income'), reverse=True)
-        #print(json.dumps(list(l.to_json() for l in region_stats), ensure_ascii=False, indent=4))
-        sum_declarant_month_median_income = 0
-        sum_citizen_month_median_salary = 0
-        declarant_count = 0
-        for s in region_stats:
-            if s.region_id is not None and s.citizen_month_median_salary is not None:
-                sum_declarant_month_median_income += s.declarant_month_median_income * s.declarant_count
-                sum_citizen_month_median_salary += s.citizen_month_median_salary * s.declarant_count
-                declarant_count += s.declarant_count
-        print("Income declarant/citizen ratio for {}: {}, declarant_count={}".format(
-            year,
-            sum_declarant_month_median_income / sum_citizen_month_median_salary,
-            declarant_count))
-
-    def build_html_by_regions_stats(self, year, region_stats):
-        report_folder = os.path.join(os.path.dirname(__file__), "../../../disclosures/static/regionreports")
-        if not os.path.exists(report_folder):
-            os.mkdir(report_folder)
-        data = list()
-        for r in region_stats:
-            if r.region_id is None or r.region_id == TRussianRegions.Russia_as_s_whole_region_id or r.citizen_month_median_salary is None:
-                continue
-            data.append((r.region_id,
-                r.region_name,
-                r.declarant_month_median_income,
-                r.citizen_month_median_salary,
-                round(r.declarant_month_median_income / r.citizen_month_median_salary, 2),
-                r.declarant_count,
-                r.population,
-                int(r.population / r.declarant_count)))
-
-        basename = "region-income-report-{}".format(year)
-        with open(os.path.join(report_folder, basename + ".csv"), "w") as outp:
-            for r in data:
-                outp.write(",".join(map(str, r)) + "\n")
-
-        with open(os.path.join(report_folder, basename + ".html"), "w") as outp:
-            outp.write("""
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Средний доход чиновников за {} год по регионам</title>
-    <h1>Средний доход чиновников за {} год по регионам</h1>
-    <h4> из <a href="/reports/regions/index.html"> отчета</a> </h4>
-    <meta name="description" content="Средний доход российских чиновников (государственных и муниципальных служащих) по регионам за {} год">
-    <style>
-           table {{ 
-            border: 1px solid black;
-            border-collapse: collapse;
-           }}
-           th {{ 
-              border: 1px solid black;
-              color: blue;
-           }}
-           td {{ 
-             border: 1px solid black;
-           }}
-    </style>
-    
-</head>
-<table id="statstable">
-  <tr>
-    <th>Id</th>
-    <th>Регион</th>
-    <th>Медианный доход чиновника в месяц</th>
-    <th>Медианная зарплата работающих граждан</th>
-    <th>Отношение дохода чиновника к зарплате граждан</th>
-    <th>Кол-во учтенных деклараций</th>
-    <th>Население</th>
-    <th>Население/Кол-во учтенных деклараций</th>
-  </tr>
-                       """.format(year, year, year))
-            for r in data:
-                td_s = ("<td>{}</td>"*len(r)).format(*r)
-                outp.write("<tr>{}</tr>\n".format(td_s))
-            outp.write("""
-</table>
-<br/>
-<a href={}> Данные в сsv-формате</a>
-<script src="/static/sorttable.js"></script>
-<script>
-    var table = document.getElementById("statstable");
-    table.querySelectorAll(`th`).forEach((th, position) => {{
-        th.addEventListener(`click`, evt => sortTable(position + 1));
-    }});
-</script>
-</html>""".format(basename + ".csv"))
 
     def handle(self, *args, **options):
         self.options = options
         year = self.options['year']
-        stats = TRossStatData()
-        stats.load_from_disk()
-        region_stats = self.build_declarant_incomes(year, stats)
-        #self.print_regions_stats(region_stats)
-        self.build_html_by_regions_stats(year, region_stats)
-        self.print_pearson_corr(region_stats)
+        region_data = self.build_declarant_incomes(year)
+        region_data.write_to_disk()
+        self.print_spearman_corr(region_stats)
+
+        x = list()
+        y = list()
+        for s in region_stats.values():
+            if s.er_election is not None:
+                x.append(s.er_election)
+                y.append(s.get_inequality())
+        print("Spearman get_inequality vs er_election {}".format(scipy.stats.spearmanr(x, y)))

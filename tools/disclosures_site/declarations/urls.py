@@ -1,6 +1,8 @@
 from django.urls import path, re_path
 from . import views
 from django.views.generic import TemplateView
+from functools import partial
+
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name="morda/index.html"), name='home_page'),
@@ -38,4 +40,6 @@ urlpatterns = [
     path('reports/regions/index.html', views.anyUrlView),
     path('reports/new-car/index.html', views.anyUrlView),
     path('reports/offices/index.html', views.anyUrlView),
+    path('reports/regions2020/index.html', partial(views.region_report_view, 2020)),
+    path('reports/regions2020/data.csv', partial(views.region_report_csv    , 2020)),
 ]

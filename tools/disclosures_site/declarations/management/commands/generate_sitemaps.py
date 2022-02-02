@@ -168,6 +168,7 @@ class Command(BaseCommand):
                      "reports/regions/index.html",
                      "reports/new-car/index.html",
                      "reports/offices/index.html",
+                     "reports/regions2020/index.html",
                      ""]
         self.write_sitemap(url_paths, sitemap_path, priority=1.0)
         self.sitemaps.append('sitemap-main.xml')

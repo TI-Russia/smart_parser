@@ -2,21 +2,21 @@
    "3": {
       "2011": {
          "population": 439935,
-         "median_salary": 10174
+         "median_salary2": 10174
       },
       "2012": {
          "population": 442451
       },
       "2013": {
          "population": 444403,
-         "median_salary": 14451
+         "median_salary2": 14451
       },
       "2014": {
          "population": 446406
       },
       "2015": {
          "population": 449171,
-         "median_salary": 17722
+         "median_salary2": 17722
       },
       "2016": {
          "population": 451480,
@@ -24,7 +24,7 @@
       },
       "2017": {
          "population": 453366,
-         "median_salary": 18670,
+         "median_salary2": 18670,
          "average_income": 26477
       },
       "2018": {
@@ -33,14 +33,15 @@
       },
       "2019": {
          "population": 454744,
-         "median_salary": 23943,
+         "median_salary2": 23943,
          "average_income": 29382
       },
       "2021": {
          "population": 463167,
-         "median_salary": 28419,
+         "median_salary2": 28419,
+         "average_salary2": 34250,
          "average_income": 32294,
-         "average_salary": 34250
+         "er_election_2021": 66.4
       },
       "2020": {
          "population": 463088,
@@ -50,21 +51,21 @@
    "24": {
       "2011": {
          "population": 2417358,
-         "median_salary": 10270
+         "median_salary2": 10270
       },
       "2012": {
          "population": 2407230
       },
       "2013": {
          "population": 2398751,
-         "median_salary": 13377
+         "median_salary2": 13377
       },
       "2014": {
          "population": 2390638
       },
       "2015": {
          "population": 2384812,
-         "median_salary": 15930
+         "median_salary2": 15930
       },
       "2016": {
          "population": 2376774,
@@ -72,7 +73,7 @@
       },
       "2017": {
          "population": 2365680,
-         "median_salary": 18713,
+         "median_salary2": 18713,
          "average_income": 22065
       },
       "2018": {
@@ -81,14 +82,15 @@
       },
       "2019": {
          "population": 2332813,
-         "median_salary": 23480,
+         "median_salary2": 23480,
          "average_income": 23857
       },
       "2021": {
          "population": 2296353,
-         "median_salary": 28559,
+         "median_salary2": 28559,
+         "average_salary2": 34629,
          "average_income": 23507,
-         "average_salary": 34629
+         "er_election_2021": 33.7
       },
       "2020": {
          "population": 2317153,
@@ -98,21 +100,21 @@
    "33": {
       "2011": {
          "population": 828660,
-         "median_salary": 18882
+         "median_salary2": 18882
       },
       "2012": {
          "population": 821573
       },
       "2013": {
          "population": 816910,
-         "median_salary": 24385
+         "median_salary2": 24385
       },
       "2014": {
          "population": 811274
       },
       "2015": {
          "population": 809873,
-         "median_salary": 28277
+         "median_salary2": 28277
       },
       "2016": {
          "population": 805689,
@@ -120,7 +122,7 @@
       },
       "2017": {
          "population": 801752,
-         "median_salary": 31640,
+         "median_salary2": 31640,
          "average_income": 29151
       },
       "2018": {
@@ -129,14 +131,15 @@
       },
       "2019": {
          "population": 793194,
-         "median_salary": 40376,
+         "median_salary2": 40376,
          "average_income": 33237
       },
       "2021": {
          "population": 781846,
-         "median_salary": 50156,
+         "median_salary2": 50156,
+         "average_salary2": 62123,
          "average_income": 36588,
-         "average_salary": 62123
+         "er_election_2021": 34.3
       },
       "2020": {
          "population": 790044,
@@ -146,21 +149,21 @@
    "37": {
       "2011": {
          "population": 1182776,
-         "median_salary": 17297
+         "median_salary2": 17297
       },
       "2012": {
          "population": 1171096
       },
       "2013": {
          "population": 1159506,
-         "median_salary": 22988
+         "median_salary2": 22988
       },
       "2014": {
          "population": 1148760
       },
       "2015": {
          "population": 1139950,
-         "median_salary": 27763
+         "median_salary2": 27763
       },
       "2016": {
          "population": 1130240,
@@ -168,7 +171,7 @@
       },
       "2017": {
          "population": 1121813,
-         "median_salary": 33394,
+         "median_salary2": 33394,
          "average_income": 32161
       },
       "2018": {
@@ -177,14 +180,15 @@
       },
       "2019": {
          "population": 1100290,
-         "median_salary": 41030,
+         "median_salary2": 41030,
          "average_income": 35575
       },
       "2021": {
          "population": 1082662,
-         "median_salary": 48782,
+         "median_salary2": 48782,
+         "average_salary2": 60732,
          "average_income": 37942,
-         "average_salary": 60732
+         "er_election_2021": 32.2
       },
       "2020": {
          "population": 1092424,
@@ -194,21 +198,21 @@
    "38": {
       "2011": {
          "population": 1009801,
-         "median_salary": 11601
+         "median_salary2": 11601
       },
       "2012": {
          "population": 1014972
       },
       "2013": {
          "population": 1013840,
-         "median_salary": 15206
+         "median_salary2": 15206
       },
       "2014": {
          "population": 1016516
       },
       "2015": {
          "population": 1021287,
-         "median_salary": 19151
+         "median_salary2": 19151
       },
       "2016": {
          "population": 1018626,
@@ -216,7 +220,7 @@
       },
       "2017": {
          "population": 1018866,
-         "median_salary": 20167,
+         "median_salary2": 20167,
          "average_income": 22868
       },
       "2018": {
@@ -225,14 +229,15 @@
       },
       "2019": {
          "population": 1014065,
-         "median_salary": 26001,
+         "median_salary2": 26001,
          "average_income": 24869
       },
       "2021": {
          "population": 997778,
-         "median_salary": 30880,
+         "median_salary2": 30880,
+         "average_salary2": 40723,
          "average_income": 25077,
-         "average_salary": 40723
+         "er_election_2021": 48.1
       },
       "2020": {
          "population": 1005782,
@@ -242,21 +247,21 @@
    "4": {
       "2011": {
          "population": 4072085,
-         "median_salary": 13351
+         "median_salary2": 13351
       },
       "2012": {
          "population": 4064245
       },
       "2013": {
          "population": 4060957,
-         "median_salary": 18438
+         "median_salary2": 18438
       },
       "2014": {
          "population": 4069698
       },
       "2015": {
          "population": 4071987,
-         "median_salary": 21685
+         "median_salary2": 21685
       },
       "2016": {
          "population": 4071064,
@@ -264,7 +269,7 @@
       },
       "2017": {
          "population": 4066972,
-         "median_salary": 24479,
+         "median_salary2": 24479,
          "average_income": 28454
       },
       "2018": {
@@ -273,14 +278,15 @@
       },
       "2019": {
          "population": 4051005,
-         "median_salary": 30176,
+         "median_salary2": 30176,
          "average_income": 30518
       },
       "2021": {
          "population": 4013786,
-         "median_salary": 35234,
+         "median_salary2": 35234,
+         "average_salary2": 44029,
          "average_income": 29194,
-         "average_salary": 44029
+         "er_election_2021": 66.6
       },
       "2020": {
          "population": 4038151,
@@ -290,21 +296,21 @@
    "96": {
       "2011": {
          "population": 1532353,
-         "median_salary": 13815
+         "median_salary2": 13815
       },
       "2012": {
          "population": 1536073
       },
       "2013": {
          "population": 1540985,
-         "median_salary": 18776
+         "median_salary2": 18776
       },
       "2014": {
          "population": 1544108
       },
       "2015": {
          "population": 1547936,
-         "median_salary": 22050
+         "median_salary2": 22050
       },
       "2016": {
          "population": 1550137,
@@ -312,7 +318,7 @@
       },
       "2017": {
          "population": 1552865,
-         "median_salary": 25448,
+         "median_salary2": 25448,
          "average_income": 30313
       },
       "2018": {
@@ -321,14 +327,15 @@
       },
       "2019": {
          "population": 1547418,
-         "median_salary": 29766,
+         "median_salary2": 29766,
          "average_income": 32370
       },
       "2021": {
          "population": 1541259,
-         "median_salary": 35372,
+         "median_salary2": 35372,
+         "average_salary2": 41463,
          "average_income": 33268,
-         "average_salary": 41463
+         "er_election_2021": 51.7
       },
       "2020": {
          "population": 1549151,
@@ -338,21 +345,21 @@
    "35": {
       "2011": {
          "population": 1275354,
-         "median_salary": 10304
+         "median_salary2": 10304
       },
       "2012": {
          "population": 1264416
       },
       "2013": {
          "population": 1253666,
-         "median_salary": 14933
+         "median_salary2": 14933
       },
       "2014": {
          "population": 1242599
       },
       "2015": {
          "population": 1232940,
-         "median_salary": 17675
+         "median_salary2": 17675
       },
       "2016": {
          "population": 1225741,
@@ -360,7 +367,7 @@
       },
       "2017": {
          "population": 1220530,
-         "median_salary": 20232,
+         "median_salary2": 20232,
          "average_income": 25008
       },
       "2018": {
@@ -369,14 +376,15 @@
       },
       "2019": {
          "population": 1200187,
-         "median_salary": 24571,
+         "median_salary2": 24571,
          "average_income": 28280
       },
       "2021": {
          "population": 1182682,
-         "median_salary": 28874,
+         "median_salary2": 28874,
+         "average_salary2": 34616,
          "average_income": 28933,
-         "average_salary": 34616
+         "er_election_2021": 64.3
       },
       "2020": {
          "population": 1192491,
@@ -386,21 +394,21 @@
    "5": {
       "2011": {
          "population": 971538,
-         "median_salary": 15664
+         "median_salary2": 15664
       },
       "2012": {
          "population": 971391
       },
       "2013": {
          "population": 971810,
-         "median_salary": 21003
+         "median_salary2": 21003
       },
       "2014": {
          "population": 973860
       },
       "2015": {
          "population": 978495,
-         "median_salary": 23357
+         "median_salary2": 23357
       },
       "2016": {
          "population": 982284,
@@ -408,7 +416,7 @@
       },
       "2017": {
          "population": 984134,
-         "median_salary": 26142,
+         "median_salary2": 26142,
          "average_income": 23865
       },
       "2018": {
@@ -417,14 +425,15 @@
       },
       "2019": {
          "population": 983273,
-         "median_salary": 31260,
+         "median_salary2": 31260,
          "average_income": 25302
       },
       "2021": {
          "population": 985431,
-         "median_salary": 36481,
+         "median_salary2": 36481,
+         "average_salary2": 45318,
          "average_income": 26203,
-         "average_salary": 45318
+         "er_election_2021": 42.6
       },
       "2020": {
          "population": 985937,
@@ -434,21 +443,21 @@
    "36": {
       "2011": {
          "population": 1441129,
-         "median_salary": 13132
+         "median_salary2": 13132
       },
       "2012": {
          "population": 1431932
       },
       "2013": {
          "population": 1421742,
-         "median_salary": 17361
+         "median_salary2": 17361
       },
       "2014": {
          "population": 1413321
       },
       "2015": {
          "population": 1405613,
-         "median_salary": 20888
+         "median_salary2": 20888
       },
       "2016": {
          "population": 1397168,
@@ -456,7 +465,7 @@
       },
       "2017": {
          "population": 1389599,
-         "median_salary": 23449,
+         "median_salary2": 23449,
          "average_income": 23458
       },
       "2018": {
@@ -465,14 +474,15 @@
       },
       "2019": {
          "population": 1365805,
-         "median_salary": 28174,
+         "median_salary2": 28174,
          "average_income": 25289
       },
       "2021": {
          "population": 1342099,
-         "median_salary": 33110,
+         "median_salary2": 33110,
+         "average_salary2": 39363,
          "average_income": 27268,
-         "average_salary": 39363
+         "er_election_2021": 37.6
       },
       "2020": {
          "population": 1358416,
@@ -482,21 +492,21 @@
    "41": {
       "2011": {
          "population": 2607505,
-         "median_salary": 12093
+         "median_salary2": 12093
       },
       "2012": {
          "population": 2594825
       },
       "2013": {
          "population": 2583002,
-         "median_salary": 16055
+         "median_salary2": 16055
       },
       "2014": {
          "population": 2569126
       },
       "2015": {
          "population": 2557397,
-         "median_salary": 20286
+         "median_salary2": 20286
       },
       "2016": {
          "population": 2545937,
@@ -504,7 +514,7 @@
       },
       "2017": {
          "population": 2535202,
-         "median_salary": 22540,
+         "median_salary2": 22540,
          "average_income": 21976
       },
       "2018": {
@@ -513,14 +523,15 @@
       },
       "2019": {
          "population": 2507509,
-         "median_salary": 26518,
+         "median_salary2": 26518,
          "average_income": 24079
       },
       "2021": {
          "population": 2474556,
-         "median_salary": 31037,
+         "median_salary2": 31037,
+         "average_salary2": 36796,
          "average_income": 25191,
-         "average_salary": 36796
+         "er_election_2021": 58.4
       },
       "2020": {
          "population": 2491036,
@@ -530,21 +541,21 @@
    "42": {
       "2011": {
          "population": 1201190,
-         "median_salary": 15638
+         "median_salary2": 15638
       },
       "2012": {
          "population": 1198546
       },
       "2013": {
          "population": 1196196,
-         "median_salary": 20624
+         "median_salary2": 20624
       },
       "2014": {
          "population": 1193371
       },
       "2015": {
          "population": 1191010,
-         "median_salary": 23445
+         "median_salary2": 23445
       },
       "2016": {
          "population": 1187685,
@@ -552,7 +563,7 @@
       },
       "2017": {
          "population": 1183860,
-         "median_salary": 26873,
+         "median_salary2": 26873,
          "average_income": 25841
       },
       "2018": {
@@ -561,14 +572,15 @@
       },
       "2019": {
          "population": 1167713,
-         "median_salary": 32854,
+         "median_salary2": 32854,
          "average_income": 28246
       },
       "2021": {
          "population": 1151042,
-         "median_salary": 39029,
+         "median_salary2": 39029,
+         "average_salary2": 46933,
          "average_income": 29692,
-         "average_salary": 46933
+         "er_election_2021": 34.3
       },
       "2020": {
          "population": 1160445,
@@ -578,21 +590,21 @@
    "43": {
       "2011": {
          "population": 2334809,
-         "median_salary": 12470
+         "median_salary2": 12470
       },
       "2012": {
          "population": 2331506
       },
       "2013": {
          "population": 2330377,
-         "median_salary": 17126
+         "median_salary2": 17126
       },
       "2014": {
          "population": 2328959
       },
       "2015": {
          "population": 2331147,
-         "median_salary": 20798
+         "median_salary2": 20798
       },
       "2016": {
          "population": 2333477,
@@ -600,7 +612,7 @@
       },
       "2017": {
          "population": 2335408,
-         "median_salary": 23440,
+         "median_salary2": 23440,
          "average_income": 29487
       },
       "2018": {
@@ -609,14 +621,15 @@
       },
       "2019": {
          "population": 2327821,
-         "median_salary": 28187,
+         "median_salary2": 28187,
          "average_income": 31997
       },
       "2021": {
          "population": 2305608,
-         "median_salary": 32989,
+         "median_salary2": 32989,
+         "average_salary2": 41045,
          "average_income": 32799,
-         "average_salary": 41045
+         "er_election_2021": 55.9
       },
       "2020": {
          "population": 2324205,
@@ -626,21 +639,21 @@
    "59": {
       "2011": {
          "population": 2914204,
-         "median_salary": 7245
+         "median_salary2": 7245
       },
       "2012": {
          "population": 2930449
       },
       "2013": {
          "population": 2946035,
-         "median_salary": 11623
+         "median_salary2": 11623
       },
       "2014": {
          "population": 2963918
       },
       "2015": {
          "population": 2990371,
-         "median_salary": 13762
+         "median_salary2": 13762
       },
       "2016": {
          "population": 3015660,
@@ -648,7 +661,7 @@
       },
       "2017": {
          "population": 3041900,
-         "median_salary": 15643,
+         "median_salary2": 15643,
          "average_income": 26579
       },
       "2018": {
@@ -657,14 +670,15 @@
       },
       "2019": {
          "population": 3086126,
-         "median_salary": 20015,
+         "median_salary2": 20015,
          "average_income": 27518
       },
       "2021": {
          "population": 3133303,
-         "median_salary": 23481,
+         "median_salary2": 23481,
+         "average_salary2": 29600,
          "average_income": 26863,
-         "average_salary": 29600
+         "er_election_2021": 81.2
       },
       "2020": {
          "population": 3110858,
@@ -674,21 +688,21 @@
    "93": {
       "2011": {
          "population": 176304,
-         "median_salary": 17442
+         "median_salary2": 17442
       },
       "2012": {
          "population": 174412
       },
       "2013": {
          "population": 172671,
-         "median_salary": 21197
+         "median_salary2": 21197
       },
       "2014": {
          "population": 170377
       },
       "2015": {
          "population": 168368,
-         "median_salary": 25417
+         "median_salary2": 25417
       },
       "2016": {
          "population": 166120,
@@ -696,7 +710,7 @@
       },
       "2017": {
          "population": 164217,
-         "median_salary": 28711,
+         "median_salary2": 28711,
          "average_income": 23520
       },
       "2018": {
@@ -705,14 +719,15 @@
       },
       "2019": {
          "population": 159913,
-         "median_salary": 34538,
+         "median_salary2": 34538,
          "average_income": 26468
       },
       "2021": {
          "population": 156500,
-         "median_salary": 39702,
+         "median_salary2": 39702,
+         "average_salary2": 47860,
          "average_income": 28041,
-         "average_salary": 47860
+         "er_election_2021": 56.4
       },
       "2020": {
          "population": 158305,
@@ -722,21 +737,21 @@
    "44": {
       "2011": {
          "population": 1106155,
-         "median_salary": 14414
+         "median_salary2": 14414
       },
       "2012": {
          "population": 1099396
       },
       "2013": {
          "population": 1095169,
-         "median_salary": 19754
+         "median_salary2": 19754
       },
       "2014": {
          "population": 1090344
       },
       "2015": {
          "population": 1087452,
-         "median_salary": 22909
+         "median_salary2": 22909
       },
       "2016": {
          "population": 1083012,
@@ -744,7 +759,7 @@
       },
       "2017": {
          "population": 1078983,
-         "median_salary": 25216,
+         "median_salary2": 25216,
          "average_income": 22648
       },
       "2018": {
@@ -753,14 +768,15 @@
       },
       "2019": {
          "population": 1065785,
-         "median_salary": 33456,
+         "median_salary2": 33456,
          "average_income": 25676
       },
       "2021": {
          "population": 1053485,
-         "median_salary": 39553,
+         "median_salary2": 39553,
+         "average_salary2": 51362,
          "average_income": 27123,
-         "average_salary": 51362
+         "er_election_2021": 38.7
       },
       "2020": {
          "population": 1059700,
@@ -770,21 +786,21 @@
    "99": {
       "2011": {
          "population": 1060109,
-         "median_salary": 11005
+         "median_salary2": 11005
       },
       "2012": {
          "population": 1054040
       },
       "2013": {
          "population": 1048961,
-         "median_salary": 15538
+         "median_salary2": 15538
       },
       "2014": {
          "population": 1043130
       },
       "2015": {
          "population": 1036909,
-         "median_salary": 17210
+         "median_salary2": 17210
       },
       "2016": {
          "population": 1029838,
@@ -792,7 +808,7 @@
       },
       "2017": {
          "population": 1023170,
-         "median_salary": 19001,
+         "median_salary2": 19001,
          "average_income": 24755
       },
       "2018": {
@@ -801,14 +817,15 @@
       },
       "2019": {
          "population": 1004180,
-         "median_salary": 23117,
+         "median_salary2": 23117,
          "average_income": 25703
       },
       "2021": {
          "population": 987032,
-         "median_salary": 27343,
+         "median_salary2": 27343,
+         "average_salary2": 32973,
          "average_income": 26817,
-         "average_salary": 32973
+         "er_election_2021": 36.2
       },
       "2020": {
          "population": 997135,
@@ -818,21 +835,21 @@
    "8": {
       "2011": {
          "population": 414524,
-         "median_salary": 10271
+         "median_salary2": 10271
       },
       "2012": {
          "population": 430495
       },
       "2013": {
          "population": 442255,
-         "median_salary": 14238
+         "median_salary2": 14238
       },
       "2014": {
          "population": 453010
       },
       "2015": {
          "population": 463893,
-         "median_salary": 17153
+         "median_salary2": 17153
       },
       "2016": {
          "population": 472776,
@@ -840,7 +857,7 @@
       },
       "2017": {
          "population": 480474,
-         "median_salary": 17607,
+         "median_salary2": 17607,
          "average_income": 15925
       },
       "2018": {
@@ -849,14 +866,15 @@
       },
       "2019": {
          "population": 497393,
-         "median_salary": 19954,
+         "median_salary2": 19954,
          "average_income": 16775
       },
       "2021": {
          "population": 515564,
-         "median_salary": 22937,
+         "median_salary2": 22937,
+         "average_salary2": 29037,
          "average_income": 16676,
-         "average_salary": 29037
+         "er_election_2021": 85.2
       },
       "2020": {
          "population": 507061,
@@ -866,21 +884,21 @@
    "45": {
       "2011": {
          "population": 2427954,
-         "median_salary": 16202
+         "median_salary2": 16202
       },
       "2012": {
          "population": 2424355
       },
       "2013": {
          "population": 2422026,
-         "median_salary": 23857
+         "median_salary2": 23857
       },
       "2014": {
          "population": 2418348
       },
       "2015": {
          "population": 2414913,
-         "median_salary": 27729
+         "median_salary2": 27729
       },
       "2016": {
          "population": 2412800,
@@ -888,7 +906,7 @@
       },
       "2017": {
          "population": 2408901,
-         "median_salary": 31617,
+         "median_salary2": 31617,
          "average_income": 23483
       },
       "2018": {
@@ -897,14 +915,15 @@
       },
       "2019": {
          "population": 2397763,
-         "median_salary": 37921,
+         "median_salary2": 37921,
          "average_income": 26270
       },
       "2021": {
          "population": 2375021,
-         "median_salary": 44371,
+         "median_salary2": 44371,
+         "average_salary2": 55866,
          "average_income": 27999,
-         "average_salary": 55866
+         "er_election_2021": 35.5
       },
       "2020": {
          "population": 2391193,
@@ -914,21 +933,21 @@
    "9": {
       "2011": {
          "population": 859792,
-         "median_salary": 9268
+         "median_salary2": 9268
       },
       "2012": {
          "population": 859063
       },
       "2013": {
          "population": 858946,
-         "median_salary": 13008
+         "median_salary2": 13008
       },
       "2014": {
          "population": 858397
       },
       "2015": {
          "population": 860709,
-         "median_salary": 15957
+         "median_salary2": 15957
       },
       "2016": {
          "population": 862254,
@@ -936,7 +955,7 @@
       },
       "2017": {
          "population": 864454,
-         "median_salary": 17157,
+         "median_salary2": 17157,
          "average_income": 20455
       },
       "2018": {
@@ -945,14 +964,15 @@
       },
       "2019": {
          "population": 866219,
-         "median_salary": 19796,
+         "median_salary2": 19796,
          "average_income": 21500
       },
       "2021": {
          "population": 869191,
-         "median_salary": 23263,
+         "median_salary2": 23263,
+         "average_salary2": 30355,
          "average_income": 21318,
-         "average_salary": 30355
+         "er_election_2021": 79.2
       },
       "2020": {
          "population": 868350,
@@ -962,21 +982,21 @@
    "46": {
       "2011": {
          "population": 941823,
-         "median_salary": 15687
+         "median_salary2": 15687
       },
       "2012": {
          "population": 946796
       },
       "2013": {
          "population": 954773,
-         "median_salary": 20823
+         "median_salary2": 20823
       },
       "2014": {
          "population": 963128
       },
       "2015": {
          "population": 968944,
-         "median_salary": 23868
+         "median_salary2": 23868
       },
       "2016": {
          "population": 976439,
@@ -984,7 +1004,7 @@
       },
       "2017": {
          "population": 986261,
-         "median_salary": 26953,
+         "median_salary2": 26953,
          "average_income": 26574
       },
       "2018": {
@@ -993,14 +1013,15 @@
       },
       "2019": {
          "population": 1002187,
-         "median_salary": 31681,
+         "median_salary2": 31681,
          "average_income": 29100
       },
       "2021": {
          "population": 1018624,
-         "median_salary": 35237,
+         "median_salary2": 35237,
+         "average_salary2": 44208,
          "average_income": 29523,
-         "average_salary": 44208
+         "er_election_2021": 41.1
       },
       "2020": {
          "population": 1012512,
@@ -1010,21 +1031,21 @@
    "47": {
       "2011": {
          "population": 288902,
-         "median_salary": 8569
+         "median_salary2": 8569
       },
       "2012": {
          "population": 286689
       },
       "2013": {
          "population": 284140,
-         "median_salary": 12157
+         "median_salary2": 12157
       },
       "2014": {
          "population": 282021
       },
       "2015": {
          "population": 280564,
-         "median_salary": 15172
+         "median_salary2": 15172
       },
       "2016": {
          "population": 278733,
@@ -1032,7 +1053,7 @@
       },
       "2017": {
          "population": 277803,
-         "median_salary": 16766,
+         "median_salary2": 16766,
          "average_income": 16191
       },
       "2018": {
@@ -1041,14 +1062,15 @@
       },
       "2019": {
          "population": 272647,
-         "median_salary": 21984,
+         "median_salary2": 21984,
          "average_income": 18456
       },
       "2021": {
          "population": 269984,
-         "median_salary": 26006,
+         "median_salary2": 26006,
+         "average_salary2": 30782,
          "average_income": 19554,
-         "average_salary": 30782
+         "er_election_2021": 39.5
       },
       "2020": {
          "population": 271135,
@@ -1058,21 +1080,21 @@
    "97": {
       "2011": {
          "population": 1009191,
-         "median_salary": 15402
+         "median_salary2": 15402
       },
       "2012": {
          "population": 1008229
       },
       "2013": {
          "population": 1005585,
-         "median_salary": 21722
+         "median_salary2": 21722
       },
       "2014": {
          "population": 1004544
       },
       "2015": {
          "population": 1010486,
-         "median_salary": 24973
+         "median_salary2": 24973
       },
       "2016": {
          "population": 1009772,
@@ -1080,7 +1102,7 @@
       },
       "2017": {
          "population": 1014570,
-         "median_salary": 27942,
+         "median_salary2": 27942,
          "average_income": 28681
       },
       "2018": {
@@ -1089,14 +1111,15 @@
       },
       "2019": {
          "population": 1009380,
-         "median_salary": 33385,
+         "median_salary2": 33385,
          "average_income": 31288
       },
       "2021": {
          "population": 1000980,
-         "median_salary": 39141,
+         "median_salary2": 39141,
+         "average_salary2": 48551,
          "average_income": 33172,
-         "average_salary": 48551
+         "er_election_2021": 36.3
       },
       "2020": {
          "population": 1002575,
@@ -1106,21 +1129,21 @@
    "48": {
       "2011": {
          "population": 321659,
-         "median_salary": 30912
+         "median_salary2": 30912
       },
       "2012": {
          "population": 320156
       },
       "2013": {
          "population": 320549,
-         "median_salary": 38805
+         "median_salary2": 38805
       },
       "2014": {
          "population": 319864
       },
       "2015": {
          "population": 317269,
-         "median_salary": 46591
+         "median_salary2": 46591
       },
       "2016": {
          "population": 316116,
@@ -1128,7 +1151,7 @@
       },
       "2017": {
          "population": 314729,
-         "median_salary": 50464,
+         "median_salary2": 50464,
          "average_income": 45379
       },
       "2018": {
@@ -1137,14 +1160,15 @@
       },
       "2019": {
          "population": 314723,
-         "median_salary": 62444,
+         "median_salary2": 62444,
          "average_income": 52531
       },
       "2021": {
          "population": 311667,
-         "median_salary": 71778,
+         "median_salary2": 71778,
+         "average_salary2": 88773,
          "average_income": 54763,
-         "average_salary": 88773
+         "er_election_2021": 34.8
       },
       "2020": {
          "population": 313016,
@@ -1154,21 +1178,21 @@
    "11": {
       "2011": {
          "population": 477403,
-         "median_salary": 8795
+         "median_salary2": 8795
       },
       "2012": {
          "population": 474675
       },
       "2013": {
          "population": 471847,
-         "median_salary": 12875
+         "median_salary2": 12875
       },
       "2014": {
          "population": 469837
       },
       "2015": {
          "population": 469060,
-         "median_salary": 15644
+         "median_salary2": 15644
       },
       "2016": {
          "population": 467797,
@@ -1176,7 +1200,7 @@
       },
       "2017": {
          "population": 466432,
-         "median_salary": 17029,
+         "median_salary2": 17029,
          "average_income": 17929
       },
       "2018": {
@@ -1185,14 +1209,15 @@
       },
       "2019": {
          "population": 465563,
-         "median_salary": 20788,
+         "median_salary2": 20788,
          "average_income": 18820
       },
       "2021": {
          "population": 465357,
-         "median_salary": 24047,
+         "median_salary2": 24047,
+         "average_salary2": 30583,
          "average_income": 18457,
-         "average_salary": 30583
+         "er_election_2021": 80.1
       },
       "2020": {
          "population": 465528,
@@ -1202,21 +1227,21 @@
    "12": {
       "2011": {
          "population": 642582,
-         "median_salary": 17692
+         "median_salary2": 17692
       },
       "2012": {
          "population": 639681
       },
       "2013": {
          "population": 636932,
-         "median_salary": 22277
+         "median_salary2": 22277
       },
       "2014": {
          "population": 634402
       },
       "2015": {
          "population": 632533,
-         "median_salary": 24891
+         "median_salary2": 24891
       },
       "2016": {
          "population": 629875,
@@ -1224,7 +1249,7 @@
       },
       "2017": {
          "population": 627083,
-         "median_salary": 28230,
+         "median_salary2": 28230,
          "average_income": 27372
       },
       "2018": {
@@ -1233,14 +1258,15 @@
       },
       "2019": {
          "population": 618056,
-         "median_salary": 34922,
+         "median_salary2": 34922,
          "average_income": 30754
       },
       "2021": {
          "population": 609071,
-         "median_salary": 40545,
+         "median_salary2": 40545,
+         "average_salary2": 50086,
          "average_income": 32447,
-         "average_salary": 50086
+         "er_election_2021": 31.7
       },
       "2020": {
          "population": 614064,
@@ -1250,21 +1276,21 @@
    "50": {
       "2011": {
          "population": 2761255,
-         "median_salary": 16325
+         "median_salary2": 16325
       },
       "2012": {
          "population": 2750829
       },
       "2013": {
          "population": 2742450,
-         "median_salary": 21669
+         "median_salary2": 21669
       },
       "2014": {
          "population": 2734075
       },
       "2015": {
          "population": 2724990,
-         "median_salary": 24157
+         "median_salary2": 24157
       },
       "2016": {
          "population": 2717627,
@@ -1272,7 +1298,7 @@
       },
       "2017": {
          "population": 2708844,
-         "median_salary": 27112,
+         "median_salary2": 27112,
          "average_income": 22083
       },
       "2018": {
@@ -1281,14 +1307,15 @@
       },
       "2019": {
          "population": 2674256,
-         "median_salary": 34256,
+         "median_salary2": 34256,
          "average_income": 24809
       },
       "2021": {
          "population": 2633446,
-         "median_salary": 39166,
+         "median_salary2": 39166,
+         "average_salary2": 48148,
          "average_income": 25952,
-         "average_salary": 48148
+         "er_election_2021": 70.7
       },
       "2020": {
          "population": 2657854,
@@ -1298,21 +1325,21 @@
    "51": {
       "2011": {
          "population": 1338758,
-         "median_salary": 11480
+         "median_salary2": 11480
       },
       "2012": {
          "population": 1327915
       },
       "2013": {
          "population": 1319076,
-         "median_salary": 15391
+         "median_salary2": 15391
       },
       "2014": {
          "population": 1310929
       },
       "2015": {
          "population": 1304348,
-         "median_salary": 18515
+         "median_salary2": 18515
       },
       "2016": {
          "population": 1297474,
@@ -1320,7 +1347,7 @@
       },
       "2017": {
          "population": 1291684,
-         "median_salary": 21617,
+         "median_salary2": 21617,
          "average_income": 21723
       },
       "2018": {
@@ -1329,14 +1356,15 @@
       },
       "2019": {
          "population": 1272109,
-         "median_salary": 25074,
+         "median_salary2": 25074,
          "average_income": 23513
       },
       "2021": {
          "population": 1250173,
-         "median_salary": 29689,
+         "median_salary2": 29689,
+         "average_salary2": 35542,
          "average_income": 24638,
-         "average_salary": 35542
+         "er_election_2021": 29.5
       },
       "2020": {
          "population": 1262402,
@@ -1346,21 +1374,21 @@
    "53": {
       "2011": {
          "population": 666391,
-         "median_salary": 12111
+         "median_salary2": 12111
       },
       "2012": {
          "population": 661764
       },
       "2013": {
          "population": 658906,
-         "median_salary": 15391
+         "median_salary2": 15391
       },
       "2014": {
          "population": 656389
       },
       "2015": {
          "population": 654390,
-         "median_salary": 18536
+         "median_salary2": 18536
       },
       "2016": {
          "population": 651450,
@@ -1368,7 +1396,7 @@
       },
       "2017": {
          "population": 648157,
-         "median_salary": 20307,
+         "median_salary2": 20307,
          "average_income": 24003
       },
       "2018": {
@@ -1377,14 +1405,15 @@
       },
       "2019": {
          "population": 637267,
-         "median_salary": 24172,
+         "median_salary2": 24172,
          "average_income": 25208
       },
       "2021": {
          "population": 628423,
-         "median_salary": 29494,
+         "median_salary2": 29494,
+         "average_salary2": 36141,
          "average_income": 26683,
-         "average_salary": 36141
+         "er_election_2021": 30.3
       },
       "2020": {
          "population": 633385,
@@ -1394,21 +1423,21 @@
    "27": {
       "2011": {
          "population": 5229998,
-         "median_salary": 13735
+         "median_salary2": 13735
       },
       "2012": {
          "population": 5284464
       },
       "2013": {
          "population": 5330181,
-         "median_salary": 17745
+         "median_salary2": 17745
       },
       "2014": {
          "population": 5404273
       },
       "2015": {
          "population": 5453329,
-         "median_salary": 21861
+         "median_salary2": 21861
       },
       "2016": {
          "population": 5513804,
@@ -1416,7 +1445,7 @@
       },
       "2017": {
          "population": 5570945,
-         "median_salary": 24875,
+         "median_salary2": 24875,
          "average_income": 33500
       },
       "2018": {
@@ -1425,14 +1454,15 @@
       },
       "2019": {
          "population": 5648235,
-         "median_salary": 29887,
+         "median_salary2": 29887,
          "average_income": 35759
       },
       "2021": {
          "population": 5683947,
-         "median_salary": 33903,
+         "median_salary2": 33903,
+         "average_salary2": 42663,
          "average_income": 38269,
-         "average_salary": 42663
+         "er_election_2021": 61.0
       },
       "2020": {
          "population": 5675462,
@@ -1442,21 +1472,21 @@
    "28": {
       "2011": {
          "population": 2829105,
-         "median_salary": 19037
+         "median_salary2": 19037
       },
       "2012": {
          "population": 2838396
       },
       "2013": {
          "population": 2846475,
-         "median_salary": 23937
+         "median_salary2": 23937
       },
       "2014": {
          "population": 2852810
       },
       "2015": {
          "population": 2858773,
-         "median_salary": 28449
+         "median_salary2": 28449
       },
       "2016": {
          "population": 2866490,
@@ -1464,7 +1494,7 @@
       },
       "2017": {
          "population": 2875301,
-         "median_salary": 31321,
+         "median_salary2": 31321,
          "average_income": 28825
       },
       "2018": {
@@ -1473,14 +1503,15 @@
       },
       "2019": {
          "population": 2874026,
-         "median_salary": 38351,
+         "median_salary2": 38351,
          "average_income": 31695
       },
       "2021": {
          "population": 2855899,
-         "median_salary": 45407,
+         "median_salary2": 45407,
+         "average_salary2": 59586,
          "average_income": 33001,
-         "average_salary": 59586
+         "er_election_2021": 34.6
       },
       "2020": {
          "population": 2866255,
@@ -1490,21 +1521,21 @@
    "98": {
       "2011": {
          "population": 908813,
-         "median_salary": 11221
+         "median_salary2": 11221
       },
       "2012": {
          "population": 896264
       },
       "2013": {
          "population": 885759,
-         "median_salary": 15132
+         "median_salary2": 15132
       },
       "2014": {
          "population": 877149
       },
       "2015": {
          "population": 869814,
-         "median_salary": 16822
+         "median_salary2": 16822
       },
       "2016": {
          "population": 861896,
@@ -1512,7 +1543,7 @@
       },
       "2017": {
          "population": 854109,
-         "median_salary": 20489,
+         "median_salary2": 20489,
          "average_income": 20556
       },
       "2018": {
@@ -1521,14 +1552,15 @@
       },
       "2019": {
          "population": 834701,
-         "median_salary": 24717,
+         "median_salary2": 24717,
          "average_income": 21208
       },
       "2021": {
          "population": 818570,
-         "median_salary": 28760,
+         "median_salary2": 28760,
+         "average_salary2": 34652,
          "average_income": 22219,
-         "average_salary": 34652
+         "er_election_2021": 36.1
       },
       "2020": {
          "population": 827166,
@@ -1538,21 +1570,21 @@
    "55": {
       "2011": {
          "population": 1125648,
-         "median_salary": 11405
+         "median_salary2": 11405
       },
       "2012": {
          "population": 1121563
       },
       "2013": {
          "population": 1119262,
-         "median_salary": 16390
+         "median_salary2": 16390
       },
       "2014": {
          "population": 1118915
       },
       "2015": {
          "population": 1117378,
-         "median_salary": 18990
+         "median_salary2": 18990
       },
       "2016": {
          "population": 1120019,
@@ -1560,7 +1592,7 @@
       },
       "2017": {
          "population": 1122893,
-         "median_salary": 22299,
+         "median_salary2": 22299,
          "average_income": 26022
       },
       "2018": {
@@ -1569,14 +1601,15 @@
       },
       "2019": {
          "population": 1107041,
-         "median_salary": 26521,
+         "median_salary2": 26521,
          "average_income": 29108
       },
       "2021": {
          "population": 1096488,
-         "median_salary": 31968,
+         "median_salary2": 31968,
+         "average_salary2": 38532,
          "average_income": 30414,
-         "average_salary": 38532
+         "er_election_2021": 43.5
       },
       "2020": {
          "population": 1104008,
@@ -1586,21 +1619,21 @@
    "56": {
       "2011": {
          "population": 1718581,
-         "median_salary": 18902
+         "median_salary2": 18902
       },
       "2012": {
          "population": 1733907
       },
       "2013": {
          "population": 1751135,
-         "median_salary": 24705
+         "median_salary2": 24705
       },
       "2014": {
          "population": 1763924
       },
       "2015": {
          "population": 1775540,
-         "median_salary": 29544
+         "median_salary2": 29544
       },
       "2016": {
          "population": 1778857,
@@ -1608,7 +1641,7 @@
       },
       "2017": {
          "population": 1791916,
-         "median_salary": 34205,
+         "median_salary2": 34205,
          "average_income": 29849
       },
       "2018": {
@@ -1617,14 +1650,15 @@
       },
       "2019": {
          "population": 1847867,
-         "median_salary": 42076,
+         "median_salary2": 42076,
          "average_income": 32550
       },
       "2021": {
          "population": 1892711,
-         "median_salary": 47044,
+         "median_salary2": 47044,
+         "average_salary2": 56145,
          "average_income": 34911,
-         "average_salary": 56145
+         "er_election_2021": 43.1
       },
       "2020": {
          "population": 1875872,
@@ -1634,21 +1668,21 @@
    "57": {
       "2011": {
          "population": 1172026,
-         "median_salary": 14424
+         "median_salary2": 14424
       },
       "2012": {
          "population": 1165916
       },
       "2013": {
          "population": 1162235,
-         "median_salary": 17495
+         "median_salary2": 17495
       },
       "2014": {
          "population": 1159866
       },
       "2015": {
          "population": 1157865,
-         "median_salary": 20731
+         "median_salary2": 20731
       },
       "2016": {
          "population": 1156093,
@@ -1656,7 +1690,7 @@
       },
       "2017": {
          "population": 1156221,
-         "median_salary": 23164,
+         "median_salary2": 23164,
          "average_income": 28881
       },
       "2018": {
@@ -1665,14 +1699,15 @@
       },
       "2019": {
          "population": 1144035,
-         "median_salary": 28557,
+         "median_salary2": 28557,
          "average_income": 32412
       },
       "2021": {
          "population": 1128192,
-         "median_salary": 33519,
+         "median_salary2": 33519,
+         "average_salary2": 40513,
          "average_income": 32620,
-         "average_salary": 40513
+         "er_election_2021": 48.7
       },
       "2020": {
          "population": 1139371,
@@ -1682,21 +1717,21 @@
    "58": {
       "2011": {
          "population": 156534,
-         "median_salary": 27932
+         "median_salary2": 27932
       },
       "2012": {
          "population": 154485
       },
       "2013": {
          "population": 152358,
-         "median_salary": 39622
+         "median_salary2": 39622
       },
       "2014": {
          "population": 150312
       },
       "2015": {
          "population": 148071,
-         "median_salary": 47077
+         "median_salary2": 47077
       },
       "2016": {
          "population": 146345,
@@ -1704,7 +1739,7 @@
       },
       "2017": {
          "population": 145570,
-         "median_salary": 53729,
+         "median_salary2": 53729,
          "average_income": 54570
       },
       "2018": {
@@ -1713,14 +1748,15 @@
       },
       "2019": {
          "population": 141234,
-         "median_salary": 69316,
+         "median_salary2": 69316,
          "average_income": 65106
       },
       "2021": {
          "population": 139034,
-         "median_salary": 81101,
+         "median_salary2": 81101,
+         "average_salary2": 101735,
          "average_income": 70658,
-         "average_salary": 101735
+         "er_election_2021": 50.1
       },
       "2020": {
          "population": 140149,
@@ -1730,21 +1766,21 @@
    "61": {
       "2011": {
          "population": 695482,
-         "median_salary": 10653
+         "median_salary2": 10653
       },
       "2012": {
          "population": 692435
       },
       "2013": {
          "population": 690349,
-         "median_salary": 14684
+         "median_salary2": 14684
       },
       "2014": {
          "population": 688686
       },
       "2015": {
          "population": 687435,
-         "median_salary": 16623
+         "median_salary2": 16623
       },
       "2016": {
          "population": 685865,
@@ -1752,7 +1788,7 @@
       },
       "2017": {
          "population": 684684,
-         "median_salary": 19761,
+         "median_salary2": 19761,
          "average_income": 19297
       },
       "2018": {
@@ -1761,14 +1797,15 @@
       },
       "2019": {
          "population": 680380,
-         "median_salary": 23739,
+         "median_salary2": 23739,
          "average_income": 20849
       },
       "2021": {
          "population": 675332,
-         "median_salary": 28161,
+         "median_salary2": 28161,
+         "average_salary2": 34297,
          "average_income": 21621,
-         "average_salary": 34297
+         "er_election_2021": 33.4
       },
       "2020": {
          "population": 679417,
@@ -1778,21 +1815,21 @@
    "62": {
       "2011": {
          "population": 833263,
-         "median_salary": 10416
+         "median_salary2": 10416
       },
       "2012": {
          "population": 825454
       },
       "2013": {
          "population": 818566,
-         "median_salary": 14237
+         "median_salary2": 14237
       },
       "2014": {
          "population": 812156
       },
       "2015": {
          "population": 808888,
-         "median_salary": 17356
+         "median_salary2": 17356
       },
       "2016": {
          "population": 807453,
@@ -1800,7 +1837,7 @@
       },
       "2017": {
          "population": 808541,
-         "median_salary": 20332,
+         "median_salary2": 20332,
          "average_income": 18215
       },
       "2018": {
@@ -1809,14 +1846,15 @@
       },
       "2019": {
          "population": 795504,
-         "median_salary": 24052,
+         "median_salary2": 24052,
          "average_income": 19681
       },
       "2021": {
          "population": 778965,
-         "median_salary": 28739,
+         "median_salary2": 28739,
+         "average_salary2": 33339,
          "average_income": 21505,
-         "average_salary": 33339
+         "er_election_2021": 66.0
       },
       "2020": {
          "population": 790197,
@@ -1826,21 +1864,21 @@
    "63": {
       "2011": {
          "population": 11776764,
-         "median_salary": 31006
+         "median_salary2": 31006
       },
       "2012": {
          "population": 11856578
       },
       "2013": {
          "population": 11979529,
-         "median_salary": 39380
+         "median_salary2": 39380
       },
       "2014": {
          "population": 12108257
       },
       "2015": {
          "population": 12197596,
-         "median_salary": 46536
+         "median_salary2": 46536
       },
       "2016": {
          "population": 12330126,
@@ -1848,7 +1886,7 @@
       },
       "2017": {
          "population": 12380664,
-         "median_salary": 55434,
+         "median_salary2": 55434,
          "average_income": 65803
       },
       "2018": {
@@ -1857,14 +1895,15 @@
       },
       "2019": {
          "population": 12615279,
-         "median_salary": 66103,
+         "median_salary2": 66103,
          "average_income": 75271
       },
       "2021": {
          "population": 12655050,
-         "median_salary": 75729,
+         "median_salary2": 75729,
+         "average_salary2": 112889,
          "average_income": 80265,
-         "average_salary": 112889
+         "er_election_2021": 37.0
       },
       "2020": {
          "population": 12678079,
@@ -1874,21 +1913,21 @@
    "64": {
       "2011": {
          "population": 6870552,
-         "median_salary": 21375
+         "median_salary2": 21375
       },
       "2012": {
          "population": 6955051
       },
       "2013": {
          "population": 7048084,
-         "median_salary": 28592
+         "median_salary2": 28592
       },
       "2014": {
          "population": 7133620
       },
       "2015": {
          "population": 7231068,
-         "median_salary": 32946
+         "median_salary2": 32946
       },
       "2016": {
          "population": 7318647,
@@ -1896,7 +1935,7 @@
       },
       "2017": {
          "population": 7423470,
-         "median_salary": 38074,
+         "median_salary2": 38074,
          "average_income": 42573
       },
       "2018": {
@@ -1905,14 +1944,15 @@
       },
       "2019": {
          "population": 7599647,
-         "median_salary": 45201,
+         "median_salary2": 45201,
          "average_income": 47484
       },
       "2021": {
          "population": 7708499,
-         "median_salary": 51215,
+         "median_salary2": 51215,
+         "average_salary2": 64792,
          "average_income": 49879,
-         "average_salary": 64792
+         "er_election_2021": 45.7
       },
       "2020": {
          "population": 7690863,
@@ -1922,21 +1962,21 @@
    "65": {
       "2011": {
          "population": 794077,
-         "median_salary": 24433
+         "median_salary2": 24433
       },
       "2012": {
          "population": 787948
       },
       "2013": {
          "population": 780401,
-         "median_salary": 35045
+         "median_salary2": 35045
       },
       "2014": {
          "population": 771058
       },
       "2015": {
          "population": 766281,
-         "median_salary": 35757
+         "median_salary2": 35757
       },
       "2016": {
          "population": 762173,
@@ -1944,7 +1984,7 @@
       },
       "2017": {
          "population": 757621,
-         "median_salary": 42143,
+         "median_salary2": 42143,
          "average_income": 39167
       },
       "2018": {
@@ -1953,14 +1993,15 @@
       },
       "2019": {
          "population": 748056,
-         "median_salary": 49589,
+         "median_salary2": 49589,
          "average_income": 44040
       },
       "2021": {
          "population": 732864,
-         "median_salary": 58996,
+         "median_salary2": 58996,
+         "average_salary2": 76627,
          "average_income": 47698,
-         "average_salary": 76627
+         "er_election_2021": 35.8
       },
       "2020": {
          "population": 741404,
@@ -1970,55 +2011,55 @@
    "102": {
       "2011": {
          "population": 42104,
-         "median_salary": 36657
+         "median_salary2": 36657
       },
       "2012": {
          "population": 42437
       },
       "2013": {
          "population": 42789,
-         "median_salary": 50314
+         "median_salary2": 50314
       },
       "2014": {
          "population": 43025
       },
       "2015": {
          "population": 43373,
-         "median_salary": 54501
+         "median_salary2": 54501
       },
       "2016": {
          "population": 43838
       },
       "2017": {
          "population": 43937,
-         "median_salary": 60780
+         "median_salary2": 60780
       },
       "2018": {
          "population": 43997
       },
       "2019": {
          "population": 43829,
-         "median_salary": 71303
+         "median_salary2": 71303
       }
    },
    "66": {
       "2011": {
          "population": 3307648,
-         "median_salary": 13886
+         "median_salary2": 13886
       },
       "2012": {
          "population": 3296947
       },
       "2013": {
          "population": 3289841,
-         "median_salary": 18784
+         "median_salary2": 18784
       },
       "2014": {
          "population": 3281496
       },
       "2015": {
          "population": 3270203,
-         "median_salary": 22560
+         "median_salary2": 22560
       },
       "2016": {
          "population": 3260267,
@@ -2026,7 +2067,7 @@
       },
       "2017": {
          "population": 3247713,
-         "median_salary": 26176,
+         "median_salary2": 26176,
          "average_income": 30265
       },
       "2018": {
@@ -2035,14 +2076,15 @@
       },
       "2019": {
          "population": 3214623,
-         "median_salary": 30671,
+         "median_salary2": 30671,
          "average_income": 33755
       },
       "2021": {
          "population": 3176552,
-         "median_salary": 35899,
+         "median_salary2": 35899,
+         "average_salary2": 45004,
          "average_income": 35642,
-         "average_salary": 45004
+         "er_election_2021": 49.9
       },
       "2020": {
          "population": 3202946,
@@ -2052,21 +2094,21 @@
    "67": {
       "2011": {
          "population": 632799,
-         "median_salary": 15063
+         "median_salary2": 15063
       },
       "2012": {
          "population": 629748
       },
       "2013": {
          "population": 625855,
-         "median_salary": 19439
+         "median_salary2": 19439
       },
       "2014": {
          "population": 622430
       },
       "2015": {
          "population": 618703,
-         "median_salary": 22284
+         "median_salary2": 22284
       },
       "2016": {
          "population": 615692,
@@ -2074,7 +2116,7 @@
       },
       "2017": {
          "population": 612522,
-         "median_salary": 24799,
+         "median_salary2": 24799,
          "average_income": 25629
       },
       "2018": {
@@ -2083,14 +2125,15 @@
       },
       "2019": {
          "population": 600296,
-         "median_salary": 29168,
+         "median_salary2": 29168,
          "average_income": 25920
       },
       "2021": {
          "population": 592415,
-         "median_salary": 32827,
+         "median_salary2": 32827,
+         "average_salary2": 40192,
          "average_income": 26640,
-         "average_salary": 40192
+         "er_election_2021": 32.5
       },
       "2020": {
          "population": 596508,
@@ -2100,21 +2143,21 @@
    "68": {
       "2011": {
          "population": 2666465,
-         "median_salary": 15342
+         "median_salary2": 15342
       },
       "2012": {
          "population": 2686863
       },
       "2013": {
          "population": 2709461,
-         "median_salary": 21101
+         "median_salary2": 21101
       },
       "2014": {
          "population": 2731176
       },
       "2015": {
          "population": 2746822,
-         "median_salary": 24395
+         "median_salary2": 24395
       },
       "2016": {
          "population": 2762237,
@@ -2122,7 +2165,7 @@
       },
       "2017": {
          "population": 2779555,
-         "median_salary": 27149,
+         "median_salary2": 27149,
          "average_income": 27744
       },
       "2018": {
@@ -2131,14 +2174,15 @@
       },
       "2019": {
          "population": 2793384,
-         "median_salary": 32556,
+         "median_salary2": 32556,
          "average_income": 30585
       },
       "2021": {
          "population": 2785836,
-         "median_salary": 37878,
+         "median_salary2": 37878,
+         "average_salary2": 47830,
          "average_income": 32694,
-         "average_salary": 47830
+         "er_election_2021": 35.2
       },
       "2020": {
          "population": 2798170,
@@ -2148,21 +2192,21 @@
    "69": {
       "2011": {
          "population": 1976560,
-         "median_salary": 13143
+         "median_salary2": 13143
       },
       "2012": {
          "population": 1974820
       },
       "2013": {
          "population": 1973985,
-         "median_salary": 17696
+         "median_salary2": 17696
       },
       "2014": {
          "population": 1973876
       },
       "2015": {
          "population": 1978183,
-         "median_salary": 20255
+         "median_salary2": 20255
       },
       "2016": {
          "population": 1978466,
@@ -2170,7 +2214,7 @@
       },
       "2017": {
          "population": 1972682,
-         "median_salary": 22366,
+         "median_salary2": 22366,
          "average_income": 24628
       },
       "2018": {
@@ -2179,14 +2223,15 @@
       },
       "2019": {
          "population": 1944195,
-         "median_salary": 27380,
+         "median_salary2": 27380,
          "average_income": 26846
       },
       "2021": {
          "population": 1903675,
-         "median_salary": 31668,
+         "median_salary2": 31668,
+         "average_salary2": 39716,
          "average_income": 27193,
-         "average_salary": 39716
+         "er_election_2021": 32.9
       },
       "2020": {
          "population": 1926665,
@@ -2196,21 +2241,21 @@
    "105": {
       "2011": {
          "population": 2031497,
-         "median_salary": 12179
+         "median_salary2": 12179
       },
       "2012": {
          "population": 2023665
       },
       "2013": {
          "population": 2016086,
-         "median_salary": 16790
+         "median_salary2": 16790
       },
       "2014": {
          "population": 2008566
       },
       "2015": {
          "population": 2001110,
-         "median_salary": 19433
+         "median_salary2": 19433
       },
       "2016": {
          "population": 1994762,
@@ -2218,7 +2263,7 @@
       },
       "2017": {
          "population": 1989589,
-         "median_salary": 22154,
+         "median_salary2": 22154,
          "average_income": 22841
       },
       "2018": {
@@ -2227,14 +2272,15 @@
       },
       "2019": {
          "population": 1963007,
-         "median_salary": 27016,
+         "median_salary2": 27016,
          "average_income": 24444
       },
       "2021": {
          "population": 1942915,
-         "median_salary": 32348,
+         "median_salary2": 32348,
+         "average_salary2": 39568,
          "average_income": 24787,
-         "average_salary": 39568
+         "er_election_2021": 38.4
       },
       "2020": {
          "population": 1956835,
@@ -2244,21 +2290,21 @@
    "70": {
       "2011": {
          "population": 785592,
-         "median_salary": 11193
+         "median_salary2": 11193
       },
       "2012": {
          "population": 781281
       },
       "2013": {
          "population": 775826,
-         "median_salary": 15421
+         "median_salary2": 15421
       },
       "2014": {
          "population": 769980
       },
       "2015": {
          "population": 765231,
-         "median_salary": 17818
+         "median_salary2": 17818
       },
       "2016": {
          "population": 759721,
@@ -2266,7 +2312,7 @@
       },
       "2017": {
          "population": 754816,
-         "median_salary": 19855,
+         "median_salary2": 19855,
          "average_income": 23859
       },
       "2018": {
@@ -2275,14 +2321,15 @@
       },
       "2019": {
          "population": 739467,
-         "median_salary": 23228,
+         "median_salary2": 23228,
          "average_income": 25959
       },
       "2021": {
          "population": 724686,
-         "median_salary": 27888,
+         "median_salary2": 27888,
+         "average_salary2": 33243,
          "average_income": 27539,
-         "average_salary": 33243
+         "er_election_2021": 38.8
       },
       "2020": {
          "population": 733498,
@@ -2292,21 +2339,21 @@
    "72": {
       "2011": {
          "population": 1384006,
-         "median_salary": 11324
+         "median_salary2": 11324
       },
       "2012": {
          "population": 1376538
       },
       "2013": {
          "population": 1368657,
-         "median_salary": 15485
+         "median_salary2": 15485
       },
       "2014": {
          "population": 1360587
       },
       "2015": {
          "population": 1355618,
-         "median_salary": 19465
+         "median_salary2": 19465
       },
       "2016": {
          "population": 1348703,
@@ -2314,7 +2361,7 @@
       },
       "2017": {
          "population": 1341526,
-         "median_salary": 20918,
+         "median_salary2": 20918,
          "average_income": 21285
       },
       "2018": {
@@ -2323,14 +2370,15 @@
       },
       "2019": {
          "population": 1318103,
-         "median_salary": 25563,
+         "median_salary2": 25563,
          "average_income": 22859
       },
       "2021": {
          "population": 1290898,
-         "median_salary": 29942,
+         "median_salary2": 29942,
+         "average_salary2": 35377,
          "average_income": 24855,
-         "average_salary": 35377
+         "er_election_2021": 56.2
       },
       "2020": {
          "population": 1305563,
@@ -2340,21 +2388,21 @@
    "29": {
       "2011": {
          "population": 2633550,
-         "median_salary": 15825
+         "median_salary2": 15825
       },
       "2012": {
          "population": 2631073
       },
       "2013": {
          "population": 2634461,
-         "median_salary": 20679
+         "median_salary2": 20679
       },
       "2014": {
          "population": 2636154
       },
       "2015": {
          "population": 2637032,
-         "median_salary": 24726
+         "median_salary2": 24726
       },
       "2016": {
          "population": 2634409,
@@ -2362,7 +2410,7 @@
       },
       "2017": {
          "population": 2632097,
-         "median_salary": 27073,
+         "median_salary2": 27073,
          "average_income": 28292
       },
       "2018": {
@@ -2371,14 +2419,15 @@
       },
       "2019": {
          "population": 2610800,
-         "median_salary": 31958,
+         "median_salary2": 31958,
          "average_income": 30520
       },
       "2021": {
          "population": 2579261,
-         "median_salary": 36388,
+         "median_salary2": 36388,
+         "average_salary2": 44208,
          "average_income": 29887,
-         "average_salary": 44208
+         "er_election_2021": 33.6
       },
       "2020": {
          "population": 2599260,
@@ -2388,21 +2437,21 @@
    "74": {
       "2011": {
          "population": 1953545,
-         "median_salary": 19361
+         "median_salary2": 19361
       },
       "2012": {
          "population": 1950483
       },
       "2013": {
          "population": 1947263,
-         "median_salary": 25473
+         "median_salary2": 25473
       },
       "2014": {
          "population": 1938516
       },
       "2015": {
          "population": 1933308,
-         "median_salary": 28038
+         "median_salary2": 28038
       },
       "2016": {
          "population": 1929008,
@@ -2410,7 +2459,7 @@
       },
       "2017": {
          "population": 1923116,
-         "median_salary": 32720,
+         "median_salary2": 32720,
          "average_income": 32185
       },
       "2018": {
@@ -2419,14 +2468,15 @@
       },
       "2019": {
          "population": 1902718,
-         "median_salary": 40620,
+         "median_salary2": 40620,
          "average_income": 36817
       },
       "2021": {
          "population": 1877844,
-         "median_salary": 47252,
+         "median_salary2": 47252,
+         "average_salary2": 59272,
          "average_income": 38286,
-         "average_salary": 59272
+         "er_election_2021": 37.4
       },
       "2020": {
          "population": 1895868,
@@ -2436,21 +2486,21 @@
    "75": {
       "2011": {
          "population": 671272,
-         "median_salary": 12208
+         "median_salary2": 12208
       },
       "2012": {
          "population": 666924
       },
       "2013": {
          "population": 661507,
-         "median_salary": 15625
+         "median_salary2": 15625
       },
       "2014": {
          "population": 656561
       },
       "2015": {
          "population": 651108,
-         "median_salary": 17527
+         "median_salary2": 17527
       },
       "2016": {
          "population": 646374,
@@ -2458,7 +2508,7 @@
       },
       "2017": {
          "population": 642164,
-         "median_salary": 19052,
+         "median_salary2": 19052,
          "average_income": 23183
       },
       "2018": {
@@ -2467,14 +2517,15 @@
       },
       "2019": {
          "population": 629651,
-         "median_salary": 23895,
+         "median_salary2": 23895,
          "average_income": 25452
       },
       "2021": {
          "population": 620249,
-         "median_salary": 28608,
+         "median_salary2": 28608,
+         "average_salary2": 34132,
          "average_income": 27670,
-         "average_salary": 34132
+         "er_election_2021": 40.1
       },
       "2020": {
          "population": 626115,
@@ -2484,21 +2535,21 @@
    "6": {
       "2011": {
          "population": 206530,
-         "median_salary": 10622
+         "median_salary2": 10622
       },
       "2012": {
          "population": 208425
       },
       "2013": {
          "population": 210344,
-         "median_salary": 14277
+         "median_salary2": 14277
       },
       "2014": {
          "population": 211645
       },
       "2015": {
          "population": 213703,
-         "median_salary": 17640
+         "median_salary2": 17640
       },
       "2016": {
          "population": 215161,
@@ -2506,7 +2557,7 @@
       },
       "2017": {
          "population": 217007,
-         "median_salary": 19152,
+         "median_salary2": 19152,
          "average_income": 18629
       },
       "2018": {
@@ -2515,14 +2566,15 @@
       },
       "2019": {
          "population": 218866,
-         "median_salary": 24872,
+         "median_salary2": 24872,
          "average_income": 20317
       },
       "2021": {
          "population": 220954,
-         "median_salary": 28932,
+         "median_salary2": 28932,
+         "average_salary2": 36674,
          "average_income": 21413,
-         "average_salary": 36674
+         "er_election_2021": 38.5
       },
       "2020": {
          "population": 220181,
@@ -2532,21 +2584,21 @@
    "13": {
       "2011": {
          "population": 899215,
-         "median_salary": 22236
+         "median_salary2": 22236
       },
       "2012": {
          "population": 889837
       },
       "2013": {
          "population": 880639,
-         "median_salary": 30348
+         "median_salary2": 30348
       },
       "2014": {
          "population": 872057
       },
       "2015": {
          "population": 864424,
-         "median_salary": 33795
+         "median_salary2": 33795
       },
       "2016": {
          "population": 856831,
@@ -2554,7 +2606,7 @@
       },
       "2017": {
          "population": 850554,
-         "median_salary": 36244,
+         "median_salary2": 36244,
          "average_income": 32126
       },
       "2018": {
@@ -2563,14 +2615,15 @@
       },
       "2019": {
          "population": 830235,
-         "median_salary": 42940,
+         "median_salary2": 42940,
          "average_income": 35148
       },
       "2021": {
          "population": 813590,
-         "median_salary": 48238,
+         "median_salary2": 48238,
+         "average_salary2": 61523,
          "average_income": 35278,
-         "average_salary": 61523
+         "er_election_2021": 29.4
       },
       "2020": {
          "population": 820473,
@@ -2580,21 +2633,21 @@
    "85": {
       "2011": {
          "population": 308132,
-         "median_salary": 12576
+         "median_salary2": 12576
       },
       "2012": {
          "population": 309347
       },
       "2013": {
          "population": 310460,
-         "median_salary": 16018
+         "median_salary2": 16018
       },
       "2014": {
          "population": 311761
       },
       "2015": {
          "population": 313777,
-         "median_salary": 18283
+         "median_salary2": 18283
       },
       "2016": {
          "population": 315637,
@@ -2602,7 +2655,7 @@
       },
       "2017": {
          "population": 318550,
-         "median_salary": 21690,
+         "median_salary2": 21690,
          "average_income": 15085
       },
       "2018": {
@@ -2611,14 +2664,15 @@
       },
       "2019": {
          "population": 324423,
-         "median_salary": 27822,
+         "median_salary2": 27822,
          "average_income": 16694
       },
       "2021": {
          "population": 330368,
-         "median_salary": 31825,
+         "median_salary2": 31825,
+         "average_salary2": 41306,
          "average_income": 16897,
-         "average_salary": 41306
+         "er_election_2021": 85.3
       },
       "2020": {
          "population": 327383,
@@ -2628,21 +2682,21 @@
    "76": {
       "2011": {
          "population": 4275223,
-         "median_salary": 12658
+         "median_salary2": 12658
       },
       "2012": {
          "population": 4260643
       },
       "2013": {
          "population": 4254613,
-         "median_salary": 16943
+         "median_salary2": 16943
       },
       "2014": {
          "population": 4245532
       },
       "2015": {
          "population": 4242080,
-         "median_salary": 20327
+         "median_salary2": 20327
       },
       "2016": {
          "population": 4236000,
@@ -2650,7 +2704,7 @@
       },
       "2017": {
          "population": 4231355,
-         "median_salary": 23019,
+         "median_salary2": 23019,
          "average_income": 27705
       },
       "2018": {
@@ -2659,14 +2713,15 @@
       },
       "2019": {
          "population": 4202320,
-         "median_salary": 27619,
+         "median_salary2": 27619,
          "average_income": 30735
       },
       "2021": {
          "population": 4181486,
-         "median_salary": 32241,
+         "median_salary2": 32241,
+         "average_salary2": 40036,
          "average_income": 32407,
-         "average_salary": 40036
+         "er_election_2021": 51.6
       },
       "2020": {
          "population": 4197821,
@@ -2676,21 +2731,21 @@
    "103": {
       "2011": {
          "population": 1151838,
-         "median_salary": 13139
+         "median_salary2": 13139
       },
       "2012": {
          "population": 1148457
       },
       "2013": {
          "population": 1144650,
-         "median_salary": 17904
+         "median_salary2": 17904
       },
       "2014": {
          "population": 1140844
       },
       "2015": {
          "population": 1135438,
-         "median_salary": 21101
+         "median_salary2": 21101
       },
       "2016": {
          "population": 1130103,
@@ -2698,7 +2753,7 @@
       },
       "2017": {
          "population": 1126739,
-         "median_salary": 23998,
+         "median_salary2": 23998,
          "average_income": 24215
       },
       "2018": {
@@ -2707,14 +2762,15 @@
       },
       "2019": {
          "population": 1114137,
-         "median_salary": 28331,
+         "median_salary2": 28331,
          "average_income": 26822
       },
       "2021": {
          "population": 1098257,
-         "median_salary": 33259,
+         "median_salary2": 33259,
+         "average_salary2": 40217,
          "average_income": 27815,
-         "average_salary": 40217
+         "er_election_2021": 47.8
       },
       "2020": {
          "population": 1108847,
@@ -2724,21 +2780,21 @@
    "77": {
       "2011": {
          "population": 3215311,
-         "median_salary": 15262
+         "median_salary2": 15262
       },
       "2012": {
          "population": 3214065
       },
       "2013": {
          "population": 3213289,
-         "median_salary": 19664
+         "median_salary2": 19664
       },
       "2014": {
          "population": 3211187
       },
       "2015": {
          "population": 3212676,
-         "median_salary": 23128
+         "median_salary2": 23128
       },
       "2016": {
          "population": 3205975,
@@ -2746,7 +2802,7 @@
       },
       "2017": {
          "population": 3203679,
-         "median_salary": 25483,
+         "median_salary2": 25483,
          "average_income": 27051
       },
       "2018": {
@@ -2755,14 +2811,15 @@
       },
       "2019": {
          "population": 3183038,
-         "median_salary": 30428,
+         "median_salary2": 30428,
          "average_income": 29405
       },
       "2021": {
          "population": 3154164,
-         "median_salary": 34889,
+         "median_salary2": 34889,
+         "average_salary2": 42792,
          "average_income": 29632,
-         "average_salary": 42792
+         "er_election_2021": 44.3
       },
       "2020": {
          "population": 3179532,
@@ -2772,21 +2829,21 @@
    "1": {
       "2011": {
          "population": 4899344,
-         "median_salary": 23576
+         "median_salary2": 23576
       },
       "2012": {
          "population": 4953219
       },
       "2013": {
          "population": 5028000,
-         "median_salary": 29929
+         "median_salary2": 29929
       },
       "2014": {
          "population": 5131942
       },
       "2015": {
          "population": 5191690,
-         "median_salary": 35772
+         "median_salary2": 35772
       },
       "2016": {
          "population": 5225690,
@@ -2794,7 +2851,7 @@
       },
       "2017": {
          "population": 5281579,
-         "median_salary": 43136,
+         "median_salary2": 43136,
          "average_income": 42620
       },
       "2018": {
@@ -2803,14 +2860,15 @@
       },
       "2019": {
          "population": 5383890,
-         "median_salary": 51248,
+         "median_salary2": 51248,
          "average_income": 47231
       },
       "2021": {
          "population": 5384342,
-         "median_salary": 58654,
+         "median_salary2": 58654,
+         "average_salary2": 76585,
          "average_income": 51154,
-         "average_salary": 76585
+         "er_election_2021": 35.0
       },
       "2020": {
          "population": 5398064,
@@ -2820,21 +2878,21 @@
    "79": {
       "2011": {
          "population": 2519282,
-         "median_salary": 11745
+         "median_salary2": 11745
       },
       "2012": {
          "population": 2508754
       },
       "2013": {
          "population": 2503305,
-         "median_salary": 15762
+         "median_salary2": 15762
       },
       "2014": {
          "population": 2496552
       },
       "2015": {
          "population": 2493024,
-         "median_salary": 18325
+         "median_salary2": 18325
       },
       "2016": {
          "population": 2487529,
@@ -2842,7 +2900,7 @@
       },
       "2017": {
          "population": 2479260,
-         "median_salary": 20297,
+         "median_salary2": 20297,
          "average_income": 20177
       },
       "2018": {
@@ -2851,14 +2909,15 @@
       },
       "2019": {
          "population": 2440815,
-         "median_salary": 24155,
+         "median_salary2": 24155,
          "average_income": 22669
       },
       "2021": {
          "population": 2395111,
-         "median_salary": 30113,
+         "median_salary2": 30113,
+         "average_salary2": 36800,
          "average_income": 24250,
-         "average_salary": 36800
+         "er_election_2021": 59.8
       },
       "2020": {
          "population": 2421895,
@@ -2868,21 +2927,21 @@
    "94": {
       "2011": {
          "population": 496739,
-         "median_salary": 29505
+         "median_salary2": 29505
       },
       "2012": {
          "population": 495402
       },
       "2013": {
          "population": 493302,
-         "median_salary": 37751
+         "median_salary2": 37751
       },
       "2014": {
          "population": 491027
       },
       "2015": {
          "population": 488391,
-         "median_salary": 44422
+         "median_salary2": 44422
       },
       "2016": {
          "population": 487293,
@@ -2890,7 +2949,7 @@
       },
       "2017": {
          "population": 487344,
-         "median_salary": 48792,
+         "median_salary2": 48792,
          "average_income": 50649
       },
       "2018": {
@@ -2899,14 +2958,15 @@
       },
       "2019": {
          "population": 489638,
-         "median_salary": 62647,
+         "median_salary2": 62647,
          "average_income": 58932
       },
       "2021": {
          "population": 485621,
-         "median_salary": 71639,
+         "median_salary2": 71639,
+         "average_salary2": 95717,
          "average_income": 58643,
-         "average_salary": 95717
+         "er_election_2021": 35.7
       },
       "2020": {
          "population": 488257,
@@ -2916,21 +2976,21 @@
    "80": {
       "2011": {
          "population": 4297227,
-         "median_salary": 17824
+         "median_salary2": 17824
       },
       "2012": {
          "population": 4307594
       },
       "2013": {
          "population": 4315830,
-         "median_salary": 22652
+         "median_salary2": 22652
       },
       "2014": {
          "population": 4320677
       },
       "2015": {
          "population": 4327472,
-         "median_salary": 26619
+         "median_salary2": 26619
       },
       "2016": {
          "population": 4330006,
@@ -2938,7 +2998,7 @@
       },
       "2017": {
          "population": 4329341,
-         "median_salary": 29402,
+         "median_salary2": 29402,
          "average_income": 35193
       },
       "2018": {
@@ -2947,14 +3007,15 @@
       },
       "2019": {
          "population": 4315699,
-         "median_salary": 34818,
+         "median_salary2": 34818,
          "average_income": 39071
       },
       "2021": {
          "population": 4290067,
-         "median_salary": 39634,
+         "median_salary2": 39634,
+         "average_salary2": 49311,
          "average_income": 37844,
-         "average_salary": 49311
+         "er_election_2021": 34.7
       },
       "2020": {
          "population": 4310681,
@@ -2964,21 +3025,21 @@
    "17": {
       "2011": {
          "population": 712481,
-         "median_salary": 8708
+         "median_salary2": 8708
       },
       "2012": {
          "population": 709032
       },
       "2013": {
          "population": 706123,
-         "median_salary": 12919
+         "median_salary2": 12919
       },
       "2014": {
          "population": 703977
       },
       "2015": {
          "population": 705270,
-         "median_salary": 16333
+         "median_salary2": 16333
       },
       "2016": {
          "population": 703745,
@@ -2986,7 +3047,7 @@
       },
       "2017": {
          "population": 703262,
-         "median_salary": 17384,
+         "median_salary2": 17384,
          "average_income": 22677
       },
       "2018": {
@@ -2995,14 +3056,15 @@
       },
       "2019": {
          "population": 699253,
-         "median_salary": 21061,
+         "median_salary2": 21061,
          "average_income": 24452
       },
       "2021": {
          "population": 693098,
-         "median_salary": 23691,
+         "median_salary2": 23691,
+         "average_salary2": 30937,
          "average_income": 24148,
-         "average_salary": 30937
+         "er_election_2021": 71.1
       },
       "2020": {
          "population": 696837,
@@ -3012,21 +3074,21 @@
    "100": {
       "2011": {
          "population": 982887,
-         "median_salary": 12632
+         "median_salary2": 12632
       },
       "2012": {
          "population": 980482
       },
       "2013": {
          "population": 975188,
-         "median_salary": 16275
+         "median_salary2": 16275
       },
       "2014": {
          "population": 967896
       },
       "2015": {
          "population": 964791,
-         "median_salary": 18992
+         "median_salary2": 18992
       },
       "2016": {
          "population": 958630,
@@ -3034,7 +3096,7 @@
       },
       "2017": {
          "population": 953201,
-         "median_salary": 20972,
+         "median_salary2": 20972,
          "average_income": 24716
       },
       "2018": {
@@ -3043,14 +3105,15 @@
       },
       "2019": {
          "population": 942363,
-         "median_salary": 26720,
+         "median_salary2": 26720,
          "average_income": 27279
       },
       "2021": {
          "population": 921127,
-         "median_salary": 29089,
+         "median_salary2": 29089,
+         "average_salary2": 35992,
          "average_income": 28753,
-         "average_salary": 35992
+         "er_election_2021": 39.9
       },
       "2020": {
          "population": 934889,
@@ -3060,21 +3123,21 @@
    "81": {
       "2011": {
          "population": 2785524,
-         "median_salary": 11139
+         "median_salary2": 11139
       },
       "2012": {
          "population": 2787030
       },
       "2013": {
          "population": 2790785,
-         "median_salary": 15158
+         "median_salary2": 15158
       },
       "2014": {
          "population": 2794508
       },
       "2015": {
          "population": 2799473,
-         "median_salary": 18301
+         "median_salary2": 18301
       },
       "2016": {
          "population": 2801597,
@@ -3082,7 +3145,7 @@
       },
       "2017": {
          "population": 2804383,
-         "median_salary": 20550,
+         "median_salary2": 20550,
          "average_income": 22470
       },
       "2018": {
@@ -3091,14 +3154,15 @@
       },
       "2019": {
          "population": 2795243,
-         "median_salary": 24432,
+         "median_salary2": 24432,
          "average_income": 24402
       },
       "2021": {
          "population": 2792796,
-         "median_salary": 28621,
+         "median_salary2": 28621,
+         "average_salary2": 35327,
          "average_income": 24009,
-         "average_salary": 35327
+         "er_election_2021": 61.8
       },
       "2020": {
          "population": 2803573,
@@ -3108,21 +3172,21 @@
    "82": {
       "2011": {
          "population": 1089700,
-         "median_salary": 10854
+         "median_salary2": 10854
       },
       "2012": {
          "population": 1082545
       },
       "2013": {
          "population": 1075748,
-         "median_salary": 14778
+         "median_salary2": 14778
       },
       "2014": {
          "population": 1068934
       },
       "2015": {
          "population": 1062421,
-         "median_salary": 17558
+         "median_salary2": 17558
       },
       "2016": {
          "population": 1050295,
@@ -3130,7 +3194,7 @@
       },
       "2017": {
          "population": 1040327,
-         "median_salary": 20422,
+         "median_salary2": 20422,
          "average_income": 25972
       },
       "2018": {
@@ -3139,14 +3203,15 @@
       },
       "2019": {
          "population": 1015966,
-         "median_salary": 24417,
+         "median_salary2": 24417,
          "average_income": 28026
       },
       "2021": {
          "population": 994420,
-         "median_salary": 28172,
+         "median_salary2": 28172,
+         "average_salary2": 34168,
          "average_income": 27209,
-         "average_salary": 34168
+         "er_election_2021": 56.9
       },
       "2020": {
          "population": 1006748,
@@ -3156,21 +3221,21 @@
    "18": {
       "2011": {
          "population": 3787485,
-         "median_salary": 13520
+         "median_salary2": 13520
       },
       "2012": {
          "population": 3803189
       },
       "2013": {
          "population": 3822038,
-         "median_salary": 18945
+         "median_salary2": 18945
       },
       "2014": {
          "population": 3838230
       },
       "2015": {
          "population": 3855037,
-         "median_salary": 22517
+         "median_salary2": 22517
       },
       "2016": {
          "population": 3868730,
@@ -3178,7 +3243,7 @@
       },
       "2017": {
          "population": 3885253,
-         "median_salary": 26092,
+         "median_salary2": 26092,
          "average_income": 32473
       },
       "2018": {
@@ -3187,14 +3252,15 @@
       },
       "2019": {
          "population": 3898628,
-         "median_salary": 31341,
+         "median_salary2": 31341,
          "average_income": 35725
       },
       "2021": {
          "population": 3894120,
-         "median_salary": 35966,
+         "median_salary2": 35966,
+         "average_salary2": 45193,
          "average_income": 37051,
-         "average_salary": 45193
+         "er_election_2021": 79.0
       },
       "2020": {
          "population": 3902888,
@@ -3204,21 +3270,21 @@
    "101": {
       "2011": {
          "population": 1350086,
-         "median_salary": 12866
+         "median_salary2": 12866
       },
       "2012": {
          "population": 1342200
       },
       "2013": {
          "population": 1334061,
-         "median_salary": 17998
+         "median_salary2": 17998
       },
       "2014": {
          "population": 1325249
       },
       "2015": {
          "population": 1315071,
-         "median_salary": 19894
+         "median_salary2": 19894
       },
       "2016": {
          "population": 1304744,
@@ -3226,7 +3292,7 @@
       },
       "2017": {
          "population": 1296799,
-         "median_salary": 23072,
+         "median_salary2": 23072,
          "average_income": 24231
       },
       "2018": {
@@ -3235,14 +3301,15 @@
       },
       "2019": {
          "population": 1269636,
-         "median_salary": 27513,
+         "median_salary2": 27513,
          "average_income": 27112
       },
       "2021": {
          "population": 1245619,
-         "median_salary": 33549,
+         "median_salary2": 33549,
+         "average_salary2": 40347,
          "average_income": 28678,
-         "average_salary": 40347
+         "er_election_2021": 35.4
       },
       "2020": {
          "population": 1260379,
@@ -3252,21 +3319,21 @@
    "106": {
       "2011": {
          "population": 1048538,
-         "median_salary": 17183
+         "median_salary2": 17183
       },
       "2012": {
          "population": 1057748
       },
       "2013": {
          "population": 1064245,
-         "median_salary": 21806
+         "median_salary2": 21806
       },
       "2014": {
          "population": 1070128
       },
       "2015": {
          "population": 1074453,
-         "median_salary": 25835
+         "median_salary2": 25835
       },
       "2016": {
          "population": 1076762,
@@ -3274,7 +3341,7 @@
       },
       "2017": {
          "population": 1078891,
-         "median_salary": 29173,
+         "median_salary2": 29173,
          "average_income": 26689
       },
       "2018": {
@@ -3283,14 +3350,15 @@
       },
       "2019": {
          "population": 1077442,
-         "median_salary": 34074,
+         "median_salary2": 34074,
          "average_income": 28404
       },
       "2021": {
          "population": 1070339,
-         "median_salary": 38708,
+         "median_salary2": 38708,
+         "average_salary2": 49520,
          "average_income": 29505,
-         "average_salary": 49520
+         "er_election_2021": 32.7
       },
       "2020": {
          "population": 1079271,
@@ -3300,21 +3368,21 @@
    "84": {
       "2011": {
          "population": 1550330,
-         "median_salary": 13792
+         "median_salary2": 13792
       },
       "2012": {
          "population": 1544545
       },
       "2013": {
          "population": 1532436,
-         "median_salary": 18658
+         "median_salary2": 18658
       },
       "2014": {
          "population": 1521497
       },
       "2015": {
          "population": 1513570,
-         "median_salary": 23717
+         "median_salary2": 23717
       },
       "2016": {
          "population": 1506446,
@@ -3322,7 +3390,7 @@
       },
       "2017": {
          "population": 1499417,
-         "median_salary": 26898,
+         "median_salary2": 26898,
          "average_income": 27157
       },
       "2018": {
@@ -3331,14 +3399,15 @@
       },
       "2019": {
          "population": 1478818,
-         "median_salary": 31694,
+         "median_salary2": 31694,
          "average_income": 28434
       },
       "2021": {
          "population": 1449115,
-         "median_salary": 36658,
+         "median_salary2": 36658,
+         "average_salary2": 44701,
          "average_income": 30856,
-         "average_salary": 44701
+         "er_election_2021": 52.9
       },
       "2020": {
          "population": 1466127,
@@ -3348,21 +3417,21 @@
    "86": {
       "2011": {
          "population": 1343206,
-         "median_salary": 17801
+         "median_salary2": 17801
       },
       "2012": {
          "population": 1361642
       },
       "2013": {
          "population": 1385008,
-         "median_salary": 24018
+         "median_salary2": 24018
       },
       "2014": {
          "population": 1409426
       },
       "2015": {
          "population": 1429232,
-         "median_salary": 28920
+         "median_salary2": 28920
       },
       "2016": {
          "population": 1454626,
@@ -3370,7 +3439,7 @@
       },
       "2017": {
          "population": 1477903,
-         "median_salary": 32366,
+         "median_salary2": 32366,
          "average_income": 44436
       },
       "2018": {
@@ -3379,14 +3448,15 @@
       },
       "2019": {
          "population": 3723969,
-         "median_salary": 39185,
+         "median_salary2": 39185,
          "average_income": 48545
       },
       "2021": {
          "population": 3778053,
-         "median_salary": 66149,
+         "median_salary2": 66149,
+         "average_salary2": 82770,
          "average_income": 51247,
-         "average_salary": 82770
+         "er_election_2021": 51.3
       },
       "2020": {
          "population": 3756536,
@@ -3396,21 +3466,21 @@
    "20": {
       "2011": {
          "population": 1520390,
-         "median_salary": 12065
+         "median_salary2": 12065
       },
       "2012": {
          "population": 1518091
       },
       "2013": {
          "population": 1517692,
-         "median_salary": 16429
+         "median_salary2": 16429
       },
       "2014": {
          "population": 1517050
       },
       "2015": {
          "population": 1517472,
-         "median_salary": 20595
+         "median_salary2": 20595
       },
       "2016": {
          "population": 1517164,
@@ -3418,7 +3488,7 @@
       },
       "2017": {
          "population": 1516826,
-         "median_salary": 23205,
+         "median_salary2": 23205,
          "average_income": 23964
       },
       "2018": {
@@ -3427,14 +3497,15 @@
       },
       "2019": {
          "population": 1507390,
-         "median_salary": 27807,
+         "median_salary2": 27807,
          "average_income": 25012
       },
       "2021": {
          "population": 1493356,
-         "median_salary": 32022,
+         "median_salary2": 32022,
+         "average_salary2": 38144,
          "average_income": 25395,
-         "average_salary": 38144
+         "er_election_2021": 35.6
       },
       "2020": {
          "population": 1500955,
@@ -3444,21 +3515,21 @@
    "88": {
       "2011": {
          "population": 1290478,
-         "median_salary": 12096
+         "median_salary2": 12096
       },
       "2012": {
          "population": 1282094
       },
       "2013": {
          "population": 1274487,
-         "median_salary": 15553
+         "median_salary2": 15553
       },
       "2014": {
          "population": 1267561
       },
       "2015": {
          "population": 1262549,
-         "median_salary": 18916
+         "median_salary2": 18916
       },
       "2016": {
          "population": 1257621,
@@ -3466,7 +3537,7 @@
       },
       "2017": {
          "population": 1252887,
-         "median_salary": 21755,
+         "median_salary2": 21755,
          "average_income": 23225
       },
       "2018": {
@@ -3475,14 +3546,15 @@
       },
       "2019": {
          "population": 1238416,
-         "median_salary": 25906,
+         "median_salary2": 25906,
          "average_income": 23615
       },
       "2021": {
          "population": 1218319,
-         "median_salary": 29791,
+         "median_salary2": 29791,
+         "average_salary2": 36649,
          "average_income": 25476,
-         "average_salary": 36649
+         "er_election_2021": 39.0
       },
       "2020": {
          "population": 1229824,
@@ -3492,21 +3564,21 @@
    "32": {
       "2011": {
          "population": 1342887,
-         "median_salary": 21158
+         "median_salary2": 21158
       },
       "2012": {
          "population": 1342475
       },
       "2013": {
          "population": 1342083,
-         "median_salary": 28178
+         "median_salary2": 28178
       },
       "2014": {
          "population": 1339912
       },
       "2015": {
          "population": 1338305,
-         "median_salary": 31430
+         "median_salary2": 31430
       },
       "2016": {
          "population": 1334552,
@@ -3514,7 +3586,7 @@
       },
       "2017": {
          "population": 1333294,
-         "median_salary": 35470,
+         "median_salary2": 35470,
          "average_income": 37028
       },
       "2018": {
@@ -3523,14 +3595,15 @@
       },
       "2019": {
          "population": 1321473,
-         "median_salary": 43216,
+         "median_salary2": 43216,
          "average_income": 41367
       },
       "2021": {
          "population": 1301127,
-         "median_salary": 50197,
+         "median_salary2": 50197,
+         "average_salary2": 62179,
          "average_income": 40888,
-         "average_salary": 62179
+         "er_election_2021": 24.5
       },
       "2020": {
          "population": 1315643,
@@ -3540,21 +3613,21 @@
    "21": {
       "2011": {
          "population": 532286,
-         "median_salary": 14826
+         "median_salary2": 14826
       },
       "2012": {
          "population": 532135
       },
       "2013": {
          "population": 533025,
-         "median_salary": 20395
+         "median_salary2": 20395
       },
       "2014": {
          "population": 534079
       },
       "2015": {
          "population": 535796,
-         "median_salary": 23750
+         "median_salary2": 23750
       },
       "2016": {
          "population": 536781,
@@ -3562,7 +3635,7 @@
       },
       "2017": {
          "population": 537668,
-         "median_salary": 26178,
+         "median_salary2": 26178,
          "average_income": 20248
       },
       "2018": {
@@ -3571,14 +3644,15 @@
       },
       "2019": {
          "population": 536167,
-         "median_salary": 29787,
+         "median_salary2": 29787,
          "average_income": 22648
       },
       "2021": {
          "population": 532036,
-         "median_salary": 36938,
+         "median_salary2": 36938,
+         "average_salary2": 46959,
          "average_income": 24999,
-         "average_salary": 46959
+         "er_election_2021": 33.4
       },
       "2020": {
          "population": 534262,
@@ -3588,59 +3662,60 @@
    "108": {
       "2011": {
          "population": 1537134,
-         "median_salary": 34430
+         "median_salary2": 34430
       },
       "2012": {
          "population": 1561238
       },
       "2013": {
          "population": 1584063,
-         "median_salary": 43222
+         "median_salary2": 43222
       },
       "2014": {
          "population": 1597248
       },
       "2015": {
          "population": 1612076,
-         "median_salary": 47957
+         "median_salary2": 47957
       },
       "2016": {
          "population": 1626755
       },
       "2017": {
          "population": 1646078,
-         "median_salary": 53087
+         "median_salary2": 53087
       },
       "2018": {
          "population": 1655074
       },
       "2019": {
          "population": 1663795,
-         "median_salary": 60570
+         "median_salary2": 60570
       },
       "2021": {
-         "median_salary": 68610,
-         "average_salary": 81909
+         "median_salary2": 68610,
+         "average_salary2": 81909,
+         "er_election_2021": 42.3
       }
    },
    "89": {
       "2011": {
          "population": 3475634,
-         "median_salary": 15131
+         "median_salary2": 15131
       },
       "2012": {
          "population": 3480142
       },
       "2013": {
          "population": 3485272,
-         "median_salary": 19792
+         "median_salary2": 19792
       },
       "2014": {
          "population": 3490053
       },
       "2015": {
          "population": 3497274,
-         "median_salary": 23263
+         "median_salary2": 23263
       },
       "2016": {
          "population": 3500716,
@@ -3648,7 +3723,7 @@
       },
       "2017": {
          "population": 3502323,
-         "median_salary": 27068,
+         "median_salary2": 27068,
          "average_income": 23687
       },
       "2018": {
@@ -3657,14 +3732,15 @@
       },
       "2019": {
          "population": 3475753,
-         "median_salary": 31245,
+         "median_salary2": 31245,
          "average_income": 25390
       },
       "2021": {
          "population": 3442810,
-         "median_salary": 36107,
+         "median_salary2": 36107,
+         "average_salary2": 44539,
          "average_income": 27152,
-         "average_salary": 44539
+         "er_election_2021": 34.3
       },
       "2020": {
          "population": 3466369,
@@ -3674,21 +3750,21 @@
    "90": {
       "2011": {
          "population": 1275113,
-         "median_salary": 9640
+         "median_salary2": 9640
       },
       "2012": {
          "population": 1302165
       },
       "2013": {
          "population": 1324767,
-         "median_salary": 12742
+         "median_salary2": 12742
       },
       "2014": {
          "population": 1346438
       },
       "2015": {
          "population": 1370268,
-         "median_salary": 17044
+         "median_salary2": 17044
       },
       "2016": {
          "population": 1394172,
@@ -3696,7 +3772,7 @@
       },
       "2017": {
          "population": 1414865,
-         "median_salary": 16896,
+         "median_salary2": 16896,
          "average_income": 22659
       },
       "2018": {
@@ -3705,14 +3781,15 @@
       },
       "2019": {
          "population": 1456951,
-         "median_salary": 22501,
+         "median_salary2": 22501,
          "average_income": 24318
       },
       "2021": {
          "population": 1497992,
-         "median_salary": 24836,
+         "median_salary2": 24836,
+         "average_salary2": 30509,
          "average_income": 23600,
-         "average_salary": 30509
+         "er_election_2021": 96.1
       },
       "2020": {
          "population": 1478726,
@@ -3722,21 +3799,21 @@
    "91": {
       "2011": {
          "population": 1250518,
-         "median_salary": 10927
+         "median_salary2": 10927
       },
       "2012": {
          "population": 1247012
       },
       "2013": {
          "population": 1243431,
-         "median_salary": 14919
+         "median_salary2": 14919
       },
       "2014": {
          "population": 1239984
       },
       "2015": {
          "population": 1238071,
-         "median_salary": 17443
+         "median_salary2": 17443
       },
       "2016": {
          "population": 1236628,
@@ -3744,7 +3821,7 @@
       },
       "2017": {
          "population": 1235863,
-         "median_salary": 19676,
+         "median_salary2": 19676,
          "average_income": 17917
       },
       "2018": {
@@ -3753,14 +3830,15 @@
       },
       "2019": {
          "population": 1223395,
-         "median_salary": 24069,
+         "median_salary2": 24069,
          "average_income": 20115
       },
       "2021": {
          "population": 1207875,
-         "median_salary": 29130,
+         "median_salary2": 29130,
+         "average_salary2": 35394,
          "average_income": 21859,
-         "average_salary": 35394
+         "er_election_2021": 37.2
       },
       "2020": {
          "population": 1217818,
@@ -3770,21 +3848,21 @@
    "95": {
       "2011": {
          "population": 50346,
-         "median_salary": 35243
+         "median_salary2": 35243
       },
       "2012": {
          "population": 50988
       },
       "2013": {
          "population": 50780,
-         "median_salary": 47997
+         "median_salary2": 47997
       },
       "2014": {
          "population": 50555
       },
       "2015": {
          "population": 50540,
-         "median_salary": 56841
+         "median_salary2": 56841
       },
       "2016": {
          "population": 50157,
@@ -3792,7 +3870,7 @@
       },
       "2017": {
          "population": 49822,
-         "median_salary": 65696,
+         "median_salary2": 65696,
          "average_income": 72672
       },
       "2018": {
@@ -3801,14 +3879,15 @@
       },
       "2019": {
          "population": 49663,
-         "median_salary": 76865,
+         "median_salary2": 76865,
          "average_income": 83909
       },
       "2021": {
          "population": 49527,
-         "median_salary": 95837,
+         "median_salary2": 95837,
+         "average_salary2": 114178,
          "average_income": 95067,
-         "average_salary": 114178
+         "er_election_2021": 46.7
       },
       "2020": {
          "population": 50288,
@@ -3818,21 +3897,21 @@
    "92": {
       "2011": {
          "population": 958258,
-         "median_salary": 23947
+         "median_salary2": 23947
       },
       "2012": {
          "population": 955859
       },
       "2013": {
          "population": 955580,
-         "median_salary": 31983
+         "median_salary2": 31983
       },
       "2014": {
          "population": 954803
       },
       "2015": {
          "population": 956896,
-         "median_salary": 39589
+         "median_salary2": 39589
       },
       "2016": {
          "population": 959689,
@@ -3840,7 +3919,7 @@
       },
       "2017": {
          "population": 962835,
-         "median_salary": 46028,
+         "median_salary2": 46028,
          "average_income": 40585
       },
       "2018": {
@@ -3849,14 +3928,15 @@
       },
       "2019": {
          "population": 967009,
-         "median_salary": 56863,
+         "median_salary2": 56863,
          "average_income": 45575
       },
       "2021": {
          "population": 981971,
-         "median_salary": 62831,
+         "median_salary2": 62831,
+         "average_salary2": 78428,
          "average_income": 44173,
-         "average_salary": 78428
+         "er_election_2021": 33.2
       },
       "2020": {
          "population": 971996,
@@ -3866,59 +3946,60 @@
    "104": {
       "2011": {
          "population": 524925,
-         "median_salary": 42583
+         "median_salary2": 42583
       },
       "2012": {
          "population": 536558
       },
       "2013": {
          "population": 541612,
-         "median_salary": 52549
+         "median_salary2": 52549
       },
       "2014": {
          "population": 539671
       },
       "2015": {
          "population": 539985,
-         "median_salary": 62732
+         "median_salary2": 62732
       },
       "2016": {
          "population": 534104
       },
       "2017": {
          "population": 536049,
-         "median_salary": 67315
+         "median_salary2": 67315
       },
       "2018": {
          "population": 538547
       },
       "2019": {
          "population": 541479,
-         "median_salary": 77542
+         "median_salary2": 77542
       },
       "2021": {
-         "median_salary": 92794,
-         "average_salary": 111598
+         "median_salary2": 92794,
+         "average_salary2": 111598,
+         "er_election_2021": 68.9
       }
    },
    "107": {
       "2011": {
          "population": 1271006,
-         "median_salary": 14394
+         "median_salary2": 14394
       },
       "2012": {
          "population": 1271030
       },
       "2013": {
          "population": 1271672,
-         "median_salary": 19324
+         "median_salary2": 19324
       },
       "2014": {
          "population": 1271766
       },
       "2015": {
          "population": 1271629,
-         "median_salary": 22932
+         "median_salary2": 22932
       },
       "2016": {
          "population": 1271912,
@@ -3926,7 +4007,7 @@
       },
       "2017": {
          "population": 1270736,
-         "median_salary": 24940,
+         "median_salary2": 24940,
          "average_income": 27145
       },
       "2018": {
@@ -3935,14 +4016,15 @@
       },
       "2019": {
          "population": 1259612,
-         "median_salary": 29987,
+         "median_salary2": 29987,
          "average_income": 28587
       },
       "2021": {
          "population": 1241424,
-         "median_salary": 34175,
+         "median_salary2": 34175,
+         "average_salary2": 41411,
          "average_income": 30900,
-         "average_salary": 41411
+         "er_election_2021": 29.7
       },
       "2020": {
          "population": 1253389,
@@ -3952,7 +4034,7 @@
    "109": {
       "2015": {
          "population": 1895915,
-         "median_salary": 16897
+         "median_salary2": 16897
       },
       "2016": {
          "population": 1907106,
@@ -3960,7 +4042,7 @@
       },
       "2017": {
          "population": 1912168,
-         "median_salary": 21124,
+         "median_salary2": 21124,
          "average_income": 19826
       },
       "2018": {
@@ -3969,14 +4051,15 @@
       },
       "2019": {
          "population": 1911818,
-         "median_salary": 25901,
+         "median_salary2": 25901,
          "average_income": 22369
       },
       "2021": {
          "population": 1901578,
-         "median_salary": 29470,
+         "median_salary2": 29470,
+         "average_salary2": 35880,
          "average_income": 24338,
-         "average_salary": 35880
+         "er_election_2021": 63.3
       },
       "2020": {
          "population": 1912622,
@@ -3986,7 +4069,7 @@
    "110": {
       "2015": {
          "population": 398973,
-         "median_salary": 16832
+         "median_salary2": 16832
       },
       "2016": {
          "population": 416263,
@@ -3994,7 +4077,7 @@
       },
       "2017": {
          "population": 428753,
-         "median_salary": 24080,
+         "median_salary2": 24080,
          "average_income": 28389
       },
       "2018": {
@@ -4003,14 +4086,15 @@
       },
       "2019": {
          "population": 443212,
-         "median_salary": 29563,
+         "median_salary2": 29563,
          "average_income": 30463
       },
       "2021": {
          "population": 509992,
-         "median_salary": 35924,
+         "median_salary2": 35924,
+         "average_salary2": 43038,
          "average_income": 27990,
-         "average_salary": 43038
+         "er_election_2021": 56.4
       },
       "2020": {
          "population": 449138,

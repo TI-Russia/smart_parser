@@ -1,6 +1,6 @@
 import declarations.models as models
 from office_db.rubrics import get_russian_rubric_str, get_all_rubric_ids
-from declarations.nominal_income import YearIncome, get_average_nominal_incomes
+from declarations.all_russia_stat_info import YearIncome, get_average_nominal_incomes
 
 from django.core.management import BaseCommand
 from itertools import groupby

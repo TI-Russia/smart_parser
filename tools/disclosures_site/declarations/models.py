@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import  get_language
 from office_db.countries import get_country_str
 from office_db.rubrics import get_russian_rubric_str
-from declarations.nominal_income import get_average_nominal_incomes, YearIncome
+from declarations.all_russia_stat_info import get_average_nominal_incomes, YearIncome
 from declarations.ratings import TPersonRatings
 from declarations.car_brands import CAR_BRANDS
 from common.urllib_parse_pro import urlsplit_pro

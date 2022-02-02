@@ -2,9 +2,9 @@ from office_db.russian_regions import TRussianRegions
 from common.primitives import normalize_whitespace
 
 
-def get_regions(inp):
+def get_regions(inp, start_after_rf_line=True):
     regions = TRussianRegions()
-    start = False
+    start = not start_after_rf_line
     used_regions = set()
     for line in inp:
         if not start:
@@ -13,7 +13,7 @@ def get_regions(inp):
             continue
         found_stop_word = False
         for stop_word in ['среднедушевые', 'рублей', '2016 год', 'i квартал', 'российская федерация',
-                          'федеральный округ',
+                          'федеральный округ', 'наименование',
                           'в том числе', ' без ', '(кроме ', 'ямало-ненецкий автономный округ', 'предварительные', 'начиная']:
             if line.lower().find(stop_word) != -1:
                 found_stop_word = True
@@ -28,6 +28,6 @@ def get_regions(inp):
             raise Exception("cannot find region {}".format(region_str))
         used_regions.add(region.id)
         yield region, cols[1:]
-    for r in regions.iterate_regions_2021():
+    for r in regions.iterate_inner_regions_without_joined():
         if r.id not in used_regions:
             raise Exception("region {}, id={} is not found in the input file".format(r.name, r.id))

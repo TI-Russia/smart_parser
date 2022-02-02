@@ -1,5 +1,5 @@
 from django.test import TestCase, tag
-from declarations.nominal_income import get_average_nominal_incomes, YearIncome
+from declarations.all_russia_stat_info import get_average_nominal_incomes, YearIncome
 
 
 class NominalIncome(TestCase):

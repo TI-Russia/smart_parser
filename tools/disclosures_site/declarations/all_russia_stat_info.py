@@ -97,3 +97,7 @@ def get_average_nominal_incomes(year_incomes):
     population_growth = get_income_diff(ROSSTAT_ALL_RUSSIA_AVERAGE_MONTH_INCOME[first_income.year],
                                         ROSSTAT_ALL_RUSSIA_AVERAGE_MONTH_INCOME[last_income.year])
     return IncomeCompare(population_growth, declarant_growth, first_income.year, last_income.year)
+
+
+def get_mrot(year: int):
+    return MROT.get(year)
