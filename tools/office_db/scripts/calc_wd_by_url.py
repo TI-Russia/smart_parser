@@ -47,52 +47,72 @@ class TWikidataRecords:
             web_domain = get_web_domain(x['website'])
             self.hostnames[web_domain].append(x)
 
+class TWikiDataMatcher:
+    def __init__(self, args):
+        self.args = args
+        self.logger = setup_logging("wd_by_url")
+        self.offices = TOfficeTableInMemory(use_office_types=False)
+        self.offices.read_from_local_file()
+        self.disclosures_hostnames = defaultdict(set)
+        self.build_office_hostnames()
 
-def get_office_hostnames(offices: TOfficeTableInMemory):
-    office: TOfficeInMemory
-    disclosures_hostnames = defaultdict(set)
-    for office in offices.offices.values():
-        site_info: TDeclarationWebSite
-        for site_info in office.office_web_sites:
-            if site_info.can_communicate():
-                disclosures_hostnames[get_web_domain(site_info.url)].add(office)
-    return disclosures_hostnames
+    def build_office_hostnames(self):
+        office: TOfficeInMemory
+        self.disclosures_hostnames = defaultdict(set)
+        for office in self.offices.offices.values():
+            site_info: TDeclarationWebSite
+            for site_info in office.office_web_sites:
+                if site_info.can_communicate():
+                    self.disclosures_hostnames[get_web_domain(site_info.url)].add(office)
 
-
-def process_offices(args, logger, offices: TOfficeTableInMemory):
-    disclosures_hostnames = get_office_hostnames(offices)
-    wd = TWikidataRecords()
-    wd.read_from_file(args.wikidata_info)
-    for hostname, wd_infos in wd.hostnames.items():
-        if len(wd_infos) > 1:
-            logger.debug("{} is ambigous in wikidata".format(hostname))
-            continue
-
-        found = disclosures_hostnames.get(hostname, list())
-        if len(found) == 0:
-            logger.debug("cannot find {} in disclosures".format(hostname))
-        elif len(found) > 1:
-            logger.debug("hostname  {} is ambiguous".format(hostname))
+    def find_wikidata_entry(self, hostname, wd_infos) -> TOfficeInMemory:
+        if len(wd_infos) == 1:
+            found = self.disclosures_hostnames.get(hostname, list())
+            if len(found) == 0:
+                self.logger.debug("cannot find {} in disclosures".format(hostname))
+            elif len(found) > 1:
+                self.logger.debug("hostname  {} is ambiguous".format(hostname))
+            else:
+                return list(found)[0], wd_infos[0]
         else:
-            wikidata_id = os.path.basename(wd_infos[0]["item"])
-            office = list(found)[0]
-            if office.wikidata_id is None:
-                office.wikidata_id = wikidata_id
-                logger.debug("set wikidata for {} to {}".format(office.name, wikidata_id))
-            elif office.wikidata_id != wikidata_id:
-                logger.error("office https://disclosures.ru/office/{} {} has  wikidata_id=https://www.wikidata.org/wiki/{}, "
-                             "but the input file has https://www.wikidata.org/wiki/{}, skip it".format(
-                    office.office_id, office.name, office.wikidata_id, wikidata_id))
+            found = self.disclosures_hostnames.get(hostname, list())
+            if len(found) == 0:
+                self.logger.debug("{} is ambiguous in wikidata, but it also useless since it cannot be found in disclosures".format(hostname))
+                return None
+            elif len(found) > 1:
+                self.logger.debug("hostname  {} is ambiguous in wikidata and in disclosures".format(hostname))
+            else:
+                office: TOfficeInMemory
+                office = list(found)[0]
+                for w in wd_infos:
+                    if w['itemLabel'].lower() == office.name.lower():
+                        return office, w
+                return None
+
+    def process_offices(self):
+        wd = TWikidataRecords()
+        wd.read_from_file(self.args.wikidata_info)
+        for hostname, wd_infos in wd.hostnames.items():
+            r = self.find_wikidata_entry(hostname, wd_infos)
+            if r is not None:
+                office, wd_info = r
+                wikidata_id = os.path.basename(wd_info["item"])
+                if office.wikidata_id is None:
+                    office.wikidata_id = wikidata_id
+                    self.logger.debug("set hostname={} office.name = {} to wikidata = https://www.wikidata.org/wiki/{} , wikidata.title={}".format(
+                        hostname, office.name, wikidata_id, wd_info["itemLabel"]))
+                elif office.wikidata_id != wikidata_id:
+                    self.logger.error("office https://disclosures.ru/office/{} {} has  wikidata_id=https://www.wikidata.org/wiki/{}, "
+                                 "but the input file has https://www.wikidata.org/wiki/{}, skip it".format(
+                        office.office_id, office.name, office.wikidata_id, wikidata_id))
 
 
 def main():
     args = parse_args()
-    logger = setup_logging("wd_by_url")
-    offices = TOfficeTableInMemory(use_office_types=False)
-    offices.read_from_local_file()
-    process_offices(args, logger, offices)
-    logger.info("write to {}".format(args.output_file))
-    offices.write_to_local_file(args.output_file)
+    m = TWikiDataMatcher(args)
+    m.process_offices()
+    m.logger.info("write to {}".format(args.output_file))
+    m.offices.write_to_local_file(args.output_file)
 
 
 if __name__ == "__main__":
