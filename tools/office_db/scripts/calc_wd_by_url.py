@@ -87,6 +87,13 @@ class TWikiDataMatcher:
                 for w in wd_infos:
                     if w['itemLabel'].lower() == office.name.lower():
                         return office, w
+                for w in wd_infos:
+                    if w['itemLabel'].lower().startswith(office.name.lower()):
+                        return office, w
+                for w in wd_infos:
+                    if office.name.lower().startswith(w['itemLabel'].lower()):
+                        return office, w
+
                 return None
 
     def process_offices(self):
