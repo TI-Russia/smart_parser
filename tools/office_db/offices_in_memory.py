@@ -9,6 +9,18 @@ import re
 from collections import defaultdict
 
 
+class TOfficeEntryCreator:
+    declarator_editor = "d"
+    wikidata_editor = "w"
+    spravochnik_editor = "sp"
+
+    @staticmethod
+    def check_editors(s):
+        return s == TOfficeEntryCreator.declarator_editor or \
+               s == TOfficeEntryCreator.wikidata_editor or \
+               s == TOfficeEntryCreator.spravochnik_editor
+
+
 class TOfficeInMemory:
 
     def __init__(self, office_id=None, name=None, parent_id=None, type_id=None, rubric_id=None, region_id=None,
@@ -35,7 +47,7 @@ class TOfficeInMemory:
         self.region_id = js['region_id']
         self.address = js.get('address')
         self.wikidata_id = js.get('wikidata_id')
-        self.source_id = js.get('source_id')
+        self.source_id = js.get('src')
         self.office_web_sites = list( TDeclarationWebSite(parent_office=self).read_from_json(x) for x in js.get('urls', list()))
         return self
 
@@ -47,7 +59,7 @@ class TOfficeInMemory:
             'type_id': self.type_id,
             'rubric_id': self.rubric_id,
             'region_id': self.region_id,
-            'source_id': self.source_id
+            'src': self.source_id
         }
         if self.address is not None:
             rec['address'] = self.address
@@ -87,6 +99,11 @@ class TOfficeInMemory:
             return ''
         id = self.wikidata_id
         return "<a href=\"https://www.wikidata.org/wiki/{}\">{}</a>".format(id, id)
+
+    def check_valid(self):
+        if self.source_id is not None:
+            if not TOfficeEntryCreator.check_editors(self.source_id):
+                raise Exception("office_id={} had bad editor={}".format(self.office_id, self.source_id))
 
 
 class TOfficeTableInMemory:
@@ -164,6 +181,8 @@ class TOfficeTableInMemory:
 
     def write_to_local_file(self, file_path):
         with open(file_path, "w") as outp:
+            for x in self.offices.values():
+                x.check_valid()
             offices = list(x.to_json() for x in self.offices.values())
             json.dump(offices, outp, indent=4, ensure_ascii=False)
 

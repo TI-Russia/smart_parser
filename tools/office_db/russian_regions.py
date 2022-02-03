@@ -17,6 +17,7 @@ class TRegion:
         self.name = None
         self.wikidata_id = None
         self.capital_coords = None
+        self.joined_to = None
         self.dative_forms = list()
 
     def from_json(self, r):
@@ -30,17 +31,19 @@ class TRegion:
         self.wikidata_id = r['wikidata_id']
         self.capital_coords = r['capital_coords']
         self.dative_forms = r.get('dative', list())
+        self.joined_to = r.get('joined_to')
         return self
 
 
 class TRussianRegions:
     Russia_as_s_whole_region_id = 2
+    Baikonur = 111
 
     def __init__(self):
         self.regions = list()
         self.max_region_id = 0
         self.region_name_to_region = dict()
-        self.region_id_to_region = dict()
+        self._region_id_to_region = dict()
         self.capitals_to_regions = dict()
         self.wikidata2region = dict()
         self.all_forms = ahocorasick.Automaton()
@@ -58,7 +61,7 @@ class TRussianRegions:
             self.max_region_id = max(self.max_region_id, r.id)
             self.region_name_to_region[r.name.lower()] = r
             self.region_name_to_region[r.short_name.lower()] = r
-            self.region_id_to_region[r.id] = r
+            self._region_id_to_region[r.id] = r
             self.wikidata2region[r.wikidata_id] = r
 
             forms = set([r.name, r.short_name])
@@ -84,49 +87,52 @@ class TRussianRegions:
         self.nominative_forms.make_automaton()
 
     def get_region_by_id(self, id: int):
-        return self.region_id_to_region[id]
+        return self._region_id_to_region[id]
 
-    def iterate_regions_2021(self):
+    def iterate_inner_regions_without_joined(self):
         for r in self.regions:
-            if r.id != TRussianRegions.Russia_as_s_whole_region_id and r.id != 102 and r.id != 104 and r.id != 108 and r.id != 111:
+            if r.id != TRussianRegions.Russia_as_s_whole_region_id and r.joined_to is None and r.id != TRussianRegions.Baikonur:
                 yield r
 
     def get_region_in_nominative(self, russian_name):
         russian_name = russian_name.lower()
+        russian_name = russian_name.replace('респ.', 'республика')
+        russian_name = russian_name.replace('сев.', 'северная')
+        russian_name = russian_name.replace('авт.', 'автономная')
         if russian_name == "территории за пределами рф":
             return None
         elif russian_name.find('якутия') != -1:
-            return self.region_id_to_region[92]
+            return self._region_id_to_region[92]
         elif russian_name.find('москва') != -1:
-            return self.region_id_to_region[63]
+            return self._region_id_to_region[63]
         elif russian_name.find('санкт-петербург') != -1:
-            return self.region_id_to_region[1]
+            return self._region_id_to_region[1]
         elif russian_name.find('севастополь') != -1:
-            return self.region_id_to_region[110]
+            return self._region_id_to_region[110]
         elif russian_name.find('ханты') != -1:
-            return self.region_id_to_region[108]
+            return self._region_id_to_region[108]
         elif russian_name.find('алания') != -1:
-            return self.region_id_to_region[17]
+            return self._region_id_to_region[17]
         elif russian_name.find(' тыв') != -1:
-            return self.region_id_to_region[85]
+            return self._region_id_to_region[85]
         elif russian_name.endswith('тыва'):
-            return self.region_id_to_region[85]
+            return self._region_id_to_region[85]
         elif russian_name.find('карачаево-') != -1:
-            return self.region_id_to_region[11]
+            return self._region_id_to_region[11]
         elif russian_name.find('северная осетия') != -1:
-            return self.region_id_to_region[17]
+            return self._region_id_to_region[17]
         elif russian_name.find('чувашская республика') != -1:
-            return self.region_id_to_region[91]
+            return self._region_id_to_region[91]
         elif russian_name.find('ямало-ненецкий авт.округ') != -1:
-            return self.region_id_to_region[104]
+            return self._region_id_to_region[104]
         elif russian_name.find('чукотский авт.округ') != -1:
-            return self.region_id_to_region[95]
+            return self._region_id_to_region[95]
         elif russian_name.find('республика адыгея') != -1:
-            return self.region_id_to_region[3]
+            return self._region_id_to_region[3]
         elif russian_name.find('татарстан') != -1:
-            return self.region_id_to_region[18]
+            return self._region_id_to_region[18]
         elif russian_name.find('кузбасс') != -1:
-            return self.region_id_to_region[50]
+            return self._region_id_to_region[50]
         return self.region_name_to_region.get(russian_name)
 
     def get_region_in_nominative_and_dative(self, russian_name):
@@ -135,7 +141,7 @@ class TRussianRegions:
         for region in self.regions:
             for region_in_dative in region.dative_forms:
                 if russian_name.endswith(region_in_dative):
-                    return self.region_id_to_region[region.id]
+                    return self._region_id_to_region[region.id]
         return self.get_region_in_nominative(russian_name)
 
     def get_region_all_forms(self, text, unknown_region=None):
