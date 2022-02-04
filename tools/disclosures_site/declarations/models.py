@@ -2,13 +2,11 @@ from django.db import models
 from django.utils.translation import  get_language
 from office_db.countries import get_country_str
 from office_db.rubrics import get_russian_rubric_str
-from declarations.all_russia_stat_info import get_average_nominal_incomes, YearIncome
+from office_db.russia import TRussia, YearIncome
 from declarations.ratings import TPersonRatings
 from declarations.car_brands import CAR_BRANDS
-from common.urllib_parse_pro import urlsplit_pro
 from declarations.corrections import SECTION_CORRECTIONS
-from office_db.offices_in_memory import TOfficeTableInMemory, TOfficeInMemory
-from office_db.declaration_office_website import TDeclarationWebSite
+from office_db.offices_in_memory import TOfficeTableInMemory
 
 from collections import defaultdict
 from operator import attrgetter
@@ -293,7 +291,7 @@ class Person(models.Model):
         incomes = list()
         for s in self.sections_ordered_by_year:
             incomes.append(YearIncome(s.income_year, s.get_declarant_income_size()))
-        return get_average_nominal_incomes(incomes)
+        return TRussia.get_average_nominal_incomes(incomes)
 
     def get_permalink_passport(self):
         if self.declarator_person_id is not None:

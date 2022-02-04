@@ -1,6 +1,6 @@
 # парсим Tab_31 из "Сведения о распределении численности работников по размерам заработной платы" от Росстата
 
-from disclosures_site.declarations.region_data import TRossStatData
+from office_db.region_data import TRossStatData
 from rosstat import get_regions
 
 

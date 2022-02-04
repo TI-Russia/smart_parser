@@ -1,0 +1,822 @@
+{
+    "1": {
+        "region_id": 1,
+        "region_name": "Санкт-Петербург",
+        "citizen_month_median_salary": 54951,
+        "population": 5398064,
+        "declarant_month_median_income": 102627,
+        "declarant_count": 11217,
+        "efficiency": 2920,
+        "er_election": 35.0
+    },
+    "3": {
+        "region_id": 3,
+        "region_name": "Республика Адыгея",
+        "citizen_month_median_salary": 26181,
+        "population": 463088,
+        "declarant_month_median_income": 57128,
+        "declarant_count": 1509,
+        "efficiency": 2877,
+        "er_election": 66.4
+    },
+    "4": {
+        "region_id": 4,
+        "region_name": "Республика Башкортостан",
+        "citizen_month_median_salary": 32705,
+        "population": 4038151,
+        "declarant_month_median_income": 63348,
+        "declarant_count": 8868,
+        "efficiency": 2277,
+        "er_election": 66.6
+    },
+    "5": {
+        "region_id": 5,
+        "region_name": "Республика Бурятия",
+        "citizen_month_median_salary": 33870,
+        "population": 985937,
+        "declarant_month_median_income": 69952,
+        "declarant_count": 2178,
+        "efficiency": 2349,
+        "er_election": 42.6
+    },
+    "6": {
+        "region_id": 6,
+        "region_name": "Республика Алтай",
+        "citizen_month_median_salary": 26902,
+        "population": 220181,
+        "declarant_month_median_income": 62264,
+        "declarant_count": 1394,
+        "efficiency": 5856,
+        "er_election": 38.5
+    },
+    "8": {
+        "region_id": 8,
+        "region_name": "Республика Ингушетия",
+        "citizen_month_median_salary": 21445,
+        "population": 507061,
+        "declarant_month_median_income": 54852,
+        "declarant_count": 1036,
+        "efficiency": 1701,
+        "er_election": 85.2
+    },
+    "9": {
+        "region_id": 9,
+        "region_name": "Кабардино-Балкарская Республика",
+        "citizen_month_median_salary": 21529,
+        "population": 868350,
+        "declarant_month_median_income": 49471,
+        "declarant_count": 1684,
+        "efficiency": 1552,
+        "er_election": 79.2
+    },
+    "11": {
+        "region_id": 11,
+        "region_name": "Карачаево-Черкесская республика",
+        "citizen_month_median_salary": 22417,
+        "population": 465528,
+        "declarant_month_median_income": 51772,
+        "declarant_count": 1231,
+        "efficiency": 2228,
+        "er_election": 80.1
+    },
+    "12": {
+        "region_id": 12,
+        "region_name": "Республика Карелия",
+        "citizen_month_median_salary": 37733,
+        "population": 614064,
+        "declarant_month_median_income": 85832,
+        "declarant_count": 2595,
+        "efficiency": 5179,
+        "er_election": 31.7
+    },
+    "13": {
+        "region_id": 13,
+        "region_name": "Республика Коми",
+        "citizen_month_median_salary": 45589,
+        "population": 820473,
+        "declarant_month_median_income": 84866,
+        "declarant_count": 2972,
+        "efficiency": 4461,
+        "er_election": 29.4
+    },
+    "17": {
+        "region_id": 17,
+        "region_name": "Республика Северная Осетия — Алания",
+        "citizen_month_median_salary": 22376,
+        "population": 696837,
+        "declarant_month_median_income": 41516,
+        "declarant_count": 2328,
+        "efficiency": 2154,
+        "er_election": 71.1
+    },
+    "18": {
+        "region_id": 18,
+        "region_name": "Республика Татарстан",
+        "citizen_month_median_salary": 33653,
+        "population": 3902888,
+        "declarant_month_median_income": 54809,
+        "declarant_count": 9233,
+        "efficiency": 2096,
+        "er_election": 79.0
+    },
+    "20": {
+        "region_id": 20,
+        "region_name": "Удмуртская республика",
+        "citizen_month_median_salary": 29914,
+        "population": 1500955,
+        "declarant_month_median_income": 49836,
+        "declarant_count": 2813,
+        "efficiency": 1480,
+        "er_election": 35.6
+    },
+    "21": {
+        "region_id": 21,
+        "region_name": "Республика Хакасия",
+        "citizen_month_median_salary": 33362,
+        "population": 534262,
+        "declarant_month_median_income": 65299,
+        "declarant_count": 1642,
+        "efficiency": 3080,
+        "er_election": 33.4
+    },
+    "24": {
+        "region_id": 24,
+        "region_name": "Алтайский край",
+        "citizen_month_median_salary": 26019,
+        "population": 2317153,
+        "declarant_month_median_income": 49159,
+        "declarant_count": 7370,
+        "efficiency": 2391,
+        "er_election": 33.7
+    },
+    "27": {
+        "region_id": 27,
+        "region_name": "Краснодарский край",
+        "citizen_month_median_salary": 31895,
+        "population": 5675462,
+        "declarant_month_median_income": 60327,
+        "declarant_count": 17130,
+        "efficiency": 2795,
+        "er_election": 61.0
+    },
+    "28": {
+        "region_id": 28,
+        "region_name": "Красноярский край",
+        "citizen_month_median_salary": 41879,
+        "population": 2866255,
+        "declarant_month_median_income": 82842,
+        "declarant_count": 10948,
+        "efficiency": 4686,
+        "er_election": 34.6
+    },
+    "29": {
+        "region_id": 29,
+        "region_name": "Пермский край",
+        "citizen_month_median_salary": 34173,
+        "population": 2599260,
+        "declarant_month_median_income": 61506,
+        "declarant_count": 9582,
+        "efficiency": 3683,
+        "er_election": 33.6
+    },
+    "32": {
+        "region_id": 32,
+        "region_name": "Хабаровский край",
+        "citizen_month_median_salary": 46706,
+        "population": 1315643,
+        "declarant_month_median_income": 101238,
+        "declarant_count": 3820,
+        "efficiency": 4250,
+        "er_election": 24.5
+    },
+    "33": {
+        "region_id": 33,
+        "region_name": "Амурская область",
+        "citizen_month_median_salary": 45266,
+        "population": 790044,
+        "declarant_month_median_income": 70343,
+        "declarant_count": 3865,
+        "efficiency": 4982,
+        "er_election": 34.3
+    },
+    "35": {
+        "region_id": 35,
+        "region_name": "Брянская область",
+        "citizen_month_median_salary": 26722,
+        "population": 1192491,
+        "declarant_month_median_income": 56396,
+        "declarant_count": 4143,
+        "efficiency": 3004,
+        "er_election": 64.3
+    },
+    "36": {
+        "region_id": 36,
+        "region_name": "Владимирская область",
+        "citizen_month_median_salary": 30642,
+        "population": 1358416,
+        "declarant_month_median_income": 60880,
+        "declarant_count": 3086,
+        "efficiency": 2077,
+        "er_election": 37.6
+    },
+    "37": {
+        "region_id": 37,
+        "region_name": "Архангельская область",
+        "citizen_month_median_salary": 44906,
+        "population": 1092424,
+        "declarant_month_median_income": 78180,
+        "declarant_count": 4798,
+        "efficiency": 5026,
+        "er_election": 32.2
+    },
+    "38": {
+        "region_id": 38,
+        "region_name": "Астраханская область",
+        "citizen_month_median_salary": 28440,
+        "population": 1005782,
+        "declarant_month_median_income": 55321,
+        "declarant_count": 2775,
+        "efficiency": 2292,
+        "er_election": 48.1
+    },
+    "41": {
+        "region_id": 41,
+        "region_name": "Волгоградская область",
+        "citizen_month_median_salary": 28777,
+        "population": 2491036,
+        "declarant_month_median_income": 53410,
+        "declarant_count": 5882,
+        "efficiency": 2061,
+        "er_election": 58.4
+    },
+    "42": {
+        "region_id": 42,
+        "region_name": "Вологодская область",
+        "citizen_month_median_salary": 35941,
+        "population": 1160445,
+        "declarant_month_median_income": 63886,
+        "declarant_count": 4566,
+        "efficiency": 3743,
+        "er_election": 34.3
+    },
+    "43": {
+        "region_id": 43,
+        "region_name": "Воронежская область",
+        "citizen_month_median_salary": 30588,
+        "population": 2324205,
+        "declarant_month_median_income": 61788,
+        "declarant_count": 5765,
+        "efficiency": 2531,
+        "er_election": 55.9
+    },
+    "44": {
+        "region_id": 44,
+        "region_name": "Забайкальский край",
+        "citizen_month_median_salary": 36504,
+        "population": 1059700,
+        "declarant_month_median_income": 66644,
+        "declarant_count": 3627,
+        "efficiency": 3524,
+        "er_election": 38.7
+    },
+    "45": {
+        "region_id": 45,
+        "region_name": "Иркутская область",
+        "citizen_month_median_salary": 41146,
+        "population": 2391193,
+        "declarant_month_median_income": 75998,
+        "declarant_count": 7052,
+        "efficiency": 3278,
+        "er_election": 35.5
+    },
+    "46": {
+        "region_id": 46,
+        "region_name": "Калининградская область",
+        "citizen_month_median_salary": 33459,
+        "population": 1012512,
+        "declarant_month_median_income": 66679,
+        "declarant_count": 3462,
+        "efficiency": 3399,
+        "er_election": 41.1
+    },
+    "47": {
+        "region_id": 47,
+        "region_name": "Республика Калмыкия",
+        "citizen_month_median_salary": 23995,
+        "population": 271135,
+        "declarant_month_median_income": 50177,
+        "declarant_count": 1647,
+        "efficiency": 5195,
+        "er_election": 39.5
+    },
+    "48": {
+        "region_id": 48,
+        "region_name": "Камчатский край",
+        "citizen_month_median_salary": 67111,
+        "population": 313016,
+        "declarant_month_median_income": 130036,
+        "declarant_count": 1994,
+        "efficiency": 11010,
+        "er_election": 34.8
+    },
+    "50": {
+        "region_id": 50,
+        "region_name": "Кемеровская область",
+        "citizen_month_median_salary": 36711,
+        "population": 2657854,
+        "declarant_month_median_income": 64056,
+        "declarant_count": 3210,
+        "efficiency": 1178,
+        "er_election": 70.7
+    },
+    "51": {
+        "region_id": 51,
+        "region_name": "Кировская область",
+        "citizen_month_median_salary": 27381,
+        "population": 1262402,
+        "declarant_month_median_income": 48091,
+        "declarant_count": 5455,
+        "efficiency": 3366,
+        "er_election": 29.5
+    },
+    "53": {
+        "region_id": 53,
+        "region_name": "Костромская область",
+        "citizen_month_median_salary": 26833,
+        "population": 633385,
+        "declarant_month_median_income": 46768,
+        "declarant_count": 2897,
+        "efficiency": 3402,
+        "er_election": 30.3
+    },
+    "55": {
+        "region_id": 55,
+        "region_name": "Курская область",
+        "citizen_month_median_salary": 29244,
+        "population": 1104008,
+        "declarant_month_median_income": 48868,
+        "declarant_count": 6992,
+        "efficiency": 4923,
+        "er_election": 43.5
+    },
+    "56": {
+        "region_id": 56,
+        "region_name": "Ленинградская область",
+        "citizen_month_median_salary": 44560,
+        "population": 1875872,
+        "declarant_month_median_income": 83841,
+        "declarant_count": 5449,
+        "efficiency": 3393,
+        "er_election": 43.1
+    },
+    "57": {
+        "region_id": 57,
+        "region_name": "Липецкая область",
+        "citizen_month_median_salary": 31038,
+        "population": 1139371,
+        "declarant_month_median_income": 59642,
+        "declarant_count": 3723,
+        "efficiency": 3003,
+        "er_election": 48.7
+    },
+    "58": {
+        "region_id": 58,
+        "region_name": "Магаданская область",
+        "citizen_month_median_salary": 75208,
+        "population": 140149,
+        "declarant_month_median_income": 124790,
+        "declarant_count": 1155,
+        "efficiency": 13973,
+        "er_election": 50.1
+    },
+    "59": {
+        "region_id": 59,
+        "region_name": "Республика Дагестан",
+        "citizen_month_median_salary": 21748,
+        "population": 3110858,
+        "declarant_month_median_income": 48968,
+        "declarant_count": 2588,
+        "efficiency": 630,
+        "er_election": 81.2
+    },
+    "61": {
+        "region_id": 61,
+        "region_name": "Республика Марий Эл",
+        "citizen_month_median_salary": 25950,
+        "population": 679417,
+        "declarant_month_median_income": 56147,
+        "declarant_count": 1620,
+        "efficiency": 2279,
+        "er_election": 33.4
+    },
+    "62": {
+        "region_id": 62,
+        "region_name": "Республика Мордовия",
+        "citizen_month_median_salary": 26395,
+        "population": 790197,
+        "declarant_month_median_income": 48486,
+        "declarant_count": 2845,
+        "efficiency": 2951,
+        "er_election": 66.0
+    },
+    "63": {
+        "region_id": 63,
+        "region_name": "Москва",
+        "citizen_month_median_salary": 70916,
+        "population": 12678079,
+        "declarant_month_median_income": 142966,
+        "declarant_count": 13859,
+        "efficiency": 2103,
+        "er_election": 37.0
+    },
+    "64": {
+        "region_id": 64,
+        "region_name": "Московская область",
+        "citizen_month_median_salary": 48208,
+        "population": 7690863,
+        "declarant_month_median_income": 96074,
+        "declarant_count": 7972,
+        "efficiency": 1404,
+        "er_election": 45.7
+    },
+    "65": {
+        "region_id": 65,
+        "region_name": "Мурманская область",
+        "citizen_month_median_salary": 54292,
+        "population": 741404,
+        "declarant_month_median_income": 101564,
+        "declarant_count": 3094,
+        "efficiency": 5836,
+        "er_election": 35.8
+    },
+    "66": {
+        "region_id": 66,
+        "region_name": "Нижегородская область",
+        "citizen_month_median_salary": 33285,
+        "population": 3202946,
+        "declarant_month_median_income": 66868,
+        "declarant_count": 9385,
+        "efficiency": 3042,
+        "er_election": 49.9
+    },
+    "67": {
+        "region_id": 67,
+        "region_name": "Новгородская область",
+        "citizen_month_median_salary": 30997,
+        "population": 596508,
+        "declarant_month_median_income": 58760,
+        "declarant_count": 2735,
+        "efficiency": 4170,
+        "er_election": 32.5
+    },
+    "68": {
+        "region_id": 68,
+        "region_name": "Новосибирская область",
+        "citizen_month_median_salary": 35217,
+        "population": 2798170,
+        "declarant_month_median_income": 63243,
+        "declarant_count": 9183,
+        "efficiency": 3287,
+        "er_election": 35.2
+    },
+    "69": {
+        "region_id": 69,
+        "region_name": "Омская область",
+        "citizen_month_median_salary": 29524,
+        "population": 1926665,
+        "declarant_month_median_income": 54807,
+        "declarant_count": 5816,
+        "efficiency": 2633,
+        "er_election": 32.9
+    },
+    "70": {
+        "region_id": 70,
+        "region_name": "Орловская область",
+        "citizen_month_median_salary": 25558,
+        "population": 733498,
+        "declarant_month_median_income": 51867,
+        "declarant_count": 2257,
+        "efficiency": 2491,
+        "er_election": 38.8
+    },
+    "72": {
+        "region_id": 72,
+        "region_name": "Пензенская область",
+        "citizen_month_median_salary": 27752,
+        "population": 1305563,
+        "declarant_month_median_income": 62324,
+        "declarant_count": 2711,
+        "efficiency": 1994,
+        "er_election": 56.2
+    },
+    "74": {
+        "region_id": 74,
+        "region_name": "Приморский край",
+        "citizen_month_median_salary": 43936,
+        "population": 1895868,
+        "declarant_month_median_income": 78003,
+        "declarant_count": 5125,
+        "efficiency": 3096,
+        "er_election": 37.4
+    },
+    "75": {
+        "region_id": 75,
+        "region_name": "Псковская область",
+        "citizen_month_median_salary": 26251,
+        "population": 626115,
+        "declarant_month_median_income": 58338,
+        "declarant_count": 2931,
+        "efficiency": 4161,
+        "er_election": 40.1
+    },
+    "76": {
+        "region_id": 76,
+        "region_name": "Ростовская область",
+        "citizen_month_median_salary": 29930,
+        "population": 4197821,
+        "declarant_month_median_income": 54583,
+        "declarant_count": 11731,
+        "efficiency": 2349,
+        "er_election": 51.6
+    },
+    "77": {
+        "region_id": 77,
+        "region_name": "Самарская область",
+        "citizen_month_median_salary": 32658,
+        "population": 3179532,
+        "declarant_month_median_income": 59291,
+        "declarant_count": 8238,
+        "efficiency": 2395,
+        "er_election": 44.3
+    },
+    "79": {
+        "region_id": 79,
+        "region_name": "Саратовская область",
+        "citizen_month_median_salary": 27134,
+        "population": 2421895,
+        "declarant_month_median_income": 66125,
+        "declarant_count": 2182,
+        "efficiency": 1021,
+        "er_election": 59.8
+    },
+    "80": {
+        "region_id": 80,
+        "region_name": "Свердловская область",
+        "citizen_month_median_salary": 37226,
+        "population": 4310681,
+        "declarant_month_median_income": 73137,
+        "declarant_count": 9285,
+        "efficiency": 2337,
+        "er_election": 34.7
+    },
+    "81": {
+        "region_id": 81,
+        "region_name": "Ставропольский край",
+        "citizen_month_median_salary": 26526,
+        "population": 2803573,
+        "declarant_month_median_income": 56221,
+        "declarant_count": 9007,
+        "efficiency": 2817,
+        "er_election": 61.8
+    },
+    "82": {
+        "region_id": 82,
+        "region_name": "Тамбовская область",
+        "citizen_month_median_salary": 26294,
+        "population": 1006748,
+        "declarant_month_median_income": 45699,
+        "declarant_count": 3903,
+        "efficiency": 2916,
+        "er_election": 56.9
+    },
+    "84": {
+        "region_id": 84,
+        "region_name": "Тульская область",
+        "citizen_month_median_salary": 34176,
+        "population": 1466127,
+        "declarant_month_median_income": 57298,
+        "declarant_count": 6016,
+        "efficiency": 3667,
+        "er_election": 52.9
+    },
+    "85": {
+        "region_id": 85,
+        "region_name": "Республика Тува (Тыва)",
+        "citizen_month_median_salary": 29823,
+        "population": 327383,
+        "declarant_month_median_income": 71439,
+        "declarant_count": 875,
+        "efficiency": 2896,
+        "er_election": 85.3
+    },
+    "86": {
+        "region_id": 86,
+        "region_name": "Тюменская область",
+        "citizen_month_median_salary": 52667,
+        "population": 3756536,
+        "declarant_month_median_income": 157465,
+        "declarant_count": 11607,
+        "efficiency": 6246,
+        "er_election": 51.3
+    },
+    "88": {
+        "region_id": 88,
+        "region_name": "Ульяновская область",
+        "citizen_month_median_salary": 27848,
+        "population": 1229824,
+        "declarant_month_median_income": 54975,
+        "declarant_count": 2963,
+        "efficiency": 2130,
+        "er_election": 39.0
+    },
+    "89": {
+        "region_id": 89,
+        "region_name": "Челябинская область",
+        "citizen_month_median_salary": 33676,
+        "population": 3466369,
+        "declarant_month_median_income": 63636,
+        "declarant_count": 7490,
+        "efficiency": 2091,
+        "er_election": 34.3
+    },
+    "90": {
+        "region_id": 90,
+        "region_name": "Чеченская республика",
+        "citizen_month_median_salary": 23668,
+        "population": 1478726,
+        "declarant_month_median_income": 53701,
+        "declarant_count": 2266,
+        "efficiency": 1294,
+        "er_election": 96.1
+    },
+    "91": {
+        "region_id": 91,
+        "region_name": "Чувашская республика - Чувашия",
+        "citizen_month_median_salary": 26599,
+        "population": 1217818,
+        "declarant_month_median_income": 39331,
+        "declarant_count": 3744,
+        "efficiency": 1919,
+        "er_election": 37.2
+    },
+    "92": {
+        "region_id": 92,
+        "region_name": "Республика Саха (Якутия)",
+        "citizen_month_median_salary": 59847,
+        "population": 971996,
+        "declarant_month_median_income": 110021,
+        "declarant_count": 3345,
+        "efficiency": 5413,
+        "er_election": 33.2
+    },
+    "93": {
+        "region_id": 93,
+        "region_name": "Еврейская автономная область",
+        "citizen_month_median_salary": 37120,
+        "population": 158305,
+        "declarant_month_median_income": 76829,
+        "declarant_count": 1051,
+        "efficiency": 7703,
+        "er_election": 56.4
+    },
+    "94": {
+        "region_id": 94,
+        "region_name": "Сахалинская область",
+        "citizen_month_median_salary": 67143,
+        "population": 488257,
+        "declarant_month_median_income": 135222,
+        "declarant_count": 2934,
+        "efficiency": 11080,
+        "er_election": 35.7
+    },
+    "95": {
+        "region_id": 95,
+        "region_name": "Чукотский автономный округ",
+        "citizen_month_median_salary": 86351,
+        "population": 50288,
+        "declarant_month_median_income": 151598,
+        "declarant_count": 473,
+        "efficiency": 18957,
+        "er_election": 46.7
+    },
+    "96": {
+        "region_id": 96,
+        "region_name": "Белгородская область",
+        "citizen_month_median_salary": 32569,
+        "population": 1549151,
+        "declarant_month_median_income": 60276,
+        "declarant_count": 6696,
+        "efficiency": 3928,
+        "er_election": 51.7
+    },
+    "97": {
+        "region_id": 97,
+        "region_name": "Калужская область",
+        "citizen_month_median_salary": 36263,
+        "population": 1002575,
+        "declarant_month_median_income": 61812,
+        "declarant_count": 3891,
+        "efficiency": 3617,
+        "er_election": 36.3
+    },
+    "98": {
+        "region_id": 98,
+        "region_name": "Курганская область",
+        "citizen_month_median_salary": 26738,
+        "population": 827166,
+        "declarant_month_median_income": 50777,
+        "declarant_count": 2711,
+        "efficiency": 2603,
+        "er_election": 36.1
+    },
+    "99": {
+        "region_id": 99,
+        "region_name": "Ивановская область",
+        "citizen_month_median_salary": 25230,
+        "population": 997135,
+        "declarant_month_median_income": 57448,
+        "declarant_count": 2725,
+        "efficiency": 2581,
+        "er_election": 36.2
+    },
+    "100": {
+        "region_id": 100,
+        "region_name": "Смоленская область",
+        "citizen_month_median_salary": 27904,
+        "population": 934889,
+        "declarant_month_median_income": 46824,
+        "declarant_count": 3632,
+        "efficiency": 3012,
+        "er_election": 39.9
+    },
+    "101": {
+        "region_id": 101,
+        "region_name": "Тверская область",
+        "citizen_month_median_salary": 30531,
+        "population": 1260379,
+        "declarant_month_median_income": 63272,
+        "declarant_count": 4278,
+        "efficiency": 3150,
+        "er_election": 35.4
+    },
+    "103": {
+        "region_id": 103,
+        "region_name": "Рязанская область",
+        "citizen_month_median_salary": 30795,
+        "population": 1108847,
+        "declarant_month_median_income": 58778,
+        "declarant_count": 4331,
+        "efficiency": 3287,
+        "er_election": 47.8
+    },
+    "105": {
+        "region_id": 105,
+        "region_name": "Оренбургская область",
+        "citizen_month_median_salary": 29682,
+        "population": 1956835,
+        "declarant_month_median_income": 57598,
+        "declarant_count": 4261,
+        "efficiency": 1997,
+        "er_election": 38.4
+    },
+    "106": {
+        "region_id": 106,
+        "region_name": "Томская область",
+        "citizen_month_median_salary": 36391,
+        "population": 1079271,
+        "declarant_month_median_income": 73244,
+        "declarant_count": 2983,
+        "efficiency": 3076,
+        "er_election": 32.7
+    },
+    "107": {
+        "region_id": 107,
+        "region_name": "Ярославская область",
+        "citizen_month_median_salary": 32081,
+        "population": 1253389,
+        "declarant_month_median_income": 52501,
+        "declarant_count": 4405,
+        "efficiency": 2702,
+        "er_election": 29.7
+    },
+    "109": {
+        "region_id": 109,
+        "region_name": "Республика Крым",
+        "citizen_month_median_salary": 27685,
+        "population": 1912622,
+        "declarant_month_median_income": 56422,
+        "declarant_count": 4651,
+        "efficiency": 2073,
+        "er_election": 63.3
+    },
+    "110": {
+        "region_id": 110,
+        "region_name": "Севастополь",
+        "citizen_month_median_salary": 32743,
+        "population": 449138,
+        "declarant_month_median_income": 64097,
+        "declarant_count": 1718,
+        "efficiency": 3676,
+        "er_election": 56.4
+    }
+}

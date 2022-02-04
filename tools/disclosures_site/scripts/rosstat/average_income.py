@@ -1,7 +1,7 @@
 #read  https://rosstat.gov.ru/folder/11109/document/13259, таблица 11-01
-from office_db.russian_regions import TRussianRegions
-from declarations.region_data import TRossStatData, TRegionYearInfo
+from office_db.region_data import TRossStatData, TRegionYearInfo
 from rosstat import get_regions
+
 
 def main():
     stat_data = TRossStatData()

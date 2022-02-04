@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Регионы России (субъекты РФ){% endblock title %}
+
+{% block serp_description %}
+<meta name="description" CONTENT="Регионы России (субъекты РФ)">
+{% endblock serp_description %}
+
+{% block content %}
+
+<table class="solid_table" id="table_to_sort">
+    <tr>
+      <th>ID</th>
+      <th>Название</th>
+      <th>Население</th>
+    </tr>
+    {% for id, name, population in region_list %}
+      <tr>
+        <td> {{ id }} </td>
+        <td>
+            <a href="/office/{{id}}"> {{ name }} </a>
+        </td>
+        <td>
+            {{population}}
+        </td>
+      </tr>
+    {% endfor %}
+</table>
+<br/>
+<br/>
+<br/>
+<script src="/static/sorttable.js"></script>
+<script>
+    var table = document.getElementById("table_to_sort");
+    table.querySelectorAll(`th`).forEach((th, position) => {{
+        th.addEventListener(`click`, evt => sortTable(position + 1));
+    }});
+</script>
+
+{% endblock content %}
+
+

@@ -1,15 +1,13 @@
 import declarations.models as models
 from office_db.russian_regions import TRussianRegions
-from declarations.region_data import TRossStatData
-from declarations.all_russia_stat_info import get_mrot
-from declarations.region_year_snapshot import TRegionYearStats, TAllRegionYearStats
+from office_db.russia import TRussia
+from office_db.region_year_snapshot import TRegionYearStats, TAllRegionYearStats
 
 from django.core.management import BaseCommand
 from itertools import groupby
 from operator import itemgetter
 from django.db import connection
 import scipy.stats
-import json
 
 
 class Command(BaseCommand):
@@ -54,7 +52,7 @@ class Command(BaseCommand):
             order by o.region_id, i.size
         """.format(year, max_income, models.Relative.main_declarant_code, minOboronyId, TRussianRegions.Russia_as_s_whole_region_id)
         regions = TRussianRegions()
-        mrot = get_mrot(year)
+        mrot = TRussia.get_mrot(year)
         assert mrot is not None
         with connection.cursor() as cursor:
             cursor.execute(query)

@@ -1,6 +1,6 @@
 import declarations.models as models
 from office_db.rubrics import get_russian_rubric_str, get_all_rubric_ids
-from declarations.all_russia_stat_info import YearIncome, get_average_nominal_incomes
+from office_db.russia import YearIncome, TRussia
 
 from django.core.management import BaseCommand
 from itertools import groupby
@@ -114,7 +114,7 @@ class Command(BaseCommand):
                     incomes = list()
                     for _, _, year, income in person_items:
                         incomes.append(YearIncome(year, income))
-                    cmp_result = get_average_nominal_incomes(incomes)
+                    cmp_result = TRussia.get_average_nominal_incomes(incomes)
                     if cmp_result is not None:
                         office_stats_for_one_year[office_id].append(cmp_result)
                         rubric_id = self.office_2_rubric.get(office_id)
@@ -138,7 +138,7 @@ class Command(BaseCommand):
                     incomes.append(YearIncome(year, median_income))
                     incomes_counts.append(r.get_declarant_count())
         if sum(incomes_counts) > 10 and len(incomes) > 1:
-            cmp_result = get_average_nominal_incomes(incomes)
+            cmp_result = TRussia.get_average_nominal_incomes(incomes)
             output_row.append(cmp_result.population_income)
             output_row.append(cmp_result.declarant_income)
 
@@ -154,7 +154,7 @@ class Command(BaseCommand):
                     if x.year == max_year or x.year == min_year:
                         r = year_stats[x.year].get(office_id)
                         x.income = r.get_month_median_income(min_count)
-                cmp_result2 = get_average_nominal_incomes(incomes)
+                cmp_result2 = TRussia.get_average_nominal_incomes(incomes)
                 output_row.append(cmp_result2.declarant_income)
 
             return True

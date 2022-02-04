@@ -9,11 +9,12 @@ from declarations.car_brands import CAR_BRANDS
 from declarations.gender_recognize import TGender
 from declarations.input_json import TIntersectionStatus
 from pylem import MorphanHolder, MorphLanguage
-from declarations.region_year_snapshot import TRegionYearStats, TAllRegionYearStats, ALL_YEAR_REGION_STATS
-
+from office_db.region_year_snapshot import TRegionYearStats
+from office_db.russia import RUSSIA
 
 from django.views import generic
 from django.views.generic.edit import FormView
+from django.views.generic.list import ListView
 from django import forms
 from datetime import datetime
 from django_elasticsearch_dsl import TextField
@@ -114,22 +115,6 @@ def fill_combo_box_with_section_years():
 def fill_document_intersection_status():
     return [("", "")] + [(s,s) for s in TIntersectionStatus.all_intersection_statuses()]
 
-CACHED_REGIONS = None
-
-
-def fill_combo_box_with_regions():
-    global CACHED_REGIONS
-    if CACHED_REGIONS is  None:
-        CACHED_REGIONS = list()
-        CACHED_REGIONS.append(('', ''))
-        for r in models.Region.objects.all():
-            name = r.name
-            if len(name) > 33:
-                name = name[:33]
-            CACHED_REGIONS.append((r.id, name))
-        CACHED_REGIONS.sort(key=operator.itemgetter(1))
-    return CACHED_REGIONS
-
 
 CACHED_CAR_BRANDS = None
 
@@ -201,7 +186,7 @@ class CommonSearchForm(forms.Form):
     region_id = forms.ChoiceField(
         required=False,
         label="Регион",
-        choices=fill_combo_box_with_regions)
+        choices=RUSSIA.sorted_region_list_for_web_interface)
     car_brands = forms.ChoiceField(
         required=False,
         label="Машина",
@@ -495,6 +480,7 @@ class CommonSearchView(FormView, generic.ListView):
                             self.person_name_corrections = list(TRussianFio.convert_from_rml_encoding(c) for c in corrections[:10])
                             self.log('person names corrections count = {}'.format(len(self.person_name_corrections)))
 
+
 class OfficeSearchView(CommonSearchView):
     model = models.Office
     template_name = 'office/index.html'
@@ -568,7 +554,7 @@ def source_doc_getter(request, sha256_and_file_extension):
 def region_report_view(year, request):
     template_name = 'reports/regions{}/index.html'.format(year)
     template = loader.get_template(template_name)
-    data = ALL_YEAR_REGION_STATS.years.get(year)
+    data = RUSSIA.year_stat.get(year)
     context = {
         'table_headers': list(zip(TRegionYearStats.get_table_headers(), TRegionYearStats.get_table_column_description())),
         'table_rows': list(i.get_table_cells() for i in data.region_data.values()),
@@ -581,9 +567,19 @@ def region_report_view(year, request):
 def region_report_csv(year, request):
     response = HttpResponse(content_type='text/csv')
     response['Content-Disposition'] = 'attachment; filename="region_report_view_{}.csv"'.format(year)
-    data = ALL_YEAR_REGION_STATS.years.get(year)
+    data = RUSSIA.year_stat.get(year)
     writer = csv.writer(response, delimiter="\t")
     writer.writerow([TRegionYearStats.get_table_headers()])
     for i in data.region_data.values():
         writer.writerow(i.get_table_cells())
     return response
+
+
+class RegionListView(ListView):
+    model = models.Region
+    template_name = 'region/index.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['region_list'] = list(RUSSIA.region_view_list_data)
+        return context

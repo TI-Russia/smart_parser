@@ -28,6 +28,9 @@ urlpatterns = [
     path('office/', views.OfficeSearchView.as_view(), name='office_search'),
     path('office/<int:pk>/', views.OfficeView.as_view(), name='office_detail'),
 
+    path('region/', views.RegionListView.as_view(), name='region_list'),
+#    path('region/<int:pk>/', views.RegionView.as_view(), name='region_detail'),
+
     path('file/<int:pk>/', views.FileView.as_view(), name='file_detail'),
     path('file/', views.FileSearchView.as_view(), name='file_search'),
     path('sourcedoc/<str:sha256_and_file_extension>', views.source_doc_getter, name='source_doc_getter'),
@@ -42,4 +45,6 @@ urlpatterns = [
     path('reports/offices/index.html', views.anyUrlView),
     path('reports/regions2020/index.html', partial(views.region_report_view, 2020)),
     path('reports/regions2020/data.csv', partial(views.region_report_csv    , 2020)),
+
+
 ]

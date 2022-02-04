@@ -4,6 +4,7 @@ import json
 import os
 import sys
 import ahocorasick
+import operator
 
 
 class TRegion:
@@ -189,9 +190,9 @@ class TRussianRegions:
 
 
 if __name__ == "__main__":
-    regions = TRussianRegions()
+    RUSSIAN_REGIONS = TRussianRegions()
     for x in sys.stdin:
-        region = regions.get_region_in_nominative_and_dative(x)
+        region = RUSSIAN_REGIONS.get_region_in_nominative_and_dative(x)
         if region is None:
             print("{} is not found".format(x.strip()))
         else:
