@@ -1,6 +1,6 @@
 import operator
 
-from office_db.region_year_snapshot import TAllRegionYearStats
+from office_db.region_year_snapshot import TAllRegionStatsForOneYear, TRegionYearStats
 from office_db.russian_regions import TRussianRegions
 
 from collections import namedtuple
@@ -89,6 +89,10 @@ RUSSIA_POPULATION = {
 2021:	146171015
 }
 
+RUSSIA_MEDIAN_SALARY = {
+    2019: 30458,
+    2020: 324222
+}
 
 IncomeCompare = namedtuple('IncomeCompare', ['population_income', 'declarant_income', 'min_year', 'max_year'])
 
@@ -105,21 +109,32 @@ class YearIncome:
     def __str__(self):
         return "YearIncome({},{})".format(self.year, self.income)
 
+
 LAST_DECLARATION_YEAR = 2020
+
 
 class TRussia:
     def __init__(self):
         self.regions = TRussianRegions()
         self.year_stat = dict()
-        self.population = max(RUSSIA_POPULATION.items(), key=operator.itemgetter(0))[1]
-
         for year in [LAST_DECLARATION_YEAR]:
-            s = TAllRegionYearStats(year, regions=self.regions)
-            s.load_from_disk()
-            s.build_correlation_matrix()
-            self.year_stat[year] = s
+            self.init_one_year_stats(year)
         self.sorted_region_list_for_web_interface = self._build_region_list_for_combo_box()
-        self.region_view_list_data = self._build_region_list_for_view_list()
+
+    def init_one_year_stats(self, year):
+        s = TAllRegionStatsForOneYear(year, regions=self.regions)
+        s.load_from_disk()
+        s.build_correlation_matrix()
+        self.year_stat[year] = s
+        if LAST_DECLARATION_YEAR == year:
+            for r in self.regions.regions:
+                if r.id == TRussianRegions.Russia_as_s_whole_region_id:
+                    last_sala = max(RUSSIA_MEDIAN_SALARY.items(), key=operator.itemgetter(0))[1]
+                    last_popul = max(RUSSIA_POPULATION.items(), key=operator.itemgetter(0))[1]
+                    r.set_stat_data(TRegionYearStats(r.id, r.name, citizen_month_median_salary=last_sala,
+                                     population=last_popul))
+                else:
+                    r.set_stat_data(s.get_region_info(r.id))
 
     #years are not continous but ordered by year
     @staticmethod
@@ -160,19 +175,5 @@ class TRussia:
             lst.append((r.id, name))
         lst.sort(key=operator.itemgetter(1))
         return lst
-
-    def _build_region_list_for_view_list(self):
-        lst = list()
-        for r in self.regions.regions:
-            lst.append((r.id, r.name, self.get_last_population(r.id)))
-        return lst
-
-    def get_last_population(self, region_id):
-        if region_id == TRussianRegions.Russia_as_s_whole_region_id:
-            return self.population
-        data = self.year_stat[LAST_DECLARATION_YEAR].get_region_info(region_id)
-        if data is not None:
-            return data.population
-        return None
 
 RUSSIA = TRussia()

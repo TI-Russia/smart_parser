@@ -4,11 +4,10 @@ import json
 import os
 import sys
 import ahocorasick
-import operator
 
 
 class TRegion:
-    def __init__(self):
+    def __init__(self, stats=None):
         self.id = None
         self.name = None
         self.short_name = None
@@ -20,6 +19,19 @@ class TRegion:
         self.capital_coords = None
         self.joined_to = None
         self.dative_forms = list()
+
+        #reference to the last known TRegionYearStats, not serialized here
+        self.stats = stats
+
+    def set_stat_data(self, stats):
+        self.stats = stats
+
+    @property
+    def wikidata_url_html(self):
+        if self.wikidata_id is None:
+            return ''
+        id = self.wikidata_id
+        return "<a href=\"https://www.wikidata.org/wiki/{}\">{}</a>".format(id, id)
 
     def from_json(self, r):
         self.id = int(r['id'])

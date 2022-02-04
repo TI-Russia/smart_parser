@@ -13,14 +13,14 @@
       <th>Название</th>
       <th>Население</th>
     </tr>
-    {% for id, name, population in region_list %}
+    {% for r in region_list %}
       <tr>
-        <td> {{ id }} </td>
+        <td> {{ r.id }} </td>
         <td>
-            <a href="/office/{{id}}"> {{ name }} </a>
+            <a href="/region/{{r.id}}"> {{ r.name }} </a>
         </td>
         <td>
-            {{population}}
+            {{r.stats.population}}
         </td>
       </tr>
     {% endfor %}

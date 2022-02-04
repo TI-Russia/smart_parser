@@ -1,7 +1,7 @@
 import declarations.models as models
 from office_db.russian_regions import TRussianRegions
 from office_db.russia import TRussia
-from office_db.region_year_snapshot import TRegionYearStats, TAllRegionYearStats
+from office_db.region_year_snapshot import TRegionYearStats, TAllRegionStatsForOneYear
 
 from django.core.management import BaseCommand
 from itertools import groupby
@@ -34,8 +34,8 @@ class Command(BaseCommand):
             dest='output_json'
         )
 
-    def build_declarant_incomes(self, year, max_income=5000000) -> TAllRegionYearStats:
-        region_data = TAllRegionYearStats(year, file_name=self.options.get('output_json'))
+    def build_declarant_incomes(self, year, max_income=5000000) -> TAllRegionStatsForOneYear:
+        region_data = TAllRegionStatsForOneYear(year, file_name=self.options.get('output_json'))
         minOboronyId = 450
         query = """
             select o.region_id, i.size

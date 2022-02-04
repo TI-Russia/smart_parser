@@ -557,7 +557,7 @@ def region_report_view(year, request):
     data = RUSSIA.year_stat.get(year)
     context = {
         'table_headers': list(zip(TRegionYearStats.get_table_headers(), TRegionYearStats.get_table_column_description())),
-        'table_rows': list(i.get_table_cells() for i in data.region_data.values()),
+        'table_rows': list(i.get_table_cells() for i in data.data_by_region.values()),
         'year': year,
         'corr_matrix': data.corr_matrix,
     }
@@ -570,16 +570,25 @@ def region_report_csv(year, request):
     data = RUSSIA.year_stat.get(year)
     writer = csv.writer(response, delimiter="\t")
     writer.writerow([TRegionYearStats.get_table_headers()])
-    for i in data.region_data.values():
+    for i in data.data_by_region.values():
         writer.writerow(i.get_table_cells())
     return response
 
 
-class RegionListView(ListView):
-    model = models.Region
+def region_list_view(request):
     template_name = 'region/index.html'
+    template = loader.get_template(template_name)
+    context = {
+        'region_list': list(RUSSIA.regions.iterate_inner_regions_without_joined())
+    }
+    return HttpResponse(template.render(context, request))
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['region_list'] = list(RUSSIA.region_view_list_data)
-        return context
+
+def region_detail_view(request, region_id):
+    template_name = 'region/detail.html'
+    template = loader.get_template(template_name)
+    context = {
+        'region': RUSSIA.regions.get_region_by_id(region_id)
+    }
+    return HttpResponse(template.render(context, request))
+

@@ -28,8 +28,8 @@ urlpatterns = [
     path('office/', views.OfficeSearchView.as_view(), name='office_search'),
     path('office/<int:pk>/', views.OfficeView.as_view(), name='office_detail'),
 
-    path('region/', views.RegionListView.as_view(), name='region_list'),
-#    path('region/<int:pk>/', views.RegionView.as_view(), name='region_detail'),
+    path('region/', views.region_list_view, name='region_list'),
+    path('region/<int:region_id>/', views.region_detail_view, name='region_detail'),
 
     path('file/<int:pk>/', views.FileView.as_view(), name='file_detail'),
     path('file/', views.FileSearchView.as_view(), name='file_search'),

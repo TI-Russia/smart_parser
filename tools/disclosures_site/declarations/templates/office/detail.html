@@ -7,7 +7,7 @@
 <table cellpadding="5px">
     <tr><td><b>ID</b>:</td><td>{{ office.id }} </td></tr>
     <tr><td><b>Название</b>:</td><td>{{ office.name }} </td></tr>
-    <tr><td><b>Регион</b>:</td><td>{{ office.region_name }} (id={{ office.region_id }}) </td></tr>
+    <tr><td><b>Регион</b>:</td><td><a href="/region/{{office.region_id}}">{{ office.region_name }} (id={{ office.region_id }})</a></td></tr>
     <tr><td><b>Рубрика</b>:</td><td>{{ office.rubric_str }} </td></tr>
 
 

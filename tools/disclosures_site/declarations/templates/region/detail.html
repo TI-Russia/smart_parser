@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ region.name }} {% endblock title %}
+
+{% block serp_description %}
+<meta name="description" CONTENT="{{ region.name }}">
+{% endblock serp_description %}
+
+{% block content %}
+
+<table cellpadding="5px">
+    <tr><td><b>ID</b>:</td><td>{{ region.id }} </td></tr>
+    <tr><td><b>Название</b>:</td><td>{{ region.name }} </td></tr>
+    <tr><td><b>Население</b>:</td><td>{{ region.stats.population }} </td></tr>
+    <tr><td><b>Медианная зарплата (прошлый год)</b>:</td><td>{{ region.stats.citizen_month_median_salary }} </td></tr>
+    <tr><td><b>Количество деклараций за прошлый год</b>:</td><td>{{ region.stats.declarant_count }} </td></tr>
+    <tr><td><b>Медианный доход чиновников по декларациям</b>:</td><td>{{ region.stats.declarant_month_median_income }} </td></tr>
+    <tr><td><b>Викидата</b>:</td><td>{{ region.wikidata_url_html|safe}} </td></tr>
+</table>
+
+
+{% endblock content %}

@@ -90,11 +90,11 @@ class TRegionYearStats:
         return r
 
 
-class TAllRegionYearStats:
+class TAllRegionStatsForOneYear:
 
     def __init__(self, year, file_name=None, regions=None):
         self.year = year
-        self.region_data = None
+        self.data_by_region = None
         if file_name is None:
             self.file_name = os.path.join(os.path.dirname(__file__), 'data/region_report_table_{}.json'.format(year))
         else:
@@ -106,28 +106,28 @@ class TAllRegionYearStats:
     def load_from_disk(self):
         with open(self.file_name) as inp:
             data = json.load(inp)
-            self.region_data = dict((int(k), TRegionYearStats.from_json(v)) for k, v in data.items())
+            self.data_by_region = dict((int(k), TRegionYearStats.from_json(v)) for k, v in data.items())
 
     def get_region_info(self, region_id) -> TRegionYearStats:
-        return self.region_data.get(int(region_id))
+        return self.data_by_region.get(int(region_id))
 
     def write_to_disk(self):
         with open(self.file_name, "w") as outp:
-            d = dict((k, v.to_json()) for k,v in self.region_data.items())
+            d = dict((k, v.to_json()) for k,v in self.data_by_region.items())
             json.dump(d, outp, indent=4, ensure_ascii=False)
 
     def add_snapshot(self, d: TRegionYearStats):
-        if d.region_id in self.region_data:
-            self.region_data[d.region_id].incomes.extend(d.incomes)
+        if d.region_id in self.data_by_region:
+            self.data_by_region[d.region_id].incomes.extend(d.incomes)
         else:
-            self.region_data[d.region_id] = d
+            self.data_by_region[d.region_id] = d
 
     def calc_aux_params(self):
-        for k, v in self.region_data.items():
+        for k, v in self.data_by_region.items():
             v.calc_aux_params()
 
     def build_correlation_matrix(self):
-        data = list(k.get_table_cells() for k in self.region_data.values())
+        data = list(k.get_table_cells() for k in self.data_by_region.values())
         cnt = len(data[0])
         corr_matrix = list([''] * (cnt+1) for i in range(0, cnt))
         for i in range(0, cnt):
