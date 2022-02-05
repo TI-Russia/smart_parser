@@ -13,6 +13,17 @@ from operator import itemgetter
 from collections import defaultdict
 
 
+# не пробовал еще запрос
+# SELECT ?item ?itemLabel
+#     WHERE
+#     {
+#       VALUES ?office { wd:Q4164871 wd:Q11204 wd:Q31728 wd:Q4481675 wd:Q4481675}
+#       ?item wdt:P31 ?office.
+#       ?item wdt:P17 wd:Q159.
+#       SERVICE wikibase:label { bd:serviceParam wikibase:language "ru". }
+#     }
+
+
 #parts of TDeclarationWebSiteList, must be declared here
 
 def add_new_websites_from_declarator(self, website_to_most_freq_office):
