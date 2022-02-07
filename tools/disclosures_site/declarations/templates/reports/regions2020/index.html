@@ -72,8 +72,26 @@
 </table>
 <br/>
 
-<a href=/reports/regions2020/data.csv> Данные в сsv-формате</a>
+<a href=/reports/offices2020/data.csv> Данные в сsv-формате</a>
 
+
+
+<table class="solid_table">
+  <tr>
+      <th>Название</th>
+      {% for th, descr in table_headers %}
+        <th><abbr title="{{descr}}">{{th}}</abbr></th>
+      {% endfor %}
+  </tr>
+    {% for row in corr_matrix %}
+        <tr>
+            {% for cell in row %}
+                <td> {{cell}} </td>
+            {% endfor %}
+        </tr>
+    {% endfor %}
+
+</table>
 
 <h2> Корреляция Спирмена для все колонок основной таблицы</h2>
 

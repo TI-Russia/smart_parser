@@ -1,6 +1,6 @@
 import declarations.models as models
 from office_db.russian_regions import TRussianRegions
-from office_db.russia import TRussia
+from office_db.russia import RUSSIA
 from office_db.region_year_snapshot import TRegionYearStats, TAllRegionStatsForOneYear
 
 from django.core.management import BaseCommand
@@ -52,7 +52,7 @@ class Command(BaseCommand):
             order by o.region_id, i.size
         """.format(year, max_income, models.Relative.main_declarant_code, minOboronyId, TRussianRegions.Russia_as_s_whole_region_id)
         regions = TRussianRegions()
-        mrot = TRussia.get_mrot(year)
+        mrot = RUSSIA.get_mrot(year)
         assert mrot is not None
         with connection.cursor() as cursor:
             cursor.execute(query)

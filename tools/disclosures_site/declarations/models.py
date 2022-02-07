@@ -2,11 +2,11 @@ from django.db import models
 from django.utils.translation import  get_language
 from office_db.countries import get_country_str
 from office_db.rubrics import get_russian_rubric_str
-from office_db.russia import TRussia, YearIncome
+from office_db.russia import RUSSIA
+from office_db.year_income import TYearIncome
 from declarations.ratings import TPersonRatings
 from declarations.car_brands import CAR_BRANDS
 from declarations.corrections import SECTION_CORRECTIONS
-from office_db.offices_in_memory import TOfficeTableInMemory
 
 from collections import defaultdict
 from operator import attrgetter
@@ -57,7 +57,6 @@ class Region_Synonyms(models.Model):
 
 
 class Office(models.Model):
-    offices_in_memory = TOfficeTableInMemory()
     name = models.TextField(verbose_name='office name')
     region = models.ForeignKey('declarations.Region', verbose_name="region", on_delete=models.CASCADE, null=True)
     type_id = models.IntegerField(null=True)
@@ -108,7 +107,7 @@ class Office(models.Model):
 
     @property
     def office_in_memory(self):
-        return Office.offices_in_memory.offices.get(self.id)
+        return RUSSIA.get_office(self.id)
 
     @property
     def parent_office_name(self):
@@ -122,13 +121,6 @@ class Office(models.Model):
             return "unknown"
         else:
             return get_russian_rubric_str(self.rubric_id)
-
-    @staticmethod
-    def static_initalize():
-        Office.offices_in_memory.read_from_local_file()
-
-
-Office.static_initalize()
 
 
 class Relative:
@@ -290,8 +282,8 @@ class Person(models.Model):
     def income_growth_yearly(self):
         incomes = list()
         for s in self.sections_ordered_by_year:
-            incomes.append(YearIncome(s.income_year, s.get_declarant_income_size()))
-        return TRussia.get_average_nominal_incomes(incomes)
+            incomes.append(TYearIncome(s.income_year, s.get_declarant_income_size()))
+        return RUSSIA.get_average_nominal_incomes(incomes)
 
     def get_permalink_passport(self):
         if self.declarator_person_id is not None:

@@ -46,5 +46,6 @@ urlpatterns = [
     path('reports/regions2020/index.html', partial(views.region_report_view, 2020)),
     path('reports/regions2020/data.csv', partial(views.region_report_csv    , 2020)),
 
+    path('reports/offices-perm/index.html', views.office_report_view),
 
 ]

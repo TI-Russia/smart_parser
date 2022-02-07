@@ -592,3 +592,13 @@ def region_detail_view(request, region_id):
     }
     return HttpResponse(template.render(context, request))
 
+
+def office_report_view(request):
+    template_name = 'reports/offices-perm/index.html'
+    template = loader.get_template(template_name)
+    data = RUSSIA.rubric_stat
+    context = {
+        'table_headers': list(zip(data.get_table_headers(), data.get_table_column_description())),
+        'table_rows': list(data.get_all_office_report_rows(RUSSIA)),
+    }
+    return HttpResponse(template.render(context, request))

@@ -6,7 +6,7 @@ from disclosures_site.predict_office.prediction_case import TPredictionCase
 from common.logging_wrapper import setup_logging
 from office_db.offices_in_memory import TOfficeInMemory
 from office_db.rubrics import TOfficeRubrics
-import declarations.models as models
+from office_db.russia import RUSSIA
 
 import os
 import json
@@ -34,7 +34,7 @@ class TOfficePredictor:
     def build_regional_tax_offices(self):
         o: TOfficeInMemory
         tax_offices = dict()
-        for o in models.Office.offices_in_memory.offices.values():
+        for o in RUSSIA.iterate_offices():
             if o.rubric_id == TOfficeRubrics.Tax:
                 tax_offices[o.region_id] = o.office_id
         assert len(tax_offices) > 0

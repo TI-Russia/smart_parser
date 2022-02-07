@@ -5,6 +5,7 @@ from office_db.rubrics import TOfficeRubrics
 from declarations.section_passport import TSectionPassportItems1,TSectionPassportItems2
 from office_db.offices_in_memory import TOfficeTableInMemory
 from common.russian_fio import TRussianFio
+from office_db.russia import RUSSIA
 import re
 
 
@@ -92,7 +93,7 @@ class TSmartParserSectionJson:
     def init_rubric(self):
         # json_reader.section.rubric_id = source_document_in_db.office.rubric_id does not work
         # may be we should call source_document_in_db.refresh_from_db
-        self.section.rubric_id = models.Office.offices_in_memory.offices[self.section.office.id].rubric_id
+        self.section.rubric_id = RUSSIA.get_office(self.section.office.id).rubric_id
 
         if self.section.rubric_id == TOfficeRubrics.Municipality and \
                 TOfficeTableInMemory.convert_municipality_to_education(self.section.position):
