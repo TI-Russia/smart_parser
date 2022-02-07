@@ -126,6 +126,9 @@ class TOfficeTableInMemory:
             office_id = parent.office_id
         return office_id
 
+    def get_office_by_id(self, office_id) -> TOfficeInMemory:
+        return self.offices.get(office_id)
+
     def get_top_parent_office_id(self, office_id):
         return self.transitive_top[int(office_id)]
 
@@ -189,6 +192,7 @@ class TOfficeTableInMemory:
     def add_office(self, office: TOfficeInMemory):
         self.offices[str(office.office_id)] = office
 
+    #may be we should delete it?
     def read_from_table(self, table):
         for o in table:
             self.offices[o.id] = TOfficeInMemory(

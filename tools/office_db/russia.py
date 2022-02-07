@@ -1,9 +1,9 @@
-import operator
-
 from office_db.region_year_snapshot import TAllRegionStatsForOneYear, TRegionYearStats
 from office_db.russian_regions import TRussianRegions
-
-from collections import namedtuple
+from office_db.offices_in_memory import TOfficeTableInMemory, TOfficeInMemory
+from office_db.declarant_group_stat_data import TGroupStatDataList
+from office_db.year_income import TYearIncome
+import operator
 
 #таблица ROSSTAT_ALL_RUSSIA_AVERAGE_MONTH_INCOME взята из https://rosstat.gov.ru/folder/210/document/13396
 #(Социально-экономические показатели Российской Федерации в 1991-2020 гг.) - это архив, из него надо взять файл "Ретро_2021_Раздел5"
@@ -91,23 +91,19 @@ RUSSIA_POPULATION = {
 
 RUSSIA_MEDIAN_SALARY = {
     2019: 30458,
-    2020: 324222
+    2020: 32422
 }
 
-IncomeCompare = namedtuple('IncomeCompare', ['population_income', 'declarant_income', 'min_year', 'max_year'])
 
+class TIncomeCompare:
+    def __init__(self, population_income_growth, declarant_income_growth, min_year, max_year):
+        self.population_income_growth = population_income_growth
+        self.declarant_income_growth = declarant_income_growth
+        self.min_year = min_year
+        self.max_year = max_year
 
-def get_income_diff(income1, income2):
-    return int(100.0 * (float(income2) - float(income1)) / float(income1))
-
-
-class YearIncome:
-    def __init__(self, year, income):
-        self.year = year
-        self.income = income
-
-    def __str__(self):
-        return "YearIncome({},{})".format(self.year, self.income)
+    def compare_to_all_people_income(self):
+        return self.declarant_income_growth / self.population_income_growth
 
 
 LAST_DECLARATION_YEAR = 2020
@@ -120,6 +116,29 @@ class TRussia:
         for year in [LAST_DECLARATION_YEAR]:
             self.init_one_year_stats(year)
         self.sorted_region_list_for_web_interface = self._build_region_list_for_combo_box()
+        self.offices_in_memory = TOfficeTableInMemory()
+        self.offices_in_memory.read_from_local_file()
+        self.federal_fsin = self.offices_in_memory.fsin_by_region[TRussianRegions.Russia_as_s_whole_region_id]
+        assert self.federal_fsin is not None
+        self.office_stat = TGroupStatDataList(TGroupStatDataList.office_group)
+        self.office_stat.load_from_disk()
+
+        self.rubric_stat = TGroupStatDataList(TGroupStatDataList.rubric_group)
+        self.rubric_stat.load_from_disk()
+
+    def get_office(self, office_id) -> TOfficeInMemory:
+        return self.offices_in_memory.get_office_by_id(office_id)
+
+    def get_fsin_by_region(self, region_id) -> TOfficeInMemory:
+        return self.offices_in_memory.fsin_by_region.get(region_id, self.federal_fsin)
+
+    def iterate_offices(self) -> TOfficeInMemory:
+        for office in self.offices_in_memory.offices.values():
+            yield office
+
+    def iterate_offices_ids(self):
+        for office_id in self.offices_in_memory.offices.keys():
+            yield office_id
 
     def init_one_year_stats(self, year):
         s = TAllRegionStatsForOneYear(year, regions=self.regions)
@@ -137,8 +156,7 @@ class TRussia:
                     r.set_stat_data(s.get_region_info(r.id))
 
     #years are not continous but ordered by year
-    @staticmethod
-    def get_average_nominal_incomes(year_incomes):
+    def get_average_nominal_incomes(self, year_incomes) -> TIncomeCompare:
         if len(year_incomes) <= 1:
             return None
         first_income = None
@@ -156,13 +174,20 @@ class TRussia:
                 last_income = year_income
         if first_income is None or first_income == last_income:
             return None
-        declarant_growth = get_income_diff(first_income.income, last_income.income)
-        population_growth = get_income_diff(ROSSTAT_ALL_RUSSIA_AVERAGE_MONTH_INCOME[first_income.year],
+        if first_income.year == last_income.year:
+            return None
+        declarant_growth = TYearIncome.get_income_diff(first_income.income, last_income.income)
+        population_growth = TYearIncome.get_income_diff(ROSSTAT_ALL_RUSSIA_AVERAGE_MONTH_INCOME[first_income.year],
                                             ROSSTAT_ALL_RUSSIA_AVERAGE_MONTH_INCOME[last_income.year])
-        return IncomeCompare(population_growth, declarant_growth, first_income.year, last_income.year)
+        return TIncomeCompare(population_growth, declarant_growth, first_income.year, last_income.year)
 
-    @staticmethod
-    def get_mrot(year: int):
+    def compare_to_all_russia_average_month_income(self, year: int, month_income):
+        i = ROSSTAT_ALL_RUSSIA_AVERAGE_MONTH_INCOME.get(year)
+        if i is None:
+            return None
+        return round(float(month_income) / float(i), 2)
+
+    def get_mrot(self, year: int):
         return MROT.get(year)
 
     def _build_region_list_for_combo_box(self):
