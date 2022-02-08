@@ -1,7 +1,9 @@
+import os.path
+
 from office_db.region_year_snapshot import TAllRegionStatsForOneYear, TRegionYearStats
 from office_db.russian_regions import TRussianRegions
 from office_db.offices_in_memory import TOfficeTableInMemory, TOfficeInMemory
-from office_db.declarant_group_stat_data import TGroupStatDataList
+from office_db.declarant_group_stat_data import TGroupStatDataList, TOfficeRubricCalculatedData
 from office_db.year_income import TYearIncome
 import operator
 
@@ -120,11 +122,8 @@ class TRussia:
         self.offices_in_memory.read_from_local_file()
         self.federal_fsin = self.offices_in_memory.fsin_by_region[TRussianRegions.Russia_as_s_whole_region_id]
         assert self.federal_fsin is not None
-        self.office_stat = TGroupStatDataList(TGroupStatDataList.office_group)
-        self.office_stat.load_from_disk()
+        self.calc_data_2020 = TOfficeRubricCalculatedData(os.path.join(os.path.dirname(__file__), "data", "office2020"))
 
-        self.rubric_stat = TGroupStatDataList(TGroupStatDataList.rubric_group)
-        self.rubric_stat.load_from_disk()
 
     def get_office(self, office_id) -> TOfficeInMemory:
         return self.offices_in_memory.get_office_by_id(office_id)

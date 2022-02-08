@@ -1,8 +1,10 @@
+import os.path
+
 from django.urls import path, re_path
 from . import views
 from django.views.generic import TemplateView
 from functools import partial
-
+from office_db.russia import RUSSIA
 
 urlpatterns = [
     path('', TemplateView.as_view(template_name="morda/index.html"), name='home_page'),
@@ -44,8 +46,8 @@ urlpatterns = [
     path('reports/new-car/index.html', views.anyUrlView),
     path('reports/offices/index.html', views.anyUrlView),
     path('reports/regions2020/index.html', partial(views.region_report_view, 2020)),
-    path('reports/regions2020/data.csv', partial(views.region_report_csv    , 2020)),
+    path('reports/regions2020/data.csv', partial(views.region_report_csv, 2020)),
 
-    path('reports/offices-perm/index.html', views.office_report_view),
-
+    path('reports/offices2020/index.html', views.office_report_2020_view),
+    path('reports/offices2020/office_stat_data.csv', partial(views.write_csv, RUSSIA.calc_data_2020.office_stats.get_csv_path())),
 ]

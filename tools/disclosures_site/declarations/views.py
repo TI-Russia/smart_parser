@@ -593,10 +593,29 @@ def region_detail_view(request, region_id):
     return HttpResponse(template.render(context, request))
 
 
-def office_report_view(request):
-    template_name = 'reports/offices-perm/index.html'
+def office_report_2020_view(request):
+    template_name = 'reports/offices2020/index.html'
     template = loader.get_template(template_name)
-    data = RUSSIA.rubric_stat
+    data = RUSSIA.calc_data_2020.rubric_stats
+    context = {
+        'table_headers': list(zip(data.get_table_headers(), data.get_table_column_description())),
+        'table_rows': list(data.get_all_office_report_rows(RUSSIA)),
+    }
+    return HttpResponse(template.render(context, request))
+
+
+def write_csv(csv_file_path, request):
+    response = HttpResponse(content_type='text/csv')
+    file_name = os.path.basename(csv_file_path)
+    response['Content-Disposition'] = 'attachment; filename="{}"'.format(file_name)
+    with open(csv_file_path) as inp:
+        response.write(inp.read())
+    return response
+
+
+    template_name = 'reports/offices2020/index.html'
+    template = loader.get_template(template_name)
+    data = RUSSIA.calc_data_2020.rubric_stats
     context = {
         'table_headers': list(zip(data.get_table_headers(), data.get_table_column_description())),
         'table_rows': list(data.get_all_office_report_rows(RUSSIA)),

@@ -35,7 +35,7 @@ source $COMMON_SCRIPT
           --output-json dlrobot_human.dbm
 
 #4  предсказание office_id
-      cd $DLROBOT_FOLDER
+    cd $DLROBOT_FOLDER
     python3 $TOOLS/disclosures_site/manage.py predict_office --dlrobot-human-path dlrobot_human.dbm
 
   #6  Копирование базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод

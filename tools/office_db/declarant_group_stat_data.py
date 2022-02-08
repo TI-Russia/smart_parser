@@ -65,21 +65,24 @@ class TGroupStatDataList:
     office_group = 1
     rubric_group = 2
 
-    def __init__(self, group_type=None, start_year=None, last_year=None):
+    def __init__(self, directory, group_type=None, start_year=None, last_year=None):
         self.declarant_groups = dict()
         self.group_type = group_type
         self.start_year = start_year
         self.last_year = last_year
         if self.group_type is  None:
             self.group_type = TGroupStatDataList.office_group
-        if  self.group_type == TGroupStatDataList.office_group:
-            self.file_path = os.path.join(os.path.dirname(__file__), "data/office_stat_data.txt")
+        if self.group_type == TGroupStatDataList.office_group:
+            self.file_path = os.path.join(directory, "office_stat_data.txt")
         else:
-            self.file_path = os.path.join(os.path.dirname(__file__), "data/rubric_stat_data.txt")
+            self.file_path = os.path.join(directory, "rubric_stat_data.txt")
+
+    def get_csv_path(self):
+        return self.file_path[:-len('.txt')] + ".csv"
 
     def write_csv_file(self, russia, filepath=None):
         if filepath is None:
-            filepath = self.file_path[:-len('.txt')] + ".csv"
+            filepath = self.get_csv_path()
         with open(filepath, "w") as outp:
             outp.write("\t".join(self.get_table_headers()) + "\n")
             for r in self.get_all_office_report_rows(russia):
@@ -194,3 +197,13 @@ class TGroupStatDataList:
             r = self.get_office_report_table_row(russia, group_id, max_cell_width=120)
             if r is not None:
                 yield r
+
+
+class TOfficeRubricCalculatedData:
+    def __init__(self, directory):
+        self.directory = directory
+        self.office_stats = TGroupStatDataList(directory, TGroupStatDataList.office_group)
+        self.office_stats.load_from_disk()
+
+        self.rubric_stats = TGroupStatDataList(directory, TGroupStatDataList.rubric_group)
+        self.rubric_stats.load_from_disk()
