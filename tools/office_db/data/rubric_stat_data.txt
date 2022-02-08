@@ -1,0 +1,370 @@
+{
+    "groups": {
+        "9": {
+            "year_snapshots": {
+                "2016": {
+                    "incomes_count": 6617,
+                    "median_year_income": 1701407
+                },
+                "2017": {
+                    "incomes_count": 6425,
+                    "median_year_income": 1685165
+                },
+                "2018": {
+                    "incomes_count": 8337,
+                    "median_year_income": 1433389
+                },
+                "2019": {
+                    "incomes_count": 6663,
+                    "median_year_income": 1764192
+                },
+                "2020": {
+                    "incomes_count": 5403,
+                    "median_year_income": 1722425
+                }
+            },
+            "V2": 1.5,
+            "V2_size": 17883
+        },
+        "8": {
+            "year_snapshots": {
+                "2016": {
+                    "incomes_count": 2607,
+                    "median_year_income": 982601
+                },
+                "2017": {
+                    "incomes_count": 2686,
+                    "median_year_income": 869209.0
+                },
+                "2018": {
+                    "incomes_count": 2471,
+                    "median_year_income": 1070537
+                },
+                "2019": {
+                    "incomes_count": 2309,
+                    "median_year_income": 1000391
+                },
+                "2020": {
+                    "incomes_count": 2666,
+                    "median_year_income": 1175157.5
+                }
+            },
+            "V2": 2.0,
+            "V2_size": 7854
+        },
+        "5": {
+            "year_snapshots": {
+                "2016": {
+                    "incomes_count": 3538,
+                    "median_year_income": 1387693.5
+                },
+                "2017": {
+                    "incomes_count": 4303,
+                    "median_year_income": 1474564
+                },
+                "2018": {
+                    "incomes_count": 3855,
+                    "median_year_income": 1489270
+                },
+                "2019": {
+                    "incomes_count": 2689,
+                    "median_year_income": 1433210
+                },
+                "2020": {
+                    "incomes_count": 2027,
+                    "median_year_income": 1368114
+                }
+            },
+            "V2": 1.75,
+            "V2_size": 8056
+        },
+        "7": {
+            "year_snapshots": {
+                "2016": {
+                    "incomes_count": 3379,
+                    "median_year_income": 1521817
+                },
+                "2017": {
+                    "incomes_count": 3519,
+                    "median_year_income": 1558642
+                },
+                "2018": {
+                    "incomes_count": 3388,
+                    "median_year_income": 1718576.5
+                },
+                "2019": {
+                    "incomes_count": 3430,
+                    "median_year_income": 2063583.5
+                },
+                "2020": {
+                    "incomes_count": 2325,
+                    "median_year_income": 2177254
+                }
+            },
+            "V2": 2.5,
+            "V2_size": 10043
+        },
+        "19": {
+            "year_snapshots": {
+                "2016": {
+                    "incomes_count": 142624,
+                    "median_year_income": 772209.5
+                },
+                "2017": {
+                    "incomes_count": 161002,
+                    "median_year_income": 765460.0
+                },
+                "2018": {
+                    "incomes_count": 163629,
+                    "median_year_income": 831632
+                },
+                "2019": {
+                    "incomes_count": 156196,
+                    "median_year_income": 913192.5
+                },
+                "2020": {
+                    "incomes_count": 119439,
+                    "median_year_income": 1033087
+                }
+            },
+            "V2": 2.0,
+            "V2_size": 395764
+        },
+        "20": {
+            "year_snapshots": {
+                "2016": {
+                    "incomes_count": 34459,
+                    "median_year_income": 731172
+                },
+                "2017": {
+                    "incomes_count": 28021,
+                    "median_year_income": 812311
+                },
+                "2018": {
+                    "incomes_count": 26325,
+                    "median_year_income": 861656
+                },
+                "2019": {
+                    "incomes_count": 25757,
+                    "median_year_income": 909631
+                },
+                "2020": {
+                    "incomes_count": 20874,
+                    "median_year_income": 978412.5
+                }
+            },
+            "V2": 1.67,
+            "V2_size": 67857
+        },
+        "4": {
+            "year_snapshots": {
+                "2016": {
+                    "incomes_count": 31408,
+                    "median_year_income": 1202113.5
+                },
+                "2017": {
+                    "incomes_count": 27559,
+                    "median_year_income": 1298070
+                },
+                "2018": {
+                    "incomes_count": 5725,
+                    "median_year_income": 1366678
+                },
+                "2019": {
+                    "incomes_count": 19659,
+                    "median_year_income": 1394932
+                },
+                "2020": {
+                    "incomes_count": 26156,
+                    "median_year_income": 1416415.0
+                }
+            },
+            "V2": 1.0,
+            "V2_size": 33553
+        },
+        "11": {
+            "year_snapshots": {
+                "2016": {
+                    "incomes_count": 4195,
+                    "median_year_income": 1294276
+                },
+                "2017": {
+                    "incomes_count": 4202,
+                    "median_year_income": 1329326.0
+                },
+                "2018": {
+                    "incomes_count": 4226,
+                    "median_year_income": 1399165.0
+                },
+                "2019": {
+                    "incomes_count": 4123,
+                    "median_year_income": 1618185
+                },
+                "2020": {
+                    "incomes_count": 3506,
+                    "median_year_income": 1692813.5
+                }
+            },
+            "V2": 2.0,
+            "V2_size": 13744
+        },
+        "10": {
+            "year_snapshots": {
+                "2016": {
+                    "incomes_count": 7353,
+                    "median_year_income": 1028484
+                },
+                "2017": {
+                    "incomes_count": 7451,
+                    "median_year_income": 1042189
+                },
+                "2018": {
+                    "incomes_count": 7084,
+                    "median_year_income": 1079304.0
+                },
+                "2019": {
+                    "incomes_count": 7078,
+                    "median_year_income": 1094093.0
+                },
+                "2020": {
+                    "incomes_count": 7008,
+                    "median_year_income": 1149621.5
+                }
+            },
+            "V2": 1.0,
+            "V2_size": 22906
+        },
+        "6": {
+            "year_snapshots": {
+                "2016": {
+                    "incomes_count": 8436,
+                    "median_year_income": 944990.5
+                },
+                "2017": {
+                    "incomes_count": 10359,
+                    "median_year_income": 979192
+                },
+                "2018": {
+                    "incomes_count": 10709,
+                    "median_year_income": 1075086
+                },
+                "2019": {
+                    "incomes_count": 8217,
+                    "median_year_income": 1285663
+                },
+                "2020": {
+                    "incomes_count": 6594,
+                    "median_year_income": 1330764.0
+                }
+            },
+            "V2": 2.25,
+            "V2_size": 23055
+        },
+        "3": {
+            "year_snapshots": {
+                "2016": {
+                    "incomes_count": 7706,
+                    "median_year_income": 1260979.0
+                },
+                "2017": {
+                    "incomes_count": 8020,
+                    "median_year_income": 1410106.5
+                },
+                "2018": {
+                    "incomes_count": 7655,
+                    "median_year_income": 1200215
+                },
+                "2019": {
+                    "incomes_count": 7713,
+                    "median_year_income": 1238361
+                },
+                "2020": {
+                    "incomes_count": 5442,
+                    "median_year_income": 1271994.0
+                }
+            },
+            "V2": 1.25,
+            "V2_size": 17241
+        },
+        "1": {
+            "year_snapshots": {
+                "2016": {
+                    "incomes_count": 46562,
+                    "median_year_income": 490224.5
+                },
+                "2017": {
+                    "incomes_count": 46798,
+                    "median_year_income": 503663.5
+                },
+                "2018": {
+                    "incomes_count": 44289,
+                    "median_year_income": 538273
+                },
+                "2019": {
+                    "incomes_count": 44860,
+                    "median_year_income": 626420.5
+                },
+                "2020": {
+                    "incomes_count": 43791,
+                    "median_year_income": 646757
+                }
+            },
+            "V2": 2.0,
+            "V2_size": 123239
+        },
+        "2": {
+            "year_snapshots": {
+                "2016": {
+                    "incomes_count": 262155,
+                    "median_year_income": 514246
+                },
+                "2017": {
+                    "incomes_count": 278822,
+                    "median_year_income": 529658.0
+                },
+                "2018": {
+                    "incomes_count": 286614,
+                    "median_year_income": 573769.5
+                },
+                "2019": {
+                    "incomes_count": 248037,
+                    "median_year_income": 632413
+                },
+                "2020": {
+                    "incomes_count": 197684,
+                    "median_year_income": 694859.5
+                }
+            },
+            "V2": 1.67,
+            "V2_size": 700626
+        },
+        "null": {
+            "year_snapshots": {
+                "2016": {
+                    "incomes_count": 96,
+                    "median_year_income": 539352.0
+                },
+                "2017": {
+                    "incomes_count": 272,
+                    "median_year_income": 425302.0
+                },
+                "2018": {
+                    "incomes_count": 151,
+                    "median_year_income": 470816
+                },
+                "2019": {
+                    "incomes_count": 25,
+                    "median_year_income": 803926
+                },
+                "2020": {
+                    "incomes_count": 148,
+                    "median_year_income": 561777.0
+                }
+            },
+            "V2": 1.33,
+            "V2_size": 221
+        }
+    },
+    "start_year": 2016,
+    "last_year": 2020
+}
