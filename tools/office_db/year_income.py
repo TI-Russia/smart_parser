@@ -1,6 +1,6 @@
 class TYearIncome:
     def __init__(self, year: int, income: int):
-        assert 2000 < year < 2030
+        assert 1989 < year < 2050
         self.year = year
         self.income = income
 

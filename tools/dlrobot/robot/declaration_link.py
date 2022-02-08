@@ -89,7 +89,10 @@ def url_features(url):
 
 
 def best_declaration_regex_match(str, from_start=True):
-    regexp = '((сведения)|(справк[аи])) о доходах'
+    # сведения о доходах
+    # справки о доходах
+    # 01. Информация о доходах судей Ростовского областного суда
+    regexp = '([0-9. ]+)?((сведения)|(справк[аи])|(информация)) о доходах'
     if from_start:
         regexp = "^" + regexp
     return len(re.findall(regexp, str))
@@ -171,6 +174,15 @@ def looks_like_a_declaration_link_without_cache(logger, link_info: TLinkInfo):
     if positive_case is None:
         if geo_leaf_word:
             positive_case = "case 6"
+
+    if positive_case is None:
+        #very special case for sudrf.ru (cannot use domain name here because of unittests)
+        #may be it should be revised
+        #http://oblsud.ros.sudrf.ru/modules.php?name=anticorruption&rid=6
+        if link_info.target_url is not None  and link_info.target_url.find('name=anticorruption') != -1 and \
+            anchor_text_russified is not None and anchor_text_russified.lower().strip().endswith('архив'):
+                positive_case = "case 7"
+                anchor_best_match = True
 
     if positive_case is not None:
         weight = TLinkInfo.MINIMAL_LINK_WEIGHT

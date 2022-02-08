@@ -176,9 +176,9 @@ class TRussia:
             return None
         if first_income.year == last_income.year:
             return None
-        declarant_growth = TYearIncome.get_income_diff(first_income.income, last_income.income)
-        population_growth = TYearIncome.get_income_diff(ROSSTAT_ALL_RUSSIA_AVERAGE_MONTH_INCOME[first_income.year],
-                                            ROSSTAT_ALL_RUSSIA_AVERAGE_MONTH_INCOME[last_income.year])
+        declarant_growth = TYearIncome.get_growth_rate(first_income.income, last_income.income)
+        population_growth = TYearIncome.get_growth_rate(ROSSTAT_ALL_RUSSIA_AVERAGE_MONTH_INCOME[first_income.year],
+                                                        ROSSTAT_ALL_RUSSIA_AVERAGE_MONTH_INCOME[last_income.year])
         return TIncomeCompare(population_growth, declarant_growth, first_income.year, last_income.year)
 
     def compare_to_all_russia_average_month_income(self, year: int, month_income):

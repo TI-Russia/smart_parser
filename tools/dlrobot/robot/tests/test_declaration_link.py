@@ -11,7 +11,7 @@ class TestDeclarationLink(TestDeclarationLinkBase):
     def tearDown(self):
         super().tearDown()
 
-    def test_page_text(self):8
+    def test_page_text(self):
         links = self.process_one_page("web_sites/page_text/sved.html")
         #self.canonize_links(links, 'web_sites/page_text/found_links')
         self.compare_to_file(links, 'web_sites/page_text/found_links')
@@ -44,3 +44,8 @@ class TestDeclarationLink(TestDeclarationLinkBase):
         links = self.process_one_page("web_sites/khabkrai/sved.html")
         #self.canonize_links(links, 'web_sites/khabkrai/found_links')
         self.compare_to_file(links, 'web_sites/khabkrai/found_links')
+
+    def test_ros_oblsud(self):
+        links = self.process_one_page("web_sites/ros.oblsud/sved.html")
+        #   self.canonize_links(links, 'web_sites/ros.oblsud/found_links')
+        self.compare_to_file(links, 'web_sites/ros.oblsud/found_links')
