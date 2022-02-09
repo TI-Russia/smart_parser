@@ -123,6 +123,7 @@ class TRussia:
         self.federal_fsin = self.offices_in_memory.fsin_by_region[TRussianRegions.Russia_as_s_whole_region_id]
         assert self.federal_fsin is not None
         self.calc_data_2020 = TOfficeRubricCalculatedData(os.path.join(os.path.dirname(__file__), "data", "office2020"))
+        self.calc_data_current = TOfficeRubricCalculatedData(os.path.join(os.path.dirname(__file__), "data", "office_current"))
 
 
     def get_office(self, office_id) -> TOfficeInMemory:

@@ -5,6 +5,7 @@ from common.russian_fio import TRussianFioRecognizer
 from common.logging_wrapper import setup_logging
 from declarations.documents import ElasticSectionDocument, ElasticPersonDocument, ElasticOfficeDocument, ElasticFileDocument
 from declarations.sql_helpers import fetch_cursor_by_chunks
+from office_db.russia import RUSSIA
 
 from itertools import groupby
 from operator import itemgetter
@@ -24,15 +25,16 @@ class TOfficeElasticIndexator:
         self.logger.debug("index web_site_snapshots")
 
     def gen_documents(self):
-        for o in models.Office.objects.all():
+        for o in RUSSIA.iterate_offices():
+            doc_cnt = RUSSIA.calc_data_current.office_stats.get_group_data(o.office_id).source_document_count
             yield {
-                "_id": o.id,
+                "_id": o.office_id,
                 "_index": self.index_name,
                 "_source": {
-                        'id': o.id,
+                        'id': o.office_id,
                         'name': o.name,
                         'parent_id': o.parent_id,
-                        'source_document_count': o.source_document_count,
+                        'source_document_count': doc_cnt,
                         'rubric_id': o.rubric_id,
                         'region_id': o.region_id
                     }

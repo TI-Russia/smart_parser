@@ -95,3 +95,18 @@ def run_with_timeout(args, timeout=20*60):
         p.kill()
 
 
+def russian_numeral_group(num, singular_nominativ, singular_genitiv, plural_genitiv):
+    if num is None:
+        return ""
+    s = str(num)
+    if len(s) == 0:
+        return ""
+    if len(s) > 1 and s[-2] == '1':       #10, 11, 12, ...,19, 110, 111...
+        return plural_genitiv
+    elif s[-1] == "1":                    #1, 21, 31, 41, 101, 121, ...201, ...
+        return singular_nominativ
+    elif s[-1] == "2" or s[-1] == "3" or s[-1] == "4":    # 2, 3, 4, 22, 23, 24, 32, 33...
+        return singular_genitiv
+    else:
+        return plural_genitiv         # 5,6,7,8,9,...,25,26,27....
+

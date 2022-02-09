@@ -10,7 +10,7 @@ class OfficeSearchTestCase(TestCase):
     @tag('front')
     def test_search_for_office(self):
         self.assertGreater(models.Office.objects.count(), 0)
-        BuildOfficeCalculatedParams(None, None).handle(None)
+        BuildOfficeCalculatedParams(None, None).handle(None, directory=".")
         BuildElasticIndex(None, None).handle(None, model="office")
 
         view = OfficeSearchView()

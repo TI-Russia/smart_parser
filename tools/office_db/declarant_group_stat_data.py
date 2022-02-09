@@ -3,35 +3,47 @@ from office_db.rubrics import get_russian_rubric_str
 
 import json
 import os
+from collections import defaultdict
 
 
 class TGroupYearSnapshot:
-    def __init__(self, median_income=None, incomes_count=None):
+    def __init__(self, median_income=None, incomes_count=None, declarants_count=None):
         self.median_year_income = median_income
         self.incomes_count = incomes_count
+        #declarants_count must be greater than incomes_count, declarants_count contains sections with less than MROT income
+        self.declarants_count = declarants_count
 
     @staticmethod
     def from_json(j):
         d = TGroupYearSnapshot()
         d.incomes_count = j.get('incomes_count')
         d.median_year_income = j.get('median_year_income')
+        d.declarants_count = j.get('declarants_count')
         return d
 
     def to_json(self):
         return {
             'incomes_count': self.incomes_count,
-            'median_year_income': self.median_year_income
+            'median_year_income': self.median_year_income,
+            'declarants_count': self.declarants_count
         }
 
 
 class TGroupStatData:
     def __init__(self):
-        self.year_snapshots = dict()
+        self.year_snapshots = defaultdict(TGroupYearSnapshot)
+        self.child_office_examples = list()
+        self.child_offices_count = None
+        self.source_document_count = None
+        self.section_count = None
         self.v2 = None
-        self.v_size = None
+        self.v2_size = None
 
-    def get_office_snapshot(self, year) -> TGroupYearSnapshot:
+    def get_year_snapshot(self, year) -> TGroupYearSnapshot:
         return self.year_snapshots.get(year)
+
+    def get_or_create_year_snapshot(self, year) -> TGroupYearSnapshot:
+        return self.year_snapshots[year]
 
     def is_empty(self):
         return len(self.year_snapshots) == 0
@@ -39,16 +51,26 @@ class TGroupStatData:
     @staticmethod
     def from_json(j):
         d = TGroupStatData()
-        d.year_snapshots = dict((int(k), TGroupYearSnapshot.from_json(v)) for k,v in j['year_snapshots'].items())
+        d.year_snapshots = defaultdict(TGroupYearSnapshot)
+        for k, v in j['year_snapshots'].items():
+            d.year_snapshots[int(k)] = TGroupYearSnapshot.from_json(v)
         d.v2 = j.get('V2')
         d.v2_size = j.get('V2_size')
+        d.child_office_examples = j.get('child_office_examples')
+        d.child_offices_count = j.get('child_offices_count')
+        d.source_document_count = j.get('source_document_count')
+        d.section_count = j.get('section_count')
         return d
 
     def to_json(self):
         return {
-            'year_snapshots': dict((k, v.to_json()) for k,v in self.year_snapshots.items()),
+            'year_snapshots': dict((k, v.to_json()) for k, v in self.year_snapshots.items()),
             'V2': self.v2,
-            'V2_size': self.v2_size
+            'V2_size': self.v2_size,
+            'child_office_examples': self.child_office_examples,
+            'child_offices_count': self.child_offices_count,
+            'source_document_count': self.source_document_count,
+            'section_count': self.section_count
         }
 
     def add_snapshot(self, year: int, snapshot: TGroupYearSnapshot):
@@ -66,7 +88,7 @@ class TGroupStatDataList:
     rubric_group = 2
 
     def __init__(self, directory, group_type=None, start_year=None, last_year=None):
-        self.declarant_groups = dict()
+        self.declarant_groups = defaultdict(TGroupStatData)
         self.group_type = group_type
         self.start_year = start_year
         self.last_year = last_year
@@ -89,7 +111,7 @@ class TGroupStatDataList:
                 outp.write("\t".join(map(str, r)) + "\n")
 
     def load_from_disk(self):
-        self.declarant_groups = dict()
+        self.declarant_groups = defaultdict(TGroupStatData)
         with open(self.file_path) as inp:
             j = json.load(inp)
             for k, v in j['groups'].items():
@@ -104,7 +126,7 @@ class TGroupStatDataList:
     def save_to_disk(self, postfix=""):
         with open(self.file_path + postfix, "w") as outp:
             d = {
-               "groups":  dict( (k, v.to_json()) for k, v in self.declarant_groups.items()),
+               "groups":  dict((k, v.to_json()) for k, v in self.declarant_groups.items()),
                'start_year': self.start_year,
                'last_year': self.last_year
             }
@@ -115,6 +137,9 @@ class TGroupStatDataList:
 
     def get_group_data(self, group_id: int) -> TGroupStatData:
         return self.declarant_groups.get(group_id)
+
+    def get_or_create_group_data(self, group_id: int) -> TGroupStatData:
+        return self.declarant_groups[group_id]
 
     def get_table_headers(self):
         l = ['Id', 'Name']
@@ -162,8 +187,8 @@ class TGroupStatDataList:
         year_count = 0
         valid_incomes = list()
         for year in range(self.start_year, self.last_year + 1):
-            d = office_info.get_office_snapshot(year)
-            if d is not None and d.incomes_count > 5:
+            d = office_info.get_year_snapshot(year)
+            if d is not None and d.incomes_count is not None and d.incomes_count > 5:
                 declarant_count += d.incomes_count
                 year_count += 1
                 output_row.append(d.median_year_income)

@@ -1,5 +1,5 @@
 from django.db import models
-from django.utils.translation import  get_language
+from django.utils.translation import get_language
 from office_db.countries import get_country_str
 from office_db.rubrics import get_russian_rubric_str
 from office_db.russia import RUSSIA
@@ -7,6 +7,7 @@ from office_db.year_income import TYearIncome
 from declarations.ratings import TPersonRatings
 from declarations.car_brands import CAR_BRANDS
 from declarations.corrections import SECTION_CORRECTIONS
+from common.primitives import russian_numeral_group
 
 from collections import defaultdict
 from operator import attrgetter
@@ -19,23 +20,6 @@ def get_django_language():
     if len(lang) > 2:
         lang = lang[:2]
     return lang
-
-
-def russian_numeral_group(num, singular_nominativ, singular_genitiv, plural_genitiv):
-    if num is None:
-        return ""
-    s = str(num)
-    if len(s) == 0:
-        return ""
-    if len(s) > 1 and s[-2] == '1':       #10, 11, 12, ...,19, 110, 111...
-        return plural_genitiv
-    elif s[-1] == "1":                    #1, 21, 31, 41, 101, 121, ...201, ...
-        return singular_nominativ
-    elif s[-1] == "2" or s[-1] == "3" or s[-1] == "4":    # 2, 3, 4, 22, 23, 24, 32, 33...
-        return singular_genitiv
-    else:
-        return plural_genitiv         # 5,6,7,8,9,...,25,26,27....
-
 
 
 class Region(models.Model):
@@ -62,65 +46,6 @@ class Office(models.Model):
     type_id = models.IntegerField(null=True)
     parent_id = models.IntegerField(null=True)
     rubric_id = models.IntegerField(null=True, default=None) # see TOfficeRubrics
-    calculated_params = models.JSONField(null=True, default=None)
-
-    @property
-    def source_document_count(self):
-        try:
-            return self.calculated_params['source_document_count']
-        except Exception as exp:
-            raise
-
-    @property
-    def region_name(self):
-        if self.region is None:
-            return ""
-
-        try:
-            return self.region.name
-        except Exception as exp:
-            raise
-
-    @property
-    def source_document_count_html(self):
-        num = self.calculated_params['source_document_count']
-        s = "{} {}".format(num, russian_numeral_group(num, "документ", "документа", "документов"))
-        return s
-
-    @property
-    def section_count_html(self):
-        num = self.calculated_params['section_count']
-        s = "{} {}".format(num, russian_numeral_group(num, "декларация", "декларации", "деклараций"))
-        return s
-
-    @property
-    def section_count_by_years_html(self):
-        data = self.calculated_params['section_count_by_years']
-        html = "<table class=\"section_by_count\"> <tr> "
-        for year in data.keys():
-            html += "<th>{}</th>".format(year)
-        html += "</tr><tr>"
-        for year, cnt in data.items():
-            html += "<td><a href=\"/section?office_id={}&income_year={}\">{}</a></td>".format(self.id, year, cnt)
-        html += "</tr></table>"
-        return html
-
-    @property
-    def office_in_memory(self):
-        return RUSSIA.get_office(self.id)
-
-    @property
-    def parent_office_name(self):
-        if self.parent_id is None:
-            return ""
-        return Office.objects.get(pk=self.parent_id).name
-
-    @property
-    def rubric_str(self):
-        if self.rubric_id is None:
-            return "unknown"
-        else:
-            return get_russian_rubric_str(self.rubric_id)
 
 
 class Relative:

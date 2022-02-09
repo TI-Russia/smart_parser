@@ -7,32 +7,32 @@
 <table cellpadding="5px">
     <tr><td><b>ID</b>:</td><td>{{ office.id }} </td></tr>
     <tr><td><b>Название</b>:</td><td>{{ office.name }} </td></tr>
-    <tr><td><b>Регион</b>:</td><td><a href="/region/{{office.region_id}}">{{ office.region_name }} (id={{ office.region_id }})</a></td></tr>
-    <tr><td><b>Рубрика</b>:</td><td>{{ office.rubric_str }} </td></tr>
+    <tr><td><b>Регион</b>:</td><td><a href="/region/{{office.region_id}}">{{ region_name }} (id={{ office.region_id }})</a></td></tr>
+    <tr><td><b>Рубрика</b>:</td><td>{{ rubric_str }} </td></tr>
 
 
     {% if office.parent_id %}
             <tr>
                 <td><b>Вышестоящая организация</b>:</td>
-                <td> <a href="/office/{{ office.parent_id }}">{{ office.parent_office_name }}</a></td>
+                <td> <a href="/office/{{ office.parent_id }}">{{ parent_office_name }}</a></td>
             </tr>
     {% endif %}
 
-    {% if office.calculated_params.child_offices_count > 0 %}
+    {% if child_offices_count > 0 %}
         <tr>
             <td valign="baseline"><b>Нижестоящие организации</b>:</td>
-            <td>{% for child_id, child_name in office.calculated_params.child_office_examples %}
+            <td>{% for child_id, child_name in child_office_examples %}
               <a href="/office/{{ child_id }}"> {{ child_name }} </a><br/>
             {% endfor %}
 
-            {% if office.calculated_params.child_offices_count > 5 %}
+            {% if child_offices_count > 5 %}
                 <a href="/office?parent_id={{office.id}}">...</a>
             {% endif %}
             </td>
         </tr>
     {% endif %}
 
-    {% with o_in_m=office.office_in_memory %}
+    {% with o_in_m=office_in_memory %}
         {% if o_in_m %}
             <tr>
                 <td><b>Вебстраницы:</b></td>
@@ -48,19 +48,45 @@
 
     <tr>
         <td><b>Исходные документы:</b></td>
-        <td><a href="/file?office_id={{office.id}}">{{office.source_document_count_html}}</a></td>
+        <td><a href="/file?office_id={{office.id}}">{{source_document_count_html}}</a></td>
     </tr>
 
     <tr>
         <td><b>Найденные декларации:</b></td>
-        <td><a href="/section?office_id={{office.id}}">{{office.section_count_html}}</a></td>
+        <td><a href="/section?office_id={{office.id}}">{{section_count_html}}</a></td>
     </tr>
 
     <tr>
         <td><b>Декларации по годам:</b></td>
-        <td>{{office.section_count_by_years_html|safe}}</td>
+        <td>{{section_count_by_years_html|safe}}</td>
     </tr>
 
+    <tr>
+        <td><b>Медианный доход по годам:</b></td>
+        <td>{{median_income_by_years_html|safe}}</td>
+    </tr>
+    <tr>
+        <td>
+             <b>Сравнение c ростом зарплат:</b>
+            <sup><a href="/compare_income_descr.html">1</a></sup>
+        </td>
+        <td>
+          <table class="solid_table">
+              <tr>
+                  <th>Мин. год</th>
+                  <th>Макс. год</th>
+                  <th>Рост доходов в этом ведомстве</th>
+                  <th>Рост доходов населения России</th>
+              </tr>
+              <tr>
+                  <td align="center">{{income_comparison.min_year}}</td>
+                  <td align="center">{{income_comparison.max_year}}</td>
+                  <td align="center">{{income_comparison.declarant_income_growth}}%</td>
+                  <td align="center">{{income_comparison.population_income_growth}}%</td>
+              </tr>
+          </table>
+        </td>
+    </tr>
 </table>
 
 {% endblock content %}

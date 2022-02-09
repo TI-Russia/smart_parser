@@ -11,6 +11,10 @@ from declarations.input_json import TIntersectionStatus
 from pylem import MorphanHolder, MorphLanguage
 from office_db.region_year_snapshot import TRegionYearStats
 from office_db.russia import RUSSIA
+from common.primitives import russian_numeral_group
+from office_db.rubrics import get_russian_rubric_str
+from office_db.year_income import TYearIncome
+
 
 from django.views import generic
 from django.views.generic.edit import FormView
@@ -24,7 +28,6 @@ import urllib
 from django.shortcuts import render
 from django.http import Http404
 from django.shortcuts import redirect
-import operator
 import logging
 import json
 from django.template import loader
@@ -67,6 +70,78 @@ class OfficeView(generic.DetailView):
     model = models.Office
     template_name = 'office/detail.html'
 
+    def get_source_doc_html(self):
+        num = self.office_stats.source_document_count
+        return "{} {}".format(num, russian_numeral_group(num, "документ", "документа", "документов"))
+
+    def section_count_html(self):
+        num = self.office_stats.section_count
+        s = "{} {}".format(num, russian_numeral_group(num, "декларация", "декларации", "деклараций"))
+        return s
+
+    def section_count_by_years_html(self):
+        data = self.office_stats.year_snapshots
+        html = "<table class=\"section_by_count\"> <tr> "
+        years = sorted(data.keys())
+        for year in years:
+            html += "<th>{}</th>".format(year)
+        html += "</tr><tr>"
+        for year in years:
+            dc = data[year].declarants_count
+            html += "<td><a href=\"/section?office_id={}&income_year={}\">{}</a></td>".format(self.office.office_id, year, dc)
+        html += "</tr></table>"
+        return html
+
+    def median_income_by_years_html(self):
+        data = self.office_stats.year_snapshots
+        years = sorted(data.keys())
+        td = ""
+        th = ""
+        incomes = list()
+        for year in years:
+            dc = data[year].median_year_income
+            if dc is not None:
+                incomes.append(TYearIncome(year, int(dc)))
+                th += "<th>{}</th>".format(year)
+                td += "<td><a href=\"/section?office_id={}&income_year={}\">{}</a></td>".format(self.office.office_id, year, int(dc))
+        html ="<table class=\"section_by_count\"> <tr> " + th + "</tr><tr>" + td + "</tr></table>"
+
+        #return RUSSIA.get_average_nominal_incomes(incomes)
+
+        return html
+
+    def comparison_to_population(self):
+        incomes = list()
+        for year, value in self.office_stats.year_snapshots.items():
+            incomes.append(TYearIncome(year, value.median_year_income))
+        incomes.sort()
+        return RUSSIA.get_average_nominal_incomes(incomes)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        office_id = self.object.id
+        self.office = RUSSIA.get_office(office_id)
+        self.office_stats = RUSSIA.calc_data_current.office_stats.get_group_data(office_id)
+        region_name = ""
+        if self.office.region_id is not None:
+            region_name = RUSSIA.regions.get_region_by_id(self.office.region_id).name
+        child_examples = list((i.id, RUSSIA.get_office(i.id).name) for i in self.office_stats.child_office_examples)
+        extra = {
+            'source_document_count':  self.office_stats.source_document_count,
+            'region_name': region_name,
+            'source_document_count_html': self.get_source_doc_html(),
+            'child_offices_count': self.office_stats.child_office_examples,
+            'section_count_html': self.section_count_html(),
+            'section_count_by_years_html': self.section_count_by_years_html(),
+            'median_income_by_years_html': self.median_income_by_years_html(),
+            'child_office_examples': child_examples,
+            'office_in_memory': self.office,
+            'parent_office_name': "" if self.office.parent_id is None else RUSSIA.get_office(self.office.parent_id).name,
+            "rubric_str": "unknown" if self.office.rubric_id is None else get_russian_rubric_str(self.office.rubric_id),
+            "income_comparison": self.comparison_to_population()
+        }
+        context.update(extra)
+        return context
 
 def anyUrlView(request):
     path = request.path
