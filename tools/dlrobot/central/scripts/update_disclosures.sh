@@ -118,6 +118,7 @@ new_permalinks_pid=$!
 
 #16 построение дополнительных параметров ведомств (calculated_params)
     python3 $TOOLS/disclosures_site/manage.py build_office_calculated_params --settings disclosures.settings.dev
+    git -C $TOOLS/office_db/office_current commit -m "new office report"
 
 #17.1 build access logs squeeze
     cd $DLROBOT_FOLDER

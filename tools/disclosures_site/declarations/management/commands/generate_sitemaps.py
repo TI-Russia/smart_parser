@@ -1,6 +1,7 @@
 from django.core.management import BaseCommand
 from common.logging_wrapper import setup_logging
 import declarations.models as models
+from office_db.russia import RUSSIA
 
 import urllib.parse
 from django.db import connection
@@ -151,6 +152,17 @@ class Command(BaseCommand):
                                                                                      len(popular_filtered)))
         self.write_sitemaps_by_chunks(sitemap_path, popular_filtered)
 
+    def build_offices_sitemap(self):
+        self.logger.info("build_offices_sitemaps")
+        sitemap_path = os.path.join(os.path.dirname(__file__), "../../../disclosures/static/sitemap-office.xml")
+        url_paths = list()
+        for o in RUSSIA.iterate_offices():
+            doc_cnt = RUSSIA.calc_data_current.office_stats.get_group_data(o.office_id).source_document_count
+            if doc_cnt is not None and doc_cnt > 10:
+                url_paths.append("office/{}".format(o.office_id))
+        self.write_sitemap(url_paths, sitemap_path, priority=0.4)
+        self.sitemaps.append(os.path.basename(sitemap_path))
+
     def build_main_sitemap(self):
         sitemap_path = os.path.join(os.path.dirname(__file__), "../../../disclosures/static/sitemap-main.xml")
         url_paths = ["",
@@ -169,9 +181,10 @@ class Command(BaseCommand):
                      "reports/new-car/index.html",
                      "reports/offices/index.html",
                      "reports/regions2020/index.html",
+                     "reports/offices2020/index.html",
                      ""]
         self.write_sitemap(url_paths, sitemap_path, priority=1.0)
-        self.sitemaps.append('sitemap-main.xml')
+        self.sitemaps.append(os.path.basename(sitemap_path))
 
     def build_sitemap_index(self):
         main_sitemap_index_path = os.path.join(os.path.dirname(__file__), "../../../disclosures/static/sitemap.xml")
@@ -196,6 +209,7 @@ class Command(BaseCommand):
                                               options['popular_site_pages_sitemap_pattern'])
         self.build_main_sitemap()
         self.build_sitemap_index()
+        self.build_offices_sitemap()
         self.tar.close()
         self.logger.info("all urls count in all sitemaps: {}".format(len(self.all_written_urls)))
 
