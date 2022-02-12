@@ -2,34 +2,59 @@
     "groups": {
         "9": {
             "year_snapshots": {
+                "2011": {
+                    "incomes_count": 2804,
+                    "median_year_income": 1158659.0,
+                    "declarants_count": null
+                },
+                "2012": {
+                    "incomes_count": 5124,
+                    "median_year_income": 1378472.5,
+                    "declarants_count": null
+                },
+                "2013": {
+                    "incomes_count": 5263,
+                    "median_year_income": 1470236,
+                    "declarants_count": null
+                },
+                "2014": {
+                    "incomes_count": 6376,
+                    "median_year_income": 1684549.5,
+                    "declarants_count": null
+                },
+                "2015": {
+                    "incomes_count": 12277,
+                    "median_year_income": 994934,
+                    "declarants_count": null
+                },
                 "2016": {
-                    "incomes_count": 6617,
-                    "median_year_income": 1701407,
+                    "incomes_count": 6768,
+                    "median_year_income": 1657333.5,
                     "declarants_count": null
                 },
                 "2017": {
-                    "incomes_count": 6425,
-                    "median_year_income": 1685165,
+                    "incomes_count": 6464,
+                    "median_year_income": 1673984.5,
                     "declarants_count": null
                 },
                 "2018": {
-                    "incomes_count": 8337,
-                    "median_year_income": 1433389,
+                    "incomes_count": 8342,
+                    "median_year_income": 1431837.0,
                     "declarants_count": null
                 },
                 "2019": {
-                    "incomes_count": 6663,
-                    "median_year_income": 1764192,
+                    "incomes_count": 6675,
+                    "median_year_income": 1765526,
                     "declarants_count": null
                 },
                 "2020": {
-                    "incomes_count": 5403,
-                    "median_year_income": 1722425,
+                    "incomes_count": 5409,
+                    "median_year_income": 1723358,
                     "declarants_count": null
                 }
             },
-            "V2": 1.5,
-            "V2_size": 17883,
+            "V2": 1.25,
+            "V2_size": 35651,
             "child_office_examples": [],
             "child_offices_count": null,
             "source_document_count": null,
@@ -37,6 +62,31 @@
         },
         "8": {
             "year_snapshots": {
+                "2011": {
+                    "incomes_count": 710,
+                    "median_year_income": 643351.0,
+                    "declarants_count": null
+                },
+                "2012": {
+                    "incomes_count": 1749,
+                    "median_year_income": 779299,
+                    "declarants_count": null
+                },
+                "2013": {
+                    "incomes_count": 1997,
+                    "median_year_income": 905916,
+                    "declarants_count": null
+                },
+                "2014": {
+                    "incomes_count": 2262,
+                    "median_year_income": 916308.0,
+                    "declarants_count": null
+                },
+                "2015": {
+                    "incomes_count": 2431,
+                    "median_year_income": 882256,
+                    "declarants_count": null
+                },
                 "2016": {
                     "incomes_count": 2607,
                     "median_year_income": 982601,
@@ -53,8 +103,8 @@
                     "declarants_count": null
                 },
                 "2019": {
-                    "incomes_count": 2309,
-                    "median_year_income": 1000391,
+                    "incomes_count": 2310,
+                    "median_year_income": 1000323.0,
                     "declarants_count": null
                 },
                 "2020": {
@@ -63,8 +113,8 @@
                     "declarants_count": null
                 }
             },
-            "V2": 2.0,
-            "V2_size": 7854,
+            "V2": 1.55,
+            "V2_size": 14420,
             "child_office_examples": [],
             "child_offices_count": null,
             "source_document_count": null,
@@ -72,34 +122,59 @@
         },
         "5": {
             "year_snapshots": {
+                "2011": {
+                    "incomes_count": 31976,
+                    "median_year_income": 402899.0,
+                    "declarants_count": null
+                },
+                "2012": {
+                    "incomes_count": 32040,
+                    "median_year_income": 400341.5,
+                    "declarants_count": null
+                },
+                "2013": {
+                    "incomes_count": 15469,
+                    "median_year_income": 769302,
+                    "declarants_count": null
+                },
+                "2014": {
+                    "incomes_count": 9126,
+                    "median_year_income": 1334688.5,
+                    "declarants_count": null
+                },
+                "2015": {
+                    "incomes_count": 3790,
+                    "median_year_income": 1583931.0,
+                    "declarants_count": null
+                },
                 "2016": {
-                    "incomes_count": 3538,
-                    "median_year_income": 1387693.5,
+                    "incomes_count": 3533,
+                    "median_year_income": 1388581,
                     "declarants_count": null
                 },
                 "2017": {
-                    "incomes_count": 4303,
-                    "median_year_income": 1474564,
+                    "incomes_count": 4307,
+                    "median_year_income": 1474422,
                     "declarants_count": null
                 },
                 "2018": {
-                    "incomes_count": 3855,
+                    "incomes_count": 3865,
                     "median_year_income": 1489270,
                     "declarants_count": null
                 },
                 "2019": {
-                    "incomes_count": 2689,
+                    "incomes_count": 2695,
                     "median_year_income": 1433210,
                     "declarants_count": null
                 },
                 "2020": {
-                    "incomes_count": 2027,
-                    "median_year_income": 1368114,
+                    "incomes_count": 2196,
+                    "median_year_income": 1270113.5,
                     "declarants_count": null
                 }
             },
-            "V2": 1.75,
-            "V2_size": 8056,
+            "V2": 1.45,
+            "V2_size": 41598,
             "child_office_examples": [],
             "child_offices_count": null,
             "source_document_count": null,
@@ -107,9 +182,34 @@
         },
         "7": {
             "year_snapshots": {
+                "2011": {
+                    "incomes_count": 3493,
+                    "median_year_income": 924102,
+                    "declarants_count": null
+                },
+                "2012": {
+                    "incomes_count": 3882,
+                    "median_year_income": 968454.5,
+                    "declarants_count": null
+                },
+                "2013": {
+                    "incomes_count": 3634,
+                    "median_year_income": 1189794.0,
+                    "declarants_count": null
+                },
+                "2014": {
+                    "incomes_count": 3348,
+                    "median_year_income": 1653948.0,
+                    "declarants_count": null
+                },
+                "2015": {
+                    "incomes_count": 3526,
+                    "median_year_income": 1487225.5,
+                    "declarants_count": null
+                },
                 "2016": {
-                    "incomes_count": 3379,
-                    "median_year_income": 1521817,
+                    "incomes_count": 3423,
+                    "median_year_income": 1513058,
                     "declarants_count": null
                 },
                 "2017": {
@@ -123,18 +223,18 @@
                     "declarants_count": null
                 },
                 "2019": {
-                    "incomes_count": 3430,
-                    "median_year_income": 2063583.5,
+                    "incomes_count": 3425,
+                    "median_year_income": 2063197,
                     "declarants_count": null
                 },
                 "2020": {
-                    "incomes_count": 2325,
-                    "median_year_income": 2177254,
+                    "incomes_count": 2608,
+                    "median_year_income": 2122659.0,
                     "declarants_count": null
                 }
             },
-            "V2": 2.5,
-            "V2_size": 10043,
+            "V2": 2.0,
+            "V2_size": 24339,
             "child_office_examples": [],
             "child_offices_count": null,
             "source_document_count": null,
@@ -142,34 +242,59 @@
         },
         "19": {
             "year_snapshots": {
+                "2011": {
+                    "incomes_count": 173410,
+                    "median_year_income": 376179.0,
+                    "declarants_count": null
+                },
+                "2012": {
+                    "incomes_count": 219294,
+                    "median_year_income": 434165.5,
+                    "declarants_count": null
+                },
+                "2013": {
+                    "incomes_count": 225717,
+                    "median_year_income": 536932,
+                    "declarants_count": null
+                },
+                "2014": {
+                    "incomes_count": 156117,
+                    "median_year_income": 714804,
+                    "declarants_count": null
+                },
+                "2015": {
+                    "incomes_count": 153402,
+                    "median_year_income": 739550.5,
+                    "declarants_count": null
+                },
                 "2016": {
-                    "incomes_count": 142624,
-                    "median_year_income": 772209.5,
+                    "incomes_count": 142687,
+                    "median_year_income": 773520,
                     "declarants_count": null
                 },
                 "2017": {
-                    "incomes_count": 161002,
-                    "median_year_income": 765460.0,
+                    "incomes_count": 161208,
+                    "median_year_income": 766782.5,
                     "declarants_count": null
                 },
                 "2018": {
-                    "incomes_count": 163629,
-                    "median_year_income": 831632,
+                    "incomes_count": 163695,
+                    "median_year_income": 833242,
                     "declarants_count": null
                 },
                 "2019": {
-                    "incomes_count": 156196,
-                    "median_year_income": 913192.5,
+                    "incomes_count": 156991,
+                    "median_year_income": 914064,
                     "declarants_count": null
                 },
                 "2020": {
-                    "incomes_count": 119439,
-                    "median_year_income": 1033087,
+                    "incomes_count": 120364,
+                    "median_year_income": 1034258.0,
                     "declarants_count": null
                 }
             },
-            "V2": 2.0,
-            "V2_size": 395764,
+            "V2": 1.4,
+            "V2_size": 908574,
             "child_office_examples": [],
             "child_offices_count": null,
             "source_document_count": null,
@@ -177,34 +302,59 @@
         },
         "20": {
             "year_snapshots": {
+                "2011": {
+                    "incomes_count": 8139,
+                    "median_year_income": 541075,
+                    "declarants_count": null
+                },
+                "2012": {
+                    "incomes_count": 15867,
+                    "median_year_income": 640234,
+                    "declarants_count": null
+                },
+                "2013": {
+                    "incomes_count": 28720,
+                    "median_year_income": 624958.5,
+                    "declarants_count": null
+                },
+                "2014": {
+                    "incomes_count": 27175,
+                    "median_year_income": 663261,
+                    "declarants_count": null
+                },
+                "2015": {
+                    "incomes_count": 25947,
+                    "median_year_income": 683166,
+                    "declarants_count": null
+                },
                 "2016": {
-                    "incomes_count": 34459,
-                    "median_year_income": 731172,
+                    "incomes_count": 34458,
+                    "median_year_income": 732233.0,
                     "declarants_count": null
                 },
                 "2017": {
-                    "incomes_count": 28021,
-                    "median_year_income": 812311,
+                    "incomes_count": 28477,
+                    "median_year_income": 818314,
                     "declarants_count": null
                 },
                 "2018": {
-                    "incomes_count": 26325,
-                    "median_year_income": 861656,
+                    "incomes_count": 27015,
+                    "median_year_income": 866528,
                     "declarants_count": null
                 },
                 "2019": {
-                    "incomes_count": 25757,
-                    "median_year_income": 909631,
+                    "incomes_count": 26400,
+                    "median_year_income": 916010.0,
                     "declarants_count": null
                 },
                 "2020": {
-                    "incomes_count": 20874,
-                    "median_year_income": 978412.5,
+                    "incomes_count": 21674,
+                    "median_year_income": 989788.0,
                     "declarants_count": null
                 }
             },
-            "V2": 1.67,
-            "V2_size": 67857,
+            "V2": 1.33,
+            "V2_size": 134047,
             "child_office_examples": [],
             "child_offices_count": null,
             "source_document_count": null,
@@ -212,14 +362,34 @@
         },
         "4": {
             "year_snapshots": {
+                "2012": {
+                    "incomes_count": 45082,
+                    "median_year_income": 966010.0,
+                    "declarants_count": null
+                },
+                "2013": {
+                    "incomes_count": 17736,
+                    "median_year_income": 1185139.5,
+                    "declarants_count": null
+                },
+                "2014": {
+                    "incomes_count": 29655,
+                    "median_year_income": 1137850,
+                    "declarants_count": null
+                },
+                "2015": {
+                    "incomes_count": 29924,
+                    "median_year_income": 1149147.5,
+                    "declarants_count": null
+                },
                 "2016": {
-                    "incomes_count": 31408,
+                    "incomes_count": 31410,
                     "median_year_income": 1202113.5,
                     "declarants_count": null
                 },
                 "2017": {
-                    "incomes_count": 27559,
-                    "median_year_income": 1298070,
+                    "incomes_count": 27562,
+                    "median_year_income": 1297959.0,
                     "declarants_count": null
                 },
                 "2018": {
@@ -228,18 +398,18 @@
                     "declarants_count": null
                 },
                 "2019": {
-                    "incomes_count": 19659,
-                    "median_year_income": 1394932,
+                    "incomes_count": 19663,
+                    "median_year_income": 1394561,
                     "declarants_count": null
                 },
                 "2020": {
-                    "incomes_count": 26156,
-                    "median_year_income": 1416415.0,
+                    "incomes_count": 26163,
+                    "median_year_income": 1416383,
                     "declarants_count": null
                 }
             },
-            "V2": 1.0,
-            "V2_size": 33553,
+            "V2": 0.67,
+            "V2_size": 73262,
             "child_office_examples": [],
             "child_offices_count": null,
             "source_document_count": null,
@@ -247,34 +417,59 @@
         },
         "11": {
             "year_snapshots": {
+                "2011": {
+                    "incomes_count": 107163,
+                    "median_year_income": 345999,
+                    "declarants_count": null
+                },
+                "2012": {
+                    "incomes_count": 101582,
+                    "median_year_income": 367948.5,
+                    "declarants_count": null
+                },
+                "2013": {
+                    "incomes_count": 101266,
+                    "median_year_income": 422675.5,
+                    "declarants_count": null
+                },
+                "2014": {
+                    "incomes_count": 115945,
+                    "median_year_income": 482609,
+                    "declarants_count": null
+                },
+                "2015": {
+                    "incomes_count": 3734,
+                    "median_year_income": 1125002.5,
+                    "declarants_count": null
+                },
                 "2016": {
-                    "incomes_count": 4195,
-                    "median_year_income": 1294276,
+                    "incomes_count": 4196,
+                    "median_year_income": 1294518.0,
                     "declarants_count": null
                 },
                 "2017": {
-                    "incomes_count": 4202,
-                    "median_year_income": 1329326.0,
+                    "incomes_count": 4203,
+                    "median_year_income": 1329452,
                     "declarants_count": null
                 },
                 "2018": {
-                    "incomes_count": 4226,
-                    "median_year_income": 1399165.0,
+                    "incomes_count": 4228,
+                    "median_year_income": 1399842.5,
                     "declarants_count": null
                 },
                 "2019": {
-                    "incomes_count": 4123,
+                    "incomes_count": 4125,
                     "median_year_income": 1618185,
                     "declarants_count": null
                 },
                 "2020": {
-                    "incomes_count": 3506,
+                    "incomes_count": 3508,
                     "median_year_income": 1692813.5,
                     "declarants_count": null
                 }
             },
-            "V2": 2.0,
-            "V2_size": 13744,
+            "V2": 1.6,
+            "V2_size": 243287,
             "child_office_examples": [],
             "child_offices_count": null,
             "source_document_count": null,
@@ -282,9 +477,34 @@
         },
         "10": {
             "year_snapshots": {
+                "2011": {
+                    "incomes_count": 71078,
+                    "median_year_income": 356049.5,
+                    "declarants_count": null
+                },
+                "2012": {
+                    "incomes_count": 83727,
+                    "median_year_income": 387654,
+                    "declarants_count": null
+                },
+                "2013": {
+                    "incomes_count": 16305,
+                    "median_year_income": 803114,
+                    "declarants_count": null
+                },
+                "2014": {
+                    "incomes_count": 7635,
+                    "median_year_income": 1107139,
+                    "declarants_count": null
+                },
+                "2015": {
+                    "incomes_count": 7618,
+                    "median_year_income": 996288.0,
+                    "declarants_count": null
+                },
                 "2016": {
-                    "incomes_count": 7353,
-                    "median_year_income": 1028484,
+                    "incomes_count": 7354,
+                    "median_year_income": 1028369.0,
                     "declarants_count": null
                 },
                 "2017": {
@@ -298,18 +518,18 @@
                     "declarants_count": null
                 },
                 "2019": {
-                    "incomes_count": 7078,
-                    "median_year_income": 1094093.0,
+                    "incomes_count": 7079,
+                    "median_year_income": 1094225,
                     "declarants_count": null
                 },
                 "2020": {
-                    "incomes_count": 7008,
-                    "median_year_income": 1149621.5,
+                    "incomes_count": 7010,
+                    "median_year_income": 1149812.5,
                     "declarants_count": null
                 }
             },
-            "V2": 1.0,
-            "V2_size": 22906,
+            "V2": 1.09,
+            "V2_size": 90675,
             "child_office_examples": [],
             "child_offices_count": null,
             "source_document_count": null,
@@ -317,34 +537,59 @@
         },
         "6": {
             "year_snapshots": {
+                "2011": {
+                    "incomes_count": 2348,
+                    "median_year_income": 439395.0,
+                    "declarants_count": null
+                },
+                "2012": {
+                    "incomes_count": 3889,
+                    "median_year_income": 691235,
+                    "declarants_count": null
+                },
+                "2013": {
+                    "incomes_count": 6588,
+                    "median_year_income": 787496.5,
+                    "declarants_count": null
+                },
+                "2014": {
+                    "incomes_count": 6730,
+                    "median_year_income": 972840.0,
+                    "declarants_count": null
+                },
+                "2015": {
+                    "incomes_count": 7925,
+                    "median_year_income": 853530,
+                    "declarants_count": null
+                },
                 "2016": {
-                    "incomes_count": 8436,
-                    "median_year_income": 944990.5,
+                    "incomes_count": 8535,
+                    "median_year_income": 938856,
                     "declarants_count": null
                 },
                 "2017": {
-                    "incomes_count": 10359,
-                    "median_year_income": 979192,
+                    "incomes_count": 10362,
+                    "median_year_income": 979173.5,
                     "declarants_count": null
                 },
                 "2018": {
-                    "incomes_count": 10709,
-                    "median_year_income": 1075086,
+                    "incomes_count": 10714,
+                    "median_year_income": 1075086.0,
                     "declarants_count": null
                 },
                 "2019": {
-                    "incomes_count": 8217,
-                    "median_year_income": 1285663,
+                    "incomes_count": 8299,
+                    "median_year_income": 1279360,
                     "declarants_count": null
                 },
                 "2020": {
-                    "incomes_count": 6594,
-                    "median_year_income": 1330764.0,
+                    "incomes_count": 6588,
+                    "median_year_income": 1332964.5,
                     "declarants_count": null
                 }
             },
-            "V2": 2.25,
-            "V2_size": 23055,
+            "V2": 1.55,
+            "V2_size": 39180,
             "child_office_examples": [],
             "child_offices_count": null,
             "source_document_count": null,
@@ -352,34 +597,59 @@
         },
         "3": {
             "year_snapshots": {
+                "2011": {
+                    "incomes_count": 812,
+                    "median_year_income": 543257.0,
+                    "declarants_count": null
+                },
+                "2012": {
+                    "incomes_count": 2999,
+                    "median_year_income": 668322,
+                    "declarants_count": null
+                },
+                "2013": {
+                    "incomes_count": 5545,
+                    "median_year_income": 1299062,
+                    "declarants_count": null
+                },
+                "2014": {
+                    "incomes_count": 5842,
+                    "median_year_income": 1262393.0,
+                    "declarants_count": null
+                },
+                "2015": {
+                    "incomes_count": 5363,
+                    "median_year_income": 1149404,
+                    "declarants_count": null
+                },
                 "2016": {
-                    "incomes_count": 7706,
-                    "median_year_income": 1260979.0,
+                    "incomes_count": 7707,
+                    "median_year_income": 1261037,
                     "declarants_count": null
                 },
                 "2017": {
-                    "incomes_count": 8020,
-                    "median_year_income": 1410106.5,
+                    "incomes_count": 8022,
+                    "median_year_income": 1409800.0,
                     "declarants_count": null
                 },
                 "2018": {
-                    "incomes_count": 7655,
-                    "median_year_income": 1200215,
+                    "incomes_count": 7657,
+                    "median_year_income": 1200000,
                     "declarants_count": null
                 },
                 "2019": {
-                    "incomes_count": 7713,
-                    "median_year_income": 1238361,
+                    "incomes_count": 7714,
+                    "median_year_income": 1237935.5,
                     "declarants_count": null
                 },
                 "2020": {
-                    "incomes_count": 5442,
-                    "median_year_income": 1271994.0,
+                    "incomes_count": 5428,
+                    "median_year_income": 1278988.5,
                     "declarants_count": null
                 }
             },
-            "V2": 1.25,
-            "V2_size": 17241,
+            "V2": 1.0,
+            "V2_size": 28296,
             "child_office_examples": [],
             "child_offices_count": null,
             "source_document_count": null,
@@ -387,34 +657,59 @@
         },
         "1": {
             "year_snapshots": {
+                "2011": {
+                    "incomes_count": 20666,
+                    "median_year_income": 353997.5,
+                    "declarants_count": null
+                },
+                "2012": {
+                    "incomes_count": 30242,
+                    "median_year_income": 359439.0,
+                    "declarants_count": null
+                },
+                "2013": {
+                    "incomes_count": 36844,
+                    "median_year_income": 380001.0,
+                    "declarants_count": null
+                },
+                "2014": {
+                    "incomes_count": 40962,
+                    "median_year_income": 434781.0,
+                    "declarants_count": null
+                },
+                "2015": {
+                    "incomes_count": 46993,
+                    "median_year_income": 448021,
+                    "declarants_count": null
+                },
                 "2016": {
-                    "incomes_count": 46562,
-                    "median_year_income": 490224.5,
+                    "incomes_count": 50498,
+                    "median_year_income": 485865.5,
                     "declarants_count": null
                 },
                 "2017": {
-                    "incomes_count": 46798,
-                    "median_year_income": 503663.5,
+                    "incomes_count": 51406,
+                    "median_year_income": 497283.0,
                     "declarants_count": null
                 },
                 "2018": {
-                    "incomes_count": 44289,
-                    "median_year_income": 538273,
+                    "incomes_count": 46940,
+                    "median_year_income": 536007.0,
                     "declarants_count": null
                 },
                 "2019": {
-                    "incomes_count": 44860,
-                    "median_year_income": 626420.5,
+                    "incomes_count": 47458,
+                    "median_year_income": 625295.0,
                     "declarants_count": null
                 },
                 "2020": {
-                    "incomes_count": 43791,
-                    "median_year_income": 646757,
+                    "incomes_count": 48083,
+                    "median_year_income": 643232,
                     "declarants_count": null
                 }
             },
             "V2": 2.0,
-            "V2_size": 123239,
+            "V2_size": 219053,
             "child_office_examples": [],
             "child_offices_count": null,
             "source_document_count": null,
@@ -422,34 +717,59 @@
         },
         "2": {
             "year_snapshots": {
+                "2011": {
+                    "incomes_count": 49305,
+                    "median_year_income": 342387,
+                    "declarants_count": null
+                },
+                "2012": {
+                    "incomes_count": 137757,
+                    "median_year_income": 399293,
+                    "declarants_count": null
+                },
+                "2013": {
+                    "incomes_count": 174849,
+                    "median_year_income": 440859,
+                    "declarants_count": null
+                },
+                "2014": {
+                    "incomes_count": 195802,
+                    "median_year_income": 489180.0,
+                    "declarants_count": null
+                },
+                "2015": {
+                    "incomes_count": 249850,
+                    "median_year_income": 494043.0,
+                    "declarants_count": null
+                },
                 "2016": {
-                    "incomes_count": 262155,
-                    "median_year_income": 514246,
+                    "incomes_count": 262912,
+                    "median_year_income": 514076.5,
                     "declarants_count": null
                 },
                 "2017": {
-                    "incomes_count": 278822,
-                    "median_year_income": 529658.0,
+                    "incomes_count": 279783,
+                    "median_year_income": 529696,
                     "declarants_count": null
                 },
                 "2018": {
-                    "incomes_count": 286614,
-                    "median_year_income": 573769.5,
+                    "incomes_count": 287405,
+                    "median_year_income": 573710,
                     "declarants_count": null
                 },
                 "2019": {
-                    "incomes_count": 248037,
-                    "median_year_income": 632413,
+                    "incomes_count": 248981,
+                    "median_year_income": 632272,
                     "declarants_count": null
                 },
                 "2020": {
-                    "incomes_count": 197684,
-                    "median_year_income": 694859.5,
+                    "incomes_count": 200515,
+                    "median_year_income": 696006,
                     "declarants_count": null
                 }
             },
-            "V2": 1.67,
-            "V2_size": 700626,
+            "V2": 1.45,
+            "V2_size": 1260966,
             "child_office_examples": [],
             "child_offices_count": null,
             "source_document_count": null,
@@ -457,6 +777,16 @@
         },
         "null": {
             "year_snapshots": {
+                "2014": {
+                    "incomes_count": 66,
+                    "median_year_income": 322501.5,
+                    "declarants_count": null
+                },
+                "2015": {
+                    "incomes_count": 74,
+                    "median_year_income": 431598.5,
+                    "declarants_count": null
+                },
                 "2016": {
                     "incomes_count": 96,
                     "median_year_income": 539352.0,
@@ -483,14 +813,14 @@
                     "declarants_count": null
                 }
             },
-            "V2": 1.33,
-            "V2_size": 221,
+            "V2": 2.25,
+            "V2_size": 342,
             "child_office_examples": [],
             "child_offices_count": null,
             "source_document_count": null,
             "section_count": null
         }
     },
-    "start_year": 2016,
+    "start_year": 2011,
     "last_year": 2020
 }
