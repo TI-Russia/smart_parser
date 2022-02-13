@@ -25,6 +25,7 @@ class TOfficePredictor:
         sp_args = TSmartParserCacheClient.parse_args([])
         self.smart_parser_server_client = TSmartParserCacheClient(sp_args, self.logger)
         model_path = options.get('office_model_path', TOfficePredictor.default_ml_model_path)
+        self.max_failures_count = options.get('max_failures_count', 100)
         assert (os.path.exists(model_path))
         bigrams_path = os.path.join(model_path, "office_ngrams.txt")
         ml_model_path = os.path.join(model_path, "model")
@@ -148,8 +149,8 @@ class TOfficePredictor:
 
         self.logger.info("all files count = {}, files_without_office_id = {}".format(
                 self.dlrobot_human.get_documents_count(), files_without_office_id))
-        if files_without_office_id > 100:
-            error = "too many files without offices"
+        if files_without_office_id > self.max_failures_count:
+            error = "too many files (more than > {}) without offices".format(self.max_failures_count)
             self.logger.error(error)
             raise Exception(error)
 
@@ -167,6 +168,8 @@ class Command(BaseCommand):
                             default=TOfficePredictor.default_ml_model_path)
         parser.add_argument("--disable-ml", dest='enable_ml', required=False, default=True,
                             action="store_false")
+        parser.add_argument("--max-failures-count", dest='max_failures_count', required=False, default=100,
+                            type=int)
 
     def handle(self, *args, **options):
         predictor = TOfficePredictor(options)

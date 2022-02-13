@@ -157,9 +157,11 @@ class Command(BaseCommand):
         sitemap_path = os.path.join(os.path.dirname(__file__), "../../../disclosures/static/sitemap-office.xml")
         url_paths = list()
         for o in RUSSIA.iterate_offices():
-            doc_cnt = RUSSIA.calc_data_current.office_stats.get_group_data(o.office_id).source_document_count
-            if doc_cnt is not None and doc_cnt > 10:
-                url_paths.append("office/{}".format(o.office_id))
+            info = RUSSIA.calc_data_current.office_stats.get_group_data(o.office_id)
+            if info is not None:
+                doc_cnt = info.source_document_count
+                if doc_cnt is not None and doc_cnt > 10:
+                    url_paths.append("office/{}".format(o.office_id))
         self.write_sitemap(url_paths, sitemap_path, priority=0.4)
         self.sitemaps.append(os.path.basename(sitemap_path))
 
@@ -208,8 +210,8 @@ class Command(BaseCommand):
         self.build_popular_site_pages_sitemap(options['access_log_squeeze'],
                                               options['popular_site_pages_sitemap_pattern'])
         self.build_main_sitemap()
-        self.build_sitemap_index()
         self.build_offices_sitemap()
+        self.build_sitemap_index()
         self.tar.close()
         self.logger.info("all urls count in all sitemaps: {}".format(len(self.all_written_urls)))
 

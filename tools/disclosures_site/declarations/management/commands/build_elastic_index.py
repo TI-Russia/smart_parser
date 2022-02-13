@@ -26,7 +26,12 @@ class TOfficeElasticIndexator:
 
     def gen_documents(self):
         for o in RUSSIA.iterate_offices():
-            doc_cnt = RUSSIA.calc_data_current.office_stats.get_group_data(o.office_id).source_document_count
+            info = RUSSIA.calc_data_current.office_stats.get_group_data(o.office_id)
+            if info is not None:
+                doc_cnt = info.source_document_count
+            else:
+                doc_cnt = 0
+
             yield {
                 "_id": o.office_id,
                 "_index": self.index_name,

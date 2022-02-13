@@ -2,8 +2,8 @@ import os.path
 import sys
 import argparse
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+TOOLS_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
+sys.path.append(TOOLS_FOLDER)
 
 from common.logging_wrapper import setup_logging
 
@@ -47,8 +47,8 @@ class TUpdater:
         self.run_cmd('git log -n 1 .. >> last_commits.txt')
         self.run_cmd('git pull')
         self.run_cmd('{} -m pip install -r ../requirements.txt'.format(sys.executable))
-        self.run_cmd('{} manage.py test --tag=front --settings disclosures.settings.prod declarations/tests  --no-input'.format(
-            sys.executable
+        self.run_cmd('PYTHONPATH={} {} manage.py test --tag=front --settings disclosures.settings.dev declarations/tests  --no-input'.format(
+            TOOLS_FOLDER, sys.executable
         ))
 
         self.logger.info("all done")

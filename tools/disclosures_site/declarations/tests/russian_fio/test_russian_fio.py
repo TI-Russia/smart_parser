@@ -1,6 +1,6 @@
 from django.test import TestCase, tag
 from common.russian_fio import TRussianFio, TRussianFioRecognizer
-
+import re
 
 class ResolveFullNameTestCase(TestCase):
     @tag('central', 'front')
@@ -129,3 +129,11 @@ class ResolveFullNameTestCase(TestCase):
         r = TRussianFioRecognizer()
         self.assertTrue(r.string_contains_Russian_name('Новикова Татьяна Николаевна Жилой Дом (Долевая Собственность ½)'))
         self.assertTrue(r.string_contains_Russian_name('Советник Абрамова Елена Евгеньевна'))
+
+    @tag('central')
+    def test_delete_fios(self):
+        def _P(s):
+            words = re.split("[»«\"',./:;_{}\[\]()\s]+", s)
+            return " ".join(TRussianFio.delete_fios(words))
+        self.assertEqual(_P('before Новикова Татьяна Николаевна after'), "before after")
+        self.assertEqual(_P('декларации Новиковой Татьяны Николаевны'), "декларации")

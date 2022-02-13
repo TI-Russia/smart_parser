@@ -41,6 +41,8 @@ class TPredictionCase:
         if self.office_strings is None or len(self.office_strings) == 0:
             return ""
         office_strings = json.loads(self.office_strings)
+        if "smart_parser_data_not_found"  in office_strings:
+            return ""
         text = ""
         title = office_strings['title']
 
