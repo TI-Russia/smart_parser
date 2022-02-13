@@ -3,6 +3,10 @@ import os.path
 import shutil
 import sys
 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+
 from common.logging_wrapper import setup_logging
 from elasticsearch import Elasticsearch
 
