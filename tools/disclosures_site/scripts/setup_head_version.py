@@ -15,7 +15,7 @@ def parse_args():
 class TUpdater:
     def __init__(self):
         self.logger = setup_logging("source_updater")
-        self.parser = parse_args()
+        self.args = parse_args()
 
     def run_cmd(self, cmd):
         self.logger.info(cmd)

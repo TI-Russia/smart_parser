@@ -137,8 +137,8 @@ class TDlrobotHumanManager:
                 yield sha256, src_doc, src_doc.calculated_office_id
 
     def get_generator_by_source_ml_pool(self):
-        pool = TOfficePool(self.logger)
-        pool.read_cases(self.args.input_predict_office_pool_path)
+        #pool = TOfficePool(self.logger)
+        #pool.read_cases(self.args.input_predict_office_pool_path)
         with open(self.args.input_predict_office_pool_path) as inp:
             for line in inp:
                 sha256, office_id = line.strip().split("\t")
@@ -148,16 +148,20 @@ class TDlrobotHumanManager:
     def build_predict_office_ml_pool(self, entries_generator):
         cases = list()
         src_doc: TSourceDocument
+        input_lines_cnt = 0
         for sha256, src_doc, true_office_id in entries_generator():
             web_ref: TWebReference
             found_web_domains = set()
+            input_lines_cnt += 1
             for web_ref in src_doc.web_references:
+                self.logger.debug("process {}, sha256 = {}".format(web_ref.url, sha256))
                 case = TPredictionCase.build_from_web_reference(self.office_index, sha256, src_doc, web_ref,
                                                                 true_office_id)
                 if case.web_domain not in found_web_domains:
                     found_web_domains.add(case.web_domain)
                     cases.append(case)
-        self.logger.info("write to {}".format(self.args.output_predict_office_pool_path))
+        self.logger.info("process {} lines from the input file".format(input_lines_cnt))
+        self.logger.info("write {} lines to {}".format(len(cases), self.args.output_predict_office_pool_path))
         TOfficePool.write_pool(cases, self.args.output_predict_office_pool_path)
 
     def print_office_id(self):
