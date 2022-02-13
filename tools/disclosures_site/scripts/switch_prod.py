@@ -3,8 +3,8 @@ import os.path
 import shutil
 import sys
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+TOOLS_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
+sys.path.append(TOOLS_FOLDER)
 
 
 from common.logging_wrapper import setup_logging
@@ -96,8 +96,8 @@ class TSwitcher:
         shutil.move(new_folder, prod)
 
     def test_final(self):
-        cmd = '{} scripts/dolbilo.py --input-access-log data/access.test.log.gz  --host {} --expected-normal-count {}'.format(
-            sys.executable, self.args.host, 141
+        cmd = 'PYTHONPATH={} {} scripts/dolbilo.py --input-access-log data/access.test.log.gz  --host {} --expected-normal-count {}'.format(
+            TOOLS_FOLDER, sys.executable, self.args.host, 141
         )
         self.run_cmd(cmd)
 

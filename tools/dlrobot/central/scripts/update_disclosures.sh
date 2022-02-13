@@ -119,6 +119,7 @@ new_permalinks_pid=$!
 #16 построение дополнительных параметров ведомств (calculated_params)
     python3 $TOOLS/disclosures_site/manage.py build_office_calculated_params --settings disclosures.settings.dev
     git -C $TOOLS/office_db/office_current commit -m "new office report"
+    git push origin master
 
 #17.1 build access logs squeeze
     cd $DLROBOT_FOLDER
@@ -134,12 +135,16 @@ new_permalinks_pid=$!
        --access-log-squeeze access_log_squeeze_flt.txt --tar-path sitemap.tar
 
 #17.4 misspell dict
+    mkdir $DLROBOT_FOLDER/misspell_bin
+    cp $TOOLS/disclosures_site/data/misspell_bin/project.mwz  $TOOLS/disclosures_site/data/misspell_bin/gramtab.tab $DLROBOT_FOLDER/misspell_bin
     python3 $TOOLS/disclosures_site/manage.py create_misspell_fio_db --settings disclosures.settings.dev --output-folder $DLROBOT_FOLDER/misspell_bin
 
 #18 создание дампа базы
     cd $DLROBOT_FOLDER
     mysqldump -u disclosures -pdisclosures disclosures_db_dev  |  gzip -c > disclosures.sql.gz
-    cp disclosures.sql.gz $YANDEX_DISK_FOLDER/dlrobot_updates/$CRAWL_EPOCH
+    p=$YANDEX_DISK_FOLDER/dlrobot_updates/$CRAWL_EPOCH
+    if [ ! -d  $p ]; then mkdir -p $p; fi
+    cp disclosures.sql.gz $p
 
 #18.1
     python3 $TOOLS/dlrobot/central/scripts/yandex_disk.py --action sync --exclude-dirs declarator/source_doc --wait
@@ -154,7 +159,7 @@ wait $new_permalinks_pid
     cd $TOOLS/disclosures_site
     bash $TOOLS/disclosures_site/scripts/rename_db.sh disclosures_db_dev disclosures_db
     sudo systemctl start elasticsearch
-    python3 $TOOLS/disclosures_site/manage.py build_elastic_index --settings disclosures.settings.prod
+    python3 $TOOLS/discl  osures_site/manage.py build_elastic_index --settings disclosures.settings.prod
 
 
 #20 make binary archives and copy to frontend
@@ -177,8 +182,9 @@ wait $new_permalinks_pid
     scp -r $DLROBOT_FOLDER/misspell_bin $FRONTEND:/tmp
 
 #21 обновление prod
-    ssh $FRONTEND python3 $FRONTEND_WEB_SITE/scripts/setup_head_version.py --mysql-version `sudo mysqld --version` \
-               --elasticsearch-version `sudo /usr/share/elasticsearch/bin/elasticsearch --version`
+    v1=`sudo mysqld --version`
+    v2=`sudo /usr/share/elasticsearch/bin/elasticsearch --version`
+    ssh $FRONTEND python3 $FRONTEND_WEB_SITE/scripts/setup_head_version.py --mysql-version "\"$v1\"" --elasticsearch-version "\"$v2\""
     ssh $FRONTEND python3 $FRONTEND_WEB_SITE/scripts/switch_prod.py --mysql-tar /tmp/mysql.tar.gz \
       --elasticsearch-tar /tmp/elastic.tar.gz --sitemap-tar /tmp/sitemap.tar --misspell-folder /tmp/misspell_bin
     ssh $PROD_SOURCE_DOC_SERVER sudo systemctl restart source_declaration_doc

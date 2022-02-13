@@ -1,4 +1,4 @@
-=====================================================================================
+]['====================================================================================
 ============ 1. INSTALLATION GUIDE FOR DLROBOT WORKERS (HARDWARE) ===================
 =====================================================================================
 
@@ -40,7 +40,8 @@ docker build  ~/smart_parser/tools/deploy/docker/step2 --tag disclosures_test
 ========================= 3. INSTALL DLROBOT_CENTRAL SERVICE=========================
 =====================================================================================
 
-3.0 sudo apt install parallel mysql cmake ninja-build python-pytest
+3.0 sudo apt install parallel mysql-server-8.0 mysql cmake ninja-build python-pytest
+sudo apt-mark hold mysql-server-8.0
 
 3.1 install yandex cloud console
    curl https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
@@ -119,9 +120,10 @@ Following https://habr.com/ru/post/501414/
 #5.0 install mysql 8
     #wget -c https://dev.mysql.com/get/mysql-apt-config_0.8.23-1_all.deb
     sudo apt update
-    sudo apt install mysql-server
-    sudo apt-mark hold mysql-server
+    sudo apt install mysql-server-8.0
+    sudo apt-mark hold mysql-server-8.0
     sudo tar --file $ELASTICSEARCH_TAR --gzip --directory $NEW_ES --extract
+    sudo apt-mark hold elasticsearch
     # root password is "root"
     #sudo mysql_secure_installation
 
@@ -131,7 +133,7 @@ Following https://habr.com/ru/post/501414/
     ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';
     FLUSH PRIVILEGES;
 
-    CREATE USER 'db_creator'@'localhost' IDENTIFIED BY 'root';
+    CREATE USER 'db_creator'@'localhost' IDENTIFIED BY '?????DB_CREATOR_PASSWORD???';
     GRANT ALL PRIVILEGES ON *.* TO 'db_creator'@'localhost' WITH GRANT OPTION;
     FLUSH PRIVILEGES;
 
@@ -160,24 +162,25 @@ Following https://habr.com/ru/post/501414/
 
 
 #5.2   Install python environment in /var/www/smart_parser
-    cd /var/www
-    sudo chmod a+rwx .
+    cd ~
     git clone https://github.com/TI-Russia/smart_parser.git
-
-    cd /var/www/smart_parser/tools
+    cd ~/smart_parser/tools
     pip3 install -r requirements.txt
+
     #add to ~/.profile
-    export TOOLS=/var/www/smart_parser/tools
-    export PYTHONPATH=$TOOLS/disclosures_site:$TOOLS
-    export SOURCE_DOC_SERVER_ADDRESS=migalka:8090
+    export TOOLS=~/smart_parser/tools
+    export PYTHONPATH=$TOOLS
+    export ASPOSE_LIC=~/lic.bin
+    export DECLARATOR_CONV_URL=c.disclosures.ru:8091
+    export DB_CREATOR_PASSWORD=?????DB_CREATOR_PASSWORD???
+
 
 #5.3 create database
-    cd /var/www/smart_parser/tools/disclosures_site
+    cd ~/smart_parser/tools/disclosures_site
     python3 manage.py create_database --settings disclosures.settings.prod  --skip-checks
     python3 manage.py makemigrations --settings disclosures.settings.prod
     python3 manage.py migrate --settings disclosures.settings.prod
-    python3 manage.py test declarations/tests --settings disclosures.settings.prod  --keepdb
-
+    python3 manage.py test declarations/tests --settings disclosures.settings.prod  --keepdb --tag=front
 
     #download disclosures.sql.gz from disclosures.ru
     zcat disclosures.sql.gz| mysql -D disclosures_db -u disclosures -pdisclosures

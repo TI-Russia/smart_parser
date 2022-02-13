@@ -14,14 +14,6 @@ def is_morph_surname(w):
             return True
     return False
 
-def is_morph_first_name(w):
-    lemm_info: LemmaInfo
-    for lemm_info in RUSSIAN_MORPH_DICT.lemmatize(w):
-        if not lemm_info.predicted and 'name' in lemm_info.morph_features and 'poss' not in lemm_info.morph_features:
-            return True
-    return False
-
-
 def get_max_word_weight(word_list):
     lemm_info: LemmaInfo
     return max(lemm_info.word_weight for w in word_list for lemm_info in RUSSIAN_MORPH_DICT.lemmatize(w))
@@ -87,6 +79,14 @@ class TRussianFio:
         self.is_resolved = True
         return self
 
+    @staticmethod
+    def is_morph_first_name(w):
+        lemm_info: LemmaInfo
+        for lemm_info in RUSSIAN_MORPH_DICT.lemmatize(w):
+            if not lemm_info.predicted and 'name' in lemm_info.morph_features and 'poss' not in lemm_info.morph_features:
+                return True
+        return False
+
     def is_name_initial(self, s):
         return  (len(s) == 1 and s[0].isalpha() and s[0].upper() == s[0]) or \
                 (len(s) == 2 and s[0].isalpha() and s[1] == '.') or \
@@ -111,6 +111,16 @@ class TRussianFio:
                 return True
         return False
 
+    @staticmethod
+    def is_morph_surname(w):
+        if w.lower() == "машина":
+            return False
+        lemm_info: LemmaInfo
+        for lemm_info in RUSSIAN_MORPH_DICT.lemmatize(w):
+            if 'surname' in lemm_info.morph_features:
+                return True
+        return False
+
     def set_first_name(self, s):
         if s.endswith('.'):
             self.first_name_is_abridged = True
@@ -120,6 +130,22 @@ class TRussianFio:
         if s.endswith('.'):
             self.patronymic_is_abridged = True
         self.patronymic = s.strip('.')
+
+    @staticmethod
+    def delete_fios(words):
+        i = 0
+        while i < len(words):
+            if i <= len(words) - 3:
+                w1 = words[i]
+                if len(w1) > 0 and w1[0].isupper():
+                    if TRussianFio.is_morph_surname_or_predicted(w1) or TRussianFio.is_morph_first_name(w1):
+                        w2 = words[i + 1]
+                        w3 = words[i + 2]
+                        if TRussianFio(" ".join([w1, w2, w3])).is_resolved:
+                            i += 3
+                            continue
+            yield words[i]
+            i += 1
 
     def get_normalized_person_name(self):
         if self.is_resolved:
@@ -262,7 +288,7 @@ class TRussianFio:
         if count_full_stops == 0:
             for i in parts:
                 if not re.match('^[А-ЯЁ][а-яА-ЯЁё-]+$', i):
-                    if not is_morph_first_name(i) and not is_morph_surname(i) and not TRussianFioRecognizer.has_patronymic_suffix(i):
+                    if not TRussianFio.is_morph_first_name(i) and not is_morph_surname(i) and not TRussianFioRecognizer.has_patronymic_suffix(i):
                         break
                 count_Russian_words += 1
 
@@ -323,7 +349,7 @@ class TRussianFio:
             self.set_first_name(parts[0])
             self.set_patronymic(parts[1])
             self.case = "abbridged_name_2"
-        elif len(parts) == 3 and TRussianFioRecognizer.has_surname_suffix(parts[0]) and is_morph_first_name(parts[1]) \
+        elif len(parts) == 3 and TRussianFioRecognizer.has_surname_suffix(parts[0]) and TRussianFio.is_morph_first_name(parts[1]) \
                 and self.is_name_initial(parts[2]):
             self.family_name = parts[0]
             self.set_first_name(parts[1])
@@ -339,7 +365,7 @@ class TRussianFio:
             self.family_name = parts[1]
             self.case = "name_initial_complex2"
         elif len(parts) == 2 and TRussianFioRecognizer.has_surname_suffix(parts[0]) and \
-              is_morph_first_name(parts[1]):
+              TRussianFio.is_morph_first_name(parts[1]):
             #Воецкая Ирина
             #Друзина Инна
             self.family_name = parts[0]
