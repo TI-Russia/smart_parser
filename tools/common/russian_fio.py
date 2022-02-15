@@ -87,6 +87,16 @@ class TRussianFio:
                 return True
         return False
 
+    @staticmethod
+    def is_morph_animative_noun(w):
+        lemm_info: LemmaInfo
+        for lemm_info in RUSSIAN_MORPH_DICT.lemmatize(w):
+            if lemm_info.lemma == "ВЕДУЩИЙ":
+                continue
+            if not lemm_info.predicted and lemm_info.part_of_speech == 'N' and  'anim' in lemm_info.morph_features:
+                return True
+        return False
+
     def is_name_initial(self, s):
         return  (len(s) == 1 and s[0].isalpha() and s[0].upper() == s[0]) or \
                 (len(s) == 2 and s[0].isalpha() and s[1] == '.') or \
