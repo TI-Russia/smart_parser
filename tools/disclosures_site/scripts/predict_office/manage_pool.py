@@ -33,6 +33,8 @@ def main():
         if len(title) < 5:
             continue
         parser = TDeclarationTitleParser(title)
+        if cnt < 700:
+            continue
         if not parser.parse():
             print("cannot parse {}".format(title))
         else:

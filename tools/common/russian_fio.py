@@ -93,6 +93,8 @@ class TRussianFio:
         for lemm_info in RUSSIAN_MORPH_DICT.lemmatize(w):
             if lemm_info.lemma == "ВЕДУЩИЙ":
                 continue
+            if 'name' in lemm_info.morph_features or 'surname' in lemm_info.morph_features:
+                continue
             if not lemm_info.predicted and lemm_info.part_of_speech == 'N' and  'anim' in lemm_info.morph_features:
                 return True
         return False
@@ -140,6 +142,24 @@ class TRussianFio:
         if s.endswith('.'):
             self.patronymic_is_abridged = True
         self.patronymic = s.strip('.')
+
+    @staticmethod
+    def can_start_fio(w):
+        return len(w) > 0 and w[0].isupper() and (
+                TRussianFio.is_morph_surname_or_predicted(w) or TRussianFio.is_morph_first_name(w))
+
+    @staticmethod
+    def is_fio_in_text(words):
+        if len(words) < 3:
+            return False
+        w1 = words[0].strip(", ")
+        if len(w1) > 0 and w1[0].isupper():
+            if TRussianFio.can_start_fio(w1):
+                w2 = words[1].strip(", ")
+                w3 = words[2].strip(", ")
+                if TRussianFio(" ".join([w1, w2, w3])).is_resolved:
+                    return True
+        return False
 
     @staticmethod
     def delete_fios(words):
