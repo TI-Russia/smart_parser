@@ -1,9 +1,8 @@
 from common.russian_fio import TRussianFioRecognizer, TRussianFio
+from common.russian_morph_dict import TRussianDictWrapper
+
 import argparse
 import json
-from pylem import MorphanHolder, MorphLanguage, LemmaInfo
-
-RUSSIAN_MORPH_DICT = MorphanHolder(MorphLanguage.Russian)
 
 
 def parse_args():
@@ -47,7 +46,7 @@ def main3():
     with open(args.input) as inp:
         for line in inp:
             line = line.strip()
-            if len(line) == 0 or TRussianFioRecognizer.is_morph_surname_or_predicted(line.strip()):
+            if len(line) == 0 or TRussianDictWrapper.is_morph_surname_or_predicted(line.strip()):
                 continue
             print(line)
 

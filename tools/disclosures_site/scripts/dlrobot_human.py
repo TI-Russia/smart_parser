@@ -15,7 +15,8 @@ def parse_args():
     parser.add_argument("--action", dest='action', help="can be stats, select, "
                                                         "print_sha256, print_web_sites, create_sample, "
                                                         "delete, to_utf8, titles, check_office, to_json,"
-                                                        " build_office_train_set, print_office_id, rebuild_ml_pool")
+                                                        " build_office_train_set, print_office_id, rebuild_ml_pool, "
+                        "unknown_office_uniq_website_pool")
     parser.add_argument("--input-file", dest='input_file')
     parser.add_argument("--output-file", dest='output_file', required=False)
     parser.add_argument("--sha256-list-file", dest='sha256_list_file', required=False)
@@ -31,7 +32,7 @@ class TDlrobotHumanManager:
         self.logger = setup_logging(logger_name="dlrobot_human")
         self.dlrobot_human = TDlrobotHumanFileDBM(self.args.input_file)
         self.dlrobot_human.open_db_read_only()
-        if self.args.action in {"check_office", "build_office_train_set", "rebuild_ml_pool"}:
+        if self.args.action in {"check_office", "build_office_train_set"} or self.args.action.endswith('_pool'):
             default_path = os.path.join(os.path.dirname(__file__), "../predict_office/model/office_ngrams.txt")
             self.office_index = TOfficePredictIndex(self.logger, default_path)
             self.office_index.read()
@@ -136,6 +137,19 @@ class TDlrobotHumanManager:
                     src_doc.calculated_office_id is not None:
                 yield sha256, src_doc, src_doc.calculated_office_id
 
+    def get_unknown_office_uniq_website(self):
+        websites = set()
+        for sha256, src_doc in self.dlrobot_human.get_all_documents():
+            if src_doc.calculated_office_id is not None:
+                continue
+            if src_doc.office_strings is None or len(json.loads(src_doc.office_strings).get('title', "")) < 10:
+                continue
+            web_site = src_doc.get_web_site()
+            if web_site in websites:
+                continue
+            websites.add(web_site)
+            yield sha256, src_doc, src_doc.calculated_office_id
+
     def get_generator_by_source_ml_pool(self):
         #pool = TOfficePool(self.logger)
         #pool.read_cases(self.args.input_predict_office_pool_path)
@@ -184,6 +198,8 @@ class TDlrobotHumanManager:
             self.build_predict_office_ml_pool(self.get_predict_train_entries)
         elif action == "rebuild_ml_pool":
             self.build_predict_office_ml_pool(self.get_generator_by_source_ml_pool)
+        elif action == "unknown_office_uniq_website_pool":
+            self.build_predict_office_ml_pool(self.get_unknown_office_uniq_website)
         elif action == "select":
             self.select_by_sha256()
         elif action == "delete":

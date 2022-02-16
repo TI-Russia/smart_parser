@@ -2,6 +2,7 @@ import re
 from common.primitives import normalize_whitespace
 from common.russian_fio import TRussianFio
 from office_db.russian_regions import TRussianRegions
+from common.russian_morph_dict import TRussianDictWrapper
 
 
 class TDeclarationTitleParser:
@@ -15,6 +16,7 @@ class TDeclarationTitleParser:
         self.fio = None
         self.regions = TRussianRegions()
         self.region_name = None
+        self.org_name = None
 
     def find_starter(self):
         for p in ['сведения о доходах']:
@@ -93,7 +95,7 @@ class TDeclarationTitleParser:
             w = words[i].strip(', ')
             if TRussianFio.can_start_fio(w):
                 break
-            if TRussianFio.is_morph_animative_noun(w) and w != "заместителя":
+            if TRussianDictWrapper.is_morph_animative_noun(w) and w != "заместителя":
                 offset = self.title.find(words[i]) + len(words[i])
                 self.declarant_positions.append(self.title[:offset].strip(' ,'))
                 self.title = self.title[offset:].strip()
@@ -227,3 +229,5 @@ class TDeclarationTitleParser:
         if self.org_name.startswith("в "):
             self.org_name = self.org_name[2:]
         return True
+
+
