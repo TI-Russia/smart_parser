@@ -34,7 +34,11 @@ class TDeclarationWebSiteList:
         self.build_web_domains_redirects()
         self.web_domain_to_web_site.clear()
         for k, v in self.web_sites.items():
-            self.web_domain_to_web_site[urlsplit_pro(k).hostname].append(get_site_url(k))
+            self.web_domain_to_web_site[TDeclarationWebSiteList.site_url_to_web_domain(k)].append(get_site_url(k))
+
+    @staticmethod
+    def site_url_to_web_domain(site_url):
+        return urlsplit_pro(site_url).hostname
 
     def build_web_domains_redirects(self):
         self.web_domains_redirects = defaultdict(set)

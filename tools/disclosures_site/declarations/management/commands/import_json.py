@@ -2,7 +2,8 @@ import declarations.models as models
 from declarations.serializers import TSmartParserSectionJson
 from declarations.permalinks import TPermaLinksSection, TPermaLinksSourceDocument
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
-from declarations.input_json import TDlrobotHumanFileDBM, TSourceDocument, TDeclaratorReference, TWebReference
+from declarations.dlrobot_human_dbm import TDlrobotHumanFileDBM
+from declarations.input_document import TDeclaratorReference, TWebReference, TSourceDocument
 from common.logging_wrapper import setup_logging
 from office_db.rubrics import TOfficeRubrics
 from office_db.russian_regions import TRussianRegions

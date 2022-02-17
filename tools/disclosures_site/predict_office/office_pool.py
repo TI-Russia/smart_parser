@@ -85,7 +85,7 @@ class TOfficePool:
                 if calculated_office_id is None:
                     site_info = self.office_index.web_sites.get_first_site_by_web_domain(case.web_domain)
                     if site_info is not None:
-                        calculated_office_id = site_info.calculated_office_id
+                        calculated_office_id = site_info.parent_office.office_id
                     else:
                         self.logger.error("cannot find web domain {} in data/offices.txt, please, update it".format(case.web_domain))
 

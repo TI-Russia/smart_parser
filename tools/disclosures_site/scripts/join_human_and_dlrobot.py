@@ -1,4 +1,5 @@
-from declarations.input_json import TSourceDocument, TDlrobotHumanFileDBM, TWebReference
+from declarations.dlrobot_human_dbm import TDlrobotHumanFileDBM
+from declarations.input_document import TWebReference, TSourceDocument
 from dlrobot.common.robot_project import TRobotProject
 from dlrobot.common.robot_config import TRobotConfig
 from dlrobot.common.robot_web_site import TWebSiteCrawlSnapshot

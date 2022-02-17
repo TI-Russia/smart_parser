@@ -21,10 +21,11 @@ import time
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--action", dest='action', help="can be ban, to_utf8, move, mark_large_sites, check_alive, select, "
-                                                        "print_urls, check, redirect_subdomain, regional_to_main, split")
+                                                        "print_urls, check, redirect_subdomain, regional_to_main, split, make_redirects")
     parser.add_argument("--input-offices", dest='input_offices', required=False, default=None,
                         help="default is ~/smart_parser/tools/offices_db/data/offices.txt")
     parser.add_argument("--output-file", dest='output_file', required=False)
+    parser.add_argument("--redirect-mapping-path", dest='redirect_mapping_path', required=False)
     parser.add_argument("--split-parts", dest='split_parts', type=int, default=100)
     parser.add_argument("--url-list", dest='url_list', required=False)
     parser.add_argument("--take-all-web-sites", dest='take_all_web_sites', required=False, action="store_true", default=False,
@@ -253,6 +254,22 @@ class TWebSitesManager:
             out.add_office(site_info.parent_office)
         self.web_sites.offices = out
 
+    def make_redirects(self):
+        with open (self.args.redirect_mapping_path) as inp:
+            for l in inp:
+                old, new_site_url = l.strip().split()
+                web_site = self.web_sites.get_web_site(old)
+                if web_site is None:
+                    old1 = TDeclarationWebSiteList.site_url_to_web_domain(old)
+                    web_site = self.web_sites.get_first_site_by_web_domain(old1)
+                    if web_site is None:
+                        raise Exception("cannot find website {}".format(old))
+                    if not new_site_url .startswith('http'):
+                        raise Exception("unknown http prefix in  {}".format(new))
+                    web_site.set_redirect(new_site_url)
+                    new_site_info = TDeclarationWebSite(url=new_site_url)
+                    web_site.parent_office.office_web_sites.append(new_site_info)
+
     def main(self):
         if self.args.action == "ban":
             self.ban_sites()
@@ -273,6 +290,8 @@ class TWebSitesManager:
         elif self.args.action == "split":
             self.split()
             return
+        elif self.args.action == "make_redirects":
+            self.make_redirects()
         else:
             raise Exception("unknown action")
 

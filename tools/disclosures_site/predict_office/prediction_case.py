@@ -1,4 +1,4 @@
-from declarations.input_json import TSourceDocument, TWebReference
+from declarations.input_document import TWebReference, TSourceDocument
 
 import json
 

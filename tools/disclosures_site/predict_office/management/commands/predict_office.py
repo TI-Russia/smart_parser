@@ -1,4 +1,5 @@
-from declarations.input_json import TSourceDocument, TDlrobotHumanFileDBM, TWebReference
+from declarations.dlrobot_human_dbm import TDlrobotHumanFileDBM
+from declarations.input_document import TWebReference, TSourceDocument
 from disclosures_site.predict_office.tensor_flow_model import TTensorFlowOfficeModel
 from disclosures_site.predict_office.office_pool import TOfficePool
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient

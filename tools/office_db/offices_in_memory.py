@@ -41,10 +41,14 @@ class TOfficeInMemory:
     def from_json(self, js):
         self.office_id = int(js['id'])
         self.name = js['name']
-        self.parent_id = js['parent_id']
+        self.parent_id = js.get('parent_id')
+        if self.parent_id is None and 'parent_id'  not in js:
+            raise Exception ("no parent_id in office_id={}, name = {}".format(self.office_id, self.name))
         self.type_id = js['type_id']
         self.rubric_id = js.get('rubric_id')
-        self.region_id = js['region_id']
+        self.region_id = js.get('region_id')
+        if self.region_id is None and self.type_id not in TOfficeTableInMemory.group_types:
+            raise Exception ("null region in office_id={}, name = {}".format(self.office_id, self.name))
         self.address = js.get('address')
         self.wikidata_id = js.get('wikidata_id')
         self.source_id = js.get('src')

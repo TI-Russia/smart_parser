@@ -1,6 +1,6 @@
 import declarations.models as models
 from disclosures_site.scripts.join_human_and_dlrobot import TJoiner
-from declarations.input_json import TDlrobotHumanFileDBM
+from declarations.dlrobot_human_dbm import TDlrobotHumanFileDBM
 
 from django.test import TestCase, tag
 import os

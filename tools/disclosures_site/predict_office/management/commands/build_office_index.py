@@ -3,7 +3,6 @@ from common.logging_wrapper import setup_logging
 from django.core.management import BaseCommand
 from office_db.offices_in_memory import TOfficeInMemory
 from office_db.russia import RUSSIA
-import declarations.models as models
 
 from collections import defaultdict
 
@@ -26,6 +25,7 @@ class TOfficePredictIndexBuilder(TOfficePredictIndex):
         office_bigrams = defaultdict(set)
         office_stems = defaultdict(set)
         self.offices = dict()
+        office: TOfficeInMemory
         for office in RUSSIA.iterate_offices():
             region_id = office.region_id
             if region_id is None:
