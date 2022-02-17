@@ -1,8 +1,8 @@
 from common.logging_wrapper import setup_logging
 from predict_office.prediction_case import TPredictionCase
-from predict_office.base_ml_model import  TPredictionModelBase
+from predict_office.base_ml_model import TPredictionModelBase
 
-from django.core.management import BaseCommand
+import argparse
 
 
 def test_baseline(model: TPredictionModelBase):
@@ -26,18 +26,21 @@ def test_baseline(model: TPredictionModelBase):
         precision, recall, f1, len(model.test_pool.pool)))
 
 
-class Command(BaseCommand):
-    def __init__(self, *args, **kwargs):
-        super(Command, self).__init__(*args, **kwargs)
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--bigrams-path", dest='bigrams_path', required=False, default="office_ngrams.txt")
+    parser.add_argument("--model-folder", dest='model_folder', required=False)
+    parser.add_argument("--test-pool", dest='test_pool')
+    return parser.parse_args()
 
-    def add_arguments(self, parser):
-        parser.add_argument("--bigrams-path", dest='bigrams_path', required=False, default="office_ngrams.txt")
-        parser.add_argument("--model-folder", dest='model_folder', required=False)
-        parser.add_argument("--test-pool", dest='test_pool')
 
-    def handle(self, *args, **options):
-        logger = setup_logging(log_file_name="predict_office_baseline.log")
-        model = TPredictionModelBase(logger, options['bigrams_path'], options['model_folder'],
-                                 test_pool=options['test_pool'])
-        test_baseline(model)
+def main():
+    args = parse_args()
+    logger = setup_logging(log_file_name="predict_office_baseline.log")
+    model = TPredictionModelBase(logger, args.bigrams_path, args.model_folder,
+                             test_pool=args.test_pool)
+    test_baseline(model)
 
+
+if __name__ == "__main__":
+    main()

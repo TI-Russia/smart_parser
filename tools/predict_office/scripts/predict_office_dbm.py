@@ -1,9 +1,11 @@
-from declarations.dlrobot_human_dbm import TDlrobotHumanFileDBM
-from declarations.input_document import TWebReference, TSourceDocument
-from disclosures_site.predict_office.tensor_flow_model import TTensorFlowOfficeModel
-from disclosures_site.predict_office.office_pool import TOfficePool
+import sys
+
+from dlrobot_human.dlrobot_human_dbm import TDlrobotHumanFileDBM
+from dlrobot_human.input_document import TWebReference, TSourceDocument
+from predict_office.tensor_flow_model import TTensorFlowOfficeModel
+from predict_office.office_pool import TOfficePool
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
-from disclosures_site.predict_office.prediction_case import TPredictionCase
+from predict_office.prediction_case import TPredictionCase
 from common.logging_wrapper import setup_logging
 from office_db.offices_in_memory import TOfficeInMemory
 from office_db.rubrics import TOfficeRubrics
@@ -11,22 +13,34 @@ from office_db.russia import RUSSIA
 
 import os
 import json
-from django.core.management import BaseCommand
+import argparse
 
 
 class TOfficePredictor:
-    default_ml_model_path = os.path.join(os.path.dirname(__file__), "../../model")
+    default_ml_model_path = os.path.join(os.path.dirname(__file__), "../model")
 
-    def __init__(self, options):
+    @staticmethod
+    def parse_args(args):
+        parser = argparse.ArgumentParser()
+        parser.add_argument("--dlrobot-human-path", dest='dlrobot_human_path', required=True)
+        parser.add_argument("--office-model-path", dest='office_model_path', required=False,
+                            default=TOfficePredictor.default_ml_model_path)
+        parser.add_argument("--disable-ml", dest='enable_ml', required=False, default=True,
+                            action="store_false")
+        parser.add_argument("--max-failures-count", dest='max_failures_count', required=False, default=100,
+                            type=int)
+        return parser.parse_args(args=args)
+
+    def __init__(self, args):
         self.logger = setup_logging(log_file_name="predict_office.log")
-        self.dlrobot_human_path = options['dlrobot_human_path']
+        self.dlrobot_human_path = args.dlrobot_human_path
         self.dlrobot_human = TDlrobotHumanFileDBM(self.dlrobot_human_path)
         self.dlrobot_human.open_write_mode()
-        self.enable_ml = options.get('enable_ml', True)
+        self.enable_ml = args.enable_ml
         sp_args = TSmartParserCacheClient.parse_args([])
         self.smart_parser_server_client = TSmartParserCacheClient(sp_args, self.logger)
-        model_path = options.get('office_model_path', TOfficePredictor.default_ml_model_path)
-        self.max_failures_count = options.get('max_failures_count', 100)
+        model_path = args.office_model_path
+        self.max_failures_count = args.max_failures_count
         assert (os.path.exists(model_path))
         bigrams_path = os.path.join(model_path, "office_ngrams.txt")
         ml_model_path = os.path.join(model_path, "model")
@@ -159,23 +173,13 @@ class TOfficePredictor:
         self.dlrobot_human.close_db()
 
 
-class Command(BaseCommand):
-    def __init__(self, *args, **kwargs):
-        super(Command, self).__init__(*args, **kwargs)
 
-    def add_arguments(self, parser):
-        parser.add_argument("--dlrobot-human-path", dest='dlrobot_human_path', required=True)
-        parser.add_argument("--office-model-path", dest='office_model_path', required=False,
-                            default=TOfficePredictor.default_ml_model_path)
-        parser.add_argument("--disable-ml", dest='enable_ml', required=False, default=True,
-                            action="store_false")
-        parser.add_argument("--max-failures-count", dest='max_failures_count', required=False, default=100,
-                            type=int)
-
-    def handle(self, *args, **options):
-        predictor = TOfficePredictor(options)
-        predictor.predict_office()
-        predictor.check()
-        predictor.write()
+def main():
+    predictor = TOfficePredictor(TOfficePredictor.parse_args(sys.argv[1:]))
+    predictor.predict_office()
+    predictor.check()
+    predictor.write()
 
 
+if __name__ == "__main__":
+    main()

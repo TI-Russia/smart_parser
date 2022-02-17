@@ -1,10 +1,9 @@
 import declarations.models as models
-from disclosures_site.scripts.join_human_and_dlrobot import TJoiner
-from declarations.dlrobot_human_dbm import TDlrobotHumanFileDBM
+from dlrobot_human  .scripts.join_human_and_dlrobot import TJoiner
+from dlrobot_human.dlrobot_human_dbm import TDlrobotHumanFileDBM
 
 from django.test import TestCase, tag
 import os
-import json
 
 CANON_STATS = {
     "web_sites_count": 1,

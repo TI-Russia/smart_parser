@@ -1,5 +1,5 @@
-from declarations.dlrobot_human_dbm import TDlrobotHumanFileDBM
-from declarations.input_document import TWebReference, TSourceDocument
+from dlrobot_human.dlrobot_human_dbm import TDlrobotHumanFileDBM
+from dlrobot_human.input_document import TWebReference, TSourceDocument
 from predict_office.office_pool import TOfficePool
 from predict_office.prediction_case import TPredictionCase
 from common.logging_wrapper import setup_logging

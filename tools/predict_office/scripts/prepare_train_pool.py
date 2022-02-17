@@ -1,4 +1,4 @@
-from disclosures_site.predict_office.office_pool import TOfficePool
+from predict_office.office_pool import TOfficePool
 from common.logging_wrapper import setup_logging
 import random
 import argparse

@@ -1,10 +1,10 @@
-from disclosures_site.predict_office.office_index import TOfficePredictIndex, TOfficeNgram, TOfficeWebDomain
+from predict_office.office_index import TOfficePredictIndex, TOfficeNgram, TOfficeWebDomain
 from common.logging_wrapper import setup_logging
-from django.core.management import BaseCommand
 from office_db.offices_in_memory import TOfficeInMemory
 from office_db.russia import RUSSIA
 
 from collections import defaultdict
+import argparse
 
 
 class TOfficePredictIndexBuilder(TOfficePredictIndex):
@@ -66,15 +66,19 @@ class TOfficePredictIndexBuilder(TOfficePredictIndex):
         self.build_ml_office_indices()
 
 
-class Command(BaseCommand):
-    def __init__(self, *args, **kwargs):
-        super(Command, self).__init__(*args, **kwargs)
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--bigrams-path", dest='bigrams_path', required=False, default="office_ngrams.txt")
+    return parser.parse_args()
 
-    def add_arguments(self, parser):
-        parser.add_argument("--bigrams-path", dest='bigrams_path', required=False, default="office_ngrams.txt")
 
-    def handle(self, *args, **options):
-        logger = setup_logging(log_file_name="build_office_bigrams.log")
-        index = TOfficePredictIndexBuilder(logger, options['bigrams_path'])
-        index.build()
-        index.write()
+def main():
+    logger = setup_logging(log_file_name="build_office_bigrams.log")
+    args = parse_args()
+    index = TOfficePredictIndexBuilder(logger, args.bigrams_path)
+    index.build()
+    index.write()
+
+
+if __name__ == "__main__":
+    main()

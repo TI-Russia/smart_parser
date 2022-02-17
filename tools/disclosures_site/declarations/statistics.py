@@ -2,7 +2,7 @@ import declarations.models as models
 from collections import defaultdict
 import json
 import os
-from declarations.input_document import TIntersectionStatus
+from dlrobot_human.input_document import TIntersectionStatus
 from django.db import connection
 
 

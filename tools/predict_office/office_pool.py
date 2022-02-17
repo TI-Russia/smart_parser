@@ -1,5 +1,5 @@
 
-from disclosures_site.predict_office.prediction_case import TPredictionCase
+from predict_office.prediction_case import TPredictionCase
 
 import json
 import random

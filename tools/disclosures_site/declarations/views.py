@@ -7,7 +7,7 @@ from common.content_types import file_extension_to_content_type
 from declarations.apps import DeclarationsConfig
 from declarations.car_brands import CAR_BRANDS
 from declarations.gender_recognize import TGender
-from .input_document import TIntersectionStatus
+from dlrobot_human.input_document import TIntersectionStatus
 from pylem import MorphanHolder, MorphLanguage
 from office_db.region_year_snapshot import TRegionYearStats
 from office_db.russia import RUSSIA

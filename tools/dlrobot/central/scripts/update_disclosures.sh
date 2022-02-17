@@ -36,7 +36,7 @@ source $COMMON_SCRIPT
 
 #4  предсказание office_id
     cd $DLROBOT_FOLDER
-    python3 $TOOLS/disclosures_site/manage.py predict_office --dlrobot-human-path dlrobot_human.dbm
+    python3 $TOOLS/predict_office/scripts/predict_office_dbm.py --dlrobot-human-path dlrobot_human.dbm
 
   #6  Копирование базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод
    mv $OLD_DLROBOT_FOLDER/new_permalinks/* .

@@ -8,9 +8,9 @@ from source_doc_http.source_doc_server import TSourceDocHTTPServer
 from common.web_site_status import TWebSiteReachStatus
 from common.primitives import build_dislosures_sha256, is_local_http_port_free
 from common.archives import TDearchiver
-from disclosures_site.scripts.join_human_and_dlrobot import TJoiner
-from declarations.dlrobot_human_dbm import TDlrobotHumanFileDBM
-from declarations.input_document import TSourceDocument
+from dlrobot_human.scripts.join_human_and_dlrobot import TJoiner
+from dlrobot_human.dlrobot_human_dbm import TDlrobotHumanFileDBM
+from dlrobot_human.input_document import TSourceDocument
 from office_db.offices_in_memory import TOfficeInMemory
 from office_db.declaration_office_website import TDeclarationWebSite
 

@@ -35,8 +35,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_elasticsearch_dsl',
     'django_elasticsearch_dsl_drf',
-    'django.contrib.sitemaps',
-    'predict_office.apps.PredictOfficeConfig',
+    'django.contrib.sitemaps'
 ]
 
 

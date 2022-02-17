@@ -1,6 +1,6 @@
 
-from disclosures_site.predict_office.office_pool import TOfficePool
-from disclosures_site.predict_office.prediction_case import TPredictionCase
+from predict_office.office_pool import TOfficePool
+from predict_office.prediction_case import TPredictionCase
 from common.logging_wrapper import setup_logging
 from common.decl_title_parser import  TDeclarationTitleParser
 from office_db.russia import RUSSIA

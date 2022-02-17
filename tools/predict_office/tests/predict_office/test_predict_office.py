@@ -1,8 +1,7 @@
 from declarations.tests.smart_parser_for_testing import SmartParserServerForTesting
-import declarations.models as models
-from predict_office.management.commands.predict_office import TOfficePredictor
+from predict_office.scripts.predict_office_dbm import TOfficePredictor
 
-from django.test import TestCase
+from unittest import TestCase
 import os
 
 
@@ -16,15 +15,12 @@ class TestPredictOffice(TestCase):
         self.assertEqual(office_id, pred_office_id)
 
     def test_predict_office(self):
-        self.assertGreater(models.Office.objects.count(), 0)
-        options = {
-                'dlrobot_human_path': "dlrobot_human.json"
-        }
         sp_workdir = os.path.join(os.path.dirname(__file__), "smart_parser_server")
         doc_folder = os.path.join(os.path.dirname(__file__), "processed_projects")
 
         with SmartParserServerForTesting(sp_workdir, doc_folder):
-            predictor = TOfficePredictor(options)
+            args = ["--dlrobot-human-path", "dlrobot_human.json"]
+            predictor = TOfficePredictor(TOfficePredictor.parse_args(args))
             predictor.predict_office()
             predictor.check()
 

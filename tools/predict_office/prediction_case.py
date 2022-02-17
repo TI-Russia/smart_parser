@@ -1,4 +1,4 @@
-from declarations.input_document import TWebReference, TSourceDocument
+from dlrobot_human.input_document import TWebReference, TSourceDocument
 
 import json
 

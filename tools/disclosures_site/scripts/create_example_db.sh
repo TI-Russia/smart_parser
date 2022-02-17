@@ -72,7 +72,7 @@ python3 $TOOLS/disclosures_site/manage.py migrate --settings disclosures.setting
 python3 $TOOLS/disclosures_site/manage.py create_permalink_storage  --settings disclosures.settings.dev
 python3 $TOOLS/disclosures_site/manage.py create_sql_sequences  --settings disclosures.settings.dev
 python3 $TOOLS/disclosures_site/manage.py clear_database --settings disclosures.settings.dev
-python3 $TOOLS/disclosures_site/manage.py predict_office --dlrobot-human-path dlrobot_human.dbm
+python3 $TOOLS/predict_office/scripts/predict_office_dbm.py  --dlrobot-human-path dlrobot_human.dbm
 
 python3 $TOOLS/disclosures_site/manage.py import_json \
                --settings disclosures.settings.dev \

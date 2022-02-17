@@ -1,6 +1,6 @@
-from disclosures_site.predict_office.prediction_case import TPredictionCase
-from disclosures_site.predict_office.base_ml_model import TPredictionModelBase
-from disclosures_site.predict_office.office_index import TOfficePredictIndex
+from predict_office.prediction_case import TPredictionCase
+from predict_office.base_ml_model import TPredictionModelBase
+from predict_office.office_index import TOfficePredictIndex
 import operator
 import numpy as np
 import tensorflow as tf

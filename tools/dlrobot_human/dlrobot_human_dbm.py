@@ -1,4 +1,4 @@
-from declarations.input_document import TIntersectionStatus, TSourceDocument
+from dlrobot_human.input_document import TIntersectionStatus, TSourceDocument
 
 import os
 import json

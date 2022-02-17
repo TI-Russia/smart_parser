@@ -10,7 +10,7 @@ import os
 import json
 import sys
 import argparse
-from disclosures_site.predict_office.prediction_case import TPredictionCase
+from predict_office.prediction_case import TPredictionCase
 
 
 class TSmartParserCacheClient(object):

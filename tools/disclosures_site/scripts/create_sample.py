@@ -1,4 +1,4 @@
-from declarations.dlrobot_human_dbm import TDlrobotHumanFileDBM
+from dlrobot_human.dlrobot_human_dbm import TDlrobotHumanFileDBM
 from source_doc_http.source_doc_client import TSourceDocClient
 from common.logging_wrapper import setup_logging
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient

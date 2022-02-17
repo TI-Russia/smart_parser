@@ -1,5 +1,5 @@
-from declarations.dlrobot_human_dbm import TDlrobotHumanFileDBM
-from declarations.input_document import TDeclaratorReference, TSourceDocument
+from dlrobot_human.dlrobot_human_dbm import TDlrobotHumanFileDBM
+from dlrobot_human.input_document import TDeclaratorReference, TSourceDocument
 from common.archives import TDearchiver
 from source_doc_http.source_doc_client import TSourceDocClient
 from ConvStorage.conversion_client import TDocConversionClient

@@ -1,7 +1,7 @@
 from disclosures_site.scripts.export_human_files import TExportHumanFiles
 from disclosures_site.declarations.tests.source_doc_for_testing import SourceDocServerForTesting
 from declarations.tests.smart_parser_for_testing import SmartParserServerForTesting
-from declarations.dlrobot_human_dbm import TDlrobotHumanFileDBM
+from dlrobot_human.dlrobot_human_dbm import TDlrobotHumanFileDBM
 
 from django.test import TestCase, tag
 import os
