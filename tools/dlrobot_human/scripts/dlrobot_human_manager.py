@@ -5,6 +5,9 @@ from predict_office.prediction_case import TPredictionCase
 from common.logging_wrapper import setup_logging
 from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from predict_office.office_index import TOfficePredictIndex
+from office_db.russia import RUSSIA
+from office_db.declaration_office_website import TDeclarationWebSite
+from common.urllib_parse_pro import  urlsplit_pro
 
 import argparse
 import json
@@ -17,6 +20,7 @@ def parse_args():
                                                         "print_sha256, print_web_sites, create_sample, "
                                                         "delete, to_utf8, titles, check_office, to_json,"
                                                         " build_office_train_set, print_office_id, rebuild_ml_pool, "
+                                                        "print_predicted_as_external"
                         "unknown_office_uniq_website_pool")
     parser.add_argument("--input-file", dest='input_file')
     parser.add_argument("--output-file", dest='output_file', required=False)
@@ -187,6 +191,27 @@ class TDlrobotHumanManager:
         for key in self.dlrobot_human.get_all_keys():
             print(key)
 
+    def print_predicted_as_external(self):
+        for key, src_doc in self.dlrobot_human.get_all_documents():
+            if src_doc.calculated_office_id is None:
+                continue
+            urls = set(r.get_site_url() for r in src_doc.web_references)
+            if len(urls) != 1:
+                continue
+            src_doc_url = list(urls)[0]
+            if src_doc_url == "service.nalog.ru":
+                continue
+            office = RUSSIA.offices_in_memory.get_office_by_id(src_doc.calculated_office_id)
+            u: TDeclarationWebSite
+            found = False
+            for u in office.office_web_sites:
+                if urlsplit_pro(u.url).hostname == urlsplit_pro(src_doc_url).hostname:
+                    found = True
+                    break
+            if found:
+                continue
+            print("{}\t{}\t{}".format(key, src_doc.calculated_office_id, src_doc_url))
+
     def main(self):
         action = self.args.action
         if action == "print_web_sites":
@@ -201,6 +226,8 @@ class TDlrobotHumanManager:
             self.build_predict_office_ml_pool(self.get_generator_by_source_ml_pool)
         elif action == "unknown_office_uniq_website_pool":
             self.build_predict_office_ml_pool(self.get_unknown_office_uniq_website)
+        elif action == "print_predicted_as_external":
+            self.print_predicted_as_external()
         elif action == "select":
             self.select_by_sha256()
         elif action == "delete":

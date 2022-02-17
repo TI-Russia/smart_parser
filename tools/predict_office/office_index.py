@@ -45,7 +45,7 @@ class TOfficePredictIndex:
         self.logger = logger
         self.office_name_bigrams = None
         self.office_name_unigrams = None
-        self.offices = None
+        self.office_squeezes = None
         self.web_domains = None
         self.office_id_2_ml_office_id = None
         self.ml_office_id_2_office_id = None
@@ -68,12 +68,12 @@ class TOfficePredictIndex:
         return s.web_domain_id
 
     def is_office_child(self, child_id, parent_id):
-        return child_id is not None and self.offices[child_id]['parent_id'] == parent_id
+        return child_id is not None and self.office_squeezes[child_id]['parent_id'] == parent_id
 
     def is_office_child_or_grandchild(self, child_id, parent_id):
         if self.is_office_child(child_id, parent_id):
             return True
-        p = self.offices[child_id]['parent_id']
+        p = self.office_squeezes[child_id]['parent_id']
         return self.is_office_child(p, parent_id)
 
     def get_web_domains_count(self):
@@ -88,7 +88,7 @@ class TOfficePredictIndex:
         web_domain = urlsplit_pro(site_url).hostname
         if self.web_sites.get_first_site_by_web_domain(web_domain) is None:
             if web_domain != "declarator.org" and web_domain != "rg.ru":
-                self.logger.error("web domain {} is missing in offices.txt".format(site_url))
+                self.logger.error("web domain {} is missing in office.txt".format(site_url))
         return web_domain
 
     def get_ml_office_id(self, office_id: int):
@@ -113,7 +113,7 @@ class TOfficePredictIndex:
         b = self.office_name_bigrams.get(bigram)
         if b is None:
             return list()
-        return b.offices
+        return b.office_squeezes
 
     @staticmethod
     def get_word_stems(text, stem_size=4, add_starter_and_enders=True):
@@ -162,7 +162,7 @@ class TOfficePredictIndex:
             js = json.load(inp)
             self.office_name_bigrams = dict((k, TOfficeNgram.from_json(v)) for k, v in js['bigrams'].items())
             self.office_name_unigrams = dict((k, TOfficeNgram.from_json(v)) for k, v in js['unigrams'].items())
-            self.offices = dict((int(k), v) for k, v in js['offices'].items())
+            self.office_squeezes = dict((int(k), v) for k, v in js['offices'].items())
             self.web_domains = dict((k, TOfficeWebDomain.from_json(v)) for k, v in js['web_domains'].items())
             self.office_id_2_ml_office_id = dict((int(k), v) for k,v in js['office_id_2_ml_office_id'].items())
             self.ml_office_id_2_office_id = dict((int(k), v) for k,v in js['ml_office_id_2_office_id'].items())
@@ -174,7 +174,7 @@ class TOfficePredictIndex:
             rec = {
                 'bigrams': dict((k, v.to_json()) for k, v in self.office_name_bigrams.items()),
                 'unigrams': dict((k, v.to_json()) for k, v in self.office_name_unigrams.items()),
-                'offices': self.offices,
+                'offices': self.office_squeezes,
                 'web_domains': dict((k, v.to_json()) for k, v in self.web_domains.items()),
                 'office_id_2_ml_office_id': self.office_id_2_ml_office_id,
                 'ml_office_id_2_office_id': self.ml_office_id_2_office_id,
@@ -182,10 +182,10 @@ class TOfficePredictIndex:
             json.dump(rec, outp, ensure_ascii=False, indent=4)
 
     def get_office_name(self, office_id: int):
-        return self.offices[office_id]['name']
+        return self.office_squeezes[office_id]['name']
 
     def get_office_region(self, office_id: int):
-        return self.offices[office_id]['region']
+        return self.office_squeezes[office_id]['region']
 
     def get_region_from_web_site_title(self, site_url: str):
         site_info = self.web_sites.get_web_site(site_url)
