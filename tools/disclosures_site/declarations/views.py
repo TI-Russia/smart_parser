@@ -125,12 +125,12 @@ class OfficeView(generic.DetailView):
         region_name = ""
         if self.office.region_id is not None:
             region_name = RUSSIA.regions.get_region_by_id(self.office.region_id).name
-        child_examples = list((i.id, RUSSIA.get_office(i.id).name) for i in self.office_stats.child_office_examples)
+        child_examples = list((id, RUSSIA.get_office(id).name) for id in self.office_stats.child_office_examples)
         extra = {
             'source_document_count':  self.office_stats.source_document_count,
             'region_name': region_name,
             'source_document_count_html': self.get_source_doc_html(),
-            'child_offices_count': self.office_stats.child_office_examples,
+            'child_offices_count': self.office_stats.child_offices_count,
             'section_count_html': self.section_count_html(),
             'section_count_by_years_html': self.section_count_by_years_html(),
             'median_income_by_years_html': self.median_income_by_years_html(),

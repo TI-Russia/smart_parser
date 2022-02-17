@@ -172,7 +172,7 @@ class BuildOfficeCalculatedParams(BaseCommand):
                 oi.child_office_examples = list()
             else:
                 oi.child_office_examples = list(c.office_id for c in child_offices[office_id][:5])
-            oi.child_offices_count = len(child_offices[office_id]),
+            oi.child_offices_count = len(child_offices[office_id])
             oi.section_count = sum(s.declarants_count for s in oi.year_snapshots.values())
             oi.urls = list(x.url for x in office.office_web_sites if x.can_communicate())
 
