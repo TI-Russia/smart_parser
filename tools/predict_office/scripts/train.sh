@@ -26,9 +26,11 @@ cut -f 1  pool.mos.ru.txt >a.1
 #get predicted office_id and print it to pool
 python3 ~/smart_parser/tools/disclosures_site/scripts/dlrobot_human.py --action to_json  --sha256-list-file a.1 --input-file dlrobot_human.dbm | jq -rc '.documents | to_entries[] | [.key, .value.office_id] | @tsv' | sort >a.sha_office
 join -t $'\t' pool.mos.ru.txt  a.sha_office  | awk -F "\t" -v  OFS="\t" '{print $1,$2,$5,$4}' >pool.mos.ru.txt.with_office_id
-python3 ~/smart_parser/tools/predict_office/tf_office_toloka.py --model-folder model --test-pool pool200a.txt --toloka-output-pool toloka.txt
+python3 ~/smart_parser/tools/predict_office/scripts/tf_office_toloka.py --model-folder model --test-pool pool200a.txt --toloka-output-pool toloka.txt
 
 # go to toloka, add a new pool, access it, download results
+# https://sandbox.toloka.yandex.ru/requester/project/74069
+
 cat ~/Downloads/assignments_from_pool_962392__20-08-2021.tsv | cut -f 1,8 | grep -v 'INPUT:sha256' | sort  >a
 cat ~/smart_parser/tools/predict_office/pools/pool????.txt  | sort   join -t $'\t' - a -o '1.1,1.2,2.2,1.4' >p.txt
 cp p.txt ~/smart_parser/tools/predict_office/pools/pool200a.txt

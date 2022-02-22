@@ -262,9 +262,9 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         assert (len(result) == len(cases))
         return result
 
-    def toloka(self, toloka_pool_path: str):
+    def toloka(self, toloka_pool_path: str, format=1):
         model = self.load_model()
         assert len(self.test_pool.pool) > 0
         test_x = self.to_ml_input_features(self.test_pool.pool)
         test_y_pred = model.predict(test_x)
-        self.test_pool.build_toloka_pool(test_y_pred, toloka_pool_path)
+        self.test_pool.build_toloka_pool(test_y_pred, toloka_pool_path, format=format)

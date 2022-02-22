@@ -68,6 +68,18 @@ class TDeclarationWebSiteList:
             return None
         return self.web_sites.get(l[0])
 
+    def search_url(self, url: str) -> TDeclarationWebSite:
+        host_name = self.site_url_to_web_domain(url)
+        web_site = self.get_first_site_by_web_domain(host_name)
+        if web_site is not None:
+            return web_site
+        if not host_name.startswith('www.'):
+            return self.get_first_site_by_web_domain("www." + host_name)
+        return None
+
+    def is_a_special_domain(self, web_domain):
+        return web_domain == "declarator.org" or web_domain == "rg.ru"
+
     def get_web_domains(self):
         for k in self.web_domain_to_web_site:
             yield k

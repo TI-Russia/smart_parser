@@ -87,7 +87,7 @@ class TOfficePredictIndex:
         # if this web domain is unknown, take web domain from site_url
         web_domain = urlsplit_pro(site_url).hostname
         if self.web_sites.get_first_site_by_web_domain(web_domain) is None:
-            if web_domain != "declarator.org" and web_domain != "rg.ru":
+            if not self.web_sites.is_a_special_domain(web_domain):
                 self.logger.error("web domain {} is missing in office.txt".format(site_url))
         return web_domain
 

@@ -7,6 +7,7 @@ from smart_parser_http.smart_parser_client import TSmartParserCacheClient
 from predict_office.office_index import TOfficePredictIndex
 from office_db.russia import RUSSIA
 from office_db.declaration_office_website import TDeclarationWebSite
+from office_db.web_site_list import TDeclarationWebSiteList
 from common.urllib_parse_pro import  urlsplit_pro
 
 import argparse
@@ -147,7 +148,7 @@ class TDlrobotHumanManager:
         for sha256, src_doc in self.dlrobot_human.get_all_documents():
             if src_doc.calculated_office_id is not None:
                 continue
-            if src_doc.office_strings is None or len(json.loads(src_doc.office_strings).get('title', "")) < 10:
+            if src_doc.office_strings is None or len(src_doc.get_doc_title()) < 10:
                 continue
             web_site = src_doc.get_web_site()
             if web_site in websites:
@@ -192,6 +193,7 @@ class TDlrobotHumanManager:
             print(key)
 
     def print_predicted_as_external(self):
+        web_sites = TDeclarationWebSiteList(logger=self.logger, offices=RUSSIA.offices_in_memory)
         for key, src_doc in self.dlrobot_human.get_all_documents():
             if src_doc.calculated_office_id is None:
                 continue
@@ -204,13 +206,33 @@ class TDlrobotHumanManager:
             office = RUSSIA.offices_in_memory.get_office_by_id(src_doc.calculated_office_id)
             u: TDeclarationWebSite
             found = False
+            origin_hostname = urlsplit_pro(src_doc_url).hostname
+            if  web_sites.is_a_special_domain(origin_hostname):
+                continue
             for u in office.office_web_sites:
-                if urlsplit_pro(u.url).hostname == urlsplit_pro(src_doc_url).hostname:
+                if urlsplit_pro(u.url).hostname == origin_hostname:
                     found = True
                     break
             if found:
                 continue
-            print("{}\t{}\t{}".format(key, src_doc.calculated_office_id, src_doc_url))
+            ww = web_sites.search_url(src_doc_url)
+            if ww is None:
+                self.logger.error("cannot find url {} by web domain in offices.txt".format(src_doc_url))
+                continue
+            r = {
+                "sha256": key,
+                "predicted_office": {
+                    "id": office.office_id,
+                    "name": office.name
+                },
+                "url_host_office": {
+                    "id": ww.parent_office.office_id,
+                    "name": ww.parent_office.name
+                },
+                "url": src_doc_url,
+                "title": src_doc.get_doc_title()
+            }
+            print(json.dumps(r, indent=4, ensure_ascii=False))
 
     def main(self):
         action = self.args.action
