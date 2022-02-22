@@ -95,9 +95,10 @@ class TWebSitesManager:
             #take all web domains
             web_domains = list(self.web_sites.web_sites.keys())
 
-        self.logger.info("we are going to process {} web sites".format(len(web_domains)))
-
         domains_filtered = (w for w in web_domains if self.check_web_site_filters(w))
+
+        self.logger.info("we are going to process {} web sites".format(len(domains_filtered)))
+
         if start_selenium:
             TDownloadEnv.FILE_CACHE_FOLDER = TDownloadEnv.FILE_CACHE_FOLDER + "_{}_{}".format(time.time(), os.getpid())
             self.logger.info("rm {}".format(TDownloadEnv.FILE_CACHE_FOLDER))
