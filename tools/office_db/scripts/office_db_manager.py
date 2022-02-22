@@ -95,7 +95,7 @@ class TWebSitesManager:
             #take all web domains
             web_domains = list(self.web_sites.web_sites.keys())
 
-        domains_filtered = (w for w in web_domains if self.check_web_site_filters(w))
+        domains_filtered = list(w for w in web_domains if self.check_web_site_filters(w))
 
         self.logger.info("we are going to process {} web sites".format(len(domains_filtered)))
 
