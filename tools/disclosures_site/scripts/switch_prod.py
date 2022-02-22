@@ -96,8 +96,8 @@ class TSwitcher:
         shutil.move(new_folder, prod)
 
     def test_final(self):
-        cmd = 'PYTHONPATH={} {} scripts/dolbilo.py --input-access-log data/access.test.log.gz  --host {} --expected-normal-count {}'.format(
-            TOOLS_FOLDER, sys.executable, self.args.host, 141
+        cmd = 'PYTHONPATH={} {} scripts/dolbilo.py --input-requests data/dolbilo_requests.txt --host {}'.format(
+            TOOLS_FOLDER, sys.executable, self.args.host
         )
         self.run_cmd(cmd)
 

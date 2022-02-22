@@ -72,8 +72,9 @@ class TOfficePool:
             self.write_pool(self.pool, train_pool_path)
             self.logger.info("train size = {}".format(len(self.pool)))
 
-    def build_toloka_pool(self,  test_y_pred, output_path):
+    def build_toloka_pool(self,  test_y_pred, output_path, format: int):
         assert len(self.pool) == len(test_y_pred)
+        assert format == 1 or format == 2
 
         with open(output_path, "w") as outp:
             case: TPredictionCase
@@ -103,6 +104,7 @@ class TOfficePool:
                             hypots[office_id] = weight
 
                 office_infos = list()
+                index = 1
                 for office_id, weight in sorted(hypots.items(), key=operator.itemgetter(1), reverse=True):
                     region_id = self.office_index.get_office_region(office_id)
                     if region_id is not None:
@@ -115,22 +117,44 @@ class TOfficePool:
                         'hypot_office_name': self.office_index.get_office_name(office_id),
                         'hypot_region': region_str,
                         "weight": round(float(weight), 4),
+                        "index": str(index)
                     }
                     if len(hypots) == 1:
                         rec['status'] = "true_positive"
                     if office_id == calculated_office_id:
                         rec['calculated_office_id'] = 1
+                    index += 1
                     office_infos.append(rec)
                 office_strings = json.loads(case.office_strings)
+                web_domain_title = self.office_index.web_sites.get_title_by_web_domain(case.web_domain)
+                if web_domain_title is None or len (web_domain_title) == 0:
+                    web_domain_title = "_"
                 rec = {
                     "INPUT:sha256":  case.sha256,
-                    "INPUT:web_domain": case.web_domain,
-                    "INPUT:web_domain_title": self.office_index.web_sites.get_title_by_web_domain(case.web_domain),
-                    'INPUT:doc_title': office_strings.get('title', ''),
-                    'INPUT:doc_roles': ";".join(office_strings.get('roles', [])),
-                    'INPUT:doc_departments': ";".join(office_strings.get('departments', [])),
-                    'INPUT:office_hypots': json.dumps(office_infos, ensure_ascii=False)
+                    "INPUT:web_domain": (case.web_domain if format == 1 else "http://" + case.web_domain),
+                    "INPUT:web_domain_title": web_domain_title
                 }
+                if format == 1:
+                    add_rec = {
+
+                        'INPUT:doc_title': office_strings.get('title', ''),
+                        'INPUT:doc_roles': ";".join(office_strings.get('roles', [])),
+                        'INPUT:doc_departments': ";".join(office_strings.get('departments', [])),
+                        'INPUT:office_hypots': json.dumps(office_infos, ensure_ascii=False),
+                    }
+                elif format == 2:
+                    hypots_str = json.dumps(office_infos, ensure_ascii=False).strip('[]').replace(',', '\\,')
+                    of_str = {
+                                'title': office_strings.get('title', ''),
+                                'roles': ";".join(office_strings.get('roles', [])),
+                                'departments':  ";".join(office_strings.get('departments', []))
+                        }
+                    add_rec = {
+                        "INPUT:web_domain_title": web_domain_title,
+                        'INPUT:office_strings': json.dumps(of_str, ensure_ascii=False),
+                        'INPUT:office_hypots': hypots_str
+                    }
+                rec.update(add_rec)
                 if cnt == 0:
                     tsv_writer.writerow(list(rec.keys()))
                 tsv_writer.writerow(list(rec.values()))

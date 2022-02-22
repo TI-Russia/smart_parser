@@ -1,5 +1,5 @@
 from common.urllib_parse_pro import TUrlUtf8Encode
-
+import json
 
 class TIntersectionStatus:
     both_found = "both_found"
@@ -141,7 +141,6 @@ class TSourceDocument:
             return year
         return int(year)
 
-
     def add_web_reference(self, web_ref):
         if web_ref is not None and web_ref not in self.web_references:
             self.web_references.append(web_ref)
@@ -171,3 +170,8 @@ class TSourceDocument:
             ref.convert_to_utf8()
         for ref in self.web_references:
             ref.convert_to_utf8()
+
+    def get_doc_title(self):
+        if self.office_strings is None:
+            return ""
+        return json.loads(self.office_strings).get('title', "")

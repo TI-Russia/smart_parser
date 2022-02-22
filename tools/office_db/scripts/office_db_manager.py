@@ -31,6 +31,7 @@ def parse_args():
     parser.add_argument("--take-all-web-sites", dest='take_all_web_sites', required=False, action="store_true", default=False,
                         help="by default we skip all abandoned web sites")
     parser.add_argument("--filter-regex", dest='filter_regex', required=False)
+    parser.add_argument("--filter-by-source", dest='filter_by_source', required=False)
     parser.add_argument("--replace-substring", dest='replace_substring', required=False,
                         help="for example, --action move --filter-regex '.mvd.ru$'  --replace-substring .мвд.рф")
     parser.add_argument("--parent-office-id", dest='parent_office_id', type=int, required=False)
@@ -76,7 +77,12 @@ class TWebSitesManager:
 
     def get_url_list(self, start_selenium=False):
         web_domains = list()
-        if self.args.url_list is not None:
+        if self.args.filter_by_source is not None:
+            web_domains = list()
+            for k in self.web_sites.web_sites.values():
+                if k.parent_office.source_id == self.args.filter_by_source:
+                    web_domains.append(strip_scheme_and_query(k.url))
+        elif self.args.url_list is not None:
             self.logger.info("read url list from {}".format(self.args.url_list))
             with open(self.args.url_list) as inp:
                 for url in inp:
@@ -88,6 +94,8 @@ class TWebSitesManager:
         else:
             #take all web domains
             web_domains = list(self.web_sites.web_sites.keys())
+
+        self.logger.info("we are going to process {} web sites".format(len(web_domains)))
 
         domains_filtered = (w for w in web_domains if self.check_web_site_filters(w))
         if start_selenium:
@@ -258,17 +266,14 @@ class TWebSitesManager:
         with open (self.args.redirect_mapping_path) as inp:
             for l in inp:
                 old, new_site_url = l.strip().split()
-                web_site = self.web_sites.get_web_site(old)
+                if not new_site_url.startswith('http'):
+                    raise Exception("unknown http prefix in  {}".format(new_site_url))
+                web_site = self.web_sites.search_url(old)
                 if web_site is None:
-                    old1 = TDeclarationWebSiteList.site_url_to_web_domain(old)
-                    web_site = self.web_sites.get_first_site_by_web_domain(old1)
-                    if web_site is None:
-                        raise Exception("cannot find website {}".format(old))
-                    if not new_site_url .startswith('http'):
-                        raise Exception("unknown http prefix in  {}".format(new))
-                    web_site.set_redirect(new_site_url)
-                    new_site_info = TDeclarationWebSite(url=new_site_url)
-                    web_site.parent_office.office_web_sites.append(new_site_info)
+                    raise Exception("cannot find website {}".format(old))
+                web_site.set_redirect(new_site_url)
+                new_site_info = TDeclarationWebSite(url=new_site_url)
+                web_site.parent_office.office_web_sites.append(new_site_info)
 
     def main(self):
         if self.args.action == "ban":

@@ -10,6 +10,7 @@ def parse_args():
     parser.add_argument("--test-pool", dest='test_pool')
     parser.add_argument("--model-folder", dest='model_folder', required=False)
     parser.add_argument("--toloka-output-pool", dest='toloka_pool', required=False)
+    parser.add_argument("--format", dest='format', default=1, type=int)
     return parser.parse_args()
 
 
@@ -18,7 +19,7 @@ def main():
     args = parse_args()
     model = TTensorFlowOfficeModel(logger, args.bigrams_path, args.model_folder,
                                    test_pool=args.test_pool)
-    model.toloka(options['toloka_pool'])
+    model.toloka(args.toloka_pool, format=args.format)
 
 
 if __name__ == "__main__":
