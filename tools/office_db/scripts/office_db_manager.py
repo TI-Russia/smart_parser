@@ -3,7 +3,7 @@ from office_db.declaration_office_website import TDeclarationWebSite
 from common.web_site_status import TWebSiteReachStatus
 from dlrobot.common.robot_web_site import TWebSiteCrawlSnapshot
 from dlrobot.common.robot_project import TRobotProject
-from common.urllib_parse_pro import strip_scheme_and_query, TUrlUtf8Encode
+from common.urllib_parse_pro import strip_scheme_and_query, TUrlUtf8Encode, get_site_url
 from common.logging_wrapper import setup_logging
 from common.http_request import THttpRequester
 from common.download import TDownloadEnv
@@ -81,7 +81,7 @@ class TWebSitesManager:
             web_domains = list()
             for k in self.web_sites.web_sites.values():
                 if k.parent_office.source_id == self.args.filter_by_source:
-                    web_domains.append(strip_scheme_and_query(k.url))
+                    web_domains.append(get_site_url(k.url))
         elif self.args.url_list is not None:
             self.logger.info("read url list from {}".format(self.args.url_list))
             with open(self.args.url_list) as inp:
