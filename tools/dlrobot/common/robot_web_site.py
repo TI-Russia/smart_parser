@@ -17,7 +17,7 @@ import urllib.parse
 
 class TWebSiteCrawlSnapshot:
 
-    def __init__(self, project, morda_url=""):
+    def __init__(self, project, morda_url="", enable_step_init=True):
         #runtime members (no serialization)
         self.start_crawling_time = time.time()
         self.parent_project = project
@@ -41,9 +41,10 @@ class TWebSiteCrawlSnapshot:
                 self.main_page_url)
 
         self.robot_steps = list()
-        for i, passport in enumerate(project.config.get_step_passports()):
-            step = TRobotStep(self, **passport, is_last_step=(i == len(project.config.get_step_passports()) - 1))
-            self.robot_steps.append(step)
+        if enable_step_init:
+            for i, passport in enumerate(project.config.get_step_passports()):
+                step = TRobotStep(self, **passport, is_last_step=(i == len(project.config.get_step_passports()) - 1))
+                self.robot_steps.append(step)
 
     # declarations number per minute
     def get_robot_speed(self):

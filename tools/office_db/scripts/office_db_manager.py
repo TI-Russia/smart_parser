@@ -37,7 +37,7 @@ def parse_args():
     parser.add_argument("--parent-office-id", dest='parent_office_id', type=int, required=False)
     parser.add_argument("--query-template", dest='query_template', required=False)
     parser.add_argument("--logfile", dest='logfile', default="web_sites.log")
-
+    parser.add_argument("--write-main-page", dest="main_page_path", action="store_true", default=False)
     return parser.parse_args()
 
 
@@ -138,7 +138,7 @@ class TWebSitesManager:
 
     def browse_one_url(self,  url):
         self.logger.info("check {}".format(url))
-        web_site = TWebSiteCrawlSnapshot(self.temp_dlrobot_project, morda_url=url)
+        web_site = TWebSiteCrawlSnapshot(self.temp_dlrobot_project, morda_url=url, enable_step_init=False)
         web_site.fetch_the_main_page(enable_search_engine=False)
         if TWebSiteReachStatus.can_communicate(web_site.reach_status):
             return web_site
@@ -180,14 +180,17 @@ class TWebSitesManager:
                 self.logger.info("     {} is alive, main_page_url = {}".format(
                     site_url, web_site.main_page_url))
                 site_info.set_title(title)
-            try:
-                if web_site.main_page_source.lower().find('коррупц') != -1:
-                    self.logger.info("site contains corruption keyword {}".format(site_url))
-                    site_info.corruption_keyword_in_html = True
-                with open(site_url.strip('/').replace('/', '_') + ".page_source.html", "w") as outp:
-                    outp.write(web_site.main_page_source)
-            except Exception as exp:
-                self.logger.error("cannot save page html to file: {} ".format(site_url))
+
+            if web_site.main_page_source.lower().find('коррупц') != -1:
+                self.logger.info("site contains corruption keyword {}".format(site_url))
+                site_info.corruption_keyword_in_html = True
+
+            if self.args.main_page_path:
+                try:
+                    with open(site_url.strip('/').replace('/', '_') + ".page_source.html", "w") as outp:
+                        outp.write(web_site.main_page_source)
+                except Exception as exp:
+                    self.logger.error("cannot save page html to file: {} ".format(site_url))
 
     def check_alive(self):
         complete_bans = list()
