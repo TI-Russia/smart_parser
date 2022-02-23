@@ -1,4 +1,6 @@
 from common.web_site_status import TWebSiteReachStatus
+from common.primitives import normalize_whitespace
+import re
 
 
 class TDeclarationWebSite:
@@ -58,3 +60,19 @@ class TDeclarationWebSite:
 
     def get_parent_source_id(self):
         return self.parent_office.source_id
+
+    @staticmethod
+    def clean_title(title):
+        if title is None:
+            return ""
+        title = normalize_whitespace(title)
+        regexp = "(главная страница)|(Новости)|(Добро пожаловать!)" \
+                "|(Добро пожаловать)|(None)|(title)|(Title)|(Portal)|(main)|(Срок регистрации домена закончился)" \
+                "|(403 Forbidden)|(Главная страница сайта)|(Срок действия тарифа истек)" \
+                "|(Добро пожаловать на сайт)|(Главная страница)|(Main)|(на сайт —)|(Общая информация \|)"
+        title = re.sub(regexp,"", title,  re.IGNORECASE).strip(" |:-—")
+        if title.lower() in {"главная", "новости", "основные сведения", "управление", "официальный сайт", "сайт школы",
+                             "администрация", "идет проверка..."}:
+            return ""
+        title = re.sub("Главная ([|-])", "", title, re.IGNORECASE).strip(" |:-")
+        return title
