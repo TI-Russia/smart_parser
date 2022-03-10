@@ -49,22 +49,26 @@
 
 <body vlink="#999999" alink="#000000">
 
-<div class="header">
+
+<div class="web_site_header mobile">
     <div>
-        <div class="disclosures_top_header">Дискложес&nbsp;
-            <span class="mobile" style="float:right; font-size: 150%;">
+        <span class="disclosures_top_header">Дискложес&nbsp;
+            <span style="float:right; font-size: 150%;">
                 <a href="javascript:void(0);" style="color: black; text-decoration: none;" onclick="showMobileMenu()">
             &#9776; &nbsp;
                 </a>
             </span>
-        </div>
-        <div class="header2 mobile"><br/>декларации о доходах</div>
-        <div class="header2 desktop">Автоматизированный сбор деклараций о доходах</div>
+            <span style="float:right;">
+                <a href="https://ru.wikipedia.org/wiki/%D0%92%D1%82%D0%BE%D1%80%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B8_%D0%BD%D0%B0_%D0%A3%D0%BA%D1%80%D0%B0%D0%B8%D0%BD%D1%83_(2022)">
+                    <img src="/static/images/pozor_putina.jpg"/ width=60/>
+                </a>
+               &nbsp;&nbsp;&nbsp;
+            </span>
+        </span>
+        <div><br/>декларации о доходах</div>
     </div>
-    <div class="desktop" id="menu_div"></div>
-
     <hr />
-      <div id="mobileMenu" class="topnav">
+    <div id="mobileMenu" class="topnav">
           <div class="menu_table">
               <div class="row">
                 <a  href="/section/">Декларации</a>
@@ -85,6 +89,30 @@
       </div>
 
 </div>
+
+<div class="web_site_header desktop">
+    <table>
+        <tr>
+            <td>
+                <span class="disclosures_top_header">Дискложес</span>
+                <span style="display:inline;">&nbsp;&nbsp;&nbsp;  Автоматизированный сбор деклараций о доходах</span>
+            </td>
+            <td rowspan="2">
+                <a href="https://ru.wikipedia.org/wiki/%D0%92%D1%82%D0%BE%D1%80%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5_%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B8_%D0%BD%D0%B0_%D0%A3%D0%BA%D1%80%D0%B0%D0%B8%D0%BD%D1%83_(2022)">
+                    <img src="/static/images/pozor_putina.jpg"/ width=60/>
+                </a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span id="menu_div"></span>
+            </td>
+        </tr>
+    </table>
+    <hr />
+
+</div>
+
 
 {# The Document Body #}
 <div id="site-wrapper">
