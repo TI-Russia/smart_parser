@@ -10,6 +10,7 @@ import pytz
 import ssl
 import argparse
 import json
+import platform
 
 # see smart_parser/tools/disclosures_site/scripts/etc/systemd/system/check_disclosures_health.service
 # for installing this script as a unix service
@@ -128,8 +129,8 @@ class TMonitoring:
 
     def send_alert_message(self, name, method_name, url, state):
         if name is None:
-            name = self.args.monitoring_name
-        message = "{} {} {} {}".format(name, url, method_name,  state)
+                name = self.args.monitoring_name
+        message = "{} {} {} {} {}".format(platform.node(), name, url, method_name,  state)
         event_id = "{} {}".format(method_name, url)
         self.logger.debug(message)
         last_send_time, last_send_alert_message = self.last_messages.get(event_id, (0, ""))

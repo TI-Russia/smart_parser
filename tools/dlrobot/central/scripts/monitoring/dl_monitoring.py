@@ -13,8 +13,9 @@ import json
 from collections import defaultdict
 import time
 
+#this script is used for monitoring dlrobot (downloading declaration files)
+#see examples in crontab.txt, how to run it
 
-#see examples in crontab.txt
 
 
 def build_html(args, fig, output_file):

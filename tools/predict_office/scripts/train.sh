@@ -11,7 +11,7 @@ cd ~/smart_parser/tools/disclosures_site/predict_office/pools
 for src in `ls *.source.txt`; do
   output_file=${src%.source.txt}.txt
   echo "$src -> $output_file"
-  python3 ~/smart_parser/tools/disclosures_site/scripts/dlrobot_human.py \
+  python3 ~/smart_parser/tools/dlrobot_human/scripts/dlrobot_human_manager.py \
     --action rebuild_ml_pool \
     --input-file  ~/declarator_hdd/declarator/dlrobot_updates/1629223992/dlrobot_human.dbm \
     --input-predict-office-pool $src  \
@@ -44,10 +44,9 @@ cd $FOLDER
 # so train.declarator.txt cam be rebuilt by command
 # python /home/sokirko/smart_parser/tools/disclosures_site/scripts/dlrobot_human.py --action build_office_train_set
 # I remember that train.declarator.txt was somehow modified after creation (I forgot the details).
-TRAIN_DECLARATOR=~/tmp/predict_office/train.declarator.txt
 
 python3 ~/smart_parser/tools/predict_office/scripts/build_office_index.py
-python3 ~/smart_parser/tools/predict_office/scripts/prepare_train_pool.py --pool $TRAIN_DECLARATOR  ~/smart_parser/tools/predict_office/pools/train.sud.txt  ~/smart_parser/tools/predict_office/pools/train.toloka.txt,3  --output-train-pool train_pool.txt
+python3 ~/smart_parser/tools/predict_office/scripts/prepare_train_pool.py --pool ~/tmp/predict_office/train.declarator.txt  ~/smart_parser/tools/predict_office/pools/train.sud.txt  ~/smart_parser/tools/predict_office/pools/train.toloka.txt,3  --output-train-pool train_pool.txt
 python3 ~/smart_parser/tools/predict_office/scripts/tf_office_train.py --model-folder model  --train-pool train_pool.txt --epoch-count  19
-python3 ~/smart_parser/tools/predict_office/scripts/tf_office_test.py --test-pool ~/smart_parser/tools/predict_office/pools/test_fixed.txt  --bigrams-path office_ngrams.txt  --model-folder model --threshold 0.99
+  python3 ~/smart_parser/tools/predict_office/scripts/tf_office_test.py --test-pool ~/smart_parser/tools/predict_office/pools/test_fixed.txt  --bigrams-path office_ngrams.txt  --model-folder model --threshold 0.99
 

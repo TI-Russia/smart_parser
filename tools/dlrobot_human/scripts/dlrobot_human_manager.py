@@ -29,6 +29,8 @@ def parse_args():
     parser.add_argument("--sha256", dest='sha256', required=False)
     parser.add_argument("--input-predict-office-pool", dest='input_predict_office_pool_path', required=False)
     parser.add_argument("--output-predict-office-pool", dest='output_predict_office_pool_path', required=False)
+    parser.add_argument("--office-index", dest='office_index', required=False,
+                        default=os.path.join(os.path.dirname(__file__), "../../predict_office/model/office_ngrams.txt"))
     return parser.parse_args()
 
 
@@ -39,8 +41,7 @@ class TDlrobotHumanManager:
         self.dlrobot_human = TDlrobotHumanFileDBM(self.args.input_file)
         self.dlrobot_human.open_db_read_only()
         if self.args.action in {"check_office", "build_office_train_set"} or self.args.action.endswith('_pool'):
-            default_path = os.path.join(os.path.dirname(__file__), "../predict_office/model/office_ngrams.txt")
-            self.office_index = TOfficePredictIndex(self.logger, default_path)
+            self.office_index = TOfficePredictIndex(self.logger, self.args.office_index)
             self.office_index.read()
         else:
             self.office_index = None
@@ -161,7 +162,11 @@ class TDlrobotHumanManager:
         #pool.read_cases(self.args.input_predict_office_pool_path)
         with open(self.args.input_predict_office_pool_path) as inp:
             for line in inp:
-                sha256, office_id = line.strip().split("\t")
+                items = line.strip().split("\t")
+                if len(items) == 4 and len(items[0]) == 64 and items[2].isdigit():
+                    sha256, office_id = items[0], items[2]
+                else:
+                    sha256, office_id = items
                 src_doc = self.dlrobot_human.get_document(sha256)
                 yield sha256, src_doc, int(office_id)
 
