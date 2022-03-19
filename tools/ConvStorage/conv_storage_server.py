@@ -1,6 +1,7 @@
 from ConvStorage.convert_storage import TConvertStorage
 from common.primitives import build_dislosures_sha256_by_file_data, run_with_timeout
 from common.logging_wrapper import  close_logger
+from ConvStorage.conversion_client import TDocConversionClient
 
 import argparse
 import json
@@ -44,6 +45,7 @@ def convert_pdf_to_docx_with_abiword(input_path, out_path):
 def taskkill_windows(process_name):
     if os.name == 'nt':
         subprocess.run(['taskkill', '/F', '/IM', process_name],  stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
+
 
 def move_file_with_retry(logger, file_name, output_folder):
     output_file = os.path.join(output_folder, os.path.basename(file_name))
@@ -187,6 +189,7 @@ class TConvertProcessor(http.server.HTTPServer):
                 raise Exception("cannot find running HotFolder.exe")
 
         self.file_garbage_collection_timestamp = 0
+        self.self_server_ping_timestamp = 0
         self.ocr_queue_is_empty_last_time_stamp = time.time()
         self.got_ocred_file_last_time_stamp = time.time()
         self.http_server_is_working = False
@@ -543,6 +546,15 @@ class TConvertProcessor(http.server.HTTPServer):
             if not self.http_server_is_working:
                 return
             self.process_stalled_files()
+
+        if current_time - self.self_server_ping_timestamp >= 3600:  # just not too often
+            args = TDocConversionClient.parse_args(["--server-address", self.args.server_address])
+            client = TDocConversionClient(args, self.logger)
+            if not client.assert_declarator_conv_alive(raise_exception=False):
+                self.logger.error("cannot ping itself, exit")
+                self.stop_http_server(run_shutdown=False)
+                sys.exit(1)
+            self.self_server_ping_timestamp = current_time
 
         current_time = time.time()
         if  current_time - self.got_ocred_file_last_time_stamp > self.args.ocr_restart_time and \

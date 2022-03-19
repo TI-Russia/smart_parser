@@ -24,13 +24,13 @@ class TOfficePredictIndexBuilder(TOfficePredictIndex):
         self.logger.info("build bigrams")
         office_bigrams = defaultdict(set)
         office_stems = defaultdict(set)
-        self.offices = dict()
+        self.office_squeezes = dict()
         office: TOfficeInMemory
         for office in RUSSIA.iterate_offices():
             region_id = office.region_id
             if region_id is None:
                 region_id = 0
-            self.offices[office.office_id] = {
+            self.office_squeezes[office.office_id] = {
                 'name': office.name,
                 'region': region_id,
                 'parent_id': office.parent_id

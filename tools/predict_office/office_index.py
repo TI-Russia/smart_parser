@@ -171,6 +171,8 @@ class TOfficePredictIndex:
     def write(self):
         self.logger.info("write to {}".format(self.index_file_path))
         with open(self.index_file_path, "w") as outp:
+            assert self.office_squeezes is not None
+            assert len(self.office_squeezes) > 0
             rec = {
                 'bigrams': dict((k, v.to_json()) for k, v in self.office_name_bigrams.items()),
                 'unigrams': dict((k, v.to_json()) for k, v in self.office_name_unigrams.items()),

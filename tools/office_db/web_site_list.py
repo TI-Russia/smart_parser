@@ -30,6 +30,8 @@ class TDeclarationWebSiteList:
                         raise Exception("url {} occurs in office db more than one time".format(site_url))
                 self.web_sites[site_url] = u
                 self.web_sites_to_office[site_url] = o
+                if u.can_communicate() and u.title is None:
+                    self.logger.error("url={} has no title, ML model predict office needs titles to work properly".format(u.url))
 
         self.build_web_domains_redirects()
         self.web_domain_to_web_site.clear()

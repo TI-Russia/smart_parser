@@ -24,7 +24,10 @@ This configuration is tested on Ubuntu 20.04
  then
    sudo systemctl restart systemd-logind
 
-
+1.5
+sudo apt-get install -y python-magic
+    python3 -m pip install python-magic
+python3 -m magic      , it must not freeze
 
 ====================================================================================
 ===== 2.  COMMON WORKER/SERVER DEPLOYMENT ACTIONS (do it for all workstations)  =====
@@ -80,6 +83,7 @@ sudo apt-mark hold mysql-server-8.0
 
 3.8  Get api-token from telegram BotFather and give it to
     telegram-send --configure
+    (токен для diclosures_ru_bot - у меня в KeePassx)
 
 3.9 sudo apt install parallel
 

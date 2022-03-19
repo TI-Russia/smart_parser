@@ -11,46 +11,54 @@ import operator
 class TOfficePool:
     UNKNOWN_OFFICE_ID = 1234567890
 
-    def __init__(self, logger, office_index=None):
+    def __init__(self, logger, office_index=None, max_errors_count=10):
         self.pool = list()
         self.logger = logger
         self.office_index = office_index
+        self.max_errors_count = max_errors_count
+
+    def _read_line(self, line):
+        sha256, web_domain, office_id, office_strings = line.strip().split("\t")
+        if office_id == 'None':
+            office_id = None
+        else:
+            if int(office_id) == self.UNKNOWN_OFFICE_ID:
+                self.logger.debug("skip {} (unknown office id)".format(sha256))
+                return
+            office_id = int(office_id)
+
+        case = TPredictionCase(self.office_index, sha256, web_domain, office_id, office_strings)
+        if len(case.text) == 0:
+            self.logger.debug("skip {} (empty text)".format(sha256))
+            return
+        if len(case.web_domain) == 0:
+            self.logger.debug("skip {} (empty web domain)".format(sha256))
+            return
+
+        self.pool.append(case)
 
     def read_cases(self, file_name: str, row_count=None, make_uniq=False):
         cnt = 0
+        error_cnt = 0
         already = set()
         with open(file_name, "r") as inp:
             for line in inp:
+                if make_uniq:
+                    if hash(line) in already:
+                        self.logger.debug("skip {} (a copy found)".format(sha256))
+                        continue
+                    already.add(hash(line))
+
                 try:
-                    if make_uniq:
-                        if hash(line) in already:
-                            self.logger.debug("skip {} (a copy found)".format(sha256))
-                            continue
-                        already.add(hash(line))
-
-                    sha256, web_domain, office_id, office_strings = line.strip().split("\t")
-                    if office_id == 'None':
-                        office_id = None
-                    else:
-                        if int(office_id) == self.UNKNOWN_OFFICE_ID:
-                            self.logger.debug("skip {} (unknown office id)".format(sha256))
-                            continue
-                        office_id = int(office_id)
-
-                    case = TPredictionCase(self.office_index, sha256, web_domain, office_id, office_strings)
-                    if len(case.text) == 0:
-                        self.logger.debug("skip {} (empty text)".format(sha256))
-                        continue
-                    if len(case.web_domain) == 0:
-                        self.logger.debug("skip {} (empty web domain)".format(sha256))
-                        continue
-
-                    self.pool.append(case)
+                    self._read_line(line)
                     cnt += 1
                     if row_count is not None and cnt >= row_count:
                         break
                 except ValueError as err:
                     self.logger.debug("cannot parse line {}, skip it".format(line.strip()))
+                    error_cnt += 1
+                    if error_cnt > self.max_errors_count:
+                        raise Exception("too many errors (>{})".format(self.max_errors_count))
                     pass
         self.logger.info("read {} cases from {}".format(cnt, file_name))
 

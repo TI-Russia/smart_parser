@@ -1,3 +1,5 @@
+import json
+
 from office_db.web_site_list import TDeclarationWebSiteList
 from office_db.declaration_office_website import TDeclarationWebSite
 from common.web_site_status import TWebSiteReachStatus
@@ -9,7 +11,7 @@ from common.http_request import THttpRequester
 from common.download import TDownloadEnv
 from office_db.offices_in_memory import TOfficeInMemory, TOfficeTableInMemory
 from common.serp_parser import SearchEngine, SearchEngineEnum
-
+from common.html_parser import get_html_title
 
 import random
 import argparse
@@ -21,7 +23,8 @@ import time
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--action", dest='action', help="can be ban, to_utf8, move, mark_large_sites, check_alive, select, "
-                                                        "print_urls, check, redirect_subdomain, regional_to_main, split, make_redirects")
+                                                        "print_urls, check, redirect_subdomain, regional_to_main, split, make_redirects,"
+                                                        "get_title_from_local_files, print_web_sites")
     parser.add_argument("--input-offices", dest='input_offices', required=False, default=None,
                         help="default is ~/smart_parser/tools/offices_db/data/offices.txt")
     parser.add_argument("--output-file", dest='output_file', required=False)
@@ -32,6 +35,7 @@ def parse_args():
                         help="by default we skip all abandoned web sites")
     parser.add_argument("--filter-regex", dest='filter_regex', required=False)
     parser.add_argument("--filter-by-source", dest='filter_by_source', required=False)
+    parser.add_argument("--take-without-titles", dest='take_without_titles', required=False, action="store_true", default=False,)
     parser.add_argument("--replace-substring", dest='replace_substring', required=False,
                         help="for example, --action move --filter-regex '.mvd.ru$'  --replace-substring .мвд.рф")
     parser.add_argument("--parent-office-id", dest='parent_office_id', type=int, required=False)
@@ -69,7 +73,9 @@ class TWebSitesManager:
             self.logger.error("skip {}, cannot find this site".format(site_url))
             return False
         else:
-            if self.args.take_all_web_sites or TWebSiteReachStatus.can_communicate(site_info.reach_status):
+            if self.args.take_without_titles:
+                return TWebSiteReachStatus.can_communicate(site_info.reach_status) and site_info.title is None
+            elif self.args.take_all_web_sites or TWebSiteReachStatus.can_communicate(site_info.reach_status):
                 return True
             else:
                 self.logger.debug("skip abandoned {}".format(site_url))
@@ -145,12 +151,15 @@ class TWebSitesManager:
         else:
             self.logger.info("restart selenium, and try again")
             self.temp_dlrobot_project.selenium_driver.restart()
-            web_site = TWebSiteCrawlSnapshot(self.temp_dlrobot_project, morda_url=url)
+            web_site = TWebSiteCrawlSnapshot(self.temp_dlrobot_project, morda_url=url, enable_step_init=False)
             web_site.fetch_the_main_page(enable_search_engine=False)
             if TWebSiteReachStatus.can_communicate(web_site.reach_status):
                 return web_site
             else:
                 return None
+
+    def get_external_file_name_by_site_url(self, site_url):
+        return site_url.strip('/').replace('/', '_') + ".page_source.html"
 
     def check_alive_one_url(self, site_url, complete_bans):
         site_info: TDeclarationWebSite
@@ -187,7 +196,7 @@ class TWebSitesManager:
 
             if self.args.main_page_path:
                 try:
-                    with open(site_url.strip('/').replace('/', '_') + ".page_source.html", "w") as outp:
+                    with open(self.get_external_file_name_by_site_url(site_url), "w") as outp:
                         outp.write(web_site.main_page_source)
                 except Exception as exp:
                     self.logger.error("cannot save page html to file: {} ".format(site_url))
@@ -279,6 +288,28 @@ class TWebSitesManager:
                 new_site_info = TDeclarationWebSite(url=new_site_url)
                 web_site.parent_office.office_web_sites.append(new_site_info)
 
+    def get_title_from_local_files(self):
+        for site_url in self.get_url_list(start_selenium=False):
+            site_info = self.web_sites.get_web_site(site_url)
+            file_path = os.path.join("page_source",self.get_external_file_name_by_site_url(site_url))
+            if os.path.exists(file_path):
+                self.logger.info("read {}".format(file_path))
+                with open(file_path, "rb") as inp:
+                    title = get_html_title(inp.read())
+                    site_info.set_title(title)
+
+    def print_web_sites(self):
+        site_infos = list()
+        for site_url in self.get_url_list(start_selenium=False):
+            site_info = self.web_sites.get_web_site(site_url)
+            site_info.title = TDeclarationWebSite.clean_title(site_info.title)
+            d = site_info.write_to_json()
+            d['office_id'] = site_info.parent_office.office_id
+            site_infos.append(d)
+
+        print (json.dumps(site_infos, ensure_ascii=False, indent=4))
+
+
     def main(self):
         if self.args.action == "ban":
             self.ban_sites()
@@ -301,6 +332,11 @@ class TWebSitesManager:
             return
         elif self.args.action == "make_redirects":
             self.make_redirects()
+        elif self.args.action == "get_title_from_local_files":
+            self.get_title_from_local_files()
+        elif self.args.action == "print_web_sites":
+            self.print_web_sites()
+            return
         else:
             raise Exception("unknown action")
 
