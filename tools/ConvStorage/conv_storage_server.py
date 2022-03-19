@@ -548,11 +548,13 @@ class TConvertProcessor(http.server.HTTPServer):
             self.process_stalled_files()
 
         if current_time - self.self_server_ping_timestamp >= 3600:  # just not too often
-            client = TDocConversionClient.parse_args(["--server-address", self.args.server_address], self.logger)
+            args = TDocConversionClient.parse_args(["--server-address", self.args.server_address])
+            client = TDocConversionClient(args, self.logger)
             if not client.assert_declarator_conv_alive(raise_exception=False):
                 self.logger.error("cannot ping itself, exit")
                 self.stop_http_server(run_shutdown=False)
                 sys.exit(1)
+            self.self_server_ping_timestamp = current_time
 
         current_time = time.time()
         if  current_time - self.got_ocred_file_last_time_stamp > self.args.ocr_restart_time and \
