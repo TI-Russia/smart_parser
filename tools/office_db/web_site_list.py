@@ -21,17 +21,21 @@ class TDeclarationWebSiteList:
         else:
             self.offices = offices
         o: TOfficeInMemory
+        error_cnt = 0
         for o in self.offices.offices.values():
             u:  TDeclarationWebSite
             for u in o.office_web_sites:
                 site_url = get_site_url(u.url)
                 if site_url in self.web_sites:
                     if site_url in self.web_sites:
-                        raise Exception("url {} occurs in office db more than one time".format(site_url))
+                        exception_msg = "url {} occurs in office db more than one time".format(site_url)
+                        error_cnt += 1
                 self.web_sites[site_url] = u
                 self.web_sites_to_office[site_url] = o
                 if u.can_communicate() and u.title is None:
                     self.logger.error("url={} has no title, ML model predict office needs titles to work properly".format(u.url))
+        if error_cnt > 0:
+            raise Exception(exception_msg + " and {} other equal urls".format(error_cnt))
 
         self.build_web_domains_redirects()
         self.web_domain_to_web_site.clear()

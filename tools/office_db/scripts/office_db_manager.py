@@ -24,7 +24,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--action", dest='action', help="can be ban, to_utf8, move, mark_large_sites, check_alive, select, "
                                                         "print_urls, check, redirect_subdomain, regional_to_main, split, make_redirects,"
-                                                        "get_title_from_local_files, print_web_sites")
+                                                        "get_title_from_local_files, print_web_sites, check_mirrors")
     parser.add_argument("--input-offices", dest='input_offices', required=False, default=None,
                         help="default is ~/smart_parser/tools/offices_db/data/offices.txt")
     parser.add_argument("--output-file", dest='output_file', required=False)
@@ -121,7 +121,7 @@ class TWebSitesManager:
 
     def ban_sites(self):
         cnt = 0
-        for url in self.get_url_list():
+        for url in self.get_url_list(start_selenium=True):
             self.logger.debug("ban {}".format(url))
             self.web_sites.get_web_site(url).ban()
             cnt += 1
@@ -161,11 +161,13 @@ class TWebSitesManager:
     def get_external_file_name_by_site_url(self, site_url):
         return site_url.strip('/').replace('/', '_') + ".page_source.html"
 
-    def check_alive_one_url(self, site_url, complete_bans):
+    def check_alive_one_url(self, site_url, complete_bans, site_info=None):
         site_info: TDeclarationWebSite
-        site_info = self.web_sites.get_web_site(site_url)
+        if site_info is None:
+            site_info = self.web_sites.get_web_site(site_url)
         web_site = self.browse_one_url(site_url)
-        office = self.web_sites.get_office(site_url)
+        #office = self.web_sites.get_office(site_url)
+        office = site_info.parent_office
         if web_site is None:
             self.logger.info("     {} is dead".format(site_url))
             site_info.ban()
@@ -309,6 +311,23 @@ class TWebSitesManager:
 
         print (json.dumps(site_infos, ensure_ascii=False, indent=4))
 
+    def check_mirrors(self):
+        offices = set()
+        complete_bans = list()
+        for site_url in self.get_url_list(start_selenium=True):
+            office_info: TOfficeInMemory
+            office_info = self.web_sites.get_web_site(site_url).parent_office
+            not_abandoned_cnt = 0
+            for u in office_info.office_web_sites:
+                if u.can_communicate():
+                    not_abandoned_cnt += 1
+            if not_abandoned_cnt > 1 and office_info.office_web_sites[-1].can_communicate() and office_info not in offices:
+                offices.add(office_info)
+                for i in range(len(office_info.office_web_sites) - 1):
+                    site_info = office_info.office_web_sites[i]
+                    if site_info.can_communicate():
+                        self.check_alive_one_url(site_info.url, complete_bans, site_info=site_info)
+
 
     def main(self):
         if self.args.action == "ban":
@@ -334,6 +353,8 @@ class TWebSitesManager:
             self.make_redirects()
         elif self.args.action == "get_title_from_local_files":
             self.get_title_from_local_files()
+        elif self.args.action == "check_mirrors":
+            self.check_mirrors()
         elif self.args.action == "print_web_sites":
             self.print_web_sites()
             return
