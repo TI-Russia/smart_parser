@@ -245,6 +245,7 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         test_x = self.to_ml_input_features(cases)
         test_y_pred = model.predict(test_x)
         test_y_max = list()
+        print (self.debug_mode)
         for pred_proba_y in test_y_pred:
             learn_target, weight = max(enumerate(pred_proba_y), key=operator.itemgetter(1))
             office_id = self.office_index.get_office_id_by_ml_office_id(learn_target)

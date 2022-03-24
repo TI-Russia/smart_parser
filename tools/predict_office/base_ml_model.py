@@ -7,9 +7,10 @@ from sklearn.metrics import accuracy_score
 
 class TPredictionModelBase:
     def __init__(self, logger, office_index_path, model_path,  row_count=None, train_pool=None,
-                 test_pool=None):
+                 test_pool=None, debug_mode=False):
         self.logger = logger
         self.model_path = model_path
+        self.debug_mode = debug_mode
         self.office_index = TOfficePredictIndex(logger, office_index_path)
         self.office_index.read()
         if train_pool is not None:

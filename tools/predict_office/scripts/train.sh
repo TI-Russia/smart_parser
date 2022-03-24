@@ -47,6 +47,6 @@ cd $FOLDER
 
 python3 ~/smart_parser/tools/predict_office/scripts/build_office_index.py
 python3 ~/smart_parser/tools/predict_office/scripts/prepare_train_pool.py --pool ~/tmp/predict_office/train.declarator.txt  ~/smart_parser/tools/predict_office/pools/train.sud.txt  ~/smart_parser/tools/predict_office/pools/train.toloka.txt,3  --output-train-pool train_pool.txt
-python3 ~/smart_parser/tools/predict_office/scripts/tf_office_train.py --model-folder model  --train-pool train_pool.txt --epoch-count  19
-  python3 ~/smart_parser/tools/predict_office/scripts/tf_office_test.py --test-pool ~/smart_parser/tools/predict_office/pools/test_fixed.txt  --bigrams-path office_ngrams.txt  --model-folder model --threshold 0.99
+  python3 ~/smart_parser/tools/predict_office/scripts/tf_office_train.py --model-folder model  --train-pool train_pool.txt --epoch-count  19
+    python3 ~/smart_parser/tools/predict_office/scripts/tf_office_test.py --test-pool ~/smart_parser/tools/predict_office/pools/test_fixed.txt  --bigrams-path office_ngrams.txt  --model-folder model --threshold 0.99
 
