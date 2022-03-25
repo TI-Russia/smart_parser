@@ -17,7 +17,7 @@ class TPredictionModelBase:
             self.inner_ml_model = self.load_model()
         if work_pool_path is None:
             self.work_pool = None
-        else
+        else:
             self.work_pool = TOfficePool(self.logger, office_index=self.office_index)
             self.work_pool.read_cases(work_pool_path, row_count=row_count)
             assert len(self.work_pool.pool) > 0
