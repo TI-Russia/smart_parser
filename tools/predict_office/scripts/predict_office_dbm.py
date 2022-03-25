@@ -44,7 +44,7 @@ class TOfficePredictor:
         assert (os.path.exists(model_path))
         bigrams_path = os.path.join(model_path, "office_ngrams.txt")
         ml_model_path = os.path.join(model_path, "model")
-        self.office_ml_model = TTensorFlowOfficeModel(self.logger, bigrams_path, ml_model_path)
+        self.office_ml_model = TTensorFlowOfficeModel(self.logger, bigrams_path, ml_model_path, create_model=False)
         self.regional_tax_offices = self.build_regional_tax_offices()
 
     def build_regional_tax_offices(self):
@@ -92,7 +92,7 @@ class TOfficePredictor:
 
     def predict_offices_by_ml(self,  cases, min_ml_weight=0.99):
         TOfficePool.write_pool(cases, "cases_to_predict_dump.txt")
-        predicted_office_ids = self.office_ml_model.predict_by_portions(cases)
+        predicted_office_ids = self.office_ml_model.predict _by_portions(cases)
         cases_filtered = ( (weight, office_id, case.sha256) \
                           for case, (office_id, weight) in zip(cases, predicted_office_ids) \
                           if weight >= min_ml_weight)
@@ -148,7 +148,7 @@ class TOfficePredictor:
                 else:
                     web_ref: TWebReference
                     for web_ref in src_doc.web_references:
-                        case = TPredictionCase.build_from_web_reference(self.office_ml_model.office_index,sha256,
+                        case = TPredictionCase.build_from_web_reference(self.office_ml_model.office_index, sha256,
                                                                  src_doc, web_ref, true_office_id=None)
                         cases_for_ml_predict.append(case)
         if len(cases_for_ml_predict) > 0:

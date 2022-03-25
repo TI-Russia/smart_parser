@@ -15,9 +15,12 @@ class TPredictionModelBase:
         self.create_model = create_model
         if not create_model:
             self.inner_ml_model = self.load_model()
-        self.work_pool = TOfficePool(self.logger, office_index=self.office_index)
-        self.work_pool.read_cases(work_pool_path, row_count=row_count)
-        assert len(self.work_pool.pool) > 0
+        if work_pool_path is None:
+            self.work_pool = None
+        else
+            self.work_pool = TOfficePool(self.logger, office_index=self.office_index)
+            self.work_pool.read_cases(work_pool_path, row_count=row_count)
+            assert len(self.work_pool.pool) > 0
 
 
     def build_handmade_regions(self, pool: TOfficePool):
