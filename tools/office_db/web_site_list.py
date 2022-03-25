@@ -68,7 +68,11 @@ class TDeclarationWebSiteList:
         return l
 
     def get_first_site_by_web_domain(self, web_domain: str) -> TDeclarationWebSite:
-        assert '/' not in web_domain
+        if web_domain is None:
+            raise Exception("web_domain cannot be None ")
+        if '/' in web_domain:
+            raise Exception("web_domain ({}) cannot contain '/' ".format(web_domain))
+
         l = self.get_sites_by_web_domain(web_domain)
         if len(l) == 0:
             return None
@@ -107,6 +111,12 @@ class TDeclarationWebSiteList:
         if info is None or info.title is None:
             return ""
         return info.title
+
+    def get_office_id_by_web_domain(self, web_domain: str, unknown_office_id=-1) -> str:
+        info = self.get_first_site_by_web_domain(web_domain)
+        if info is None or info.title is None:
+            return unknown_office_id
+        return info.parent_office.office_id
 
     def has_web_site(self, site_url):
         return site_url in self.web_sites

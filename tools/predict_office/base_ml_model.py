@@ -6,20 +6,19 @@ from sklearn.metrics import accuracy_score
 
 
 class TPredictionModelBase:
-    def __init__(self, logger, office_index_path, model_path,  row_count=None, train_pool=None,
-                 test_pool=None, debug_mode=False):
+    def __init__(self, logger, office_index_path, model_path, create_model: bool, work_pool_path: str, row_count=None):
         self.logger = logger
         self.model_path = model_path
-        self.debug_mode = debug_mode
         self.office_index = TOfficePredictIndex(logger, office_index_path)
         self.office_index.read()
-        if train_pool is not None:
-            self.train_pool = TOfficePool(self.logger, office_index=self.office_index)
-            self.train_pool.read_cases(train_pool, row_count=row_count)
+        self.inner_ml_model = None
+        self.create_model = create_model
+        if not create_model:
+            self.inner_ml_model = self.load_model()
+        self.work_pool = TOfficePool(self.logger, office_index=self.office_index)
+        self.work_pool.read_cases(work_pool_path, row_count=row_count)
+        assert len(self.work_pool.pool) > 0
 
-        if test_pool is not None:
-            self.test_pool = TOfficePool(self.logger, office_index=self.office_index)
-            self.test_pool.read_cases(test_pool)
 
     def build_handmade_regions(self, pool: TOfficePool):
         regions = TRussianRegions()

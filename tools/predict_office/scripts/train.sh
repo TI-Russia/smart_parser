@@ -47,6 +47,19 @@ cd $FOLDER
 
 python3 ~/smart_parser/tools/predict_office/scripts/build_office_index.py
 python3 ~/smart_parser/tools/predict_office/scripts/prepare_train_pool.py --pool ~/tmp/predict_office/train.declarator.txt  ~/smart_parser/tools/predict_office/pools/train.sud.txt  ~/smart_parser/tools/predict_office/pools/train.toloka.txt,3  --output-train-pool train_pool.txt
-  python3 ~/smart_parser/tools/predict_office/scripts/tf_office_train.py --model-folder model  --train-pool train_pool.txt --epoch-count  19
-    python3 ~/smart_parser/tools/predict_office/scripts/tf_office_test.py --test-pool ~/smart_parser/tools/predict_office/pools/test_fixed.txt  --bigrams-path office_ngrams.txt  --model-folder model --threshold 0.99
+python3 ~/smart_parser/tools/predict_office/scripts/tf_office_train.py --model-folder model  --train-pool train_pool.txt --epoch-count  19
+python3 ~/smart_parser/tools/predict_office/scripts/tf_office_test.py --test-pool ~/smart_parser/tools/predict_office/pools/test_fixed.txt  --bigrams-path office_ngrams.txt  --model-folder model --threshold 0.99
 
+
+=============
+new sites
+#python3 ~/smart_parser/tools/disclosures_site/scripts/dlrobot_human.py --action unknown_office_uniq_website_pool --input-file ~/declarator_hdd/declarator/dlrobot_updates/1644319081/dlrobot_human.dbm --output-predict-office-pool new_sites_pool.tx
+#python3 ~/smart_parser/tools/disclosures_site/scripts/predict_office/manage_pool.py --input-pool new_sites_pool.txt  --output-toloka-file toloka.txt --output-automatic-file automatic.txt
+===
+python3 ~/smart_parser/tools/dlrobot_human/scripts/dlrobot_human_manager.py --action weak_offices --input-file ~/declarator_hdd/declarator/dlrobot_updates/1644319081/dlrobot_human.dbm --output-predict-office-pool weak_offices_pool.txt
+python3 ~/smart_parser/tools/predict_office/scripts/manage_pool.py --input-pool weak_offices_pool.txt  --output-toloka-file toloka.txt --output-automatic-file weak_automatic.txt
+
+==
+datasphere
+cd ~/tmp/predict_office/tf41
+scp office_ngrams.txt ~/smart_parser/tools/predict_office/pools/test_fixed.txt train_pool.txt iphil:/data/sokirko/predict_office

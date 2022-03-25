@@ -186,6 +186,9 @@ class TOfficePredictIndex:
     def get_office_name(self, office_id: int):
         return self.office_squeezes[office_id]['name']
 
+    def has_office_squeeze(self, office_id: int):
+        return office_id in self.office_squeezes
+
     def get_office_region(self, office_id: int):
         return self.office_squeezes[office_id]['region']
 
@@ -196,6 +199,10 @@ class TOfficePredictIndex:
         else:
             return 0
 
-
-
+    def get_parent_office_from_web_site(self, site_url: str):
+        site_info = self.web_sites.get_web_site(site_url)
+        if site_info is None:
+            self.logger.error(" site_url = {} cannot be found in offices.txt".format(site_url))
+            return None
+        return self.get_ml_office_id(site_info.parent_office.office_id)
 
