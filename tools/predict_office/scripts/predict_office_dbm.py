@@ -92,7 +92,7 @@ class TOfficePredictor:
 
     def predict_offices_by_ml(self,  cases, min_ml_weight=0.99):
         TOfficePool.write_pool(cases, "cases_to_predict_dump.txt")
-        predicted_office_ids = self.office_ml_model.predict _by_portions(cases)
+        predicted_office_ids = self.office_ml_model.predict_by_portions(cases)
         cases_filtered = ( (weight, office_id, case.sha256) \
                           for case, (office_id, weight) in zip(cases, predicted_office_ids) \
                           if weight >= min_ml_weight)
