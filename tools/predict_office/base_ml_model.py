@@ -6,7 +6,7 @@ from sklearn.metrics import accuracy_score
 
 
 class TPredictionModelBase:
-    def __init__(self, logger, office_index_path, model_path, create_model: bool, work_pool_path=None, row_count=None):
+    def __init__(self, logger, office_index_path, model_path, create_model: bool, work_pool_path=None   , row_count=None):
         self.logger = logger
         self.model_path = model_path
         self.office_index = TOfficePredictIndex(logger, office_index_path)

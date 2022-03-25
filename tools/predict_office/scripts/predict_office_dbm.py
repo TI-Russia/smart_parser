@@ -1,5 +1,3 @@
-import sys
-
 from dlrobot_human.dlrobot_human_dbm import TDlrobotHumanFileDBM
 from dlrobot_human.input_document import TWebReference, TSourceDocument
 from predict_office.tensor_flow_model import TTensorFlowOfficeModel
@@ -9,11 +7,14 @@ from predict_office.prediction_case import TPredictionCase
 from common.logging_wrapper import setup_logging
 from office_db.offices_in_memory import TOfficeInMemory
 from office_db.rubrics import TOfficeRubrics
+from predict_office.read_office_from_title import TOfficeFromTitle, TTitleParseResult
+from office_db.web_site_list import TDeclarationWebSiteList
 from office_db.russia import RUSSIA
 
 import os
 import json
 import argparse
+import sys
 
 
 class TOfficePredictor:
@@ -46,6 +47,8 @@ class TOfficePredictor:
         ml_model_path = os.path.join(model_path, "model")
         self.office_ml_model = TTensorFlowOfficeModel(self.logger, bigrams_path, ml_model_path, create_model=False)
         self.regional_tax_offices = self.build_regional_tax_offices()
+        self.web_sites = TDeclarationWebSiteList(self.logger, RUSSIA.offices_in_memory)
+        self.title_parser = TOfficeFromTitle(self.logger, web_sites=self.web_sites)
 
     def build_regional_tax_offices(self):
         o: TOfficeInMemory
@@ -90,6 +93,34 @@ class TOfficePredictor:
                     return True
         return False
 
+    def single_web_site(self, src_doc):
+        r: TWebReference
+        offices = set()
+        for r in src_doc.web_references:
+            if r.get_site_url():
+                site_info = self.web_sites.search_url(r.get_site_url())
+                if site_info is not None:
+                    offices.add(site_info.parent_office.office_id)
+        if len(offices) == 1:
+            return list(offices)[0]
+        return None
+
+    def predict_by_hand(self, case: TPredictionCase, src_doc):
+        single_web_site_office_id = self.single_web_site(src_doc)
+        parse_result: TTitleParseResult
+        parse_result = self.title_parser.parse_title(case)
+        if parse_result is not None and parse_result.weight > 0.5:
+            office_id = parse_result.office.office_id
+            message = "title_parser confidence={}".format(parse_result.weight)
+            if single_web_site_office_id != office_id and single_web_site_office_id is not None:
+                message += " single_web_site_office_id={}".format(office_id)
+            self.set_office_id(case.sha256, src_doc, office_id, message)
+            return
+
+        if single_web_site_office_id is not None:
+            self.set_office_id(case.sha256, src_doc, single_web_site_office_id, "parent_office ")
+            return
+
     def predict_offices_by_ml(self,  cases, min_ml_weight=0.99):
         TOfficePool.write_pool(cases, "cases_to_predict_dump.txt")
         predicted_office_ids = self.office_ml_model.predict_by_portions(cases)
@@ -106,9 +137,9 @@ class TOfficePredictor:
 
         for case in cases:
             if case.sha256 not in already:
-                # set by the old method
+                # set by hand
                 src_doc = self.dlrobot_human.get_document(case.sha256)
-                self.get_office_using_max_freq_heuristics(case.sha256, src_doc)
+                self.predict_by_hand(case, src_doc)
                 already.add(case.sha256)
 
     def update_office_string(self, sha256, src_doc):
@@ -156,14 +187,18 @@ class TOfficePredictor:
 
     def check(self):
         files_without_office_id = 0
-
+        files_without_json_and_office_id = 0
         for sha256, src_doc in self.dlrobot_human.get_all_documents():
             if src_doc.calculated_office_id is None:
-                self.logger.error("website: {}, file {} has no office".format(src_doc.get_web_site(), sha256))
-                files_without_office_id += 1
+                if TSmartParserCacheClient.are_empty_office_strings(src_doc.office_strings):
+                    files_without_json_and_office_id += 1
+                    self.logger.error("website: {}, file {} has no office and no json".format(src_doc.get_web_site(), sha256))
+                else:
+                    self.logger.error("website: {}, file {} has no office".format(src_doc.get_web_site(), sha256))
+                    files_without_office_id += 1
 
-        self.logger.info("all files count = {}, files_without_office_id = {}".format(
-                self.dlrobot_human.get_documents_count(), files_without_office_id))
+        self.logger.info("all files count = {}, files_without_office_id = {} files_without_json_and_office_id = {}".format(
+                self.dlrobot_human.get_documents_count(), files_without_office_id, files_without_json_and_office_id))
         if files_without_office_id > self.max_failures_count:
             error = "too many files (more than > {}) without offices".format(self.max_failures_count)
             self.logger.error(error)
@@ -171,7 +206,6 @@ class TOfficePredictor:
 
     def write(self):
         self.dlrobot_human.close_db()
-
 
 
 def main():
