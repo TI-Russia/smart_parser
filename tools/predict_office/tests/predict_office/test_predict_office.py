@@ -1,4 +1,4 @@
-from declarations.tests.smart_parser_for_testing import SmartParserServerForTesting
+from disclosures_site.declarations.tests.smart_parser_for_testing import SmartParserServerForTesting
 from predict_office.scripts.predict_office_dbm import TOfficePredictor
 
 from unittest import TestCase

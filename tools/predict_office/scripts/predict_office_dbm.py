@@ -1,3 +1,5 @@
+import time
+
 from dlrobot_human.dlrobot_human_dbm import TDlrobotHumanFileDBM
 from dlrobot_human.input_document import TWebReference, TSourceDocument
 from predict_office.tensor_flow_model import TTensorFlowOfficeModel
@@ -15,6 +17,16 @@ import os
 import json
 import argparse
 import sys
+
+
+class TAdhocRuleResults:
+    def __init__(self, cases, max_freq_heuristics, single_web_site, parse_title, first_web_site_evil, no_title):
+        self.cases = cases
+        self.max_freq_heuristics = max_freq_heuristics
+        self.single_web_site = single_web_site
+        self.parse_title = parse_title
+        self.first_web_site_evil = first_web_site_evil
+        self.no_title = no_title
 
 
 class TOfficePredictor:
@@ -49,6 +61,7 @@ class TOfficePredictor:
         self.regional_tax_offices = self.build_regional_tax_offices()
         self.web_sites = TDeclarationWebSiteList(self.logger, RUSSIA.offices_in_memory)
         self.title_parser = TOfficeFromTitle(self.logger, web_sites=self.web_sites)
+        self.src_doc_to_rule_results = dict()
 
     def build_regional_tax_offices(self):
         o: TOfficeInMemory
@@ -93,6 +106,7 @@ class TOfficePredictor:
                     return True
         return False
 
+    # all sites are ascribed to the same office
     def single_web_site(self, src_doc):
         r: TWebReference
         offices = set()
@@ -105,23 +119,42 @@ class TOfficePredictor:
             return list(offices)[0]
         return None
 
-    def predict_by_hand(self, case: TPredictionCase, src_doc):
-        single_web_site_office_id = self.single_web_site(src_doc)
-        parse_result: TTitleParseResult
-        parse_result = self.title_parser.parse_title(case)
-        if parse_result is not None and parse_result.weight > 0.5:
-            office_id = parse_result.office.office_id
-            message = "title_parser confidence={}".format(parse_result.weight)
-            if single_web_site_office_id != office_id and single_web_site_office_id is not None:
-                message += " single_web_site_office_id={}".format(office_id)
+    #Take the first office, that is a very bad solution. This is done to make the whole thing work.
+    # In future we hope to get rid of this solution by adding anchor texts analysis  or moro sophisticated title parsing
+    def predict_by_first_web_site(self, case: TPredictionCase, src_doc):
+        r: TWebReference
+        min_crawl_epoch = time.time()
+        office_id = None
+        for r in src_doc.web_references:
+            if 0 < r.crawl_epoch < min_crawl_epoch:
+                site_info = self.web_sites.search_url(r.get_site_url())
+                if site_info is not None:
+                    min_crawl_epoch = r.crawl_epoch
+                    office_id = site_info.parent_office.office_id
+        return office_id
+
+    def predict_by_title(self, case: TPredictionCase, src_doc):
+        if not TSmartParserCacheClient.are_empty_office_strings(src_doc.office_strings):
+            parse_result: TTitleParseResult
+            parse_result = self.title_parser.parse_title(case)
+            if parse_result is not None and parse_result.weight > 0.5:
+                return parse_result.office.office_id
+
+    def predict_by_post_ml_rules(self, case: TPredictionCase, src_doc):
+        rule_results: TAdhocRuleResults
+        rule_results = self.src_doc_to_rule_results[case.sha256]
+        if rule_results.parse_title:
+            office_id = rule_results.parse_title
+            message = "title_parser office_id={}".format(office_id)
+            if rule_results.single_web_site != office_id and rule_results.single_web_site is not None:
+                message += " contradicts to single_web_site_office_id={}".format(rule_results.single_web_site)
             self.set_office_id(case.sha256, src_doc, office_id, message)
-            return
+        elif rule_results.single_web_site is not None:
+            self.set_office_id(case.sha256, src_doc, rule_results.single_web_site, "parent_office ")
+        elif rule_results.first_web_site_evil is not None:
+            self.set_office_id(case.sha256, src_doc, rule_results.first_web_site_evil, "first_web_site_evil ")
 
-        if single_web_site_office_id is not None:
-            self.set_office_id(case.sha256, src_doc, single_web_site_office_id, "parent_office ")
-            return
-
-    def predict_offices_by_ml(self,  cases, min_ml_weight=0.99):
+    def predict_offices_by_ml_and_post_ml_rules(self,  cases, min_ml_weight=0.99):
         TOfficePool.write_pool(cases, "cases_to_predict_dump.txt")
         predicted_office_ids = self.office_ml_model.predict_by_portions(cases)
         cases_filtered = ( (weight, office_id, case.sha256) \
@@ -139,7 +172,7 @@ class TOfficePredictor:
             if case.sha256 not in already:
                 # set by hand
                 src_doc = self.dlrobot_human.get_document(case.sha256)
-                self.predict_by_hand(case, src_doc)
+                self.predict_by_post_ml_rules(case, src_doc)
                 already.add(case.sha256)
 
     def update_office_string(self, sha256, src_doc):
@@ -157,7 +190,25 @@ class TOfficePredictor:
         for web_ref in src_doc.web_references:
             office = self.office_ml_model.office_index.web_sites.get_office(web_ref._site_url)
             if office is not None:
-                self.set_office_id(sha256, src_doc, office.office_id, "max freq heuristics")
+                return office.office_id
+
+    def calc_features(self, sha256, src_doc) -> TAdhocRuleResults:
+        web_ref: TWebReference
+        cases = list()
+        for web_ref in src_doc.web_references:
+            case = TPredictionCase.build_from_web_reference(self.office_ml_model.office_index, sha256,
+                                                     src_doc, web_ref, true_office_id=None)
+            cases.append(case)
+        if len(cases) == 0:
+            return None
+        return TAdhocRuleResults(
+            cases=cases,
+            max_freq_heuristics=self.get_office_using_max_freq_heuristics(sha256, src_doc),
+            single_web_site=self.single_web_site(src_doc),
+            parse_title=self.predict_by_title(cases[0], src_doc),
+            first_web_site_evil=self.predict_by_first_web_site(cases[0], src_doc),
+            no_title=TSmartParserCacheClient.are_empty_office_strings(src_doc.office_strings)
+        )
 
     def predict_office(self):
         cases_for_ml_predict = list()
@@ -174,16 +225,23 @@ class TOfficePredictor:
             else:
                 if not self.enable_ml or src_doc.office_strings is None:
                     self.update_office_string(sha256, src_doc)
-                if not self.enable_ml or TSmartParserCacheClient.are_empty_office_strings(src_doc.office_strings):
-                    self.get_office_using_max_freq_heuristics(sha256, src_doc)
+                rule_results = self.calc_features(sha256, src_doc)
+                if rule_results is None:
+                    self.logger.debug("no way to set office id")
+                    continue
+                self.src_doc_to_rule_results[sha256] = rule_results
+                if not self.enable_ml or rule_results.no_title:
+                    if rule_results.single_web_site == rule_results.parse_title and rule_results.parse_title is not None:
+                        message = "parse_title and single_web_site"
+                        if rule_results.max_freq_heuristics is not None and rule_results.parse_title != rule_results.max_freq_heuristics:
+                            message = " contradicts to max_freq_heuristics(office_id={})".format(rule_results.max_freq_heuristics)
+                        self.set_office_id(sha256, src_doc, rule_results.parse_title, message)
+                    else:
+                        self.set_office_id(sha256, src_doc, rule_results.max_freq_heuristics, "max freq heuristics")
                 else:
-                    web_ref: TWebReference
-                    for web_ref in src_doc.web_references:
-                        case = TPredictionCase.build_from_web_reference(self.office_ml_model.office_index, sha256,
-                                                                 src_doc, web_ref, true_office_id=None)
-                        cases_for_ml_predict.append(case)
+                    cases_for_ml_predict.extend(rule_results.cases)
         if len(cases_for_ml_predict) > 0:
-            self.predict_offices_by_ml(cases_for_ml_predict)
+            self.predict_offices_by_ml_and_post_ml_rules(cases_for_ml_predict)
 
     def check(self):
         files_without_office_id = 0
