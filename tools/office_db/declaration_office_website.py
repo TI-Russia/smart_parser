@@ -46,8 +46,8 @@ class TDeclarationWebSite:
         self.redirect_to = to_url
         self.ban()
 
-    def ban(self):
-        self.reach_status = TWebSiteReachStatus.abandoned
+    def ban(self, status=TWebSiteReachStatus.abandoned):
+        self.reach_status = status
 
     def set_title(self, title):
         self.title = title

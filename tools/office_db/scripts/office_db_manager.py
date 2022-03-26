@@ -24,7 +24,7 @@ def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--action", dest='action', help="can be ban, to_utf8, move, mark_large_sites, check_alive, select, "
                                                         "print_urls, check, redirect_subdomain, regional_to_main, split, make_redirects,"
-                                                        "get_title_from_local_files, print_web_sites, check_mirrors")
+                                                        "get_title_from_local_files, print_web_sites, check_mirrors, select_adhoc")
     parser.add_argument("--input-offices", dest='input_offices', required=False, default=None,
                         help="default is ~/smart_parser/tools/offices_db/data/offices.txt")
     parser.add_argument("--output-file", dest='output_file', required=False)
@@ -81,6 +81,18 @@ class TWebSitesManager:
                 self.logger.debug("skip abandoned {}".format(site_url))
                 return False
 
+    def read_web_domains_from_file(self):
+        self.logger.info("read url list from {}".format(self.args.url_list))
+        web_domains = list()
+        with open(self.args.url_list) as inp:
+            for url in inp:
+                url = url.strip(" \r\n")
+                if url.startswith('http'):
+                    web_domains.append(strip_scheme_and_query(url))
+                else:
+                    web_domains.append(url)
+        return web_domains
+
     def get_url_list(self, start_selenium=False):
         web_domains = list()
         if self.args.filter_by_source is not None:
@@ -89,14 +101,7 @@ class TWebSitesManager:
                 if k.parent_office.source_id == self.args.filter_by_source:
                     web_domains.append(get_site_url(k.url))
         elif self.args.url_list is not None:
-            self.logger.info("read url list from {}".format(self.args.url_list))
-            with open(self.args.url_list) as inp:
-                for url in inp:
-                    url = url.strip(" \r\n")
-                    if url.startswith('http'):
-                        web_domains.append(strip_scheme_and_query(url))
-                    else:
-                        web_domains.append(url)
+            web_domains = self.read_web_domains_from_file()
         else:
             #take all web domains
             web_domains = list(self.web_sites.web_sites.keys())
@@ -277,6 +282,27 @@ class TWebSitesManager:
             out.add_office(site_info.parent_office)
         self.web_sites.offices = out
 
+    def select_adhoc(self):
+        good_web_domains = set(self.read_web_domains_from_file())
+        office: TOfficeInMemory
+        ban_cnt = 0
+        sp_left = 0
+        for office in self.web_sites.offices.offices.values():
+            if office.is_from_spravochnik():
+                w: TDeclarationWebSite
+
+                for w in office.office_web_sites:
+                    if not w.can_communicate():
+                        continue
+                    u = strip_scheme_and_query(w.url)
+                    if u in good_web_domains or "{}/".format(u) in good_web_domains:
+                        sp_left += 1
+                        continue
+                    ban_cnt += 1
+                    self.logger.debug("ban office_id={}".format(office.office_id))
+                    w.ban(TWebSiteReachStatus.unpromising   )
+        self.logger.info("ban {} sites, left in spravochnik {}".format(ban_cnt, sp_left))
+
     def make_redirects(self):
         with open (self.args.redirect_mapping_path) as inp:
             for l in inp:
@@ -355,6 +381,8 @@ class TWebSitesManager:
             self.get_title_from_local_files()
         elif self.args.action == "check_mirrors":
             self.check_mirrors()
+        elif self.args.action == "select_adhoc":
+            self.select_adhoc()
         elif self.args.action == "print_web_sites":
             self.print_web_sites()
             return

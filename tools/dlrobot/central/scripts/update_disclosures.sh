@@ -30,7 +30,7 @@ source $COMMON_SCRIPT
       python3 $TOOLS/dlrobot_human/scripts/join_human_and_dlrobot.py \
           --max-ctime $CRAWL_EPOCH \
           --input-dlrobot-folder  "$DLROBOT_CENTRAL_FOLDER/processed_projects" \
-          --human-json $HUMAN_FILES_JSON \
+            --human-json $HUMAN_FILES_JSON \
           --old-dlrobot-human-json $OLD_DLROBOT_FOLDER/dlrobot_human.dbm \
           --output-json dlrobot_human.dbm
 
@@ -39,7 +39,7 @@ source $COMMON_SCRIPT
     python3 $TOOLS/predict_office/scripts/predict_office_dbm.py --dlrobot-human-path dlrobot_human.dbm
 
   #6  Копирование базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод
-   mv $OLD_DLROBOT_FOLDER/new_permalinks/* .
+     mv $OLD_DLROBOT_FOLDER/new_permalinks/* .
    # можно создать их прям сейчас
      #python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.prod --directory $DLROBOT_FOLDER
 
