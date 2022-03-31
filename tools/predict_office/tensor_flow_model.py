@@ -1,6 +1,8 @@
 from predict_office.prediction_case import TPredictionCase
 from predict_office.base_ml_model import TPredictionModelBase
 from predict_office.office_index import TOfficePredictIndex
+from predict_office.office_pool import TOfficePool
+
 import operator
 import numpy as np
 import tensorflow as tf
@@ -163,20 +165,20 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
                          "steps_per_epoch={}".format(dense_layer_size, batch_size, workers_count, epoch_count,
                                                      steps_per_epoch))
 
-        train_x, train_y = self.to_ml_input(self.train_pool.pool, "train")
+        train_x, train_y = self.to_ml_input(self.work_pool.pool, "train")
 
         self.logger.info("init_model_before_train")
-        model = self.init_model_before_train(dense_layer_size, train_x)
-        self.logger.info(model.summary())
+        self.inner_ml_model = self.init_model_before_train(dense_layer_size, train_x)
+        self.logger.info(self.inner_ml_model.summary())
 
         self.logger.info("compile model...")
-        model.compile(optimizer='adam',
+        self.inner_ml_model.compile(optimizer='adam',
                       loss=tf.keras.losses.SparseCategoricalCrossentropy(),
                       metrics=['accuracy'])
 
         self.logger.info("training on device {}...".format(device_name))
         with tf.device(device_name):
-            model.fit(train_x,
+            self.inner_ml_model.fit(train_x,
                       train_y,
                       epochs=epoch_count,
                       workers=workers_count,
@@ -184,19 +186,18 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
                       steps_per_epoch=steps_per_epoch,
                       )
         self.logger.info("save to {}".format(self.model_path))
-        model.save(self.model_path)
+        self.inner_ml_model.save(self.model_path)
 
     def load_model(self):
         self.logger.info("load tensorflow model from {}".format(self.model_path))
-        model = tf.keras.models.load_model(self.model_path)
-        return model
+        return tf.keras.models.load_model(self.model_path)
 
-    def calc_on_threshold(self, cases, test_y, test_y_pred, threshold, verbose=True):
+    def calc_on_threshold(self, pool: TOfficePool, test_y, test_y_pred, threshold, verbose=True):
         true_positive = 0
         false_positive = 0
         true_negative = 0
         false_negative = 0
-        for case, true_ml_office_id, pred_proba_y in zip(cases, test_y, test_y_pred):
+        for case, true_ml_office_id, pred_proba_y in zip(pool.pool, test_y, test_y_pred):
             if verbose:
                 for ml_office_id, weight in enumerate(pred_proba_y):
                     if weight > threshold or ml_office_id == true_ml_office_id:
@@ -232,18 +233,17 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
                                  true_positive, false_positive, true_negative, false_negative))
 
     def test_model(self, thresholds=[0.6]):
-        model = self.load_model()
-        test_x, test_y = self.to_ml_input(self.test_pool.pool, "test")
-        test_y_pred = model.predict(test_x)
+        test_x, test_y = self.to_ml_input(self.work_pool.pool, "test")
+        test_y_pred = self.inner_ml_model.predict(test_x)
         for threshold in thresholds:
-            self.calc_on_threshold(self.test_pool.pool, test_y, test_y_pred, threshold)
+            self.calc_on_threshold(self.work_pool, test_y, test_y_pred, threshold)
 
-    def predict(self, model, cases):
+    def predict_cases(self, cases):
         if len(cases) == 0:
             return list()
 
         test_x = self.to_ml_input_features(cases)
-        test_y_pred = model.predict(test_x)
+        test_y_pred = self.inner_ml_model.predict(test_x)
         test_y_max = list()
         for pred_proba_y in test_y_pred:
             learn_target, weight = max(enumerate(pred_proba_y), key=operator.itemgetter(1))
@@ -252,19 +252,16 @@ class TTensorFlowOfficeModel(TPredictionModelBase):
         return test_y_max
 
     def predict_by_portions(self, cases, portion_size=500):
-        model = self.load_model()
         result = list()
         for start in range(0, len(cases), portion_size):
             portion = cases[start:start+portion_size]
-            portion_result = self.predict(model, portion)
+            portion_result = self.predict_cases(portion)
             result.extend(portion_result)
 
         assert (len(result) == len(cases))
         return result
 
     def toloka(self, toloka_pool_path: str, format=1):
-        model = self.load_model()
-        assert len(self.test_pool.pool) > 0
-        test_x = self.to_ml_input_features(self.test_pool.pool)
-        test_y_pred = model.predict(test_x)
+        test_x = self.to_ml_input_features(self.work_pool.pool)
+        test_y_pred = self.inner_ml_model.predict(test_x)
         self.test_pool.build_toloka_pool(test_y_pred, toloka_pool_path, format=format)

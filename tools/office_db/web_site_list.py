@@ -21,17 +21,21 @@ class TDeclarationWebSiteList:
         else:
             self.offices = offices
         o: TOfficeInMemory
+        error_cnt = 0
         for o in self.offices.offices.values():
             u:  TDeclarationWebSite
             for u in o.office_web_sites:
                 site_url = get_site_url(u.url)
                 if site_url in self.web_sites:
                     if site_url in self.web_sites:
-                        raise Exception("url {} occurs in office db more than one time".format(site_url))
+                        exception_msg = "url {} occurs in office db more than one time".format(site_url)
+                        error_cnt += 1
                 self.web_sites[site_url] = u
                 self.web_sites_to_office[site_url] = o
                 if u.can_communicate() and u.title is None:
                     self.logger.error("url={} has no title, ML model predict office needs titles to work properly".format(u.url))
+        if error_cnt > 0:
+            raise Exception(exception_msg + " and {} other equal urls".format(error_cnt))
 
         self.build_web_domains_redirects()
         self.web_domain_to_web_site.clear()
@@ -64,7 +68,11 @@ class TDeclarationWebSiteList:
         return l
 
     def get_first_site_by_web_domain(self, web_domain: str) -> TDeclarationWebSite:
-        assert '/' not in web_domain
+        if web_domain is None:
+            raise Exception("web_domain cannot be None ")
+        if '/' in web_domain:
+            raise Exception("web_domain ({}) cannot contain '/' ".format(web_domain))
+
         l = self.get_sites_by_web_domain(web_domain)
         if len(l) == 0:
             return None
@@ -103,6 +111,12 @@ class TDeclarationWebSiteList:
         if info is None or info.title is None:
             return ""
         return info.title
+
+    def get_office_id_by_web_domain(self, web_domain: str, unknown_office_id=-1) -> str:
+        info = self.get_first_site_by_web_domain(web_domain)
+        if info is None or info.title is None:
+            return unknown_office_id
+        return info.parent_office.office_id
 
     def has_web_site(self, site_url):
         return site_url in self.web_sites
