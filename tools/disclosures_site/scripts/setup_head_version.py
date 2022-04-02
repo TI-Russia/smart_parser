@@ -10,6 +10,7 @@ from common.logging_wrapper import setup_logging
 
 def parse_args():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--skip-version-check", dest='enable_version_check',  action="store_false", default=True)
     parser.add_argument("--mysql-version", dest='mysql_version')
     parser.add_argument("--elasticsearch-version", dest='elasticsearch_version')
     return parser.parse_args()
@@ -42,8 +43,9 @@ class TUpdater:
         os.chdir(disclosures_folder)
 
         self.run_cmd('sudo ls >/dev/null')          #check sudo without password
-        self.check_version('mysqld', self.args.mysql_version)
-        self.check_version('/usr/share/elasticsearch/bin/elasticsearch', self.args.elasticsearch_version)
+        if self.args.enable_version_check:
+            self.check_version('mysqld', self.args.mysql_version)
+            self.check_version('/usr/share/elasticsearch/bin/elasticsearch', self.args.elasticsearch_version)
         self.run_cmd('git log -n 1 .. >> last_commits.txt')
         self.run_cmd('git pull')
         self.run_cmd('{} -m pip install -r ../requirements.txt'.format(sys.executable))

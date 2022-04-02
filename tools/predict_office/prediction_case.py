@@ -12,7 +12,7 @@ class TPredictionCase:
         self.text = self.get_text_from_office_strings()
 
         self.true_office_id = true_office_id
-        if self.true_office_id is not None and office_index is not None:
+        if self.true_office_id is not None and office_index is not None and office_index.has_office_squeeze(self.true_office_id):
             self.true_region_id = office_index.get_office_region(self.true_office_id)
         else:
             self.true_region_id = None

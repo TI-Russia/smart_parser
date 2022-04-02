@@ -55,6 +55,9 @@ class TOfficeInMemory:
         self.office_web_sites = list( TDeclarationWebSite(parent_office=self).read_from_json(x) for x in js.get('urls', list()))
         return self
 
+    def is_from_spravochnik(self):
+        return self.source_id == TOfficeEntryCreator.spravochnik_editor
+
     def to_json(self):
         rec = {
             'id': self.office_id,

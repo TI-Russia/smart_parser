@@ -22,8 +22,8 @@ def main():
     logger = setup_logging(log_file_name="predict_office_train.log")
     args = parse_args()
 
-    model = TTensorFlowOfficeModel(logger, args.bigrams_path, args.model_folder, args.row_count,
-                                   args.train_pool)
+    model = TTensorFlowOfficeModel(logger, args.bigrams_path, args.model_folder, create_model=True,
+                                   work_pool_path=args.train_pool,  row_count=args.row_count)
     model.train_tensorflow(args.dense_layer_size,
                                epoch_count=args.epoch_count,
                                batch_size=args.batch_size,

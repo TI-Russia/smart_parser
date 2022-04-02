@@ -40,7 +40,7 @@ class TDlrobotHumanManager:
         self.logger = setup_logging(logger_name="dlrobot_human")
         self.dlrobot_human = TDlrobotHumanFileDBM(self.args.input_file)
         self.dlrobot_human.open_db_read_only()
-        if self.args.action in {"check_office", "build_office_train_set"} or self.args.action.endswith('_pool'):
+        if self.args.action in {"check_office", "build_office_train_set", "weak_offices"} or self.args.action.endswith('_pool'):
             self.office_index = TOfficePredictIndex(self.logger, self.args.office_index)
             self.office_index.read()
         else:
@@ -157,6 +157,26 @@ class TDlrobotHumanManager:
             websites.add(web_site)
             yield sha256, src_doc, src_doc.calculated_office_id
 
+    def get_weak_office_uniq_website(self):
+        strong_offices = set()
+        for _, _, office_id in self.get_predict_train_entries():
+            strong_offices.add(office_id)
+
+        web_sites = TDeclarationWebSiteList(logger=self.logger, offices=RUSSIA.offices_in_memory)
+        processed_websites = set()
+        for sha256, src_doc in self.dlrobot_human.get_all_documents():
+            web_site = src_doc.get_web_site()
+            if web_site in processed_websites or web_site is None or web_site == "":
+                continue
+            processed_websites.add(web_site)
+            site_info = web_sites.search_url(web_site)
+            if site_info is None:
+                self.logger.error("cannot find {} in offices.txt".format(web_site))
+                continue
+            office_id = site_info.parent_office.office_id
+            if office_id not in strong_offices:
+                yield sha256, src_doc, office_id
+
     def get_generator_by_source_ml_pool(self):
         #pool = TOfficePool(self.logger)
         #pool.read_cases(self.args.input_predict_office_pool_path)
@@ -182,7 +202,7 @@ class TDlrobotHumanManager:
                 self.logger.debug("process {}, sha256 = {}".format(web_ref.url, sha256))
                 case = TPredictionCase.build_from_web_reference(self.office_index, sha256, src_doc, web_ref,
                                                                 true_office_id)
-                if case.web_domain not in found_web_domains:
+                if case.web_domain not in found_web_domains and case.office_strings is not None:
                     found_web_domains.add(case.web_domain)
                     cases.append(case)
         self.logger.info("process {} lines from the input file".format(input_lines_cnt))
@@ -253,6 +273,8 @@ class TDlrobotHumanManager:
             self.build_predict_office_ml_pool(self.get_generator_by_source_ml_pool)
         elif action == "unknown_office_uniq_website_pool":
             self.build_predict_office_ml_pool(self.get_unknown_office_uniq_website)
+        elif action == "weak_offices":
+            self.build_predict_office_ml_pool(self.get_weak_office_uniq_website)
         elif action == "print_predicted_as_external":
             self.print_predicted_as_external()
         elif action == "select":

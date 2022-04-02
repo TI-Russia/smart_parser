@@ -30,7 +30,7 @@ source $COMMON_SCRIPT
       python3 $TOOLS/dlrobot_human/scripts/join_human_and_dlrobot.py \
           --max-ctime $CRAWL_EPOCH \
           --input-dlrobot-folder  "$DLROBOT_CENTRAL_FOLDER/processed_projects" \
-          --human-json $HUMAN_FILES_JSON \
+              --human-json $HUMAN_FILES_JSON \
           --old-dlrobot-human-json $OLD_DLROBOT_FOLDER/dlrobot_human.dbm \
           --output-json dlrobot_human.dbm
 
@@ -39,7 +39,7 @@ source $COMMON_SCRIPT
     python3 $TOOLS/predict_office/scripts/predict_office_dbm.py --dlrobot-human-path dlrobot_human.dbm
 
   #6  Копирование базы первичных ключей старой базы, чтобы поддерживать постоянство веб-ссылок по базе прод
-   mv $OLD_DLROBOT_FOLDER/new_permalinks/* .
+     mv $OLD_DLROBOT_FOLDER/new_permalinks/* .
    # можно создать их прям сейчас
      #python3 $TOOLS/disclosures_site/manage.py create_permalink_storage --settings disclosures.settings.prod --directory $DLROBOT_FOLDER
 
@@ -118,7 +118,7 @@ new_permalinks_pid=$!
 
 #16 построение дополнительных параметров ведомств (calculated_params)
     python3 $TOOLS/disclosures_site/manage.py build_office_calculated_params --settings disclosures.settings.dev
-    git -C $TOOLS/office_db/office_current commit -m "new office report"
+    git -C $TOOLS/office_db/data/office_current commit -m "new office report"
     git push origin master
 
 #17.1 build access logs squeeze
@@ -159,7 +159,7 @@ wait $new_permalinks_pid
     cd $TOOLS/disclosures_site
     bash $TOOLS/disclosures_site/scripts/rename_db.sh disclosures_db_dev disclosures_db
     sudo systemctl start elasticsearch
-    python3 $TOOLS/discl  osures_site/manage.py build_elastic_index --settings disclosures.settings.prod
+    python3 $TOOLS/disclosures_site/manage.py build_elastic_index --settings disclosures.settings.prod
 
 
 #20 make binary archives and copy to frontend

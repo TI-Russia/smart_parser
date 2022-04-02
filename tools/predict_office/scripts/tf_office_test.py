@@ -15,8 +15,8 @@ def parse_args():
 def main():
     logger = setup_logging(log_file_name="predict_office_test.log")
     args = parse_args()
-    model = TTensorFlowOfficeModel(logger, args.bigrams_path, args.model_folder,
-                                   test_pool=args.test_pool)
+    model = TTensorFlowOfficeModel(logger, args.bigrams_path, args.model_folder, create_model=False,
+                                   work_pool_path=args.test_pool)
     model.test_model(thresholds=args.threshold)
 
 

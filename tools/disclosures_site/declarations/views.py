@@ -620,6 +620,8 @@ class FileSearchView(CommonSearchView):
 
 
 def source_doc_getter(request, sha256_and_file_extension):
+    if DeclarationsConfig.SOURCE_DOC_CLIENT is None:
+        raise Http404('source_doc_backend is not initialized')
     sha256, _ = os.path.splitext(sha256_and_file_extension)
     data, file_extension = DeclarationsConfig.SOURCE_DOC_CLIENT.retrieve_file_data_by_sha256(sha256)
     content_type = file_extension_to_content_type(file_extension)
