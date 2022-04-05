@@ -255,7 +255,9 @@ class TConvertProcessor(http.server.HTTPServer):
                 self.logger.error(exp)
             self.logger.debug("http server was stopped")
             self.convert_storage.close_storage()
+            self.logger.debug("storage was closed")
             close_logger(self.logger)
+            print("stop_http_server ends")
 
     def save_new_file(self, sha256, file_bytes, file_extension, force, only_winword_conversion=False,
                       only_ocr=False):
