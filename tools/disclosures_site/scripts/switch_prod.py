@@ -37,7 +37,7 @@ class TSwitcher:
         self.run_cmd("sudo mv {} {}".format(prod_folder, backup_folder))
         self.run_cmd("sudo mv {} {}".format(new_folder, prod_folder))
         self.run_cmd("sudo systemctl start {}".format(service))
-        self.run_cmd("sudo systemctl status {}".format(service))
+        self.run_cmd("sudo systemctl status --no-pager {}".format(service))
 
     def check_mysql(self):
         sql_check = '{} manage.py external_link_surname_checker --links-input-file data/external_links.json  --settings disclosures.settings.prod'.format(
