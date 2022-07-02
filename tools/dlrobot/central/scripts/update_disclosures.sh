@@ -119,7 +119,8 @@ new_permalinks_pid=$!
 #16 построение дополнительных параметров ведомств (calculated_params)
     python3 $TOOLS/disclosures_site/manage.py build_office_calculated_params --settings disclosures.settings.dev
     git -C $TOOLS/office_db/data/office_current commit -m "new office report"
-    git push origin master
+    git -C $TOOLS/office_db/data/office_current add *.txt *.csv
+    git -C $TOOLS/office_db/data/office_current push origin master
 
 #17.1 build access logs squeeze
     cd $DLROBOT_FOLDER
@@ -184,10 +185,13 @@ wait $new_permalinks_pid
 #21 обновление prod
     v1=`sudo mysqld --version`
     v2=`sudo /usr/share/elasticsearch/bin/elasticsearch --version`
+    # реально следующие две строки (выкатки исходников и переключение) не работают автоматичеси,
+    # тесты не проходят по таймаутам в бизнес-тайм,
+    # а разворачивание всегда ломается. Приходится делать руками.
     ssh $FRONTEND python3 $FRONTEND_WEB_SITE/scripts/setup_head_version.py --mysql-version "\"$v1\"" --elasticsearch-version "\"$v2\""
     ssh $FRONTEND python3 $FRONTEND_WEB_SITE/scripts/switch_prod.py --mysql-tar /tmp/mysql.tar.gz \
       --elasticsearch-tar /tmp/elastic.tar.gz --sitemap-tar /tmp/sitemap.tar --misspell-folder /tmp/misspell_bin
-    ssh $PROD_SOURCE_DOC_SERVER sudo systemctl restart source_declaration_doc
+      ssh $PROD_SOURCE_DOC_SERVER sudo systemctl restart source_declaration_doc
 
 #22  посылаем данные dlrobot в каталог, который синхронизируется с облаком, очищаем dlrobot_central (без возврата)
     cd $DLROBOT_FOLDER
