@@ -1,0 +1,248 @@
+@font-face {
+    font-family: 'Roboto Light';
+    src: url('/static/fonts/Robotolight.woff') format('woff'),
+         url('/static/fonts/Robotolight.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('/static/fonts/Roboto.woff') format('woff'),
+         url('/static/fonts/Roboto.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+br.mobile {
+  display: inline; // Show BR tag for narrow screens
+}
+
+@media screen and (max-device-width: 480px) /* Mobile */ {
+    body {
+        background-color: #F3F3F3;
+        font-family: "Roboto", serif;
+    }
+    html {
+        /*font-size: 36px;*/
+        /*height:100%;*/
+    }
+    body{
+        height:100%;
+    }
+    .desktop {
+         display: none;
+    }
+    .mobile {
+         display: inline;
+    }
+}
+
+@media screen and (min-device-width: 480px)  /* Desktop */ {
+    body {
+        background-color: #F3F3F3;
+        text-color: black;
+        link-color: black;
+        font-family: "Roboto Light", serif;
+    }
+    .mobile {
+         display: none;
+    }
+    input.mobild {
+
+    }
+    .desktop {
+         display: inline;
+    }
+}
+
+span.disclosures_top_header {
+    display: inline;
+    font-size: 200%;
+    font-weight: bold;
+    text-align: left;
+}
+
+div.web_site_header {
+    margin: 10px;
+    font-size: 100%;
+}
+
+span.selected_menu {
+    color: white;
+    background-color: black;
+}
+
+span.not_selected_menu {
+    color: black;
+    background-color: #F3F3F3;
+}
+
+span.menu_space {
+     width: 10px;
+     display: inline-block;
+}
+
+input {
+  font-size: 100%;
+}
+
+select {
+  font-size: 100%;
+}
+/*================*/
+
+.declaration_table td, .declaration_table th {
+    border: thin solid;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+table.declaration_table  {
+    border: thin solid;
+    border-collapse: collapse;
+}
+
+/*================*/
+table.declaration_list_table  {
+    border: thin solid;
+    border-collapse: collapse;
+}
+
+.declaration_list_table td, .declaration_list_table th {
+    border: thin solid;
+    padding-left: 8px
+    padding-right: 8px;
+    padding-top: 10x;
+}
+
+/*================*/
+.solid_table td, .solid_table th {
+    border: thin solid;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+table.solid_table  {
+    border: thin solid;
+    border-collapse: collapse;
+}
+/*==========*/
+
+div.clickable {
+  cursor: pointer;
+}
+
+div.menu {
+  width: 35px;
+  height: 5px;
+  background-color: black;
+  margin: 6px 0;
+}
+
+/* ================ mobile menu ==================== */
+.topnav {
+  overflow: hidden;
+  position: relative;
+}
+
+#mobileMenu {
+    display: none;
+    height: 80vh;
+}
+
+.menu_table {
+    display: table;
+    height: 100%;
+    width: 100%;
+}
+
+div.row {
+    display: table-row;
+}
+
+.topnav a {
+    display: table-cell;
+    text-align: center;
+    text-decoration: none;
+    font-size: x-large;
+    border:1px solid black;
+    vertical-align: middle;
+}
+
+.mobile_menu_dark_cell {
+    background-color: #E3E3E3;
+}
+
+/* section search*/
+td.search_param {
+    padding-bottom: 10px;
+}
+
+div.search_input {
+    padding-top: 5x;
+    padding-bottom: 5px;
+}
+
+div.search_input1 {
+    padding-bottom: 10px;
+}
+
+#id_car_brands {
+    width: 100px;
+}
+
+#id_gender{
+    width: 60px;
+}
+
+#id_rubric_id {
+    width: 150px;
+}
+
+#id_region_id {
+  width: 150px;
+}
+
+#id_position_and_department {
+    width: 130px;
+}
+
+#id_person_name {
+  width: 160px;
+}
+
+#id_web_domains {
+  width: 120px;
+}
+
+#id_office_request {
+    width: 180px;
+}
+
+hr {
+    width: 100%;
+    margin-block-start: 0.5em;
+    margin-block-end: 0.5em;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+}
+
+.section_by_count td, .section_by_count th {
+    border: thin solid;
+    padding: 4px;
+}
+
+table.section_by_count {
+    border-collapse: collapse;
+    border: thin solid;
+    padding: 4px;
+}
+
+div.correction_link {
+    display: inline;
+    font-size: 120%;
+    font-weight: bold;
+    background-color: pink;
+    text-color: white;
+}

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <title>Средний доход российских чиновников по регионам 2010-2019 гг</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/style.css" />
+
+    
+    
+    
+    <meta name="yandex-verification" content="5c8f653019005048" />
+    <meta name="google-site-verification" content="z3C44ad-5G9K768OYL0xzTf6xtJeshD-WMGmdqMe9oU" />
+    
+     
+     
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6WBY07BML5"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-6WBY07BML5');
+    </script>
+
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+       (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+       m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+       (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+       ym(74114962, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true
+       });
+    </script>
+
+    <noscript><div><img src="https://mc.yandex.ru/watch/74114962" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
+</head>
+
+
+<body vlink="#999999" alink="#000000">
+
+
+<div class="web_site_header mobile">
+    <div>
+        <span class="disclosures_top_header">Дискложес&nbsp;
+            <span style="float:right; font-size: 150%;">
+                <a href="javascript:void(0);" style="color: black; text-decoration: none;" onclick="showMobileMenu()">
+            &#9776; &nbsp;
+                </a>
+            </span>
+            <span style="float:right;">
+                <!-- <a href="https://www.icc-cpi.int/ukraine"><img src="/static/images/pozor_putina.jpg" width=60/></a> -->
+               &nbsp;&nbsp;&nbsp;
+            </span>
+        </span>
+        <div><br/>декларации о доходах</div>
+    </div>
+    <hr />
+
+</div>
+
+<div class="web_site_header desktop">
+    <table>
+        <tr>
+            <td>
+                <span class="disclosures_top_header">Дискложес</span>
+                <span style="display:inline;">&nbsp;&nbsp;&nbsp;  Автоматизированный сбор деклараций о доходах</span>
+            </td>
+            <td rowspan="2">
+                <!-- <a href="https://www.icc-cpi.int/ukraine">
+                    <img src="/static/images/pozor_putina.jpg"/ width=60/>
+                </a> -->
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <span id="menu_div"></span>
+            </td>
+        </tr>
+    </table>
+    <hr />
+
+</div>
+
+
+
+<div id="site-wrapper">
+    
+
+<h1> Средний доход российских чиновников по регионам 2010-2019 гг </h1>
+
+<h4> Алексей Сокирко, декабрь 2020, sokirko@yandex.ru</h4>
+
+<p>
+    На декабрь 2020 года в базе около 4 млн. деклараций, из них около 800.000 деклараций приписаны федеральным
+    ведомствам, которые не рассматриваются в этом исследовании. Остальные 3.2 млн деклараций пришли из регионов. Мы
+    считаем медианные доходы чиновников по разным регионам. Первая проблема — это ошибки парсинга доходов. Из-за этих
+    ошибок базе возникают доходы больше 100 млн. Конечно, чиновники с такими доходами в природе есть, но ошибок больше,
+    поэтому в этом исследовании мы не будем рассматривать доходы свыше 5 млн в год. Дальше нас интересуют доходы только
+    самих чиновников, а не их жён(мужей). Мы будем сравнивать этот доход с медианной зарплатой всех граждан по регионам,
+    которую мы взяли с сайта <a href=https://russia.duck.consulting/maps/105/2019> russia.duck.consulting </a>.
+</p>
+
+<p>
+    Мы хорошо понимаем, что доход не равен зарплате. В доход, кроме зарплаты, включаются доходы от продажи имущества или
+    доходы по ценным бумагам. Доход всегда выше зарплаты. Но срезав доходы свыше 5 млн рублей, мы убрали не только
+    ошибки, но значительную часть этих сверхдоходов, которые формируются не каждый год. Мы смотрели на доходы за
+    последние пять лет. Мы увидели, что корреляция между медианной зарплатой в регионе и медианным доходом очень
+    сильная. Нам не очень интересно углубляться в строгий корреляционный анализ, скажем только, что коэффициент Спирмена
+    между этим двумя величинами 0.91, p-value<0.01. Это свидетельствует о простом факте - чиновники из бедных регионов
+    получают меньше, чем чиновники из богатых.
+</p>
+<p>
+    Если смотреть на данные глазами, можно увидеть, что, чтобы получить медианный доход чиновника в регионе, нужно
+    примерно умножить медианную зарплату обычного гражданина на 2. Можем ли мы сказать, что чиновники в среднем получают
+    в два раза больше денег? Нет, не можем, поскольку:
+</p>
+<p>
+    1. Мы сравниваем медианные доход и зарплату, доход включает зарплату.
+    <br/>
+    2. Декларирующие свои доходы чиновники — это верхушка айсберга. Согласно <a
+        href=https://www.rbc.ru/society/23/09/2019/5d8868bb9a7947414a3753bd> этому источнику </a> в России сейчас около
+    1.1 млн «настоящих чиновников», в нашей базе находится примерно 300-400 тыс деклараций за каждый год, т. е. меньше
+    трети «настоящих» чиновников. Часть деклараций мы просто не умеем пока парсить. Однако можно предположить, что в
+    нашу базу пока попадают почти все высшие чиновники. Это люди с высшим образованием, интеллектуально сильные, может
+    быть, у них моральная планка занижена, но это к делу отношение не имеет :). Мы рискнём предположить, что такие люди
+    могут получить сопоставимый доход за пределами властных структур.
+</p>
+<p>
+    Интересно еще посмотреть на список регионов, где разница между доходами чиновников и обычных граждан очень высока. С
+    первого взгляда видно, что эти регионы делятся на две категории: 1. самые богатые регионы России, типа
+    Ямало-Ненецкий автономный округ), 2. либо бедные, и тогда это Кавказ. В бедных регионах средней полосы России разрыв
+    между доходами чиновников и людьми меньше. Интерпретировать я это не буду, поскольку в данных явно еще не хватает
+    размеров численности населения регионов (вдруг на Кавказе плотность чиновников меньше и поэтому они получают
+    больше?) Оставим это на будущее.
+</p>
+<p>
+    Данные по регионам за разные года:
+    <br/> <a href=/static/regionreports/region-income-report-2019.html> 2019 год </a>
+    <br/> <a href=/static/regionreports/region-income-report-2017.html> 2017 год </a>
+    <br/> <a href=/static/regionreports/region-income-report-2015.html> 2015 год </a>
+    <br/> <a href=/static/regionreports/region-income-report-2013.html> 2013 год </a>
+    <br/> <a href=/static/regionreports/region-income-report-2011.html> 2011 год </a>
+</p>
+
+
+</div>
+
+<script type="text/javascript" src="/static/main_menu.js"></script>
+
+</body>
+</html>
