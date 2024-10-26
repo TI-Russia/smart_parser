@@ -28,35 +28,41 @@ namespace SmartParser.Lib
             {
                 return true;
             }
+
+            if (cellText.StartsWith("за", StringComparison.OrdinalIgnoreCase) && cellText.EndsWith("год", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
             // first words: get it from previous results:
             // ~/media/json$ ls | xargs  jq -cr '.persons[].person.department' | awk '{print $1}' | sort | uniq -c  | sort -nr
             // стоит перейти на более продвинутую модель на триграммах
             if (cellText.StartsWith("ФК") ||
-                cellText.StartsWith("ФГ") ||
-                cellText.StartsWith("ГУ") ||
-                cellText.StartsWith("Федеральн") ||
-                cellText.StartsWith("федеральн") ||
-                cellText.StartsWith("ФБУ") ||
-                cellText.StartsWith("Руководство") ||
-                cellText.StartsWith("ФАУ") ||
-                cellText.StartsWith("Департамент") ||
-                cellText.StartsWith("Заместители") ||
-                cellText.StartsWith("Институт") ||
-                cellText.StartsWith("Государственное") ||
-                cellText.StartsWith("Главное") ||
-                cellText.StartsWith("Отдел") ||
-                cellText.StartsWith("Управлени") ||
-                cellText.StartsWith("Фонд") ||
-                cellText.StartsWith("АНО") ||
-                cellText.StartsWith("УФСИН") ||
-                cellText.StartsWith("Центр") ||
-                cellText.StartsWith("ФСИН") ||
-                cellText.StartsWith("Министерств") ||
-                cellText.StartsWith("Лица") ||
-                cellText.StartsWith("ИК")
-                )
+                    cellText.StartsWith("ФГ") ||
+                    cellText.StartsWith("ГУ") ||
+                    cellText.StartsWith("федеральн", StringComparison.OrdinalIgnoreCase) ||
+                    cellText.StartsWith("ФБУ") ||
+                    cellText.StartsWith("Руководство") ||
+                    cellText.StartsWith("ФАУ") ||
+                    cellText.StartsWith("Департамент") ||
+                    cellText.StartsWith("Заместители") ||
+                    cellText.StartsWith("Институт") ||
+                    cellText.StartsWith("Государственное") ||
+                    cellText.StartsWith("Главное") ||
+                    cellText.StartsWith("Отдел") ||
+                    cellText.StartsWith("Управлени") ||
+                    cellText.StartsWith("Фонд") ||
+                    cellText.StartsWith("АНО") ||
+                    cellText.StartsWith("УФСИН") ||
+                    cellText.StartsWith("Центр") ||
+                    cellText.StartsWith("ФСИН") ||
+                    cellText.StartsWith("Министерств") ||
+                    cellText.StartsWith("Лица") ||
+                    cellText.StartsWith("ИК") ||
+                    cellText.StartsWith("Филиал") ||
+                    cellText.StartsWith("информация о", StringComparison.OrdinalIgnoreCase))
 
-                
+
             {
                 return true;
             }
@@ -101,9 +107,9 @@ namespace SmartParser.Lib
             bool langModel = CheckSectionLanguageModel(cellText);
             bool hasEnoughLength = rowText.Length >= 9; // "Референты"; но встречаются ещё "Заместители Министра"
             bool halfCapitalLetters = rowText.Count(char.IsUpper) * 2 > rowText.Length;
-            
+
             // Stop Words
-            List<string> stopWords = new List<string> {"сведения", };
+            List<string> stopWords = new List<string> { "сведения" };
             bool hasStopWord = false;
             foreach (var word in stopWords)
             {
@@ -114,7 +120,7 @@ namespace SmartParser.Lib
             {
                 return rowText;
             }
-            
+
             // "ННИИПК", "СамГМУ"  
             if (!hasEnoughLength && !halfCapitalLetters)
             {
@@ -124,7 +130,7 @@ namespace SmartParser.Lib
             {
                 return rowText;
             }
-            
+
             if (!OneColumnIsLarge)
             {
                 return null;
@@ -133,7 +139,7 @@ namespace SmartParser.Lib
             if (cellsWithTextCount == 1)
             {
                 // possible title, exact number of not empty columns is not yet defined
-                if (maxMergedCols > 5 && langModel)
+                if (maxMergedCols >= 4 && langModel)
                 {
                     return rowText;
                 };

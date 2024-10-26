@@ -95,6 +95,8 @@ namespace SmartParser.Lib
                     _ => DeclaredYearlyIncome,
                 },
 
+                _ when str.IsAvgMonthlyIncomeThousands() => DeclaredAvgMonthlyIncomeThousands,
+                _ when str.IsAvgMonthlyIncome() => DeclaredAvgMonthlyIncome,
                 _ when str.IsMainWorkPositionIncome() => MainWorkPositionIncome,
                 _ when str.IsDataSources() => DataSources,
                 _ when str.IsComments() => Comments,
@@ -130,8 +132,8 @@ namespace SmartParser.Lib
         public static bool IsNumeroSign(this string str)
         {
             str = str.RemoveCharacters(' ');
-            return str.StartsWith("№")
-                   || str.ContainsAny("nп/п", "№п/п", "nпп")
+        return  str.StartsWith("№")
+                   || str.ContainsAny("nп/п", "№п/п", "№\nп/п", "-п/п", "nпп")
                    || str.Replace("\\", "/").Equals("п/п", StringComparison.OrdinalIgnoreCase);
         }
 
@@ -144,7 +146,7 @@ namespace SmartParser.Lib
         {
             str = str.OnlyRussianLowercase();
             return str.ContainsAny("отчетныйгод") && !str.IsDeclaredYearlyIncome();
-                   ;
+            ;
         }
 
         public static bool IsName(this string s)
@@ -152,10 +154,10 @@ namespace SmartParser.Lib
             var clean = s.RemoveCharacters(',', '-', '\n', ' ').ToLowerInvariant();
             return clean.StartsWithAny("лицаодоходах", "подающиесведения", "подающийсведения")
                     || clean.ContainsAny(
-                        "фамилия", 
-                        "фамилимя", 
-                        "фио", 
-                        ".иф.о.", 
+                        "фамилия",
+                        "фамилимя",
+                        "фио",
+                        ".иф.о.",
                         "сведенияодепутате",
                         "сведенияолице",
                         "ф.и.о");
@@ -171,7 +173,7 @@ namespace SmartParser.Lib
             return s.ContainsAny("члены семьи", "степень родства") && !s.IsName();
         }
 
-        public static bool IsOccupation(string s) 
+        public static bool IsOccupation(string s)
         {
             return s.RemoveCharacters('-', ' ').ToLowerInvariant()
             .ContainsAny("должность", "должности", "должностей");
@@ -181,20 +183,20 @@ namespace SmartParser.Lib
             return IsOccupation(s) && IsRelativeType(s);
         }
 
-        private static bool IsDepartment(this string s) => s.ContainsAny("наименование организации", "ерриториальное управление в субъекте");
+        private static bool IsDepartment(this string s) => s.ContainsAny("наименование организации", "ерриториальное управление в субъекте", "наименование учреждения", "наименование государственного учреждения");
 
         private static bool IsMixedRealEstateOwnershipType(this string s) => s.IsMixedColumn() && HasOwnershipTypeString(s);
 
-        private static bool HasRealEstateTypeStr(string s) 
+        private static bool HasRealEstateTypeStr(string s)
         {
             s = s.OnlyRussianLowercase();
-            return s.ContainsAny("видобъекта", 
-                                "видобъектов", 
-                                "видобьекта", 
-                                "видимущества", 
-                                "видыобъектов", 
-                                "видынедвижимости", 
-                                "видинаименованиеимущества", 
+            return s.ContainsAny("видобъекта",
+                                "видобъектов",
+                                "видобьекта",
+                                "видимущества",
+                                "видыобъектов",
+                                "видынедвижимости",
+                                "видинаименованиеимущества",
                                 "виднедвижимости");
         }
 
@@ -224,7 +226,8 @@ namespace SmartParser.Lib
 
         public static bool IsMixedColumn(this string s) => HasOwnedString(s) && HasStateString(s);
 
-        private static bool IsOwnedRealEstateType(string parentColumnTitle, string subTitle) {
+        private static bool IsOwnedRealEstateType(string parentColumnTitle, string subTitle)
+        {
             if (subTitle.Length > 0 && (subTitle.HasSquareString() || subTitle.HasCountryString()))
             {
                 // 4479_27.doc 
@@ -235,7 +238,7 @@ namespace SmartParser.Lib
             {
                 return true;
             }
-            if (parentColumnTitle.IsOwnedColumn() && HasRealEstateStr(parentColumnTitle) 
+            if (parentColumnTitle.IsOwnedColumn() && HasRealEstateStr(parentColumnTitle)
                 && subTitle.ToLower().StartsWith("вид") && !HasOwnershipTypeString(subTitle))
             {
                 return true;
@@ -253,7 +256,8 @@ namespace SmartParser.Lib
             return s.IsStateColumn() && HasRealEstateTypeStr(s) && s.HasCountryString();
         }
 
-        private static bool IsOwnedRealEstateOwnershipType(string parentColumnTitle, string subTitle) {
+        private static bool IsOwnedRealEstateOwnershipType(string parentColumnTitle, string subTitle)
+        {
             if (subTitle.Length > 0 && (subTitle.HasSquareString() || subTitle.HasCountryString()))
             {
                 // 4479_27.doc 
@@ -263,13 +267,14 @@ namespace SmartParser.Lib
             return IsOwnedColumn(s) && HasOwnershipTypeString(s);
         }
 
-        private static bool IsOwnedRealEstateSquare(string parentColumnTitle, string subTitle) {
+        private static bool IsOwnedRealEstateSquare(string parentColumnTitle, string subTitle)
+        {
             var s = parentColumnTitle + " " + subTitle;
             if (IsOwnedColumn(s) && HasRealEstateStr(s) && HasSquareString(s) && !s.Contains("вид"))
             {
                 return true;
             }
-            if (IsOwnedColumn(parentColumnTitle) && HasRealEstateStr(s)  && HasSquareString(subTitle))
+            if (IsOwnedColumn(parentColumnTitle) && HasRealEstateStr(s) && HasSquareString(subTitle))
             {
                 return true;
             }
@@ -320,7 +325,7 @@ namespace SmartParser.Lib
 
         private static bool HasMixedRealEstateOrRealEstateWithoutOwnership(string s)
         {
-            return HasRealEstateStr(s) && 
+            return HasRealEstateStr(s) &&
                 (IsMixedColumn(s) || (!HasOwnedString(s) && !HasStateString(s)));
         }
         private static bool IsMixedRealEstateDeclarant(this string s)
@@ -406,22 +411,32 @@ namespace SmartParser.Lib
         public static bool IsDeclaredYearlyIncome(this string str)
         {
             var strLower = str.OnlyRussianLowercase();
-            return strLower.ContainsAny("годовойдоход", "годовогодохода", "суммадохода", "суммадоходов", 
-                "декларированныйдоход", "декларированныйгодовой", "декларированногодохода", 
-                "декларированногогодовогодоход", "общаясуммадохода", "общаясуммаза" )
+            return strLower.ContainsAny("годовойдоход", "годовогодохода", "суммадохода", "суммадоходов",
+                "декларированныйдоход", "декларированныйгодовой", "декларированногодохода",
+                "декларированногогодовогодоход", "общаясуммадохода", "общаясуммаза")
                 || strLower.StartsWithAny("сведенияодоходеза", "доход");
         }
-
+        public static bool IsAvgMonthlyIncome(this string str)
+        {
+            var strLower = str.OnlyRussianLowercase();
+            return strLower.ContainsAny("среднемесячнаязаработная", "cредняязарплата", "размерсреднемесячнойзаработнойплат", "средняязаработнаяплата");
+        }
+        private static bool IsAvgMonthlyIncomeThousands(this string s) => s.IsAvgMonthlyIncome() &&  s.Contains("тыс.");
         private static bool IsMainWorkPositionIncome(this string str) => Regex.Match(str, @"сумма.*месту\s+работы").Success;
 
         private static bool IsDeclaredYearlyIncomeThousands(this string s) => s.IsDeclaredYearlyIncome() && s.Contains("тыс.");
 
-        private static bool IsDataSources(this string s) {
+        private static bool IsDataSources(this string s)
+        {
             var s1 = s.OnlyRussianLowercase();
             return s1.Contains("сведен") || s1.Contains("источниках");
         }
 
-        private static bool IsComments(this string s) => s.OnlyRussianLowercase().Contains("примечани");
+        private static bool IsComments(this string s)
+        {
+            var strLower = s.OnlyRussianLowercase();
+            return strLower.Contains("примечани") || strLower.StartsWithAny("наименование", "соотношениекратностисреднейзаработнойплаты");
+        }
 
         private static bool IsAcquiredProperty(this string s) => s.OnlyRussianLowercase().Contains("приобретенногоимущества");
 

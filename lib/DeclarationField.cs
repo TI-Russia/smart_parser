@@ -50,6 +50,8 @@ namespace SmartParser.Lib
         OccupationOrRelativeType = 15,
         DeclaredYearlyOtherIncome = 16 | StartsWithDigitMask,
         DeclarantIndexAndName = 17 | StartsWithDigitMask,
+        DeclaredAvgMonthlyIncome = 18 | StartsWithDigitMask,
+        DeclaredAvgMonthlyIncomeThousands = DeclaredAvgMonthlyIncome | StartsWithDigitMask,
 
         // Для случая, когда один и тот же набор колонок содержит сведения и о частной, и о государственной собственности
         MixedRealEstateType = Mixed | RealtyTypeMask,
@@ -105,7 +107,6 @@ namespace SmartParser.Lib
         Stocks = 107,
         MainWorkPositionIncome = 108,
         Spendings = 109
-
     }
 
 }

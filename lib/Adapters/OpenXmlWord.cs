@@ -51,11 +51,11 @@ namespace SmartParser.Lib
 
     }
 
-    public class BadCellAddress : System.Exception 
+    public class BadCellAddress : System.Exception
     {
         public int Row = -1;
-        public BadCellAddress(int row, int col) 
-                : base(String.Format("Cannot get cell row={0}, col={1} ", row, col)) 
+        public BadCellAddress(int row, int col)
+                : base(String.Format("Cannot get cell row={0}, col={1} ", row, col))
         {
             Row = row;
         }
@@ -202,17 +202,17 @@ namespace SmartParser.Lib
                 return false;
             }
             var body = WordDocument.MainDocumentPart.Document.Body;
-            if  (p.Parent == body)
+            if (p.Parent == body)
             {
                 return false;
             }
-            var cell  = p.Parent;
+            var cell = p.Parent;
             if (cell == null || cell.GetType() != typeof(TableCell))
             {
                 return false;
             }
             var row = cell.Parent;
-            if (row == null || row.GetType() != typeof(TableRow) ||  WordDocHolder.CountInnerVerticalBorders((TableRow)row) < 3)
+            if (row == null || row.GetType() != typeof(TableRow) || WordDocHolder.CountInnerVerticalBorders((TableRow)row) < 3)
             {
                 return false;
             }
@@ -257,24 +257,24 @@ namespace SmartParser.Lib
 
     public class OpenXmlWordCell : Cell
     {
-        public MergedCellValues? VerticallyMerged; 
+        public MergedCellValues? VerticallyMerged;
         public bool HasBottomBorder = true;
         public bool HasTopBorder = true;
         public bool HasRightBorder = true;
         public bool TableHasInsideHorizontalBorders = false;
 
-        public OpenXmlWordCell(WordDocHolder docHolder, TableCell[] row, int cellIndexInRow, TableWidthInfo tableWidth,  
+        public OpenXmlWordCell(WordDocHolder docHolder, TableCell[] row, int cellIndexInRow, TableWidthInfo tableWidth,
                     int rowIndexInTable, int unmergedColumnIndex, TableBorders tblBorders)
         {
             TableCell inputCell = row[cellIndexInRow];
             InitTextProperties(docHolder, inputCell);
-            if (inputCell?.TableCellProperties?.TableCellBorders != null) 
+            if (inputCell?.TableCellProperties?.TableCellBorders != null)
             {
                 var borders = inputCell.TableCellProperties.TableCellBorders;
                 HasBottomBorder = WordDocHolder.BorderIsVisible(borders.BottomBorder);
                 HasTopBorder = WordDocHolder.BorderIsVisible(borders.TopBorder);
                 HasRightBorder = WordDocHolder.BorderIsVisible(borders.RightBorder);
-                if  (!HasRightBorder && cellIndexInRow + 1 < row.Length && row[cellIndexInRow + 1].TableCellProperties?.TableCellBorders != null)
+                if (!HasRightBorder && cellIndexInRow + 1 < row.Length && row[cellIndexInRow + 1].TableCellProperties?.TableCellBorders != null)
                 {
                     HasRightBorder = WordDocHolder.BorderIsVisible(row[cellIndexInRow + 1].TableCellProperties?.TableCellBorders?.LeftBorder);
                 }
@@ -288,7 +288,7 @@ namespace SmartParser.Lib
             VerticallyMerged = null;
             if (vmerge != null)
             {
-                if ((vmerge.Val == null) || (vmerge.Val == MergedCellValues.Continue)) 
+                if ((vmerge.Val == null) || (vmerge.Val == MergedCellValues.Continue))
                 {
                     // null -> MergedCellValues.Continue
                     VerticallyMerged = MergedCellValues.Continue;
@@ -430,7 +430,7 @@ namespace SmartParser.Lib
             {
                 FontSize = docHolder.DefaultFontSize;
             }
-            
+
         }
     }
 
@@ -610,7 +610,7 @@ namespace SmartParser.Lib
             using (StreamReader r = new StreamReader(fileName))
             {
                 jsonStr = r.ReadToEnd();
-            }   
+            }
             TJsonTablePortion portion = JsonConvert.DeserializeObject<TJsonTablePortion>(jsonStr);
             Title = portion.Title;
             DocumentFile = portion.InputFileName;
@@ -664,7 +664,8 @@ namespace SmartParser.Lib
         {
             for (int i = startRow; i > 0; --i)
             {
-                try {
+                try
+                {
                     if (HasTopBorder(i, column))
                     {
                         return i;
@@ -716,7 +717,7 @@ namespace SmartParser.Lib
             {
                 return true;
             }
-            
+
             if (cellUnder.HasTopBorder)
             {
                 return true;
@@ -766,7 +767,8 @@ namespace SmartParser.Lib
                     {
                         c.FirstMergedRow = FindCellWithTopBorder(c.Row, c.Col);
                         c.MergedRowsCount = FindCellWithBottomBorder(c.Row, c.Col) - c.Row + 1;
-                        if (c.FirstMergedRow == c.Row) {
+                        if (c.FirstMergedRow == c.Row)
+                        {
                             for (int i = 1; i < c.MergedRowsCount; i++)
                             {
                                 int cellNo = FindMergedCellByColumnNo(TableRows[c.Row + i].RowCells, c.Col);
@@ -859,7 +861,7 @@ namespace SmartParser.Lib
                 if (tBorders != null)
                 {
                     return tBorders;
-                } 
+                }
             }
             return null;
         }
@@ -922,7 +924,7 @@ namespace SmartParser.Lib
             }
             if ((TableRows.Count > 0) && !TableHeaderRecognizer.IsNamePositionAndIncomeTable(GetDataCells(0)))
             {
-                if (maxCellsCount <= 4 || CheckNameColumnIsEmpty(saveRowsCount))
+                if (maxCellsCount <= 3 || CheckNameColumnIsEmpty(saveRowsCount))
                 {
                     //remove this suspicious table 
                     TableRows.RemoveRange(saveRowsCount, TableRows.Count - saveRowsCount);
@@ -960,7 +962,8 @@ namespace SmartParser.Lib
 
         void ProcessWordTableAndUpdateTitle(WordDocHolder docHolder, Table table, int maxRowsToProcess, int tableIndex)
         {
-            if (CanAppendRowsFromTable(table, tableIndex)) { 
+            if (CanAppendRowsFromTable(table, tableIndex))
+            {
                 ProcessWordTable(docHolder, table, maxRowsToProcess);
             }
 
@@ -1041,6 +1044,11 @@ namespace SmartParser.Lib
         protected override List<Cell> GetCells(int row, int maxColEnd)
         {
             var result = new List<Cell>();
+            if (TableRows.Count <= row)
+            {
+                return result;
+            }
+
             foreach (var r in TableRows[row].RowCells)
             {
                 result.Add(r);
@@ -1056,11 +1064,11 @@ namespace SmartParser.Lib
         }
         public override List<Cell> GetUnmergedRow(int row)
         {
-            return TableRows[row].RowCells.ConvertAll(x =>(Cell)x);
+            return TableRows[row].RowCells.ConvertAll(x => (Cell)x);
         }
         virtual public bool RowHasPersonName(int row)
         {
-            return TableRows[row].HasPersonName;
+            return TableRows.Count > row && TableRows[row].HasPersonName;
         }
 
 
@@ -1081,7 +1089,7 @@ namespace SmartParser.Lib
 
         public override bool RowHasInnerBorder(int row)
         {
-            return TableRows[row].InnerBorderCount > 0;
+            return TableRows.Count > row && TableRows[row].InnerBorderCount > 0;
         }
     }
 }

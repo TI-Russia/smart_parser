@@ -60,6 +60,17 @@ namespace SmartParser.Lib
 
             bool fieldInThousands = (field & DeclarationField.DeclaredYearlyIncomeThousandsMask) == DeclarationField.DeclaredYearlyIncomeThousandsMask;
             person.DeclaredYearlyIncome = DataHelper.ParseDeclaredIncome(fieldStr, fieldInThousands);
+
+            if (field == DeclarationField.DeclaredAvgMonthlyIncome)
+            {
+                // we have to multiply by 12 months to get yearly income
+                person.DeclaredYearlyIncome *= 12;
+                if (field == DeclarationField.DeclaredAvgMonthlyIncomeThousands)
+                {
+                    person.DeclaredYearlyIncome *= 1000;
+                }
+            }
+
             if (!ignoreThousandMultiplier || fieldStr.Contains("тыс."))
             {
                 person.DeclaredYearlyIncome *= 1000;
@@ -86,6 +97,10 @@ namespace SmartParser.Lib
                     return true;
                 }
                 else if (ParseIncomeOneField(currRow, person, DeclarationField.DeclarantIncome, true))
+                {
+                    return true;
+                }
+                else if (ParseIncomeOneField(currRow, person, DeclarationField.DeclaredAvgMonthlyIncome, true))
                 {
                     return true;
                 }
@@ -218,7 +233,7 @@ namespace SmartParser.Lib
             var secondPassStartTime = DateTime.Now;
             int allDeclarantsCount = declaration.PublicServants.Count();
 
-            int  goodDeclarantCount = 0;
+            int goodDeclarantCount = 0;
             var exceptions = new List<Exception>();
 
             foreach (PublicServant declarant in declaration.PublicServants)
