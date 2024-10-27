@@ -6,7 +6,7 @@ using System.Xml.Linq;
 
 namespace SmartParser.Lib
 {
-    public interface DataRowInterface
+    public interface IDataRow
     {
 
     }
@@ -22,7 +22,7 @@ namespace SmartParser.Lib
 
         public string DataSources = "";
 
-        public List<DataRowInterface> DateRows = new List<DataRowInterface>();
+        public List<IDataRow> DateRows = new List<IDataRow>();
 
         public string document_position { set; get; }
         virtual public int? PersonIndex { set; get; } = null;

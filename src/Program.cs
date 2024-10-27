@@ -14,6 +14,7 @@ using System.Security.Cryptography;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Newtonsoft.Json;
 using System.Reflection;
+using Smart.Parser.Lib.Adapters.Azure;
 
 namespace Smart.Parser
 {
@@ -398,7 +399,18 @@ namespace Smart.Parser
                 case ".rtf":
                 case ".toloka_json":
                 case ".docx":
-                    return OpenXmlWordAdapter.CreateAdapter(inputFile, MaxRowsToProcess);
+
+                    var adapter = (OpenXmlWordAdapter)OpenXmlWordAdapter.CreateAdapter(inputFile, MaxRowsToProcess);
+                    if (adapter.DocumentIsScan)
+                    {
+                        var azureadapter = new AzureFormRecognizer(inputFile);
+                        azureadapter.RecognizeForm().Wait();
+                        if (azureadapter.Validate())
+                        {
+                            return azureadapter;
+                        }
+                    }
+                    return adapter;
                 case ".xls":
                 case ".xlsx":
                     if (AdapterFamily == "aspose" || AdapterFamily == "prod")

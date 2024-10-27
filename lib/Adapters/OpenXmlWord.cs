@@ -454,7 +454,7 @@ namespace SmartParser.Lib
         XmlNamespaceManager NamespaceManager;
         private int TablesCount;
         private DocxConverter _DocxConverter;
-
+        public bool DocumentIsScan { get; set; }
         protected static List<IAdapterScheme> _allSchemes = new List<IAdapterScheme>()
         {
             new SovetFederaciiDocxScheme(),
@@ -531,6 +531,7 @@ namespace SmartParser.Lib
                 try
                 {
                     fileName = _DocxConverter.ConvertFile2TempDocX(fileName);
+                    DocumentIsScan = IsDocumentScan(fileName);
                 }
                 catch (System.TypeInitializationException exp)
                 {
@@ -549,6 +550,9 @@ namespace SmartParser.Lib
             try
             {
                 ProcessDoc(fileName, extension, maxRowsToProcess);
+                //most likely the file is a scan
+                DocumentIsScan = TableRows.Count == 0;
+
             }
             catch (OpenXmlPackageException e)
             {
@@ -579,6 +583,18 @@ namespace SmartParser.Lib
             //     return new OnePersonAdapter(fileName);
 
             return new OpenXmlWordAdapter(fileName, maxRowsToProcess);
+        }
+
+        public static bool IsDocumentScan(string filePath)
+        {
+            using (var doc = WordprocessingDocument.Open(filePath, false))
+            {
+                var body = doc.MainDocumentPart.Document.Body;
+                bool hasText = body.Descendants<Text>().Any(text => !string.IsNullOrWhiteSpace(text.Text));
+
+                bool hasImages = doc.MainDocumentPart.ImageParts.Any();
+                return hasImages && !hasText;
+            }
         }
 
         void CopyPortion(List<List<TJsonCell>> portion, bool ignoreMergedRows)
