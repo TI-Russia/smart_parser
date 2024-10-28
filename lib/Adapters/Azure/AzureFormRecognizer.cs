@@ -1,6 +1,11 @@
 ﻿using Azure;
 using Azure.AI.FormRecognizer.DocumentAnalysis;
+
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 using SmartParser.Lib;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,29 +18,23 @@ namespace Smart.Parser.Lib.Adapters.Azure
 {
     public class AzureTableCell : Cell
     {
-        public AzureTableCell(string text, int row, int col)
+        public AzureTableCell(DocumentTableCell cell)
         {
-            Text = text;
-            Row = row;
-            Col = col;
+            Text = cell.Content;
+            Row = cell.RowIndex;
+            Col = cell.ColumnIndex;
+            MergedColsCount = cell.ColumnSpan;
+            MergedRowsCount = cell.RowSpan;
             IsEmpty = string.IsNullOrWhiteSpace(Text);
         }
-        public AzureTableCell(IAdapter.TJsonCell cell)
-        {
-            Text = cell.t;
-            MergedColsCount = cell.mc;
-            MergedRowsCount = cell.mr;
-            IsEmpty = string.IsNullOrWhiteSpace(Text);
-            Row = cell.r;
-            Col = cell.c;
-        }
+
     }
 
 
     public class AzureFormRecognizer : IAdapter
     {
         bool isDebug = true;
-        private List<OpenXmlTableRow> TableRows;
+        IDictionary<int, List<DocumentTableCell>> AllTableRows;
         DocumentAnalysisClient client;
         string inputFile;
         AnalyzeResult doc;
@@ -53,10 +52,10 @@ namespace Smart.Parser.Lib.Adapters.Azure
 
         public override Cell GetCell(int row, int column)
         {
-            var azureSell =MainTable.Cells.FirstOrDefault(c => c.RowIndex == row && c.ColumnIndex == column);
+            var azureSell = MainTable.Cells.FirstOrDefault(c => c.RowIndex == row && c.ColumnIndex == column);
             if (azureSell != null)
             {
-                return new AzureTableCell(azureSell.Content, azureSell.RowIndex, azureSell.ColumnIndex);
+                return new AzureTableCell(azureSell);
 
             }
             return null;
@@ -69,7 +68,7 @@ namespace Smart.Parser.Lib.Adapters.Azure
 
         public override int GetRowsCount()
         {
-            return MainTable?.RowCount ?? 0;
+            return doc?.Tables.Sum(t => t.RowCount) ?? 0;
         }
 
         public override List<Cell> GetUnmergedRow(int row)
@@ -82,23 +81,37 @@ namespace Smart.Parser.Lib.Adapters.Azure
         }
         public override int GetTablesCount()
         {
-            return doc?.Tables.Count ?? 0;
+            return doc?.Tables?.Count ?? 0;
         }
 
         public async Task RecognizeForm()
         {
             try
             {
+                AllTableRows = new Dictionary<int, List<DocumentTableCell>>();
                 byte[] fileBytes = File.ReadAllBytes(inputFile);
                 using var stream = new MemoryStream(fileBytes);
 
                 var operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-document", stream);
                 doc = operation.Value;
                 Logger.Info($"Azure Form Recognizer: {doc.Tables.Count} tables found");
+
+                var rowIndex = 0;
+                foreach (var table in doc.Tables)
+                {
+                    for (int row = 0; row < table.RowCount; row++)
+                    {
+                        var cells = table.Cells.Where(c => c.RowIndex == row).ToList();
+                        AllTableRows.Add(rowIndex, cells);
+                        rowIndex++;
+                    }
+                }
             }
             catch (RequestFailedException e)
             {
-                Logger.Error($"Azure Form Recognizer Error: {e.Message}");
+                var resp = e.GetRawResponse();
+                var error = JsonConvert.DeserializeObject<JObject>(resp.Content.ToString());
+                Logger.Error($"Azure Form Recognizer Error: {error["error"]["innererror"]["message"]}");
                 Logger.Error($"Error Code: {e.ErrorCode}");
                 Logger.Error($"Status: {e.Status}");
             }
@@ -110,21 +123,15 @@ namespace Smart.Parser.Lib.Adapters.Azure
 
         protected override List<Cell> GetCells(int row, int maxColEnd)
         {
-            var table = MainTable;
-            if (table == null)
-            {
-                return new List<Cell>();
-            }
-            var cells = new List<Cell>();
-            for (int col = 0; col < table.ColumnCount; col++)
-            {
-                var azureCell = table.Cells.FirstOrDefault(c => c.RowIndex == row && c.ColumnIndex == col);
-                if (azureCell != null)
-                {
-                    cells.Add(new AzureTableCell(azureCell.Content, azureCell.RowIndex, azureCell.ColumnIndex));
 
-                }
+            var cells = new List<Cell>();
+            var tableCells = AllTableRows[row];
+            foreach (var azureCell in tableCells)
+            {
+                cells.Add(new AzureTableCell(azureCell));
+
             }
+
             return cells;
         }
 

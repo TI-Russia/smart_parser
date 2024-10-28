@@ -12,6 +12,14 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Net;
 using System.Runtime.InteropServices;
+using Adobe.PDFServicesSDK.auth;
+using Adobe.PDFServicesSDK.io;
+using Adobe.PDFServicesSDK.pdfjobs.jobs;
+using Adobe.PDFServicesSDK.pdfjobs.parameters.exportpdf;
+using Adobe.PDFServicesSDK.pdfjobs.results;
+using Adobe.PDFServicesSDK;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Drawing;
 
 namespace SmartParser.Lib
 {
@@ -120,7 +128,7 @@ namespace SmartParser.Lib
                     {
                         url = "http://" + url;
                     }
-                    string docXPath = Path.GetTempFileName();
+                    string docXPath = System.IO.Path.GetTempFileName();
                     Logger.Debug(String.Format("try to download docx from {0} to {1}", url, docXPath));
 
                     try
@@ -144,10 +152,58 @@ namespace SmartParser.Lib
             }
         }
 
+        public bool TryConvertWithAdobe(string filename)
+        {
+            string docXPath = filename + ".converted.docx";
+            if (File.Exists(docXPath))
+            {
+                File.Delete(docXPath);
+            }
+            var clientId = Environment.GetEnvironmentVariable("ADOBE_SERVICES_CLIENT_ID");
+            var secret = Environment.GetEnvironmentVariable("ADOBE_SERVICES_CLIENT_SECRET");
+            if (clientId == null || secret == null)
+            {
+                Logger.Info("Cannot convert pdf to docx, no Adobe credentials found. Skip this step.");
+                return false;
+            }
+
+            try
+            {
+
+                var credentials = new ServicePrincipalCredentials(clientId, secret);
+                var pdfServices = new PDFServices(credentials);
+
+                using Stream inputStream = File.OpenRead(filename);
+                IAsset asset = pdfServices.Upload(inputStream, PDFServicesMediaType.PDF.GetMIMETypeValue());
+
+                var exportPDFParams = ExportPDFParams.ExportPDFParamsBuilder(ExportPDFTargetFormat.DOCX)
+                    .WithExportOCRLocale(ExportOCRLocale.RU_RU)
+                  .Build();
+                var exportPDFJob = new ExportPDFJob(asset, exportPDFParams);
+
+                var location = pdfServices.Submit(exportPDFJob);
+                var pdfServicesResponse = pdfServices.GetJobResult<ExportPDFResult>(location, typeof(ExportPDFResult));
+
+                var resultAsset = pdfServicesResponse.Result.Asset;
+                var streamAsset = pdfServices.GetContent(resultAsset);
+
+                var outputStream = File.OpenWrite(docXPath);
+                streamAsset.Stream.CopyTo(outputStream);
+                outputStream.Close();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Cannot convert pdf to docx with Adobe services: " + ex.Message);
+                return false;
+            }
+        }
         public string ConvertFile2TempDocX(string filename)
         {
+            string docXPath = filename + ".converted.docx";
             if (filename.EndsWith("pdf"))
             {
+
                 if (DeclaratorConversionServerUrl != "")
                 {
                     try
@@ -165,7 +221,6 @@ namespace SmartParser.Lib
                     Logger.Error("no url for declarator conversion server specified!");
                 }
             }
-            string docXPath = filename + ".converted.docx";
             if (filename.EndsWith(".html") || filename.EndsWith(".htm"))
             {
                 return ConvertWithSoffice(filename);
@@ -178,6 +233,15 @@ namespace SmartParser.Lib
                 var doc = new Aspose.Words.Document(filename);
                 doc.RemoveMacros();
                 doc.Save(docXPath, Aspose.Words.SaveFormat.Docx);
+
+                if (!IsDocumentScan(docXPath))
+                {
+                    if (TryConvertWithAdobe(docXPath))
+                    {
+                        return docXPath;
+                    }
+                }
+
                 Thread.CurrentThread.CurrentCulture = saveCulture;
                 doc = null;
                 System.GC.Collect();
@@ -193,13 +257,24 @@ namespace SmartParser.Lib
 
 
         }
-        public String ConvertWithSoffice(string fileName)
+        public bool IsDocumentScan(string filePath)
+        {
+            using (var doc = WordprocessingDocument.Open(filePath, false))
+            {
+                var body = doc.MainDocumentPart.Document.Body;
+                bool hasText = body.Descendants<Text>().Any(text => !string.IsNullOrWhiteSpace(text.Text));
+
+                bool hasImages = doc.MainDocumentPart.ImageParts.Any();
+                return hasImages && !hasText;
+            }
+        }
+        public string ConvertWithSoffice(string fileName)
         {
             if (fileName.ToLower().EndsWith("pdf"))
             {
                 throw new SmartParserException("libre office cannot convert pdf");
             }
-            String outFileName = Path.ChangeExtension(fileName, "docx");
+            string outFileName = System.IO.Path.ChangeExtension(fileName, "docx");
             if (File.Exists(outFileName))
             {
                 File.Delete(outFileName);
@@ -209,7 +284,7 @@ namespace SmartParser.Lib
             {
                 prg = "/usr/bin/soffice";
             }
-            var outdir = Path.GetDirectoryName(outFileName);
+            var outdir = System.IO.Path.GetDirectoryName(outFileName);
             var args = String.Format(" --headless --writer   --convert-to \"docx:MS Word 2007 XML\"");
             if (outdir != "")
             {

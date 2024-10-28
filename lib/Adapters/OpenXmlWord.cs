@@ -531,7 +531,6 @@ namespace SmartParser.Lib
                 try
                 {
                     fileName = _DocxConverter.ConvertFile2TempDocX(fileName);
-                    DocumentIsScan = IsDocumentScan(fileName);
                 }
                 catch (System.TypeInitializationException exp)
                 {
@@ -547,32 +546,34 @@ namespace SmartParser.Lib
                 removeTempFile = true;
             }
 
-            try
+            DocumentIsScan = IsDocumentScan(fileName);
+            if (!DocumentIsScan)
             {
-                ProcessDoc(fileName, extension, maxRowsToProcess);
-                //most likely the file is a scan
-                DocumentIsScan = TableRows.Count == 0;
-
-            }
-            catch (OpenXmlPackageException e)
-            {
-                // http://www.ericwhite.com/blog/handling-invalid-hyperlinks-openxmlpackageexception-in-the-open-xml-sdk/
-                if (e.ToString().Contains("Invalid Hyperlink"))
+                try
                 {
-                    var newFileName = fileName + ".fixed.docx";
-                    File.Copy(fileName, newFileName);
-                    using (FileStream fs = new FileStream(newFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite))
-                    {
-                        UriFixer.FixInvalidUri(fs, brokenUri => FixUri(brokenUri));
-                    }
-                    ProcessDoc(newFileName, extension, maxRowsToProcess);
-                    File.Delete(newFileName);
-                }
-            }
+                    ProcessDoc(fileName, extension, maxRowsToProcess);
 
-            if (removeTempFile)
-            {
-                File.Delete(fileName);
+                }
+                catch (OpenXmlPackageException e)
+                {
+                    // http://www.ericwhite.com/blog/handling-invalid-hyperlinks-openxmlpackageexception-in-the-open-xml-sdk/
+                    if (e.ToString().Contains("Invalid Hyperlink"))
+                    {
+                        var newFileName = fileName + ".fixed.docx";
+                        File.Copy(fileName, newFileName);
+                        using (FileStream fs = new FileStream(newFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                        {
+                            UriFixer.FixInvalidUri(fs, brokenUri => FixUri(brokenUri));
+                        }
+                        ProcessDoc(newFileName, extension, maxRowsToProcess);
+                        File.Delete(newFileName);
+                    }
+                }
+
+                if (removeTempFile)
+                {
+                    File.Delete(fileName);
+                }
             }
         }
 
@@ -940,7 +941,7 @@ namespace SmartParser.Lib
             }
             if ((TableRows.Count > 0) && !TableHeaderRecognizer.IsNamePositionAndIncomeTable(GetDataCells(0)))
             {
-                if (maxCellsCount <= 3 || CheckNameColumnIsEmpty(saveRowsCount))
+                if (maxCellsCount < 3 || CheckNameColumnIsEmpty(saveRowsCount))
                 {
                     //remove this suspicious table 
                     TableRows.RemoveRange(saveRowsCount, TableRows.Count - saveRowsCount);

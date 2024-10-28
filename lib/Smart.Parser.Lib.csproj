@@ -1,104 +1,105 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-     <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
+	</PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
-    <DefineConstants>TRACE;DYLD_PRINT_LIBRARIES</DefineConstants>
-  </PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+		<DefineConstants>TRACE;DYLD_PRINT_LIBRARIES</DefineConstants>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Resources\bigrams.txt" />
-    <None Remove="Resources\column_trigrams.txt" />
-    <None Remove="Resources\log4net.config" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="Resources\bigrams.txt" />
+		<None Remove="Resources\column_trigrams.txt" />
+		<None Remove="Resources\log4net.config" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AngleSharp" Version="0.13.0" />
-    <PackageReference Include="Aspose.Cells" Version="20.3.0" />
-    <PackageReference Include="Aspose.Words" Version="20.3.0" />
-    <PackageReference Include="Azure.AI.FormRecognizer" Version="4.1.0" />
-    <PackageReference Include="colorlife.xceed.words.net.core" Version="2.1.2" />
-    <PackageReference Include="CsvHelper" Version="12.2.2" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="NPOI" Version="2.4.1" />
-    <PackageReference Include="log4net" Version="2.0.8" />
-    <PackageReference Include="Open-XML-SDK" Version="2.9.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="AngleSharp" Version="0.13.0" />
+		<PackageReference Include="Aspose.Cells" Version="20.3.0" />
+		<PackageReference Include="Aspose.Words" Version="20.3.0" />
+		<PackageReference Include="Azure.AI.FormRecognizer" Version="4.1.0" />
+		<PackageReference Include="colorlife.xceed.words.net.core" Version="2.1.2" />
+		<PackageReference Include="CsvHelper" Version="12.2.2" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="NPOI" Version="2.4.1" />
+		<PackageReference Include="log4net" Version="2.0.17" />
+		<PackageReference Include="Open-XML-SDK" Version="2.9.0" />
+		<PackageReference Include="Adobe.PDFServicesSDK" Version="4.0.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Antlr\BuildAntlr.csproj" />
-    <ProjectReference Include="..\ParserCommon\ParserCommon.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Antlr\BuildAntlr.csproj" />
+		<ProjectReference Include="..\ParserCommon\ParserCommon.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\bigrams.txt" />
-    <EmbeddedResource Include="Resources\column_trigrams.txt" />
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Resources\bigrams.txt" />
+		<EmbeddedResource Include="Resources\column_trigrams.txt" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\log4net.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Resources\log4net.config">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</EmbeddedResource>
+	</ItemGroup>
 
 
-  <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Properties\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="EP.Analyzer.Biblio.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\EP.SdkCore\EP.Analyzer.Biblio.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="EP.Analyzer.Decree.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\EP.SdkCore\EP.Analyzer.Decree.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="EP.Analyzer.Goods.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\EP.SdkCore\EP.Analyzer.Goods.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="EP.Analyzer.Location.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\EP.SdkCore\EP.Analyzer.Location.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="EP.Analyzer.Misc.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\EP.SdkCore\EP.Analyzer.Misc.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="EP.Analyzer.Organization.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\EP.SdkCore\EP.Analyzer.Organization.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="EP.Analyzer.Person.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\EP.SdkCore\EP.Analyzer.Person.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="EP.Analyzer.Semantic.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\EP.SdkCore\EP.Analyzer.Semantic.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="EP.Analyzer.Util.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\EP.SdkCore\EP.Analyzer.Util.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="EP.Core.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\EP.SdkCore\EP.Core.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="EP.Explanatory.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\EP.SdkCore\EP.Explanatory.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="EP.Morphology.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\EP.SdkCore\EP.Morphology.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="EP.Semantic.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\EP.SdkCore\EP.Semantic.Core.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+	<ItemGroup>
+		<Reference Include="EP.Analyzer.Biblio.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+			<HintPath>..\EP.SdkCore\EP.Analyzer.Biblio.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="EP.Analyzer.Decree.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+			<HintPath>..\EP.SdkCore\EP.Analyzer.Decree.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="EP.Analyzer.Goods.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+			<HintPath>..\EP.SdkCore\EP.Analyzer.Goods.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="EP.Analyzer.Location.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+			<HintPath>..\EP.SdkCore\EP.Analyzer.Location.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="EP.Analyzer.Misc.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+			<HintPath>..\EP.SdkCore\EP.Analyzer.Misc.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="EP.Analyzer.Organization.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+			<HintPath>..\EP.SdkCore\EP.Analyzer.Organization.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="EP.Analyzer.Person.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+			<HintPath>..\EP.SdkCore\EP.Analyzer.Person.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="EP.Analyzer.Semantic.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+			<HintPath>..\EP.SdkCore\EP.Analyzer.Semantic.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="EP.Analyzer.Util.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+			<HintPath>..\EP.SdkCore\EP.Analyzer.Util.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="EP.Core.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+			<HintPath>..\EP.SdkCore\EP.Core.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="EP.Explanatory.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+			<HintPath>..\EP.SdkCore\EP.Explanatory.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="EP.Morphology.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+			<HintPath>..\EP.SdkCore\EP.Morphology.Core.dll</HintPath>
+		</Reference>
+		<Reference Include="EP.Semantic.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+			<HintPath>..\EP.SdkCore\EP.Semantic.Core.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 </Project>
