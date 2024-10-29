@@ -267,55 +267,79 @@ namespace SmartParser.Lib
                     var body = doc.MainDocumentPart.Document.Body;
 
                     // Count text elements in the body
-                    var textElements = body.Descendants<Text>().Where(t => !string.IsNullOrWhiteSpace(t.Text)).Count();
+                    int textElements = body.Descendants<Text>().Count(t => !string.IsNullOrWhiteSpace(t.Text));
 
                     // Include text in headers and footers
-                    var headerTextCount = doc.MainDocumentPart.HeaderParts
+                    textElements += doc.MainDocumentPart.HeaderParts
                         .SelectMany(h => h.Header.Descendants<Text>())
-                        .Where(t => !string.IsNullOrWhiteSpace(t.Text))
-                        .Count();
+                        .Count(t => !string.IsNullOrWhiteSpace(t.Text));
 
-                    var footerTextCount = doc.MainDocumentPart.FooterParts
+                    textElements += doc.MainDocumentPart.FooterParts
                         .SelectMany(f => f.Footer.Descendants<Text>())
-                        .Where(t => !string.IsNullOrWhiteSpace(t.Text))
-                        .Count();
+                        .Count(t => !string.IsNullOrWhiteSpace(t.Text));
 
-                    textElements += headerTextCount + footerTextCount;
+                    // Define minimum size thresholds (e.g., 300x300 pixels)
+                    const int minWidthEmu = 300 * 9525;  // 1 pixel = 9525 EMUs
+                    const int minHeightEmu = 300 * 9525;
 
-                    // Count image elements in the body
-                    var imageElements = body.Descendants<Drawing>().Count() + body.Descendants<Picture>().Count();
+                    // Function to filter images based on size and visibility
+                    bool IsLargeVisibleImage(Drawing drawing)
+                    {
+                        var extent = drawing.Inline?.Extent ?? drawing.Anchor?.Extent;
+                        if (extent == null) return false;
 
-                    // Include images in headers
-                    var headerImageCount = doc.MainDocumentPart.HeaderParts
+                        var width = extent.Cx;
+                        var height = extent.Cy;
+
+                        if (width < minWidthEmu || height < minHeightEmu)
+                            return false;
+
+                        // Check visibility
+                        DocumentFormat.OpenXml.Drawing.Wordprocessing.DocProperties docProperties = null;
+
+                        if (drawing.Inline != null)
+                        {
+                            docProperties = drawing.Inline.DocProperties;
+                        }
+                        else if (drawing.Anchor != null)
+                        {
+                            docProperties = drawing.Anchor.GetFirstChild<DocumentFormat.OpenXml.Drawing.Wordprocessing.DocProperties>();
+                        }
+
+                        if (docProperties != null && docProperties.Hidden != null && docProperties.Hidden)
+                            return false;
+
+                        return true;
+                    }
+
+                    // Count large, visible images in the body
+                    int imageElements = body.Descendants<Drawing>().Count(IsLargeVisibleImage);
+
+                    // Include images in headers and footers
+                    imageElements += doc.MainDocumentPart.HeaderParts
                         .SelectMany(h => h.Header.Descendants<Drawing>())
-                        .Count() +
-                        doc.MainDocumentPart.HeaderParts
-                        .SelectMany(h => h.Header.Descendants<Picture>())
-                        .Count();
+                        .Count(IsLargeVisibleImage);
 
-                    // Include images in footers
-                    var footerImageCount = doc.MainDocumentPart.FooterParts
+                    imageElements += doc.MainDocumentPart.FooterParts
                         .SelectMany(f => f.Footer.Descendants<Drawing>())
-                        .Count() +
-                        doc.MainDocumentPart.FooterParts
-                        .SelectMany(f => f.Footer.Descendants<Picture>())
-                        .Count();
-
-                    imageElements += headerImageCount + footerImageCount;
+                        .Count(IsLargeVisibleImage);
 
                     // Determine if the document is a scan
-                    if (imageElements > 0)
+                    if (textElements == 0 && imageElements > 0)
                     {
+                        // No text, but images present
                         return true;
                     }
                     else if (imageElements > 0)
                     {
+                        // Calculate the ratio of images to total elements
                         double ratio = (double)imageElements / (textElements + imageElements);
                         if (ratio > 0.8)
                         {
                             return true;
                         }
                     }
+
                     return false;
                 }
             }

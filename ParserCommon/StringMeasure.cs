@@ -79,31 +79,29 @@ namespace StringHelpers
             }
             FontSize = fontSize;
         }
-        static public void InitDefaultFontSystem(string fontName, int fontSize)
+        static public void InitDefaultFontSystem(string fontName, int fontSizePoints)
         {
             CurrentApproximatedTable = null;
-            FontSize = fontSize;
             FontName = fontName;
+            FontSize = fontSizePoints; // Keep FontSize unchanged
 
-            if (fontSize > 0)
+            if (fontSizePoints > 0)
             {
                 // Load the typeface
-                DefaultTypeface = SKTypeface.FromFamilyName(fontName);
-                if (DefaultTypeface == null)
-                {
-                    // Fallback to default typeface
-                    DefaultTypeface = SKTypeface.Default;
-                }
-
+                DefaultTypeface = SKTypeface.FromFamilyName(fontName) ?? SKTypeface.Default;
                 DefaultPaint.Typeface = DefaultTypeface;
-                DefaultPaint.TextSize = fontSize;
+
+                // Set TextSize to match fontSizePoints
+                DefaultPaint.TextSize = fontSizePoints;
             }
             else
             {
                 // Default font size
-                DefaultPaint.Typeface = SKTypeface.Default;
-                DefaultPaint.TextSize = 5;
+                DefaultTypeface = SKTypeface.Default;
+                DefaultPaint.Typeface = DefaultTypeface;
+                DefaultPaint.TextSize = 5f;
             }
+            Console.WriteLine($"DefaultTypeface FamilyName: {DefaultTypeface.FamilyName}");
         }
 
         static public void InitDefaultFont(string fontName, int fontSize)

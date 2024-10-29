@@ -63,10 +63,13 @@ namespace Smart.Parser.Lib.Adapters.Azure
         {
             this.inputFile = inputFile;
             DocumentFile = inputFile;
-            var endpoint = Environment.GetEnvironmentVariable("AZURE_FR_ENDPOINT");
-            var apiKey = Environment.GetEnvironmentVariable("AZURE_FR_APIKEY");
-            client = new DocumentAnalysisClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            if (IsFeatureValid())
+            {
 
+                var endpoint = Environment.GetEnvironmentVariable("AZURE_FR_ENDPOINT");
+                var apiKey = Environment.GetEnvironmentVariable("AZURE_FR_APIKEY");
+                client = new DocumentAnalysisClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
+            }
         }
 
         public override Cell GetCell(int row, int column)
@@ -306,7 +309,7 @@ namespace Smart.Parser.Lib.Adapters.Azure
         }
 
 
-        public bool Validate()
+        public bool IsFeatureValid()
         {
             return !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("AZURE_FR_ENDPOINT")) &&
                 !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("AZURE_FR_APIKEY"));

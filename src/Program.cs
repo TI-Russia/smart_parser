@@ -401,12 +401,12 @@ namespace Smart.Parser
                 case ".docx":
 
                     var adapter = (OpenXmlWordAdapter)OpenXmlWordAdapter.CreateAdapter(inputFile, MaxRowsToProcess);
-                     if (adapter.DocumentIsScan)
+                    if (adapter.DocumentIsScan)
                     {
                         var azureadapter = new AzureFormRecognizer(inputFile);
-                        azureadapter.RecognizeForm().Wait();
-                        if (azureadapter.Validate())
+                        if (azureadapter.IsFeatureValid())
                         {
+                            azureadapter.RecognizeForm().Wait();
                             return azureadapter;
                         }
                     }
