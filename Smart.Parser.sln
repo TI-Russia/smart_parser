@@ -30,7 +30,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildAntlr", "Antlr\BuildAn
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AntlrTester", "tools\AntlrTester\AntlrTester.csproj", "{F7BB5B96-5A83-4C9B-95D8-4377A9B67EAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildCharWidthTable", "tools\BuildCharWidthTable\BuildCharWidthTable.csproj", "{855CF5A8-3DA0-465F-ADAA-A64F6D0D7EE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuildCharWidthTable", "tools\BuildCharWidthTable\BuildCharWidthTable.csproj", "{855CF5A8-3DA0-465F-ADAA-A64F6D0D7EE2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

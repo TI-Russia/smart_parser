@@ -21,3 +21,4 @@ src/Smart.Parser.csproj.user
 *.log
 docs/
 *.user
+/published

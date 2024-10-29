@@ -5,7 +5,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
     <AssemblyName>smart_parser</AssemblyName>
- </PropertyGroup>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -17,8 +17,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\versions.txt" />
   </ItemGroup>
-
-
   <ItemGroup>
     <ProjectReference Include="..\DeclaratorApiClient\DeclaratorApiClient.csproj" />
     <ProjectReference Include="..\JsonSerialization\JsonSerialization.csproj" />
