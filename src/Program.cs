@@ -401,7 +401,7 @@ namespace Smart.Parser
                 case ".docx":
 
                     var adapter = (OpenXmlWordAdapter)OpenXmlWordAdapter.CreateAdapter(inputFile, MaxRowsToProcess);
-                    if (adapter.DocumentIsScan)
+                     if (adapter.DocumentIsScan)
                     {
                         var azureadapter = new AzureFormRecognizer(inputFile);
                         azureadapter.RecognizeForm().Wait();
@@ -578,7 +578,8 @@ namespace Smart.Parser
                       columnOrdering.ContainsField(DeclarationField.DeclarantIncomeInThousands) ||
                       columnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncome) ||
                       columnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncomeThousands) ||
-                      columnOrdering.ContainsField(DeclarationField.DeclaredAvgMonthlyIncome)
+                      columnOrdering.ContainsField(DeclarationField.DeclaredAvgMonthlyIncome) ||
+                      columnOrdering.ContainsField(DeclarationField.DeclaredAvgMonthlyIncomeThousands)
                       ))
                 {
                     if (!SmartParser.Lib.TableHeader.SearchForFioColumnOnly)

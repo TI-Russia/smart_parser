@@ -104,6 +104,10 @@ namespace SmartParser.Lib
                 {
                     return true;
                 }
+                else if (ParseIncomeOneField(currRow, person, DeclarationField.DeclaredAvgMonthlyIncomeThousands, true))
+                {
+                    return true;
+                }
                 return false;
             }
             catch (SmartParserFieldNotFoundException e)

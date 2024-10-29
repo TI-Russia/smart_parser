@@ -19,8 +19,8 @@ using Adobe.PDFServicesSDK.pdfjobs.parameters.exportpdf;
 using Adobe.PDFServicesSDK.pdfjobs.results;
 using Adobe.PDFServicesSDK;
 using DocumentFormat.OpenXml.Packaging;
-using DocumentFormat.OpenXml.Drawing;
 using Smart.Parser.Lib.Adapters.Exceptions;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace SmartParser.Lib
 {
@@ -258,17 +258,81 @@ namespace SmartParser.Lib
 
 
         }
-        public bool IsDocumentScan(string filePath)
+        public static bool IsDocumentScan(string filePath)
         {
-            using (var doc = WordprocessingDocument.Open(filePath, false))
+            try
             {
-                var body = doc.MainDocumentPart.Document.Body;
-                bool hasText = body.Descendants<Text>().Any(text => !string.IsNullOrWhiteSpace(text.Text));
+                using (var doc = WordprocessingDocument.Open(filePath, false))
+                {
+                    var body = doc.MainDocumentPart.Document.Body;
 
-                bool hasImages = doc.MainDocumentPart.ImageParts.Any();
-                return hasImages && !hasText;
+                    // Count text elements in the body
+                    var textElements = body.Descendants<Text>().Where(t => !string.IsNullOrWhiteSpace(t.Text)).Count();
+
+                    // Include text in headers and footers
+                    var headerTextCount = doc.MainDocumentPart.HeaderParts
+                        .SelectMany(h => h.Header.Descendants<Text>())
+                        .Where(t => !string.IsNullOrWhiteSpace(t.Text))
+                        .Count();
+
+                    var footerTextCount = doc.MainDocumentPart.FooterParts
+                        .SelectMany(f => f.Footer.Descendants<Text>())
+                        .Where(t => !string.IsNullOrWhiteSpace(t.Text))
+                        .Count();
+
+                    textElements += headerTextCount + footerTextCount;
+
+                    // Count image elements in the body
+                    var imageElements = body.Descendants<Drawing>().Count() + body.Descendants<Picture>().Count();
+
+                    // Include images in headers
+                    var headerImageCount = doc.MainDocumentPart.HeaderParts
+                        .SelectMany(h => h.Header.Descendants<Drawing>())
+                        .Count() +
+                        doc.MainDocumentPart.HeaderParts
+                        .SelectMany(h => h.Header.Descendants<Picture>())
+                        .Count();
+
+                    // Include images in footers
+                    var footerImageCount = doc.MainDocumentPart.FooterParts
+                        .SelectMany(f => f.Footer.Descendants<Drawing>())
+                        .Count() +
+                        doc.MainDocumentPart.FooterParts
+                        .SelectMany(f => f.Footer.Descendants<Picture>())
+                        .Count();
+
+                    imageElements += headerImageCount + footerImageCount;
+
+                    // Determine if the document is a scan
+                    if (imageElements > 0)
+                    {
+                        return true;
+                    }
+                    else if (imageElements > 0)
+                    {
+                        double ratio = (double)imageElements / (textElements + imageElements);
+                        if (ratio > 0.8)
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            }
+            catch (OpenXmlPackageException ex)
+            {
+                // Handle exceptions (e.g., encrypted or corrupted documents)
+                Console.WriteLine($"Error opening document: {ex.Message}");
+                return false;
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                return false;
             }
         }
+
         public string ConvertWithSoffice(string fileName)
         {
             if (fileName.ToLower().EndsWith("pdf"))

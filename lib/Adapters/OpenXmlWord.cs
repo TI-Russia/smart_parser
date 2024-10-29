@@ -558,7 +558,7 @@ namespace SmartParser.Lib
 
             if (fileName.EndsWith(".docx"))
             {
-                DocumentIsScan = IsDocumentScan(fileName);
+                DocumentIsScan = DocxConverter.IsDocumentScan(fileName);
             }
 
             if (!DocumentIsScan)
@@ -598,18 +598,6 @@ namespace SmartParser.Lib
             //     return new OnePersonAdapter(fileName);
 
             return new OpenXmlWordAdapter(fileName, maxRowsToProcess);
-        }
-
-        public static bool IsDocumentScan(string filePath)
-        {
-            using (var doc = WordprocessingDocument.Open(filePath, false))
-            {
-                var body = doc.MainDocumentPart.Document.Body;
-                bool hasText = body.Descendants<Text>().Any(text => !string.IsNullOrWhiteSpace(text.Text));
-
-                bool hasImages = doc.MainDocumentPart.ImageParts.Any();
-                return hasImages && !hasText;
-            }
         }
 
         void CopyPortion(List<List<TJsonCell>> portion, bool ignoreMergedRows)
