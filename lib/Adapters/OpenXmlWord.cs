@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading;
 using System.Xml;
 using System.Xml.Linq;
+using Smart.Parser.Lib.Adapters.Exceptions;
 
 namespace SmartParser.Lib
 {
@@ -537,6 +538,15 @@ namespace SmartParser.Lib
                     Logger.Error("Type Exception " + exp.ToString());
                     fileName = _DocxConverter.ConvertWithSoffice(fileName);
                 }
+                catch (AsposeCorruptedFileException exp)
+                {
+                    if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("AZURE_FR_APIKEY")))
+                    {
+                        //we will try to scan corrupted pdf with Azure Recognizer
+                        DocumentIsScan = true;
+                        return;
+                    }
+                }
                 catch (Exception exp)
                 {
                     Logger.Error(String.Format("cannot convert {0} to docx, try one more time (exception: {1}", fileName, exp));
@@ -546,7 +556,11 @@ namespace SmartParser.Lib
                 removeTempFile = true;
             }
 
-            DocumentIsScan = IsDocumentScan(fileName);
+            if (fileName.EndsWith(".docx"))
+            {
+                DocumentIsScan = IsDocumentScan(fileName);
+            }
+
             if (!DocumentIsScan)
             {
                 try
@@ -569,11 +583,11 @@ namespace SmartParser.Lib
                         File.Delete(newFileName);
                     }
                 }
+            }
 
-                if (removeTempFile)
-                {
-                    File.Delete(fileName);
-                }
+            if (removeTempFile)
+            {
+                File.Delete(fileName);
             }
         }
 

@@ -20,6 +20,7 @@ using Adobe.PDFServicesSDK.pdfjobs.results;
 using Adobe.PDFServicesSDK;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Drawing;
+using Smart.Parser.Lib.Adapters.Exceptions;
 
 namespace SmartParser.Lib
 {
@@ -252,7 +253,7 @@ namespace SmartParser.Lib
             {
                 Thread.CurrentThread.CurrentCulture = saveCulture;
                 Logger.Error("Aspose.Words cannot convert the file, most likely due to file corruption. try to use soffice");
-                return string.Empty;
+                throw new AsposeCorruptedFileException("Aspose.Words cannot convert the file, most likely due to file corruption. try to use soffice");
             }
 
 

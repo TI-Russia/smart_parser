@@ -44,7 +44,7 @@ namespace SmartParser.Lib
             }
             return false;
         }
-
+        public static string[] TitleStopWords = { "сведения", "обязательствах", "доход", "период", "год", "г.", "информация о", "о среднемесячной" };
         static public bool GetValuesFromTitle(string text, ref string title, ref int? year, ref string ministry)
         {
             int text_len = text.Length;
@@ -54,8 +54,7 @@ namespace SmartParser.Lib
                 title += " " + text;
 
             text = text.ToLower();
-            string[] title_words = { "сведения", "обязательствах", "доход", "период", "год", "г.", "информация о" };
-            bool has_title_words = Array.Exists(title_words, s => text.Contains(s));
+            bool has_title_words = Array.Exists(TitleStopWords, s => text.Contains(s));
             if (!has_title_words)
                 return false;
 
@@ -89,6 +88,13 @@ namespace SmartParser.Lib
             if (specificYearMatches.Count > 0)
             {
                 year = int.Parse(specificYearMatches[0].Groups[1].Value);
+            }
+
+            var specificYearMatches2 = Regex.Matches(text, @"за\s(20(?:|\s)\d\d)\sгод\b");
+            if (specificYearMatches2.Count > 0)
+            {
+                var yearOnlyDigits = Regex.Replace(specificYearMatches2[0].Groups[1].Value, @"\D", string.Empty);
+                year = int.Parse(yearOnlyDigits);
             }
 
             var minMatch = Regex.Match(text, @"Министерств(?:а|у)(.+)Российской Федерации", RegexOptions.IgnoreCase);
@@ -534,7 +540,7 @@ namespace SmartParser.Lib
                         Logger.Debug("Predict: " + field.ToString());
                     }
 
-                    if(field  == DeclarationField.None)
+                    if (field == DeclarationField.None)
                     {
                         field = ColumnByDataPredictor.PredictGenericColumnTitle(adapter, cell);
                         Logger.Debug("Predict: " + field.ToString());

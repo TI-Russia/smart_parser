@@ -133,8 +133,10 @@ namespace SmartParser.Lib
         {
             str = str.RemoveCharacters(' ').ToLower();
             return str.StartsWith("№")
-                       || str.ContainsAny("nп/п", "№п/п", "№\nп/п", "-п/п", "nпп", "кбп")
-                       || str.Replace("\\", "/").Equals("п/п", StringComparison.OrdinalIgnoreCase);
+                       || str.ContainsAny("nоп/п", "nп/п", "№п/п", "№\nп/п", "-п/п", "nпп", "кбп")
+                       || str.Replace("\\", "/").Equals("п/п", StringComparison.OrdinalIgnoreCase)
+                       || str.Replace("\\", "/").Equals("т/п", StringComparison.OrdinalIgnoreCase);
+            
         }
 
         public static bool IsNumeroSignAndName(this string str)
@@ -420,7 +422,7 @@ namespace SmartParser.Lib
         public static bool IsAvgMonthlyIncome(this string str)
         {
             var strLower = str.OnlyRussianLowercase();
-            return strLower.ContainsAny("среднемесячнаязаработная", "cредняязарплата", "размерсреднемесячнойзаработнойплат", "средняязаработнаяплата");
+            return strLower.ContainsAny("среднемесячнаязаработная", "средмесячнаязаработная", "cредняязарплата", "размерсреднемесячнойзаработнойплат", "средняязаработнаяплата");
         }
         private static bool IsAvgMonthlyIncomeThousands(this string s) => s.IsAvgMonthlyIncome() && s.Contains("тыс.");
         private static bool IsMainWorkPositionIncome(this string str) => Regex.Match(str, @"сумма.*месту\s+работы").Success;
@@ -436,7 +438,7 @@ namespace SmartParser.Lib
         private static bool IsComments(this string s)
         {
             var strLower = s.OnlyRussianLowercase();
-            return strLower.Contains("примечани") || strLower.StartsWithAny("наименование", "соотношениекратностисреднейзаработнойплаты");
+            return strLower.Contains("примечани") || strLower.StartsWithAny("наименование", "соотношения", "соотношениекратностисреднейзаработнойплаты");
         }
 
         private static bool IsAcquiredProperty(this string s) => s.OnlyRussianLowercase().Contains("приобретенногоимущества");
