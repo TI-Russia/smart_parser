@@ -17,8 +17,8 @@ namespace SmartParser.Lib
 
     public class TableHeaderRecognizer
     {
-        public static List<string> AbsenceMarkers = new List<string> { "-", "отсутствует", "?", "не указано", "не имеет"};
-        
+        public static List<string> AbsenceMarkers = new List<string> { "-", "отсутствует", "?", "не указано", "не имеет" };
+
         public static string CheckDate(Match match)
         {
             // delete all dates except the first ones or the last ones 01.01.2010 and 31.12.2010
@@ -27,12 +27,24 @@ namespace SmartParser.Lib
             if (first_date || last_date)
             {
                 return match.Value;
-            } 
+            }
             else
             {
                 return "";
             }
         }
+        static public bool ContainsYear(string text, ref int? year)
+        {
+
+            var matches = Regex.Matches(text, @"\b20\d\d\b");
+            if (matches.Count > 0)
+            {
+                year = int.Parse(matches[0].Value);
+                return true;
+            }
+            return false;
+        }
+
         static public bool GetValuesFromTitle(string text, ref string title, ref int? year, ref string ministry)
         {
             int text_len = text.Length;
@@ -40,9 +52,9 @@ namespace SmartParser.Lib
                 title = text;
             else
                 title += " " + text;
-            
+
             text = text.ToLower();
-            string[] title_words = { "сведения", "обязательствах", "доход", "период" };
+            string[] title_words = { "сведения", "обязательствах", "доход", "период", "год", "г.", "информация о" };
             bool has_title_words = Array.Exists(title_words, s => text.Contains(s));
             if (!has_title_words)
                 return false;
@@ -72,14 +84,14 @@ namespace SmartParser.Lib
                     }
                 }
             }
-            
+
             var specificYearMatches = Regex.Matches(text, @"за(20\d\d)\b");
             if (specificYearMatches.Count > 0)
             {
                 year = int.Parse(specificYearMatches[0].Groups[1].Value);
             }
 
-            var minMatch = Regex.Match(text, @"Министерства(.+)Российской Федерации", RegexOptions.IgnoreCase);
+            var minMatch = Regex.Match(text, @"Министерств(?:а|у)(.+)Российской Федерации", RegexOptions.IgnoreCase);
             if (minMatch.Success)
             {
                 ministry = minMatch.Groups[1].Value;
@@ -132,10 +144,10 @@ namespace SmartParser.Lib
             {
                 var currRow = adapter.GetDataCells(row);
                 string section_text;
-                bool isSection = adapter.IsSectionRow(row, currRow,  adapter.GetColsCount(), prevRowIsSection, out section_text);
+                bool isSection = adapter.IsSectionRow(row, currRow, adapter.GetColsCount(), prevRowIsSection, out section_text);
                 if (isSection)
                 {
-                    if (section_text.Length > 20)
+                    if (ContainsYear(section_text, ref year) || section_text.Length > 20)
                     {
                         if (GetValuesFromTitle(section_text, ref title, ref year, ref ministry))
                         {
@@ -160,7 +172,8 @@ namespace SmartParser.Lib
                 }
                 prevRowIsSection = isSection;
             }
-            if (!findTitle) {
+            if (!findTitle)
+            {
                 if (GetValuesFromTitle(adapter.GetTitleOutsideTheTable(), ref title, ref year, ref ministry))
                 {
                     findTitle = true;
@@ -178,11 +191,11 @@ namespace SmartParser.Lib
         static List<Cell> FindSubcellsUnder(IAdapter adapter, Cell cell)
         {
             var subCells = new List<Cell>();
-            if (cell.Row + cell.MergedRowsCount >= adapter.GetRowsCount() )
+            if (cell.Row + cell.MergedRowsCount >= adapter.GetRowsCount())
             {
                 return subCells;
             }
-            if (cell.CellWidth ==  0 && cell.GetText(true).Trim() == "")
+            if (cell.CellWidth == 0 && cell.GetText(true).Trim() == "")
             {
                 return subCells;
             }
@@ -202,10 +215,11 @@ namespace SmartParser.Lib
         {
             return d == DeclarationField.DeclaredYearlyIncome ||
                 d == DeclarationField.DeclaredYearlyIncomeThousands ||
-                d == DeclarationField.DeclaredYearlyOtherIncome;
+                d == DeclarationField.DeclaredYearlyOtherIncome ||
+            d == DeclarationField.DeclaredAvgMonthlyIncome;
         }
 
-        static void AddColumn(TableHeader ordering, DeclarationField field, Cell  cell)
+        static void AddColumn(TableHeader ordering, DeclarationField field, Cell cell)
         {
             TColumnInfo s = new TColumnInfo();
             s.BeginColumn = cell.Col;
@@ -232,7 +246,7 @@ namespace SmartParser.Lib
                 return;
 
             TColumnInfo dummy;
-            var headerCell = adapter.GetDeclarationFieldWeak(columnOrdering, columnOrdering.HeaderBegin.Value, DeclarationField.Vehicle,out dummy);
+            var headerCell = adapter.GetDeclarationFieldWeak(columnOrdering, columnOrdering.HeaderBegin.Value, DeclarationField.Vehicle, out dummy);
             if (headerCell.MergedColsCount != 2)
                 return;
 
@@ -272,7 +286,7 @@ namespace SmartParser.Lib
                 var cell = adapter.GetCell(row, subCells[subColumnNo].Col);
                 if (cell == null)
                 {
-                    return false;   
+                    return false;
                 }
                 string areaStr = cell.GetText(true);
                 if (!DataHelper.IsEmptyValue(areaStr))
@@ -314,11 +328,11 @@ namespace SmartParser.Lib
             //see DepEnergo2010.doc  in tests
             FixMissingSubheadersForMergedColumns(
                 adapter,
-                columnOrdering, 
+                columnOrdering,
                 DeclarationField.MixedColumnWithNaturalText,
-                new DeclarationField[] {   
-                    DeclarationField.MixedRealEstateType, 
-                    DeclarationField.MixedRealEstateSquare, 
+                new DeclarationField[] {
+                    DeclarationField.MixedRealEstateType,
+                    DeclarationField.MixedRealEstateSquare,
                     DeclarationField.MixedRealEstateCountry}
             );
         }
@@ -330,7 +344,7 @@ namespace SmartParser.Lib
                 adapter,
                 columnOrdering,
                 DeclarationField.OwnedColumnWithNaturalText,
-                new DeclarationField[] {   
+                new DeclarationField[] {
                     DeclarationField.OwnedRealEstateType,
                     DeclarationField.OwnedRealEstateSquare,
                     DeclarationField.OwnedRealEstateCountry,
@@ -392,7 +406,7 @@ namespace SmartParser.Lib
         static void FixBadColumnName02(TableHeader c)
         {
             //move NameAndOccupationOrRelativeType  to NameOrRelativeType if Occupation  is present
-            if (     c.ContainsField(DeclarationField.NameAndOccupationOrRelativeType)
+            if (c.ContainsField(DeclarationField.NameAndOccupationOrRelativeType)
                   && c.ContainsField(DeclarationField.Occupation)
                 )
             {
@@ -408,7 +422,7 @@ namespace SmartParser.Lib
             headerEndRow = headerStartRow + 1;
             var firstRow = adapter.GetDataCells(headerStartRow);
 
-            List<Cell> columnCells =  new List<Cell>();
+            List<Cell> columnCells = new List<Cell>();
             bool headerCanHaveSecondLevel = true;
             int maxMergedRows = 1;
             var texts = new List<string>();
@@ -437,10 +451,10 @@ namespace SmartParser.Lib
                             break;
                         }
                     }
-                    
+
 
                     // иногда в двухярусном заголовке в верхней клетке пусто, а в нижней есть заголовок (TwoRowHeaderEmptyTopCellTest)
-                    if (text.Trim() == "" && cell.MergedRowsCount < maxMergedRows && underCells.Count() == 1) 
+                    if (text.Trim() == "" && cell.MergedRowsCount < maxMergedRows && underCells.Count() == 1)
                     {
                         columnCells.Add(underCells.First());
                     }
@@ -448,9 +462,9 @@ namespace SmartParser.Lib
                     {
                         columnCells.Add(cell);
                     }
-                    
+
                     texts.Add(cell.Text.NormSpaces());
-                    
+
                     // обработка ошибки документа DepEnergo2010
                     if (columnCells.Count == 1 && cell.MergedRowsCount == 1 && underCells.Count == 1)
                     {
@@ -486,45 +500,54 @@ namespace SmartParser.Lib
                     }
                     headerEndRow = Math.Max(headerEndRow, underCells[0].Row + underCells[0].MergedRowsCount);
                 }
-                
+
             }
             Logger.Debug("column titles: " + String.Join("|", texts));
             return columnCells;
         }
 
-        
+
         static public void MapColumnTitlesToInnerConstants(IAdapter adapter, List<Cell> cells, TableHeader columnOrdering)
         {
             foreach (var cell in cells)
             {
                 string text = cell.GetText(true);
-                Logger.Debug(string.Format("column title: \"{0}\"[{1}]",text.ReplaceEolnWithSpace().CoalesceWhitespace(), cell.CellWidth));
+                Logger.Debug(string.Format("column title: \"{0}\"[{1}]", text.ReplaceEolnWithSpace().CoalesceWhitespace(), cell.CellWidth));
                 DeclarationField field;
                 string clean_text = AbsenceMarkers.Aggregate(text, (x, y) => x.Replace(y, "")).Trim();
-                
+
                 if (adapter.GetRowsCount() == cell.MergedRowsCount)
                     continue;
-                
+
                 if ((text == "" || clean_text.Length <= 1) && (text != "№"))
                 {
                     // too short title, try to predict by values
                     field = ColumnByDataPredictor.PredictEmptyColumnTitle(adapter, cell);
                     Logger.Debug("Predict: " + field.ToString());
                 }
-                else {
+                else
+                {
                     field = HeaderHelpers.TryGetField(cell.TextAbove, text);
                     if ((field == DeclarationField.None) && clean_text.Length <= 4)
                     {
                         field = ColumnByDataPredictor.PredictEmptyColumnTitle(adapter, cell);
                         Logger.Debug("Predict: " + field.ToString());
                     }
-                    if (field == DeclarationField.None) {
+
+                    if(field  == DeclarationField.None)
+                    {
+                        field = ColumnByDataPredictor.PredictGenericColumnTitle(adapter, cell);
+                        Logger.Debug("Predict: " + field.ToString());
+                    }
+
+                    if (field == DeclarationField.None)
+                    {
                         throw new SmartParserException(String.Format("Cannot recognize field \"{0}\"", text.Replace('\n', ' ')));
                     }
 
                 }
 
-                if (field == DeclarationField.None && !DataHelper.IsEmptyValue(text) )
+                if (field == DeclarationField.None && !DataHelper.IsEmptyValue(text))
                 {
                     throw new ColumnDetectorException(String.Format("Fail to detect column type row: {0} title:{1}", cell.Row, text));
                 }
@@ -532,10 +555,10 @@ namespace SmartParser.Lib
                 {
                     ColumnByDataPredictor.PredictForPrecisionCheck(adapter, cell, field);
                 }
-                
+
                 AddColumn(columnOrdering, field, cell);
                 if (TableHeader.SearchForFioColumnOnly)
-                    if  (HeaderHelpers.IsNameDeclarationField(field))
+                    if (HeaderHelpers.IsNameDeclarationField(field))
                     {
                         break;
                     }
@@ -543,7 +566,7 @@ namespace SmartParser.Lib
         }
 
         static public void ReadHeader(IAdapter adapter, int headerStartRow, TableHeader columnOrdering)
-        { 
+        {
             int headerEndRow;
             var cells = GetColumnCells(adapter, headerStartRow, out headerEndRow);
             MapColumnTitlesToInnerConstants(adapter, cells, columnOrdering);

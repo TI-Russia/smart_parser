@@ -21,7 +21,7 @@ namespace SmartParser.Lib
         protected override WebRequest GetWebRequest(Uri uri)
         {
             WebRequest w = base.GetWebRequest(uri);
-            w.Timeout = 5 * 60 *  1000; // 5 minutes
+            w.Timeout = 5 * 60 * 1000; // 5 minutes
             return w;
         }
     }
@@ -159,7 +159,7 @@ namespace SmartParser.Lib
                         var t = exp.GetType();
                         Logger.Debug("the file cannot be found in conversion server db, try to process this file in place");
                     }
-                } 
+                }
                 else
                 {
                     Logger.Error("no url for declarator conversion server specified!");
@@ -172,15 +172,25 @@ namespace SmartParser.Lib
             }
             var saveCulture = Thread.CurrentThread.CurrentCulture;
             // Aspose.Words cannot work well, see 7007_10.html in regression tests
-            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US"); 
-            var doc = new Aspose.Words.Document(filename);
-            doc.RemoveMacros();
-            doc.Save(docXPath, Aspose.Words.SaveFormat.Docx);
-            Thread.CurrentThread.CurrentCulture = saveCulture;
-            doc = null;
-            System.GC.Collect();
-            System.GC.WaitForPendingFinalizers();
-            return docXPath;
+            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("en-US");
+            try
+            {
+                var doc = new Aspose.Words.Document(filename);
+                doc.RemoveMacros();
+                doc.Save(docXPath, Aspose.Words.SaveFormat.Docx);
+                Thread.CurrentThread.CurrentCulture = saveCulture;
+                doc = null;
+                System.GC.Collect();
+                System.GC.WaitForPendingFinalizers();
+                return docXPath;
+            }
+            catch (Exception exp)
+            {
+                Thread.CurrentThread.CurrentCulture = saveCulture;
+                Logger.Error("Aspose.Words cannot convert the file, most likely due to file corruption. try to use soffice");
+                return string.Empty;
+            }
+
 
         }
         public String ConvertWithSoffice(string fileName)

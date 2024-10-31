@@ -9,6 +9,8 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Reflection;
 using Newtonsoft.Json;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 
 namespace SmartParser.Lib
@@ -16,16 +18,16 @@ namespace SmartParser.Lib
     using TrigramsDict = Dictionary<DeclarationField, Dictionary<string, int>>;
     public class ColumnByDataPredictor
     {
-        static  TrigramsDict Trigrams = new TrigramsDict();
+        static TrigramsDict Trigrams = new TrigramsDict();
         static Dictionary<DeclarationField, double> ClassFreq;
         static double SampleLen;
-        static public bool CalcPrecision =  false;
+        static public bool CalcPrecision = false;
         static public int CorrectCount = 0;
         static public int AllCount = 0;
         static string ExternalFileName = null;
 
 
-        public static void InitializeIfNotAlready(string fileName=null)
+        public static void InitializeIfNotAlready(string fileName = null)
         {
             if (SampleLen == 0)
             {
@@ -85,7 +87,7 @@ namespace SmartParser.Lib
                 }
             }
         }
-    
+
         static DeclarationField FindMin(Dictionary<DeclarationField, double> freqs)
         {
             // Linq is slower
@@ -106,13 +108,13 @@ namespace SmartParser.Lib
         {
             if (text.Length == 0) return true;
             if (text == "п/п" && field == DeclarationField.DeclarantIndex) return true;
-            if (    ((field & DeclarationField.StartsWithDigitMask) > 0)
+            if (((field & DeclarationField.StartsWithDigitMask) > 0)
                  && !Char.IsNumber(text[0]))
             {
-                    return false;
+                return false;
             }
-            if (    DataHelper.IsCountryStrict(text)
-                &&  (field & DeclarationField.CountryMask) == 0)
+            if (DataHelper.IsCountryStrict(text)
+                && (field & DeclarationField.CountryMask) == 0)
             {
                 return false;
             }
@@ -131,10 +133,10 @@ namespace SmartParser.Lib
                 if (TestFieldRegexpWeak(i.Key, words))
                     freqs[i.Key] = -Math.Log(ClassFreq[i.Key] / SampleLen);
             }
-            var fields = new List <DeclarationField > (freqs.Keys);
+            var fields = new List<DeclarationField>(freqs.Keys);
             foreach (var trigram in String2Trigrams(words))
             {
-                foreach  (var field in fields)
+                foreach (var field in fields)
                 {
                     //DeclarationField field = i.Key;
                     int freq = 0;
@@ -149,7 +151,8 @@ namespace SmartParser.Lib
         public static DeclarationField PredictByStrings(List<string> words)
         {
             var negativeFreqs = new Dictionary<DeclarationField, double>();
-            foreach (string w in words) {
+            foreach (string w in words)
+            {
                 if (DataHelper.IsEmptyValue(w)) continue;
                 var f = HeaderHelpers.TryGetField("", w);
                 if (f == DeclarationField.None)
@@ -172,7 +175,7 @@ namespace SmartParser.Lib
         {
             if (cell.IsEmpty) return false;
             string text = cell.GetText(true);
-            if ((field & DeclarationField.SquareMask)>0 && DataHelper.ParseSquare(text).HasValue)
+            if ((field & DeclarationField.SquareMask) > 0 && DataHelper.ParseSquare(text).HasValue)
             {
                 return true;
             }
@@ -191,9 +194,9 @@ namespace SmartParser.Lib
             }
         }
 
-        public static void IncrementTrigrams(DeclarationField field,  string words)
+        public static void IncrementTrigrams(DeclarationField field, string words)
         {
-            if (!Trigrams.ContainsKey(field) )
+            if (!Trigrams.ContainsKey(field))
             {
                 Trigrams[field] = new Dictionary<string, int>();
             }
@@ -235,6 +238,47 @@ namespace SmartParser.Lib
                     "Predictor precision all={0} correct={1}, precision={2}",
                     AllCount, CorrectCount,
                     CorrectCount / ((double)AllCount + 10E-10));
+        }
+
+        // попытка предсказать заголовок колонки по данным внутри таблицы. В случае, когда название колонки слишком расплывчато
+        public static DeclarationField PredictGenericColumnTitle(IAdapter adapter, Cell headerCell)
+        {
+            var field = DeclarationField.None;
+            int maxRowToCollect = Math.Min(50, adapter.GetRowsCount());
+            List<string> texts = new List<string>();
+            var possible = 0;
+            var not_possible = 0;
+
+            var possibleFields = new List<DeclarationField>();
+
+            int rowIndex = headerCell.Row + headerCell.MergedRowsCount;
+            for (int i = 0; i < maxRowToCollect; i++)
+            {
+                var index = rowIndex + i;
+                var cells = adapter.GetDataCells(index, IAdapter.MaxColumnsCount);
+                var c = cells.Count > headerCell.Col ? cells[headerCell.Col] : null;
+                if (c == null)
+                {
+                    continue;
+                }
+                var txt = c.GetText(true);
+                if (!string.IsNullOrWhiteSpace(txt))
+                {
+
+                    if (Regex.IsMatch(txt, "(МСЧ|КБ|ЦКБ|ФНКЦ|ГНЦ|ФМБЦ)"))
+                    {
+                        possibleFields.Add(DeclarationField.Department);
+                        possible++;
+                    }
+                    else
+                    {
+                        possibleFields.Add(DeclarationField.None);
+                    }
+                }
+            }
+
+            return possibleFields.Count > 0 ? possibleFields.GroupBy(v => v).OrderByDescending(g => g.Count()).First().Key : DeclarationField.None;
+
         }
         public static DeclarationField PredictEmptyColumnTitle(IAdapter adapter, Cell headerCell)
         {
@@ -293,14 +337,15 @@ namespace SmartParser.Lib
             {
                 field = DeclarationField.DeclarantIndex;
             }
-            else {
+            else
+            {
                 field = PredictByStrings(texts);
                 if (field == DeclarationField.NameOrRelativeType && String.Join(" ", texts).Contains(","))
                 {
                     field = DeclarationField.NameAndOccupationOrRelativeType;
                 }
             }
-            
+
             if (headerCell.TextAbove != null && ((field & DeclarationField.AllOwnTypes) > 0))
             {
                 string h = headerCell.TextAbove;

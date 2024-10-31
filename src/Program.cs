@@ -251,14 +251,14 @@ namespace Smart.Parser
             }
         }
 
-
-
-        private static string SupportedFileTypesPattern = "*.pdf, *.xls, *.xlsx, *.doc, *.docx, *.html";
+        private static readonly string[] SupportedFileTypes = { "*.pdf", "*.xls", "*.xlsx", "*.doc", "*.docx", "*.html" };
 
         public static int ParseDirectory(string dirName)
         {
-            string[] files = Directory.GetFiles(dirName, SupportedFileTypesPattern);
-            return ParseMultipleFiles(Directory.GetFiles(dirName), dirName);
+            var files = SupportedFileTypes
+                .SelectMany(pattern => Directory.GetFiles(dirName, pattern))
+                .ToArray();
+            return ParseMultipleFiles(files, dirName);
         }
 
         public static int ParseByFileMask(string fileMask)
@@ -508,10 +508,11 @@ namespace Smart.Parser
                         columnOrdering = LastGoodOrdering;
                         columnOrdering.FirstDataRow = 0;
                     }
-                    else {
+                    else
+                    {
                         throw ex;
                     }
-                    
+
                 }
 
                 // Try to extract declaration year from file name if we weren't able to get it from document title
@@ -564,7 +565,9 @@ namespace Smart.Parser
                 if (!(columnOrdering.ContainsField(DeclarationField.DeclarantIncome) ||
                       columnOrdering.ContainsField(DeclarationField.DeclarantIncomeInThousands) ||
                       columnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncome) ||
-                      columnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncomeThousands)))
+                      columnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncomeThousands) ||
+                      columnOrdering.ContainsField(DeclarationField.DeclaredAvgMonthlyIncome)
+                      ))
                 {
                     if (!SmartParser.Lib.TableHeader.SearchForFioColumnOnly)
                     {
@@ -614,7 +617,7 @@ namespace Smart.Parser
             return output;
         }
 
-        public static void WriteOutputJson (string inputFile, Declaration declarations, string outFile)
+        public static void WriteOutputJson(string inputFile, Declaration declarations, string outFile)
         {
             if (declarations != null)
             {
