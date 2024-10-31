@@ -26,6 +26,7 @@ namespace SmartParser.Lib
         Appartment = 0b00100000_00000000_00000000,
         SummerHouse = 0b01000000_00000000_00000000,
         Garage = 0b10000000_00000000_00000000,
+        ThousandsMask = 0b00000001_00000000_00000000_00000000,
 
         //the first byte
         None = 0,
@@ -51,7 +52,7 @@ namespace SmartParser.Lib
         DeclaredYearlyOtherIncome = 16 | StartsWithDigitMask,
         DeclarantIndexAndName = 17 | StartsWithDigitMask,
         DeclaredAvgMonthlyIncome = 18 | StartsWithDigitMask,
-        DeclaredAvgMonthlyIncomeThousands = DeclaredAvgMonthlyIncome | StartsWithDigitMask,
+        DeclaredAvgMonthlyIncomeThousands = DeclaredAvgMonthlyIncome | ThousandsMask,
 
         // Для случая, когда один и тот же набор колонок содержит сведения и о частной, и о государственной собственности
         MixedRealEstateType = Mixed | RealtyTypeMask,

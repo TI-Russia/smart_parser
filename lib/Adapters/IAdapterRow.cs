@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 
 namespace SmartParser.Lib
 {
-    public class DataRow : DataRowInterface
+    public class DataRow : IDataRow
     {
 
         void MapCells()

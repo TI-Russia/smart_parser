@@ -131,10 +131,12 @@ namespace SmartParser.Lib
 
         public static bool IsNumeroSign(this string str)
         {
-            str = str.RemoveCharacters(' ');
-        return  str.StartsWith("№")
-                   || str.ContainsAny("nп/п", "№п/п", "№\nп/п", "-п/п", "nпп")
-                   || str.Replace("\\", "/").Equals("п/п", StringComparison.OrdinalIgnoreCase);
+            str = str.RemoveCharacters(' ').ToLower();
+            return str.StartsWith("№")
+                       || str.ContainsAny("nоп/п", "nп/п", "№п/п", "№\nп/п", "-п/п", "nпп", "кбп")
+                       || str.Replace("\\", "/").Equals("п/п", StringComparison.OrdinalIgnoreCase)
+                       || str.Replace("\\", "/").Equals("т/п", StringComparison.OrdinalIgnoreCase);
+
         }
 
         public static bool IsNumeroSignAndName(this string str)
@@ -183,7 +185,8 @@ namespace SmartParser.Lib
             return IsOccupation(s) && IsRelativeType(s);
         }
 
-        private static bool IsDepartment(this string s) => s.ContainsAny("наименование организации", "ерриториальное управление в субъекте", "наименование учреждения", "наименование государственного учреждения");
+        private static bool IsDepartment(this string s) => s.ContainsAny("наименование организации", "ерриториальное управление в субъекте", "наименование учреждения",
+            "наименование государственного учреждения", "наименование федерального");
 
         private static bool IsMixedRealEstateOwnershipType(this string s) => s.IsMixedColumn() && HasOwnershipTypeString(s);
 
@@ -419,9 +422,9 @@ namespace SmartParser.Lib
         public static bool IsAvgMonthlyIncome(this string str)
         {
             var strLower = str.OnlyRussianLowercase();
-            return strLower.ContainsAny("среднемесячнаязаработная", "cредняязарплата", "размерсреднемесячнойзаработнойплат", "средняязаработнаяплата");
+            return strLower.ContainsAny("среднемесячнойзаработнойплаты", "среднемесячнаязарплата", "среднемесячнаязаработная", "средмесячнаязаработная", "cредняязарплата", "размерсреднемесячнойзаработнойплат", "средняязаработнаяплата");
         }
-        private static bool IsAvgMonthlyIncomeThousands(this string s) => s.IsAvgMonthlyIncome() &&  s.Contains("тыс.");
+        private static bool IsAvgMonthlyIncomeThousands(this string s) => s.IsAvgMonthlyIncome() && s.Contains("тыс.");
         private static bool IsMainWorkPositionIncome(this string str) => Regex.Match(str, @"сумма.*месту\s+работы").Success;
 
         private static bool IsDeclaredYearlyIncomeThousands(this string s) => s.IsDeclaredYearlyIncome() && s.Contains("тыс.");
@@ -435,7 +438,7 @@ namespace SmartParser.Lib
         private static bool IsComments(this string s)
         {
             var strLower = s.OnlyRussianLowercase();
-            return strLower.Contains("примечани") || strLower.StartsWithAny("наименование", "соотношениекратностисреднейзаработнойплаты");
+            return strLower.Contains("примечани") || strLower.StartsWithAny("наименование", "соотношения", "соотношениекратностисреднейзаработнойплаты");
         }
 
         private static bool IsAcquiredProperty(this string s) => s.OnlyRussianLowercase().Contains("приобретенногоимущества");

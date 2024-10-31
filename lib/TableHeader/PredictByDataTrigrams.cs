@@ -255,7 +255,7 @@ namespace SmartParser.Lib
             for (int i = 0; i < maxRowToCollect; i++)
             {
                 var index = rowIndex + i;
-                var cells = adapter.GetDataCells(index, IAdapter.MaxColumnsCount);
+                var cells = adapter.GetDataCells(rowIndex, IAdapter.MaxColumnsCount);
                 var c = cells.Count > headerCell.Col ? cells[headerCell.Col] : null;
                 if (c == null)
                 {

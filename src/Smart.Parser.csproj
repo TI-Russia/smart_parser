@@ -2,12 +2,13 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
+    <EnableUnsafeBinaryFormatterSerialization>true</EnableUnsafeBinaryFormatterSerialization>
     <AssemblyName>smart_parser</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,8 +17,6 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\versions.txt" />
   </ItemGroup>
-
-
   <ItemGroup>
     <ProjectReference Include="..\DeclaratorApiClient\DeclaratorApiClient.csproj" />
     <ProjectReference Include="..\JsonSerialization\JsonSerialization.csproj" />

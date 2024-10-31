@@ -14,6 +14,7 @@ using System.Security.Cryptography;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Newtonsoft.Json;
 using System.Reflection;
+using Smart.Parser.Lib.Adapters.Azure;
 
 namespace Smart.Parser
 {
@@ -398,7 +399,18 @@ namespace Smart.Parser
                 case ".rtf":
                 case ".toloka_json":
                 case ".docx":
-                    return OpenXmlWordAdapter.CreateAdapter(inputFile, MaxRowsToProcess);
+
+                    var adapter = (OpenXmlWordAdapter)OpenXmlWordAdapter.CreateAdapter(inputFile, MaxRowsToProcess);
+                    if (adapter.DocumentIsScan)
+                    {
+                        var azureadapter = new AzureFormRecognizer(inputFile);
+                        if (azureadapter.IsFeatureValid())
+                        {
+                            azureadapter.RecognizeForm().Wait();
+                            return azureadapter;
+                        }
+                    }
+                    return adapter;
                 case ".xls":
                 case ".xlsx":
                     if (AdapterFamily == "aspose" || AdapterFamily == "prod")
@@ -566,7 +578,8 @@ namespace Smart.Parser
                       columnOrdering.ContainsField(DeclarationField.DeclarantIncomeInThousands) ||
                       columnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncome) ||
                       columnOrdering.ContainsField(DeclarationField.DeclaredYearlyIncomeThousands) ||
-                      columnOrdering.ContainsField(DeclarationField.DeclaredAvgMonthlyIncome)
+                      columnOrdering.ContainsField(DeclarationField.DeclaredAvgMonthlyIncome) ||
+                      columnOrdering.ContainsField(DeclarationField.DeclaredAvgMonthlyIncomeThousands)
                       ))
                 {
                     if (!SmartParser.Lib.TableHeader.SearchForFioColumnOnly)

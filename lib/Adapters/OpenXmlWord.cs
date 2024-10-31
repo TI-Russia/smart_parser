@@ -12,6 +12,7 @@ using System.Linq;
 using System.Threading;
 using System.Xml;
 using System.Xml.Linq;
+using Smart.Parser.Lib.Adapters.Exceptions;
 
 namespace SmartParser.Lib
 {
@@ -454,7 +455,7 @@ namespace SmartParser.Lib
         XmlNamespaceManager NamespaceManager;
         private int TablesCount;
         private DocxConverter _DocxConverter;
-
+        public bool DocumentIsScan { get; set; }
         protected static List<IAdapterScheme> _allSchemes = new List<IAdapterScheme>()
         {
             new SovetFederaciiDocxScheme(),
@@ -537,6 +538,15 @@ namespace SmartParser.Lib
                     Logger.Error("Type Exception " + exp.ToString());
                     fileName = _DocxConverter.ConvertWithSoffice(fileName);
                 }
+                catch (AsposeCorruptedFileException exp)
+                {
+                    if (!string.IsNullOrWhiteSpace(Environment.GetEnvironmentVariable("AZURE_FR_APIKEY")))
+                    {
+                        //we will try to scan corrupted pdf with Azure Recognizer
+                        DocumentIsScan = true;
+                        return;
+                    }
+                }
                 catch (Exception exp)
                 {
                     Logger.Error(String.Format("cannot convert {0} to docx, try one more time (exception: {1}", fileName, exp));
@@ -546,23 +556,32 @@ namespace SmartParser.Lib
                 removeTempFile = true;
             }
 
-            try
+            if (fileName.EndsWith(".docx"))
             {
-                ProcessDoc(fileName, extension, maxRowsToProcess);
+                DocumentIsScan = DocxConverter.IsDocumentScan(fileName);
             }
-            catch (OpenXmlPackageException e)
+
+            if (!DocumentIsScan)
             {
-                // http://www.ericwhite.com/blog/handling-invalid-hyperlinks-openxmlpackageexception-in-the-open-xml-sdk/
-                if (e.ToString().Contains("Invalid Hyperlink"))
+                try
                 {
-                    var newFileName = fileName + ".fixed.docx";
-                    File.Copy(fileName, newFileName);
-                    using (FileStream fs = new FileStream(newFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                    ProcessDoc(fileName, extension, maxRowsToProcess);
+
+                }
+                catch (OpenXmlPackageException e)
+                {
+                    // http://www.ericwhite.com/blog/handling-invalid-hyperlinks-openxmlpackageexception-in-the-open-xml-sdk/
+                    if (e.ToString().Contains("Invalid Hyperlink"))
                     {
-                        UriFixer.FixInvalidUri(fs, brokenUri => FixUri(brokenUri));
+                        var newFileName = fileName + ".fixed.docx";
+                        File.Copy(fileName, newFileName);
+                        using (FileStream fs = new FileStream(newFileName, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                        {
+                            UriFixer.FixInvalidUri(fs, brokenUri => FixUri(brokenUri));
+                        }
+                        ProcessDoc(newFileName, extension, maxRowsToProcess);
+                        File.Delete(newFileName);
                     }
-                    ProcessDoc(newFileName, extension, maxRowsToProcess);
-                    File.Delete(newFileName);
                 }
             }
 
@@ -924,7 +943,7 @@ namespace SmartParser.Lib
             }
             if ((TableRows.Count > 0) && !TableHeaderRecognizer.IsNamePositionAndIncomeTable(GetDataCells(0)))
             {
-                if (maxCellsCount <= 3 || CheckNameColumnIsEmpty(saveRowsCount))
+                if (maxCellsCount < 3 || CheckNameColumnIsEmpty(saveRowsCount))
                 {
                     //remove this suspicious table 
                     TableRows.RemoveRange(saveRowsCount, TableRows.Count - saveRowsCount);
