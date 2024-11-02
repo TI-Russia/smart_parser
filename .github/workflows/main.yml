@@ -53,10 +53,10 @@ jobs:
       - name: Publish the project
         run: dotnet publish src/Smart.Parser.csproj --configuration Release --no-build --output ./published
 
-      - name: Compress published files
+      - name: Compress published files into tar.gz
         run: |
           mkdir artifacts
-          zip -r artifacts/smart-parser.zip ./published
+          tar -czf artifacts/smart-parser.tar.gz -C published .
           
       - name: Upload artifact
         uses: actions/upload-artifact@v3
