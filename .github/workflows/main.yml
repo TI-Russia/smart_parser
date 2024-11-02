@@ -47,8 +47,8 @@ jobs:
       - name: Build the project
         run: dotnet build Smart.Parser.sln --configuration Release
 
-#      - name: Run Unit Tests
-#        run: dotnet test Smart.Parser.sln --configuration Release --no-build --verbosity normal
+      # - name: Run Unit Tests
+      #   run: dotnet test Smart.Parser.sln --configuration Release --no-build --verbosity normal
 
       - name: Publish the project
         run: dotnet publish src/Smart.Parser.csproj --configuration Release --output ./published
@@ -58,9 +58,20 @@ jobs:
         with:
           name: smart-parser-release
           path: ./published
-          
-      - name: Create release
-        if: ${{ inputs.publish-release == 'true' }}
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: ${{ inputs.publish-release == 'true' }}
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: smart-parser-release
+          path: ./artifact
+
+      - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
         with:
@@ -71,11 +82,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload release
-        if: ${{ inputs.publish-release == 'true' }}
+      - name: Upload release assets
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./published
+          asset_path: ./artifact
           asset_name: smart-parser-release.zip
           asset_content_type: application/zip
