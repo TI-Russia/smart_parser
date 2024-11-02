@@ -14,12 +14,12 @@ on:
         type: boolean
         description: 'Publish Release'
         required: false
-        default: 'false'
+        default: false
       version:
         description: 'Version'
         required: false
         default: ''
- 
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -32,7 +32,7 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '8.0.x'
-          
+
       - name: Cache NuGet packages
         uses: actions/cache@v3
         with:
@@ -40,57 +40,46 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/*.sln') }}
           restore-keys: |
             ${{ runner.os }}-nuget-
-            
+
       - name: Restore dependencies
         run: dotnet restore Smart.Parser.sln
 
       - name: Build the project
-        run: dotnet build Smart.Parser.sln --configuration Release
+        run: dotnet build Smart.Parser.sln --configuration Release --no-restore
 
-      # - name: Run Unit Tests
-      #   run: dotnet test Smart.Parser.sln --configuration Release --no-build --verbosity normal
+#      - name: Run Unit Tests
+#        run: dotnet test Smart.Parser.sln --configuration Release --no-build --verbosity normal
 
       - name: Publish the project
-        run: dotnet publish src/Smart.Parser.csproj --configuration Release --output ./published
+        run: dotnet publish src/Smart.Parser.csproj --configuration Release --no-build --output ./published
 
-      - name: Compress published files
-        run: zip -r smart-parser.zip ./published
-        
-      - name: Upload artifact
+      - name: Archive published files
         uses: actions/upload-artifact@v3
         with:
-          name: smart-parser
-          path: smart-parser.zip
+          name: smart-parser-artifact
+          path: ./published
 
   release:
     needs: build
     runs-on: ubuntu-latest
     if: ${{ inputs.publish-release }}
-
     steps:
-      - name: Download Artifact
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          name: smart-parser
-          path: .
+          name: smart-parser-artifact
+          path: ./published
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
         with:
           tag_name: v${{ inputs.version }}
-          release_name: Smart Parser v${{ inputs.version }}
+          name: Smart Parser v${{ inputs.version }}
+          files: ./published/**
           draft: false
           prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./smart-parser.zip
-          asset_name: smart-parser.zip
-          asset_content_type: application/zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
