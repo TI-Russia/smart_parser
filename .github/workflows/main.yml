@@ -53,11 +53,14 @@ jobs:
       - name: Publish the project
         run: dotnet publish src/Smart.Parser.csproj --configuration Release --output ./published
 
+      - name: Compress published files
+        run: zip -r smart-parser-release.zip ./published
+        
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
-          name: smart-parser-release
-          path: ./published
+          name: smart-parser
+          path: smart-parser.zip
 
   release:
     needs: build
@@ -68,10 +71,10 @@ jobs:
       - name: Download Artifact
         uses: actions/download-artifact@v3
         with:
-          name: smart-parser-release
-          path: ./smart-parser-release.zip
+          name: smart-parser
+          path: .
 
-      - name: Create GitHub Release
+      - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         with:
@@ -86,6 +89,6 @@ jobs:
         uses: actions/upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./smart-parser-release.zip
-          asset_name: smart-parser-release.zip
+          asset_path: ./smart-parser.zip
+          asset_name: smart-parser.zip
           asset_content_type: application/zip
