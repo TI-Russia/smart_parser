@@ -62,7 +62,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: smart-parser
-          path: artifacts/smart-parser.zip
+          path: artifacts/smart-parser.tar.gz
 
   release:
     needs: build
@@ -80,7 +80,7 @@ jobs:
         with:
           tag_name: v${{ inputs.version }}
           name: Smart Parser v${{ inputs.version }}
-          files: artifacts/smart-parser.zip
+          files: artifacts/smart-parser.tar.gz
           draft: false
           prerelease: false
         env:
