@@ -62,7 +62,7 @@ jobs:
   release:
     needs: build
     runs-on: ubuntu-latest
-    if: ${{ inputs.publish-release == 'true' }}
+    if: ${{ inputs.publish-release }}
 
     steps:
       - name: Download artifact
