@@ -21,18 +21,29 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '8.0.x'
-
+          
+      - name: Cache NuGet packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/*.sln') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+            
       - name: Restore dependencies
         run: dotnet restore Smart.Parser.sln
 
       - name: Build the project
         run: dotnet build Smart.Parser.sln --configuration Release
 
+      - name: Run Unit Tests
+        run: dotnet test Smart.Parser.sln --configuration Release --no-build --verbosity normal
+
       - name: Publish the project
-        run: dotnet publish src/Smart.Parser/Smart.Parser.csproj --configuration Release --output /home/runner/work/smart_parser/published
+        run: dotnet publish src/Smart.Parser.csproj --configuration Release --output ./published
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: smart-parser-release
-          path: /home/runner/work/smart_parser/published
+          path: ./published
