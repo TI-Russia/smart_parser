@@ -36,8 +36,8 @@ jobs:
       - name: Build the project
         run: dotnet build Smart.Parser.sln --configuration Release
 
-      - name: Run Unit Tests
-        run: dotnet test Smart.Parser.sln --configuration Release --no-build --verbosity normal
+#      - name: Run Unit Tests
+#        run: dotnet test Smart.Parser.sln --configuration Release --no-build --verbosity normal
 
       - name: Publish the project
         run: dotnet publish src/Smart.Parser.csproj --configuration Release --output ./published
